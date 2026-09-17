@@ -1169,9 +1169,7 @@ facts:[
  {"label":"Archers who left","value":"Most"},
  {"label":"Muslim dead","value":"~70"},
  {"label":"Notable martyr","value":"Hamza"},
- {"label":"Prophet","value":"Wounded"},
- {"label":"Martyrs","value":"70 of the Muslims"},
- {"label":"Archers' post","value":"50, Jabal ar-Rumat"}]},
+ {"label":"Prophet","value":"Wounded"}]},
 
 {id:40,period:"seerah",titleEn:"Khandaq: The Trench",titleAr:"الخندق",summary:"Salman suggested the trench. The Confederates were defeated by wind.",pattern:"pattern-1",image:"assets/manuscripts/khandaq.jpg",
 details:`The Confederates gathered against {{p:p-madinah|Madinah}} in the fifth year after the {{n:34|Hijrah}}: Quraysh, Ghatafan, and other allies, with a force far larger than at {{n:39|Uhud}}. The aim was to end the Medinan community in a single siege. The Prophet consulted his companions. {{c:c-salman|Salman al-Farisi}} advised digging a trench, a method known in Persia but not to the Arabs of that region as a city defense. The counsel was accepted. The Muslims dug through hard days, the Prophet working with them, binding a stone to his stomach from hunger as they did, until a ditch protected the vulnerable approaches of the town.
@@ -1261,8 +1259,7 @@ facts:[
  {"label":"Truce","value":"10 years"},
  {"label":"Umrah","value":"Deferred 1 year"},
  {"label":"Pledge","value":"Bay'at al-Ridwan"},
- {"label":"Quran name","value":"Fath mubin"},
- {"label":"Pledgers under the tree","value":"~1,400"}]},
+ {"label":"Quran name","value":"Fath mubin"}]},
 
 {id:42,period:"seerah",titleEn:"Fath Makkah: Idols Fall",titleAr:"فتح مكة",summary:"10,000 entered almost bloodlessly. Bilal called the adhan from the Kaaba.",pattern:"pattern-4",image:"assets/manuscripts/fath-makkah.jpg",
 details:`In the eighth year after the Hijrah a breach of the {{n:41|Hudaybiyyah}} treaty by allies of Quraysh opened the legal and moral way for a march on {{p:p-makkah|Makkah}}. The Prophet set out with a force of about ten thousand, larger than any previous Muslim army. The approach was managed with secrecy and speed so that Quraysh would not have time to form a full defense or seek new alliances.
@@ -1312,7 +1309,6 @@ facts:[
  {"label":"Idols removed","value":"~360"},
  {"label":"Adhan on Kaaba","value":"Bilal"},
  {"label":"Policy","value":"General amnesty"},
- {"label":"Army","value":"10,000"},
  {"label":"Blood spilled","value":"Almost none"}]},
 
 {id:43,period:"seerah",titleEn:"Hunayn: 12,000 Tested",titleAr:"حنين",metric:"“I am the Prophet, no lie”",summary:"Numbers made them proud. Ambush, then reliance returned.",pattern:"pattern-3",image:"assets/manuscripts/hunayn.jpg",

@@ -1544,6 +1544,65 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   else look();
 })();
 
+/* ================= the season, asked for only when it is due =============
+   noor-ramadan.js and noor-hijri.js used to sit in the head of every old
+   room, all year, so a reader in June downloaded fourteen kilobytes of
+   calendar arithmetic to be told, silently, that nothing was due. The window
+   it is ever needed in is fourteen days before Ramadan through the four days
+   of Eid al-Fitr, and the ten days of Dhul Hijjah -- a few weeks of the
+   year, not all of it (audit arch-005).
+
+   This asks the question first, from the tabular calendar's own Ramadan and
+   Dhul Hijjah starts (the same arithmetic noor-hijri.js runs, precomputed so
+   the question itself costs no network and no script), padded on both sides
+   for the offset a reader may have nudged the calendar by. Only when the
+   answer is yes does it ask for the season files -- which is exactly what a
+   page that still carries its own tag for them does the moment it loads;
+   this only changes when that moment is.
+
+   A page that keeps its own tag for noor-ramadan.js is left alone: this
+   section finds it already on the page and stands down. Two pages do --
+   ramadan.html and eid.html read window.NOOR_HIJRI and window.NOOR_RAMADAN
+   directly, for their own permanent calendar content, not only through the
+   seasonal bar -- and so keep the season loaded unconditionally. So does
+   ?season=, the query string the two files already answer for a look at any
+   phase without waiting on the calendar. */
+(function () {
+  "use strict";
+  if (document.querySelector('script[src*="noor-ramadan.js"]')) return;
+  var RAMADAN = ["2025-03-01", "2026-02-18", "2027-02-08", "2028-01-28", "2029-01-16",
+    "2030-01-06", "2030-12-26", "2031-12-15", "2032-12-04", "2033-11-23"];
+  var DHUL_HIJJAH = ["2025-05-29", "2026-05-18", "2027-05-08", "2028-04-26", "2029-04-15",
+    "2030-04-05", "2031-03-25", "2032-03-13", "2033-03-03", "2034-02-20"];
+  var DAY = 86400000;
+  function due() {
+    try {
+      if (/[?&]season=/.test(location.search)) return true;
+      var now = Date.now(), i, t;
+      /* past the table: do not guess dormant, ask for the files */
+      if (now > new Date(RAMADAN[RAMADAN.length - 1] + "T00:00:00Z").getTime()) return true;
+      for (i = 0; i < RAMADAN.length; i++) {
+        t = new Date(RAMADAN[i] + "T00:00:00Z").getTime();
+        /* fourteen days of approach, the month, three days of Eid al-Fitr,
+           and five spare days on each side for a reader's own offset */
+        if (now >= t - 19 * DAY && now <= t + 37 * DAY) return true;
+      }
+      for (i = 0; i < DHUL_HIJJAH.length; i++) {
+        t = new Date(DHUL_HIJJAH[i] + "T00:00:00Z").getTime();
+        if (now >= t - 5 * DAY && now <= t + 18 * DAY) return true;
+      }
+    } catch (e) { return true; }   /* unsure: load it rather than stay silent all year */
+    return false;
+  }
+  if (!due()) return;
+  var l = document.createElement("link");
+  l.rel = "stylesheet"; l.href = "/assets/noor-ramadan.css?v=1";
+  document.head.appendChild(l);
+  var s = document.createElement("script");
+  s.src = "/assets/noor-ramadan.js?v=1"; s.defer = true;
+  document.head.appendChild(s);
+})();
+
 /* ================= the quiet guide, wherever a box asks for it =============
    noor-guide.js answers from the sources on the thirty chapters that carry a
    curated topic -- the Dajjal, the grave, the trials, Harut and Marut. When

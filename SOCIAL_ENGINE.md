@@ -9,9 +9,10 @@ Director.
 - **The schedule** (`api/_schedule.js`): slots a day in UTC: dawn 05 (the day's date
   card), reelA 08, reelC 11, light 12 (the day's Light card), reelD 14, word 16, reelB 17,
   reelF 19, dusk 20 (the chapter card), reelE 21. A rota by weekday picks each reel slot's
-  kind (verse, word, name, know, light, dua, day); the afternoon asks for a short and takes
-  the old row until shorts exist. `chooseReel` walks the shelf by a step counted per kind
-  since the epoch (Sunday 6 September 2026), so nothing repeats inside six months; the
+  kind (verse, word, name, know, light, dua, day); the afternoon asks for a short on
+  Sunday, Tuesday, Thursday and Saturday and keeps the old row the other three days (and
+  every day, until shorts exist at all). `chooseReel` walks the shelf by a step counted per
+  kind since the epoch (Sunday 6 September 2026), so nothing repeats inside six months; the
   walk moves when the shelf grows, which is why a repair must be pinned to the record's
   reel (it is).
 - **The shelf** (`reels/index.json`, 1,457 rows with video; `tools/reels/README.md`):
@@ -33,6 +34,69 @@ Director.
 - **The console** (`/admin2`, the Reels and Controls rooms; `/admin` the old one): the
   records, retry per network, Post now, the dials (mode off, approve, auto; fb; ig;
   stories; cardsFeed off).
+
+## Shorts
+
+A silent short is a plate film (`tools/films/briefs/plate-*.json`, rendered on the owner's
+Mac by `plates.sh`), not a rendered-from-cards reel: no voice, the library's own illustrated
+page staged to motion, a hook, a mechanism, a turn and a payoff, then its source. `tools/
+films/shortmanifest.py` turns a finished brief into a row of kind "short" in `reels/
+index.json` (id, caption, the long `story` in the library's own words read off the hero card
+its `room` names, or, when nothing on that page shares a word with the brief, the brief's own
+lines instead, with a warning printed rather than a silent wrong guess, `src`, `room`,
+`title`, `hook`, `payoff`, `secs`, `made`); no `wide` from this script, ever, since it has no
+url yet to put there. `publish-shorts.sh` makes a delivery copy of each shape first (a master
+is CRF 16 and 90 to 180 MB; the copy is libx264, crf 21, kept under Telegram's 50 MB ceiling
+or refused rather than uploaded), uploads the copies, and merges the rows in -- `wide` is
+written only here, as a real url, once that upload has actually succeeded, and a shelf that
+already carries a row's id twice is collapsed to one row rather than left with a stale copy
+standing. The Director carries `out/index.merged.json` to main, the same as every other reels
+update.
+
+Building the row is not the same as the post reaching a network: `api/_schedule.js`'s
+`buildSlot`, which every reel slot runs through, carries a short's own fields -- `story`,
+`title`, `hook`, `payoff`, `tags`, `wide`, `src`, `room` -- onto the post it hands to
+`api/_channels.js`, alongside the caption and video every reel already carries; without this
+the shaping below never runs at all. An ordinary reel's post carries none of these fields,
+unchanged.
+
+The rota (`api/_schedule.js`, `ROTA.afternoon`) gives the afternoon slot to a short on
+Sunday, Tuesday, Thursday and Saturday, two to four a week by the owner's own words of 16
+September 2026; Monday, Wednesday and Friday keep exactly what the afternoon showed before
+any short existed. The row change is self disabling: `chooseReel` only ever picks kind
+"short" once a row of that kind exists on the shelf, and "short" is deliberately absent from
+`FALLBACK`, so it can never leak into another half.
+
+A short is shaped per network in `api/_channels.js`, on the owner's instruction of 16
+September 2026 that every network gets its own words and its own posting shape. YouTube is
+the one network a short with a wide file reaches twice in one slot, on the owner's further
+instruction the same day: the tall file first, filed as a proper Short (titled the hook, with
+#Shorts, its description the full `story` then the source then the room link then the tags),
+and, once the daily upload cap (`YT.DAILY_CAP`) still has room after that, the wide file
+second, as an ordinary 16:9 video (titled the film's own name, never the hook, never
+`#Shorts`, the same story and tags) -- never wide IN PLACE of the Short, the way an earlier
+version of this had it. `api/social.js`'s `sendOne` (`sendYouTubeBoth`) runs both through the
+one sender and folds them into one `results.youtube`: the Short's own `id` and `url` as
+always, plus `wide: {id, url}` once the second upload is confirmed clean by `api/_youtube.js`'s
+`status()` (read the one way `fbReelStatus` reads Facebook's, a single look, since a duplicate
+refusal sometimes only surfaces once YouTube has finished processing); `wide: {pending: id}`
+when that look is inconclusive, settled next run by `finishPendingReels`'s own `youtube`
+finisher (a look through `YT.status`, never a fresh upload, the same restraint the story
+finishers above already keep) rather than started over; and `wide: {refused: reason}` --
+"duplicate" among them -- on an outright refusal, never touching the Short's own `ok`. If the
+cap only has room for one upload, the Short takes it and `wide: {skipped: "cap"}` is recorded
+so the console shows why, with no later retry, since the owner's own rule is that a Short
+always wins the room. findDuplicate and notePostedChannels see one send of the reel to
+youtube either way, because both uploads live under that one result, never two. Facebook and
+Instagram take the `story` too, cut to their own limit keeping the tail (`_threads.js`'s
+`cutKeepTail`, already used for a reel's caption), so the source and the room link survive a
+cut that a plain trim from the end would have dropped. Threads and Pinterest, both capped at
+500, take the hook and the payoff sentence rather than the caption or the story, since
+neither of those fits whole. Telegram needs no special shaping: the row's own `caption`
+already ends with the source, the room link and the tags inside 500 characters, well under
+Telegram's 1,024. A reel (kind other than "short") is untouched by any of this; every row of
+kind "short" is shaped this way, `story` falling back to the row's own `caption` when a short
+has nothing longer to say, so the hook title and the wide upload hold either way.
 
 ## States today (against the masterplan's GENERATED, QUEUED, UPLOADED, PUBLISHED, FAILED, RETRIED)
 
@@ -131,6 +195,44 @@ The console unlocked in the owner's browser (he types the password), then
 log: Vercel runtime logs scoped to the production deployment and the hour, search `noor`.
 Never a token in a report.
 
+## Numbers (masterplan step 8, 16 September 2026)
+
+`api/_insights.js` reads what the cache already holds on demand; it never remembered what a
+Friday looked like once Monday asked. `snapshot()` takes one photograph a day instead: it
+walks the slot records of the last fourteen days (bounded to thirty, and by a forty second
+clock), asks Instagram, Facebook and YouTube (`YT.ytStats`, statistics and contentDetails
+together, up to fifty ids a call, added to `_youtube.js` for this) for the numbers on every
+live id a record carries, the Short and the `wide` upload beside it both, and writes one row
+per network under its own key, `nsoc:stats:<date>#<slot>`, thirty of them kept before the
+oldest goes. A separate key, not a rewrite of the poster's own `nsoc:slot:<date>#<slot>`: the
+poster writes that one on its own hourly cron, and this file must never race it. `numbers()`
+folds a fortnight of those photographs into this week against the one before it, per network
+(posts, views, reach, engagement rate, all summed over the bucket, not averaged per post),
+per reel kind and the silent films together, per weekday, per slot hour, the best and worst
+kind by engagement, and every film named once any exist; it reads only the snapshots, no
+network call.
+
+Taking the photograph wants its own daily cron, and `vercel.json` already carries two, held
+to exactly that count by a fixed check in `tests/rooms.mjs`. So it rides `api/warm.js`'s own
+04:00 UTC run instead, a direct call rather than a fourth cron, budgeted tighter (25 s) than
+the door `?action=snapshot` opens for a hand run or the console's own Refresh button (40 s),
+since warm.js has the night shift and, once a month, the journal triage still ahead of it.
+The console's Readers room shows the fold as "The numbers": this week against last per
+network, the best and worst reel kind, the films' own rows once any exist, and a network
+with no token reads as "not connected", never a silent zero.
+
+The refuter's review of 17 September 2026 closed four gaps here. `snapshot()` only counts
+`out.written` for a row it actually wrote, not one the store skipped, and `warm.js` checks
+`kvReady()` itself before even calling `snapshot()`, so a night with no store touches neither
+the network nor the write path for nothing. Every Meta and YouTube fetch in `_insights.js`
+now carries an eight second `AbortController` timeout, and `snapshot()` checks its own clock
+again right after the token exchange, before the first store round trip, so one hung call
+cannot spend a night shift that never gets to the store at all. `numbers()` folds the wide
+upload's views into its Short's own row before any bucket is built, so a short with both
+counts as one post everywhere, not only in the network fold; and a bucket with nothing in the
+week before reads its delta as `"new"` rather than a null the console could not tell apart
+from an error.
+
 ## What remains (masterplan sections 9, 11, 12)
 
 - The record as the Distribution Manager wants it: publish time per network, permalink on
@@ -141,5 +243,5 @@ Never a token in a report.
   checks, insights read per video (`_insights.js` reads the right object).
 - Platform specific shaping beyond the caption: covers for Facebook and YouTube, alt
   text, the recitation's language for YouTube, hooks per platform.
-- Analytics: views, reach, retention, engagement, conversion per reel and per kind, fed
-  back into the rota.
+- Retention proper (watch time beyond Instagram's own reel average) and conversion per
+  reel and per kind; the numbers above are read only, still nothing feeds the rota.

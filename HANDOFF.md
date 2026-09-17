@@ -59,7 +59,13 @@ claude-haiku-4-5, claude-sonnet-5, claude-opus-5 and claude-fable-5-1.
   `/root/audit/perf/scripts/server.mjs` with its ROOT pointed at the tree.
 - The reels: `tools/reels/README.md`; a run is started from the Actions tab (`reels`,
   inputs `ids`); the Monday run needs nothing.
-- The films: `VIDEO_ENGINE.md`.
+- The films: `VIDEO_ENGINE.md` for the engine, `tools/films/README.md` for how a staged
+  brief reaches the shelf. A batch renders from the Actions tab (`films`, inputs `briefs`,
+  `machines`, `proof`) with no Terminal; it needs the `films-music` release (the owner's
+  own two Suno scores, `tools/films/README.md`, "The music release") and the
+  `BLOB_READ_WRITE_TOKEN` repository secret (the same one the owner's own
+  `publish-shorts.sh` reads) to put a film on the shelf. `node tests/films-workflow.mjs`
+  checks the workflow file itself.
 
 ## The films
 

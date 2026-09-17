@@ -3,6 +3,40 @@
 Dated, newest first, in his words where the words matter. A decision here binds every
 agent. `NOOR.md` holds the standing rules; this file holds the calls made along the way.
 
+## 16 September 2026, the evening
+
+- **The words**: "you need to step it up with the videos story telling ... the text is
+  cryptic ... we are trying to reach people with low IQ or people that are too busy to
+  break their heads with complicated things ... rework everything to bring the overall
+  quality up, not down." The writing law in `tools/films/TEMPLATE.md`; every brief
+  rewritten to it and checked by the refuter; the retell test on every film.
+- **The bells**: "relax with the bell sounds, they are too loud and too present, I said
+  subtle, with reverb." The sound law: at most eight marks, about 9 dB quieter, felt,
+  a long wet hall.
+- **The light**: no hard edge anywhere ("gradual, even if small"); the plate's frame no
+  longer clips a halo; every halo a radial fade under the strokes.
+- **YouTube**: both shapes, the Short first, the 16:9 as an ordinary video with the
+  story, "as long as it doesn't flag duplicate".
+- **Sound in every film**: the score step had died on the Mac (scipy missing); fixed.
+
+## 16 September 2026, the afternoon
+
+- **The base template is locked** on the dark room ("good enough to be published ... lock
+  this as the bare minimum, or the base template"): `tools/films/TEMPLATE.md`. The nine
+  researched briefs are brought up to it, not shipped as they were.
+- **Volume**: content for at least 90 days at two to four films a week, each taking a
+  reel's slot in the rota or an extra slot where a network's daily limit has room.
+- **Mac first**: "before we render on github I need to see the finished result by
+  rendering it quick on my mac ... then you can even use the rendered one to upload on
+  the system". The GitHub films workflow is the later path, not the first.
+- **The posts**: the films are scheduled in the social machine like the reels, "routed
+  to all the proper socials with the proper meta data specific to the social media it's
+  posting to ... and a very long version description in order to have the full story
+  there": the story from the library's own page, per network limits.
+- **Facebook**: the duplicate sends and the page's zero reach diagnosed; the machine
+  fixed and deployed; the second copies on the page are the owner's to delete; the
+  follower base is the owner's to build.
+
 ## 16 September 2026, the morning (the owner's verdict on the night)
 
 - The night's proof was rejected: "lagging and stuttery" (a 12 fps proof was handed

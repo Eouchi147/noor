@@ -16,8 +16,16 @@ the long form; `OPERATIONS.md` is the day to day.
   second cut's shell (`data-n2`, `assets/noor2.css`, `assets/noor2.js`, version 13); 38
   root pages, the nine stories, six masjid pages and the 21 language doors are older pages
   dressed at runtime by the skin (`noor-fx.js` hides their baked Tailwind header, inserts
-  the shell's bar and the night sheets). The audit's batch 6 is the diet of those old
-  rooms (a 21 KB baked header, a nine file kit, two shells).
+  the shell's bar and the night sheets). The audit's batch 6 (`scripts/oldrooms.py`) put
+  the 51 pages the map named for it (36 root pages, six masjid pages, the nine stories) on
+  a diet: the baked header, once about 21 KB, is now a hidden stub carrying only the three
+  ids a script still reaches for (`#site-header`, `#search-toggle`, `#hm-search`); each
+  page's `<head>` now links the shell's four sheets directly and carries a small inline
+  night style, so first paint is already dark instead of flashing parchment; and the nine
+  file kit is down to what `noor-fx.js` cannot already load on its own, since it now
+  fetches search on first keystroke and the Ramadan and Dhul Hijjah files only in the
+  weeks they fall due. The 21 language doors were not in the map's list and keep their
+  old chrome for now.
 - **The rooms** (`api/page.js`): `/light/:id` (350), `/path/:n` (71), `/surah/:n` (114),
   `/verse/:ref` (591 with a reel), `/today`, the shelves, and, once batch 5 ships,
   `/prophet/:id` (25), `/companion/:id` (58), `/character/:id` (40), `/place/:id` (34),

@@ -40,10 +40,32 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 
 ## In flight
 
-- **The dark room, plate version**: rendering on the owner's Mac; his notes on it drive
-  the next round (the plate engine's camera, the marks, the words).
+- **22 films staged and rewritten to the writing law** (the dark room, nine from last
+  week, twelve written 16 September from heroes.html), every line fact checked by the
+  refuter, the sound law applied (soft marks under the score), the lights soft; in the
+  owner's render folder; the owner renders them on the Mac (`./plates.sh`) and judges
+  one by one before anything goes to the shelf.
+- **The films' road to the networks**: rows of kind "short" on the reels shelf with
+  caption, story, sources and room; per network shaping (YouTube the 16:9 file and the
+  story as description); the afternoon slot on Sunday, Tuesday, Thursday and Saturday;
+  built, reviewed twice by the refuter, waiting for the owner's confirmation of the
+  films before it goes to main (`tools/reels/README.md`, "Shorts").
+- **Facebook**: the duplicate sends fixed and deployed (a cut send keeps its id, a per
+  network ledger refuses a second send, Telegram uploads the file); the page's reach is
+  a follower problem (0 followers), the owner's to build.
 - **The dictionary rebuild at shell v14** (workflow run 35047391599): its pull request
   is merged or waiting; `CURRENT_STATE.md` is updated when it lands.
+
+## Waiting for the owner's yes to reach main (the evening batch of 16 September)
+
+- The films' road to the networks (`api/_schedule.js`, `_channels.js`, `social.js`:
+  rows of kind short, the story per network, YouTube both shapes with a finisher for
+  the wide), the numbers room (`api/_insights.js`, `insights.js`, `warm.js`, the console
+  card), the films workflow (`.github/workflows/films.yml`, `tools/films/render_ci.py`),
+  batch 6 (51 old rooms lighter by 1.4 MB, night first paint, a no script fallback),
+  the 22 briefs and chapters, the template with its two laws, the engine fixes, the
+  tests and the documents. Reviewed by the refuter (three rounds), every note closed.
+  Nothing in it posts until films are on the shelf.
 
 ## Decided and not yet done
 
@@ -62,5 +84,6 @@ each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owne
 - Reels on the shelf with video: 1,457 of 1,565 planned. Slots a day: 5 reels (08, 11, 14,
   17, 21 UTC) plus reelF at 19, and the cards (dawn 05, light 12, word 16, dusk 20).
 - Rooms rendered by `api/page.js`: 1,130 live, 1,386 once batch 5 ships.
-- Audit findings: 123 (23 high, 49 medium, 51 low); closed so far: about 40, and the
-  engine rebuild (the audit's largest finding) has its first prototype.
+- Audit findings: 123 (23 high, 49 medium, 51 low); closed so far: about 45 (five content
+  findings, 004, 005, 006, 008 and 009, closed 17 September), and the engine rebuild
+  (the audit's largest finding) has its first prototype.
