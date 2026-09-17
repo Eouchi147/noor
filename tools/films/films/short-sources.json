@@ -1,0 +1,215 @@
+{
+  "slug": "short-sources",
+  "id": "short-sources",
+  "title": "Four sources, one answer",
+  "note": "Al-Shafi'i ordered the sources of Islamic law into one shared grammar that jurists still argue by.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "Four sources, one answer",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "foursources",
+          "hold": 48.3,
+          "lines": [
+            {
+              "text": "Every Islamic ruling follows four steps",
+              "sub": "always in the same fixed order",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.13
+            },
+            {
+              "text": "Cairo, Egypt, around the year 814",
+              "sub": "a jurist named Ash-Shafi'i arrives",
+              "size": "h1",
+              "at": 6.47,
+              "until": 12.41
+            },
+            {
+              "text": "First, what does the Qur'an itself say",
+              "size": "h1",
+              "at": 12.75,
+              "until": 16.49
+            },
+            {
+              "text": "Then the Sunnah, the Prophet's practice",
+              "size": "h1",
+              "at": 16.83,
+              "until": 20.59
+            },
+            {
+              "text": "Then ijma, what the scholars agreed",
+              "size": "h1",
+              "at": 20.93,
+              "until": 24.42
+            },
+            {
+              "text": "Then qiyas, likeness to a case settled",
+              "size": "h1",
+              "at": 24.76,
+              "until": 28.5
+            },
+            {
+              "text": "Before him, jurists just disagreed",
+              "sub": "after him, they disagreed by shared rules",
+              "size": "h1",
+              "at": 28.84,
+              "until": 35.37
+            },
+            {
+              "text": "Every school of law still uses his four",
+              "sub": "Qur'an, Sunnah, agreement, then likeness",
+              "size": "h1",
+              "at": 35.71,
+              "until": 42.55
+            },
+            {
+              "eyebrow": "Ash-Shafi'i, Cairo",
+              "text": "He wrote the grammar for the argument",
+              "src": "Ar-Risala, principles of law, 767 to 820",
+              "size": "h1",
+              "at": 42.89,
+              "until": 47.93
+            }
+          ],
+          "at": [
+            100,
+            1757,
+            3065,
+            4372,
+            6920,
+            8180,
+            9440,
+            10700,
+            13200,
+            17280,
+            21380,
+            25210,
+            36160,
+            37348,
+            38536,
+            39724,
+            40912
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 3
+            },
+            {
+              "at": 6.47,
+              "i0": 4,
+              "i1": 7
+            },
+            {
+              "at": 12.75,
+              "i0": 8,
+              "i1": 8
+            },
+            {
+              "at": 16.83,
+              "i0": 9,
+              "i1": 9
+            },
+            {
+              "at": 20.93,
+              "i0": 10,
+              "i1": 10
+            },
+            {
+              "at": 24.76,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 28.84,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 35.71,
+              "i0": 12,
+              "i1": 16
+            },
+            {
+              "at": 42.89,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "pulse",
+              "on": "rect:nth-of-type(1)",
+              "at": 2,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(2)",
+              "at": 2,
+              "for": 1.8
+            },
+            {
+              "do": "pulse",
+              "on": "rect:nth-of-type(2)",
+              "at": 3,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(3)",
+              "at": 3,
+              "for": 1.8
+            },
+            {
+              "do": "pulse",
+              "on": "rect:nth-of-type(3)",
+              "at": 4,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(4)",
+              "at": 4,
+              "for": 1.8
+            },
+            {
+              "do": "pulse",
+              "on": "rect:nth-of-type(4)",
+              "at": 5,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(5)",
+              "at": 5,
+              "for": 1.8
+            },
+            {
+              "do": "travel",
+              "on": "g.rd",
+              "at": 7,
+              "for": 3.2,
+              "times": 1
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(6)",
+              "at": 7,
+              "for": 2.6
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

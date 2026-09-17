@@ -14,83 +14,83 @@
         {
           "kind": "plate",
           "plate": "sieve",
-          "hold": 44.8,
+          "hold": 46.6,
           "lines": [
             {
-              "text": "One book was checked 600,000 times",
+              "text": "One man tested 600,000 hadith reports",
               "size": "hook",
               "at": 0.0,
-              "until": 3.56
+              "until": 3.63
             },
             {
-              "text": "Bukhara, in Uzbekistan, the year 846",
+              "text": "Bukhara, in Uzbekistan, the 800s",
               "sub": "a scholar, Muhammad al-Bukhari",
               "size": "h1",
-              "at": 3.9,
-              "until": 9.73
+              "at": 3.97,
+              "until": 9.48
             },
             {
               "text": "He gathers everything people report",
               "sub": "from over a thousand teachers",
               "size": "h1",
-              "at": 10.07,
-              "until": 15.76
+              "at": 9.82,
+              "until": 15.51
             },
             {
               "text": "Then he tests every single one",
               "size": "h1",
-              "at": 16.1,
-              "until": 19.26
+              "at": 15.85,
+              "until": 19.01
             },
             {
               "text": "Did these two men really meet?",
-              "sub": "how good was his memory, and his character",
+              "sub": "how good was his memory and character",
               "size": "h1",
-              "at": 19.6,
-              "until": 26.03
+              "at": 19.35,
+              "until": 25.39
             },
             {
-              "text": "He threw out a man he saw",
-              "sub": "tricking his horse with an empty bag",
+              "text": "He drops one man for a small lie",
+              "sub": "the man tricked his horse with an empty bag",
               "size": "h1",
-              "at": 26.37,
-              "until": 32.06
+              "at": 25.73,
+              "until": 32.51
             },
             {
               "text": "Out of 600,000 reports",
-              "sub": "about 2,600 came through",
+              "sub": "about 2,600 come through",
               "size": "h1",
-              "at": 32.4,
-              "until": 36.79
+              "at": 32.85,
+              "until": 37.24
             },
             {
-              "text": "Doubt, made a method",
+              "text": "Every hadith you read passed his test",
               "size": "h1",
-              "at": 37.13,
-              "until": 39.52
+              "at": 37.58,
+              "until": 41.26
             },
             {
               "eyebrow": "Muhammad al-Bukhari",
               "text": "He died poor, in exile, in 870",
               "src": "Sahih al-Bukhari, counts by the tradition",
               "size": "h1",
-              "at": 39.86,
-              "until": 44.5
+              "at": 41.6,
+              "until": 46.24
             }
           ],
           "at": [
             100,
-            1780,
-            4350,
-            10520,
-            20050,
-            21893,
-            23737,
-            26820,
-            32850,
-            33723,
-            34595,
-            35468
+            1815,
+            4420,
+            10270,
+            19800,
+            21513,
+            23227,
+            26180,
+            33300,
+            34173,
+            35045,
+            35918
           ],
           "shots": [
             {
@@ -99,42 +99,42 @@
               "i1": 1
             },
             {
-              "at": 3.9,
+              "at": 3.97,
               "i0": 2,
               "i1": 2
             },
             {
-              "at": 10.07,
+              "at": 9.82,
               "i0": 3,
               "i1": 3
             },
             {
-              "at": 16.1,
+              "at": 15.85,
               "i0": 3,
               "i1": 3
             },
             {
-              "at": 19.6,
+              "at": 19.35,
               "i0": 4,
               "i1": 6
             },
             {
-              "at": 26.37,
+              "at": 25.73,
               "i0": 7,
               "i1": 7
             },
             {
-              "at": 32.4,
+              "at": 32.85,
               "i0": 8,
               "i1": 11
             },
             {
-              "at": 37.13,
+              "at": 37.58,
               "i0": 11,
               "i1": 11
             },
             {
-              "at": 39.86,
+              "at": 41.6,
               "all": true
             }
           ],

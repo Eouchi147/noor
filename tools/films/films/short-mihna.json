@@ -1,0 +1,206 @@
+{
+  "slug": "short-mihna",
+  "id": "short-mihna",
+  "title": "The one who would not bend",
+  "note": "Ahmad ibn Hanbal endured the mihna without ever blaming the scholars who gave in around him.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The one who would not bend",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-row-of-figures-bent-under-pressure-w",
+          "hold": 48.5,
+          "lines": [
+            {
+              "text": "Everyone else bent. One man refused",
+              "sub": "a test forced on every scholar in 833",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.43
+            },
+            {
+              "text": "Baghdad, Iraq, from the year 833",
+              "sub": "a scholar named Ahmad ibn Hanbal",
+              "size": "h1",
+              "at": 6.77,
+              "until": 12.56
+            },
+            {
+              "text": "Pressure comes down on the whole row",
+              "sub": "say the Qur'an was created, or be ruined",
+              "size": "h1",
+              "at": 12.9,
+              "until": 19.64
+            },
+            {
+              "text": "One man alone contradicts the state",
+              "size": "h1",
+              "at": 19.98,
+              "until": 23.47
+            },
+            {
+              "text": "His stand becomes a standard for others",
+              "size": "h1",
+              "at": 23.81,
+              "until": 27.62
+            },
+            {
+              "text": "Flogged before the caliph, he refuses",
+              "size": "h1",
+              "at": 27.96,
+              "until": 31.59
+            },
+            {
+              "text": "Yet he never blames those who give in",
+              "size": "h1",
+              "at": 31.93,
+              "until": 35.66
+            },
+            {
+              "text": "Creed still rests on evidence, not decree",
+              "size": "h1",
+              "at": 36.0,
+              "until": 39.94
+            },
+            {
+              "eyebrow": "Ahmad ibn Hanbal, Baghdad",
+              "text": "He would not say the words demanded",
+              "sub": "his collection of hadith reports",
+              "src": "The Musnad, 27,000 reports, 780 to 855",
+              "size": "h1",
+              "at": 40.28,
+              "until": 48.21
+            }
+          ],
+          "at": [
+            100,
+            13350,
+            13837,
+            14323,
+            14810,
+            15297,
+            15783,
+            16270,
+            16757,
+            17243,
+            17730,
+            18217,
+            18703,
+            20430,
+            21293,
+            22157,
+            24260,
+            28410,
+            32380
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 6.77,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 12.9,
+              "i0": 1,
+              "i1": 12
+            },
+            {
+              "at": 19.98,
+              "i0": 13,
+              "i1": 15
+            },
+            {
+              "at": 23.81,
+              "i0": 16,
+              "i1": 16
+            },
+            {
+              "at": 27.96,
+              "i0": 17,
+              "i1": 17
+            },
+            {
+              "at": 31.93,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 36.0,
+              "i0": 18,
+              "i1": 18
+            },
+            {
+              "at": 40.28,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "pulse",
+              "on": "g.ln",
+              "at": 2,
+              "for": 2.6,
+              "stagger": 0.15
+            },
+            {
+              "do": "glow",
+              "on": "g.ln",
+              "at": 2,
+              "for": 3.0
+            },
+            {
+              "do": "glow",
+              "on": "g.rd",
+              "at": 3,
+              "for": 2.0
+            },
+            {
+              "do": "pulse",
+              "on": "circle.halo2",
+              "at": 3,
+              "for": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(4)",
+              "at": 4,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(2)",
+              "at": 5,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(3)",
+              "at": 6,
+              "for": 2.2
+            },
+            {
+              "do": "travel",
+              "on": "g:nth-of-type(4)",
+              "at": 7,
+              "for": 3.0,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

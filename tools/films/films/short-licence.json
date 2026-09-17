@@ -14,84 +14,85 @@
         {
           "kind": "plate",
           "plate": "checkcopy",
-          "hold": 45.5,
+          "hold": 50.1,
           "lines": [
             {
-              "text": "A book you were not allowed to copy",
+              "text": "One woman checked every copy by ear",
+              "sub": "every copy read back, out loud, line by line",
               "size": "hook",
               "at": 0.0,
-              "until": 3.59
+              "until": 6.99
             },
             {
               "text": "Makkah, in Arabia, about 1020",
               "sub": "the scholar Karima al-Marwaziyya",
               "size": "h1",
-              "at": 3.93,
-              "until": 9.37
+              "at": 7.33,
+              "until": 12.77
             },
             {
               "text": "Karima holds the most trusted copy",
-              "sub": "of the most checked book after the Qur'an",
+              "sub": "the most checked book after the Qur'an",
               "size": "h1",
-              "at": 9.71,
-              "until": 16.34
+              "at": 13.11,
+              "until": 19.49
             },
             {
-              "text": "Copying by hand puts errors in",
+              "text": "Copying by hand lets errors creep in",
               "size": "h1",
-              "at": 16.68,
-              "until": 19.84
+              "at": 19.83,
+              "until": 23.44
             },
             {
               "text": "So you read yours back to her",
-              "sub": "out loud, line by line, against hers",
+              "sub": "out loud, checked line by line",
               "size": "h1",
-              "at": 20.18,
-              "until": 26.14
+              "at": 23.78,
+              "until": 29.29
             },
             {
               "text": "One error caught is one error stopped",
               "size": "h1",
-              "at": 26.48,
-              "until": 30.16
+              "at": 29.63,
+              "until": 33.31
             },
             {
-              "text": "Only then would she sign your licence",
+              "text": "Only then does she sign your licence",
               "size": "h1",
-              "at": 30.5,
-              "until": 34.18
+              "at": 33.65,
+              "until": 37.26
             },
             {
               "text": "Fifty years as the checkpoint",
-              "sub": "chains still pass through her",
+              "sub": "the hadith you hear still pass through her",
               "size": "h1",
-              "at": 34.52,
-              "until": 39.81
+              "at": 37.6,
+              "until": 43.91
             },
             {
-              "eyebrow": "Karima al-Marwaziyya",
+              "eyebrow": "Karima al-Marwaziyya, Makkah",
               "text": "She died in Makkah, near a hundred",
-              "src": "al-Khatib al-Baghdadi read it back to her",
+              "src": "Sahih al-Bukhari, her checked copy, 1070",
               "size": "h1",
-              "at": 40.15,
-              "until": 45.13
+              "at": 44.25,
+              "until": 49.81
             }
           ],
           "at": [
             100,
-            10160,
-            17130,
-            17695,
-            18260,
-            18825,
-            20630,
-            21895,
-            23160,
-            24425,
-            26930,
-            30950,
-            32340,
-            34970
+            13560,
+            20280,
+            20958,
+            21635,
+            22312,
+            24230,
+            25382,
+            26535,
+            27688,
+            30080,
+            34100,
+            35455,
+            38050
           ],
           "shots": [
             {
@@ -100,42 +101,42 @@
               "i1": 0
             },
             {
-              "at": 3.93,
+              "at": 7.33,
               "i0": 0,
               "i1": 0
             },
             {
-              "at": 9.71,
+              "at": 13.11,
               "i0": 1,
               "i1": 1
             },
             {
-              "at": 16.68,
+              "at": 19.83,
               "i0": 2,
               "i1": 5
             },
             {
-              "at": 20.18,
+              "at": 23.78,
               "i0": 6,
               "i1": 9
             },
             {
-              "at": 26.48,
+              "at": 29.63,
               "i0": 10,
               "i1": 10
             },
             {
-              "at": 30.5,
+              "at": 33.65,
               "i0": 11,
               "i1": 12
             },
             {
-              "at": 34.52,
+              "at": 37.6,
               "i0": 13,
               "i1": 13
             },
             {
-              "at": 40.15,
+              "at": 44.25,
               "all": true
             }
           ],

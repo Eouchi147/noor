@@ -1,0 +1,188 @@
+{
+  "slug": "short-firnas",
+  "id": "short-firnas",
+  "title": "The leap, held lightly",
+  "note": "Abbas ibn Firnas is said to have glided from a height in Cordoba, a story the house holds lightly for its late written record.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The leap, held lightly",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-winged-figure-gliding-from-a-height",
+          "hold": 50.2,
+          "lines": [
+            {
+              "text": "A man tried to fly six centuries early",
+              "sub": "six hundred years before Leonardo's wings",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.89
+            },
+            {
+              "text": "Cordoba, about 810 to 887",
+              "sub": "an inventor named Abbas ibn Firnas leaps",
+              "size": "h1",
+              "at": 7.23,
+              "until": 13.09
+            },
+            {
+              "text": "He builds wings of silk and feathers",
+              "size": "h1",
+              "at": 13.43,
+              "until": 17.04
+            },
+            {
+              "text": "He leaps from a height before a crowd",
+              "size": "h1",
+              "at": 17.38,
+              "until": 21.11
+            },
+            {
+              "text": "He glides some distance through the air",
+              "size": "h1",
+              "at": 21.45,
+              "until": 25.26
+            },
+            {
+              "text": "Then he lands hard, hurting his back",
+              "size": "h1",
+              "at": 25.6,
+              "until": 29.21
+            },
+            {
+              "text": "Only a rival's joke survives from his time",
+              "sub": "the full tale was written centuries later",
+              "size": "h1",
+              "at": 29.55,
+              "until": 36.76
+            },
+            {
+              "text": "A rival's joke is not a flight log",
+              "sub": "a poet mocked him for flying like a bird",
+              "size": "h1",
+              "at": 37.1,
+              "until": 43.81
+            },
+            {
+              "eyebrow": "Abbas ibn Firnas, Cordoba",
+              "text": "We hold this story lightly, not proven",
+              "src": "Al-Maqqari's account, about 700 years later",
+              "size": "h1",
+              "at": 44.15,
+              "until": 49.83
+            }
+          ],
+          "at": [
+            100,
+            7680,
+            13880,
+            14783,
+            15687,
+            21900,
+            26050,
+            26953,
+            27857,
+            30000,
+            32103,
+            34207,
+            37550,
+            40455
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 7.23,
+              "i0": 1,
+              "i1": 1
+            },
+            {
+              "at": 13.43,
+              "i0": 2,
+              "i1": 4
+            },
+            {
+              "at": 17.38,
+              "i0": 4,
+              "i1": 4
+            },
+            {
+              "at": 21.45,
+              "i0": 5,
+              "i1": 5
+            },
+            {
+              "at": 25.6,
+              "i0": 6,
+              "i1": 8
+            },
+            {
+              "at": 29.55,
+              "i0": 9,
+              "i1": 11
+            },
+            {
+              "at": 37.1,
+              "i0": 12,
+              "i1": 13
+            },
+            {
+              "at": 44.15,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "trace",
+              "on": "path.ln",
+              "at": 2,
+              "for": 1.8
+            },
+            {
+              "do": "pulse",
+              "on": "g:nth-of-type(2)",
+              "at": 3,
+              "for": 1.6
+            },
+            {
+              "do": "trace",
+              "on": "g:nth-of-type(3)",
+              "at": 4,
+              "for": 2.0
+            },
+            {
+              "do": "pulse",
+              "on": "g:nth-of-type(4)",
+              "at": 5,
+              "for": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(7)",
+              "at": 6,
+              "for": 2.0
+            },
+            {
+              "do": "travel",
+              "on": "g:nth-of-type(7)",
+              "at": 7,
+              "for": 3.4,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

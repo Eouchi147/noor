@@ -14,7 +14,7 @@
         {
           "kind": "plate",
           "plate": "roundearth",
-          "hold": 44.1,
+          "hold": 44.6,
           "lines": [
             {
               "text": "Prayer set a hard geometry problem",
@@ -23,79 +23,79 @@
               "until": 3.56
             },
             {
-              "text": "Raqqa and Baghdad, the 800s",
-              "sub": "al-Battani, and Abu al-Wafa after him",
+              "text": "Raqqa, Syria, the 800s",
+              "sub": "an astronomer, Al-Battani, works here",
               "size": "h1",
               "at": 3.9,
-              "until": 9.64
+              "until": 9.21
             },
             {
               "text": "Five times a day, face Makkah",
               "sub": "from any village on a round earth",
               "size": "h1",
-              "at": 9.98,
-              "until": 15.69
+              "at": 9.55,
+              "until": 15.26
             },
             {
               "text": "On a flat page a triangle makes 180",
               "size": "h1",
-              "at": 16.03,
-              "until": 19.62
+              "at": 15.6,
+              "until": 19.19
             },
             {
               "text": "On a ball it always makes more",
               "size": "h1",
-              "at": 19.96,
-              "until": 23.17
+              "at": 19.53,
+              "until": 22.74
             },
             {
               "text": "So the way to Makkah is an arc",
               "sub": "not a straight line on a flat map",
               "size": "h1",
-              "at": 23.51,
-              "until": 29.44
+              "at": 23.08,
+              "until": 29.01
             },
             {
               "text": "The old flat rules quietly fail",
               "size": "h1",
-              "at": 29.78,
-              "until": 33.01
+              "at": 29.35,
+              "until": 32.58
             },
             {
-              "text": "So they built the maths of curves",
-              "sub": "planets, oceans, orbits, signals",
+              "text": "So he built the mathematics of curves",
+              "sub": "your GPS still uses triangles on a ball",
               "size": "h1",
-              "at": 33.35,
-              "until": 39.16
+              "at": 32.92,
+              "until": 39.66
             },
             {
               "eyebrow": "al-Battani, Raqqa",
               "text": "Copernicus cites him by name",
-              "src": "His tables measured the year to minutes",
+              "src": "His zij, astronomical tables, 858 to 929",
               "size": "h1",
-              "at": 39.5,
-              "until": 43.78
+              "at": 40.0,
+              "until": 44.28
             }
           ],
           "at": [
             100,
             4350,
-            5963,
-            7577,
-            10430,
-            12033,
-            13637,
-            16480,
-            20410,
-            20740,
-            21070,
-            21400,
-            21730,
-            22060,
-            22390,
-            23960,
-            26475,
-            30230
+            5820,
+            7290,
+            10000,
+            11603,
+            13207,
+            16050,
+            19980,
+            20310,
+            20640,
+            20970,
+            21300,
+            21630,
+            21960,
+            23530,
+            26045,
+            29800
           ],
           "shots": [
             {
@@ -109,37 +109,37 @@
               "i1": 3
             },
             {
-              "at": 9.98,
+              "at": 9.55,
               "i0": 4,
               "i1": 6
             },
             {
-              "at": 16.03,
+              "at": 15.6,
               "i0": 7,
               "i1": 7
             },
             {
-              "at": 19.96,
+              "at": 19.53,
               "i0": 8,
               "i1": 14
             },
             {
-              "at": 23.51,
+              "at": 23.08,
               "i0": 15,
               "i1": 16
             },
             {
-              "at": 29.78,
+              "at": 29.35,
               "i0": 17,
               "i1": 17
             },
             {
-              "at": 33.35,
+              "at": 32.92,
               "i0": 17,
               "i1": 17
             },
             {
-              "at": 39.5,
+              "at": 40.0,
               "all": true
             }
           ],

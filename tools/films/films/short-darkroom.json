@@ -14,7 +14,7 @@
         {
           "kind": "plate",
           "plate": "darkroom",
-          "hold": 44.4,
+          "hold": 46.4,
           "lines": [
             {
               "text": "Your camera is named after a room",
@@ -24,88 +24,88 @@
             },
             {
               "text": "Cairo, Egypt, 1020",
-              "sub": "here, Ibn al-Haytham lights a candle",
+              "sub": "a scientist, Ibn al-Haytham, lights a candle",
               "size": "h1",
               "at": 3.9,
-              "until": 8.88
+              "until": 9.46
             },
             {
               "text": "One small hole in the wall",
               "sub": "and light only travels straight",
               "size": "h1",
-              "at": 9.22,
-              "until": 14.5
+              "at": 9.8,
+              "until": 15.08
             },
             {
               "text": "It lands on the wall opposite",
               "size": "h1",
-              "at": 14.84,
-              "until": 17.93
+              "at": 15.42,
+              "until": 18.51
             },
             {
-              "text": "Upside down",
+              "text": "The picture lands upside down",
               "sub": "the top crossed over at the hole",
               "size": "h1",
-              "at": 18.27,
-              "until": 22.51
+              "at": 18.85,
+              "until": 24.44
             },
             {
               "text": "That is a camera",
               "size": "h1",
-              "at": 22.85,
-              "until": 24.98
+              "at": 24.78,
+              "until": 26.91
             },
             {
               "text": "Then he broke an older idea",
               "sub": "eyes shoot rays out to see",
               "size": "h1",
-              "at": 25.32,
-              "until": 30.38
+              "at": 27.25,
+              "until": 32.31
             },
             {
               "text": "No eye was in that room",
               "sub": "the picture formed anyway",
               "size": "h1",
-              "at": 30.72,
-              "until": 35.35
+              "at": 32.65,
+              "until": 37.28
             },
             {
               "text": "Light comes in. The eye reads it",
               "size": "h1",
-              "at": 35.69,
-              "until": 39.03
+              "at": 37.62,
+              "until": 40.96
             },
             {
               "eyebrow": "Ibn al-Haytham, Cairo",
               "text": "Camera obscura means dark room",
               "src": "The Book of Optics, about 1020",
               "size": "h1",
-              "at": 39.37,
-              "until": 44.1
+              "at": 41.3,
+              "until": 46.03
             }
           ],
           "at": [
             100,
             1780,
             4350,
-            6390,
-            9670,
-            11860,
-            15290,
-            16020,
-            16750,
-            18720,
-            25770,
-            26810,
-            27850,
-            28890,
-            31170,
-            33035,
-            36140,
-            36628,
-            37116,
-            37604,
-            38092
+            6680,
+            10250,
+            12440,
+            15870,
+            16600,
+            17330,
+            19300,
+            27700,
+            28740,
+            29780,
+            30820,
+            33100,
+            34965,
+            38070,
+            38558,
+            39046,
+            39534,
+            40022
           ],
           "shots": [
             {
@@ -119,42 +119,42 @@
               "i1": 3
             },
             {
-              "at": 9.22,
+              "at": 9.8,
               "i0": 4,
               "i1": 5
             },
             {
-              "at": 14.84,
+              "at": 15.42,
               "i0": 6,
               "i1": 8
             },
             {
-              "at": 18.27,
+              "at": 18.85,
               "i0": 9,
               "i1": 9
             },
             {
-              "at": 22.85,
+              "at": 24.78,
               "i0": 9,
               "i1": 9
             },
             {
-              "at": 25.32,
+              "at": 27.25,
               "i0": 10,
               "i1": 13
             },
             {
-              "at": 30.72,
+              "at": 32.65,
               "i0": 14,
               "i1": 15
             },
             {
-              "at": 35.69,
+              "at": 37.62,
               "i0": 16,
               "i1": 20
             },
             {
-              "at": 39.37,
+              "at": 41.3,
               "all": true
             }
           ],

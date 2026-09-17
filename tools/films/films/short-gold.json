@@ -14,79 +14,80 @@
         {
           "kind": "plate",
           "plate": "goldprice",
-          "hold": 41.6,
+          "hold": 45.3,
           "lines": [
             {
-              "text": "One man's giving broke a market",
+              "text": "One pilgrim's gold crashed a market",
+              "sub": "Cairo's gold price sank for years",
               "size": "hook",
               "at": 0.0,
-              "until": 3.56
+              "until": 6.06
             },
             {
               "text": "Cairo, Egypt, the year 1324",
               "sub": "the king of Mali, Mansa Musa, arrives",
               "size": "h1",
-              "at": 3.9,
-              "until": 9.69
+              "at": 6.4,
+              "until": 12.19
             },
             {
-              "text": "He is walking to Makkah",
+              "text": "His caravan is crossing to Makkah",
               "sub": "and giving gold away the whole way",
               "size": "h1",
-              "at": 10.03,
-              "until": 15.36
+              "at": 12.53,
+              "until": 18.57
             },
             {
               "text": "So much that the price of gold sags",
               "size": "h1",
-              "at": 15.7,
-              "until": 19.29
+              "at": 18.91,
+              "until": 22.5
             },
             {
-              "text": "It took years to climb back",
+              "text": "It takes years to climb back",
               "size": "h1",
-              "at": 19.63,
-              "until": 22.59
+              "at": 22.84,
+              "until": 25.87
             },
             {
               "text": "But the gold is not the story",
               "size": "h1",
-              "at": 22.93,
-              "until": 26.07
+              "at": 26.21,
+              "until": 29.35
             },
             {
-              "text": "He went home with scholars and jurists",
+              "text": "He returns home with scholars and jurists",
               "sub": "and an architect from Spain",
               "size": "h1",
-              "at": 26.41,
-              "until": 32.27
+              "at": 29.69,
+              "until": 35.75
             },
             {
-              "text": "And built Timbuktu into a city of books",
+              "text": "He builds Timbuktu into a city of books",
               "size": "h1",
-              "at": 32.61,
-              "until": 36.47
+              "at": 36.09,
+              "until": 39.95
             },
             {
               "eyebrow": "Mansa Musa, Mali",
-              "text": "The gold went back into vaults",
+              "text": "The gold settled back into vaults",
               "src": "Cairo chronicles; the Catalan Atlas, 1375",
               "size": "h1",
-              "at": 36.81,
-              "until": 41.25
+              "at": 40.29,
+              "until": 44.93
             }
           ],
           "at": [
             100,
-            4350,
-            10480,
-            11587,
-            12695,
-            13802,
-            16150,
-            20080,
-            23380,
-            26860
+            6850,
+            12980,
+            14265,
+            15550,
+            16835,
+            19360,
+            23290,
+            26660,
+            30140
           ],
           "shots": [
             {
@@ -95,42 +96,42 @@
               "i1": 0
             },
             {
-              "at": 3.9,
+              "at": 6.4,
               "i0": 1,
               "i1": 1
             },
             {
-              "at": 10.03,
+              "at": 12.53,
               "i0": 2,
               "i1": 5
             },
             {
-              "at": 15.7,
+              "at": 18.91,
               "i0": 6,
               "i1": 6
             },
             {
-              "at": 19.63,
+              "at": 22.84,
               "i0": 7,
               "i1": 7
             },
             {
-              "at": 22.93,
+              "at": 26.21,
               "i0": 8,
               "i1": 8
             },
             {
-              "at": 26.41,
+              "at": 29.69,
               "i0": 9,
               "i1": 9
             },
             {
-              "at": 32.61,
+              "at": 36.09,
               "i0": 9,
               "i1": 9
             },
             {
-              "at": 36.81,
+              "at": 40.29,
               "all": true
             }
           ],

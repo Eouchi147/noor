@@ -1,0 +1,190 @@
+{
+  "slug": "short-sutures",
+  "id": "short-sutures",
+  "title": "The stitch the body keeps",
+  "note": "Al-Zahrawi drew two hundred surgical instruments and introduced dissolving sutures still used today.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The stitch the body keeps",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "instruments-drawn-in-al-tasrif-around",
+          "hold": 50.0,
+          "lines": [
+            {
+              "text": "Your surgeon's tools were drawn in 1000",
+              "sub": "drawn precisely enough for surgeons to copy",
+              "size": "hook",
+              "at": 0.0,
+              "until": 7.09
+            },
+            {
+              "text": "Cordoba, Spain, about the year 1000",
+              "sub": "a surgeon named Abu al-Qasim al-Zahrawi",
+              "size": "h1",
+              "at": 7.43,
+              "until": 13.89
+            },
+            {
+              "text": "He draws each tool, precise enough to copy",
+              "size": "h1",
+              "at": 14.23,
+              "until": 18.29
+            },
+            {
+              "text": "Centuries later, the shapes sit on a tray",
+              "size": "h1",
+              "at": 18.63,
+              "until": 22.62
+            },
+            {
+              "text": "He stitches wounds with thread of catgut",
+              "sub": "thread made from animal gut",
+              "size": "h1",
+              "at": 22.96,
+              "until": 28.95
+            },
+            {
+              "text": "The body slowly absorbs the thread itself",
+              "size": "h1",
+              "at": 29.29,
+              "until": 33.23
+            },
+            {
+              "text": "Old thread had to be cut back out",
+              "sub": "his stitches leave with no second cut",
+              "size": "h1",
+              "at": 33.57,
+              "until": 39.91
+            },
+            {
+              "text": "Dissolving stitches work on his principle",
+              "size": "h1",
+              "at": 40.25,
+              "until": 44.14
+            },
+            {
+              "eyebrow": "Al-Zahrawi, Cordoba",
+              "text": "He drew around two hundred instruments",
+              "src": "Al-Tasrif, about the year 1000",
+              "size": "h1",
+              "at": 44.48,
+              "until": 49.61
+            }
+          ],
+          "at": [
+            100,
+            14680,
+            15075,
+            15470,
+            15865,
+            16260,
+            16655,
+            17050,
+            17445,
+            19080,
+            19852,
+            20625,
+            21398,
+            23410
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 7.43,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 14.23,
+              "i0": 1,
+              "i1": 8
+            },
+            {
+              "at": 18.63,
+              "i0": 9,
+              "i1": 12
+            },
+            {
+              "at": 22.96,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 29.29,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 33.57,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 40.25,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 44.48,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(2), g:nth-of-type(3), g:nth-of-type(4), g:nth-of-type(5)",
+              "at": 2,
+              "for": 2.6,
+              "stagger": 0.2
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(6), g:nth-of-type(7)",
+              "at": 3,
+              "for": 2.2,
+              "stagger": 0.2
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(8) text:nth-of-type(1)",
+              "at": 4,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(8) text:nth-of-type(2)",
+              "at": 5,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(8) text:nth-of-type(3)",
+              "at": 6,
+              "for": 2.0
+            },
+            {
+              "do": "travel",
+              "on": "path.rd",
+              "at": 7,
+              "for": 3.0,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "slug": "short-algebra",
+  "id": "short-algebra",
+  "title": "The restored scale",
+  "note": "Al-Khwarizmi turned a balance scale into a general method, and gave algebra its name.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The restored scale",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "balance",
+          "hold": 47.5,
+          "lines": [
+            {
+              "text": "One trick can solve any equation",
+              "sub": "found by balancing a scale",
+              "size": "hook",
+              "at": 0.0,
+              "until": 5.34
+            },
+            {
+              "text": "Baghdad, Iraq, the young House of Wisdom",
+              "sub": "a scholar, al-Khwarizmi, 780 to 850",
+              "size": "h1",
+              "at": 5.68,
+              "until": 12.26
+            },
+            {
+              "text": "One pan holds an unknown, plus five",
+              "size": "h1",
+              "at": 12.6,
+              "until": 16.14
+            },
+            {
+              "text": "The other pan holds twelve alone",
+              "size": "h1",
+              "at": 16.48,
+              "until": 19.77
+            },
+            {
+              "text": "He takes five away from each side",
+              "sub": "the scale must stay level",
+              "size": "h1",
+              "at": 20.11,
+              "until": 25.5
+            },
+            {
+              "text": "What remains: the unknown equals seven",
+              "size": "h1",
+              "at": 25.84,
+              "until": 29.53
+            },
+            {
+              "text": "Before him, each puzzle needed its own fix",
+              "sub": "he taught one method for every shape",
+              "size": "h1",
+              "at": 29.87,
+              "until": 36.75
+            },
+            {
+              "text": "Every \"solve for x\" still uses his rule",
+              "size": "h1",
+              "at": 37.09,
+              "until": 40.95
+            },
+            {
+              "eyebrow": "Muhammad al-Khwarizmi, Baghdad",
+              "text": "He called it al-jabr, the restoration",
+              "src": "Al-Khwarizmi's algebra, about 780 to 850",
+              "size": "h1",
+              "at": 41.29,
+              "until": 47.13
+            }
+          ],
+          "at": [
+            100,
+            1930,
+            3410,
+            6130,
+            7550,
+            8970,
+            10390,
+            13050,
+            14370,
+            20560,
+            22057,
+            23553,
+            26290,
+            27220,
+            28150
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 2
+            },
+            {
+              "at": 5.68,
+              "i0": 3,
+              "i1": 6
+            },
+            {
+              "at": 12.6,
+              "i0": 7,
+              "i1": 8
+            },
+            {
+              "at": 16.48,
+              "i0": 8,
+              "i1": 8
+            },
+            {
+              "at": 20.11,
+              "i0": 9,
+              "i1": 11
+            },
+            {
+              "at": 25.84,
+              "i0": 12,
+              "i1": 14
+            },
+            {
+              "at": 29.87,
+              "i0": 14,
+              "i1": 14
+            },
+            {
+              "at": 37.09,
+              "i0": 14,
+              "i1": 14
+            },
+            {
+              "at": 41.29,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "pulse",
+              "on": "text.t1.big:nth-of-type(1)",
+              "at": 2,
+              "for": 1.4
+            },
+            {
+              "do": "glow",
+              "on": "text.t1.big:nth-of-type(1)",
+              "at": 2,
+              "for": 1.6
+            },
+            {
+              "do": "pulse",
+              "on": "text.t1.big:nth-of-type(2)",
+              "at": 2,
+              "for": 1.4,
+              "delay": 0.9
+            },
+            {
+              "do": "glow",
+              "on": "text.t1.big:nth-of-type(2)",
+              "at": 3,
+              "for": 1.8
+            },
+            {
+              "do": "trace",
+              "on": "g.rd",
+              "at": 4,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "text.t2",
+              "at": 4,
+              "for": 2.0
+            },
+            {
+              "do": "pulse",
+              "on": "text.gold",
+              "at": 5,
+              "for": 1.6,
+              "stagger": 0.2
+            },
+            {
+              "do": "glow",
+              "on": "text.gold",
+              "at": 5,
+              "for": 2.4
+            },
+            {
+              "do": "travel",
+              "on": "g.ln path:nth-of-type(1)",
+              "at": 7,
+              "for": 3.0,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

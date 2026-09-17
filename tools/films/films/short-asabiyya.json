@@ -1,0 +1,194 @@
+{
+  "slug": "short-asabiyya",
+  "id": "short-asabiyya",
+  "title": "The curve every empire follows",
+  "note": "Ibn Khaldun charted how group solidarity carries a dynasty to power and then lets it fall.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The curve every empire follows",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-curve-showing-a-group-with-strong-so",
+          "hold": 49.2,
+          "lines": [
+            {
+              "text": "Why every empire falls the same way",
+              "sub": "a pattern found 650 years ago",
+              "size": "hook",
+              "at": 0.0,
+              "until": 5.84
+            },
+            {
+              "text": "In Algeria, the year 1377",
+              "sub": "Ibn Khaldun, a historian, writes a book",
+              "size": "h1",
+              "at": 6.18,
+              "until": 11.97
+            },
+            {
+              "text": "A united people rises and takes power",
+              "sub": "their strength: they stick together",
+              "size": "h1",
+              "at": 12.31,
+              "until": 18.64
+            },
+            {
+              "text": "In power, life gets comfortable",
+              "size": "h1",
+              "at": 18.98,
+              "until": 22.16
+            },
+            {
+              "text": "Generation after generation, it fades",
+              "size": "h1",
+              "at": 22.5,
+              "until": 26.08
+            },
+            {
+              "text": "A hungrier, united people takes over",
+              "size": "h1",
+              "at": 26.42,
+              "until": 29.98
+            },
+            {
+              "text": "Before him, history was just stories",
+              "sub": "he made it a science with laws",
+              "size": "h1",
+              "at": 30.32,
+              "until": 36.3
+            },
+            {
+              "text": "Nations still rise and fall his way",
+              "size": "h1",
+              "at": 36.64,
+              "until": 40.18
+            },
+            {
+              "eyebrow": "Ibn Khaldun, Tunis to Cairo",
+              "text": "He called that unity asabiyya",
+              "sub": "group feeling, the bond that holds people",
+              "src": "The Muqaddimah, 1377",
+              "size": "h1",
+              "at": 40.52,
+              "until": 48.83
+            }
+          ],
+          "at": [
+            100,
+            2920,
+            6630,
+            7608,
+            8586,
+            9564,
+            10542,
+            12760,
+            19430,
+            22950,
+            26870,
+            30770
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 1
+            },
+            {
+              "at": 6.18,
+              "i0": 2,
+              "i1": 6
+            },
+            {
+              "at": 12.31,
+              "i0": 7,
+              "i1": 7
+            },
+            {
+              "at": 18.98,
+              "i0": 8,
+              "i1": 8
+            },
+            {
+              "at": 22.5,
+              "i0": 9,
+              "i1": 9
+            },
+            {
+              "at": 26.42,
+              "i0": 10,
+              "i1": 10
+            },
+            {
+              "at": 30.32,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 36.64,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 40.52,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "glow",
+              "on": "g.mo text:nth-of-type(1)",
+              "at": 2,
+              "for": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "g.mo text:nth-of-type(2)",
+              "at": 3,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "g.mo text:nth-of-type(3)",
+              "at": 4,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "g.mo text:nth-of-type(4)",
+              "at": 5,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "g.mo text:nth-of-type(5)",
+              "at": 6,
+              "for": 1.8
+            },
+            {
+              "do": "travel",
+              "on": "g.rd",
+              "at": 7,
+              "for": 3.4,
+              "times": 1
+            },
+            {
+              "do": "glow",
+              "on": "circle.nd",
+              "at": 7,
+              "for": 2.2,
+              "stagger": 0.15
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

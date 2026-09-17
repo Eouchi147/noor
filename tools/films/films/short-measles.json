@@ -1,0 +1,198 @@
+{
+  "slug": "short-measles",
+  "id": "short-measles",
+  "title": "One fever, two names",
+  "note": "Al-Razi separated smallpox from measles symptom by symptom, founding the practice of differential diagnosis.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One fever, two names",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "one-patient-with-fever-and-a-rash-and",
+          "hold": 48.8,
+          "lines": [
+            {
+              "text": "One doctor first told two fevers apart",
+              "sub": "smallpox and measles, both fever and rash",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.89
+            },
+            {
+              "text": "Rayy and Baghdad, about the year 900",
+              "sub": "a physician named Abu Bakr al-Razi",
+              "size": "h1",
+              "at": 7.23,
+              "until": 13.47
+            },
+            {
+              "text": "One fever and rash look like one disease",
+              "size": "h1",
+              "at": 13.81,
+              "until": 17.74
+            },
+            {
+              "text": "He sorts them into two: smallpox",
+              "size": "h1",
+              "at": 18.08,
+              "until": 21.37
+            },
+            {
+              "text": "Measles sits on the other side",
+              "size": "h1",
+              "at": 21.71,
+              "until": 24.87
+            },
+            {
+              "text": "The same questions get asked of each",
+              "sub": "fever pattern, rash type, timing",
+              "size": "h1",
+              "at": 25.21,
+              "until": 31.27
+            },
+            {
+              "text": "He judges by evidence, not by habit",
+              "sub": "and he writes the answer down each time",
+              "size": "h1",
+              "at": 31.61,
+              "until": 38.22
+            },
+            {
+              "text": "Every diagnosis today follows that split",
+              "size": "h1",
+              "at": 38.56,
+              "until": 42.39
+            },
+            {
+              "eyebrow": "Abu Bakr al-Razi, Baghdad",
+              "text": "Diagnosis by evidence: still his method",
+              "src": "On Smallpox and Measles, about 865 to 925",
+              "size": "h1",
+              "at": 42.73,
+              "until": 48.42
+            }
+          ],
+          "at": [
+            14260,
+            15775,
+            18530,
+            19127,
+            19725,
+            20322,
+            22160,
+            23290,
+            25660,
+            28240,
+            32060,
+            34915
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 7.23,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 13.81,
+              "i0": 0,
+              "i1": 1
+            },
+            {
+              "at": 18.08,
+              "i0": 2,
+              "i1": 5
+            },
+            {
+              "at": 21.71,
+              "i0": 6,
+              "i1": 7
+            },
+            {
+              "at": 25.21,
+              "i0": 8,
+              "i1": 9
+            },
+            {
+              "at": 31.61,
+              "i0": 10,
+              "i1": 11
+            },
+            {
+              "at": 38.56,
+              "i0": 11,
+              "i1": 11
+            },
+            {
+              "at": 42.73,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(1)",
+              "at": 2,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(1)",
+              "at": 2,
+              "for": 1.8
+            },
+            {
+              "do": "trace",
+              "on": "path.rd",
+              "at": 3,
+              "for": 2.2
+            },
+            {
+              "do": "glow",
+              "on": "path.rd",
+              "at": 3,
+              "for": 2.4
+            },
+            {
+              "do": "glow",
+              "on": "g.mo-pop",
+              "at": 4,
+              "for": 2.0
+            },
+            {
+              "do": "glow",
+              "on": "g.ln.thin",
+              "at": 5,
+              "for": 2.2
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(2)",
+              "at": 6,
+              "for": 2.4
+            },
+            {
+              "do": "travel",
+              "on": "g:nth-of-type(4)",
+              "at": 7,
+              "for": 3.0,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "slug": "short-ambulance",
+  "id": "short-ambulance",
+  "title": "One van, then a nation",
+  "note": "Abdul Sattar Edhi grew one donated van into the world's largest volunteer ambulance service, asking no one's faith.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "One van, then a nation",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "one-battered-van-in-karachi-and-the-am",
+          "hold": 49.8,
+          "lines": [
+            {
+              "text": "One old van became a giant rescue fleet",
+              "sub": "the largest volunteer fleet on earth",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.63
+            },
+            {
+              "text": "Karachi, Pakistan, 1951",
+              "sub": "Abdul Sattar Edhi, a poor cloth seller",
+              "size": "h1",
+              "at": 6.97,
+              "until": 12.46
+            },
+            {
+              "text": "He opens a tiny free clinic",
+              "size": "h1",
+              "at": 12.8,
+              "until": 15.76
+            },
+            {
+              "text": "A donation buys one battered van",
+              "sub": "Edhi drives it himself to every disaster",
+              "size": "h1",
+              "at": 16.1,
+              "until": 22.48
+            },
+            {
+              "text": "From that van grows a whole fleet",
+              "size": "h1",
+              "at": 22.82,
+              "until": 26.23
+            },
+            {
+              "text": "Outside each centre he puts a cradle",
+              "sub": "so no unwanted baby is ever killed",
+              "size": "h1",
+              "at": 26.57,
+              "until": 32.86
+            },
+            {
+              "text": "Critics asked why he carried non Muslims",
+              "sub": "the ambulance is more Muslim than you",
+              "size": "h1",
+              "at": 33.2,
+              "until": 39.96
+            },
+            {
+              "text": "His ambulances still ask no one's faith",
+              "size": "h1",
+              "at": 40.3,
+              "until": 44.11
+            },
+            {
+              "eyebrow": "Abdul Sattar Edhi, Karachi",
+              "text": "He owned two sets of clothes",
+              "src": "The Edhi Foundation, since 1951",
+              "size": "h1",
+              "at": 44.45,
+              "until": 49.48
+            }
+          ],
+          "at": [
+            100,
+            13250,
+            13765,
+            14280,
+            14795,
+            16550,
+            17920,
+            19290,
+            20660,
+            23270,
+            24107,
+            24943,
+            27020,
+            29715,
+            33650,
+            40750
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 6.97,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 12.8,
+              "i0": 1,
+              "i1": 4
+            },
+            {
+              "at": 16.1,
+              "i0": 5,
+              "i1": 8
+            },
+            {
+              "at": 22.82,
+              "i0": 9,
+              "i1": 11
+            },
+            {
+              "at": 26.57,
+              "i0": 12,
+              "i1": 13
+            },
+            {
+              "at": 33.2,
+              "i0": 14,
+              "i1": 14
+            },
+            {
+              "at": 40.3,
+              "i0": 15,
+              "i1": 15
+            },
+            {
+              "at": 44.45,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "glow",
+              "on": "g.rd",
+              "at": 2,
+              "for": 2.0
+            },
+            {
+              "do": "trace",
+              "on": "g.ln.thin",
+              "at": 3,
+              "for": 2.2
+            },
+            {
+              "do": "glow",
+              "on": "g.ln.thin",
+              "at": 3,
+              "for": 2.4
+            },
+            {
+              "do": "pulse",
+              "on": "path.nd",
+              "at": 3,
+              "for": 1.6
+            },
+            {
+              "do": "glow",
+              "on": "g:nth-of-type(3)",
+              "at": 4,
+              "for": 2.0
+            },
+            {
+              "do": "glow",
+              "on": "g.mo",
+              "at": 5,
+              "for": 2.0
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(1)",
+              "at": 6,
+              "for": 1.8
+            },
+            {
+              "do": "glow",
+              "on": "text:nth-of-type(2)",
+              "at": 7,
+              "for": 2.0
+            },
+            {
+              "do": "travel",
+              "on": "path.nd",
+              "at": 7,
+              "for": 3.0,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

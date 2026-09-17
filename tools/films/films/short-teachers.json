@@ -14,7 +14,7 @@
         {
           "kind": "plate",
           "plate": "teachers",
-          "hold": 44.0,
+          "hold": 46.3,
           "lines": [
             {
               "text": "A school with no building at all",
@@ -24,76 +24,76 @@
             },
             {
               "text": "Sokoto, northern Nigeria, the 1830s",
-              "sub": "built by a scholar, Nana Asma'u",
+              "sub": "a scholar, Nana Asma'u, builds it",
               "size": "h1",
               "at": 3.9,
-              "until": 9.78
+              "until": 9.91
             },
             {
-              "text": "The countryside is full of women",
+              "text": "The villages are full of unschooled women",
               "size": "h1",
-              "at": 10.12,
-              "until": 13.41
+              "at": 10.25,
+              "until": 14.19
             },
             {
               "text": "So the teachers go to them",
               "size": "h1",
-              "at": 13.75,
-              "until": 16.64
+              "at": 14.53,
+              "until": 17.42
             },
             {
               "text": "Trained women walk out to the villages",
               "sub": "carrying her lessons as poems",
               "size": "h1",
-              "at": 16.98,
-              "until": 22.97
+              "at": 17.76,
+              "until": 23.75
             },
             {
-              "text": "Learned by heart, in her language",
+              "text": "They memorize her poems in their tongue",
               "size": "h1",
-              "at": 23.31,
-              "until": 26.67
+              "at": 24.09,
+              "until": 27.9
             },
             {
               "text": "Village women come in, study",
               "sub": "and walk home as teachers themselves",
               "size": "h1",
-              "at": 27.01,
-              "until": 32.75
+              "at": 28.24,
+              "until": 33.98
             },
             {
-              "text": "It ran for generations",
-              "sub": "and outlasted the state that held it",
+              "text": "Her school outlasted the state itself",
+              "sub": "and schools still carry her name",
               "size": "h1",
-              "at": 33.09,
-              "until": 38.43
+              "at": 34.32,
+              "until": 40.45
             },
             {
               "eyebrow": "Nana Asma'u, Sokoto",
-              "text": "Its leaders are still called jaji",
+              "text": "jaji: her title for a trained teacher",
               "src": "She wrote over sixty works, died 1864",
               "size": "h1",
-              "at": 38.77,
-              "until": 43.61
+              "at": 40.79,
+              "until": 45.95
             }
           ],
           "at": [
             100,
             4350,
-            6840,
-            10570,
-            14200,
-            17430,
-            18278,
-            19127,
-            19975,
-            20823,
-            21672,
-            27460,
-            28428,
-            29396,
-            30364,
-            31332
+            6905,
+            10700,
+            14980,
+            18210,
+            19058,
+            19907,
+            20755,
+            21603,
+            22452,
+            28690,
+            29658,
+            30626,
+            31594,
+            32562
           ],
           "shots": [
             {
@@ -107,37 +107,37 @@
               "i1": 2
             },
             {
-              "at": 10.12,
+              "at": 10.25,
               "i0": 3,
               "i1": 3
             },
             {
-              "at": 13.75,
+              "at": 14.53,
               "i0": 4,
               "i1": 4
             },
             {
-              "at": 16.98,
+              "at": 17.76,
               "i0": 5,
               "i1": 10
             },
             {
-              "at": 23.31,
+              "at": 24.09,
               "i0": 10,
               "i1": 10
             },
             {
-              "at": 27.01,
+              "at": 28.24,
               "i0": 11,
               "i1": 15
             },
             {
-              "at": 33.09,
+              "at": 34.32,
               "i0": 15,
               "i1": 15
             },
             {
-              "at": 38.77,
+              "at": 40.79,
               "all": true
             }
           ],

@@ -14,7 +14,7 @@
         {
           "kind": "plate",
           "plate": "placevalue",
-          "hold": 45.6,
+          "hold": 46.6,
           "lines": [
             {
               "text": "Zero is not nothing. It is a number",
@@ -23,77 +23,77 @@
               "until": 3.59
             },
             {
-              "text": "From India to Baghdad, the 700s",
-              "sub": "tested there, taught there",
+              "text": "Baghdad, Iraq, the 800s",
+              "sub": "al-Khwarizmi, a mathematician, writes",
               "size": "h1",
               "at": 3.93,
-              "until": 9.16
+              "until": 9.26
             },
             {
               "text": "Try writing three hundred and seven",
               "size": "h1",
-              "at": 9.5,
-              "until": 12.99
+              "at": 9.6,
+              "until": 13.09
             },
             {
               "text": "Without a zero the places collapse",
               "sub": "37 and 307 look alike",
               "size": "h1",
-              "at": 13.33,
-              "until": 18.47
+              "at": 13.43,
+              "until": 18.57
             },
             {
               "text": "Zero holds the empty place open",
               "size": "h1",
-              "at": 18.81,
-              "until": 22.04
+              "at": 18.91,
+              "until": 22.14
             },
             {
-              "text": "Arabic called it sifr, the empty",
+              "text": "Arabic calls it sifr, the empty",
               "sub": "which became cipher, and zero",
               "size": "h1",
-              "at": 22.38,
-              "until": 27.92
+              "at": 22.48,
+              "until": 27.96
             },
             {
               "text": "Al-Khwarizmi wrote the handbook",
               "sub": "Latin copies carried it west",
               "size": "h1",
-              "at": 28.26,
-              "until": 33.57
+              "at": 28.3,
+              "until": 33.61
             },
             {
               "text": "Every price and every line of code",
               "sub": "is written in those ten signs",
               "size": "h1",
-              "at": 33.91,
-              "until": 39.69
+              "at": 33.95,
+              "until": 39.73
             },
             {
               "eyebrow": "India, Baghdad, Damascus, Pisa",
-              "text": "Three civilisations, one gift",
+              "text": "From India, through Baghdad, to the world",
               "src": "al-Uqlidisi, about 952; Fibonacci, 1202",
               "size": "h1",
-              "at": 40.03,
-              "until": 45.29
+              "at": 40.07,
+              "until": 46.28
             }
           ],
           "at": [
             100,
-            9950,
-            10813,
-            11677,
-            13780,
-            15193,
-            16607,
-            19260,
-            20037,
-            20813,
-            22830,
-            23990,
-            25150,
-            26310,
-            34360
+            10050,
+            10913,
+            11777,
+            13880,
+            15293,
+            16707,
+            19360,
+            20137,
+            20913,
+            22930,
+            24075,
+            25220,
+            26365,
+            34400
           ],
           "shots": [
             {
@@ -107,37 +107,37 @@
               "i1": 0
             },
             {
-              "at": 9.5,
+              "at": 9.6,
               "i0": 1,
               "i1": 3
             },
             {
-              "at": 13.33,
+              "at": 13.43,
               "i0": 4,
               "i1": 6
             },
             {
-              "at": 18.81,
+              "at": 18.91,
               "i0": 7,
               "i1": 9
             },
             {
-              "at": 22.38,
+              "at": 22.48,
               "i0": 10,
               "i1": 13
             },
             {
-              "at": 28.26,
+              "at": 28.3,
               "i0": 13,
               "i1": 13
             },
             {
-              "at": 33.91,
+              "at": 33.95,
               "i0": 14,
               "i1": 14
             },
             {
-              "at": 40.03,
+              "at": 40.07,
               "all": true
             }
           ],

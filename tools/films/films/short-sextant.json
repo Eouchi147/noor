@@ -14,78 +14,78 @@
         {
           "kind": "plate",
           "plate": "sextant",
-          "hold": 45.3,
+          "hold": 47.8,
           "lines": [
             {
-              "text": "A king measured the sky in stone",
+              "text": "A king measured the sky with a stone arc",
               "size": "hook",
               "at": 0.0,
-              "until": 3.56
+              "until": 3.98
             },
             {
               "text": "Samarkand, in Uzbekistan, the 1420s",
-              "sub": "the king is Ulugh Beg, an astronomer",
+              "sub": "Ulugh Beg, a king and astronomer, rules",
               "size": "h1",
-              "at": 3.9,
-              "until": 10.16
+              "at": 4.32,
+              "until": 10.78
             },
             {
               "text": "He sank an arc into the bedrock",
               "sub": "about forty metres across",
               "size": "h1",
-              "at": 10.5,
-              "until": 15.71
+              "at": 11.12,
+              "until": 16.33
             },
             {
-              "text": "Bigger means finer",
+              "text": "A bigger instrument reads a finer sky",
               "sub": "a minute of sky is a centimetre of stone",
               "size": "h1",
-              "at": 16.05,
-              "until": 21.44
+              "at": 16.67,
+              "until": 23.53
             },
             {
-              "text": "He paid a salaried staff",
-              "sub": "and scholars came from many lands",
+              "text": "His team measures the year's length",
+              "sub": "to within about one minute",
               "size": "h1",
-              "at": 21.78,
-              "until": 27.06
+              "at": 23.87,
+              "until": 29.41
             },
             {
-              "text": "They fixed a thousand stars",
+              "text": "They fix a thousand stars",
               "sub": "the first fresh catalogue in 1,000 years",
               "size": "h1",
-              "at": 27.4,
-              "until": 33.39
+              "at": 29.75,
+              "until": 35.61
             },
             {
               "text": "He was killed, the tower pulled down",
-              "sub": "the numbers got to Oxford anyway",
+              "sub": "but the numbers still reached Oxford",
               "size": "h1",
-              "at": 33.73,
-              "until": 39.84
+              "at": 35.95,
+              "until": 42.33
             },
             {
               "eyebrow": "Ulugh Beg, Samarkand",
               "text": "Instruments break. Numbers travel",
               "src": "Printed at Oxford, 1665",
               "size": "h1",
-              "at": 40.18,
-              "until": 44.99
+              "at": 42.67,
+              "until": 47.48
             }
           ],
           "at": [
             100,
-            4350,
-            10950,
-            13105,
-            16500,
-            22230,
-            22960,
-            23690,
-            24420,
-            25150,
-            25880,
-            27850
+            4770,
+            11570,
+            13725,
+            17120,
+            24320,
+            25093,
+            25867,
+            26640,
+            27413,
+            28187,
+            30200
           ],
           "shots": [
             {
@@ -94,37 +94,37 @@
               "i1": 0
             },
             {
-              "at": 3.9,
+              "at": 4.32,
               "i0": 1,
               "i1": 1
             },
             {
-              "at": 10.5,
+              "at": 11.12,
               "i0": 2,
               "i1": 3
             },
             {
-              "at": 16.05,
+              "at": 16.67,
               "i0": 4,
               "i1": 4
             },
             {
-              "at": 21.78,
+              "at": 23.87,
               "i0": 5,
               "i1": 10
             },
             {
-              "at": 27.4,
+              "at": 29.75,
               "i0": 11,
               "i1": 11
             },
             {
-              "at": 33.73,
+              "at": 35.95,
               "i0": 11,
               "i1": 11
             },
             {
-              "at": 40.18,
+              "at": 42.67,
               "all": true
             }
           ],
