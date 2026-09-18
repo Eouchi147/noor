@@ -223,6 +223,63 @@ console.log('\nthe put blobput.py makes');
 }
 
 /* =========================================================================
+   THE FRESHNESS RULE: a file derived from a master is remade when the
+   master is newer, and every maker in the script obeys the same rule.
+
+   make_delivery_copy had this from the start. make_cover, written in a hurry
+   on 17 September, skipped on mere existence. The two lived side by side in
+   one file and only one was right. The day after, every master was rendered
+   again with its mechanisms moving, and a run would have kept the previous
+   day's covers: twenty two films published behind stills of the versions
+   where nothing moved, with no error anywhere to say so.
+   ========================================================================= */
+console.log('\nthe freshness rule every maker obeys');
+{
+  const shPath = path.join(ROOT, 'tools', 'films', 'publish-shorts.sh');
+  const src = fs.readFileSync(shPath, 'utf8');
+
+  //  every make_*() in the script, body only, comments stripped
+  const makers = [...src.matchAll(/^(make_[a-z_]+)\(\)\s*\{\n([\s\S]*?)\n\}/gm)]
+    .map(m => ({ name: m[1], body: m[2].replace(/^\s*#.*$/gm, '') }));
+  ok(makers.length >= 2, 'the script still has makers to check: ' + makers.map(m => m.name).join(', '));
+  for (const mk of makers) {
+    const guards = /-nt /.test(mk.body);
+    const bare = /\[ -f "\$\w+" \]\s*&&\s*return 0/.test(mk.body);
+    ok(guards && !bare, mk.name + ' remakes its file when the master is newer, rather than skipping because a file is simply there');
+  }
+
+  //  and then the behaviour itself, with the shipped function, if ffmpeg is here
+  const haveFF = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' }).status === 0;
+  if (!haveFF) {
+    console.log('  (no ffmpeg on this machine, the behavioural half is skipped)');
+  } else {
+    const scratch = tmpdir('shorts-cover');
+    const fn = src.match(/^make_cover\(\)\s*\{\n[\s\S]*?\n\}/m);
+    ok(!!fn, 'make_cover can be lifted out of the script whole');
+    if (fn) {
+      const drive = [
+        '#!/bin/bash',
+        fn[0],
+        'set -e',
+        'ffmpeg -y -v error -f lavfi -i "testsrc=size=320x240:rate=30:duration=4" -c:v libx264 -pix_fmt yuv420p m.mp4',
+        'make_cover m.mp4 cov.jpg; a=$(cksum < cov.jpg | cut -d" " -f1)',
+        'make_cover m.mp4 cov.jpg; b=$(cksum < cov.jpg | cut -d" " -f1)',
+        'sleep 1',
+        'ffmpeg -y -v error -f lavfi -i "smptebars=size=320x240:rate=30:duration=4" -c:v libx264 -pix_fmt yuv420p m.mp4',
+        'make_cover m.mp4 cov.jpg; c=$(cksum < cov.jpg | cut -d" " -f1)',
+        'echo "$a $b $c"',
+      ].join('\n');
+      fs.writeFileSync(path.join(scratch, 'drive.sh'), drive);
+      const r = spawnSync('bash', ['drive.sh'], { cwd: scratch, encoding: 'utf8' });
+      const [a, b, c] = String(r.stdout || '').trim().split('\n').pop().split(' ');
+      ok(r.status === 0 && !!a, 'the lifted make_cover runs: ' + String(r.stderr || '').slice(-160));
+      ok(a === b, 'a cover younger than its master is kept, so a rerun costs nothing');
+      ok(!!c && a !== c, 'a cover older than its master is remade, so a rerendered film never goes up behind its old still');
+    }
+  }
+}
+
+/* =========================================================================
    THE MERGE: publish-shorts.sh's own python, extracted and run for real
    ========================================================================= */
 console.log('\nthe merge into reels/index.json');

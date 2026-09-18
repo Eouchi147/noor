@@ -215,7 +215,18 @@ PY3
 #  will not list a film whose cover did not arrive.
 make_cover() {
   local master="$1" dest="$2" dur t
-  [ -f "$dest" ] && return 0
+  #  THE SAME RULE make_delivery_copy USES, AND FOR THE SAME REASON.
+  #  A cover is a frame OF a master. Keeping one that is older than the master
+  #  it claims to show means a film that was re-rendered goes up behind the
+  #  picture it used to have. That is not hypothetical either: the twenty two
+  #  covers made on 17 September outlived the masters they came from by one
+  #  day, and the re-render that gave those films their moving parts would
+  #  have been published under stills of the versions where nothing moved.
+  #  A cover no older than its master is the current frame; anything else is
+  #  remade.
+  if [ -f "$dest" ] && [ "$dest" -nt "$master" ]; then
+    return 0
+  fi
   dur=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$master" 2>/dev/null)
   t=$(python3 -c "import sys;print(round(float(sys.argv[1] or 40)*0.80,2))" "$dur")
   ffmpeg -y -loglevel error -ss "$t" -i "$master" -frames:v 1 \
