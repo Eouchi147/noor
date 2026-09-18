@@ -369,7 +369,7 @@ def tracks():
                   if f.lower().endswith((".m4a", ".mp3", ".wav", ".flac", ".aac", ".ogg")))
 
 
-def build(ev, slug, which=None, start=None, voice="felt"):
+def build(ev, slug, which=None, start=None, voice="felt", hunt=False):
     tl = tracks()
     if not tl:
         raise SystemExit("no music in %s. Put the score files there." % MUSIC)
@@ -386,7 +386,17 @@ def build(ev, slug, which=None, start=None, voice="felt"):
     L, R = decode(path)
     mono = (L + R) * 0.5
     total = ev["total"]
-    at = start if start is not None else pick_window(mono, total + 2.5)
+    #  WHERE IN THE TRACK THE FILM CUTS FROM.
+    #
+    #  pick_window below was written for the two instrumental pieces: it hunts
+    #  the passage that opens quiet and grows, which is the shape a short
+    #  wants. On the nasheed that replaced them it hunted badly. The owner
+    #  listened to a film and said so plainly: it had taken the worst part of
+    #  the track, and the beginning is the good part. A scoring rule that
+    #  measures loudness cannot hear that, and the person who can has spoken,
+    #  so the top of the track is now where a film cuts from unless told
+    #  otherwise. --pick restores the hunt for the piece it was written for.
+    at = start if start is not None else (pick_window(mono, total + 2.5) if hunt else 0.0)
     i0 = int(at * SR)
     n = int(total * SR)
     ml = L[i0:i0 + n].copy()
@@ -577,12 +587,15 @@ def main():
                          "sound law), glass or wood where a brief asks")
     ap.add_argument("--lufs", type=float, default=-14.0,
                     help="where the platforms normalise to")
+    ap.add_argument("--pick", action="store_true",
+                    help="hunt the passage that opens quiet and grows, instead "
+                         "of cutting from the top of the track")
     ap.add_argument("--mux", action="store_true")
     ap.add_argument("--shape", default="tall")
     a = ap.parse_args()
 
     ev = events(a.slug)
-    Lc, Rc, info = build(ev, a.slug, a.track, a.at, a.voice)
+    Lc, Rc, info = build(ev, a.slug, a.track, a.at, a.voice, a.pick)
     print("\n  %s" % ev["title"])
     print("  %.1f s   %d sentences   %d marks" % (ev["total"], len(ev["lines"]), info["marks"]))
     print("  %s  from %.0f s  ·  key %s  ·  %d marks in %s"
