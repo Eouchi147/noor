@@ -1,0 +1,195 @@
+{
+  "slug": "short-astrolabe",
+  "id": "short-astrolabe",
+  "title": "The sky folded into brass",
+  "note": "The astrolabe folded the whole sky onto one brass plate, and turning its star map could read the hour, the prayer times and the latitude.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The sky folded into brass",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "an-astrolabe-a-graduated-rim-a-horizon",
+          "hold": 47.0,
+          "lines": [
+            {
+              "text": "An astrolabe is the sky folded in brass",
+              "sub": "the working computer of a thousand years",
+              "size": "hook",
+              "at": 0.0,
+              "until": 6.94
+            },
+            {
+              "text": "A catalogue in Baghdad, about 987",
+              "sub": "it names al-Ijliya, who made them, in Aleppo",
+              "size": "h1",
+              "at": 7.28,
+              "until": 14.04
+            },
+            {
+              "text": "Sight a star along the sighting bar",
+              "size": "h1",
+              "at": 14.38,
+              "until": 17.92
+            },
+            {
+              "text": "Read its height on the graduated rim",
+              "size": "h1",
+              "at": 18.26,
+              "until": 21.87
+            },
+            {
+              "text": "Turn the star map to match the sky",
+              "size": "h1",
+              "at": 22.21,
+              "until": 25.74
+            },
+            {
+              "text": "Now read the hour and the prayer times",
+              "size": "h1",
+              "at": 26.08,
+              "until": 29.87
+            },
+            {
+              "text": "Greek geometry first drew the disc",
+              "sub": "Muslim makers added plates for latitudes",
+              "size": "h1",
+              "at": 30.21,
+              "until": 36.67
+            },
+            {
+              "text": "Your star map app is an astrolabe reborn",
+              "size": "h1",
+              "at": 37.01,
+              "until": 40.94
+            },
+            {
+              "eyebrow": "Al-Ijliya, Aleppo",
+              "text": "All we securely know of her fits one line",
+              "src": "The Fihrist, about 987",
+              "size": "h1",
+              "at": 41.28,
+              "until": 46.62
+            }
+          ],
+          "at": [
+            100,
+            7730,
+            9683,
+            11637,
+            14830,
+            18710,
+            19011,
+            19312,
+            19613,
+            19914,
+            20216,
+            20517,
+            20818,
+            21119
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 7.28,
+              "i0": 1,
+              "i1": 3
+            },
+            {
+              "at": 14.38,
+              "i0": 4,
+              "i1": 4
+            },
+            {
+              "at": 18.26,
+              "i0": 5,
+              "i1": 13
+            },
+            {
+              "at": 22.21,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 26.08,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 30.21,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 37.01,
+              "i0": 13,
+              "i1": 13
+            },
+            {
+              "at": 41.28,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "swing",
+              "on": "g.rd",
+              "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+              "arc": 17,
+              "at": 2,
+              "for": 3.0,
+              "times": 2
+            },
+            {
+              "do": "trace",
+              "on": "path[d=\"M380 170A140 140 0 0 0 361 100\"]",
+              "at": 3,
+              "for": 2.8,
+              "size": 1.4
+            },
+            {
+              "do": "spin",
+              "on": "g.rete",
+              "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+              "at": 4,
+              "for": 3.4,
+              "times": 1
+            },
+            {
+              "do": "glow",
+              "on": "text[x=\"430\"][y=\"212\"], text[x=\"430\"][y=\"240\"]",
+              "at": 5,
+              "for": 2.4,
+              "size": 1.5
+            },
+            {
+              "do": "pulse",
+              "on": "circle[cx=\"240\"][cy=\"170\"][r=\"140\"]",
+              "at": 6,
+              "for": 1.8
+            },
+            {
+              "do": "spin",
+              "on": "g.rete",
+              "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+              "at": 7,
+              "for": 3.2,
+              "times": 1
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

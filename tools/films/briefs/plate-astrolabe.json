@@ -1,0 +1,107 @@
+{
+  "slug": "short-astrolabe",
+  "title": "The sky folded into brass",
+  "theme": "nutvoid",
+  "plate": "an-astrolabe-a-graduated-rim-a-horizon",
+  "room": "heroes.html#f-sky-and-sea",
+  "note": "The astrolabe folded the whole sky onto one brass plate, and turning its star map could read the hour, the prayer times and the latitude.",
+  "lines": [
+    {
+      "text": "An astrolabe is the sky folded in brass",
+      "sub": "the working computer of a thousand years",
+      "steps": 1
+    },
+    {
+      "text": "A catalogue in Baghdad, about 987",
+      "sub": "it names al-Ijliya, who made them, in Aleppo",
+      "steps": 3
+    },
+    {
+      "text": "Sight a star along the sighting bar",
+      "steps": 1
+    },
+    {
+      "text": "Read its height on the graduated rim",
+      "steps": 9
+    },
+    {
+      "text": "Turn the star map to match the sky"
+    },
+    {
+      "text": "Now read the hour and the prayer times"
+    },
+    {
+      "text": "Greek geometry first drew the disc",
+      "sub": "Muslim makers added plates for latitudes"
+    },
+    {
+      "text": "Your star map app is an astrolabe reborn"
+    },
+    {
+      "eyebrow": "Al-Ijliya, Aleppo",
+      "text": "All we securely know of her fits one line",
+      "src": "The Fihrist, about 987"
+    }
+  ],
+  "motion": [
+    {
+      "do": "swing",
+      "on": "g.rd",
+      "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+      "arc": 17,
+      "at": 2,
+      "for": 3.0,
+      "times": 2
+    },
+    {
+      "do": "trace",
+      "on": "path[d=\"M380 170A140 140 0 0 0 361 100\"]",
+      "at": 3,
+      "for": 2.8,
+      "size": 1.4
+    },
+    {
+      "do": "spin",
+      "on": "g.rete",
+      "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+      "at": 4,
+      "for": 3.4,
+      "times": 1
+    },
+    {
+      "do": "glow",
+      "on": "text[x=\"430\"][y=\"212\"], text[x=\"430\"][y=\"240\"]",
+      "at": 5,
+      "for": 2.4,
+      "size": 1.5
+    },
+    {
+      "do": "pulse",
+      "on": "circle[cx=\"240\"][cy=\"170\"][r=\"140\"]",
+      "at": 6,
+      "for": 1.8
+    },
+    {
+      "do": "spin",
+      "on": "g.rete",
+      "about": "circle[cx=\"240\"][cy=\"170\"][r=\"6\"]",
+      "at": 7,
+      "for": 3.2,
+      "times": 1
+    }
+  ],
+  "research": {
+    "retell": "An astrolabe is a brass model of the sky where you sight a star, turn its star map to match, and read off the time, the prayer times and your location, and one of its tenth century makers was a woman named in a single line of an old book catalogue.",
+    "proof": [
+      "An astrolabe is the sky folded into a brass plate. / kept it the working computer of educated people for a thousand years.",
+      "In the catalogue of books he compiled at Baghdad around 987, Ibn al-Nadim lists the makers of astrolabes, and among them names the daughter of al-Ijli ... worked at the court of Sayf al-Dawla in Aleppo. [lights/all.json: al-ijliyya-astrolabe-maker]",
+      "Sight a star along the bar, read its height on the rim.",
+      "read its height on the rim [heroes.html] / a graduated rim [svg title]",
+      "then turn the rete, the pierced star map, until the brass sky matches the one overhead. / a turning star map [svg title]",
+      "find the times of prayer, take a latitude / the hour of the day / the times of prayer [svg labels]",
+      "The Greeks conceived it; Muslim instrument makers perfected it, adding interchangeable plates for different latitudes.",
+      "Every star map app on a phone is an astrolabe reborn, the folded sky turned from brass to glass.",
+      "Everything we securely know of her fits in one line of the Fihrist, the great tenth century catalog of Ibn al-Nadim."
+    ]
+  }
+}

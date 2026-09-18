@@ -1,0 +1,221 @@
+{
+  "slug": "short-crankshaft",
+  "id": "short-crankshaft",
+  "title": "The crank inside your engine",
+  "note": "Al-Jazari joined a turning wheel to a connecting rod, and the same crank still runs every engine.",
+  "short": true,
+  "chapters": [
+    {
+      "id": "the-short",
+      "title": "The crank inside your engine",
+      "theme": "nutvoid",
+      "short": true,
+      "beats": [
+        {
+          "kind": "plate",
+          "plate": "a-turning-wheel-joined-by-a-connecting",
+          "hold": 50.3,
+          "lines": [
+            {
+              "text": "Your car's crankshaft is 800 years old",
+              "size": "hook",
+              "at": 0.0,
+              "until": 3.74
+            },
+            {
+              "text": "Diyarbakir, upper Mesopotamia, 1206",
+              "sub": "An engineer, Al-Jazari, finishes his book",
+              "size": "h1",
+              "at": 4.08,
+              "until": 10.57
+            },
+            {
+              "text": "His book explains 50 machines in detail",
+              "sub": "precise enough for someone to build",
+              "size": "h1",
+              "at": 10.91,
+              "until": 17.42
+            },
+            {
+              "text": "A turning wheel drives a straight rod",
+              "sub": "rotation becomes a back and forth stroke",
+              "size": "h1",
+              "at": 17.76,
+              "until": 24.52
+            },
+            {
+              "text": "The rod drives a twin cylinder water pump",
+              "size": "h1",
+              "at": 24.86,
+              "until": 28.85
+            },
+            {
+              "text": "Pegs set in a turning barrel keep rhythm",
+              "sub": "move the pegs, and the tune changes",
+              "size": "h1",
+              "at": 29.19,
+              "until": 35.87
+            },
+            {
+              "text": "A program you could touch, centuries early",
+              "size": "h1",
+              "at": 36.21,
+              "until": 40.22
+            },
+            {
+              "text": "Your engine still turns his crank and rod",
+              "size": "h1",
+              "at": 40.56,
+              "until": 44.55
+            },
+            {
+              "eyebrow": "Al-Jazari, Diyarbakir",
+              "text": "He wrote and illustrated it himself",
+              "src": "Book of Ingenious Mechanical Devices, 1206",
+              "size": "h1",
+              "at": 44.89,
+              "until": 49.95
+            }
+          ],
+          "at": [
+            100,
+            4530,
+            18210,
+            20163,
+            22117,
+            25310,
+            25825,
+            26340,
+            26855,
+            27370,
+            27885,
+            29640,
+            30466,
+            31291,
+            32117,
+            32943,
+            33769,
+            34594,
+            36660,
+            38215,
+            41010,
+            42555
+          ],
+          "shots": [
+            {
+              "at": 0.0,
+              "i0": 0,
+              "i1": 0
+            },
+            {
+              "at": 4.08,
+              "i0": 1,
+              "i1": 1
+            },
+            {
+              "at": 10.91,
+              "i0": 1,
+              "i1": 1
+            },
+            {
+              "at": 17.76,
+              "i0": 2,
+              "i1": 4
+            },
+            {
+              "at": 24.86,
+              "i0": 5,
+              "i1": 10
+            },
+            {
+              "at": 29.19,
+              "i0": 11,
+              "i1": 17
+            },
+            {
+              "at": 36.21,
+              "i0": 18,
+              "i1": 19
+            },
+            {
+              "at": 40.56,
+              "i0": 20,
+              "i1": 21
+            },
+            {
+              "at": 44.89,
+              "all": true
+            }
+          ],
+          "motion": [
+            {
+              "do": "glow",
+              "on": "circle[r=\"62\"]",
+              "at": 2,
+              "for": 2.2,
+              "size": 1.4
+            },
+            {
+              "do": "slidercrank",
+              "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+              "pin": "circle.nd",
+              "arm": "path[d=\"M140 150L188 110\"]",
+              "rod": "path[d=\"M188 110L320 150\"]",
+              "slider": "rect[x=\"320\"]",
+              "at": 3,
+              "for": 4.2,
+              "times": 3
+            },
+            {
+              "do": "slidercrank",
+              "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+              "pin": "circle.nd",
+              "arm": "path[d=\"M140 150L188 110\"]",
+              "rod": "path[d=\"M188 110L320 150\"]",
+              "slider": "rect[x=\"320\"]",
+              "at": 4,
+              "for": 3.4,
+              "times": 2
+            },
+            {
+              "do": "travel",
+              "on": "path[d=\"M334 206h84\"]",
+              "at": 4,
+              "for": 3.0,
+              "times": 3,
+              "size": 1.1
+            },
+            {
+              "do": "spin",
+              "on": "circle[cx=\"545\"][cy=\"150\"][r=\"52\"], path[d=\"M545 98v-14M597 150h14M545 202v14M493 150h-14M582 113l10-10M582 187l10 10\"]",
+              "about": "circle[cx=\"545\"][cy=\"150\"][r=\"52\"]",
+              "at": 5,
+              "for": 3.6,
+              "times": 2
+            },
+            {
+              "do": "pulse",
+              "on": "text[x=\"545\"][y=\"248\"]",
+              "at": 6,
+              "for": 1.8
+            },
+            {
+              "do": "slidercrank",
+              "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+              "pin": "circle.nd",
+              "arm": "path[d=\"M140 150L188 110\"]",
+              "rod": "path[d=\"M188 110L320 150\"]",
+              "slider": "rect[x=\"320\"]",
+              "at": 7,
+              "for": 3.2,
+              "times": 2
+            }
+          ],
+          "shot": "study",
+          "enter": "slow",
+          "exit": "slow"
+        }
+      ]
+    }
+  ]
+}

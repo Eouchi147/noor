@@ -495,6 +495,198 @@
     c.tl.add(m, { opacity: [1, 0], ease: "inOutSine", duration: fadeDur(500) }, c.at + c.dur - fadeDur(500));
   };
 
+
+  /* =====================================================================
+     MECHANISM: THE PICTURE DOING THE THING THE WORDS SAY
+
+     Every other behaviour in this file decorates a drawing that does not
+     move. A light runs along a path, an element glows, a number counts, a
+     mote goes round. That is fine when the drawing is a map or a table, and
+     it is a contradiction when the drawing is a machine: the crank film says
+     "a turning wheel drives a straight rod" over a wheel that never turns
+     and a rod that never moves, and a viewer who has seen an engine can see
+     that nothing here is connected to anything.
+
+     So these two move the parts themselves, and they move them CORRECTLY.
+     The positions are computed from the linkage, not keyframed to look
+     about right, because a stroke that does not obey the rod's length is
+     visible to anyone who would care about the film in the first place.
+
+     Nothing is hard coded. Every dimension is read out of the drawing at
+     setup: the crank's radius is the distance from the hub to the pin as
+     drawn, the rod's length is the length of the rod as drawn. A figure
+     redrawn to different proportions animates to its own new proportions.
+     ===================================================================== */
+
+  /* the two ends of a two point path, "M x y L x y" or "M x yLx y" */
+  function endsOf(el) {
+    var d = el && el.getAttribute && el.getAttribute("d");
+    if (!d) return null;
+    var n = d.match(/-?\d*\.?\d+/g);
+    if (!n || n.length < 4) return null;
+    return { x0: +n[0], y0: +n[1], x1: +n[2], y1: +n[3] };
+  }
+  function centreOf(el) {
+    if (!el) return null;
+    if (el.hasAttribute("cx")) return { x: +el.getAttribute("cx"), y: +el.getAttribute("cy") };
+    var b = boxOf([el]); if (!b) return null;
+    return { x: (b.x0 + b.x1) / 2, y: (b.y0 + b.y1) / 2 };
+  }
+
+  /* SLIDER CRANK. The mechanism al-Jazari drew and every piston engine still
+     uses: a pin riding a circle, a rod of fixed length, a body constrained to
+     one line. Given the hub, the pin, the crank arm, the rod and the sliding
+     body, the only free number is the crank angle; everything else follows
+     from it, which is exactly why the thing works at all.
+
+        pin   = hub + r(cos t, sin t)
+        slide = pin.x + sqrt(L^2 - (pin.y - axis)^2)
+
+     The second line is the whole mechanism. The rod is the hypotenuse of a
+     right triangle whose vertical side is how far the pin sits off the axis,
+     so the horizontal side, and with it the stroke, is forced. Note what
+     falls out for free and is the point of the film: the stroke is NOT a
+     sine wave. It is faster on one half than the other, because the rod
+     leans. Keyframing would have lost that. */
+  DO.slidercrank = function (c) {
+    var sp = c.spec || {};
+    var hub = centreOf(c.targets[0]);
+    var pinEl = pick(c.root, sp.pin)[0];
+    var armEl = pick(c.root, sp.arm)[0];
+    var rodEl = pick(c.root, sp.rod)[0];
+    var body = pick(c.root, sp.slider);
+    var rod0 = endsOf(rodEl);
+    var pin0 = centreOf(pinEl) || (endsOf(armEl) ? { x: endsOf(armEl).x1, y: endsOf(armEl).y1 } : null);
+    if (!hub || !pin0 || !rodEl || !rod0) {
+      console.warn("MECHANISM INCOMPLETE slidercrank: need hub, pin and rod");
+      return;
+    }
+    var r = Math.hypot(pin0.x - hub.x, pin0.y - hub.y);
+    var t0 = Math.atan2(pin0.y - hub.y, pin0.x - hub.x);
+    var ax0 = rod0.x1, axisY = rod0.y1;
+    var L = Math.hypot(ax0 - pin0.x, axisY - pin0.y);
+    if (!(r > 0) || !(L > r)) {
+      /* a rod shorter than the crank cannot close: the drawing is not a
+         slider crank and pretending otherwise would animate a lie */
+      console.warn("MECHANISM REFUSED slidercrank: rod " + L.toFixed(1) + " against crank " + r.toFixed(1));
+      return;
+    }
+    var starts = body.map(function (e) { return e.getAttribute("transform") || ""; });
+    /* THE DRAWING MUST END EXACTLY AS IT WAS DRAWN, to the character.
+       This behaviour rewrites the very attributes the brief's selectors
+       match on: after one turn the rod's d is "M188.00 110.00L320.00 150"
+       and path[d="M188 110L320 150"] finds nothing, so a second mechanism
+       later in the same film silently does nothing. Whole turns bring the
+       numbers back but not the formatting, so the original strings are kept
+       and written back verbatim when the motion ends. It also means every
+       still taken after the motion shows the plate as the artist left it. */
+    var was = [];
+    function remember(el, names) {
+      if (!el) return;
+      names.forEach(function (n) { was.push([el, n, el.getAttribute(n)]); });
+    }
+    remember(armEl, ["d"]); remember(rodEl, ["d"]); remember(pinEl, ["cx", "cy"]);
+    body.forEach(function (e) { remember(e, ["transform"]); });
+    var v = { t: t0 };
+    c.tl.add(v, {
+      t: [t0, t0 + Math.PI * 2 * (c.times || 2)],
+      ease: c.ease || "linear", duration: c.dur,
+      complete: function () {
+        was.forEach(function (w) {
+          if (w[2] === null) w[0].removeAttribute(w[1]); else w[0].setAttribute(w[1], w[2]);
+        });
+      },
+      onUpdate: function () {
+        var px = hub.x + Math.cos(v.t) * r, py = hub.y + Math.sin(v.t) * r;
+        var dy = py - axisY;
+        var run = Math.sqrt(Math.max(0, L * L - dy * dy));
+        var ax = px + run;
+        if (armEl) armEl.setAttribute("d", "M" + hub.x + " " + hub.y + "L" + px.toFixed(2) + " " + py.toFixed(2));
+        rodEl.setAttribute("d", "M" + px.toFixed(2) + " " + py.toFixed(2) + "L" + ax.toFixed(2) + " " + axisY);
+        if (pinEl && pinEl.hasAttribute("cx")) {
+          pinEl.setAttribute("cx", px.toFixed(2));
+          pinEl.setAttribute("cy", py.toFixed(2));
+        }
+        var dx = ax - ax0;
+        body.forEach(function (e, i) {
+          e.setAttribute("transform", (starts[i] ? starts[i] + " " : "") + "translate(" + dx.toFixed(2) + ",0)");
+        });
+      }
+    }, c.at);
+  };
+
+  /* SPIN. A body turning about its own centre, for the drawings where the
+     turning IS the fact: al-Jazari's peg barrel, an astrolabe's star map over
+     its horizon plate, a water wheel. Whole turns only, so the drawing is
+     back exactly where it was drawn when the motion ends and every later
+     shot of the plate is the plate as drawn. */
+  DO.spin = function (c) {
+    var sp = c.spec || {};
+    var about = sp.about ? centreOf(pick(c.root, sp.about)[0]) : null;
+    if (!about) {
+      var b = boxOf(c.targets); if (!b) return;
+      about = { x: (b.x0 + b.x1) / 2, y: (b.y0 + b.y1) / 2 };
+    }
+    var starts = c.targets.map(function (e) { return e.getAttribute("transform") || ""; });
+    var turns = Math.max(1, Math.round(c.times || 1));
+    var v = { a: 0 };
+    c.tl.add(v, {
+      a: [0, 360 * turns * (sp.reverse ? -1 : 1)],
+      ease: c.ease || "linear", duration: c.dur,
+      /* whole turns land the drawing back where it started, but on a
+         transform string of its own; the original is written back so the
+         plate at rest is the plate as drawn */
+      complete: function () {
+        c.targets.forEach(function (e, i) {
+          if (starts[i]) e.setAttribute("transform", starts[i]); else e.removeAttribute("transform");
+        });
+      },
+      onUpdate: function () {
+        var rot = "rotate(" + v.a.toFixed(2) + " " + about.x + " " + about.y + ")";
+        c.targets.forEach(function (e, i) {
+          e.setAttribute("transform", (starts[i] ? starts[i] + " " : "") + rot);
+        });
+      }
+    }, c.at);
+  };
+
+
+  /* SWING. An arm that turns about a pivot and comes back, rather than round
+     and round: an astrolabe's sighting bar rising to take a star's height, a
+     balance beam, a lever, a pendulum. `sweep` in this file is a light moving
+     along a path and is a different thing entirely; this moves the arm.
+
+     It ends where it started for the same reason spin does, so the plate at
+     rest is the plate as drawn. */
+  DO.swing = function (c) {
+    var sp = c.spec || {};
+    var about = sp.about ? centreOf(pick(c.root, sp.about)[0]) : null;
+    if (!about) {
+      var b = boxOf(c.targets); if (!b) return;
+      about = { x: (b.x0 + b.x1) / 2, y: (b.y0 + b.y1) / 2 };
+    }
+    var arc = Math.abs(sp.arc != null ? sp.arc : 24);
+    var starts = c.targets.map(function (e) { return e.getAttribute("transform") || ""; });
+    var v = { a: 0 };
+    c.tl.add(v, {
+      a: [0, Math.PI * 2 * Math.max(1, Math.round(c.times || 1))],
+      ease: "linear", duration: c.dur,
+      update: null,
+      onUpdate: function () {
+        var deg = Math.sin(v.a) * arc * (sp.reverse ? -1 : 1);
+        var rot = "rotate(" + deg.toFixed(2) + " " + about.x + " " + about.y + ")";
+        c.targets.forEach(function (e, i) {
+          e.setAttribute("transform", (starts[i] ? starts[i] + " " : "") + rot);
+        });
+      },
+      complete: function () {
+        c.targets.forEach(function (e, i) {
+          if (starts[i]) e.setAttribute("transform", starts[i]); else e.removeAttribute("transform");
+        });
+      }
+    }, c.at);
+  };
+
   /* =====================================================================
      APPLYING A BRIEF'S MOTION LIST
      ===================================================================== */
@@ -535,6 +727,12 @@
              stagger: spec.stagger != null ? spec.stagger * 1000 : null,
              into: spec.into, count: spec.count, keep: spec.keep, rise: spec.rise,
              peak: spec["do"] === "glow" ? (0.55 / glowShares[spec.on]) : null,
+             /* THE WHOLE SPEC, for the behaviours that need more than one
+                selector. A mechanism has parts: a hub, a pin, an arm, a rod,
+                a body that slides. Passing named fields one at a time meant
+                every new behaviour edited this call; passing the spec means
+                none of them do. */
+             spec: spec,
              seed: 7 + i * 31, span: span || 40000, vb: vb });
       });
     }

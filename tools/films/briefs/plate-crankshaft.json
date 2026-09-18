@@ -1,0 +1,118 @@
+{
+  "slug": "short-crankshaft",
+  "title": "The crank inside your engine",
+  "theme": "nutvoid",
+  "plate": "a-turning-wheel-joined-by-a-connecting",
+  "note": "Al-Jazari joined a turning wheel to a connecting rod, and the same crank still runs every engine.",
+  "room": "heroes.html#f-engineering",
+  "research": {
+    "quotes": "heroes.html#f-engineering: 'Al-Jazari served three generations of Artuqid princes as court engineer.' 'The result, the Book of Knowledge of Ingenious Mechanical Devices, finished in 1206, is part engineering manual and part illuminated painting: fifty devices with instructions exact enough to build from.' 'the crankshaft joined to connecting rods, turning rotation into back and forth motion in his twin cylinder water pump.' 'His musical automata, drummers on a boat, kept rhythm with pegs set into a turning barrel; move the pegs and the rhythm changes.' 'his own book survives, in his own words, with his own paintings, one of engineering's great primary documents.'",
+    "retell": "An engineer named Al-Jazari built a machine that turned a spinning wheel into a back and forth push using a crank and a rod, and cars still use that same trick today."
+  },
+  "lines": [
+    {
+      "text": "Your car's crankshaft is 800 years old",
+      "steps": 1
+    },
+    {
+      "text": "Diyarbakir, upper Mesopotamia, 1206",
+      "sub": "An engineer, Al-Jazari, finishes his book",
+      "steps": 1
+    },
+    {
+      "text": "His book explains 50 machines in detail",
+      "sub": "precise enough for someone to build"
+    },
+    {
+      "text": "A turning wheel drives a straight rod",
+      "sub": "rotation becomes a back and forth stroke",
+      "steps": 3
+    },
+    {
+      "text": "The rod drives a twin cylinder water pump",
+      "steps": 6
+    },
+    {
+      "text": "Pegs set in a turning barrel keep rhythm",
+      "sub": "move the pegs, and the tune changes",
+      "steps": 7
+    },
+    {
+      "text": "A program you could touch, centuries early",
+      "steps": 2
+    },
+    {
+      "text": "Your engine still turns his crank and rod",
+      "steps": 2
+    },
+    {
+      "eyebrow": "Al-Jazari, Diyarbakir",
+      "text": "He wrote and illustrated it himself",
+      "src": "Book of Ingenious Mechanical Devices, 1206"
+    }
+  ],
+  "motion": [
+    {
+      "do": "glow",
+      "on": "circle[r=\"62\"]",
+      "at": 2,
+      "for": 2.2,
+      "size": 1.4
+    },
+    {
+      "do": "slidercrank",
+      "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+      "pin": "circle.nd",
+      "arm": "path[d=\"M140 150L188 110\"]",
+      "rod": "path[d=\"M188 110L320 150\"]",
+      "slider": "rect[x=\"320\"]",
+      "at": 3,
+      "for": 4.2,
+      "times": 3
+    },
+    {
+      "do": "slidercrank",
+      "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+      "pin": "circle.nd",
+      "arm": "path[d=\"M140 150L188 110\"]",
+      "rod": "path[d=\"M188 110L320 150\"]",
+      "slider": "rect[x=\"320\"]",
+      "at": 4,
+      "for": 3.4,
+      "times": 2
+    },
+    {
+      "do": "travel",
+      "on": "path[d=\"M334 206h84\"]",
+      "at": 4,
+      "for": 3.0,
+      "times": 3,
+      "size": 1.1
+    },
+    {
+      "do": "spin",
+      "on": "circle[cx=\"545\"][cy=\"150\"][r=\"52\"], path[d=\"M545 98v-14M597 150h14M545 202v14M493 150h-14M582 113l10-10M582 187l10 10\"]",
+      "about": "circle[cx=\"545\"][cy=\"150\"][r=\"52\"]",
+      "at": 5,
+      "for": 3.6,
+      "times": 2
+    },
+    {
+      "do": "pulse",
+      "on": "text[x=\"545\"][y=\"248\"]",
+      "at": 6,
+      "for": 1.8
+    },
+    {
+      "do": "slidercrank",
+      "on": "circle[cx=\"140\"][cy=\"150\"][r=\"5\"]",
+      "pin": "circle.nd",
+      "arm": "path[d=\"M140 150L188 110\"]",
+      "rod": "path[d=\"M188 110L320 150\"]",
+      "slider": "rect[x=\"320\"]",
+      "at": 7,
+      "for": 3.2,
+      "times": 2
+    }
+  ]
+}
