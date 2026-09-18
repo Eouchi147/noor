@@ -43,6 +43,19 @@
 #     only by luck: a backup that is short is not a backup, so it is now
 #     compared byte for byte against the master before anything is muxed from
 #     it, and the master is left alone if it is not right.
+#
+#  4. AND IT TRUSTED A BACKUP OF A DIFFERENT PICTURE. This one was never hit,
+#     but it was waiting. out/prescore is kept so the script can be run again
+#     against other music without stacking two scores, and the old rule was
+#     simply "a backup that is already there is fine". It is fine only while
+#     the master is still the one that backup produced. Re-render a film and
+#     the picture changes underneath a backup that has not; the next rescore
+#     would then copy the OLD picture forward and quietly undo the re-render.
+#     After the mechanism engine landed, every one of the forty four films in
+#     out/prescore was exactly that: a picture from the day before, where
+#     nothing moved. So each backup now carries a stamp of the master it was
+#     taken from, and a master that no longer matches its stamp is refused by
+#     name instead of being reverted in silence.
 set -u
 
 cd "$(dirname "$0")" || exit 1
@@ -54,6 +67,18 @@ ls music/ | sed 's/^/    /'
 echo
 
 mkdir -p out/prescore
+
+#  A film's stamp: its length, and a checksum of its first megabyte. These
+#  are rendered with +faststart, so that first megabyte is the index of the
+#  whole file and no two encodes of the same film share it. wc, dd, cksum and
+#  cut behave the same on the Mac and on Linux, which stat does not: BSD stat
+#  reads -f as a format string and GNU stat reads it as "describe the file
+#  system", so an mtime helper written with it returns a page of block counts
+#  on one of the two machines and the stamp never matches itself.
+stampof() {
+  printf '%s %s' "$(wc -c < "$1" | tr -d ' ')" \
+                 "$(dd if="$1" bs=65536 count=16 2>/dev/null | cksum | cut -d' ' -f1)"
+}
 
 only="${1:-}"
 done_n=0
@@ -82,17 +107,29 @@ for f in short-*-tall-30fps.mp4; do
     [ -f "$mp4" ] || continue
     shapes=$((shapes + 1))
     pre="out/prescore/$mp4"
-    #  3: a short backup is not a backup. A copy made NOW must match the
-    #  master byte for byte; one that was already there is from an earlier
-    #  run and holds the picture as it was before any score was swapped, so
-    #  its size is its own and only its emptiness would be a fault.
+    stamp="out/prescore/$mp4.from"
     if [ ! -f "$pre" ]; then
+      #  3: a short backup is not a backup. A copy made NOW must match the
+      #  master byte for byte.
       want=$(wc -c < "$mp4" | tr -d ' ')
       cp "$mp4" "$pre" 2>/dev/null
       got=$(wc -c < "$pre" 2>/dev/null | tr -d ' ')
       if [ "${got:-0}" != "$want" ]; then
         echo "    $shape: the backup came across as ${got:-0} of $want bytes, master left alone"
         failed="$failed $slug/$shape(bad-backup)"
+        ok=0
+        continue
+      fi
+    else
+      #  4: a backup that was already here belongs to whatever master this
+      #  script last wrote from it. If the master no longer matches that
+      #  stamp it has been re-rendered since, so this backup is a picture
+      #  from before the re-render and muxing from it would throw the new
+      #  picture away. An unstamped backup is older than this rule and is
+      #  refused for the same reason: nothing can vouch for it.
+      if [ "$(cat "$stamp" 2>/dev/null)" != "$(stampof "$mp4")" ]; then
+        echo "    $shape: out/prescore holds an older picture of this film, master left alone"
+        failed="$failed $slug/$shape(stale-backup)"
         ok=0
         continue
       fi
@@ -109,6 +146,7 @@ for f in short-*-tall-30fps.mp4; do
         -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -ar 48000 -ac 2 -b:a 192k \
         -shortest -movflags +faststart "$tmp" 2>/dev/null && [ -s "$tmp" ]; then
       if mv "$tmp" "$mp4"; then
+        stampof "$mp4" > "$stamp"
         echo "    $shape rescored"
       else
         echo "    $shape: could not replace the master"
@@ -140,6 +178,16 @@ fi
 echo "  The pictures before the music changed are in out/prescore, so this"
 echo "  can be run again against a different set of scores without losing"
 echo "  anything, and running it twice does not stack two scores."
+if [ -n "$failed" ]; then
+  case "$failed" in
+    *stale-backup*)
+      echo
+      echo "  A film refused as stale-backup was re-rendered after its picture"
+      echo "  was saved. Delete out/prescore and run this again: it will save"
+      echo "  the picture you have now and score that one."
+      ;;
+  esac
+fi
 echo
 echo "  Next: ./publish-shorts.sh, which will see the masters have changed,"
 echo "  remake the delivery copies and put them back on the shelf."
