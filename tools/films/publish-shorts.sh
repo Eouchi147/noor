@@ -8,6 +8,10 @@
 #      export BLOB_READ_WRITE_TOKEN=...        (you type this, nobody else)
 #      ./publish-shorts.sh
 #
+#  or, better, put the key on the first line of blob-token.txt in the folder
+#  above this one and just run the script: it is read from there, kept out of
+#  your shell history, and never printed. See the note at the check itself.
+#
 #  Each short is uploaded to the same pathname every time, so re-rendering a
 #  short overwrites it and its URL never changes. That is the same rule the
 #  reels shelf runs on and it is why the manifest does not have to be
@@ -65,7 +69,33 @@ if [ "$nbriefs" -gt 0 ] && [ "$nmasters" -eq 0 ]; then
   exit 1
 fi
 
-[ -n "$BLOB_READ_WRITE_TOKEN" ] || { echo "BLOB_READ_WRITE_TOKEN is not set. Export it first."; exit 1; }
+#  THE KEY MAY COME FROM A FILE, AND USUALLY SHOULD.
+#  Typing "export BLOB_READ_WRITE_TOKEN=..." writes the key into the shell's
+#  history file, where it sits in plain text for as long as that file lives
+#  and is read by anything that reads history. The key that published this
+#  shelf in September had to be replaced for a related reason, and replacing
+#  a key by typing it is how the next one leaks too.
+#
+#  So: if the variable is not already set, the key is read from a file named
+#  blob-token.txt in the folder ABOVE this one, which is the same place and
+#  the same habit as github-token.txt. Nothing about it is printed, here or
+#  anywhere below, and the file is tightened to owner only on the way past.
+#  Exporting by hand still works and still wins; this is only the gentler
+#  road for anyone who would rather not put a secret in their history.
+if [ -z "${BLOB_READ_WRITE_TOKEN:-}" ] && [ -f ../blob-token.txt ]; then
+  chmod 600 ../blob-token.txt 2>/dev/null
+  BLOB_READ_WRITE_TOKEN=$(head -1 ../blob-token.txt | tr -d '[:space:]')
+  export BLOB_READ_WRITE_TOKEN
+  [ -n "$BLOB_READ_WRITE_TOKEN" ] && echo "  key taken from blob-token.txt, nothing typed and nothing shown"
+fi
+if [ -z "${BLOB_READ_WRITE_TOKEN:-}" ]; then
+  echo "  No key. Either put it in blob-token.txt in the folder above this one,"
+  echo "  which keeps it out of your shell history, or export it by hand:"
+  echo
+  echo "      export BLOB_READ_WRITE_TOKEN=..."
+  echo
+  exit 1
+fi
 command -v ffmpeg >/dev/null 2>&1 || { echo "ffmpeg not found on PATH."; exit 1; }
 command -v curl >/dev/null 2>&1 || { echo "curl not found on PATH."; exit 1; }
 [ -f blobput.py ] || { echo "blobput.py is missing beside this script."; exit 1; }

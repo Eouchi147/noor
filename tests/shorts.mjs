@@ -219,7 +219,41 @@ console.log('\nthe put blobput.py makes');
   ok(/python3 blobput\.py put /.test(sh) && !/\bnode /.test(sh.replace(/#.*$/gm, '')), 'publish-shorts.sh uploads with blobput.py and needs no node');
   ok(/shelf\/index\.json/.test(sh) && /shelf\/know\.json/.test(fs.readFileSync(path.join(ROOT, 'tools', 'films', 'shortmanifest.py'), 'utf8')), 'both fall back to the shelf/ folder that travels to the Mac');
   ok(/out\/main\/reels/.test(sh), 'the merged shelf is also written under out/main/reels with its real name');
-  ok(!/BLOB_READ_WRITE_TOKEN=/.test(sh.replace(/#.*$/gm, '')), 'the token is never assigned in the script');
+  //  THE RULE THIS ALWAYS MEANT: no secret literal in the file. It used to be
+  //  written as "no assignment at all", which was the same thing while the key
+  //  could only arrive through the environment. Now it may also be read from
+  //  blob-token.txt beside the folder, so the rule is stated as what it is:
+  //  every assignment's right hand side must be a substitution that reads that
+  //  file, never a constant somebody pasted in.
+  {
+    const code = sh.replace(/^\s*#.*$/gm, '');
+    const assigns = [...code.matchAll(/^\s*(?:export\s+)?BLOB_READ_WRITE_TOKEN=(.*)$/gm)].map(m => m[1].trim());
+    ok(assigns.every(rhs => /^\$\(.*blob-token\.txt/.test(rhs)),
+       'every assignment of the key reads blob-token.txt, none is a pasted constant: ' + (assigns.join(' | ') || 'none'));
+    ok(!/vercel_blob_rw_[A-Za-z0-9]/.test(sh), 'no key shaped string appears anywhere in the script, comments included');
+    ok(!/echo[^\n]*\$\{?BLOB_READ_WRITE_TOKEN/.test(code), 'the key is never echoed');
+    ok(/chmod 600 \.\.\/blob-token\.txt/.test(code), 'the key file is tightened to its owner when it is used');
+  }
+
+  //  and the route itself, run: the chunk that finds the key, against a file
+  //  holding a stand in, with the variable cleared first.
+  {
+    const chunk = sh.match(/^#  THE KEY MAY COME FROM A FILE[\s\S]*?\n^fi$/m);
+    ok(!!chunk, 'the key finding chunk can be lifted out whole');
+    if (chunk) {
+      const scratch = tmpdir('shorts-key');
+      fs.mkdirSync(path.join(scratch, 'films'));
+      const stand = 'vercel_blob_rw_STORE_NOTAREALKEY';
+      fs.writeFileSync(path.join(scratch, 'blob-token.txt'), '  ' + stand + '  \n', { mode: 0o644 });
+      fs.writeFileSync(path.join(scratch, 'films', 'chunk.sh'), chunk[0]);
+      const r = spawnSync('bash', ['-c', 'unset BLOB_READ_WRITE_TOKEN; source ./chunk.sh; echo "LEN=${#BLOB_READ_WRITE_TOKEN}"'],
+                          { cwd: path.join(scratch, 'films'), encoding: 'utf8', env: { ...process.env, BLOB_READ_WRITE_TOKEN: '' } });
+      const out = String(r.stdout || '') + String(r.stderr || '');
+      ok(new RegExp('LEN=' + stand.length + '\\b').test(out), 'the key is read from the file with its whitespace stripped, ' + stand.length + ' characters: ' + out.trim().split('\n').pop());
+      ok(!/NOTAREALKEY/.test(out), 'and nothing of it is printed on the way');
+      ok((fs.statSync(path.join(scratch, 'blob-token.txt')).mode & 0o777) === 0o600, 'and the file is left readable only by its owner');
+    }
+  }
 }
 
 /* =========================================================================
