@@ -21,6 +21,10 @@
    Run:  node tests/films-workflow.mjs
 */
 import fs from 'fs';
+import path from 'path';
+import { spawnSync } from 'child_process';
+import { fileURLToPath } from 'url';
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
@@ -103,6 +107,58 @@ ok(/Co-Authored-By:/.test(wf) && /Claude-Session:/.test(wf), 'the commit message
 ok(/Generated with \[Claude Code\]/.test(wf), 'the pull request body carries the attribution line');
 ok(/reels\/index\.json/.test(wf) && /reels\/home\.json/.test(wf),
    'the manifest and the home page sidecar are what the pull request carries');
+
+/* =========================================================================
+   THE WHEN GATE, run for real rather than described.
+
+   shortplate.py refuses a brief whose first two lines do not tell the viewer
+   when. The law was written for films about things that happened once, so
+   the only when it could read was Gregorian, and eleven films about the Hajj
+   failed it although every one of them gives its date in the opening: the
+   tenth of Dhul Hijjah. A Hijri month now satisfies it too.
+
+   Nothing was loosened to get there. The century words used to match alone,
+   so "the road from the eighth to the thirteenth", a range of DAYS, read as
+   the thirteenth century and went through; the ordinal must now carry the
+   word century. Both halves are checked here, with the shipped function.
+   ========================================================================= */
+console.log('\n=== when, in either calendar ===');
+{
+  const drive = `
+import importlib.util, json, sys
+spec = importlib.util.spec_from_file_location("sp", "tools/films/shortplate.py")
+sp = importlib.util.module_from_spec(spec); spec.loader.exec_module(sp)
+cases = [
+ ["a Gregorian year", [{"text":"Baghdad in 830 had a problem"},{"text":"and a man who solved it"}], True],
+ ["a decade", [{"text":"The 800s in Baghdad"},{"text":"one house, one idea"}], True],
+ ["about a thousand years ago", [{"text":"About a thousand years ago"},{"text":"a lens was ground"}], True],
+ ["a real century", [{"text":"The thirteenth century, in Anatolia"},{"text":"a wheel turned"}], True],
+ ["a bare ordinal that is a day", [{"text":"the road from the eighth to the thirteenth"},{"text":"six legs, four places"}], False],
+ ["a Hijri month with a day", [{"text":"Seven circuits, one corner"},{"text":"Makkah's House, the tenth of Dhul Hijjah"}], True],
+ ["a Hijri month alone", [{"text":"Hajj is Islam's fifth pillar"},{"text":"The House, once in a life, in Dhul Hijjah"}], True],
+ ["Ramadan", [{"text":"One month the year turns on"},{"text":"Ramadan, from the first sighting"}], True],
+ ["Rabi al-Awwal", [{"text":"A birth the world still marks"},{"text":"Rabi al-Awwal, in Makkah"}], True],
+ ["no when at all", [{"text":"A man built a machine"},{"text":"and it worked rather well"}], False],
+ ["a when that arrives on line three", [{"text":"A man built a machine"},{"text":"and it worked"},{"text":"in 1206"}], False],
+]
+out = []
+for name, lines, want in cases:
+    notes = []
+    sp.check_words(lines, notes)
+    got = not any("give no date" in n for n in notes)
+    out.append([name, got, want])
+print(json.dumps(out))
+`;
+  const r = spawnSync('python3', ['-c', drive], { cwd: ROOT, encoding: 'utf8' });
+  let rows = null;
+  try { rows = JSON.parse(String(r.stdout || '').trim().split('\n').pop()); } catch (e) { rows = null; }
+  ok(!!rows, 'shortplate.py\'s own check_words can be run: ' + String(r.stderr || '').slice(-200));
+  if (rows) {
+    for (const [name, got, want] of rows) {
+      ok(got === want, (want ? 'accepted as a when: ' : 'refused as no when: ') + name);
+    }
+  }
+}
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

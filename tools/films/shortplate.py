@@ -79,15 +79,39 @@ def hold_for(*parts):
     return max(FLOOR, ENTRY + PER_WORD * len(txt.split()) + len(txt) / CPS + SETTLE)
 
 
+#  ---- WHEN, IN EITHER CALENDAR -----------------------------------------
+#  The law is that the viewer is told WHEN before the third line. The law was
+#  written for films about things that happened once, so the only "when" it
+#  could read was a Gregorian one: a year, a century, or "about a thousand
+#  years ago". Eleven films about the Hajj then failed it, all eleven, and
+#  every one of them names its date in the first two lines. Tawaf is on the
+#  tenth of Dhul Hijjah. That is not a vaguer answer than 1206; for a rite
+#  that comes round every year it is the truer one, because the question
+#  "when is tawaf" is not answered by a year at all.
+#
+#  So a Hijri month satisfies the law, from a closed list of the twelve.
+#  Nothing else was loosened. Quite the opposite: the century words used to
+#  match on their own, so "the road from the eighth to the thirteenth", which
+#  is a range of DAYS in Dhul Hijjah, was read as the thirteenth century and
+#  waved through. One brief in the library passed on that misreading and no
+#  other used the bare form, so the ordinal now has to carry the word century
+#  behind it to count as one.
+WHEN_GREGORIAN = (r"1[0-9]{3}|[6-9][0-9]{2}|[0-9]{3,4}s|years ago|"
+                  r"(?:elev|twelf|thirteen|fourteen|fifteen|sixteen)th\s+centur")
+WHEN_HIJRI = (r"muharram|safar|rabi[\s'-]*al[\s'-]*(?:awwal|thani)|"
+              r"jumada[\s'-]*al[\s'-]*(?:ula|akhirah)|rajab|sha'?ban|"
+              r"ramadan|shawwal|dhu[l'\s-]*(?:al[\s-]*)?(?:qa'?dah|hijjah)")
+WHEN = re.compile(r"\b(?:" + WHEN_GREGORIAN + r"|" + WHEN_HIJRI + r")", re.I)
+
+
 def check_words(lines, notes):
     """who, where, when, before the third line; and no pronoun before a name"""
     opening = " ".join(v for L in lines[:2] for v in
                        (L.get("eyebrow"), L.get("text"), L.get("sub")) if v)
-    if not re.search(r"\b(1[0-9]{3}|[6-9][0-9]{2}|[0-9]{3,4}s|years ago|"
-                     r"(elev|twelf|thirteen|fourteen|fifteen|sixteen)th)\b",
-                     opening, re.I):
-        notes.append("the first two lines give no date. A year, a century or "
-                     "\"about a thousand years ago\" has to be on screen early")
+    if not WHEN.search(opening):
+        notes.append("the first two lines give no date. A year, a century, "
+                     "\"about a thousand years ago\" or, for a rite, the month "
+                     "of the Hijri year has to be on screen early")
     names = set()
     for L in lines[:2]:
         for v in (L.get("eyebrow"), L.get("text"), L.get("sub")):
