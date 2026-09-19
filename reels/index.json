@@ -1,5 +1,5 @@
 {
- "n": 1498,
+ "n": 1509,
  "written": "2026-09-15",
  "cards": [
   {
@@ -15670,6 +15670,27 @@
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-zero-wide.mp4"
   },
   {
+   "id": "short-arafah",
+   "kind": "short",
+   "title": "You arrive full, and leave empty",
+   "hook": "You arrive full, and you leave empty",
+   "payoff": "A newborn has no history: that is the gift",
+   "caption": "You arrive full, and leave empty\n\nYou arrive full, and you leave empty\n\nA newborn has no history: that is the gift\n\nSource: The heart of it\n\nhttps://noorcodex.com/hajj.html#heart\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "You arrive full, and you leave empty\n\nArafah, the ninth of Dhul Hijjah, the peak\n\nA man in ihram wears two unstitched sheets\n\nAt the line, every marker is taken off\n\nThe same clothing on the Day of Standing\n\nYou return as the day your mother bore you\n\nThe circle is drawn empty on purpose\n\nA newborn has no history: that is the gift\n\nThe sign is what changed afterwards\n\nSource: The heart of it\n\nhttps://noorcodex.com/hajj.html#heart",
+   "src": "The heart of it",
+   "room": "hajj.html#heart",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 52,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-arafah-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-arafah.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-arafah-wide.mp4"
+  },
+  {
    "id": "short-astrolabe",
    "kind": "short",
    "title": "The sky folded into brass",
@@ -15859,6 +15880,111 @@
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-epistles-wide.mp4"
   },
   {
+   "id": "short-hajjdays",
+   "kind": "short",
+   "title": "Six days, one disc each",
+   "hook": "One ribbon, six days, the whole Hajj",
+   "payoff": "That slowness after the tenth is the point",
+   "caption": "Six days, one disc each\n\nOne ribbon, six days, the whole Hajj\n\nThat slowness after the tenth is the point\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "One ribbon, six days, the whole Hajj\n\nMina, from the eighth of Dhul Hijjah\n\nThe ninth is Arafah: it cannot be missed\n\nThe tenth: stone, sacrifice, shave, tawaf\n\nTashriq: three days, all three pillars\n\nAfter the twelfth, leave, or stay one more\n\nThe farewell tawaf: three call it a duty\n\nThat slowness after the tenth is the point\n\nEach day is a disc with its acts below\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days",
+   "src": "Hajj, day by day",
+   "room": "hajj.html#days",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 52,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjdays-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjdays.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjdays-wide.mp4"
+  },
+  {
+   "id": "short-hajjmap",
+   "kind": "short",
+   "title": "The one map of the whole Hajj",
+   "hook": "Six legs, four places, one Hajj map",
+   "payoff": "Learn this shape and the days make sense",
+   "caption": "The one map of the whole Hajj\n\nSix legs, four places, one Hajj map\n\nLearn this shape and the days make sense\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Six legs, four places, one Hajj map\n\nMakkah to Mina, the eighth of Dhul Hijjah\n\nOn the ninth the road runs out to Arafah\n\nAt sunset it turns back to Muzdalifah\n\nThe tenth: Mina at dawn, then the House\n\nThe last days circle home through Makkah\n\nOnly the road to Arafah cannot be missed\n\nLearn this shape and the days make sense\n\nFour places, six legs, six dates\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days",
+   "src": "Hajj, day by day",
+   "room": "hajj.html#days",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 51,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjmap-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjmap.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-hajjmap-wide.mp4"
+  },
+  {
+   "id": "short-ihram",
+   "kind": "short",
+   "title": "Nine things ihram forbids",
+   "hook": "Nine ordinary things: forbidden in ihram",
+   "payoff": "Fidyah: fast three days, feed six, a sheep",
+   "caption": "Nine things ihram forbids\n\nNine ordinary things: forbidden in ihram\n\nFidyah: fast three days, feed six, a sheep\n\nSource: Ihram, entering the sacred state\n\nhttps://noorcodex.com/hajj.html#ihram\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Nine ordinary things: forbidden in ihram\n\nIn ihram, until the tenth of Dhul Hijjah\n\nCut your hair or nails: pay a fidyah\n\nA marriage contract: forbidden, no fidyah\n\nOne thing voids the Hajj: intercourse\n\nHunting land game: owe a like animal\n\nHanafis, Malikis charge it by mistake too\n\nFidyah: fast three days, feed six, a sheep\n\nWashing and a watch stay lawful throughout\n\nSource: Ihram, entering the sacred state\n\nhttps://noorcodex.com/hajj.html#ihram",
+   "src": "Ihram, entering the sacred state",
+   "room": "hajj.html#ihram",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 52,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ihram-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ihram.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ihram-wide.mp4"
+  },
+  {
+   "id": "short-jamarat",
+   "kind": "short",
+   "title": "Three pillars, seven pebbles each",
+   "hook": "Twenty one pebbles a day, after the tenth",
+   "payoff": "Throw pebbles the size of a chickpea",
+   "caption": "Three pillars, seven pebbles each\n\nTwenty one pebbles a day, after the tenth\n\nThrow pebbles the size of a chickpea\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Twenty one pebbles a day, after the tenth\n\nMina, the tenth of Dhul Hijjah\n\nOn the tenth, seven at al-Aqabah alone\n\nOn 11 and 12, all three; on 13 if you stay\n\nAfter the first two, a sunnah: make du'a\n\nThere is no devil standing at the pillars\n\nHanafis allow the thirteenth before noon\n\nThrow pebbles the size of a chickpea\n\nThree pillars, named small, middle, large\n\nSource: Hajj, day by day\n\nhttps://noorcodex.com/hajj.html#days",
+   "src": "Hajj, day by day",
+   "room": "hajj.html#days",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 48,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-jamarat-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-jamarat.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-jamarat-wide.mp4"
+  },
+  {
+   "id": "short-labbayk",
+   "kind": "short",
+   "title": "One call, still being answered",
+   "hook": "Hajj is Islam's fifth pillar, and a call",
+   "payoff": "The accepted Hajj's only reward: Paradise",
+   "caption": "One call, still being answered\n\nHajj is Islam's fifth pillar, and a call\n\nThe accepted Hajj's only reward: Paradise\n\nSource: The fifth pillar, and its verse\n\nhttps://noorcodex.com/hajj.html#why\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Hajj is Islam's fifth pillar, and a call\n\nThe House, once in a life, in Dhul Hijjah\n\nIbrahim was told to make the call\n\nOne man called out in an empty valley\n\nYou answer labbayk: here I am\n\nThe verse says whoever is able, just once\n\nHanafis, Malikis excuse permanent illness\n\nThe accepted Hajj's only reward: Paradise\n\nOne call still being answered today\n\nSource: The fifth pillar, and its verse\n\nhttps://noorcodex.com/hajj.html#why",
+   "src": "The fifth pillar, and its verse",
+   "room": "hajj.html#why",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 48,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-labbayk-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-labbayk.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-labbayk-wide.mp4"
+  },
+  {
    "id": "short-lens",
    "kind": "short",
    "title": "The law behind every lens",
@@ -15920,6 +16046,27 @@
    "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-lute.mp4",
    "made": "2026-09-18",
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-lute-wide.mp4"
+  },
+  {
+   "id": "short-miqat",
+   "kind": "short",
+   "title": "Five gates around Makkah",
+   "hook": "Five roads into Makkah, one rule for all",
+   "payoff": "For Hajj, the nearer begin where they are",
+   "caption": "Five gates around Makkah\n\nFive roads into Makkah, one rule for all\n\nFor Hajj, the nearer begin where they are\n\nSource: Ihram, entering the sacred state\n\nhttps://noorcodex.com/hajj.html#ihram\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Five roads into Makkah, one rule for all\n\nFive lines ring Makkah, before Dhul Hijjah\n\nFrom Madinah, the north: Dhul Hulayfah\n\nFrom Sham and Egypt: Al-Juhfah, northwest\n\nNajd east, Iraq north east: two more lines\n\nFrom Yemen, the south: Yalamlam waits\n\nCome back and the sacrifice is not owed\n\nFor Hajj, the nearer begin where they are\n\nFive lines, one for each direction\n\nSource: Ihram, entering the sacred state\n\nhttps://noorcodex.com/hajj.html#ihram",
+   "src": "Ihram, entering the sacred state",
+   "room": "hajj.html#ihram",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 49,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-miqat-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-miqat.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-miqat-wide.mp4"
   },
   {
    "id": "short-monsoon",
@@ -16006,6 +16153,48 @@
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-qanat-wide.mp4"
   },
   {
+   "id": "short-ranks",
+   "kind": "short",
+   "title": "What a missing act costs you",
+   "hook": "One of three ranks holds every Hajj act",
+   "payoff": "Read the row you were taught, not all four",
+   "caption": "What a missing act costs you\n\nOne of three ranks holds every Hajj act\n\nRead the row you were taught, not all four\n\nSource: The pillars and the obligations\n\nhttps://noorcodex.com/hajj.html#ranks\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "One of three ranks holds every Hajj act\n\nHajj is once in a life, in Dhul Hijjah\n\nA pillar: leave it and there is no Hajj\n\nAn obligation: a sacrifice repairs it\n\nA sunnah: better, and nothing is owed\n\nOnly Arafah has no way back at all\n\nThe schools do not rank every act the same\n\nRead the row you were taught, not all four\n\nA dam is meat for the poor, not a fine\n\nSource: The pillars and the obligations\n\nhttps://noorcodex.com/hajj.html#ranks",
+   "src": "The pillars and the obligations",
+   "room": "hajj.html#ranks",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 49,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ranks-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ranks.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ranks-wide.mp4"
+  },
+  {
+   "id": "short-saee",
+   "kind": "short",
+   "title": "Seven trips between two hills",
+   "hook": "Sa'i is seven legs between two hills",
+   "payoff": "Sa'i is the memory of a woman running",
+   "caption": "Seven trips between two hills\n\nSa'i is seven legs between two hills\n\nSa'i is the memory of a woman running\n\nSource: Umrah, step by step\n\nhttps://noorcodex.com/hajj.html#umrah\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Sa'i is seven legs between two hills\n\nSafa and Marwah, the tenth of Dhul Hijjah\n\nAt Safa, begin with what Allah began with\n\nWalk to Marwah: that first leg is one\n\nSeven legs end you at Marwah, not Safa\n\nSa'i remembers Hajar, alone with an infant\n\nMaliki, Shafi'i, Hanbali: sa'i is a pillar\n\nSa'i is the memory of a woman running\n\nNo one walks this Hajj without her path\n\nSource: Umrah, step by step\n\nhttps://noorcodex.com/hajj.html#umrah",
+   "src": "Umrah, step by step",
+   "room": "hajj.html#umrah",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 53,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-saee-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-saee.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-saee-wide.mp4"
+  },
+  {
    "id": "short-starnames",
    "kind": "short",
    "title": "The night sky still speaks Arabic",
@@ -16027,6 +16216,27 @@
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-starnames-wide.mp4"
   },
   {
+   "id": "short-tawaf",
+   "kind": "short",
+   "title": "Seven circuits around the House",
+   "hook": "Seven circuits, one direction, one corner",
+   "payoff": "Tawaf is a pillar; nothing replaces it",
+   "caption": "Seven circuits around the House\n\nSeven circuits, one direction, one corner\n\nTawaf is a pillar; nothing replaces it\n\nSource: Umrah, step by step\n\nhttps://noorcodex.com/hajj.html#umrah\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Seven circuits, one direction, one corner\n\nMakkah's House, the tenth of Dhul Hijjah\n\nWalk anticlockwise, the House on your left\n\nFace the Black Stone and say Allahu akbar\n\nSeven passes, counted from that corner\n\nLose count, and you build on the lower one\n\nMaliki, Shafi'i, Hanbali require wudu\n\nTawaf is a pillar; nothing replaces it\n\nThe Black Stone marks the start and end\n\nSource: Umrah, step by step\n\nhttps://noorcodex.com/hajj.html#umrah",
+   "src": "Umrah, step by step",
+   "room": "hajj.html#umrah",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 49,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-tawaf-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-tawaf.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-tawaf-wide.mp4"
+  },
+  {
    "id": "short-timbuktu",
    "kind": "short",
    "title": "The smallest library in Timbuktu",
@@ -16046,6 +16256,27 @@
    "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-timbuktu.mp4",
    "made": "2026-09-18",
    "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-timbuktu-wide.mp4"
+  },
+  {
+   "id": "short-ways",
+   "kind": "short",
+   "title": "Three ways to perform the Hajj",
+   "hook": "Hajj has three shapes; you pick one first",
+   "payoff": "Whichever you pick, choose it before ihram",
+   "caption": "Three ways to perform the Hajj\n\nHajj has three shapes; you pick one first\n\nWhichever you pick, choose it before ihram\n\nSource: The three ways to perform Hajj\n\nhttps://noorcodex.com/hajj.html#ways\n\n#Islam #IslamicHistory #NoorCodexOfLight",
+   "story": "Hajj has three shapes; you pick one first\n\nAt the miqat, for a Hajj in Dhul Hijjah\n\nTamattu: Umrah first, then out, then Hajj\n\nQiran: one ihram holds both, start to end\n\nIfrad: Hajj alone, and no sacrifice falls\n\nFor qiran, most say one tawaf serves both\n\nMaliki and Shafi'i say ifrad is best\n\nWhichever you pick, choose it before ihram\n\nTamattu, qiran, ifrad: three shapes\n\nSource: The three ways to perform Hajj\n\nhttps://noorcodex.com/hajj.html#ways",
+   "src": "The three ways to perform Hajj",
+   "room": "hajj.html#ways",
+   "tags": [
+    "#Islam",
+    "#IslamicHistory",
+    "#NoorCodexOfLight"
+   ],
+   "secs": 53,
+   "cover": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ways-cover.jpg",
+   "video": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ways.mp4",
+   "made": "2026-09-19",
+   "wide": "https://rffxj44gtgkagbhr.public.blob.vercel-storage.com/reels/short-ways-wide.mp4"
   },
   {
    "id": "short-wisdom",
