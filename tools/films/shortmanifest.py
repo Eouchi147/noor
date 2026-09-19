@@ -160,7 +160,15 @@ def secs_of(slug):
 
 
 def made_of(path):
-    return datetime.datetime.utcfromtimestamp(os.path.getmtime(path)).strftime("%Y-%m-%d")
+    #  utcfromtimestamp is deprecated and slated for removal: it hands back a
+    #  naive datetime that CLAIMS to be UTC and carries nothing saying so, so
+    #  anything that later treats it as local time is quietly wrong. The
+    #  aware form is asked for explicitly and prints the same date, which is
+    #  all this uses. timezone.utc rather than datetime.UTC, which is 3.11 and
+    #  later only and this has to run wherever the owner's python happens to
+    #  be.
+    return datetime.datetime.fromtimestamp(
+        os.path.getmtime(path), datetime.timezone.utc).strftime("%Y-%m-%d")
 
 
 # ---------------------------------------------------------------------------
