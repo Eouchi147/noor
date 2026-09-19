@@ -89,7 +89,13 @@ function hash32(s) {
   return h >>> 0;
 }
 const gcd = (a, b) => b ? gcd(b, a % b) : a;
-function pick(list, dateStr, salt) {
+/* `seen` here does the same work it does in pickStep below, for the same
+   reason: this walk is also laid out against the list's own length, so it
+   re-shuffles when the shelf grows and can land on something recently sent.
+   It reaches the day's card, which walks by date rather than by slot, and the
+   stand in kinds. Passing nothing is the old behaviour exactly, which is what
+   every caller outside chooseReel does. */
+function pick(list, dateStr, salt, seen) {
   if (!list || !list.length) return null;
   const n = list.length;
   if (n === 1) return list[0];
@@ -98,7 +104,14 @@ function pick(list, dateStr, salt) {
   let stride = (hash32(salt + "|stride") % (n - 1)) + 1;
   while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
   const off = hash32(salt + "|offset") % n;
-  return list[(((day * stride + off) % n) + n) % n];
+  const at = d => list[(((d * stride + off) % n) + n) % n];
+  const first = at(day);
+  if (!seen || typeof seen.has !== "function" || !seen.size) return first;
+  for (let i = 0; i < n; i++) {
+    const c = at(day + i);
+    if (c && !seen.has(c.id)) return c;
+  }
+  return first;
 }
 
 const BASE_TAGS = ["#Islam", "#NoorCodexOfLight"];
@@ -274,18 +287,56 @@ export function reelStep(kind, dateStr, half, noShorts) {
   return week * perWeek + before;
 }
 
-function pickStep(list, step, salt) {
+/* THE WALK STEPS PAST WHAT HAS ALREADY GONE OUT.
+
+   The walk visits every card of a kind before it comes round, which is right,
+   and it is computed from the shelf rather than remembered, which is cheap.
+   The cost of that is written a few lines above: "a new shelf is a new walk".
+   Change the shelf and every step maps to a different card. Measured on 19
+   September 2026, putting the films on the shelf moved 60 of the 84 slots in
+   a fortnight onto a different card, across name, know, verse and word.
+
+   A re-shuffled walk can land on something posted days earlier. When it does,
+   sendOne's duplicate guard refuses every channel that already has it and the
+   slot goes out to nobody: five green "already had it" labels and silence. The
+   guard was doing its job. It was simply the only thing looking, and by the
+   time it looks the slot is already spent.
+
+   So the walk is told what has actually been sent, and steps on. It keeps its
+   own shape, which is the point: this is not a filter. Filtering the list
+   would change its length, and the stride and offset are chosen against the
+   length, so filtering would re-shuffle the very walk it was meant to steady.
+   Stepping forward leaves every other card exactly where it was and only
+   skips the cells that are occupied.
+
+   With no set passed, nothing changes at all: the first pick is returned
+   before the set is even consulted. So a store that is down, a caller that
+   does not know about this, and every existing test all get today's answer.
+   If every card of a kind has been sent inside the window, the plain pick is
+   returned rather than nothing, which is what happens today. */
+function pickStep(list, step, salt, seen) {
   if (!list || !list.length) return null;
   const n = list.length;
   if (n === 1) return list[0];
   let stride = (hash32(salt + "|stride") % (n - 1)) + 1;
   while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
   const off = hash32(salt + "|offset") % n;
-  return list[(((step * stride + off) % n) + n) % n];
+  const at = s => list[(((s * stride + off) % n) + n) % n];
+  const first = at(step);
+  if (!seen || typeof seen.has !== "function" || !seen.size) return first;
+  for (let i = 0; i < n; i++) {
+    const c = at(step + i);
+    if (c && !seen.has(c.id)) return c;
+  }
+  return first;
 }
 
-export function chooseReel(cards, dateStr, half, hijri) {
+export function chooseReel(cards, dateStr, half, hijri, seen) {
   const all = (cards || []).filter(c => c && c.id);
+  /* ids already sent to some channel inside the duplicate guard's window; a
+     Set, an array, or nothing at all, which is the same as nothing */
+  const avoid = seen && typeof seen.has === "function"
+    ? seen : new Set(Array.isArray(seen) ? seen : []);
   const kindOf = c => c.kind || "light";
   const dow = new Date(String(dateStr) + "T12:00:00Z").getUTCDay();
   if (half === "morning" && hijri && hijri.m && hijri.d) {
@@ -311,8 +362,8 @@ export function chooseReel(cards, dateStr, half, hijri) {
       /* the kind the rota asked for walks by slot count; a stand-in kind (the
          shelf mid-render) and the day's card, which has one slot a half a
          week and cannot meet itself, walk by the day as before */
-      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half, noShorts), "reel:" + kind);
-      return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind);
+      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half, noShorts), "reel:" + kind, avoid);
+      return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind, avoid);
     }
   }
   /* the shelf holds only the old day's cards, filed as morning and evening,
@@ -320,7 +371,7 @@ export function chooseReel(cards, dateStr, half, hijri) {
      the half takes any day's card, on its own walk, until the other kinds
      are rendered */
   const any = all.filter(c => kindOf(c) === "light");
-  if (any.length) return pick(any, dateStr, "reel:" + half);
+  if (any.length) return pick(any, dateStr, "reel:" + half, avoid);
   return null;
 }
 
@@ -566,7 +617,7 @@ function buildSlotInner(slot, ctx) {
    the machine used to send, which is worse than the full one and better than
    none.
 --------------------------------------------------------------------------- */
-export async function slotExtras(base, date, index, slot, hijri, pin) {
+export async function slotExtras(base, date, index, slot, hijri, pin, seen) {
   const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
@@ -582,7 +633,7 @@ export async function slotExtras(base, date, index, slot, hijri, pin) {
        the rota's walk moves when the shelf grows (every Monday), so a retry
        composed from the rota came out as a different card and was refused
        as drift (every reel of 15 September 2026 after the shelf grew) */
-    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null);
+    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null, seen);
     /* the row carries the video's own URL once the shelf is on the Blob
        store; an older manifest has none, and the file is on the site */
     const isUrl = v => typeof v === "string" && /^https:\/\//.test(v);

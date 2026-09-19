@@ -8,6 +8,7 @@
 
    Run:  node tests/reels-kinds.mjs
 */
+import fs from 'fs';
 import * as S from '../api/_schedule.js';
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
@@ -178,6 +179,109 @@ console.log('\nthe afternoon short, four days a week');
      original stand in row, exactly as before this change */
   const noShorts = week.map(d => kind(S.chooseReel(MAN, d, 'afternoon', null)));
   ok(noShorts.join() === 'name,word,know,verse,verse,know,word', 'with no shorts on the shelf, every afternoon is still the old row: ' + noShorts.join(' '));
+}
+
+/* =========================================================================
+   THE WALK STEPS PAST WHAT HAS ALREADY GONE OUT
+
+   On 19 September 2026 the 08:00 reel was refused by all five networks at
+   once, each of them saying it already had that reel, and the slot went out
+   to nobody. The duplicate guard was right every time; it was simply the
+   only thing looking, and it is asked after a send is already under way.
+
+   The cause is written into the walk itself: its stride and offset are laid
+   out against the length of the list, so a shelf that grows is a new walk.
+   Putting the films on the shelf moved 60 of the 84 slots in a fortnight
+   onto a different card, and a moved slot can land on something posted days
+   earlier.
+
+   The picker now takes what has actually been sent and steps past it. Three
+   things have to hold: passing nothing must change nothing, a card known to
+   have gone out must never come back while another of its kind is free, and
+   a kind that is entirely spent must still yield something rather than
+   nothing, because nothing is the fault being fixed.
+   ========================================================================= */
+console.log('\n=== the walk steps past what has already gone out ===');
+{
+  const HALVES = ['morning', 'noon', 'afternoon', 'evening', 'late', 'night'];
+  const days = [];
+  for (let t = Date.parse('2026-09-06T00:00:00Z'); t <= Date.parse('2026-12-06T00:00:00Z'); t += 86400000)
+    days.push(new Date(t).toISOString().slice(0, 10));
+
+  //  nothing passed, an empty Set and an empty array are one and the same
+  let sameEmpty = 0, n = 0;
+  for (const d of days) for (const h of HALVES) {
+    const a = S.chooseReel(MAN, d, h, null);
+    const b = S.chooseReel(MAN, d, h, null, new Set());
+    const c = S.chooseReel(MAN, d, h, null, []);
+    n++;
+    if ((a && a.id) === (b && b.id) && (a && a.id) === (c && c.id)) sameEmpty++;
+  }
+  ok(sameEmpty === n, 'an empty set, an empty array and nothing at all pick the same card every time (' + sameEmpty + '/' + n + ')');
+
+  //  the card it would have chosen, marked sent: it must move, and stay in kind
+  let moved = 0, stuck = [];
+  for (const d of days) for (const h of HALVES) {
+    const was = S.chooseReel(MAN, d, h, null);
+    if (!was) continue;
+    const now = S.chooseReel(MAN, d, h, null, new Set([was.id]));
+    if (now && now.id !== was.id && now.kind === was.kind) moved++;
+    else stuck.push(d + ' ' + h + ' ' + (was && was.id));
+  }
+  ok(stuck.length === 0, 'a card already sent is stepped past, for a card of the same kind, on every slot of three months (' + moved + ' moved' + (stuck.length ? ', stuck: ' + stuck.slice(0, 3).join('; ') : '') + ')');
+
+  //  keep marking them off and it keeps finding new ones, right to the end of
+  //  the kind. Asked for more than the kind holds it must of course repeat:
+  //  the run below is the size of the pool the slot actually draws on, worked
+  //  out from the shelf rather than guessed, because a stub shelf with five
+  //  Did you knows cannot yield thirty distinct ones and a test that asks for
+  //  thirty is testing its own arithmetic.
+  {
+    const d = '2026-09-06', h = 'noon';
+    const kindHere = (S.chooseReel(MAN, d, h, null) || {}).kind;
+    const pool = MAN.filter(c => c.kind === kindHere).length;
+    const seen = new Set(); const got = []; let repeated = 0;
+    for (let i = 0; i < pool; i++) {
+      const c = S.chooseReel(MAN, d, h, null, seen);
+      if (!c) break;
+      if (seen.has(c.id)) repeated++;
+      got.push(c.id); seen.add(c.id);
+    }
+    ok(pool > 3 && repeated === 0 && got.length === pool && new Set(got).size === pool,
+       'asked again and again with every answer marked sent, it walks the whole kind without repeating itself (' + kindHere + ': ' + got.length + ' of ' + pool + ', ' + new Set(got).size + ' distinct)');
+  }
+
+  //  a kind wholly spent still answers: nothing is the bug, not the remedy
+  {
+    const know = new Set(MAN.filter(c => c.kind === 'know').map(c => c.id));
+    const c = S.chooseReel(MAN, '2026-09-08', 'morning', null, know);
+    ok(!!c, 'when every card of the kind has already gone out it still returns one rather than nothing (' + (c ? c.kind + ' ' + c.id : 'NULL') + ')');
+  }
+
+  //  and the day's card keeps its date: a named day is not stepped over
+  {
+    const ash = S.chooseReel(MAN, '2026-09-07', 'morning', { m: 1, d: 10 });
+    if (ash) {
+      const again = S.chooseReel(MAN, '2026-09-07', 'morning', { m: 1, d: 10 }, new Set([ash.id]));
+      ok(again && again.id === ash.id, 'a This day reel still goes out on its own date even when it has been sent before, because the date is the point');
+    } else ok(true, 'no This day card in this stub shelf to check');
+  }
+}
+
+/* =========================================================================
+   AND THE READ THAT FEEDS IT
+   ========================================================================= */
+console.log('\n=== what has already gone out, read from the store ===');
+{
+  const src = fs.readFileSync(new URL('../api/social.js', import.meta.url), 'utf8');
+  ok(/export async function recentlyPosted\(/.test(src), 'social.js exports recentlyPosted for the picker to use');
+  ok(/recentlyPosted[\s\S]{0,900}K_POSTED_CH/.test(src),
+     'it reads the per channel hash, so a reel that reached three networks of five still counts as sent');
+  ok(/recentlyPosted[\s\S]{0,900}DUP_WINDOW_DAYS/.test(src),
+     'and it uses the duplicate guard\'s own window, so the picker avoids exactly what the guard would refuse');
+  const SOC = await import('../api/social.js');
+  const empty = await SOC.recentlyPosted('2026-09-19');
+  ok(empty instanceof Set && empty.size === 0, 'with no store configured it answers an empty set, so the picker behaves exactly as it did before');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

@@ -1926,6 +1926,49 @@ async function findDuplicate(reelId, ch, date) {
   return null;
 }
 
+/* WHAT HAS ALREADY GONE OUT, SO THE PICKER CAN STEP PAST IT.
+
+   findDuplicate above is the last line: it is asked once a send is already
+   under way, per channel, and all it can do is refuse. On 19 September 2026
+   the 08:00 reel was refused by all five networks at once and the slot went
+   out to nobody. The guard was right every time and the morning was still
+   lost, because nothing upstream had ever looked.
+
+   This is the same question asked early enough to be useful. One HGETALL of
+   the per channel hash, the very read findDuplicate does first, reduced to
+   the set of reel ids some channel has had inside the same window. The
+   picker (chooseReel, _schedule.js) steps past them rather than landing on
+   one and being turned away.
+
+   K_POSTED_CH and not K_POSTED: the latter names a reel only once EVERY live
+   network has it, so a reel that reached three networks of five would be
+   missing from it while those three would certainly refuse it again. The
+   window is DUP_WINDOW_DAYS, the guard's own, because a picker that avoided
+   more than the guard refuses would spend variety for nothing, and one that
+   avoided less would leave exactly the hole this closes.
+
+   Store down, or anything thrown: an empty set, and every caller behaves
+   precisely as it did before this existed. */
+export async function recentlyPosted(date) {
+  const out = new Set();
+  if (!kvReady()) return out;
+  const cutoff = Date.parse(String(date) + "T00:00:00Z") - DUP_WINDOW_DAYS * 86400000;
+  if (!isFinite(cutoff)) return out;
+  let raw = [];
+  try { raw = (await kv([["HGETALL", K_POSTED_CH]]))[0] || []; } catch { return out; }
+  const pairs = Array.isArray(raw) ? raw : Object.entries(raw).flat();
+  for (let i = 0; i + 1 < pairs.length; i += 2) {
+    const field = String(pairs[i]), at = String(pairs[i + 1]);
+    const bar = field.lastIndexOf("|");
+    if (bar < 0) continue;
+    const hash = at.indexOf("#");
+    const when = Date.parse((hash < 0 ? at : at.slice(0, hash)) + "T00:00:00Z");
+    if (!isFinite(when) || when < cutoff) continue;
+    out.add(field.slice(0, bar));
+  }
+  return out;
+}
+
 /* ---------------------------------------------------------------------------
    YOUTUBE, TWICE IN ONE SLOT
 
@@ -2022,7 +2065,11 @@ export async function composeSlot(host, date, slotId, opts = {}) {
     if (r.ok) index = await r.json(); } catch { } }
   /* the day's chapter and word, in full, so the caption carries the material
      the library actually wrote rather than the index's one line */
-  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null);
+  /* a pinned repair names its own reel and never reaches the picker, so it is
+     not worth a read; every other composition hands the picker what has
+     already gone out */
+  const seen = opts.extras || opts.reel ? null : (opts.seen || await recentlyPosted(date));
+  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null, seen);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
@@ -2709,6 +2756,9 @@ export async function runDue(host, date, now, opts = {}) {
 
   const base = "https://" + publicHost(host);
   const idx = opts.index || null;
+  /* once for the run, not once a slot: every slot of this run steps past the
+     same set, and two slots of one run cannot pick the same reel either */
+  const seen = opts.seen || await recentlyPosted(date);
   for (const slot of due) {
     if (posted >= cap) break;
     let post;
@@ -2719,7 +2769,7 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image, slot: "light" };
     } else {
-      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri);
+      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, null, seen);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
