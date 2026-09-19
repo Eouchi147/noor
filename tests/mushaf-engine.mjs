@@ -45,7 +45,7 @@ const errors=[]; page.on('pageerror',e=>errors.push(String(e)));
 
 /* verse 2 of Al-Fatiha is slow; verse 4 is dead on every mirror; the rest are fine */
 const SLOW_MS=7000;
-let slowServed=0, deadAsked=0;
+let slowServed=0, deadAsked=0; const deadUrls=[];
 await page.route('**/api.alquran.cloud/**', r=>{
   const p=new URL(r.request().url()).pathname.split('/');
   r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(surahJSON(+p[3],7,p[4]!=='quran-uthmani'))});
@@ -53,7 +53,7 @@ await page.route('**/api.alquran.cloud/**', r=>{
 await page.route(u=>/(islamic\.network|everyayah|verses\.quran)/.test(u.href), async r=>{
   const u=r.request().url();
   const isV2=/\/2\.mp3$|001002\.mp3$/.test(u), isV4=/\/4\.mp3$|001004\.mp3$/.test(u);
-  if(isV4){ deadAsked++; return r.abort('failed'); }
+  if(isV4){ deadAsked++; deadUrls.push(u); return r.abort('failed'); }
   if(isV2){ slowServed++; await new Promise(res=>setTimeout(res,SLOW_MS)); }
   r.fulfill({status:200,contentType:'audio/wav',body:TONE});
 });
@@ -81,14 +81,30 @@ ok(slowServed===1,'without asking a second mirror for it ('+slowServed+' request
 
 console.log('\n=== a dead verse stops the recitation on that verse ===');
 await page.waitForFunction(()=>NOOR_MUSHAF.playingIdx===3,{timeout:15000});
-/* four mirrors, refused, then two retry rounds of four -- give it time */
+/* every mirror refused, then retried -- give it time */
 await page.waitForFunction(()=>NOOR_MUSHAF.stuckAt===3,{timeout:60000}).then(()=>ok(true,'the recitation stops ON verse 4'))
   .catch(async()=>ok(false,'the recitation stops ON verse 4 (state '+JSON.stringify(await st())+')'));
 s=await st();
 ok(s.i===3,'verse 4 is still the current verse -- it was not passed over');
 ok(s.paused===true,'and the player is paused there, not playing something else');
 ok(/could not be loaded|tap play/i.test(s.status+' '+s.sub),'and it says so in words: "'+s.sub+'"');
-ok(deadAsked>=8,'after trying every mirror and trying again ('+deadAsked+' asks)');
+/*  THIS USED TO ASSERT deadAsked>=8, AND IT WAS WRONG, not the engine.
+    Eight was four mirrors twice. The chain quran.html builds is the chosen
+    reciter at its own bitrate, the same reciter at the other bitrate, then
+    Alafasy, then everyayah -- and the Alafasy entry is skipped when Alafasy
+    IS the chosen reciter, which he is by default and therefore in this test.
+    Three mirrors, asked twice, is six, and six is the whole chain tried and
+    retried with nothing missing. A magic number that drifts the moment the
+    reciter list changes proves nothing anyway, so the promise is stated as
+    what it actually is. */
+{
+  const tried = [...new Set(deadUrls)];
+  const hosts = [...new Set(tried.map(u => new URL(u).host))];
+  const askedTwice = tried.filter(u => deadUrls.filter(x => x === u).length >= 2);
+  ok(tried.length >= 3, 'every mirror in the chain was tried, not just the first (' + tried.length + ' distinct)');
+  ok(hosts.length >= 2, 'and the chain spans more than one provider, so one of them going down does not silence the verse (' + hosts.join(', ') + ')');
+  ok(askedTwice.length === tried.length, 'and every one of them was asked again before giving up (' + askedTwice.length + '/' + tried.length + ', ' + deadAsked + ' asks in all)');
+}
 ok(s.cont===true,'continuous mode is kept, so play resumes the run');
 
 console.log('\n=== play resumes from the verse that failed ===');
