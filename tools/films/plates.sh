@@ -34,6 +34,40 @@ for b in $LIST; do
     mv -f "$s-$shape-30fps.mp4" "$s-$shape-60fps.mp4"
     python3 shortmusic.py "$s" --mux --shape "$shape" || echo "  SCORE FAILED: $s ($shape)"
     mv -f "$s-$shape-60fps.mp4" "$s-$shape-30fps.mp4"
+
+    #  ---- AND DROP THIS FILM'S OLDER FRAME GENERATIONS -------------------
+    #  The frames cache is keyed on a hash of the film, the page, spec.py and
+    #  every hand written file in web/. That is the right key: edit a line of
+    #  a film or a line of the motion engine and the old frames are no longer
+    #  the film, so a fresh cache is started and resuming stays honest.
+    #
+    #  Nothing ever removed the cache that was left behind. By 19 September
+    #  there were 178 frame directories on the owner's Mac for 82 films, and
+    #  96 of them belonged to builds that no longer existed and could never
+    #  be reused again: 48.7 GB, quietly, with the disk at 98 percent and no
+    #  room to render eleven more films. Every engine change had cost a
+    #  generation of every film in the library.
+    #
+    #  So a film drops its own older generations once its current ones have
+    #  actually been drawn. Three things keep it narrow. It runs only after
+    #  the encode and the mux, so the master exists. It asks noor.py itself
+    #  where the current frames are rather than working the hash out again
+    #  here, which is how a copy of a rule drifts from the rule. And it does
+    #  nothing at all unless that current directory is really on disk, so a
+    #  failed render or an unanswered question can never be read as "none of
+    #  these are current, remove them all".
+    keep=$(python3 noor.py --film "$s" --shape "$shape" --fps 30 --cells 2>/dev/null)
+    keep=$(basename "${keep:-none}")
+    if [ -n "$keep" ] && [ -d "frames/$keep" ]; then
+      for d in frames/"$s"-"$shape"-30fps-*; do
+        [ -d "$d" ] || continue
+        [ "$(basename "$d")" = "$keep" ] && continue
+        sz=$(du -sk "$d" 2>/dev/null | cut -f1)
+        if rm -rf "$d"; then
+          echo "  dropped an older frame cache, $(( ${sz:-0} / 1024 )) MB: $(basename "$d")"
+        fi
+      done
+    fi
   done
 done
 echo

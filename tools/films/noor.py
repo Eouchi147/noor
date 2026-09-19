@@ -295,7 +295,18 @@ def main():
     ap.add_argument("--fresh", action="store_true",
                     help="throw away the frames already on disk for this film first. "
                          "Use it after the look changes, or you will re-encode old frames.")
+    ap.add_argument("--cells", action="store_true",
+                    help="print the frames directory this film and shape would "
+                         "use right now, then stop. plates.sh asks with this so "
+                         "it can drop a film's older frame generations without "
+                         "reimplementing the cache key and drifting from it.")
     a = ap.parse_args()
+
+    #  A QUESTION, NOT A RENDER. Answered before anything is created, so asking
+    #  where the frames would go never brings that directory into being.
+    if a.cells:
+        print(cells(a.film, a.shape, a.fps))
+        return
 
     sys.path.insert(0, HERE)
     if a.stills:
