@@ -1,6 +1,26 @@
 {
  "_note": "reels every network has taken, id to date, from https://noorcodex.com/api/social?action=posted; plan_build.py leaves them out of the plan and the shelf lets them go. This file only grows.",
- "fetched": "2026-09-15",
- "n": 0,
- "posted": {}
+ "fetched": "2026-09-21",
+ "n": 19,
+ "posted": {
+  "asma-two-belts": "2026-09-16",
+  "dua-rabbana-zalamna": "2026-09-17",
+  "know-astrolabe-maker": "2026-09-15",
+  "know-thabit": "2026-09-18",
+  "name-ad-darr": "2026-09-18",
+  "name-as-samad": "2026-09-17",
+  "short-asabiyya": "2026-09-17",
+  "verse-14-52": "2026-09-17",
+  "verse-17-110": "2026-09-18",
+  "verse-2-155-156": "2026-09-15",
+  "verse-25-54": "2026-09-15",
+  "verse-3-135": "2026-09-17",
+  "verse-30-22": "2026-09-18",
+  "verse-31-27": "2026-09-15",
+  "verse-55-5-6": "2026-09-16",
+  "verse-6-17": "2026-09-18",
+  "word-ahruf-sabah": "2026-09-16",
+  "word-illah": "2026-09-18",
+  "word-rukhsah": "2026-09-16"
+ }
 }
