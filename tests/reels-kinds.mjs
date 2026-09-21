@@ -281,7 +281,73 @@ console.log('\n=== what has already gone out, read from the store ===');
      'and it uses the duplicate guard\'s own window, so the picker avoids exactly what the guard would refuse');
   const SOC = await import('../api/social.js');
   const empty = await SOC.recentlyPosted('2026-09-19');
-  ok(empty instanceof Set && empty.size === 0, 'with no store configured it answers an empty set, so the picker behaves exactly as it did before');
+  ok(empty instanceof Map && empty.size === 0, 'with no store configured it answers empty, so the picker behaves exactly as it did before');
+}
+
+/* =========================================================================
+   HOW FAR BACK THE GUARD LOOKS, HELD TO THE SHELF ITSELF
+
+   On 21 September 2026 the owner found one of his films posted a second time.
+   The guard looked back twenty one days. His films come round every ninety
+   one, because there are 52 of them and the rota asks for one four times a
+   week, so there were seventy days in which a repeat was possible and nothing
+   was watching. The walk re-lays itself whenever the shelf grows, and the
+   shelf had gone from 22 films to 41 to 52 inside a week, which is how a film
+   sent on day 10 was offered again on day 25.
+
+   The number is now sixty. What matters more than the number is that it can
+   never again be wrong without something saying so: the shortest honest gap in
+   the library is worked out here from the real shelf and the real rota, and
+   the window has to sit under it. Add films and the gap shrinks; ask for them
+   more often and it shrinks; either way this fails and names the kind.
+   ========================================================================= */
+console.log('\n=== how far back the guard looks ===');
+{
+  const SOC = await import('../api/social.js');
+  const shelf = JSON.parse(fs.readFileSync(new URL('../reels/index.json', import.meta.url), 'utf8')).cards;
+  const HALVES = ['morning', 'noon', 'afternoon', 'evening', 'late', 'night'];
+  const pool = {}, perWeek = {};
+  for (const c of shelf) { const k = c.kind || 'light'; pool[k] = (pool[k] || 0) + 1; }
+  for (let d = 0; d < 7; d++) for (const h of HALVES) {
+    const iso = new Date(Date.UTC(2026, 8, 6 + d)).toISOString().slice(0, 10);
+    const c = S.chooseReel(shelf, iso, h, null);
+    if (c) { const k = c.kind || 'light'; perWeek[k] = (perWeek[k] || 0) + 1; }
+  }
+  let tightest = null, tightestDays = Infinity;
+  for (const k of Object.keys(perWeek)) {
+    if (k === 'day') continue;                    /* a This day card is its date, not a cycle */
+    const days = Math.round((pool[k] / perWeek[k]) * 7);
+    if (days < tightestDays) { tightestDays = days; tightest = k; }
+  }
+  ok(isFinite(tightestDays) && tightestDays > 0, 'the shortest honest gap can be worked out from the shelf (' + tightest + ', ' + tightestDays + ' days)');
+  ok(SOC.DUP_WINDOW_DAYS > 21, 'the guard looks back further than the twenty one days that let a film through (' + SOC.DUP_WINDOW_DAYS + ')');
+  ok(SOC.DUP_WINDOW_DAYS < tightestDays,
+     'and it still sits under the shortest gap the rota honestly produces, so it never refuses a card whose turn has really come round (' +
+     SOC.DUP_WINDOW_DAYS + ' against ' + tightest + ' at ' + tightestDays + ')');
+  ok(tightestDays - SOC.DUP_WINDOW_DAYS >= 14, 'with at least a fortnight of margin, not a hair (' + (tightestDays - SOC.DUP_WINDOW_DAYS) + ' days)');
+}
+
+/* =========================================================================
+   AND WHEN A KIND HAS BEEN USED UP, THE ONE SENT LONGEST AGO
+   ========================================================================= */
+console.log('\n=== a kind used up falls back to the oldest, not to chance ===');
+{
+  const d = '2026-09-06', h = 'noon';
+  const kindHere = (S.chooseReel(MAN, d, h, null) || {}).kind;
+  const all = MAN.filter(c => c.kind === kindHere);
+  //  every one of them sent, on dates a month apart, the last one longest ago
+  const when = new Map();
+  all.forEach((c, i) => when.set(c.id, '2026-0' + (i % 8 + 1) + '-01'));
+  let oldestId = null, oldestT = Infinity;
+  for (const [id, day] of when) { const t = Date.parse(day + 'T00:00:00Z'); if (t < oldestT) { oldestT = t; oldestId = id; } }
+  const got = S.chooseReel(MAN, d, h, null, when);
+  ok(got && when.has(got.id), 'with the whole kind spent it still answers rather than going silent');
+  ok(got && Date.parse(when.get(got.id) + 'T00:00:00Z') === oldestT,
+     'and it answers with one of those sent longest ago, which is the widest gap left to give (' + (got && when.get(got.id)) + ')');
+  //  a plain Set still works, it simply knows whether and not when
+  const asSet = new Set(when.keys());
+  const fromSet = S.chooseReel(MAN, d, h, null, asSet);
+  ok(!!fromSet, 'a caller that passes a plain Set, which knows whether but not when, still gets an answer');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

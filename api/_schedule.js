@@ -107,11 +107,22 @@ function pick(list, dateStr, salt, seen) {
   const at = d => list[(((d * stride + off) % n) + n) % n];
   const first = at(day);
   if (!seen || typeof seen.has !== "function" || !seen.size) return first;
+  /* the first card this walk reaches that has not gone out. Failing that, when
+     every card of the kind has been sent, the one sent LONGEST AGO rather than
+     whichever the step happened to land on, so a library that has been round
+     once still gives the widest gap it can. `seen` may be a plain Set, which
+     knows whether but not when; then this is the first in walk order, exactly
+     as before. */
+  let oldest = null, oldestAt = Infinity;
   for (let i = 0; i < n; i++) {
     const c = at(day + i);
-    if (c && !seen.has(c.id)) return c;
+    if (!c) continue;
+    if (!seen.has(c.id)) return c;
+    const t = typeof seen.get === "function" ? Date.parse(String(seen.get(c.id)) + "T00:00:00Z") : NaN;
+    const when = isFinite(t) ? t : 0;
+    if (when < oldestAt) { oldestAt = when; oldest = c; }
   }
-  return first;
+  return oldest || first;
 }
 
 const BASE_TAGS = ["#Islam", "#NoorCodexOfLight"];
@@ -324,11 +335,22 @@ function pickStep(list, step, salt, seen) {
   const at = s => list[(((s * stride + off) % n) + n) % n];
   const first = at(step);
   if (!seen || typeof seen.has !== "function" || !seen.size) return first;
+  /* the first card this walk reaches that has not gone out. Failing that, when
+     every card of the kind has been sent, the one sent LONGEST AGO rather than
+     whichever the step happened to land on, so a library that has been round
+     once still gives the widest gap it can. `seen` may be a plain Set, which
+     knows whether but not when; then this is the first in walk order, exactly
+     as before. */
+  let oldest = null, oldestAt = Infinity;
   for (let i = 0; i < n; i++) {
     const c = at(step + i);
-    if (c && !seen.has(c.id)) return c;
+    if (!c) continue;
+    if (!seen.has(c.id)) return c;
+    const t = typeof seen.get === "function" ? Date.parse(String(seen.get(c.id)) + "T00:00:00Z") : NaN;
+    const when = isFinite(t) ? t : 0;
+    if (when < oldestAt) { oldestAt = when; oldest = c; }
   }
-  return first;
+  return oldest || first;
 }
 
 export function chooseReel(cards, dateStr, half, hijri, seen) {

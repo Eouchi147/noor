@@ -1564,14 +1564,14 @@ async function notePostedChannels(date, rec) {
    release, never from a send: it walks the guard's own window, the last
    DUP_WINDOW_DAYS of reel slots, REEL_SLOTS a day, and calls
    notePostedChannels on every record that has an ok result on any network.
-   Bounded (DUP_WINDOW_DAYS times REEL_SLOTS.length reads, 126 today, well
+   Bounded (BACKFILL_DAYS times REEL_SLOTS.length reads, 126 today, well
    inside one run) and idempotent: writing the same field to the same value
    twice changes nothing, so running it again after a fresh send, or twice
    by mistake, costs a few reads and nothing more. */
 export async function backfillPosted(today) {
   const base = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z");
   const days = [];
-  for (let i = 0; i < DUP_WINDOW_DAYS; i++) days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
+  for (let i = 0; i < BACKFILL_DAYS; i++) days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
   let records = 0, written = 0;
   for (const d of days) {
     for (const slot of REEL_SLOTS) {
@@ -1893,7 +1893,47 @@ function reelDoor(p) {
    itself predates 16 September or was never written (KV down that day).
    Never more than a couple of reads either way. A card is not a reel and
    carries no id worth guarding here. */
-const DUP_WINDOW_DAYS = 21;
+/* HOW FAR BACK THE GUARD LOOKS, AND WHY IT IS NOT TWENTY ONE.
+
+   It was twenty one, and on 21 September 2026 the owner found one of his films
+   posted a second time. Twenty one days was never the right number; it was the
+   number that kept backfillPosted's walk cheap, and it leaked into the guard,
+   which does not walk anything.
+
+   The arithmetic, measured against the real shelf. Each kind comes round again
+   when its pool runs out, so the honest gap between one card and itself is its
+   pool divided by how often the rota asks for that kind:
+
+       word   422 cards,  8 a week  ->  369 days
+       know   225 cards,  5 a week  ->  315 days
+       light   79 cards,  2 a week  ->  277 days
+       verse  593 cards, 18 a week  ->  231 days
+       name    99 cards,  4 a week  ->  173 days
+       dua     18 cards,  1 a week  ->  126 days
+       short   52 cards,  4 a week  ->   91 days
+
+   So the shortest honest gap in the whole library is ninety one days, and it
+   belongs to the films, which is precisely what the owner saw come round
+   twice. Between twenty one and ninety one there were seventy days in which a
+   repeat was possible and nothing was watching.
+
+   Sixty. Three times what it was, wide enough to cover the real cause (the
+   walk re-lays itself whenever the shelf grows, and the shelf grew from 22
+   films to 41 to 52 inside one week, so a film sent on day 10 could be offered
+   again on day 25), and thirty one days clear of the shortest gap the rota
+   legitimately produces, so it never refuses a film whose turn has honestly
+   come round again.
+
+   That margin is not left to memory: tests/reels-kinds.mjs works the shortest
+   cycle out from the shelf itself and fails if this number ever rises above
+   it. Add films, or ask for them more often, and the test says so. */
+export const DUP_WINDOW_DAYS = Number(process.env.DUP_WINDOW_DAYS) > 0 ? Number(process.env.DUP_WINDOW_DAYS) : 60;
+
+/* backfillPosted walks slot records by hand, REEL_SLOTS reads a day, so its
+   reach is a cost and stays where it was. The guard and the picker each read
+   one hash and then apply a cutoff, so their reach costs nothing at all, which
+   is why the two were never the same number and should not have shared one. */
+const BACKFILL_DAYS = 21;
 async function findDuplicate(reelId, ch, date) {
   if (!reelId || !kvReady()) return null;
   const cutoff = Date.parse(date + "T00:00:00Z") - DUP_WINDOW_DAYS * 86400000;
@@ -1950,7 +1990,13 @@ async function findDuplicate(reelId, ch, date) {
    Store down, or anything thrown: an empty set, and every caller behaves
    precisely as it did before this existed. */
 export async function recentlyPosted(date) {
-  const out = new Set();
+  /* A Map and not a Set, keyed by reel id, holding the LAST date some channel
+     had it. A Map answers has() and size exactly as a Set does, so nothing
+     that only asks whether a reel has gone out needs to change. What the value
+     buys is the case where a kind has been used up: the picker can then take
+     the one sent longest ago rather than the first one it happens to step on,
+     which is the difference between the largest possible gap and a random one. */
+  const out = new Map();
   if (!kvReady()) return out;
   const cutoff = Date.parse(String(date) + "T00:00:00Z") - DUP_WINDOW_DAYS * 86400000;
   if (!isFinite(cutoff)) return out;
@@ -1964,7 +2010,9 @@ export async function recentlyPosted(date) {
     const hash = at.indexOf("#");
     const when = Date.parse((hash < 0 ? at : at.slice(0, hash)) + "T00:00:00Z");
     if (!isFinite(when) || when < cutoff) continue;
-    out.add(field.slice(0, bar));
+    const id = field.slice(0, bar), day = hash < 0 ? at : at.slice(0, hash);
+    const had = out.get(id);
+    if (!had || when > Date.parse(had + "T00:00:00Z")) out.set(id, day);
   }
   return out;
 }

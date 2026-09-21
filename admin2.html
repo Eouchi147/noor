@@ -878,7 +878,14 @@ function drawPosts(force){
            earlier day, and nothing new was sent. Named `already` since 16
            September 2026 -- `dup` is the list just above, of a different
            kind of duplicate, and one field cannot honestly be both. */
-        if(x.ok&&x.already===true)return '<span class="chan ok" title="'+esc(k)+' already had this reel, from '+esc(x.at||'an earlier send')+'; not sent again">'+esc(k)+' (already had it)</span>'+dupBadge;
+        /* THE WORDING, AND WHY IT CHANGED ON 21 SEPTEMBER 2026.
+           This said "(already had it)", which is a state and not an action,
+           and the owner read it the only other way English allows: that the
+           network already had the reel and here it was again. He saw five of
+           these on one slot and understood it as five duplicate posts, which
+           is the opposite of what had happened. A label on a console is read
+           by one person under pressure and has to say what was DONE. */
+        if(x.ok&&x.already===true)return '<span class="chan ok" title="'+esc(k)+' already had this reel, from '+esc(x.at||'an earlier send')+', so nothing was sent">'+esc(k)+' · not sent (already up)</span>'+dupBadge;
         if(x.ok)return '<span class="chan ok" title="'+(x.story?(x.story.ok?'and a story':(x.story.pending?'story still processing':'story: '+esc(x.story.error||x.story.skipped||'refused'))):'')+'">'+esc(k)+(x.story?(x.story.ok?' +story':(x.story.pending?' +story …':'')):'')+'</span>'+dupBadge;
         /* a Facebook pending that outlived PENDING_MAX_MS with a real video
            id on it: never given up into a resend (social.js), because the
