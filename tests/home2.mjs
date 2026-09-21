@@ -149,9 +149,21 @@ console.log('\n=== 3. the promises ===');
   ok(html.includes('<h2 class="n2-h2" data-noor-1>The whole library, <span class="n2-g">free</span></h2>'), 'the library screen says the same, with the key word in gold, and reads as one sentence in every language');
   ok(html.includes('with its date, and its source where the card names one'), 'the Lights claim a source only where a card names one');
   ok(!/whole of Islam/i.test(html), 'no "the whole of Islam"');
+  /* the tab, the headline of every search result, the headline of every shared
+     link and the name of every bookmark. It read "NOOR · Codex of Light" and
+     named no subject whatever, which is the same fault as the headline had and
+     is seen by far more people, most of whom never reach the page. */
+  ok(/<title>NOOR · Learn Islam, from the sources<\/title>/.test(html), 'the title names the subject, for everyone who sees it before the page');
+  ok(/<meta property="og:title" content="NOOR · Learn Islam, from the sources"\/>/.test(html), 'and a shared link carries the same');
   /* the arrival: the question, the verse, the three Names, the toolkit */
   ok(/<p class="n2-eyebrow ask-eyebrow">Free · No ads · No account<\/p>/.test(html), 'the arrival opens with the short guarantee, three words wide');
-  ok(/<h1 class="n2-h1 ask-h1" data-noor-1>What do you want <span class="g">to know\?<\/span><\/h1>/.test(html), 'the headline is the question itself, its second half in gold');
+  /* The question named no subject until 21 September 2026. A stranger arriving
+     from a reel met a warm, open question about nothing in particular, and the
+     word Islam did not appear above the fold at all except as the third item
+     in the list below. Two words were added and the gold moved onto them: the
+     emphasis was always there, it was simply pointing at "to know", which
+     carries no information. The page says what it is about now. */
+  ok(/<h1 class="n2-h1 ask-h1" data-noor-1>What do you want to know <span class="g">about Islam\?<\/span><\/h1>/.test(html), 'the headline names its subject, and the gold falls on the subject rather than on filler');
   {
     /* Five headings on this page are one sentence styled in two halves. Every
        one of them must be marked data-noor-1, or a translator is handed two
