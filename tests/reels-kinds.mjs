@@ -350,5 +350,35 @@ console.log('\n=== a kind used up falls back to the oldest, not to chance ===');
   ok(!!fromSet, 'a caller that passes a plain Set, which knows whether but not when, still gets an answer');
 }
 
+/* =========================================================================
+   THE GUARD CAN ONLY REFUSE WHAT IT REMEMBERS
+
+   The same short went to YouTube on 7 September and again on the 21st. That
+   is fourteen days, well inside the guard's window even as it then stood, so
+   the window was not the fault. The 7 September send happened before the per
+   channel hash existed, and the older ledger only ever names a reel once EVERY
+   live network has it, so that send was written down nowhere the guard reads.
+   It had no memory of it in any form.
+
+   backfillPosted is the walk that writes the past down. Its reach was fixed at
+   twenty one days, which is the bound that keeps its cost sane, not a statement
+   about how far back the history goes. It takes the reach from its caller now,
+   clamped, so the hole can actually be closed.
+   ========================================================================= */
+console.log('\n=== the walk that writes the past down ===');
+{
+  const SOC = await import('../api/social.js');
+  const r21 = await SOC.backfillPosted('2026-09-21');
+  ok(r21 && r21.days === 21, 'asked for nothing it still walks its old default (' + (r21 && r21.days) + ')');
+  const r120 = await SOC.backfillPosted('2026-09-21', 120);
+  ok(r120 && r120.days === 120, 'asked for 120 it walks 120, which is what a history starting in August needs (' + (r120 && r120.days) + ')');
+  ok(r120 && r120.to === '2026-09-21' && r120.from === '2026-05-25',
+     'and it says which days it covered, so nobody has to guess whether it reached far enough (' + (r120 && r120.from) + ' to ' + (r120 && r120.to) + ')');
+  const huge = await SOC.backfillPosted('2026-09-21', 9999);
+  ok(huge && huge.days === 400, 'a silly reach is clamped rather than run (' + (huge && huge.days) + ')');
+  const zero = await SOC.backfillPosted('2026-09-21', 0);
+  ok(zero && zero.days === 21, 'and nought falls back to the default rather than walking nothing');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

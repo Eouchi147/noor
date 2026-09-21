@@ -1568,10 +1568,22 @@ async function notePostedChannels(date, rec) {
    inside one run) and idempotent: writing the same field to the same value
    twice changes nothing, so running it again after a fresh send, or twice
    by mistake, costs a few reads and nothing more. */
-export async function backfillPosted(today) {
+export async function backfillPosted(today, reach) {
   const base = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z");
+  /* THE REACH IS NOW THE CALLER'S, AND IT HAD TO BECOME SO.
+     On 21 September 2026 the owner found the same short on YouTube twice, sent
+     on the 7th and again on the 21st: fourteen days apart, well inside the
+     guard's window even as it then stood. The window was not the fault. The
+     7 September send happened before K_POSTED_CH existed at all, and the old
+     ledger the guard falls back to had never named that reel either, so the
+     guard had no memory of the send in any form and could only wave the second
+     one through. A guard is only as good as what it can remember, and nothing
+     had ever gone back and written down what happened before the memory was
+     built. This walk is that writing down, and twenty one days of reach cannot
+     cover a history that starts in August. */
+  const n = Math.max(1, Math.min(400, Number(reach) > 0 ? Math.floor(Number(reach)) : BACKFILL_DAYS));
   const days = [];
-  for (let i = 0; i < BACKFILL_DAYS; i++) days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
+  for (let i = 0; i < n; i++) days.push(new Date(base - i * 86400000).toISOString().slice(0, 10));
   let records = 0, written = 0;
   for (const d of days) {
     for (const slot of REEL_SLOTS) {
@@ -1582,7 +1594,7 @@ export async function backfillPosted(today) {
       written += await notePostedChannels(d, rec.slot ? rec : { ...rec, slot });
     }
   }
-  return { days: days.length, records, written };
+  return { days: days.length, records, written, from: days[days.length - 1], to: days[0] };
 }
 
 /* the ledger, less the last few days: what the render run may retire */
@@ -3073,7 +3085,7 @@ export default async function handler(req, res) {
     /* the owner's own one time catch up for K_POSTED_CH, run by hand from
        the console's System room after a release; owner only, unlike
        `posted` just above, since this one writes */
-    if (action === "backfillposted") return json(res, 200, { ok: true, ...(await backfillPosted(date)) });
+    if (action === "backfillposted") return json(res, 200, { ok: true, ...(await backfillPosted(date, (req.query && req.query.days) || (req.body && req.body.days))) });
     /* Step one: send the owner to Pinterest. */
     if (action === "pin-auth") {
       const id = process.env.PIN_APP_ID, secret = process.env.ADMIN_SECRET || "";
