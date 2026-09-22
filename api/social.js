@@ -55,6 +55,7 @@ import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
 import * as YT from "./_youtube.js";
+import * as REC from "./_reconcile.js";
 import { chooseLight } from "./_lights.js";
 import { askOpenRouter } from "./_models.js";
 import { ownerGate } from "./_owner.js";
@@ -1597,6 +1598,143 @@ export async function backfillPosted(today, reach) {
   return { days: days.length, records, written, from: days[days.length - 1], to: days[0] };
 }
 
+/* ---------------------------------------------------------------------------
+   THE LEDGER SIDE OF THE RECONCILIATION
+
+   api/_reconcile.js asks a network what it holds; this is what the house
+   believes it sent there. Every slot record in reach, every ok result for
+   that network, reduced to the platform's own id, which is the only thing
+   the two sides can be joined on exactly.
+
+   A SHORT WITH A WIDE FILE IS TWO VIDEOS ON YOUTUBE, by the owner's rule of
+   16 September: the tall file as a Short and the wide file as an ordinary
+   video. sendYouTubeBoth records the second under `wide` on the same result,
+   so both ids are pulled out here and expectedOn() in _reconcile knows to
+   allow two for such a reel. Miss the wide id and every film would be
+   reported as an unrecorded duplicate, which is the false alarm this whole
+   pass exists to avoid.
+
+   A wide upload still processing is recorded as `wide.pending` and its id is
+   just as real on the network, so it counts; a refused or capped one carries
+   no id and is nothing to look for.
+
+   Read in pipelines rather than one key at a time. Two hundred days of every
+   slot is two thousand keys, which as two thousand round trips would not fit
+   in a run and as ten pipelined reads costs about a second. Nothing here
+   writes. */
+export const RECONCILE_CHUNK = 200;
+
+export async function sentTo(network, today, reach, opts = {}) {
+  if (!kvReady()) return { ok: false, why: "no store is configured, so the house has no ledger to compare against" };
+  const base = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z");
+  const n = Math.max(1, Math.min(400, Number(reach) > 0 ? Math.floor(Number(reach)) : DUP_WINDOW_DAYS));
+  const want = [];
+  for (let i = 0; i < n; i++) {
+    const d = new Date(base - i * 86400000).toISOString().slice(0, 10);
+    for (const slot of SLOT_IDS) want.push({ date: d, slot });
+  }
+  const seen = new Map();          /* platform id -> the earliest row for it */
+  const idless = [];               /* ok sends that kept no platform id: unverifiable, never dropped */
+  let records = 0, slotsRead = 0, ranOut = false;
+  /* A WALK WITH NO CLOCK IS A WALK THAT CAN EAT THE WHOLE RUN. Four hundred
+     days of every slot is four thousand keys, and a store having a slow
+     minute would spend the function's five on this and return nothing at all.
+     It stops instead, says how far it got, and reconcile() below treats a
+     short ledger as an incomplete enumeration, which withholds the absences:
+     a walk that did not finish must not be read as a walk that found nothing. */
+  const started = Date.now();
+  const budget = opts.budgetMs == null ? 120000 : opts.budgetMs;
+  const take = (row) => {
+    if (!row.id) return;
+    const k = String(row.id);
+    const was = seen.get(k);
+    if (!was || String(row.at || "") < String(was.at || "")) seen.set(k, row);
+  };
+  for (let i = 0; i < want.length; i += RECONCILE_CHUNK) {
+    if (Date.now() - started > budget) { ranOut = true; break; }
+    const chunk = want.slice(i, i + RECONCILE_CHUNK);
+    let vals = [];
+    try { vals = await kv(chunk.map(w => ["GET", K_SLOT(w.date, w.slot)])); }
+    catch (e) { return { ok: false, why: "the store refused a read: " + String(e && e.message || e).slice(0, 120) }; }
+    slotsRead += chunk.length;
+    for (let k = 0; k < chunk.length; k++) {
+      const raw = vals[k];
+      if (!raw) continue;
+      let rec = null;
+      try { rec = typeof raw === "string" ? JSON.parse(raw) : raw; } catch { continue; }
+      if (!rec || !rec.reel || !rec.results) continue;
+      const r = rec.results[network];
+      if (!r || !r.ok) continue;
+      records++;
+      /* A GUARD REFUSAL IS NOT A SEND. findDuplicate answers ok with
+         already: true and the EARLIER send's id, so it is taken for that id
+         (it may be the only record of a send now out of reach) and never
+         counted as a send in its own right; one with no id says nothing. */
+      if (r.already && !r.id) continue;
+      if (!r.id && !r.already) { idless.push({ reel: rec.reel, id: null, at: chunk[k].date, slot: chunk[k].slot }); }
+      take({ reel: rec.reel, id: r.id || null, url: r.url || null, at: chunk[k].date, slot: chunk[k].slot, shape: network === "youtube" ? "short" : null });
+      if (network === "youtube" && r.wide) {
+        const wid = r.wide.id || r.wide.pending || null;
+        if (wid) take({ reel: rec.reel, id: wid, url: r.wide.url || null, at: chunk[k].date, slot: chunk[k].slot, shape: "wide",
+                        pending: !r.wide.id });
+      }
+    }
+  }
+  const rows = [...seen.values(), ...idless].sort((a, b) => String(a.at).localeCompare(String(b.at)));
+  return { ok: true, rows, records, slotsRead, days: n, complete: !ranOut,
+           why: ranOut ? ("the ledger walk ran out of time after " + slotsRead + " of " + want.length + " slot records") : null,
+           from: new Date(base - (n - 1) * 86400000).toISOString().slice(0, 10),
+           to: new Date(base).toISOString().slice(0, 10) };
+}
+
+/* the whole pass: what the network has, what we think we sent, and the
+   three things that differ. Reads only, on both sides. */
+export async function reconcile(network, host, opts = {}) {
+  const desc = REC.NETWORKS[network];
+  if (!desc) return { ok: false, error: "no such network: " + network };
+  if (!desc.enumerable) return { ok: true, network, enumerable: false, why: desc.why, clean: null };
+  const inv = await desc.inventory(opts);
+  if (!inv.ok) return { ok: true, network, enumerable: false, why: inv.why, clean: null };
+  /* THE LEDGER READS AS FAR BACK AS THE CHANNEL GOES. An item older than the
+     records read can never be judged recorded or not, so the reach is carried
+     back to the oldest video the network holds, within the walk's own limit,
+     rather than left to whatever number the caller guessed. */
+  let reach = Number(opts.days) > 0 ? Math.floor(Number(opts.days)) : DUP_WINDOW_DAYS;
+  const today = String(opts.date || new Date().toISOString().slice(0, 10));
+  const oldest = inv.items.reduce((m, i) => (i.at && (!m || i.at < m)) ? i.at : m, null);
+  if (oldest) {
+    const span = Math.floor((Date.parse(today + "T00:00:00Z") - Date.parse(oldest + "T00:00:00Z")) / 86400000) + 1;
+    if (isFinite(span) && span > reach) reach = Math.min(400, span);
+  }
+  const led = await sentTo(network, today, reach, opts);
+  if (!led.ok) return { ok: true, network, enumerable: true, ledger: false, why: led.why, clean: null };
+  const shelf = await readManifest(host, opts);
+  const cards = (shelf && Array.isArray(shelf.cards)) ? shelf.cards : [];
+  /* THE SHELF IS HALF THE NAMING AND ITS ABSENCE IS NOT A CLEAN BILL.
+     Without it no title can be turned into a reel id, so every item on the
+     network reads as foreign and nothing reads as unrecorded: the exact
+     finding this pass was built for would silently vanish. */
+  if (!cards.length) return { ok: true, network, enumerable: true, shelf: false,
+                              why: "the shelf could not be read, so nothing on the network can be named", clean: null };
+  const out = REC.compare({ inventory: inv.items, ledger: led.rows,
+                            index: REC.titleIndex(cards, network), cards, network,
+                            /* EITHER SIDE BEING SHORT MAKES AN ABSENCE UNSAFE TO CLAIM.
+                               An absence is "in our ledger, not on the network", and a
+                               ledger walk that stopped early has not finished being our
+                               ledger any more than a page walk that stopped has finished
+                               being the network. Both feed the same gate. */
+                            enumeration: { complete: inv.complete !== false && led.complete !== false,
+                                           why: inv.why || led.why },
+                            /* an item older than the ledger's first day cannot have a
+                               record by construction, and is not called unrecorded */
+                            ledgerFrom: led.from, statusComplete: inv.privacyComplete !== false });
+  return { ok: true, enumerable: true, ...out,
+           walk: { pages: inv.pages, complete: inv.complete, why: inv.why, tookMs: inv.tookMs,
+                   privacy: inv.privacy, privacyComplete: inv.privacyComplete, repeats: inv.repeats },
+           ledgerWalk: { days: led.days, from: led.from, to: led.to, records: led.records,
+                         slotsRead: led.slotsRead, complete: led.complete, why: led.why } };
+}
+
 /* the ledger, less the last few days: what the render run may retire */
 export async function postedReels(today, grace) {
   if (!kvReady()) return {};
@@ -3086,6 +3224,13 @@ export default async function handler(req, res) {
        the console's System room after a release; owner only, unlike
        `posted` just above, since this one writes */
     if (action === "backfillposted") return json(res, 200, { ok: true, ...(await backfillPosted(date, (req.query && req.query.days) || (req.body && req.body.days))) });
+    /* WHAT THE NETWORK ACTUALLY HOLDS, against what we believe. Owner only,
+       and it writes nothing at all, on either side. masterplan section 11. */
+    if (action === "reconcile") {
+      const net = String((q.net || q.network || "youtube")).toLowerCase();
+      const out = await reconcile(net, host, { date, days: q.days });
+      return json(res, out.ok === false ? 400 : 200, out);
+    }
     /* Step one: send the owner to Pinterest. */
     if (action === "pin-auth") {
       const id = process.env.PIN_APP_ID, secret = process.env.ADMIN_SECRET || "";
