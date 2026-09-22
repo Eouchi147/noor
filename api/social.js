@@ -1687,6 +1687,48 @@ export async function sentTo(network, today, reach, opts = {}) {
            to: new Date(base).toISOString().slice(0, 10) };
 }
 
+/* WHAT THE NETWORK HOLDS BECOMES WHAT THE GUARD REMEMBERS.
+   The first run of the reconciliation, 22 September 2026, found reels on
+   YouTube that no record of ours had ever named, laylat al-qadr twice among
+   them. The guard reads only the per channel hash, so for those reels it had
+   no memory that YouTube had them at all, and the picker could hand them to
+   YouTube again. This writes the channel's own inventory into that hash:
+   for every reel the pass could name on the network, the latest day it
+   appears there, set only when the guard knew nothing or knew an older day.
+   It writes to the house's own store and nothing else, never to a network;
+   it is idempotent; and the slot part of the value is left empty, which the
+   guard already reads as "sent, record not held" and refuses on. */
+export async function teachGuard(network, host, opts = {}) {
+  const out = await reconcile(network, host, opts);
+  if (!out.ok || !out.enumerable || out.ledger === false || out.shelf === false)
+    return { ok: false, why: out.why || out.error || "the network could not be read, so there is nothing to teach", network };
+  const latest = new Map();
+  const note = (reel, at) => { if (reel && at && (!latest.has(reel) || at > latest.get(reel))) latest.set(reel, at); };
+  for (const t of out.twice || []) for (const c of [...(t.copies || []), ...(t.lawful || [])]) note(t.reel, c.at);
+  for (const u of out.unrecorded || []) note(u.reel, u.at);
+  for (const b of out.beyondReach || []) note(b.reel, b.at);
+  if (!latest.size) return { ok: true, network, written: 0, known: 0, taught: [] };
+  const reels = [...latest.keys()];
+  let have = [];
+  try { have = await kv(reels.map(r => ["HGET", K_POSTED_CH, r + "|" + network])); }
+  catch (e) { return { ok: false, why: "the store refused a read: " + String(e && e.message || e).slice(0, 120), network }; }
+  const cmds = [], taught = [];
+  let known = 0;
+  reels.forEach((r, i) => {
+    const was = have[i] ? String(have[i]) : "";
+    const wasDay = was.split("#")[0];
+    const day = latest.get(r);
+    if (wasDay && wasDay >= day) { known++; return; }
+    cmds.push(["HSET", K_POSTED_CH, r + "|" + network, day + "#"]);
+    taught.push({ reel: r, day, before: wasDay || null });
+  });
+  if (cmds.length) {
+    try { await kv(cmds); }
+    catch (e) { return { ok: false, why: "the store refused the write: " + String(e && e.message || e).slice(0, 120), network }; }
+  }
+  return { ok: true, network, written: cmds.length, known, taught };
+}
+
 /* the whole pass: what the network has, what we think we sent, and the
    three things that differ. Reads only, on both sides. */
 export async function reconcile(network, host, opts = {}) {
@@ -3226,6 +3268,13 @@ export default async function handler(req, res) {
     if (action === "backfillposted") return json(res, 200, { ok: true, ...(await backfillPosted(date, (req.query && req.query.days) || (req.body && req.body.days))) });
     /* WHAT THE NETWORK ACTUALLY HOLDS, against what we believe. Owner only,
        and it writes nothing at all, on either side. masterplan section 11. */
+    /* the one write this family makes, to the house's own store only, run
+       by the owner from the console after reading what the pass found */
+    if (action === "reconcile-teach") {
+      const net = String((q.net || q.network || "youtube")).toLowerCase();
+      const out = await teachGuard(net, host, { date, days: q.days });
+      return json(res, out.ok === false ? 400 : 200, out);
+    }
     if (action === "reconcile") {
       const net = String((q.net || q.network || "youtube")).toLowerCase();
       const out = await reconcile(net, host, { date, days: q.days });

@@ -272,6 +272,8 @@ console.log('\nthe whole road, store to verdict');
     /* and nothing at all for 7 September, which is what happened */
   };
   const kvCalls = [];
+  /* the guard already knows the tawaf film went to YouTube on the 15th */
+  const HASH = { 'nsoc:reels:postedch': { 'short-tawaf|youtube': '2026-09-15#reelD' } };
   const wire = [];
   globalThis.fetch = async (url, init = {}) => {
     url = String(url);
@@ -279,7 +281,13 @@ console.log('\nthe whole road, store to verdict');
     if (url === 'https://kv.test/pipeline') {
       const cmds = JSON.parse(init.body);
       kvCalls.push(...cmds.map(c => c[0]));
-      return { ok: true, status: 200, json: async () => cmds.map(c => ({ result: c[0] === 'GET' ? (STORE[c[1]] ?? null) : 'OK' })) };
+      return { ok: true, status: 200, json: async () => cmds.map(c => {
+        if (c[0] === 'GET') return { result: STORE[c[1]] ?? null };
+        if (c[0] === 'HGET') return { result: (HASH[c[1]] || {})[c[2]] ?? null };
+        if (c[0] === 'HSET') { (HASH[c[1]] = HASH[c[1]] || {})[c[2]] = c[3]; return { result: 1 }; }
+        if (c[0] === 'HGETALL') return { result: Object.entries(HASH[c[1]] || {}).flat() };
+        return { result: 'OK' };
+      }) };
     }
     if (/\/reels\/index\.json$/.test(url)) return { ok: true, status: 200, json: async () => ({ n: CARDS.length, cards: CARDS }) };
     if (/\/channels\?/.test(url)) return chan();
@@ -323,6 +331,25 @@ console.log('\nthe whole road, store to verdict');
   const one = await SOC.reconcile('youtube', 'noorcodex.com', { date: '2026-09-22', days: 1 });
   ok(one.ledgerWalk.from === '2026-09-07' && !(one.beyondReach || []).length && (one.twice || []).some(t => t.reel === 'short-zakat'),
      'asked for one day, the pass reads back to the oldest video on the channel (' + one.ledgerWalk.from + ') so nothing is left beyond reach');
+
+  /* the guard is taught what the channel holds, and only that */
+  kvCalls.length = 0;
+  const taught = await SOC.teachGuard('youtube', 'noorcodex.com', { date: '2026-09-22', days: 30 });
+  const H = HASH['nsoc:reels:postedch'];
+  ok(taught.ok && H['short-zakat|youtube'] === '2026-09-21#',
+     'the guard now remembers the Zakat film went to YouTube, at its latest day on the channel (' + H['short-zakat|youtube'] + ')');
+  ok(H['short-tawaf|youtube'] === '2026-09-15#reelD' && !taught.taught.some(t => t.reel === 'short-tawaf'),
+     'a reel whose sends were all recorded has nothing to teach and is left exactly as it was');
+  ok(kvCalls.filter(c => c !== 'GET' && c !== 'HGET').every(c => c === 'HSET') && taught.written === taught.taught.length,
+     'it writes one kind of thing, the guard\u2019s own memory, and says how many (' + taught.written + ')');
+  ok(!wire.some(w => /^(POST|PUT|DELETE|PATCH) https:\/\/(www\.)?googleapis/.test(w)), 'and nothing at all to YouTube');
+  const again = await SOC.teachGuard('youtube', 'noorcodex.com', { date: '2026-09-22', days: 30 });
+  ok(again.ok && again.written === 0 && again.known === 1, 'run twice, the second run finds the guard already knows and writes nothing: it is idempotent');
+  H['short-zakat|youtube'] = '2026-09-30#reelA';
+  const later = await SOC.teachGuard('youtube', 'noorcodex.com', { date: '2026-09-22', days: 30 });
+  ok(later.written === 0 && H['short-zakat|youtube'] === '2026-09-30#reelA', 'and a later day the guard already holds is never wound back to an earlier one');
+  const picker = await SOC.recentlyPosted('2026-09-22');
+  ok(picker.has('short-zakat'), 'and the picker now steps past the Zakat film too, because it reads the same memory');
 
   const tg = await SOC.reconcile('telegram', 'noorcodex.com', {});
   ok(tg.enumerable === false && tg.clean === null && /getUpdates/.test(tg.why), 'a network that cannot be asked is never clean: it says why, and clean is null');
