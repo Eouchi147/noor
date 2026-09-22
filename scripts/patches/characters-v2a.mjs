@@ -39,7 +39,7 @@ details:`Ali ibn Abi Talib grew up in the household of the Prophet ﷺ and belie
 
 He married {{c:c-fatimah|Fatimah}}; from them came {{c:c-hasan|al-Hasan}} and {{c:c-husayn|al-Husayn}}, the two masters of the youth of Jannah. His judgments made Umar seek him; his sermons trained the Arabic tongue. As fourth caliph he carried the community through its bitterest years, and was struck by a Kharijite's blade at Fajr in Kufa. Sunni and Shi'i memory both orbit him; the Codex records the love and the rank on which all agree.`,
 facts:[{label:"First",value:"Among the first to believe, as a boy"},{label:"Hijrah night",value:"The decoy in the bed"},{label:"Khaybar",value:"The banner given to him"},{label:"Rank",value:"As Harun to Musa (Bukhari 4416)"}],
-hadith:[{text:"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.",source:"Bukhari 3702 · Muslim 2407"}]},
+hadith:[{text:"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.",source:"Bukhari 3702 · Muslim 2406"}]},
 
 "c-khadijah":{
 role:"First believer · Umm al-Mu'minin",
@@ -66,7 +66,7 @@ details:`Hamza ibn Abd al-Muttalib, uncle of the Prophet ﷺ and his milk-brothe
 
 What was done to his body after death grieved the Prophet ﷺ beyond any other loss of the day, and revelation and his own mercy sealed the response at {{n:41|the Opening}}: no revenge, and mutilation forbidden in this ummah forever. He was buried at Uhud with the martyrs, where his grave is greeted to this day. The Prophet called him Sayyid ash-Shuhada, the master of the martyrs, and the Lion of Allah. In the Codex he stands where courage and restraint meet: the man whose death taught the ummah how not to avenge.`,
 facts:[{label:"Title",value:"Lion of Allah · Sayyid ash-Shuhada"},{label:"Islam",value:"Declared with a bowstrike at Safa"},{label:"Fell at",value:"Uhud, 3 AH"},{label:"Legacy",value:"Mutilation forbidden forever"}],
-hadith:[{text:"The master of the martyrs is Hamza ibn Abd al-Muttalib.",source:"al-Hakim (hasan) · cf. Bukhari 4072 for his death"}]},
+hadith:[{text:"The master of the martyrs is Hamza ibn Abd al-Muttalib.",source:"al-Tabarani, al-Mu'jam al-Kabir 2958 (graded sahih by al-Suyuti) · cf. Bukhari 4072 for his death"}]},
 
 "c-bilal":{
 role:"First mu'adhdhin of Islam",
@@ -207,7 +207,7 @@ details:`Al-Husayn ibn Salam was the rabbi of Banu Qaynuqa, a man who knew the a
 
 The Prophet renamed him Abdullah; the sunnah records for him what it records for barely anyone: a promise of Jannah by name while walking the earth, and a dream of a firm handhold interpreted by the Prophet as his dying upon the rope of Islam. He did, decades later, having spent his knowledge translating the two scriptures for the ummah of the last one.`,
 facts:[{label:"Verdict",value:"“Not the face of a liar”"},{label:"Test",value:"Questions only a prophet answers"},{label:"Verse",value:"46:10, read of him"},{label:"Promise",value:"Jannah, by name"}],
-hadith:[{text:"Spread salam, feed food, keep the ties, and pray at night while people sleep: you will enter Jannah in peace.",source:"Tirmidhi 2485 · Ibn Majah 1334 (his first hearing ﷺ)"}]},
+hadith:[{text:"Spread salam, feed food, keep the ties, and pray at night while people sleep: you will enter Jannah in peace.",source:"Ibn Majah 3251 (his first hearing ﷺ)"}]},
 
 {id:"c-amr",titleEn:"Amr ibn al-As",titleAr:"عمرو بن العاص",role:"The mind that opened Egypt",summary:"Came to Islam between Khalid and Uthman ibn Talha in one caravan; Egypt entered Islam through his.",pattern:"pattern-sahaba",
 details:`Quraysh's sharpest diplomat, sent to Abyssinia to drag the emigrants home, Amr watched {{c:c-jafar|Ja'far's}} defense defeat him in front of the Negus and carried the splinter of that day for years. After {{n:40|Hudaybiyyah}} the calculation completed itself: he rode north and met {{c:c-khalid|Khalid}} and {{c:c-uthman-talha|Uthman ibn Talha}} on the same errand. At his pledge he demanded a clause, that his past be forgiven, and learned the rule the ummah recites to every convert since: "Do you not know that Islam demolishes what was before it?"

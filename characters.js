@@ -43,7 +43,7 @@ facts:[{"label":"First","value":"Among the first to believe, as a boy"},
  {"label":"Hijrah night","value":"The decoy in the bed"},
  {"label":"Khaybar","value":"The banner given to him"},
  {"label":"Rank","value":"As Harun to Musa (Bukhari 4416)"}],
-hadith:[{"text":"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.","source":"Bukhari 3702 · Muslim 2407"}]},
+hadith:[{"text":"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.","source":"Bukhari 3702 · Muslim 2406"}]},
 
 {id:"c-khadijah",titleEn:"Khadijah bint Khuwaylid",titleAr:"خديجة بنت خويلد",role:"First believer · Umm al-Mu'minin",summary:"She believed before anyone, spent everything, and received salam from her Lord and a house of qasab in Jannah.",pattern:"pattern-sahaba",
 details:`Khadijah bint Khuwaylid ran her own caravans in a city that buried daughters. She hired the young Muhammad ﷺ for trade, read his character, and proposed. For twenty-five years she was his only wife and the mother of every child of his except {{n:9|Ibrahim}}. When he came down from {{n:30|Hira}} trembling, she wrapped him and argued from evidence: Allah would never disgrace a man who keeps ties, carries the weak, earns for the destitute, honors the guest, and helps bear the calamities that strike in the cause of truth. Then she took him to {{c:c-waraqah|Waraqah}}. She was the first human being to believe.
@@ -73,7 +73,7 @@ facts:[{"label":"Title","value":"Lion of Allah · Sayyid ash-Shuhada"},
  {"label":"Islam","value":"Declared with a bowstrike at Safa"},
  {"label":"Fell at","value":"Uhud, 3 AH"},
  {"label":"Legacy","value":"Mutilation forbidden forever"}],
-hadith:[{"text":"The master of the martyrs is Hamza ibn Abd al-Muttalib.","source":"al-Hakim (hasan) · cf. Bukhari 4072 for his death"}]},
+hadith:[{"text":"The master of the martyrs is Hamza ibn Abd al-Muttalib.","source":"al-Tabarani, al-Mu'jam al-Kabir 2958 (graded sahih by al-Suyuti) · cf. Bukhari 4072 for his death"}]},
 
 {id:"c-bilal",titleEn:"Bilal ibn Rabah",titleAr:"بلال بن رباح",role:"First mu'adhdhin of Islam",summary:"Tortured under the rock saying Ahad, Ahad; his footsteps were heard in Jannah before he died.",pattern:"pattern-sahaba",
 details:`Bilal ibn Rabah, an Abyssinian slave, believed early and paid immediately. Umayyah ibn Khalaf staked him on the burning sand under a boulder, demanding he curse the Prophet ﷺ; the whole theology of Islam compressed into his two-word answer: Ahad, Ahad. One. One. {{c:c-abubakr|Abu Bakr}} bought him and freed him for Allah.
@@ -405,7 +405,7 @@ facts:[{"label":"Verdict","value":"“Not the face of a liar”"},
  {"label":"Test","value":"Questions only a prophet answers"},
  {"label":"Verse","value":"46:10, read of him"},
  {"label":"Promise","value":"Jannah, by name"}],
-hadith:[{"text":"Spread salam, feed food, keep the ties, and pray at night while people sleep: you will enter Jannah in peace.","source":"Tirmidhi 2485 · Ibn Majah 1334 (his first hearing ﷺ)"}]},
+hadith:[{"text":"Spread salam, feed food, keep the ties, and pray at night while people sleep: you will enter Jannah in peace.","source":"Ibn Majah 3251 (his first hearing ﷺ)"}]},
 
 {id:"c-amr",titleEn:"Amr ibn al-As",titleAr:"عمرو بن العاص",role:"The mind that opened Egypt",summary:"Came to Islam between Khalid and Uthman ibn Talha in one caravan; Egypt entered Islam through him.",pattern:"pattern-sahaba",
 details:`Quraysh's sharpest diplomat, sent to Abyssinia to drag the emigrants home, Amr watched {{c:c-jafar|Ja'far's}} defense defeat him in front of the Negus and carried the splinter of that day for years. After {{n:41|Hudaybiyyah}} the calculation completed itself: he rode north and met {{c:c-khalid|Khalid}} and {{c:c-uthman-talha|Uthman ibn Talha}} on the same errand. At his pledge he demanded a clause, that his past be forgiven, and learned the rule the ummah recites to every convert since: "Do you not know that Islam demolishes what was before it?"

@@ -20,8 +20,8 @@ window.NOOR_PROPHETS = [
     { ref:"3:59", note:"Isa's creation is likened to Adam's: from dust, then 'Be', and he was." }
   ],
   hadith:[
-    { src:"Sahih Muslim", text:"The best day on which the sun has risen is Friday: on it Adam was created, on it he was admitted into the Garden, and on it he was expelled from it." },
-    { src:"Sahih al-Bukhari", text:"On the Day of Resurrection the believers will come to Adam and say: you are the father of mankind; Allah created you with His hand, and made the angels prostrate to you." }
+    { src:"Sahih Muslim 854", text:"The best day on which the sun has risen is Friday: on it Adam was created, on it he was admitted into the Garden, and on it he was expelled from it." },
+    { src:"Sahih al-Bukhari 3340", text:"On the Day of Resurrection the believers will come to Adam and say: you are the father of mankind; Allah created you with His hand, and made the angels prostrate to you." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"25 times", pct:18 },
@@ -43,7 +43,7 @@ window.NOOR_PROPHETS = [
     { ref:"21:85", note:"Counted with Ismail and Dhul-Kifl: 'all were of the patient.'" }
   ],
   hadith:[
-    { src:"Sahih Muslim (the Night Journey)", text:"Then we ascended to the fourth heaven and there was Idris. Jibril said: this is Idris, greet him. He said: welcome to the righteous prophet and righteous brother." }
+    { src:"Sahih al-Bukhari 3887 · Sahih Muslim 162 (the Night Journey)", text:"Then we ascended to the fourth heaven and there was Idris. Jibril said: this is Idris, greet him. He said: welcome to the righteous prophet and righteous brother." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"2 times", pct:2 },
@@ -67,7 +67,7 @@ window.NOOR_PROPHETS = [
     { ref:"54:10", note:"'So he called upon his Lord: I am overpowered, so help.' And the gates of heaven opened with water." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"On the Day of Resurrection the people will come to Nuh and say: you are the first messenger Allah sent to the people of the earth, and Allah named you a grateful servant." }
+    { src:"Sahih al-Bukhari 3340", text:"On the Day of Resurrection the people will come to Nuh and say: you are the first messenger Allah sent to the people of the earth, and Allah named you a grateful servant." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"43 times", pct:32 },
@@ -113,7 +113,7 @@ window.NOOR_PROPHETS = [
     { ref:"11:65", note:"'Enjoy yourselves in your homes for three days: a promise not to be belied.'" }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"When the Prophet ﷺ passed by al-Hijr he said: do not enter the dwellings of those who wronged themselves except weeping, lest what struck them should strike you." }
+    { src:"Sahih al-Bukhari 3380", text:"When the Prophet ﷺ passed by al-Hijr he said: do not enter the dwellings of those who wronged themselves except weeping, lest what struck them should strike you." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"9 times", pct:7 },
@@ -139,8 +139,8 @@ window.NOOR_PROPHETS = [
     { ref:"4:125", note:"'And Allah took Ibrahim as an intimate friend.' Khalilullah." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The first of creation to be clothed on the Day of Resurrection will be Ibrahim." },
-    { src:"Sahih al-Bukhari (the Night Journey)", text:"In the seventh heaven the Prophet ﷺ found Ibrahim reclining against al-Bayt al-Mamur, the Frequented House, into which seventy thousand angels enter daily and never return." }
+    { src:"Sahih al-Bukhari 3349", text:"The first of creation to be clothed on the Day of Resurrection will be Ibrahim." },
+    { src:"Sahih al-Bukhari 3207 (the Night Journey)", text:"In the seventh heaven the Prophet ﷺ found Ibrahim reclining against al-Bayt al-Mamur, the Frequented House, into which seventy thousand angels enter daily and never return." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"69 times", pct:51 },
@@ -184,7 +184,7 @@ window.NOOR_PROPHETS = [
     { ref:"2:127", note:"Side by side with Ibrahim, raising the foundations of the House." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ told the long story of Hajar and Ismail in the valley: her running between the two hills, the angel at Zamzam, and said: may Allah have mercy on the mother of Ismail." }
+    { src:"Sahih al-Bukhari 3364", text:"The Prophet ﷺ told the long story of Hajar and Ismail in the valley: her running between the two hills, the angel at Zamzam, and said: may Allah have mercy on the mother of Ismail." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"12 times", pct:9 },
@@ -206,7 +206,7 @@ window.NOOR_PROPHETS = [
     { ref:"38:45", note:"Ibrahim, Ishaq and Yaqub: possessors of strength and vision, chosen for the remembrance of the Home." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The noble, son of the noble, son of the noble, son of the noble: Yusuf, son of Yaqub, son of Ishaq, son of Ibrahim." }
+    { src:"Sahih al-Bukhari 3382", text:"The noble, son of the noble, son of the noble, son of the noble: Yusuf, son of Yaqub, son of Ishaq, son of Ibrahim." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"17 times", pct:13 },
@@ -254,7 +254,7 @@ window.NOOR_PROPHETS = [
     { ref:"12:101", note:"'Let me die as a Muslim and join me with the righteous.' A king's only remaining wish." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ was asked: who is the most noble of people? He said: the noble, son of the noble, son of the noble, son of the noble: Yusuf, son of Yaqub, son of Ishaq, son of Ibrahim." }
+    { src:"Sahih al-Bukhari 3382", text:"The Prophet ﷺ was asked: who is the most noble of people? He said: the noble, son of the noble, son of the noble, son of the noble: Yusuf, son of Yaqub, son of Ishaq, son of Ibrahim." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"27 times", pct:20 },
@@ -277,7 +277,7 @@ window.NOOR_PROPHETS = [
     { ref:"38:44", note:"'Indeed We found him patient. An excellent servant, ever turning back.'" }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"While Ayyub was bathing, gold locusts fell upon him and he began gathering them in his garment. His Lord called: had I not enriched you? He said: yes my Lord, but I am never free of need for Your blessing." }
+    { src:"Sahih al-Bukhari 3391", text:"While Ayyub was bathing, gold locusts fell upon him and he began gathering them in his garment. His Lord called: had I not enriched you? He said: yes my Lord, but I am never free of need for Your blessing." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"4 times", pct:3 },
@@ -323,8 +323,8 @@ window.NOOR_PROPHETS = [
     { ref:"4:164", note:"'And Allah spoke to Musa with direct speech.' Kalimullah." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari (the Night Journey)", text:"On the night of the ascension, Musa counseled the Prophet ﷺ to return and ask his Lord for lightening, until the prayers settled at five: five in practice, fifty in the scale." },
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ said: do not prefer me over Musa, for the people will be struck unconscious on the Day of Resurrection and I will be the first to recover, and there will be Musa, holding to the side of the Throne." }
+    { src:"Sahih al-Bukhari 3207 (the Night Journey)", text:"On the night of the ascension, Musa counseled the Prophet ﷺ to return and ask his Lord for lightening, until the prayers settled at five: five in practice, fifty in the scale." },
+    { src:"Sahih al-Bukhari 3408", text:"The Prophet ﷺ said: do not prefer me over Musa, for the people will be struck unconscious on the Day of Resurrection and I will be the first to recover, and there will be Musa, holding to the side of the Throne." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"136 times · the most of any name", pct:100 },
@@ -347,7 +347,7 @@ window.NOOR_PROPHETS = [
     { ref:"20:94", note:"'O son of my mother...' Gentleness under his brother's fury, for the sake of the people's unity." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ said to Ali: are you not pleased to be to me as Harun was to Musa, except that there is no prophet after me?" }
+    { src:"Sahih al-Bukhari 4416", text:"The Prophet ﷺ said to Ali: are you not pleased to be to me as Harun was to Musa, except that there is no prophet after me?" }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"20 times", pct:15 },
@@ -388,8 +388,8 @@ window.NOOR_PROPHETS = [
     { ref:"38:24", note:"The parable of the ewes; the king falls in repentance, judged by his own verdict." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The most beloved prayer to Allah is the prayer of Dawud, and the most beloved fasting is the fasting of Dawud: he slept half the night, stood a third, slept a sixth, and fasted every other day." },
-    { src:"Sahih al-Bukhari", text:"Recitation was made easy for Dawud: he would order his mounts saddled and finish reciting before they were ready, and he ate only from the work of his own hands." }
+    { src:"Sahih al-Bukhari 1131 · Sahih Muslim 1159", text:"The most beloved prayer to Allah is the prayer of Dawud, and the most beloved fasting is the fasting of Dawud: he slept half the night, stood a third, slept a sixth, and fasted every other day." },
+    { src:"Sahih al-Bukhari 3417", text:"Recitation was made easy for Dawud: he would order his mounts saddled and finish reciting before they were ready, and he ate only from the work of his own hands." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"16 times", pct:12 },
@@ -414,7 +414,7 @@ window.NOOR_PROPHETS = [
     { ref:"34:14", note:"The staff, the termite, the fall: the jinn knew the unseen belongs to Allah alone." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"A rebellious jinn tried to interrupt the Prophet's ﷺ prayer; he seized it and remembered his brother Sulayman's prayer, 'a kingdom not belonging to anyone after me', and released it." }
+    { src:"Sahih al-Bukhari 3423", text:"A rebellious jinn tried to interrupt the Prophet's ﷺ prayer; he seized it and remembered his brother Sulayman's prayer, 'a kingdom not belonging to anyone after me', and released it." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"17 times", pct:13 },
@@ -476,8 +476,8 @@ window.NOOR_PROPHETS = [
     { ref:"68:48", note:"'And do not be like the companion of the fish...' The Seal ﷺ himself is counseled by Yunus's story." }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ said: it does not befit any servant to say 'I am better than Yunus ibn Matta.'" },
-    { src:"Jami at-Tirmidhi", text:"No Muslim ever supplicates with the prayer of Dhun-Nun in the belly of the whale except that Allah answers him." }
+    { src:"Sahih al-Bukhari 3395", text:"The Prophet ﷺ said: it does not befit any servant to say 'I am better than Yunus ibn Matta.'" },
+    { src:"Jami at-Tirmidhi 3505", text:"No Muslim ever supplicates with the prayer of Dhun-Nun in the belly of the whale except that Allah answers him." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"4 times · also Dhun-Nun and the companion of the fish", pct:3 },
@@ -547,8 +547,8 @@ window.NOOR_PROPHETS = [
     { ref:"5:117", note:"His answer on the Last Day: 'I said to them only what You commanded me: worship Allah, my Lord and your Lord.'" }
   ],
   hadith:[
-    { src:"Sahih al-Bukhari", text:"The Prophet ﷺ said: I am the closest of people to Isa son of Maryam in this world and the next; the prophets are brothers, their mothers differ and their religion is one, and there is no prophet between me and him." },
-    { src:"Sahih Muslim", text:"By the One in whose hand is my soul, the son of Maryam will soon descend among you as a just judge; he will break the cross, kill the swine, and abolish the tribute, and wealth will overflow until no one accepts it." }
+    { src:"Sahih al-Bukhari 3442", text:"The Prophet ﷺ said: I am the closest of people to Isa son of Maryam in this world and the next; the prophets are brothers, their mothers differ and their religion is one, and there is no prophet between me and him." },
+    { src:"Sahih Muslim 155", text:"By the One in whose hand is my soul, the son of Maryam will soon descend among you as a just judge; he will break the cross, kill the swine, and abolish the tribute, and wealth will overflow until no one accepts it." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"25 times · also al-Masih 11 times", pct:18 },
@@ -582,11 +582,11 @@ window.NOOR_PROPHETS = [
     { ref:"61:6", note:"Isa's glad tidings of a messenger to come after him 'whose name is Ahmad.'" }
   ],
   hadith:[
-    { src:"Sahih Muslim", text:"Aisha was asked about his character and answered: his character was the Qur'an." },
-    { src:"Sahih al-Bukhari", text:"None of you truly believes until I am more beloved to him than his father, his child, and all of mankind." },
-    { src:"Sahih al-Bukhari", text:"The best of you are those who learn the Qur'an and teach it." },
-    { src:"Sahih Muslim", text:"I have been given superiority over the prophets in six things, among them: the earth was made a mosque for me, and I was sent to all creation, and the prophets were sealed with me." },
-    { src:"Musnad Ahmad", text:"I was sent only to perfect noble character." }
+    { src:"Sahih Muslim 746", text:"Aisha was asked about his character and answered: his character was the Qur'an." },
+    { src:"Sahih al-Bukhari 15", text:"None of you truly believes until I am more beloved to him than his father, his child, and all of mankind." },
+    { src:"Sahih al-Bukhari 5027", text:"The best of you are those who learn the Qur'an and teach it." },
+    { src:"Sahih Muslim 523", text:"I have been given superiority over the prophets in six things, among them: the earth was made a mosque for me, and I was sent to all creation, and the prophets were sealed with me." },
+    { src:"al-Adab al-Mufrad 273 (also in Musnad Ahmad)", text:"I was sent only to perfect noble character." }
   ],
   figures:[
     { label:"Named in the Qur'an", value:"4 times as Muhammad, once as Ahmad (61:6)", pct:4 },

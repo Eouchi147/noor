@@ -359,7 +359,7 @@ facts:[
 quran:[
  {ref:"8:26",ar:"وَاذْكُرُوا إِذْ أَنتُمْ قَلِيلٌ مُّسْتَضْعَفُونَ فِي الْأَرْضِ تَخَافُونَ أَن يَتَخَطَّفَكُمُ النَّاسُ فَآوَاكُمْ",en:"Remember when you were few and oppressed in the land, fearing the people would snatch you away — and He sheltered you."}],
 hadith:[
- {text:"O people: spread salam, feed food, keep the ties of kinship, and pray at night while people sleep — you will enter Jannah in peace.",source:"Tirmidhi 2485 · Ibn Majah 1334 (sahih) — Abdullah ibn Salam"},
+ {text:"O people: spread salam, feed food, keep the ties of kinship, and pray at night while people sleep — you will enter Jannah in peace.",source:"Ibn Majah 3251 (sahih), Abdullah ibn Salam"},
  {text:"The Prophet ﷺ bought the site of the masjid from the two orphans of Banu Najjar.",source:"Bukhari 428"}],
 lessons:[
  "He entered as a ruler could not: buying from orphans what he could have taken as tribute",
@@ -562,7 +562,7 @@ quran:[
  {ref:"3:144",ar:"وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ الرُّسُلُ ۚ أَفَإِن مَّاتَ أَوْ قُتِلَ انقَلَبْتُمْ عَلَىٰ أَعْقَابِكُمْ",en:"Muhammad is only a messenger; messengers have passed away before him. If he dies or is killed, will you turn back on your heels?"},
  {ref:"39:30",ar:"إِنَّكَ مَيِّتٌ وَإِنَّهُم مَّيِّتُونَ",en:"Indeed, you will die — and indeed, they will die."}],
 hadith:[
- {text:"He murmured: With those You have favored… Rather, the Highest Companion — three times — and he passed.",source:"Bukhari 4463 · Muslim 2444"},
+ {text:"He murmured: With those You have favored… Rather, the Highest Companion — three times — and he passed.",source:"Bukhari 4586 · Bukhari 4438"},
  {text:"Abu Bakr said: Whoever worshipped Muhammad — Muhammad has died; and whoever worships Allah — Allah is Living and does not die. Then he recited 3:144.",source:"Bukhari 4452-4454"},
  {text:"Fatimah said after the burial: How could your souls consent to pour the earth over the Messenger of Allah?",source:"Bukhari 4462 (Anas)"},
  {text:"Count six things before the Hour — the first of them: my death.",source:"Bukhari 3176"}],

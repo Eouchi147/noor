@@ -225,7 +225,7 @@ facts:[{"label":"Chain","value":"Eight fortresses"},
  {"label":"Rule","value":"Adhan heard = no attack"},
  {"label":"The banner","value":"To Ali, cured and loved"},
  {"label":"Same day","value":"Ja'far's return"}],
-hadith:[{"text":"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.","source":"Bukhari 3701 · Muslim 2406"}]},
+hadith:[{"text":"Tomorrow I will give the banner to a man who loves Allah and His Messenger, and whom Allah and His Messenger love.","source":"Bukhari 3702 · Muslim 2406"}]},
 
 {id:"p-hunayn",titleEn:"The Valley of Hunayn",titleAr:"وادي حنين",role:"The defile where numbers failed",summary:"A dawn ambush between rock walls taught the largest Muslim army ever mustered where victory is stored.",pattern:"pl-city",
 details:`A stony defile on the road from {{p:p-makkah|Makkah}} to {{p:p-taif|Ta'if}}, Hunayn was chosen by Malik ibn Awf precisely for what it does to a column: compresses it, blinds its flanks, and hands the high walls to whoever arrives first. Into it at first light marched {{n:43|twelve thousand}}, the largest force Islam had fielded, carrying the one supply the Qur'an later confiscated: "your great number pleased you, but it availed you nothing, and the earth, vast as it is, narrowed upon you" (9:25).
