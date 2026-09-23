@@ -18,7 +18,7 @@
       "maxDuration": 60
     },
     "api/page.js": {
-      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,prophets-data.js,characters.js,places.js,allah.html,assets/*.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"
+      "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,prophets-data.js,characters.js,places.js,allah.html,assets/*.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json,verse/*.json}"
     },
     "api/sitemap.js": {
       "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,prophets-data.js,characters.js,places.js,allah.html,assets/*-index.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json}"

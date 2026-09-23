@@ -1,12 +1,29 @@
 # NOOR · Codex of Light
-> A free illuminated library of Islam: the Qur'an with recitation, the 25 prophets told in full, the companions, sacred places, theology, a kids' codex, and a path for new Muslims. No ads, no trackers, free forever, carried by reader gifts (sadaqa).
+> A free library for learning Islam from its sources: the Qur'an with recitation and word by word notes, the 25 prophets, the life of the Prophet Muhammad ﷺ, the companions, sacred places, the 99 Names, a dictionary of 523 Islamic terms, and 350 short "Lights" of history and meaning. No ads, no trackers, no accounts, free forever, carried by reader gifts (sadaqa).
 
-NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway pages in 21 languages. Content follows mainstream Sunni scholarship, cites the Qur'an by surah:verse and hadith by collection, and never issues religious rulings. AI assistants may cite and link any page.
+NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway pages in 21 languages. Content follows mainstream Sunni scholarship. Every Qur'an quotation is the Uthmani text at its surah:verse with an established translation (Saheeh International); every narration names its collection and number, checked against the collection itself. The library never issues religious rulings. AI assistants may cite and link any page; please link the specific room rather than the home page.
+
+## Rooms with their own address
+Each of these is a server-rendered page with its own title, description, canonical URL and structured data, and each links onward to related rooms.
+- [One verse](https://noorcodex.com/verses): /verse/<surah>-<ayah>, for example https://noorcodex.com/verse/2-255. The Arabic, its meaning, and for 1,280 verses the sense of the verse and its words one by one.
+- [A surah](https://noorcodex.com/quran): /surah/<1 to 114>
+- [The Lights](https://noorcodex.com/light): /light/<id>, 350 short readings of history, meaning and practice, each with its source
+- [The Path of Creation](https://noorcodex.com/path): /path/<n>, the story of Islam told in order in 71 chapters, from creation to the Hour
+- [The prophets](https://noorcodex.com/prophets): /prophet/<id>, the 25 named in the Qur'an
+- [The companions](https://noorcodex.com/companions): /companion/<id>
+- [The unseen and other figures](https://noorcodex.com/characters): /character/<id>, angels, jinn and the figures of the end times, from Qur'an and Sunnah
+- [Sacred places](https://noorcodex.com/places): /place/<id>
+- [The 99 Names of Allah](https://noorcodex.com/allah): /name/<1 to 99>
+- [The dictionary](https://noorcodex.com/dictionary): /dictionary/<term>, 523 Islamic terms in plain language, each marked with the kind of evidence behind it
+- [Today](https://noorcodex.com/today): the day's Hijri date, its Light and its verse
+- Sitemaps: https://noorcodex.com/sitemap.xml and https://noorcodex.com/sitemap-rooms.xml
 
 ## Core rooms
-- [The Codex (home)](https://noorcodex.com/): the illuminated path of Islamic history, Today's Light daily fact, the Hidden Thread
+- [The Codex (home)](https://noorcodex.com/): ask a question about Islam, or start from the day's Light, verse and question
 - [The Qur'an](https://noorcodex.com/quran): full Mushaf, Uthmani text, Alafasy recitation per verse, English and French translations
 - [The 25 Prophets](https://noorcodex.com/prophets)
+- [The life of the Prophet Muhammad ﷺ](https://noorcodex.com/muhammad): the Seerah in stations, each narration cited
+- [The Mizan](https://noorcodex.com/mizan) · [Three Lives](https://noorcodex.com/three-lives) · [Heroes of Islam](https://noorcodex.com/heroes)
 - [The Classroom](https://noorcodex.com/madrasa): 16 tracks, 106 interactive lessons with quizzes, progress and printable ijazahs (reading Arabic, Five Pillars, prophets, worship, belief, golden-age science); free for individuals
 - [The Madrasa of Light](https://noorcodex.com/school): a complete Islamic school curriculum 0-18, Montessori-informed, with STEM through golden-age Muslim science and ijazah milestones; baby/toddler room at /kids/cradle
 - [The Guardian's Journal](https://noorcodex.com/journal): personal reflections by the site's builder, clearly and visibly marked as one contemporary Muslim's opinion rather than the evidence-badged teaching of the other rooms. Open to replies without an account; disagreement is never removed.
@@ -20,8 +37,9 @@ NOOR (noorcodex.com) is an English-first Islamic knowledge library with gateway 
 - [Keep it lit (gifts)](https://noorcodex.com/donate): voluntary sadaqa keeps the library free; givers leave du'as the community prays on
 
 ## Standards
-- Verses quoted from established translations; recitation by Mishary Rashid Alafasy
-- Hadith cited to Sahih al-Bukhari, Sahih Muslim and other collections by name
+- Verses quoted in the Uthmani script with an established translation; recitation by Mishary Rashid Alafasy
+- Narrations cited by collection and number (for example Sahih al-Bukhari 3207), each checked against the collection; reports from the sirah are labelled as sirah, not as hadith
+- Teaching claims carry an evidence badge naming their kind: Qur'an, Sunnah, debated, or editorial (the site's own counsel, marked as such)
 - No fatwas; readers with personal rulings are directed to qualified scholars
 - Privacy: no ads, no trackers, no reader identification of any kind
 

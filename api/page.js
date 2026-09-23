@@ -197,6 +197,25 @@ export async function ayah(s, a) {
     return { ar: ar.text, en: en.text, surah: surahShape(ar.surah || en.surah) };
   });
 }
+/* THE ARABIC NEVER WAITS ON A STRANGER (audit seo-008).
+   A verse room fetched both its Arabic and its English from api.alquran.cloud
+   while the reader waited, and when that service was slow the page printed
+   "the text of this verse is on the Mushaf" and was cached at the edge for a
+   whole day as a success. The Uthmani text of all 6,236 verses has always
+   been beside this file, in the reels' own table; it is read from there now,
+   so the Arabic is on the page whatever any other service is doing. Only the
+   English still comes from outside, and a page that is missing it says so to
+   the cache (see versePage) instead of pretending to be whole. */
+export const localArabic = (s, a) => (quranTable().verses || {})[s + ":" + a] || "";
+/* the written notes the library already owns for 1,280 verses: the sense of
+   the verse in a few sentences and its words one by one, from verse/<s>.json */
+export const verseNotes = (s, a) => { const j = once("vn:" + s, () => readJSON("verse/" + s + ".json")); return (j && j.v && j.v[String(a)]) || null; };
+export async function verseText(s, a, askEnglish = true) {
+  const ar = localArabic(s, a);
+  const t = askEnglish ? await ayah(s, a) : null;
+  if (t) return { ar: ar || t.ar, en: t.en, surah: t.surah };
+  return ar ? { ar, en: "", surah: null } : null;
+}
 export async function surahMeta(n) {
   return remembered("n2:surah:" + n, async () => {
     const j = await getJSON(API + "/surah/" + n);
@@ -636,14 +655,25 @@ async function versePage(refRaw) {
   const video = row ? (isUrl(row.video) ? row.video : "/reels/" + row.id + ".mp4") : "";
   const cover = row ? (isUrl(row.cover) ? row.cover : (row.cover ? "/reels/" + row.id + "-cover.jpg" : "")) : "";
   const texts = [];
-  for (let a = ref.a; a <= ref.b; a++) { const t = await ayah(ref.s, a); if (!t) { texts.length = 0; break; } texts.push(t); }
+  /* once the English fails for one verse of a range, it is not asked for the
+     rest: the service is down or slow, and waiting on it once per verse
+     turned a 21 verse range into two minutes of nothing for the reader */
+  let askEnglish = true;
+  for (let a = ref.a; a <= ref.b; a++) {
+    const t = await verseText(ref.s, a, askEnglish);
+    if (!t) { texts.length = 0; break; }
+    if (!t.en) askEnglish = false;
+    texts.push(t);
+  }
+  /* the English came back for every verse, or the page is not whole */
+  const whole = texts.length > 0 && texts.every(t => t.en);
   /* the surah's name always comes from the reels' own uthmani table, never
      the live API's englishName: the API and the table spell 63 of the 109
      surahs with shelf verses differently, and a room, a caption and a
      sitemap must all print the same one (content-009) */
   const name = (surahRow(ref.s) || {}).translit || "";
   const mushaf = "/quran?surah=" + ref.s + "&ayah=" + ref.a;
-  const english = texts.map(t => t.en).join(" ");
+  const english = whole ? texts.map(t => t.en).join(" ") : "";
   const reciter = row && row.reciter ? String(row.reciter) : "";
   const shareText = "Qur'an " + ref.label + (english ? ": " + clip(english, 200) : "") + " · NOOR Codex of Light";
   /* the reel has a screen of its own after the text: a reader who arrived
@@ -658,19 +688,32 @@ async function versePage(refRaw) {
 </section>` : "";
   const textBlock = texts.length
     ? `<p class="n2-quran" lang="ar" translate="no">${texts.map(t => esc(t.ar)).join(" ")}</p>
-<p class="n2-ref">Qur'an ${esc(ref.label)}${name ? " · " + esc(name) : ""}</p>
-<p class="n2-meaning">${texts.map(t => `<span class="n2-s">${esc(t.en)}</span>`).join("")}</p>
-<p class="n2-credit">Saheeh International</p>`
+${whole ? `<p class="n2-meaning">${texts.map(t => `<span class="n2-s">${esc(t.en)}</span>`).join("")}</p>
+<p class="n2-credit">Saheeh International</p>` : `<p class="n2-p">Its meaning in English is a moment away on the <a href="${attr(mushaf)}">Mushaf</a>.</p>`}`
     : `<p class="n2-ref">Qur'an ${esc(ref.label)}${name ? " · " + esc(name) : ""}</p>
 <p class="n2-p">The text of this verse, in the Uthmani script with its meaning, is on the Mushaf.</p>
 ${reciter ? `<p class="n2-credit">Recited by ${esc(reciter)}</p>` : ""}`;
-  const words = relatedWords((row && row.caption ? row.caption : "") + " " + english);
+  /* WHAT IT SAYS, BEFORE ANYTHING ELSE ASKS. Where the library has already
+     written a verse's sense and its words one by one (1,280 verses), the room
+     now shows them under the text: the plain answer to "what does this verse
+     mean", in the house's own checked words, with nothing generated. For a
+     range, the first verse carries the sense. */
+  const vn = verseNotes(ref.s, ref.a);
+  const gloss = vn && Array.isArray(vn.words) && vn.words.length && ref.a === ref.b
+    ? `<p class="n2-eyebrow">Word by word</p><p class="n2-p">${vn.words.map(w => `<span lang="ar" translate="no">${esc(w.a)}</span> <small>${esc(w.t || "")}</small> ${esc(w.g || "")}`).join(" · ")}</p>` : "";
+  const sense = vn && vn.sense ? `<section class="n2-idea n2-short" id="sense">
+<p class="n2-eyebrow">What it says${ref.b > ref.a ? ` <small>· verse ${ref.a}</small>` : ""}</p>
+<p class="n2-p">${esc(vn.sense)}</p>
+${gloss}
+</section>` : "";
+  const words = relatedWords((row && row.caption ? row.caption : "") + " " + english + " " + (vn && vn.sense ? vn.sense : ""));
   const others = (await verseRows()).filter(r => r.ref && r.ref.split(":")[0] === String(ref.s) && r.id !== "verse-" + ref.id).slice(0, 8);
   const body = `<section class="n2-idea n2-in">
-<p class="n2-eyebrow">One verse${name ? ` <small>· ${esc(name)}</small>` : ""}</p>
+<h1 class="n2-h1">Qur'an ${esc(ref.label)}${name ? ` <span class="n2-g">${esc(name)}</span>` : ""}</h1>
 ${textBlock}
 <div class="n2-row">${row ? go("#reel", "The reel", true) : ""}${go(mushaf, "The Mushaf", !row)}${shareBtn(shareText, SITE + url)}</div>
 </section>
+${sense}
 ${reel}
 <section class="n2-idea n2-short" id="beside">
 <p class="n2-eyebrow">Read beside it</p>
@@ -683,7 +726,7 @@ b.addEventListener("click",function(){v.setAttribute("controls","");v.play().the
 v.addEventListener("pause",function(){r.classList.remove("n2-playing")});v.addEventListener("play",function(){r.classList.add("n2-playing")});})();</script>` : "";
   return { status: 200, html: shell({
     title: "Qur'an " + ref.label + (name ? ", " + name : ""), path: url,
-    desc: english ? clip(english, 158) : "Qur'an " + ref.label + " on the Mushaf, with its recitation.",
+    desc: english ? clip(english, 158) : (vn && vn.sense ? clip(vn.sense, 158) : "Qur'an " + ref.label + (name ? ", Surah " + name : "") + ": the Arabic, its meaning and its recitation."),
     active: "/quran", crumbs: [["The verses", "/verses"], ["Qur'an " + ref.label, url]], pill: ["/verses", "The shelf"],
     image: cover && isUrl(cover) ? cover : (cover ? SITE + cover : ""),
     ld: [{ "@context": "https://schema.org", "@type": "CreativeWork", name: "Qur'an " + ref.label + (name ? " · " + name : ""), url: SITE + url,
@@ -691,7 +734,7 @@ v.addEventListener("pause",function(){r.classList.remove("n2-playing")});v.addEv
       isPartOf: { "@type": "Book", name: name ? "Surah " + name : "The Qur'an", url: SITE + "/surah/" + ref.s },
       ...(row ? { video: { "@type": "VideoObject", name: "Qur'an " + ref.label, description: english ? clip(english, 200) : "A verse of the Qur'an, recited.",
         contentUrl: isUrl(video) ? video : SITE + video, thumbnailUrl: cover ? (isUrl(cover) ? cover : SITE + cover) : OG_DEFAULT, uploadDate: MAN.written || undefined } } : {}) }],
-    body, tail }) };
+    body, tail }), cache: whole ? undefined : "public, s-maxage=600, stale-while-revalidate=3600" };
 }
 async function versesIndex() {
   const rows = await verseRows();

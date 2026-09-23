@@ -39,7 +39,7 @@ const ok = (c, m) => { if (c) { pass++; console.log("  PASS " + m); } else { fai
 const skip = m => console.log("  SKIP " + m);
 
 /* ---------- the stubs: the Qur'an API and the manifest, without a network ---------- */
-let apiDown = false;
+let apiDown = false, downAsks = 0;
 globalThis.fetch = async (url) => {
   url = String(url);
   const json = j => ({ ok: true, json: async () => j });
@@ -48,7 +48,7 @@ globalThis.fetch = async (url) => {
     { id: "verse-2-153", kind: "verse", slot: "evening", hook: "Qur'an 2:153", caption: "…", reciter: "Abdul Basit Abdus Samad", cover: true },
     { id: "word-sabr", kind: "word", slot: "evening", hook: "Sabr", caption: "…", cover: true }
   ] });
-  if (apiDown) return { ok: false, status: 503, json: async () => ({}) };
+  if (apiDown) { if (/\/ayah\//.test(url)) downAsks++; return { ok: false, status: 503, json: async () => ({}) }; }
   const m = url.match(/\/ayah\/(\d+):(\d+)\//);
   if (m) return json({ data: [
     { text: "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا", edition: { identifier: "quran-uthmani" }, surah: { number: +m[1], name: "سورة الشرح", englishName: m[1] === "3" ? "Al <b>Imran</b>" : "Ash-Sharh", englishNameTranslation: "The Relief", numberOfAyahs: 8, revelationType: "Meccan" } },
@@ -274,9 +274,24 @@ console.log("\n=== the Qur'an API being down ===");
 {
   apiDown = true;
   const r = await call({ kind: "verse", ref: "2:255" });
-  ok(r.code === 200 && r.body.includes("on the Mushaf") && r.body.includes("Qur&#39;an 2:255"), "a verse the API cannot give still renders, and says the text is on the Mushaf");
+  /* seo-008: the Arabic never waited on the API again after 22 September. It
+     comes from the reels' own table, the house's written sense of the verse
+     is shown where it exists, and a page missing its English tells the edge
+     to ask again in ten minutes instead of caching the gap for a day. */
+  ok(r.code === 200 && r.body.includes("Qur&#39;an 2:255") && r.body.includes('class="n2-quran"') && r.body.includes("ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ"),
+     "a verse the API cannot give still shows its Arabic, from the house's own table");
+  ok(/<h1 class="n2-h1">Qur(?:'|&#39;)an 2:255/.test(r.body), "and a headline naming the verse");
+  ok(r.body.includes('id="sense"'), "and the house's own written sense of the verse, where it has one");
+  ok(r.body.includes("a moment away") && !r.body.includes("n2-credit\">Saheeh"), "and says the English is on the Mushaf, rather than printing an empty translation");
+  ok(/s-maxage=600/.test((r.headers && (r.headers["Cache-Control"] || r.headers["cache-control"])) || r.cache || ""), "and is cached for ten minutes, not a day, so the gap heals itself");
   const s = await call({ kind: "surah", n: "112" });
   ok(s.code === 200 && s.body.includes("Al-Ikhlas") && s.body.includes("4 verses"), "a surah the API cannot give still renders from the reels' Qur'an table");
+  /* a range with the service down asks it once, not once per verse: the old
+     walk broke on the first failure, and the new one must not trade that for
+     waiting on every verse in turn */
+  downAsks = 0;
+  const rg = await call({ kind: "verse", ref: "2:1-7" });
+  ok(rg.code === 200 && downAsks === 1 && rg.body.split('class="n2-quran"').length === 2, "a seven verse range with the service down asks it once and still shows all its Arabic (" + downAsks + " asks)");
   apiDown = false;
 }
 
@@ -755,6 +770,11 @@ console.log("\n=== the deployment ===");
      && (inc.includes("assets/entity-graph.json") || inc.includes("assets/*.json")) && inc.length <= 256
      && fs.existsSync("assets/entity-graph.json"),
      "api/page.js includes the people, the places, the Names and the graph that ties them, under 256 characters");
+  /* the verse rooms read their written sense and words from verse/<s>.json
+     (seo-008, 22 September); without this line the section renders in every
+     test and on no live page, because the test reads the disk and Vercel
+     ships only what is listed */
+  ok(inc.includes("verse/*.json"), "and the verse notes, so the verse rooms can show what each verse says");
   ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => v.functions["api/sitemap.js"].includeFiles.includes(f)), "and api/sitemap.js includes what it lists");
   ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 6, "what was in vercel.json is still there");
   ok(/max-age=300/.test(cc("/reels/(index|home)\\.json")), "the reels manifests are kept five minutes and revalidated in the background");

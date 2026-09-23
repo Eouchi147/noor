@@ -1629,9 +1629,14 @@ export async function sentTo(network, today, reach, opts = {}) {
   const base = Date.parse(String(today || new Date().toISOString().slice(0, 10)) + "T00:00:00Z");
   const n = Math.max(1, Math.min(400, Number(reach) > 0 ? Math.floor(Number(reach)) : DUP_WINDOW_DAYS));
   const want = [];
+  /* the day's cards go to Facebook and Instagram as stories, which vanish in
+     a day and are in no list a network will hand back, so on the caption
+     networks only the reel slots are read: a story would otherwise read as a
+     send the network had lost */
+  const slots = REC.CAPTION_NETWORKS.has(network) ? REEL_SLOTS : SLOT_IDS;
   for (let i = 0; i < n; i++) {
     const d = new Date(base - i * 86400000).toISOString().slice(0, 10);
-    for (const slot of SLOT_IDS) want.push({ date: d, slot });
+    for (const slot of slots) want.push({ date: d, slot });
   }
   const seen = new Map();          /* platform id -> the earliest row for it */
   const idless = [];               /* ok sends that kept no platform id: unverifiable, never dropped */
@@ -1735,7 +1740,14 @@ export async function reconcile(network, host, opts = {}) {
   const desc = REC.NETWORKS[network];
   if (!desc) return { ok: false, error: "no such network: " + network };
   if (!desc.enumerable) return { ok: true, network, enumerable: false, why: desc.why, clean: null };
-  const inv = await desc.inventory(opts);
+  /* each walk is handed the account and token the house already posts with;
+     _reconcile.js never reads the environment itself */
+  const creds = {
+    ig: { id: process.env.IG_USER_ID || "", tok: igToken() || "", base: graphBase(igToken()) },
+    fb: { id: process.env.FB_PAGE_ID || "", tok: network === "facebook" ? await pageToken() : "" },
+    th: { tok: (process.env.TH_TOKEN || "").trim() }
+  };
+  const inv = await desc.inventory({ ...opts, ...creds });
   if (!inv.ok) return { ok: true, network, enumerable: false, why: inv.why, clean: null };
   /* THE LEDGER READS AS FAR BACK AS THE CHANNEL GOES. An item older than the
      records read can never be judged recorded or not, so the reach is carried

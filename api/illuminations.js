@@ -19,6 +19,8 @@
 import net from "node:net";
 import { isFree, allowPaid, liveChain } from "./_models.js";
 import { chooseLight, libraryInfo, hijriOf } from "./_lights.js";
+import * as JEV from "./_jev.js";
+import { ownerGate } from "./_owner.js";
 import tls from "node:tls";
 
 /* ---------- the store, whoever provides it ----------
@@ -318,6 +320,23 @@ function prose(x, words) {
   return t;
 }
 
+/* ---- THE JUDGE BESIDE THE WRITER ------------------------------------------
+   Prose is necessary and not sufficient. Once a piece is prose, Jev asks the
+   questions a reader of an Islamic library would ask of it (api/_jev.js):
+   does it put words in the Prophet's mouth ﷺ, cite a hadith number nobody has
+   checked, issue a ruling, slight anyone, or wander from its subject. A
+   refusal throws exactly as an empty answer does, so the kind falls back to
+   its own hand written light. Jev being unreachable changes nothing a reader
+   sees. The request is kept so the deployment's own token can be read from
+   it when the environment does not carry one. */
+let THIS_REQ = null;
+async function gated(kind, text, ctx) {
+  const g = await JEV.judge(kind, text, ctx, { req: THIS_REQ });
+  if (!g.pass) { const e = new Error("gate"); e.gate = g; throw e; }
+  return g.gate;
+}
+const refusal = e => (e && e.gate) ? { gate: "refused", refusedFor: e.gate.reasons } : {};
+
 /* The Codex speaks 21 languages, and until now its daily light spoke one.
    A reader who switched to Arabic met an English paragraph sitting inside an
    otherwise Arabic page. The lantern is simply told which language to write
@@ -479,8 +498,9 @@ async function kindVerse(today) {
       "The reflection for Qur'an " + ref + " on " + today + ".", 260);
     const reflection = prose(p.reflection, 35);
     if (!reflection) throw 0;
-    return { date: today, ref, reflection: reflection.slice(0, 600), theme: clean(p.theme).slice(0, 24), source: "lantern" };
-  } catch { return Object.assign({ date: today, source: "treasury" }, VERSE_FALLBACK, { ref }); }
+    const gate = await gated("verse", reflection, { ref });
+    return { date: today, ref, reflection: reflection.slice(0, 600), theme: clean(p.theme).slice(0, 24), source: "lantern", gate };
+  } catch (e) { return Object.assign({ date: today, source: "treasury" }, VERSE_FALLBACK, { ref }, refusal(e)); }
 }
 async function kindThread(today, lang) {
   try {
@@ -495,8 +515,9 @@ async function kindThread(today, lang) {
       "The thread for " + today + ". Choose a pairing unlikely to repeat often.", 340);
     const a = DOORS[String(p.aDoor || "").toLowerCase()], b = DOORS[String(p.bDoor || "").toLowerCase()];
     if (!p.text || !a || !b) throw 0;
-    return { date: today, text: clean(p.text).slice(0, 500), a: { label: clean(p.aLabel).slice(0, 40) || "Open", href: a }, b: { label: clean(p.bLabel).slice(0, 40) || "Open", href: b }, source: "lantern" };
-  } catch { return threadFallback(today, lang); }
+    const gate = await gated("thread", clean(p.text), {});
+    return { date: today, text: clean(p.text).slice(0, 500), a: { label: clean(p.aLabel).slice(0, 40) || "Open", href: a }, b: { label: clean(p.bLabel).slice(0, 40) || "Open", href: b }, source: "lantern", gate };
+  } catch (e) { return Object.assign(threadFallback(today, lang), refusal(e)); }
 }
 async function kindQuestion(today) {
   const q = QUESTIONS[dayIndexOf(today) % QUESTIONS.length];
@@ -510,8 +531,9 @@ async function kindQuestion(today) {
       "Answer for " + today + ".", 320);
     const href = DOORS[String(p.door || "").toLowerCase()];
     if (!p.a || !href) throw 0;
-    return { date: today, q, a: clean(p.a).slice(0, 800), href, room: clean(p.room).slice(0, 40) || "Explore", source: "lantern" };
-  } catch { return Object.assign({ date: today, source: "treasury" }, QUESTION_FALLBACK, { q: QUESTION_FALLBACK.q }); }
+    const gate = await gated("question", clean(p.a), { q });
+    return { date: today, q, a: clean(p.a).slice(0, 800), href, room: clean(p.room).slice(0, 40) || "Explore", source: "lantern", gate };
+  } catch (e) { return Object.assign({ date: today, source: "treasury" }, QUESTION_FALLBACK, { q: QUESTION_FALLBACK.q }, refusal(e)); }
 }
 function isoWeek(d) {
   const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
@@ -529,14 +551,32 @@ async function kindFriday(weekKey) {
        BASE_RULES].join("\n"),
       "Friday Light for week " + weekKey + ".", 240);
     if (!p.text) throw 0;
-    return { week: weekKey, text: clean(p.text).slice(0, 700), kahf: true, source: "lantern" };
-  } catch { return Object.assign({ week: weekKey, source: "treasury" }, FRIDAY_FALLBACK); }
+    const gate = await gated("friday", clean(p.text), {});
+    return { week: weekKey, text: clean(p.text).slice(0, 700), kahf: true, source: "lantern", gate };
+  } catch (e) { return Object.assign({ week: weekKey, source: "treasury" }, FRIDAY_FALLBACK, refusal(e)); }
 }
 
 /* ---------- handler ---------- */
 export default async function handler(req, res) {
   const kind = String((req.query && req.query.kind) || "light");
   const today = new Date().toISOString().slice(0, 10);
+  THIS_REQ = req;
+
+  /* THE OWNER'S LOOK AT THE JUDGE. Two pieces of writing, one a reflection
+     the gate should pass and one it must refuse, sent through the very same
+     judge the Lantern uses, with every score shown. Owner only, never cached,
+     and it writes nothing. This is how the gate is proved to be alive on the
+     live deployment rather than assumed to be. */
+  if (kind === "gate") {
+    const g0 = ownerGate(req);
+    if (!g0.ok) return res.status(g0.code).json({ ok: false, reason: g0.reason });
+    res.setHeader("Cache-Control", "no-store");
+    const good = "Every night ends in a morning you did not have to make. The verse asks you to notice that. Before you open your phone today, look at the light and let it remind you that the One who turns night into day can turn a heavy heart light again.";
+    const bad = "The Prophet said that whoever reads this verse after every prayer is forbidden from the Fire (Bukhari 9921), so skipping it is haram.";
+    const [a, b] = await Promise.all([JEV.judge("verse", good, { ref: "3:190" }, { req }), JEV.judge("verse", bad, { ref: "3:190" }, { req })]);
+    return res.status(200).json({ ok: true, credential: JEV.credential(req) ? "present" : "missing", good: a, bad: b,
+      working: a.gate !== "unavailable" && b.gate !== "unavailable" && a.pass && !b.pass });
+  }
 
   if (kind === "light") {
     let want = String((req.query && req.query.date) || "").slice(0, 10);

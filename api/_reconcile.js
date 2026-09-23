@@ -133,8 +133,9 @@ export function expectedOn(card, network) { return allowanceOn(card, network).to
    announced to somebody who then stops believing the tool. */
 export function titleIndex(cards, network = "youtube") {
   const by = new Map();
+  const key = keyOf(network);
   const add = (t, reel, shape) => {
-    const k = norm(t);
+    const k = key(t);
     if (!k) return;
     if (!by.has(k)) by.set(k, []);
     const list = by.get(k);
@@ -146,10 +147,42 @@ export function titleIndex(cards, network = "youtube") {
       const t = youtubeTitles(c);
       if (t.short) add(t.short, c.id, "short");
       if (t.wide) add(t.wide, c.id, "wide");
+    } else if (CAPTION_NETWORKS.has(network)) {
+      /* the caption the poster sends, from the same shaper: sendOne hands a
+         network shaped.text as the post's caption */
+      const post = postFor(c);
+      let text = "";
+      try { const sh = post && CH.shape(post, network); text = sh ? (sh.text || sh.description || "") : ""; } catch { }
+      if (text) add(text, c.id, "short");
     }
   }
   return by;
 }
+
+/* A CAPTION IS NAMED BY ITS OPENING WORDS. Instagram, Facebook and Threads
+   carry no title, only the caption the poster wrote, and a network may trim
+   it, turn its link into a short one or drop a tag. What survives every one
+   of those is the opening: the first twelve words, with links, tags and
+   punctuation taken out. The shelf's captions open on each reel's own hook,
+   so twelve words tell one reel from another. */
+export function captionKey(s) {
+  const t = String(s == null ? "" : s).normalize("NFC").replace(/\p{M}/gu, "").toLowerCase()
+    .replace(/https?:\/\/\S+/g, " ").replace(/#[\p{L}\p{N}_]+/gu, " ")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
+  return t.split(" ").filter(Boolean).slice(0, 12).join(" ");
+}
+export const CAPTION_NETWORKS = new Set(["instagram", "facebook", "threads"]);
+/* where a record may hold a container's id rather than the post's: Instagram
+   (a slow publish answer) and Threads (_threads.js keeps the container id when
+   publish is still settling). Not Facebook, whose video ids are exact, and
+   only within two days: a record from June and a post from September are two
+   sends, a removed one and an unrecorded resend, and pairing them would hide
+   exactly the fault this pass exists to find. */
+export const PAIRING_NETWORKS = new Set(["instagram", "threads"]);
+export const PAIR_DAYS = 2;
+const withinDays = (a, b, n) => { const x = Date.parse(String(a || "") + "T00:00:00Z"), y = Date.parse(String(b || "") + "T00:00:00Z");
+  return isFinite(x) && isFinite(y) && Math.abs(x - y) <= n * 86400000; };
+export const keyOf = network => CAPTION_NETWORKS.has(network) ? captionKey : norm;
 
 /* compared on collapsed whitespace, case folded: neither carries meaning
    here and both have been seen to differ. The ellipsis a cut title ends with
@@ -212,7 +245,7 @@ export function compare({ inventory = [], ledger = [], index = new Map(), cards 
       continue;
     }
     const rec = ledgerById.get(String(it.id)) || null;
-    const hits = index.get(norm(it.title)) || [];
+    const hits = index.get(keyOf(network)(it.title)) || [];
     let reel = rec ? rec.reel : null, shape = null, ambiguous = null;
     if (!reel) {
       if (hits.length === 1) { reel = hits[0].reel; shape = hits[0].shape; }
@@ -226,10 +259,31 @@ export function compare({ inventory = [], ledger = [], index = new Map(), cards 
     items.push({ ...it, reel, shape, ambiguous, recorded: !!rec });
   }
 
+  /* A RECORD AND A POST THAT ARE THE SAME SEND UNDER TWO IDS. Instagram hands
+     back the id of the upload container when the publish answer is slow, and
+     that id is what some records kept, while the post on the profile has its
+     own. Joined on id alone, one send would read twice: absent under the
+     record's id and unrecorded under the post's. On the caption networks, a
+     record whose id the network does not list is paired with an unrecorded
+     post of the same reel, nearest in date, and the two are one send. Never
+     on YouTube, whose ids are exact, where such a pair would be a real fault
+     that pairing would hide. */
+  const pairedIds = new Set();
+  if (PAIRING_NETWORKS.has(network)) {
+    const listed = new Set(inventory.filter(Boolean).map(i => String(i.id)));
+    const spare = items.filter(i => i.reel && !i.recorded);
+    for (const L of ledgerById.values()) {
+      if (listed.has(String(L.id))) continue;
+      const near = spare.filter(i => i.reel === L.reel && !i.recorded && withinDays(i.at, L.at, PAIR_DAYS))
+        .sort((a, b) => Math.abs(Date.parse(a.at || 0) - Date.parse(L.at || 0)) - Math.abs(Date.parse(b.at || 0) - Date.parse(L.at || 0)))[0];
+      if (near) { near.recorded = true; near.pairedWith = L.id; pairedIds.add(String(L.id)); }
+    }
+  }
+
   /* --- absent ----------------------------------------------------------- */
   const have = new Set(inventory.filter(Boolean).map(i => String(i.id)));
   const withIds = [...ledgerById.values()];
-  let absent = withIds.filter(L => !have.has(String(L.id)))
+  let absent = withIds.filter(L => !have.has(String(L.id)) && !pairedIds.has(String(L.id)))
     .map(L => ({ reel: L.reel, id: L.id, url: L.url || null, at: L.at || null, slot: L.slot || null }));
 
   /* a record with no platform id cannot be looked for at all: counted and
@@ -346,7 +400,8 @@ export function compare({ inventory = [], ledger = [], index = new Map(), cards 
        to have covered it */
     caveats: [
       ...(foreign.length ? [foreign.length + " video" + (foreign.length === 1 ? "" : "s") + " on the channel match no reel on the shelf and could not be judged"] : []),
-      ...(statusComplete === false ? ["YouTube did not say the status of every video, so an upload rejected after an ok could be among those it did not answer for"] : []),
+      ...(statusComplete === false ? ["the network did not say the status of every post, so an upload rejected after an ok could be among those it did not answer for"] : []),
+      ...(network !== "youtube" ? ["this network gives no upload status, so an upload rejected after an ok cannot be seen here"] : []),
       ...(rejected.length ? [rejected.length + " upload" + (rejected.length === 1 ? "" : "s") + " YouTube itself rejected, never published and in no record of ours"] : [])
     ]
   };
@@ -482,17 +537,109 @@ export async function ytInventory(opts = {}) {
 }
 
 /* -------------------------------------------------------------------------
-   THE NETWORKS, AND WHAT CAN HONESTLY BE ASKED OF EACH
+   ASKING META AND THREADS WHAT THEY HAVE
 
-   Only youtube is enumerable today. "No adapter yet" and "the platform offers
-   no such read" are different facts, and each row says which.
+   The three speak the same Graph dialect: a list of the account's posts with
+   the fields asked for, fifty at a time, and a paging.next address to follow.
+   One pager serves all three, with the same guarantees as the YouTube walk:
+   one post is one item however many pages hand it back, a page token handed
+   back twice stops the walk as unfinished, a refused page keeps what was
+   already read and says why, and every call is bounded in time. Nothing here
+   holds a credential of its own: social.js hands each walk the account id and
+   token it already posts with, so this file never reads the environment.
+
+   Only posts are listed. The day's cards go to Facebook and Instagram as
+   stories, which vanish after a day and are not in any list, so the ledger
+   side reads only the reel slots for these networks (sentTo in social.js).
+------------------------------------------------------------------------- */
+export const META_MAX_PAGES = 30;
+
+export async function graphInventory(firstUrl, tok, map, opts = {}) {
+  const fetcher = opts.fetch || fetch;
+  const started = Date.now();
+  const left = () => (opts.budgetMs == null ? WALK_BUDGET_MS : opts.budgetMs) - (Date.now() - started);
+  const items = [], seen = new Set(), urls = new Set();
+  let url = firstUrl, pages = 0, complete = true, why = null, repeats = 0;
+  while (url) {
+    if (pages >= META_MAX_PAGES) { complete = false; why = "stopped at " + META_MAX_PAGES + " pages"; break; }
+    if (left() <= 2500) { complete = false; why = "ran out of time after " + pages + " pages"; break; }
+    if (urls.has(url)) { complete = false; why = "the network handed back a page it had already given"; break; }
+    urls.add(url);
+    const ctl = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = ctl ? setTimeout(() => ctl.abort(), Math.max(1000, Math.min(CALL_TIMEOUT_MS, left()))) : null;
+    let r, j;
+    try {
+      r = await fetcher(url, { headers: { authorization: "Bearer " + tok }, signal: ctl ? ctl.signal : undefined });
+      j = await r.json().catch(() => null);
+    } catch (e) {
+      if (timer) clearTimeout(timer);
+      if (!pages) return { ok: false, enumerable: false, why: (e && e.name === "AbortError") ? "no answer in time" : String(e && e.message || e).slice(0, 120) };
+      complete = false; why = "page " + (pages + 1) + " failed: " + String(e && e.message || e).slice(0, 80); break;
+    }
+    if (timer) clearTimeout(timer);
+    if (!r.ok || !j || !Array.isArray(j.data)) {
+      const w = (j && j.error && (j.error.message || j.error.type)) || ("http " + (r && r.status));
+      if (!pages) return { ok: false, enumerable: false, why: "the network refused the list: " + w };
+      complete = false; why = "the network refused page " + (pages + 1) + ": " + w; break;
+    }
+    pages++;
+    for (const raw of j.data) {
+      const it = map(raw);
+      if (!it || !it.id) continue;
+      if (seen.has(String(it.id))) { repeats++; continue; }
+      seen.add(String(it.id));
+      items.push(it);
+    }
+    url = (j.paging && j.paging.next) || null;
+  }
+  return { ok: true, enumerable: true, items, pages, complete, why, repeats, tookMs: Date.now() - started };
+}
+
+const day = t => (t ? String(t).slice(0, 10) : null);
+const needs = (what, names) => ({ ok: false, enumerable: false, why: what + " is not connected (" + names + " is not set)" });
+
+export async function igInventory(opts = {}) {
+  const c = opts.ig || {};
+  if (!c.id || !c.tok) return needs("Instagram", "IG_USER_ID or its token");
+  const base = c.base || "https://graph.facebook.com/v21.0";
+  return graphInventory(base + "/" + encodeURIComponent(c.id) + "/media?fields=id,caption,timestamp,permalink,media_product_type&limit=50", c.tok,
+    /* REELS ONLY. Until 9 September the day's cards went to the grid as
+       ordinary posts, and a word card opens with the same words as that
+       word's reel: read as reels, 421 old card posts would each have been
+       called the older copy of a reel, the real reel marked for removal, and
+       the guard taught that reels never sent there had been. The house posts
+       nothing to the grid but reels now, so only reels are ours to judge. */
+    m => (m.media_product_type && m.media_product_type !== "REELS") ? null
+      : ({ id: m.id, title: m.caption || "", at: day(m.timestamp), atFull: m.timestamp || null, url: m.permalink || null, kind: m.media_product_type || null }), opts);
+}
+export async function fbInventory(opts = {}) {
+  const c = opts.fb || {};
+  if (!c.id || !c.tok) return needs("Facebook", "FB_PAGE_ID or FB_PAGE_TOKEN");
+  return graphInventory("https://graph.facebook.com/v21.0/" + encodeURIComponent(c.id) + "/video_reels?fields=id,description,created_time,permalink_url&limit=50", c.tok,
+    m => ({ id: m.id, title: m.description || "", at: day(m.created_time), atFull: m.created_time || null,
+            url: m.permalink_url ? (/^https?:/.test(m.permalink_url) ? m.permalink_url : "https://www.facebook.com" + m.permalink_url) : null }), opts);
+}
+export async function thInventory(opts = {}) {
+  const c = opts.th || {};
+  if (!c.tok) return needs("Threads", "TH_TOKEN");
+  /* videos only, for the reason given above Instagram's walk: the cards were
+     once posted to Threads as text and pictures, and open like their reels */
+  return graphInventory("https://graph.threads.net/v1.0/me/threads?fields=id,text,timestamp,permalink,media_type&limit=50", c.tok,
+    m => (m.media_type && m.media_type !== "VIDEO") ? null
+      : ({ id: m.id, title: m.text || "", at: day(m.timestamp), atFull: m.timestamp || null, url: m.permalink || null }), opts);
+}
+
+/* -------------------------------------------------------------------------
+   THE NETWORKS, AND WHAT CAN HONESTLY BE ASKED OF EACH
+   "No adapter yet" and "the platform offers no such read" are different
+   facts, and each row says which.
 ------------------------------------------------------------------------- */
 export const NETWORKS = {
   youtube:   { enumerable: true,  inventory: ytInventory },
+  instagram: { enumerable: true,  inventory: igInventory },
+  facebook:  { enumerable: true,  inventory: fbInventory },
+  threads:   { enumerable: true,  inventory: thInventory },
   telegram:  { enumerable: false, why: "the bot API cannot list a channel's history: getUpdates only reaches forward from now, so nothing can enumerate what was sent before" },
-  instagram: { enumerable: false, why: "the Graph edge exists and the token is already held; the adapter is not written yet" },
-  facebook:  { enumerable: false, why: "the Graph edge exists and the token is already held; the adapter is not written yet" },
-  threads:   { enumerable: false, why: "the Graph edge exists and the token is already held; the adapter is not written yet" },
   pinterest: { enumerable: false, why: "listing pins needs Standard access, which is still in review; the adapter is not written yet" },
   x:         { enumerable: false, why: "reading a timeline is not in the tier this house holds" },
   reddit:    { enumerable: false, why: "this house only ever drafts to Reddit, so there is nothing of ours to enumerate" },

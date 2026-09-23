@@ -2206,8 +2206,9 @@ function drawSystem(force){
       +'<div class="acts"><button class="btn ghost" id="sys-backfill">Run</button></div><div id="sys-backfill-out"></div></div>'
       +'<p class="sec">What the networks actually hold</p><div class="card">'
       +'<p class="muted small" style="margin:0">An ok from an upload means the request was accepted. It does not mean the video is there today, and it does not mean it is there once. This asks a network for its real inventory and sets it against this house\'s own records, naming three things: a send we recorded that the network does not have, a reel the network has that we never wrote down, and a reel it holds more times than it should. It reads only, on both sides, and writes nothing anywhere.</p>'
-      +'<div class="acts"><button class="btn ghost" id="sys-rec" data-net="youtube">Check YouTube</button><button class="btn ghost" id="sys-rec-teach" data-net="youtube">Teach the guard</button></div>'
-      +'<p class="faint small" style="margin:8px 0 0">Teach the guard writes what the channel holds into the duplicate guard\'s memory, so a reel already on YouTube is never sent there again, even when no record of the send was ever kept. It writes to the house only, never to YouTube.</p><div id="sys-rec-out"></div></div>'
+      +'<div class="acts"><button class="btn ghost" id="sys-rec" data-rec="1" data-net="youtube">Check YouTube</button><button class="btn ghost" id="sys-rec-ig" data-rec="1" data-net="instagram">Check Instagram</button><button class="btn ghost" id="sys-rec-fb" data-rec="1" data-net="facebook">Check Facebook</button><button class="btn ghost" id="sys-rec-th" data-rec="1" data-net="threads">Check Threads</button></div>'
+      +'<div class="acts"><button class="btn ghost" id="sys-rec-teach" data-teach="1" data-net="youtube">Teach the guard: YouTube</button><button class="btn ghost" id="sys-rec-teach-ig" data-teach="1" data-net="instagram">Instagram</button><button class="btn ghost" id="sys-rec-teach-fb" data-teach="1" data-net="facebook">Facebook</button><button class="btn ghost" id="sys-rec-teach-th" data-teach="1" data-net="threads">Threads</button></div>'
+      +'<p class="faint small" style="margin:8px 0 0">Teach the guard writes what a network holds into the duplicate guard\'s memory, so a reel already there is never sent there again, even when no record of the send was ever kept. It writes to the house only, never to the network.</p><div id="sys-rec-out"></div></div>'
       +'<div class="acts" style="margin-top:20px"><button class="btn ghost" id="sys-logout">Sign out</button></div>';
     el.onclick=function(e){
       var b=e.target.closest("button");if(!b)return;
@@ -2215,8 +2216,8 @@ function drawSystem(force){
       if(b.id==="sys-logout")return void post("/api/admin-auth",{logout:true}).then(function(){location.reload()}).catch(unreachable(b));
       if(b.id==="sys-lantern")return sysLantern(b);
       if(b.id==="sys-backfill")return sysBackfill(b);
-      if(b.id==="sys-rec")return sysReconcile(b);
-      if(b.id==="sys-rec-teach")return sysTeach(b);
+      if(b.dataset.rec)return sysReconcile(b);
+      if(b.dataset.teach)return sysTeach(b);
     };
   }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The machinery could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
 }
@@ -2279,7 +2280,7 @@ function sysTeach(b){
 function sysReconcile(b){
   var net=b.dataset.net||"youtube",was=b.textContent,out=$("sys-rec-out");
   b.disabled=true;b.textContent="Asking…";
-  out.innerHTML='<p class="muted small" style="margin:12px 0 0">Asking '+esc(net)+' what it holds, then reading every slot record back to its oldest video. Twenty seconds or so.</p>';
+  out.innerHTML='<p class="muted small" style="margin:12px 0 0">Asking '+esc(net)+' what it holds, then reading every record of ours back to its oldest post. Twenty seconds or so.</p>';
   get("/api/social?action=reconcile&net="+encodeURIComponent(net)).then(function(r){
     b.disabled=false;b.textContent=was;var j=r.j||{};
     if(r.locked)return;
@@ -2290,12 +2291,13 @@ function sysReconcile(b){
         +'<span style="white-space:normal">'+esc(j.why||"no reason given")+'</span></div></div>';return}
     var w=j.walk||{},lw=j.ledgerWalk||{},c=j.counted||{};
     var priv=Object.keys(w.privacy||{}).map(function(k){return w.privacy[k]+" "+k}).join(", ");
+    var unit=net==="youtube"?"video":"post",place=net==="youtube"?"the channel":"the account";
     var link=function(x,label){return '<a href="'+esc(x.url||"#")+'" target="_blank" rel="noopener">'+esc(label)+'</a>'};
     var head=j.clean
-      ? '<div class="row"><div class="ic" style="color:var(--good)">'+ICO.ok+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">The two sides agree on everything it could name.</b><span style="white-space:normal">Nothing missing, nothing unrecorded, nothing posted twice, nothing rejected after an ok.'+((j.caveats||[]).length?' Not covered: '+esc(j.caveats.join("; "))+'.':'')+'</span></div></div>'
+      ? '<div class="row"><div class="ic" style="color:var(--good)">'+ICO.ok+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">The two sides agree on everything it could name.</b><span style="white-space:normal">Nothing missing, nothing unrecorded, nothing posted twice'+(net==="youtube"?", nothing rejected after an ok":"")+'.'+((j.caveats||[]).length?' Not covered: '+esc(j.caveats.join("; "))+'.':'')+'</span></div></div>'
       : '<div class="row"><div class="ic" style="color:var(--bad)">'+ICO.warn+'</div><div class="t" style="white-space:normal"><b style="white-space:normal">'+(j.withheld?"Something does not add up, and part of the answer is withheld.":"The two sides do not agree, or part of it could not be checked.")+'</b><span style="white-space:normal">Read the lists below before acting on any of them.</span></div></div>';
     out.innerHTML='<div style="margin-top:12px">'+head
-      +'<p class="muted small" style="margin:10px 0 0">'+esc(String(c.onNetwork||0))+' video'+(c.onNetwork===1?"":"s")+' on the channel, '
+      +'<p class="muted small" style="margin:10px 0 0">'+esc(String(c.onNetwork||0))+' '+unit+(c.onNetwork===1?"":"s")+' on '+place+', '
       +esc(String(c.named||0))+' of them named as ours. '+esc(String(c.withIds||0))+' recorded sends in reach, '
       +esc(String(c.found||0))+' of those found ('+(c.coverage==null?"n/a":Math.round(c.coverage*100)+"%")+'). '
       +esc(String(w.pages||0))+' page'+(w.pages===1?"":"s")+', walk '+(w.complete?"finished":"DID NOT finish")+(w.why?" ("+esc(w.why)+")":"")+'. '
@@ -2305,10 +2307,10 @@ function sysReconcile(b){
         var marks=t.byHand
           ? 'Too many videos for this reel, but their shapes could not be told apart, so nothing is marked: look at them by hand. '+t.copies.map(function(x){return link(x,(x.at||"?")+" "+(x.shape||"shape unknown"))}).join(" · ")
           : t.copies.map(function(x){return link(x,(x.at||"?")+" "+x.shape+(x.keep?" keep":" remove"))}).join(" · ");
-        var lawful=(t.lawful||[]).length?' Also on the channel, lawfully, and not to be touched: '+t.lawful.map(function(x){return link(x,(x.at||"?")+" "+(x.shape||""))}).join(" · ")+'.':'';
-        return '<div class="row"><div class="t" style="white-space:normal;min-width:0"><b style="white-space:normal">'+esc(t.reel)+'</b><span style="white-space:normal">'+esc(String(t.count))+' videos, '+esc(String(t.expected))+' lawful'+(t.shapes?", doubled: "+esc(t.shapes.join(" and ")):"")+'. '+marks+lawful
+        var lawful=(t.lawful||[]).length?' Also on '+place+', lawfully, and not to be touched: '+t.lawful.map(function(x){return link(x,(x.at||"?")+" "+(x.shape||""))}).join(" · ")+'.':'';
+        return '<div class="row"><div class="t" style="white-space:normal;min-width:0"><b style="white-space:normal">'+esc(t.reel)+'</b><span style="white-space:normal">'+esc(String(t.count))+' '+unit+'s, '+esc(String(t.expected))+' lawful'+(t.shapes?", doubled: "+esc(t.shapes.join(" and ")):"")+'. '+marks+lawful
           +(t.assumed?'<br><i>'+esc(t.assumed)+'.</i>':'')+'</span></div></div>'})
-      +recList("Recorded as sent, and never published",j.failed,"The upload was accepted and YouTube then rejected, failed or removed the video. An ok is not a post.",function(x){
+      +recList("Recorded as sent, and never published",j.failed,"The upload was accepted and the network then rejected, failed or removed it. An ok is not a post.",function(x){
         return '<div class="row"><div class="t" style="white-space:normal;min-width:0"><b style="white-space:normal">'+esc(x.reel||x.id)+'</b><span style="white-space:normal">'+esc(x.at||"?")+' · '+esc(x.upload)+' · '+link(x,"open")+'</span></div></div>'})
       +recList("On the network, in no record of ours",j.unrecorded,"Something sent it and no slot record kept its id: a run cut before it could write its answer down, or a send made by hand.",function(x){
         return '<div class="row"><div class="t" style="white-space:normal;min-width:0"><b style="white-space:normal">'+esc(x.reel)+'</b><span style="white-space:normal">'+esc(x.at||"?")+' · '+esc(x.shape||"shape unknown")+' · '+link(x,"open")+'</span></div></div>'})
@@ -2321,7 +2323,7 @@ function sysReconcile(b){
       +((j.unverifiable||[]).length?'<p class="small" style="margin:10px 0 0;color:var(--wait)">'+esc(String(j.unverifiable.length))+' send'+(j.unverifiable.length===1?"":"s")+' kept no platform id and could not be looked for either way, so the pass is not clean while they stand.</p>':"")
       +((j.rejected||[]).length?'<p class="faint small" style="margin:6px 0 0">'+esc(String(j.rejected.length))+' upload'+(j.rejected.length===1?"":"s")+' YouTube itself rejected sit in the channel unpublished; they are not counted as copies.</p>':"")
       +((j.beyondReach||[]).length?'<p class="small" style="margin:6px 0 0;color:var(--wait)">'+esc(String(j.beyondReach.length))+' of ours predate the records the house can read, so whether they were recorded cannot be said, and the pass is not clean while they stand.</p>':"")
-      +((j.foreign||[]).length?'<p class="faint small" style="margin:6px 0 0">'+esc(String(j.foreign.length))+' video'+(j.foreign.length===1?"":"s")+' on the channel match no reel on the shelf: retired reels older than the records, or your own uploads.</p>':"")
+      +((j.foreign||[]).length?'<p class="faint small" style="margin:6px 0 0">'+esc(String(j.foreign.length))+' '+unit+(j.foreign.length===1?"":"s")+' on '+place+' match no reel on the shelf: retired reels older than the records, or your own posts.</p>':"")
       +'</div>';
   }).catch(function(){b.disabled=false;b.textContent=was;out.innerHTML='<p class="small" style="margin:12px 0 0;color:var(--bad)">Could not reach the house.</p>'});
 }

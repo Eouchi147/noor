@@ -1,89 +1,69 @@
 # NOOR: where things stand
 
-Kept current by the Director after every shipped batch. Dates are UTC. Newest at the top of
-each section. `HANDOFF.md` says how to resume; `DECISIONS.md` says what the owner decided.
+Kept current by the Director after every shipped batch. Dates are UTC. `HANDOFF.md` says how
+to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line by line record.
 
-## Live on main (16 September 2026)
+## Live on main (22 September 2026)
 
-- **The video engine** (`VIDEO_ENGINE.md`): the whole engine in `tools/films/` in the
-  repository, out of the deployment. The direction after the owner's verdict of 16
-  September: the site's own SVG plates animated by the plate engine (`plates.sh`), both
-  shapes at 30 fps, captions fading from blur, the watermark, no synthetic voice. The
-  night's scene film and 3D room stay behind a flag. "The dark room" renders on the
-  owner's Mac (`./plates.sh plate-darkroom`).
-- **Batch 5, the `/license` removal, the orphan removal and the house documents**: live
-  (rooms for prophets, companions, characters, places and the 99 Names; the sitemap at
-  1,386; `/license` redirected to `/school`; 97 orphan files gone by pull request 14).
-- **The change archive**: `changes.txt` at the root, one line per change, read and
-  downloaded from the console's System room (`/admin2`).
-- **The social machine**: five minutes a run (was 60 s), a claim per slot before sending, a
-  Facebook reel verified after finish, a published Instagram container never resent, a
-  private YouTube upload never retiring a reel, the YouTube cap at six, Pinterest's Trial
-  refusal recorded as waiting, the legacy nightly feed post removed, the Lights library read
-  from the site's own host, the afternoon rota restored until shorts exist, every reel
-  linking its own room, captions cut for Threads and Pinterest keeping their tail, the cron
-  door bearer only when a secret is set, Telegram handed `/api/reel?id=`, repairs pinned to
-  the record's reel, the dusk story patient with Instagram's 9007. First proof: the day's
-  card story went out at 22:00 UTC on 15 September (it had failed every hour before).
-- **The site**: the six right to left doors keep their language; 32 pages allow zoom; the
-  breadcrumb on every room resolves; the map on every page names Today, The Lights and
-  The Verses and sends the Path to `/path`; each surah on the Mushaf links its room; the
-  search index carries every Light, surah, Name, chapter and reader room; the dictionary
-  generator keeps the index whole and builds at shell v13; the 523 word pages rebuilt and
-  merged (pull request 13) with "Rooms that name it" shelves.
-- **The reels**: 1,457 reels on the shelf with video (runs 12 and 13 merged); the
-  recitation of a verse reel held by a lookahead limiter at minus 3 dB true peak and
-  encoded at 128k; a removed reel named on the run page; manifest rows carry `src`.
-- **The audit**: `/root/audit/` in the session box, the pack in the owner's folder
-  `NOOR Films/audit-2026`, the page "NOOR Audit 2026" in the owner's artifacts: 123
-  findings, 23 high; batches 1 to 3 shipped.
+- **The films**: 52 on the shelf (`reels/index.json`, kind `short`), each with its tall file,
+  wide file and cover on the store; the eleven Hajj films among them. Rendered on the owner's
+  Mac (`./plates.sh`), published by `tools/films/publish-shorts.sh`, which refuses to shrink the
+  shelf, cuts covers from the current master, and prunes a film's old frame caches.
+- **The duplicate guard, three layers deep**: the picker steps past what has gone out and prefers
+  the reel sent longest ago; the guard looks back 60 days (the shortest honest cycle, films, is
+  91); `backfillPosted` wrote the history back to March.
+- **The reconciliation** (masterplan section 11): the System room's "What the networks actually
+  hold" asks a network for its real inventory and names what is absent, unrecorded, posted twice
+  or rejected after an ok. "Teach the guard" writes what a network holds into the guard's memory.
+  First live run on YouTube: 8 reels more than once, all dated 8 to 21 September; the owner chose
+  to leave the copies. The guard now remembers every one of them.
+- **Citations**: every narration in the prophets, the chapters, the companions and the places
+  names its collection and number, checked against sunnah.com (audit content-001, content-002);
+  `tests/citations.mjs` guards it.
+- **The front door**: "What do you want to know about Islam?", title "NOOR · Learn Islam, from
+  the sources".
+- **The nine story rooms** on the same diet as the other 42 old rooms.
+- **Everything from before 19 September**: see `changes.txt`.
 
-## In flight
+## Shipped 22 September, second batch
 
-- **22 films staged and rewritten to the writing law** (the dark room, nine from last
-  week, twelve written 16 September from heroes.html), every line fact checked by the
-  refuter, the sound law applied (soft marks under the score), the lights soft; in the
-  owner's render folder; the owner renders them on the Mac (`./plates.sh`) and judges
-  one by one before anything goes to the shelf.
-- **The films' road to the networks**: rows of kind "short" on the reels shelf with
-  caption, story, sources and room; per network shaping (YouTube the 16:9 file and the
-  story as description); the afternoon slot on Sunday, Tuesday, Thursday and Saturday;
-  built, reviewed twice by the refuter, waiting for the owner's confirmation of the
-  films before it goes to main (`tools/reels/README.md`, "Shorts").
-- **Facebook**: the duplicate sends fixed and deployed (a cut send keeps its id, a per
-  network ledger refuses a second send, Telegram uploads the file); the page's reach is
-  a follower problem (0 followers), the owner's to build.
-- **The dictionary rebuild at shell v14** (workflow run 35047391599): its pull request
-  is merged or waiting; `CURRENT_STATE.md` is updated when it lands.
-
-## Waiting for the owner's yes to reach main (the evening batch of 16 September)
-
-- The films' road to the networks (`api/_schedule.js`, `_channels.js`, `social.js`:
-  rows of kind short, the story per network, YouTube both shapes with a finisher for
-  the wide), the numbers room (`api/_insights.js`, `insights.js`, `warm.js`, the console
-  card), the films workflow (`.github/workflows/films.yml`, `tools/films/render_ci.py`),
-  batch 6 (51 old rooms lighter by 1.4 MB, night first paint, a no script fallback),
-  the 22 briefs and chapters, the template with its two laws, the engine fixes, the
-  tests and the documents. Reviewed by the refuter (three rounds), every note closed.
-  Nothing in it posts until films are on the shelf.
+- **Jev, the Lantern's judge** (`api/_jev.js`, `api/illuminations.js`, `tests/jev.mjs`): before a
+  Verse Lamp, Seeker's answer, Hidden Thread or Friday Light is saved, Jev (TypeSafe, through
+  Vercel's AI Gateway, free, no key) asks whether it quotes the Prophet, cites an unchecked hadith
+  number, issues a ruling, slights anyone, or strays from its subject; a refusal falls back to the
+  hand written light, and Jev being down changes nothing. Owner probe: `/api/illuminations?kind=gate`.
+- **The reconciliation on Instagram, Facebook and Threads**: posts named by caption, reels and
+  videos only (the old card posts are not ours to judge), container ids paired within two days on
+  Instagram and Threads.
+- **Verse rooms** (audit seo-008): Arabic from the house's own table, never waiting on
+  api.alquran.cloud; a missing English cached ten minutes, not a day; a headline; the written sense
+  and word by word notes on the 1,280 verses that have them (`verse/*.json` now shipped with the
+  function).
+- **llms.txt** rewritten to the site as it is; the home page names its subject as Wikidata Q432.
 
 ## Decided and not yet done
 
-- Nudge Pinterest about the Standard access review (the owner sends the note himself;
-  the text is in the morning summary of 16 September).
-- The content corrections (content-001 to 006) and the old rooms diet (batch 6).
+- The CI list (`.github/workflows/tests.yml`) gains `citations`, `jev` and `reconcile-meta`: the
+  house's GitHub key cannot change workflow files, so it is done in the web editor.
+- The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for
+  a year behind a version written by hand in the shell and baked into 527 generated pages; ride it
+  on the next dictionary rebuild.
+
+## Postponed by the owner until funding (do not start)
+
+Full translation of the library, the Mushaf's remaining exegesis (1,280 verses across 59 surahs
+written; the long surahs from Al-Imran on are not), bulk generation of any kind, and anything
+needing paid compute.
 
 ## Blocked or waiting
 
-- Pinterest Standard access (their review). Video pins wait until it is granted.
-- The content corrections (content-001 to 006) need hadith numbers checked against a
-  reference; the cloud box cannot reach the web for that, the owner's browser can.
+- Pinterest Standard access (their review).
+- "Al-Isra · 17:110" on YouTube, blocked by a claim since 18 September.
+- Three unheard nasheeds in the owner's Suno library; every film shares the one G minor track.
 
 ## Numbers that matter
 
-- Reels on the shelf with video: 1,457 of 1,565 planned. Slots a day: 5 reels (08, 11, 14,
-  17, 21 UTC) plus reelF at 19, and the cards (dawn 05, light 12, word 16, dusk 20).
-- Rooms rendered by `api/page.js`: 1,130 live, 1,386 once batch 5 ships.
-- Audit findings: 123 (23 high, 49 medium, 51 low); closed so far: about 45 (five content
-  findings, 004, 005, 006, 008 and 009, closed 17 September), and the engine rebuild
-  (the audit's largest finding) has its first prototype.
+- Shelf: 1,509 cards, 52 films. YouTube channel: 88 videos at the first reconciliation.
+- Audit: 122 findings; the high ones in content, performance, SEO and social are closed. Open light
+  work remains in architecture, performance and SEO (the scout's table of 22 September overstates
+  it: at least ten items it calls open are fixed in `changes.txt`).
