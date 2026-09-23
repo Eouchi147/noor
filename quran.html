@@ -125,6 +125,11 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 #q-pick{border-radius:999px}
 .qnone{margin:10px 14px 0;font-size:12px;line-height:1.6;color:rgba(255,254,247,.6);max-width:46rem}
 .tool.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+/* "How you read" used to carry its own name in the row, but a name next to
+   "Browse the 114 gates" and "Listen to surah" is what pushed the bar onto
+   a second line on a phone; the room already has one, and an icon with an
+   aria-label and a title tooltip loses nothing but the width. */
+.tool-icon{padding:.5rem;width:44px;justify-content:center}
 .navarrow{width:2.4rem;height:2.4rem;border-radius:var(--r);border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
 .navarrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
 .navarrow:disabled{opacity:.3;cursor:default}
@@ -474,6 +479,36 @@ html[dir="rtl"] .kline i{transform-origin:right center}
 #room .vact.on{color:#8a6d13}
 @media (max-width:400px){.vact span{font-size:.78rem}}
 
+/* ---------- a word, tapped for its meaning ---------------------------------
+   Only a verse the library has actually written words for offers this: the
+   sheet needs a place to read the word from, and a verse with nothing
+   written has nowhere to send a finger. The affordance is a cursor and a
+   warm wash on the word under it, not a box -- the script stays the script. */
+.ayah.hw .ar .w{cursor:pointer;border-radius:3px;transition:background-color .15s ease}
+.ayah.hw .ar .w:hover{background:rgba(201,162,39,.14)}
+/* a held tap waits on verse/<n>.json before it can say whether this was a
+   word or an ordinary tap that fell through it -- on a slow connection
+   that can be most of a second with nothing on the page saying a tap
+   landed at all. The same warm wash the word already wears on hover,
+   held a little deeper, says so until the wait is over. */
+.ayah .ar .w.w-pending{background:rgba(201,162,39,.22)}
+/* the number sealed at the end of the line, the way a printed mushaf sets it.
+   It is never a .w: the sweep counts words by that class alone, so a seal
+   sitting beside the last word cannot be mistaken for one and lit like one.
+   The wrapper around it and the last word keeps the two from breaking apart
+   at the line's own edge, so the seal never sits alone on a line of nothing. */
+.w-tail{white-space:nowrap}
+.ar .seal{display:inline-grid;place-items:center;width:1.5em;height:1.5em;margin-inline-start:.32em;
+  vertical-align:-.32em;border-radius:50%;border:1.5px solid rgba(201,162,39,.6);
+  font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:.34em;font-weight:600;
+  color:var(--gold);line-height:1;direction:ltr;user-select:none}
+.ayah.playing .ar .seal{border-color:var(--gold-hi);color:var(--gold-hi);background:rgba(244,212,106,.14)}
+/* the transliteration, quieter than the translation under it, and present
+   only where the words it is built from were actually written */
+.ayah .tl{grid-column:2;margin:.4rem 0 0;font-size:.82rem;line-height:1.6;
+  color:rgba(255,254,247,.55);font-style:italic;letter-spacing:.01em;max-width:38rem}
+body.no-tl .ayah .tl{display:none}
+
 /* ---------- the surah's masthead ------------------------------------------
    It was a dark card floating on a dark page -- a rectangle with a gradient
    inside it, which in the night is a shape you can only find by its edge, and
@@ -530,6 +565,17 @@ body.reading #qhero,body.reading #vlamp{display:none}
   font-size:.76rem;padding:.3rem .6rem;font-weight:600}
 #qnav .qrow2 .tool:hover{border-color:rgba(201,162,39,.45)}
 #qnav .qrow2 select.tool{border-color:rgba(44,36,22,.18)}
+/* the legacy always-on block up top (line 4, never scoped to either
+   mode) sets these two selects to a near-vanishing .18 alpha -- meant,
+   maybe, to look quiet, but on the room's own dark ground that reads as
+   blank, and the day toggle's own #qnav .tool colour below cannot beat
+   it either, since that legacy rule carries #qnav's own id and wins on
+   specificity regardless of which comes first. Restated here at that
+   same specificity, so the one written later is the one that is read;
+   the day line under it then outweighs both, carrying the day toggle's
+   own class besides. */
+#qnav .qrow2 select.tool{color:rgba(255,254,247,.82)!important}
+html.noor-day #qnav .qrow2 select.tool{color:rgba(44,36,22,.78)!important}
 #qnav .qrow2 .tlab{font-size:.78rem;letter-spacing:.02em;margin-inline-start:.5rem}
 /* On a phone these four choices wrapped onto two more lines and pushed the
    surah off the top of the screen, with "Reciter" orphaned from the control it
@@ -646,6 +692,10 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 .tool:focus-visible,.gview:focus-visible,.navarrow:focus-visible,#q-pick:focus-visible,#gate-search:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .navarrow{width:44px;height:44px}
 #gate-search{min-height:44px}
+/* this box is white in both modes (bg-white, unscoped) -- so its own
+   placeholder needs the same dark ink #s-search's does in Day, in both
+   modes, not only when Day is asked for. */
+#gate-search::placeholder{color:rgba(44,36,22,.7)}
 #surah-select{min-height:44px;max-width:min(22rem,42vw)}
 #q-pick{display:none}
 #q-pick{align-items:center;gap:.45rem;min-height:44px;max-width:min(18rem,44vw);border:1.5px solid rgba(201,162,39,.55);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF6E2);color:var(--ink);font-family:inherit;font-weight:700;font-size:.82rem;padding:0 .95rem;cursor:pointer}
@@ -684,6 +734,23 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 .srow .st span{display:block;font-size:.68rem;color:rgba(44,36,22,.5)}
 .srow .sa{font-family:Amiri,serif;font-size:1.15rem;color:var(--gold);direction:rtl;flex:none}
 .snone{font-size:.8rem;color:rgba(44,36,22,.5);padding:1rem .6rem}
+/* the current surah's own row is cream in Day -- the day toggle below
+   forces that light gradient on it -- so dark ink is right there. In
+   Night it is not: the room's own always-on legacy rule (line 4, never
+   scoped to either mode) paints this same row with a gradient that
+   starts navy and only turns cream at its far edge, and the row's own
+   name and translation sit far enough into that navy stretch that the
+   same dark ink, written here unconditionally, once read at about
+   1.3:1 on it: ink printed on ink. Night is given its own background
+   instead of that gradient -- the same warm gold wash the room already
+   wears for a chosen state elsewhere (the player's own toggled tools) --
+   so one light ink reads on it end to end, not only at its lit edge. */
+html.noor-day .srow.on .st b,html.noor-day .srow.on .st span{color:#2C2416!important}
+html.noor-day .srow.on .sa{color:#836919!important}
+html:not(.noor-day) .srow.on{background:rgba(244,212,106,.16)!important}
+html:not(.noor-day) .srow.on .st b{color:#F4D46A!important}
+html:not(.noor-day) .srow.on .st span{color:rgba(255,254,247,.72)!important}
+html:not(.noor-day) .srow.on .sa{color:#F4D46A!important}
 /* ======================================================================
    THE ARRIVAL, ON A PHONE  (17 September 2026)
    The owner: "the quran page doesn't make sense visually ... adapted for
@@ -726,6 +793,177 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 #qcont .qc-t b{display:block;font-size:.9rem;font-weight:700;line-height:1.3}
 #qcont .qc-t span{display:block;font-size:.72rem;opacity:.62;margin-top:1px}
 #qcont .qc-go{flex:none;color:var(--gold);font-size:1.1rem}
+
+/* ======================================================================
+   THE READING VIEW, CARRIED FROM THE PROTOTYPE APPROVED 17 SEPTEMBER 2026
+   Two bottom sheets (a word's meaning, and "How you read"), the chrome that
+   steps back while a reader is reading, and a Day a reader can ask for on a
+   room that is night by default. Nothing here is a second theme system: the
+   dark ground and gold this room already wears is night; html.noor-day
+   restores the parchment and ink this same stylesheet already declares for
+   .gate, .tool, .vw and the rest, a few lines above every rule that darkens
+   them again for the ground this room ships on.
+   ====================================================================== */
+
+/* ---- the two bottom sheets: one shape, shared ---- */
+#read-scrim{position:fixed;inset:0;z-index:88;background:rgba(10,13,20,.55);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;transition:opacity .22s ease}
+#read-scrim.on{opacity:1;pointer-events:auto}
+#read-scrim[hidden]{display:none}
+#wordsheet,#rsheet{position:fixed;inset-inline:0;bottom:0;z-index:89;
+  max-width:34rem;margin:0 auto;background:#14100A;color:#FFFEF7;
+  border-top:1px solid rgba(201,162,39,.4);
+  border-start-start-radius:1.25rem;border-start-end-radius:1.25rem;
+  padding:.4rem 1.25rem calc(1.4rem + env(safe-area-inset-bottom,0px));
+  max-height:78vh;overflow-y:auto;
+  transform:translateY(102%);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+#wordsheet.on,#rsheet.on{transform:none}
+#wordsheet[hidden],#rsheet[hidden]{display:none}
+@media (min-width:640px){#wordsheet,#rsheet{left:50%;right:auto;transform:translate(-50%,102%);bottom:1.5rem;border-radius:1.25rem}
+  #wordsheet.on,#rsheet.on{transform:translate(-50%,0)}}
+@media (prefers-reduced-motion:reduce){#read-scrim,#wordsheet,#rsheet{transition:none}}
+.rgrip{width:38px;height:4px;border-radius:99px;background:rgba(255,254,247,.2);margin:.6rem auto .9rem}
+/* a modal dialog needs a control inside it a reader can close it with, not
+   only Escape or a tap on the scrim behind it -- the same thing gives the
+   sheet something to hand focus to the instant it opens */
+#w-close{position:absolute;top:.7rem;inset-inline-end:.7rem;min-width:44px;min-height:44px;
+  border:1px solid rgba(255,254,247,.22);background:rgba(255,254,247,.06);border-radius:999px;
+  font:inherit;font-size:.7rem;font-weight:700;letter-spacing:.02em;color:rgba(255,254,247,.75);cursor:pointer}
+#w-close:hover{border-color:var(--gold);color:#F4D46A}
+#w-close:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* ---- the word's own meaning ---- */
+#wordsheet .wa{font-family:'Amiri Quran',Amiri,serif;font-size:2.15rem;line-height:1.7;
+  color:#F4D46A;direction:rtl;text-align:center;margin:0}
+#wordsheet .wt{text-align:center;font-size:.82rem;color:rgba(255,254,247,.55);font-style:italic;margin:.2rem 0 0}
+#wordsheet .wg{text-align:center;font-size:1.12rem;line-height:1.5;margin:.85rem 0 .3rem;color:#FFFEF7}
+#wordsheet .wref{text-align:center;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:.66rem;
+  color:rgba(255,254,247,.5);letter-spacing:.08em;margin-top:1rem}
+/* ---- "How you read" ---- */
+#rsheet h3{font-family:Newsreader,Georgia,serif;font-weight:500;font-size:1.15rem;margin:0 0 .2rem;color:#FFFEF7}
+#rsheet .row{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.85rem 0;border-top:1px solid rgba(255,254,247,.12)}
+#rsheet .row:first-of-type{border-top:0}
+#rsheet .lbl{font-size:.92rem;color:#FFFEF7}
+#rsheet .lbl small{display:block;font-size:.72rem;color:rgba(255,254,247,.5);margin-top:.15rem}
+#rsheet .seg{display:flex;gap:.25rem;background:rgba(255,254,247,.06);border-radius:12px;padding:4px;flex:none}
+#rsheet .seg button{min-width:38px;min-height:40px;padding:0 .55rem;border-radius:9px;
+  font-size:.78rem;font-weight:600;color:rgba(255,254,247,.6);font-family:inherit}
+/* a pressed segment that only swaps to a brown barely darker than the row
+   it sits on reads as weaker than the row's own plain, lighter-toned
+   unselected text -- the opposite of what "pressed" should say. Filling it
+   with the gold the rest of the room already uses for an active state
+   settles which one is chosen at a glance. */
+#rsheet .seg button.on{background:#F4D46A;color:#1A160F}
+#rsheet .seg button:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
+#rsheet .sw{width:52px;height:32px;border-radius:99px;background:rgba(255,254,247,.18);
+  position:relative;flex:none;transition:background .2s ease}
+#rsheet .sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:26px;height:26px;
+  border-radius:50%;background:#FFFEF7;box-shadow:0 1px 3px rgba(0,0,0,.35);
+  transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+#rsheet .sw[aria-checked="true"]{background:#C9A227}
+#rsheet .sw[aria-checked="true"]::after{transform:translateX(20px)}
+html[dir="rtl"] #rsheet .sw[aria-checked="true"]::after{transform:translateX(-20px)}
+#rsheet .sw:focus-visible{outline:2px solid #F4D46A;outline-offset:2px}
+
+/* ---- the chrome leaves when a reader is reading ---- */
+#qnav{transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+/* -100% of its own box is not enough: the bar is sticky at a top offset
+   (the site header's height plus the safe area) that its own height does
+   not know about, so a plain -100% still left a sliver showing. Clearing
+   the offset too is what actually takes it off the glass. */
+body.chrome-hidden #qnav{transform:translateY(calc(-100% - 6rem))}
+body.chrome-hidden:not(.p-active) #player.show{transform:translateY(calc(100% - 3px))!important}
+@media (prefers-reduced-motion:reduce){#qnav{transition:none}}
+
+/* ---- Day, on a room that is Night by default ----
+   Every value below is copied from this same stylesheet's own declaration
+   for the parchment ground -- the one every one of these selectors carried
+   before it was darkened for this room's permanent night a few hundred
+   lines above. Nothing here is invented; it is the room's own day, given
+   a door back. */
+/* the site's own always-on night (noor2-night.css, loaded after this
+   room's own styles, on every page, this one included) redefines --ink
+   for html.n2-night.n2-room -- classes this room carries unconditionally,
+   day or not, because there is no page-wide day mode to ask for instead.
+   Every rule below that reads var(--ink), var(--gold) or var(--gold-hi)
+   was still reading that redefinition until these three lines gave the
+   variables themselves back for the room this toggle actually controls;
+   --gold and --gold-hi are also darkened here, not merely reclaimed --
+   the room's own gold, correct against its permanent night, is under
+   3:1 on the cream this toggle asks for instead. */
+html.noor-day{--ink:#2C2416!important;--gold:#836919!important;--gold-hi:#7a6a35!important}
+html.noor-day,html.noor-day body{background:#FFFEF7!important;color:#2C2416!important}
+html.noor-day #qnav{background:#FFFEF7!important}
+html.noor-day .gate{background:#fff!important}
+html.noor-day .gate:hover{background:linear-gradient(168deg,#FFFDF4,#FFF8E4)!important}
+html.noor-day .gate.active{background:linear-gradient(160deg,#FFFDF4,#FFF4D2)!important}
+html.noor-day .gate .gmn,html.noor-day .gate .gct{color:rgba(44,36,22,.68)!important}
+html.noor-day .gchip.mk{color:#8a6d13!important;background:#FFF7DF!important}
+html.noor-day .gchip.md{color:#4d5c38!important;background:#F3F6EC!important}
+html.noor-day .bismillah{color:#241D12!important}
+html.noor-day .bismillah small{color:rgba(44,36,22,.68)!important}
+html.noor-day .tool{background:#fff!important;color:rgba(44,36,22,.78)!important}
+html.noor-day .navarrow{background:#fff!important}
+html.noor-day #surah-select{background:linear-gradient(160deg,#FFFDF4,#FFF8E1)!important}
+html.noor-day #q-pick{background:linear-gradient(160deg,#FFFDF4,#FFF6E2)!important}
+html.noor-day .skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06))!important}
+html.noor-day #qnav .tlab,html.noor-day .qstat{color:rgba(44,36,22,.7)!important}
+html.noor-day #s-sheet{background:#FFFEF7!important}
+html.noor-day #s-search,html.noor-day #s-close{background:#fff!important;color:rgba(44,36,22,.7)!important}
+/* the search box's own placeholder is drawn by the browser, not written
+   here at all until now, so it fell back to the UA's own light grey --
+   fine on the room's own dark ground, where it reads at about 7:1, but
+   at 2.5:1 on Day's white once the box turned white under it. Only Day
+   needed asking: Night's default already reads. */
+html.noor-day #s-search::placeholder{color:rgba(44,36,22,.7)!important}
+html.noor-day .srow:hover{background:#FFF8E4!important}
+html.noor-day .srow.on{background:linear-gradient(160deg,#FFFDF4,#FFF1CE)!important}
+html.noor-day .srow .st span,html.noor-day .snone{color:rgba(44,36,22,.68)!important}
+/* the number coin beside each row stays the small dark badge it always
+   was -- a decorative circle, not a line of the page -- so it keeps its
+   own bright gold rather than taking the darker one this toggle gives
+   the rest of the room's gold text, which would wash out against a
+   background that never lightened with it */
+html.noor-day .srow .sn{color:#F4D46A!important}
+html.noor-day .vw{background:#fff!important}
+html.noor-day .vw b{color:#241D12!important}
+html.noor-day .vw em{color:rgba(44,36,22,.58)!important}
+html.noor-day .vsense{color:rgba(44,36,22,.82)!important}
+html.noor-day .vnote p{color:rgba(44,36,22,.74)!important}
+html.noor-day .vsrc{color:rgba(44,36,22,.48)!important}
+html.noor-day .vlinks h6{color:rgba(44,36,22,.42)!important}
+html.noor-day .vlink{background:#fff!important;color:rgba(44,36,22,.72)!important}
+html.noor-day .vnone,html.noor-day .vwait{color:rgba(44,36,22,.6)!important}
+html.noor-day .evb.editorial{color:rgba(44,36,22,.62)!important;background:rgba(44,36,22,.05)!important}
+html.noor-day .ayah .ar{color:#241D12!important}
+html.noor-day .ayah.playing .ar .w.now{color:#14100A!important}
+html.noor-day .ayah .trans{color:rgba(44,36,22,.94)!important}
+html.noor-day .ayah .tl{color:rgba(44,36,22,.55)!important}
+html.noor-day .vact{color:rgba(44,36,22,.72)!important}
+html.noor-day .vno{color:rgba(44,36,22,.68)!important}
+html.noor-day .ayah.playing .vno{color:#8a6d13!important}
+html.noor-day .shead-k{color:rgba(44,36,22,.66)!important}
+html.noor-day .shead h2{color:#2C2416!important}
+html.noor-day .shead h2 em{color:rgba(44,36,22,.64)!important}
+html.noor-day .shead-i{color:rgba(44,36,22,.84)!important}
+html.noor-day .gview{background:#fff!important;color:rgba(44,36,22,.68)!important}
+html.noor-day .glegend,html.noor-day .glegend b,html.noor-day #gate-count{color:rgba(44,36,22,.68)!important}
+html.noor-day .wgo>h2{color:#2C2416!important}
+html.noor-day .wgo>.wgo-s{color:rgba(44,36,22,.6)!important}
+/* the support banner is sponsor.js's own room, not this one's -- every
+   colour on it, the row, the mark beside it, the text, is written inline
+   by that shared script, and only an !important rule reaches past an
+   inline style at all. */
+html.noor-day [data-noor-sponsor]{color:rgba(44,36,22,.75)!important}
+html.noor-day [data-noor-sponsor] .nsp-t,html.noor-day [data-noor-sponsor] span{color:rgba(44,36,22,.75)!important}
+/* two accents no rule above reaches: the study companion's own call to
+   action, styled as a pill of its own rather than through var(--gold-hi),
+   and the sparkle that marks the Verse Lamp and the "every surah opened
+   in full" line, hoisted out of an inline style before this toggle
+   existed to ask it for a second value. */
+html.noor-day #t-study{color:#836919!important;border-color:rgba(131,105,25,.45)!important;background:rgba(131,105,25,.08)!important}
+html.noor-day .ih-03499c6a.ih-03499c6a.ih-03499c6a,html.noor-day .ih-031328a5.ih-031328a5.ih-031328a5{color:#836919!important}
 
 </style>
 <link rel="canonical" href="https://noorcodex.com/quran"/>
@@ -791,6 +1029,7 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 <div class="qgrp">
 <button class="tool" id="t-gates">☰ Browse the 114 gates</button>
 <button class="tool primary" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
+<button class="tool tool-icon" id="t-settings" type="button" aria-haspopup="dialog" aria-controls="rsheet" aria-label="How you read" title="How you read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="width:1rem;height:1rem;display:block"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.1"/><circle cx="10" cy="17" r="2.1"/></svg></button>
 <span id="t-status" class="qstat"></span>
 </div>
 </div>
@@ -899,6 +1138,49 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <button type="button" id="s-close">Close</button>
 </div>
 <div id="s-list" role="listbox" aria-label="The 114 surahs"></div>
+</div>
+
+<!-- WORD SHEET: tap one Arabic word on a written verse for its meaning -->
+<div id="read-scrim" hidden></div>
+<div id="wordsheet" role="dialog" aria-modal="true" aria-labelledby="w-ref" hidden>
+<div class="rgrip" aria-hidden="true"></div>
+<button type="button" id="w-close" aria-label="Close">Close</button>
+<p class="wa" id="w-ar" translate="no">.</p>
+<p class="wt" id="w-tr">.</p>
+<p class="wg" id="w-gl">.</p>
+<p class="wref" id="w-ref">.</p>
+</div>
+
+<!-- "HOW YOU READ": one sheet for size, translation, transliteration, day and night -->
+<div id="rsheet" role="dialog" aria-modal="true" aria-labelledby="rs-ttl" hidden>
+<div class="rgrip" aria-hidden="true"></div>
+<h3 id="rs-ttl">How you read</h3>
+<div class="row">
+<span class="lbl" id="rs-size-lbl">Size of the Qur'an<small>the Arabic text only</small></span>
+<span class="seg" id="rs-size" role="group" aria-labelledby="rs-size-lbl">
+<button type="button" data-k="0" style="font-size:.72rem" aria-pressed="false">A</button>
+<button type="button" data-k="1" style="font-size:.8rem" aria-pressed="false">A</button>
+<button type="button" data-k="2" style="font-size:.88rem" aria-pressed="false">A</button>
+<button type="button" data-k="3" style="font-size:.97rem" aria-pressed="true">A</button>
+<button type="button" data-k="4" style="font-size:1.06rem" aria-pressed="false">A</button>
+<button type="button" data-k="5" style="font-size:1.16rem" aria-pressed="false">A</button>
+</span>
+</div>
+<div class="row">
+<span class="lbl">Translation<small>the language chosen above</small></span>
+<button type="button" class="sw" id="rs-trans" role="switch" aria-checked="true" aria-label="Show the translation"></button>
+</div>
+<div class="row">
+<span class="lbl">Transliteration<small>how the Arabic sounds</small></span>
+<button type="button" class="sw" id="rs-tl" role="switch" aria-checked="false" aria-label="Show the transliteration"></button>
+</div>
+<div class="row">
+<span class="lbl" id="rs-theme-lbl">Day / Night<small>the ground the Qur'an rests on</small></span>
+<span class="seg" id="rs-theme" role="group" aria-labelledby="rs-theme-lbl">
+<button type="button" data-v="day" aria-pressed="false">Day</button>
+<button type="button" data-v="night" aria-pressed="true">Night</button>
+</span>
+</div>
 </div>
 
 <!-- BOTTOM PLAYER -->
@@ -1100,12 +1382,22 @@ $("gv-tiles").addEventListener("click",()=>setView(false));
 
 /* ---------- fetch & render ---------- */
 async function j(url){const r=await fetch(url);if(!r.ok)throw new Error(r.status);return(await r.json()).data;}
-const BISMILLAH=/^بِ?سْ?مِ.{0,45}?رّ?َ?حِ?يمِ?\s*/;
+/* the ba can carry a shadda as well as its kasra -- surahs 95 and 97's own
+   written text opens "بِّسْمِ", shadda before kasra, not merely "بِسْمِ" --
+   and a Bismillah this does not recognise is left standing, so the room
+   both shows it a second time and lights four words nothing was tapped.
+   The closing "رَّحِيمِ" has the same kind of ordering to allow for: the
+   room's own verse files carry the fatha before the shadda on that ra,
+   not after it, so a fixed shadda-then-fatha sequence never matched the
+   very word it exists to find, and left every Bismillah standing, not
+   only the two written with the shadda on their ba. */
+const BISMILLAH=/^ب[ِّ]{0,2}سْ?مِ.{0,45}?ر[َّ]{0,2}حِ?يمِ?\s*/;
 
 async function openSurah(n,gotoAyah,user){
   if(!SURAHS[n-1])return;
   if(chaining)killAudio(); else stopAudio();   /* a chained surah keeps the player up and the mode intact */
   cur=n; markActive(n);
+  document.body.classList.remove("chrome-hidden");   /* a fresh surah opens with its chrome up */
   /* the page remembers where you were, so the next visit can offer it back */
   try{localStorage.setItem("noor-last-read",
     JSON.stringify({n:n,ayah:gotoAyah||1,at:Date.now()}));}catch(e){}
@@ -1148,6 +1440,10 @@ async function openSurah(n,gotoAyah,user){
   }
 }
 
+/* Arabic-Indic digits, for the seal at the end of a verse: a printed mushaf
+   never numbers its own ayat in the script of another script. */
+const ARABIC_DIGITS=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+const arabicNum=v=>String(v).split("").map(d=>ARABIC_DIGITS[+d]||d).join("");
 function renderAyahs(n){
   const showBismillah=n!==1&&n!==9;
   let html=showBismillah?`<div class="bismillah" translate="no">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<small>In the name of Allah, the Entirely Merciful, the Especially Merciful</small></div>`:"";
@@ -1165,23 +1461,34 @@ function renderAyahs(n){
       voice. A standalone mark is carried inside the span of the word it
       follows, so it stays exactly where it was on the page, in the same order,
       with the same space before it, and the sweep counts words only. */
-   const ar=String(text).trim().split(/\s+/).filter(Boolean)
+   const words=String(text).trim().split(/\s+/).filter(Boolean)
      .reduce((out,w)=>{
        if(/^[\u06D6-\u06ED]+$/.test(w)&&out.length)out[out.length-1]+=" "+w; else out.push(w);
-       return out;},[])
-     .map(w=>`<span class="w">${esc(w)}</span>`).join(" ");
-   return `<article class="ayah" id="a-${v}" data-i="${i}" tabindex="0">
+       return out;},[]);
+   /* the seal used to sit right after the last word with only a breaking
+      space between them, so a verse that ended near the right margin left
+      the seal stranded alone on the next line -- a number floating under
+      the text it numbers. The last word travels inside the same nowrap
+      wrapper as the seal now, so the two move together; it keeps its own
+      .w span and tabindex, so the sweep's word count and word tap are
+      untouched, only where the line may break has changed. */
+   const wordSpans=words.map(w=>`<span class="w" tabindex="-1">${esc(w)}</span>`);
+   const lastSpan=wordSpans.pop()||"";
+   const ar=wordSpans.join(" ");
+   const written=hasVerse(n,v);
+   return `<article class="ayah${written?" hw":""}" id="a-${v}" data-i="${i}" tabindex="0">
     <div class="vrail">
       <button class="playbtn" type="button" data-play="${i}" aria-label="Play ayah ${v}"><i class="vg" aria-hidden="true">${TRI}</i></button>
       <span class="vno" aria-hidden="true">${v}</span>
     </div>
-    <p class="ar" translate="no">${ar}</p>
+    <p class="ar" translate="no">${ar?ar+" ":""}<span class="w-tail">${lastSpan} <span class="seal" aria-hidden="true">${arabicNum(v)}</span></span></p>
     <span class="kline" aria-hidden="true"><i></i></span>
     <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
+    ${written?`<p class="tl"></p>`:""}
     <div class="arow">
       <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
-      ${hasVerse(n,v)?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
-    </div>${hasVerse(n,v)?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
+      ${written?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study this verse</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
+    </div>${written?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
   /* THE VERSES ARE NOT IN A BOX.
      They used to be wrapped in a card, and the verse being recited got a
      second card inside that, and the study companion a third inside that.
@@ -1200,6 +1507,15 @@ function renderAyahs(n){
      failure mode of every design that hides its affordances. */
   setAt(roomBody.querySelector(".ayah"));
   mountStudy(n);
+  /* verse/<n>.json -- the surah's own words[], the file a word tap, Study
+     and transliteration all read -- is not warmed here any more. It can
+     run to 250KB for a long surah, and a reader who opens the room, reads
+     a page and moves on without tapping a word, opening Study or asking
+     for transliteration was never going to need a byte of it. The word
+     tap handler below holds its own tap open until the fetch it starts
+     resolves; fillTl starts the same fetch when transliteration is
+     already on for a freshly opened surah. */
+  if(tlOn)fillTl(n);
 }
 
 /* ---------- the study companion ----------
@@ -1352,9 +1668,19 @@ function hasVerse(n,v){const s=VSET&&VSET[String(n)];
 function vFetch(n){
  if(VCACHE[n])return Promise.resolve(VCACHE[n]);
  if(VPEND[n])return VPEND[n];
+ /* only a real answer is kept in VCACHE. A missing or broken file resolves
+    this one call with an empty map and forgets it happened -- caching that
+    emptiness the same way a real answer is cached would leave a later tap,
+    on a file that came back afterwards, believing forever that this surah
+    has nothing to show. VPEND still holds the one request already in
+    flight, so two taps landing together do not start two fetches; a tap
+    that lands after the last one has already failed and finished is a
+    fresh try, not a storm. */
  VPEND[n]=fetch("/verse/"+n+".json").then(r=>r.ok?r.json():null).then(j=>{
-   VCACHE[n]=(j&&j.v)||{};delete VPEND[n];return VCACHE[n];
- }).catch(()=>{VCACHE[n]=Object.create(null);delete VPEND[n];return VCACHE[n];});
+   delete VPEND[n];
+   if(j&&j.v){VCACHE[n]=j.v;return VCACHE[n];}
+   return Object.create(null);
+ }).catch(()=>{delete VPEND[n];return Object.create(null);});
  return VPEND[n];
 }
 const EVN={quran:"Qur'an",sunnah:"Sunnah",debated:"Scholars differ",editorial:"Our reading"};
@@ -1373,7 +1699,7 @@ function versePanel(rec){
  if(links.length){h+=`<div class="vlinks"><h6>Read alongside</h6>`+links.map(l=>{
    const p=String(l.ref).split(":"),s=+p[0],a=parseInt(p[1],10)||1;
    const nm=SURAHS[s-1]?SURAHS[s-1][1]:("Surah "+s);
-   return `<button type="button" class="vlink" data-goto="${s}:${a}"><b>${esc(l.ref)}</b> · ${esc(nm)} — ${esc(l.why)}</button>`;
+   return `<button type="button" class="vlink" data-goto="${s}:${a}"><b>${esc(l.ref)}</b> · ${esc(nm)}: ${esc(l.why)}</button>`;
   }).join("")+`</div>`;}
  return h;
 }
@@ -1447,7 +1773,11 @@ function playerLabel(extra){if(playingIdx<0||!ayahs[playingIdx])return;
 const EQ=`<span class="eq"><i></i><i></i><i></i></span>`;
 const ICO_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
 const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
-function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;}
+/* "sounding" rides on the same flag the play button already draws from, so
+   the chrome that keeps the player visible while it plays (below) never
+   needs its own idea of whether the recitation is actually going */
+function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;
+ document.body.classList.toggle("sounding",!!playing);}
 function listenLabel(on){autoBtn();$("t-listen").innerHTML=on
  ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
  :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>${narrow()?"Listen":"Listen to surah"}`;}
@@ -1489,7 +1819,12 @@ function pill(show){const p=$("p-pill");if(!p)return;
  p.hidden=!(show&&!follow&&playingIdx>=0&&document.body.classList.contains("has-player"));}
 function setFollow(on){follow=on;followBtn(on);pill(!on);if(on&&followEl)scrollToVerse(followEl,true);}
 function playerH(){const p=$("player");
- return (p&&document.body.classList.contains("has-player"))?Math.round(p.getBoundingClientRect().height)+8:14;}
+ if(!p||!document.body.classList.contains("has-player"))return 14;
+ /* the bar's own height does not change when the chrome hides it (a
+    transform moves it, it does not shrink it), so a hidden, silent player
+    must be asked about by name rather than measured */
+ if(document.body.classList.contains("chrome-hidden")&&!document.body.classList.contains("p-active"))return 14;
+ return Math.round(p.getBoundingClientRect().height)+8;}
 function scrollToVerse(el,force){
  if(!el||!el.isConnected)return;
  const top=headTop(), bottom=innerHeight-playerH();
@@ -1572,6 +1907,11 @@ function sweepOn(){if(kRaf||reduced())return;
 function sweepOff(){if(kRaf){cancelAnimationFrame(kRaf);kRaf=0;}}
 
 function setPlaying(i,loading){playingIdx=i;
+ /* "on a verse" is not the same question as "sounding": a paused recitation
+    or one stuck on a mirror is still on a verse, and the player that holds
+    it must not slide away just because the reader scrolled while it waited.
+    Only a full stop, which clears playingIdx, lets the idle player leave. */
+ document.body.classList.toggle("p-active",i>=0);
  if(prevAy){karaokeClear(prevAy);prevAy.classList.remove("playing");prevAy.removeAttribute("aria-current");prevAy=null;}
  if(prevBtn){paintBtn(prevBtn,0);prevBtn=null;}
  karaokeBind(null);
@@ -1918,10 +2258,12 @@ addEventListener("orientationchange",()=>setTimeout(measurePlayer,220),{passive:
 function optBtn(el,on){if(!el)return;el.setAttribute("aria-checked",on?"true":"false");el.textContent=on?"On":"Off";}
 function repeatBtn(){optBtn($("o-repeat"),repeatOne);}
 function autoBtn(){optBtn($("o-auto"),continuous);}
-function transBtn(){optBtn($("o-trans"),transOn);}
+function transBtn(){optBtn($("o-trans"),transOn);
+ const rt=$("rs-trans");if(rt)rt.setAttribute("aria-checked",String(transOn));}
 function sheetOpen(on){const s=$("p-sheet"),b=$("p-more");if(!s||!b)return;
  s.classList.toggle("open",!!on);b.classList.toggle("on",!!on);
  b.setAttribute("aria-expanded",on?"true":"false");
+ if(on)document.body.classList.remove("chrome-hidden");   /* never hide a bar mid-use */
  measurePlayer();setTimeout(measurePlayer,340);}   /* again once it has unfolded */
 
 $("p-more").addEventListener("click",()=>sheetOpen(!$("p-sheet").classList.contains("open")));
@@ -1996,7 +2338,9 @@ $("o-size").addEventListener("click",e=>{const b=e.target.closest&&e.target.clos
  setSize(fontStep+(b.dataset.size==="+"?1:-1));});
 function setSize(k){fontStep=Math.max(0,Math.min(FSIZES.length-1,k));
  const r=$("room");if(r)r.style.setProperty("--ar-size",FSIZES[fontStep]+"rem");
- try{localStorage.setItem("noor-quran-size",String(fontStep));}catch(e){}}
+ try{localStorage.setItem("noor-quran-size",String(fontStep));}catch(e){}
+ const rs=$("rs-size");if(rs)rs.querySelectorAll("button").forEach(b=>{
+  const on=+b.dataset.k===fontStep;b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
 
 /* ---------- the pill ---------- */
 $("p-pill").addEventListener("click",()=>{setFollow(true);pill(false);});
@@ -2019,6 +2363,7 @@ function pickRows(q){
 function openPicker(on,opener){
  const sh=$("s-sheet"), sc=$("s-scrim");
  if(on){pickOpener=opener||null;pickRows($("s-search").value);
+  document.body.classList.remove("chrome-hidden");
   sh.hidden=false;sc.hidden=false;
   const el=$("s-list").querySelector(".srow.on");
   if(el)setTimeout(()=>{try{el.scrollIntoView({block:"center"});}catch(e){}},0);
@@ -2032,9 +2377,32 @@ $("s-scrim").addEventListener("click",()=>openPicker(false));
 $("s-search").addEventListener("input",e=>pickRows(e.target.value));
 $("s-list").addEventListener("click",e=>{const r=e.target.closest&&e.target.closest("[data-sn]");if(!r)return;
  openPicker(false);openSurah(+r.dataset.sn,1,true);});
-addEventListener("keydown",e=>{if(e.key!=="Escape")return;
- if(!$("s-sheet").hidden){openPicker(false);return;}
- if($("p-sheet").classList.contains("open")){sheetOpen(false);$("p-more").focus();}});
+$("w-close").addEventListener("click",closeReadSheet);
+addEventListener("keydown",e=>{
+ if(e.key==="Escape"){
+  if(!$("s-sheet").hidden){openPicker(false);return;}
+  if(document.querySelector("#wordsheet.on,#rsheet.on")){closeReadSheet();return;}
+  if($("p-sheet").classList.contains("open")){sheetOpen(false);$("p-more").focus();return;}
+ }
+ /* a modal dialog does not hand Tab to whatever the page behind it holds:
+    the last thing inside wraps to the first, the first wraps to the last,
+    so a reader tabbing through "How you read", a word's meaning, or the
+    surah picker never lands on a surah's text they cannot presently reach
+    without closing it first. The picker is hidden by its own attribute
+    rather than an .on class (openPicker toggles it, not a shared sheet
+    routine), so it is asked for that way instead. */
+ if(e.key==="Tab"){
+  const open=document.querySelector("#wordsheet.on,#rsheet.on")||(!$("s-sheet").hidden?$("s-sheet"):null);
+  if(!open)return;
+  const items=[...open.querySelectorAll("button,[href],input,select,textarea,[tabindex]")]
+   .filter(el=>el.tabIndex>=0&&!el.disabled&&el.getClientRects().length);
+  if(!items.length)return;
+  const first=items[0],last=items[items.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  else if(!open.contains(document.activeElement)){e.preventDefault();first.focus();}
+ }
+});
 
 /* ---------- the navigator folds once the reading has started ---------- */
 let qTick=0;
@@ -2094,6 +2462,251 @@ roomBody.addEventListener("click",e=>{
  dropPre();                                  /* a chosen verse is rarely the one fetched ahead */
  playAyah(i);});
 
+/* ================= THE READING VIEW =================
+   Carried from the prototype approved 17 September 2026: tap a word for its
+   meaning, a quiet transliteration line, one settings sheet, the chrome
+   that steps back while a reader reads, and the verse sealed at its end.
+   verse/<n>.json is not fetched ahead of any of this -- it can run to
+   250KB for a long surah -- so a word tap, transliteration being asked
+   for, or Study being opened are each what starts that fetch, the first
+   of the three to happen for a given surah; the rest here reads state
+   the room already keeps (fontStep, transOn), nothing new asked of the
+   network. */
+
+/* ---- tap a word for its meaning ----
+   verse/<n>.json's words[i] is written against the Uthmani text at that
+   position, and renderAyahs cuts the room's own spans from the same text.
+   Position lines the two up only when they agree on how many words the
+   verse has -- a few verses count a waqf mark or a joined form differently
+   between the two -- so the count is checked at the moment of the tap, not
+   assumed once at render time, and a mismatch opens nothing rather than
+   name the wrong word. */
+function wordsFor(n,v,spanCount){
+ const map=VCACHE[n], rec=map&&map[String(v)];
+ if(!rec||!Array.isArray(rec.words)||rec.words.length!==spanCount)return null;
+ return rec.words;
+}
+let rsOpener=null;
+function openReadSheet(id,opener){
+ const el=$(id); if(!el)return;
+ document.body.classList.remove("chrome-hidden");
+ closeReadSheet();
+ rsOpener=opener||document.activeElement;
+ el.hidden=false;$("read-scrim").hidden=false;
+ requestAnimationFrame(()=>{el.classList.add("on");$("read-scrim").classList.add("on");});
+ const f=el.querySelector("button,[href],input,select,textarea,[tabindex]");
+ if(f)try{f.focus({preventScroll:true});}catch(e){}
+}
+function closeReadSheet(){
+ const open=document.querySelector("#wordsheet.on,#rsheet.on");
+ if(!open)return;
+ open.classList.remove("on");$("read-scrim").classList.remove("on");
+ setTimeout(()=>{if(!open.classList.contains("on"))open.hidden=true;
+  if(!document.querySelector("#wordsheet.on,#rsheet.on"))$("read-scrim").hidden=true;},reduced()?0:260);
+ if(rsOpener)try{rsOpener.focus({preventScroll:true});}catch(e){}
+ rsOpener=null;
+}
+$("read-scrim").addEventListener("click",closeReadSheet);
+function openWordSheet(word,n,v,opener){
+ $("w-ar").textContent=word.a;$("w-tr").textContent=word.t;$("w-gl").textContent=word.g;
+ const s=SURAHS[n-1];
+ $("w-ref").textContent=(s?s[1]:("Surah "+n))+" "+n+":"+v;
+ openReadSheet("wordsheet",opener);
+}
+/* capture phase, so this is decided before the verse's own click handlers
+   (play, "at") ever see the tap: a word must not also start the recitation
+   or fold the verse's notes open while its meaning is still being decided.
+
+   "hw" already means verse/index.json listed this verse as one that has
+   words[] written for it -- that is the one thing renderAyahs needed to
+   know before it could draw the class at all -- so a tap here is always a
+   real candidate, whether or not the surah's own notes file (verse/<n>.json,
+   the same file the word sheet, transliteration and Study all read, and
+   still fetched only once) has arrived yet. If it has, the count is
+   checked and the sheet opens or not in the same tick, exactly as before.
+   If it has not, the tap is held rather than let through -- a recitation
+   started now and found a moment later to have been a word after all
+   cannot be called back -- and finishes the instant the fetch does: the
+   sheet opens on a match, or the verse plays exactly as an ordinary tap
+   would have, on a mismatch. Either way nothing plays while the file is
+   still in flight. */
+roomBody.addEventListener("click",e=>{
+ const w=e.target.closest&&e.target.closest(".ar .w");
+ if(!w)return;
+ const row=w.closest(".ayah");
+ if(!row||!row.classList.contains("hw"))return;
+ const n=cur, v=+row.id.slice(2);
+ const ws=row.querySelectorAll(".ar .w");
+ const i=Array.prototype.indexOf.call(ws,w);
+ /* the same blessing the verse's own default tap gives the deck, and for
+    the same reason: it has to happen inside this real gesture, once, or
+    not at all. Held here for a mismatch that resolves into a recitation
+    a moment from now, a blessing left for that later moment would land on
+    a deck already sounding the very verse it was meant to unlock, and
+    silence it -- so it runs up front regardless of which way the tap
+    turns out to fall. */
+ bless();
+ if(VCACHE[n]){
+  const words=wordsFor(n,v,ws.length);
+  if(!words||!words[i])return;       /* a mismatched count: nothing intercepted, the tap behaves as it always has */
+  e.stopPropagation();
+  setAt(row);openWordSheet(words[i],n,v,w);
+  return;
+ }
+ e.stopPropagation();                /* the file is not here yet, so the tap is held rather than guessed at */
+ const at=+row.dataset.i;
+ w.classList.add("w-pending");       /* quiet feedback while the fetch this tap is waiting on is in flight */
+ vFetch(n).then(map=>{
+  w.classList.remove("w-pending");
+  if(cur!==n)return;                 /* they moved on while it was in flight */
+  const words=wordsFor(n,v,ws.length);
+  if(words&&words[i]){setAt(row);openWordSheet(words[i],n,v,w);return;}
+  /* the same choice an ordinary tap makes: a verse already sounding is
+     paused, not started over from its own first instant, so a held tap
+     that falls through onto the very verse already playing behaves like
+     the tap it was standing in for the whole time, not a different one */
+  if(playingIdx===at&&audio){$("p-toggle").click();return;}
+  follow=true;followBtn(true);pill(false);dropPre();playAyah(at);
+ });
+},true);
+
+/* ---- transliteration: off by default, on request ---- */
+let tlOn=false;
+try{tlOn=localStorage.getItem("noor-quran-tl")==="1";}catch(e){}
+function fillTl(n){
+ if(!tlOn)return;
+ vFetch(n).then(map=>{
+  if(cur!==n)return;
+  roomBody.querySelectorAll(".ayah.hw .tl").forEach(p=>{
+   if(p.dataset.filled==="1")return;
+   const row=p.closest(".ayah"), v=+row.id.slice(2);
+   const rec=map[String(v)];
+   if(rec&&Array.isArray(rec.words)&&rec.words.length){
+    p.textContent=rec.words.map(w=>w.t).join(" ");p.dataset.filled="1";
+   }
+  });
+ });
+}
+function setTl(on){
+ tlOn=on;
+ document.body.classList.toggle("no-tl",!on);
+ try{localStorage.setItem("noor-quran-tl",on?"1":"0");}catch(e){}
+ if(on&&cur)fillTl(cur);
+}
+document.body.classList.toggle("no-tl",!tlOn);
+
+/* ---- Day / Night on the reading surface: night by default, matching how
+   this room already ships. html.noor-day is declared with the room's own
+   parchment colours, each one copied from this same stylesheet's own
+   declaration for it a few hundred lines above where the room darkens
+   every one of them again for the night it wears when nobody has asked.
+   No second theme system: one room, one set of tokens, a door back to the
+   one it was written in first. */
+let nightOn=true;
+try{if(localStorage.getItem("noor-quran-night")==="0")nightOn=false;}catch(e){}
+function setNight(on){
+ nightOn=on;
+ document.documentElement.classList.toggle("noor-day",!on);
+ try{localStorage.setItem("noor-quran-night",on?"1":"0");}catch(e){}
+ paintRsheet();
+}
+document.documentElement.classList.toggle("noor-day",!nightOn);
+
+/* ---- "How you read": one sheet, four rows, the same state every other
+   control on the page already reads and writes -- so a change here and a
+   change in the player's own sheet can never disagree. ---- */
+function paintRsheet(){
+ $("rs-size").querySelectorAll("button").forEach(b=>{
+  const on=+b.dataset.k===fontStep;b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});
+ $("rs-trans").setAttribute("aria-checked",String(transOn));
+ $("rs-tl").setAttribute("aria-checked",String(tlOn));
+ $("rs-theme").querySelectorAll("button").forEach(b=>{
+  const on=(b.dataset.v==="night")===nightOn;b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});
+}
+$("t-settings").addEventListener("click",e=>{paintRsheet();openReadSheet("rsheet",e.currentTarget);});
+$("rs-size").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(!b)return;
+ setSize(+b.dataset.k);paintRsheet();});
+/* the same function the player sheet's own switch calls, so the two never
+   disagree about whether the translation is showing */
+$("rs-trans").addEventListener("click",()=>$("t-trans").click());
+$("rs-tl").addEventListener("click",()=>{setTl(!tlOn);paintRsheet();});
+$("rs-theme").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(!b)return;
+ setNight(b.dataset.v==="night");});
+
+/* ---- the chrome leaves when a reader is reading ----
+   Hiding is decided from the reader's own gesture and nothing else, on the
+   same three event types `readerMoved` above already trusts for the same
+   reason: our own smooth scrolling (follow, opening a surah) fires a plain
+   "scroll" event too, indistinguishable afterwards from a thumb, and
+   chrome that hid itself because the room scrolled a reader to their verse
+   would be fighting the reader rather than reading with them.
+
+   A single wheel or touch input is not one scroll event, though: the
+   glass keeps drifting for a few hundred milliseconds after the hand lifts
+   (the browser's own momentum), each frame of it its own plain "scroll"
+   event with no gesture attached to it directly. So the gesture leaves a
+   short window open -- chromeGestureUntil -- rather than being read once
+   and thrown away, and every scroll event within it, drift included, is
+   trusted the same as the hand that started it.
+
+   Bringing the chrome back follows the reader's own last position, the way
+   the prototype set it: down past the threshold AND further than the last
+   place checked hides it, up past that same margin OR back near the top
+   shows it again. That "last place checked" is not read from every one of
+   those drifting frames, though: a single large wheel input does not move
+   the page in one step here, it hands it a momentum curve that can overshoot
+   its own resting point by some tens of pixels and spend a quarter second
+   easing back, each easing frame its own "scroll" event with scrollY a
+   little smaller than the frame before. Read as ground the reader's own
+   hand gave up, that easing-back would erase a hide the very same downward
+   gesture had only just earned. So lastY is written from a settled
+   position -- one no further scroll event has followed within a short
+   quiet spell -- rather than from every frame of however the browser chose
+   to get there, and a scroll the room made on the reader's behalf (follow,
+   a fresh surah, a click bringing its own target into view) settles the
+   same way, so it is never mistaken for ground gained by a hand that never
+   moved, and cannot leave a stale, too-high floor a later real scroll
+   fails to clear. Nothing here fights scrollToVerse either way: headTop()
+   and playerH() both measure a bar's live position, and a bar this moves
+   off screen measures itself out of their sums without being told to
+   separately. */
+let chromeY=0,chromeTick=0,chromeGestureUntil=0,chromeSettle=0;
+function chromeMayHide(){
+ if(!$("s-sheet").hidden)return false;
+ if($("p-sheet").classList.contains("open"))return false;
+ if(document.querySelector("#wordsheet.on,#rsheet.on"))return false;
+ /* :focus-visible, not mere activeElement: a button a reader just tapped
+    keeps document.activeElement long after the tap is over, and a scroll
+    that followed it is the reader reading again, not still at the button.
+    A ring the browser itself chose to draw -- Tab, or any other keyboard
+    move -- is the one case a hide would strand, so that is the one this
+    still holds the bar open for. */
+ const ae=document.activeElement;
+ if(ae&&ae.matches&&ae.matches(":focus-visible")&&($("qnav").contains(ae)||$("player").contains(ae)))return false;
+ return true;
+}
+function chromeCheck(){
+ if(reduced())return;   /* the chrome does not move at all under reduced motion */
+ if(chromeTick)return;chromeTick=requestAnimationFrame(()=>{chromeTick=0;
+  const y=scrollY, gesture=Date.now()<chromeGestureUntil;
+  if(gesture&&y>120&&y>chromeY+6&&chromeMayHide())document.body.classList.add("chrome-hidden");
+  else if(y<chromeY-6||y<90)document.body.classList.remove("chrome-hidden");
+ });
+ clearTimeout(chromeSettle);chromeSettle=setTimeout(()=>{chromeY=scrollY;},180);
+}
+function chromeGesture(){chromeGestureUntil=Date.now()+600;chromeCheck();}
+["wheel","touchmove"].forEach(ev=>addEventListener(ev,chromeGesture,{passive:true}));
+addEventListener("keydown",e=>{if(/^(Arrow|Page|Home|End)/.test(e.key)||e.key===" ")chromeGesture();});
+addEventListener("scroll",chromeCheck,{passive:true});
+/* a focus that lands inside a hidden bar -- Tab, or a reader's own
+   assistive technology moving it there directly -- is shown the control it
+   just received rather than left to hunt for a bar it cannot see */
+addEventListener("focusin",e=>{
+ const t=e.target;
+ if(t&&(($("qnav")&&$("qnav").contains(t))||($("player")&&$("player").contains(t))))
+  document.body.classList.remove("chrome-hidden");
+});
+
 /* ---------- boot ---------- */
 /* THE PHONE OPENS ON THE COMPACT LIST.
    114 tiles two abreast is 8,800 pixels of scrolling; the same 114 as rows
@@ -2142,7 +2755,7 @@ $("qcont-b").addEventListener("click",function(){
 _contShow();
 try{const r=parseFloat(localStorage.getItem("noor-quran-rate"));if(r===0.75||r===1||r===1.25)setRate(r);}catch(e){}
 try{const k=parseInt(localStorage.getItem("noor-quran-size"),10);setSize(isNaN(k)?fontStep:k);}catch(e){setSize(fontStep);}
-repeatBtn();autoBtn();transBtn();pickRows("");pickLabel(0);measurePlayer();
+repeatBtn();autoBtn();transBtn();paintRsheet();pickRows("");pickLabel(0);measurePlayer();
 renderGates("");
 const usp=new URLSearchParams(location.search);
 const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
@@ -2171,7 +2784,12 @@ window.NOOR_MUSHAF={
  get words(){return kWords?kWords.length:0}, get wordAt(){return kAt},
  get sheet(){return $("p-sheet").classList.contains("open")},
  get picker(){return !$("s-sheet").hidden},
- get fill(){const f=kFill&&kFill.style.transform.match(/scaleX\(([\d.]+)\)/);return f?+f[1]:0}};
+ get fill(){const f=kFill&&kFill.style.transform.match(/scaleX\(([\d.]+)\)/);return f?+f[1]:0},
+ get chromeHidden(){return document.body.classList.contains("chrome-hidden")},
+ get sounding(){return document.body.classList.contains("sounding")},
+ get pActive(){return document.body.classList.contains("p-active")},
+ get tlOn(){return tlOn}, get nightOn(){return nightOn},
+ get readSheet(){const o=document.querySelector("#wordsheet.on,#rsheet.on");return o?o.id:null}};
 })();
 </script>
 

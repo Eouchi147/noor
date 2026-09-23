@@ -3,7 +3,7 @@
 Kept current by the Director after every shipped batch. Dates are UTC. `HANDOFF.md` says how
 to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line by line record.
 
-## Live on main (22 September 2026)
+## Live on main (23 September 2026)
 
 - **The films**: 52 on the shelf (`reels/index.json`, kind `short`), each with its tall file,
   wide file and cover on the store; the eleven Hajj films among them. Rendered on the owner's
@@ -40,6 +40,18 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
   and word by word notes on the 1,280 verses that have them (`verse/*.json` now shipped with the
   function).
 - **llms.txt** rewritten to the site as it is; the home page names its subject as Wikidata Q432.
+
+## Shipped 23 September
+
+- **Jev, calibrated live**: the relevance question now asks what Jev can see (is this about faith)
+  instead of whether it matches a verse it is never shown; the owner's probe sends one sound piece
+  of each kind and one bad one, and all behave. Owner calibration: `?kind=gate&text=..&ask={..}`.
+- **The reconciliation, live on Meta and Threads**: no absences, no rejections; copies of 11
+  (Instagram), 19 (Facebook) and 6 (Threads) reels from 5 to 21 September, left in place by the
+  owner's choice, and taught to the guard.
+- **The Mushaf reading view** (the 17 September prototype): word meanings on tap, transliteration,
+  the "How you read" sheet with a Day page, chrome that steps aside while reading, the verse seal.
+  Bismillah shown twice on 95 and 97 fixed.
 
 ## Decided and not yet done
 
