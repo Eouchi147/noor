@@ -56,7 +56,7 @@ jobs:
 
       - name: every suite that needs no browser, no server and no secret
         run: |
-          SUITES="api-audit art behave calendar card-fonts card cards-stories cards claim clock crongate films-workflow heal home2 house insights lantern lights names nightshift no-dashes norepeat pinterest podcast reconcile reel-proxy reels-kinds reels retire retry rooms seerah shorts social stories symbols telegram threads traffic youtube"
+          SUITES="api-audit art behave calendar card-fonts card cards-stories cards citations claim clock crongate films-workflow heal home2 house insights jev lantern lights names nightshift no-dashes norepeat pinterest podcast reconcile reconcile-meta reel-proxy reels-kinds reels retire retry rooms seerah shorts social stories symbols telegram threads traffic youtube"
           failed=""
           n=0
           echo '### Tests' >> "$GITHUB_STEP_SUMMARY"
