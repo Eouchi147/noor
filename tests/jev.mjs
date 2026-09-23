@@ -53,7 +53,7 @@ console.log('\nasking Jev');
   ok(g.pass && g.gate === 'passed', 'a clean reflection passes');
   ok(last.auth === 'Bearer oidc-abc', 'the deployment’s own token is the credential: no key to create or leak');
   ok(last.body.model === 'typesafe-ai/jev' && last.body.state.text === 'A reflection.', 'one POST, the model named, the text as the state');
-  ok(/3:190/.test(last.body.questions.on_topic.instructions), 'the verse it was asked about is named in the relevance question');
+  ok(/faith/.test(last.body.questions.on_topic.instructions) && !/3:190/.test(last.body.questions.on_topic.instructions), 'the relevance question asks what Jev can see (is it about faith), not what it cannot (the meaning of a verse it is never shown)');
   ok(['attributes', 'hadith_number', 'ruling', 'slight', 'on_topic'].every(k => last.body.questions[k] && last.body.questions[k].type === 'noul'), 'five yes or no questions, asked at once');
 }
 

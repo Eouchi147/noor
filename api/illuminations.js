@@ -571,11 +571,32 @@ export default async function handler(req, res) {
     const g0 = ownerGate(req);
     if (!g0.ok) return res.status(g0.code).json({ ok: false, reason: g0.reason });
     res.setHeader("Cache-Control", "no-store");
-    const good = "Every night ends in a morning you did not have to make. The verse asks you to notice that. Before you open your phone today, look at the light and let it remind you that the One who turns night into day can turn a heavy heart light again.";
+    /* CALIBRATION: the owner may put any text and any questions to Jev
+       exactly as the Lantern would, to read the raw scores before a question
+       is changed. Nothing is saved or published. */
+    if (req.query && req.query.ask) {
+      let qs = null; try { qs = JSON.parse(String(req.query.ask)); } catch (e) {}
+      if (!qs || typeof qs !== "object" || Object.keys(qs).length > 8) return res.status(400).json({ ok: false, reason: "ask must be a JSON object of at most eight questions" });
+      const r = await JEV.ask({ text: String(req.query.text || "").slice(0, 4000) }, qs, { req });
+      return res.status(200).json(r);
+    }
+    /* one sound piece of each kind the Lantern writes, and one it must
+       refuse: the gate is working only when all four pass and the fifth does
+       not, because a judge that refuses everything is as broken as one that
+       refuses nothing */
+    const goods = {
+      verse: ["Every night ends in a morning you did not have to make. The verse asks you to notice that. Before you open your phone today, look at the light and let it remind you that the One who turns night into day can turn a heavy heart light again.", { ref: "3:190" }],
+      friday: ["Friday has come round again, the best day the sun rises on. Set aside a quiet moment before the prayer, read what you can of al-Kahf, and bring one worry you have been carrying to God by name. Whatever this week took from you, He is nearer than it.", {}],
+      thread: ["Ibrahim and Ismail raised the walls of the Kaaba as a house for the worship of One God. Many centuries later the Prophet cleared it of idols on the day Makkah opened, returning it to the purpose it was built for, and every pilgrim who circles it today walks inside that one story.", {}],
+      question: ["Bismillah means in the name of God. Muslims say it before eating, reading, travelling and beginning almost anything, so that each act starts with God's name rather than their own. It opens every surah of the Qur'an but one, and its full form adds that God is the Most Merciful, the Especially Merciful.", { q: "What does Bismillah mean?" }]
+    };
     const bad = "The Prophet said that whoever reads this verse after every prayer is forbidden from the Fire (Bukhari 9921), so skipping it is haram.";
-    const [a, b] = await Promise.all([JEV.judge("verse", good, { ref: "3:190" }, { req }), JEV.judge("verse", bad, { ref: "3:190" }, { req })]);
-    return res.status(200).json({ ok: true, credential: JEV.credential(req) ? "present" : "missing", good: a, bad: b,
-      working: a.gate !== "unavailable" && b.gate !== "unavailable" && a.pass && !b.pass });
+    const kinds = Object.keys(goods);
+    const verdicts = await Promise.all(kinds.map(k => JEV.judge(k, goods[k][0], goods[k][1], { req })).concat([JEV.judge("verse", bad, { ref: "3:190" }, { req })]));
+    const good = Object.fromEntries(kinds.map((k, i) => [k, verdicts[i]]));
+    const b = verdicts[kinds.length];
+    return res.status(200).json({ ok: true, credential: JEV.credential(req) ? "present" : "missing", good, bad: b,
+      working: kinds.every(k => good[k].gate !== "unavailable" && good[k].pass) && b.gate !== "unavailable" && !b.pass });
   }
 
   if (kind === "light") {

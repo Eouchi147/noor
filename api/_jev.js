@@ -82,10 +82,17 @@ export function questionsFor(kind, ctx = {}) {
     ruling: { type: "noul", instructions: "The text issues a religious ruling, declaring something obligatory, forbidden, permitted or disliked, or takes a side in a dispute between schools or sects of Islam." },
     slight: { type: "noul", instructions: "The text mocks, disparages or speaks with contempt of any person, group, people or religion." }
   };
-  if (kind === "verse") q.on_topic = { type: "noul", instructions: "The text is a reflection on the meaning of Qur'an " + (ctx.ref || "the given verse") + " for a reader's life." };
-  if (kind === "question") q.on_topic = { type: "noul", instructions: "The text answers this question directly: " + String(ctx.q || "").slice(0, 300) };
-  if (kind === "friday") q.on_topic = { type: "noul", instructions: "The text is an encouragement for Friday, Jumu'ah." };
-  if (kind === "thread") q.on_topic = { type: "noul", instructions: "The text describes a connection between two things in Islamic history, belief or practice." };
+  /* RELEVANCE, ASKED OF WHAT JEV CAN SEE. The first form asked whether a
+     piece was "a reflection on the meaning of Qur'an 3:190", and Jev, which is
+     never shown the verse, scored a sound reflection 0.27 and refused it: on
+     the live probe of 23 September every lamp would have gone to the hand
+     written light. Jev cannot know what a verse says, so the question is now
+     the one visible in the text: is this about faith at all, or has the
+     writer wandered off to something else. */
+  if (kind === "verse") q.on_topic = { type: "noul", instructions: "The text is a reflection about God, faith, the Qur'an, prayer, or a believer's heart and daily life." };
+  if (kind === "question") q.on_topic = { type: "noul", instructions: "The text is an answer to this question: " + String(ctx.q || "").slice(0, 300) };
+  if (kind === "friday") q.on_topic = { type: "noul", instructions: "The text is a reminder or an encouragement about faith, prayer, or remembering God." };
+  if (kind === "thread") q.on_topic = { type: "noul", instructions: "The text connects two people, places, events or ideas from Islamic history, belief or practice." };
   return q;
 }
 
