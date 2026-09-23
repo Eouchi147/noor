@@ -698,6 +698,32 @@ for (const night of [false, true]) {
   }
 }
 
+console.log('\n=== 18b. on a wide screen the sheet is a sheet, not a sliver ===');
+{
+  /* above 640px the sheets are centred with left:50% and no right edge, so
+     without a width of their own they shrink to their content: on the live
+     site at 1710px the word sheet came out 140px wide around a single word */
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto(BASE + '/quran?surah=1', { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.ayah');
+  await page.waitForTimeout(300);
+  await page.locator('#a-4 .ar .w').nth(0).click();
+  await page.waitForSelector('#wordsheet.on');
+  await page.waitForTimeout(350);
+  const r = await page.locator('#wordsheet').evaluate(el => { const b = el.getBoundingClientRect(); return { w: b.width, l: b.left, rt: b.right }; });
+  ok(r.w >= 480 && r.w <= 560, 'the word sheet is a reading width at 1280px (' + Math.round(r.w) + 'px)');
+  ok(Math.abs((r.l + r.rt) / 2 - 640) < 4, 'and centred');
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(300);
+  await page.locator('[aria-label*="How you read"]').first().click();
+  await page.waitForSelector('#rsheet.on');
+  await page.waitForTimeout(350);
+  const r2 = await page.locator('#rsheet').evaluate(el => el.getBoundingClientRect().width);
+  ok(r2 >= 480 && r2 <= 560, 'and so is How you read (' + Math.round(r2) + 'px)');
+  await page.keyboard.press('Escape');
+  await page.setViewportSize({ width: 360, height: 780 });
+}
+
 console.log('\n=== 19. nothing threw ===');
 const real = errors.filter(e => !/favicon|net::ERR_|fonts\.(googleapis|gstatic)|\/api\/|mark\.svg|Failed to load resource/.test(e));
 if (real.length) console.log('  errors:\n   ' + [...new Set(real)].join('\n   '));

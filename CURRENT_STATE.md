@@ -55,8 +55,6 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
 
 ## Decided and not yet done
 
-- The CI list (`.github/workflows/tests.yml`) gains `citations`, `jev` and `reconcile-meta`: the
-  house's GitHub key cannot change workflow files, so it is done in the web editor.
 - The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for
   a year behind a version written by hand in the shell and baked into 527 generated pages; ride it
   on the next dictionary rebuild.
