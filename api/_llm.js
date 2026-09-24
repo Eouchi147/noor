@@ -548,12 +548,59 @@ async function rememberRefused(id, why) {
 }
 
 /* ---------------------------------------------------------------------------
+   response_format:{type:"json_object"} only helps when the model on the
+   other end actually honours it; sent to one that does not, it is usually
+   just ignored, but a strict host can 400 the whole request instead. Groq
+   and Gemini both always accept the OpenAI-shaped field. OpenRouter fans
+   out to dozens of underlying models, and only some of them declare
+   "response_format" (or "structured_outputs") among their own
+   supported_parameters on OpenRouter's own /models endpoint -- so this is
+   asked for there only where the model itself lists it, best-effort and
+   fail-closed: a network failure or a schema OpenRouter changes under this
+   file leaves the set empty, which asks for json mode nowhere on
+   OpenRouter rather than guessing a model can answer it. A caller that
+   still wants strict JSON gets it from the robust parser either way
+   (api/_agent.js's parsePlan/parseSynthesis); this is only ever a better
+   chance at the first try, never the only line of defence. */
+const OR_JSON_TTL = 6 * 3600 * 1000;
+let orJsonCache = { at: 0, ids: new Set() };
+async function orJsonCapableIds(force) {
+  const now = Date.now();
+  if (!force && orJsonCache.ids.size && now - orJsonCache.at < OR_JSON_TTL) return orJsonCache.ids;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 6000);
+    const r = await fetch("https://openrouter.ai/api/v1/models", { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) return orJsonCache.ids;
+    const j = await r.json();
+    const ids = new Set();
+    for (const m of (Array.isArray(j.data) ? j.data : [])) {
+      const sp = Array.isArray(m && m.supported_parameters) ? m.supported_parameters : [];
+      if (sp.includes("response_format") || sp.includes("structured_outputs")) ids.add(m.id);
+    }
+    if (ids.size) orJsonCache = { at: now, ids };
+    return orJsonCache.ids;
+  } catch { return orJsonCache.ids; }
+}
+async function jsonCapable(provider, model) {
+  if (provider === "groq" || provider === "gemini") return true;
+  if (provider === "openrouter") return (await orJsonCapableIds(false)).has(model);
+  return false;
+}
+
+/* ---------------------------------------------------------------------------
    7. route(task): task.tier ("fast" | "strong" | "long"), task.messages
       (OpenAI-shaped), task.opts (passed to chatOnce), task.perPerson (true
       when any message carries per-person rather than aggregate data, which
       routes the whole call away from Gemini's free tier -- see §3's header
       comment: Gemini's free terms allow training on submitted content, so
-      nothing about an identifiable person goes there).
+      nothing about an identifiable person goes there). task.json (true
+      when the caller wants response_format:{type:"json_object"}, asked for
+      on a per-candidate basis, only where jsonCapable() above says that
+      provider or that specific OpenRouter model actually lists it; a
+      caller that already set task.opts.response_format itself is left
+      alone, this never overrides one already chosen).
 
       Returns { ok:true, content, tool_calls, usage, model, provider, tier,
       tried } on success, or { ok:false, error, tier, tried, blocked? } with
@@ -593,7 +640,11 @@ export async function route(task = {}) {
       continue;
     }
     anyAttempted = true;
-    const got = await chatOnce(cand.provider, cand.model, messages, task.opts || {});
+    const callOpts = { ...(task.opts || {}) };
+    if (task.json && !callOpts.response_format && await jsonCapable(cand.provider, cand.model)) {
+      callOpts.response_format = { type: "json_object" };
+    }
+    const got = await chatOnce(cand.provider, cand.model, messages, callOpts);
     tried.push({ provider: cand.provider, model: cand.model, ms: got.ms, err: got.ok ? "" : got.error });
     if (!got.ok && cand.provider === "openrouter" && (got.status === 403 || got.status === 404)) await rememberRefused(cand.model, got.error);
     const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;

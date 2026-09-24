@@ -36,9 +36,69 @@ console.log('plan parsing: malformed JSON, one repair, then the fallback');
   ok(A.parsePlan(trailingComma).steps[0].name === 'visitors', 'a trailing comma and stray prose around the braces are repaired');
   ok(A.parsePlan('not json at all, no braces here') === null, 'text with nothing to repair returns null rather than guessing');
   ok(A.parsePlan(null) === null, 'no text at all returns null');
-  const fb = A.fallbackPlan();
-  ok(Array.isArray(fb.steps) && fb.steps.length === 1 && fb.steps[0].kind === 'tool' && fb.steps[0].name === 'observatory',
-    'the fallback plan is one safe tool read, never empty');
+}
+
+console.log('\nthe fallback plan: no longer one fixed read, chosen from the question\'s own keywords (2026-09-24, a live run: the planner could not be read, and observatory alone had nothing that answered "which kind of reel")');
+{
+  const names = plan => plan.steps.map(s => s.kind + ':' + s.name);
+  const bare = A.fallbackPlan('');
+  ok(names(bare).join() === 'tool:observatory,subagent:analyst,subagent:strategist',
+    'nothing named in the question still gets the whole picture and a reading of it: ' + names(bare).join());
+  const kind = A.fallbackPlan('Which kind of reel reaches most people on Instagram, and what should we post more of?');
+  ok(names(kind).includes('tool:insights') && names(kind).includes('tool:numbers'),
+    'a question about kind or what to post reaches for insights and numbers: ' + names(kind).join());
+  const site = A.fallbackPlan('How many visitors does the site get from readers each day?');
+  ok(names(site).includes('tool:visitors'), 'a question about the site itself reaches for visitors: ' + names(site).join());
+  const net = A.fallbackPlan('Why is Facebook at zero?');
+  ok(names(net).includes('tool:numbers') && names(net).includes('tool:reconcileRead'),
+    'a question naming a network reaches for numbers and reconcileRead: ' + names(net).join());
+  const reconcileStep = net.steps.find(s => s.name === 'reconcileRead');
+  ok(reconcileStep && reconcileStep.args.network === 'facebook', 'and reconcileRead is asked about that exact network: ' + JSON.stringify(reconcileStep));
+  const pkg = A.fallbackPlan('Make a package for the best verse of the month');
+  ok(names(pkg).includes('tool:package'), 'a question asking for a package reaches for package: ' + names(pkg).join());
+  const line = A.fallbackPlan("Plan next week's line-up");
+  ok(names(line).includes('tool:lineup') && names(line).includes('tool:shelf'), 'a question about the line-up reaches for lineup and shelf: ' + names(line).join());
+  ok(names(bare).join() === names(A.fallbackPlan()).join(), 'no message at all is the same as an empty one, never a crash');
+  for (const p of [bare, kind, site, net, pkg, line]) {
+    ok(p.steps[0].kind === 'tool' && p.steps[0].name === 'observatory', 'observatory always runs first');
+    ok(p.steps[p.steps.length - 1].name === 'strategist' || p.steps.length >= A.BUDGETS.maxSteps,
+      'the analyst and strategist subagents always run last, reading whatever the tools above them found');
+    ok(p.steps.length <= A.BUDGETS.maxSteps, 'never more than the step budget, even a question that matches every keyword at once: ' + p.steps.length);
+  }
+}
+
+console.log('\nplan parsing survives what a real free model actually answers, not only strict JSON (2026-09-24, a live run: nvidia/nemotron-3-ultra-550b-a55b on OpenRouter)');
+{
+  const shape = { steps: [{ kind: 'tool', name: 'insights', args: {}, why: 'x' }] };
+  const think = '<think>I should read insights first.</think>\n' + JSON.stringify(shape);
+  ok(A.parsePlan(think) && A.parsePlan(think).steps[0].name === 'insights', 'a <think>...</think> block is stripped before the JSON is ever read');
+  const preamble = 'Sure, here is my plan for this request:\n\n' + JSON.stringify(shape) + '\n\nLet me know if you would like changes.';
+  ok(A.parsePlan(preamble) && A.parsePlan(preamble).steps[0].name === 'insights', 'a reasoning preamble before the JSON, and trailing prose after it, are both read past');
+  const nested = 'Here is the plan, as requested: ' + JSON.stringify(shape) + ' -- that should cover it.';
+  ok(A.parsePlan(nested) && A.parsePlan(nested).steps[0].name === 'insights', 'a JSON object nested inside surrounding text is extracted whole');
+  const singleQuoted = "{'steps':[{'kind':'tool','name':'insights','args':{},'why':'x'}]}";
+  ok(A.parsePlan(singleQuoted) && A.parsePlan(singleQuoted).steps[0].name === 'insights', 'single quotes throughout are repaired to real JSON');
+  const trailingComma = '{"steps":[{"kind":"tool","name":"insights","args":{},"why":"x"},]}';
+  ok(A.parsePlan(trailingComma) && A.parsePlan(trailingComma).steps[0].name === 'insights', 'a trailing comma is still repaired');
+  const bareArray = '[{"kind":"tool","name":"insights","args":{},"why":"x"}]';
+  ok(A.parsePlan(bareArray) && A.parsePlan(bareArray).steps[0].name === 'insights', 'a bare array of steps is read as the steps list itself, not only {"steps":[...]}');
+  const everything = '<think>hmm</think>Sure, my plan:\n' + "{'steps': [{'kind': 'tool', 'name': 'insights', 'args': {}, 'why': 'x'},]}" + '\nHope that helps!';
+  ok(A.parsePlan(everything) && A.parsePlan(everything).steps[0].name === 'insights', 'a think block, a preamble, single quotes and a trailing comma together, all in one answer, still parse');
+  ok(A.parsePlan('not json at all, no braces here') === null, 'text with nothing to repair returns null rather than guessing');
+
+  /* names in a different case or with spaces, or a subagent named with a
+     different case, both fold to the same canonical name; an unknown name
+     is still dropped, never guessed at */
+  const cased = { steps: [
+    { kind: 'TOOL', name: 'Reconcile Read', args: { network: 'facebook' }, why: 'a' },
+    { kind: 'Subagent', name: 'STRATEGIST', args: {}, why: 'b' },
+    { kind: 'tool', name: 'site-search', args: {}, why: 'c' },
+    { kind: 'tool', name: 'not-a-real-tool', args: {}, why: 'd' }
+  ] };
+  const v = A.validatePlan(cased);
+  ok(v.length === 3, 'case and spacing differences still match a real tool or subagent name: ' + JSON.stringify(v.map(s => s.name)));
+  ok(v.some(s => s.name === 'reconcileRead') && v.some(s => s.name === 'strategist') && v.some(s => s.name === 'siteSearch'),
+    'each one folds to its own canonical name, not a guess at a new one');
 }
 
 console.log('\nplan validation: only known tools and subagents survive, capped at the step budget');
@@ -87,6 +147,54 @@ console.log('\nthe critic: a number this run actually found survives, an invente
   ok(derived.clean && /6,567%/.test(derived.text), 'a percent change genuinely derived from two of this run\'s own numbers (14000 against 210) survives: ' + JSON.stringify(derived));
   const invented = A.critic('Reach rose 42% this week.', obsEvidence);
   ok(!invented.clean && !/42%/.test(invented.text), 'a percent with no literal and no real derivation behind it is dropped: ' + JSON.stringify(invented));
+}
+
+console.log('\nthe critic leaves no debris: a dropped clause inside a parenthesis or a list is tidied, not left as punctuation with a hole in it (2026-09-24, a live run: "reel type (verse, dhikr, )")');
+{
+  const ev = A.evidenceFromToolOutputs([{ name: 'insights', data: { byKind: [{ kind: 'reel:verse', n: 12 }, { kind: 'reel:dhikr', n: 8 }] } }]);
+  ok(A.critic('reel type (verse, dhikr, ). It only shows totals.', ev).text === 'reel type (verse, dhikr). It only shows totals.',
+     'a trailing comma left inside a parenthesis by a model that ran out of real names to list is cleaned up');
+  ok(A.critic('the kinds that matter (verse, dhikr, and ) this week.', ev).text === 'the kinds that matter (verse, dhikr) this week.',
+     'an orphaned "and" right before the closing bracket goes with it');
+  ok(A.critic('a list with nothing left (, , ) here.', ev).text === 'a list with nothing left here.',
+     'a parenthesis with nothing real left inside it is removed whole, not left as empty brackets');
+  ok(A.critic('an empty bracket example [] stays gone.', ev).text === 'an empty bracket example stays gone.',
+     'an empty bracket pair left by anything else is removed the same way');
+  ok(A.critic('double  spaces   here and  there.', ev).text === 'double spaces here and there.', 'doubled spaces left behind are collapsed to one');
+  ok(A.critic('a trailing comma before a period, .', ev).text === 'a trailing comma before a period.', 'and a comma stranded right before a full stop is dropped with it');
+  const untouched = 'reel type (verse, dhikr) leads this week, over 12 and 8 posts.';
+  ok(A.critic(untouched, ev).text === untouched, 'ordinary, fully evidenced prose is never touched by the tidy-up pass');
+}
+
+console.log('\nthe compact tool JSON is cut by priority, not by a flat slice: summary numbers first, then the breakdowns, the long tail last (2026-09-24, a live run: "the data does not break down Instagram reach by reel type" because byKind sat past the truncation point)');
+{
+  const big = { ok: true, at: '2026-09-24T00:00:00Z', windowDays: 30,
+    summary: { reach: { value: 5319 }, views: { value: 17498 } },
+    trend30: { dates: Array.from({ length: 30 }, (_, i) => '2026-08-' + (i + 1)),
+      networks: { instagram: Array.from({ length: 30 }, (_, i) => ({ date: 'd' + i, reach: 100 + i, views: 200 + i, posts: 1, engagement: 0.05 })) } },
+    weekdayHour: Array.from({ length: 42 }, (_, i) => ({ weekday: i % 7, hour: 8 + (i % 6), instagramN: i, youtubeN: i })),
+    byKind: [{ kind: 'reel:verse', label: 'verse reels', n: 12, reach: { median: 2400 } }, { kind: 'reel:dhikr', label: 'dhikr reels', n: 8, reach: { median: 1500 } }],
+    bySubject: [{ group: 'surah:2', label: 'Al-Baqarah', n: 6, reach: { median: 3000 } }],
+    kindDaily: Array.from({ length: 90 }, (_, i) => ({ date: 'd' + i, kind: 'reel:verse', n: 1 })),
+    notes: ['Instagram carries the week.', 'Word reels lead engagement.'] };
+  ok(JSON.stringify(big).length > 6000, 'the fixture itself is bigger than the whole synthesis budget, on purpose: ' + JSON.stringify(big).length);
+  const compact = A.compactToolOutputs([{ name: 'observatory', data: big }]);
+  ok(compact[0].json.length <= 6000, 'the compacted form still stays inside the budget: ' + compact[0].json.length);
+  const parsed = JSON.parse(compact[0].json);
+  ok(Array.isArray(parsed.byKind) && parsed.byKind.length, 'byKind survives, the exact field a "which kind" question needs: ' + JSON.stringify(parsed.byKind));
+  ok(parsed.byKind.every(k => typeof k.n === 'number'), 'and every row it kept still carries its own sample size n');
+  ok(Array.isArray(parsed.bySubject) && parsed.bySubject.length, 'bySubject survives too');
+  ok(parsed.summary && parsed.summary.reach && parsed.summary.reach.value === 5319, 'the summary numbers are kept whole, first, whatever they cost');
+  ok(!('kindDaily' in parsed) || JSON.stringify(parsed.kindDaily).length < JSON.stringify(big.kindDaily).length,
+     'a long tail like kindDaily (90 rows, no sample size, the least useful breakdown here) is the first thing cut when the budget runs out');
+
+  const insightsShape = { posts: 40, read: 40, unread: 0, refused: 0,
+    byKind: [{ kind: 'reel:verse', label: 'verse reels', n: 12, reach: { median: 2400 }, views: { median: 7100 } },
+             { kind: 'reel:dhikr', label: 'dhikr reels', n: 8, reach: { median: 1500 }, views: { median: 4000 } }],
+    bySubject: [], byHour: [], byNetwork: [], byFamily: [], subjectTop: [], subjectBottom: [], top: [], sentences: [] };
+  const ic = A.compactToolOutputs([{ name: 'insights', data: insightsShape }]);
+  const ip = JSON.parse(ic[0].json);
+  ok(Array.isArray(ip.byKind) && ip.byKind.length === 2 && ip.byKind[0].n === 12, 'api/_insights.js\'s own byKind, with its own n, survives a small run untouched');
 }
 
 console.log('\nper-person data never reaches a subagent: the router\'s own scrubber is asked a second time here');

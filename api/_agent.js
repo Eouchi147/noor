@@ -105,43 +105,158 @@ const nowMs = clock => (typeof clock === "function" ? clock() : Date.now());
    could stream an id the store never got to keep. */
 
 /* ---------------------------------------------------------------------------
-   PLAN PARSING: robust to a model that does not answer strict JSON. One
-   local repair attempt (strip a code fence, take the largest {...} run, fix
-   a trailing comma) and, failing that, a safe fallback plan -- never a
-   second model call spent repairing the first one, since that is exactly
-   the kind of budget leak the marching orders name.
+   PLAN PARSING: robust to what a real free model actually answers, not only
+   to strict JSON (2026-09-24, a live run: nvidia/nemotron-3-ultra-550b-a55b
+   on OpenRouter answered with a reasoning preamble around its JSON, and
+   parsePlan's own strict-then-largest-brace-run repair could not read it,
+   so every question fell to the old one-step fallback). Local text work
+   only, in this fixed order -- never a second model call spent repairing
+   the first one, since that is exactly the kind of budget leak the
+   marching orders name:
+     1. strip a <think>...</think> block or a bare reasoning preamble
+     2. try the text as-is, then the same text with a code fence's own
+        marker lines removed and a trailing comma fixed
+     3. extract the FIRST BALANCED {...} or [...] found anywhere in the
+        text (a real bracket-depth scan that knows a brace inside a quoted
+        string is not a brace, not merely "first { to last }", which a
+        model's own trailing prose after the JSON could fool)
+     4. the one repair attempt: single quotes turned into double quotes on
+        whichever candidate above came closest, tried last
+   A bare array of steps ([...] rather than {"steps":[...]}) is accepted as
+   the steps list itself. Failing all of that, a safe fallback plan.
 --------------------------------------------------------------------------- */
+function stripThink(s) {
+  /* a <think> block a reasoning model left in, and the common "Sure, here
+     is the plan:" preamble before the JSON actually starts; neither is
+     JSON, and leaving the preamble in only costs the plain-text parse
+     attempt below, since extractBalanced() finds the JSON either way */
+  const noThink = String(s || "").replace(/<think>[\s\S]*?<\/think>/gi, " ");
+  const m = /[{[]/.exec(noThink);
+  return m ? noThink.slice(m.index) : noThink;
+}
 function stripFence(s) {
   const m = /```(?:json)?\s*([\s\S]*?)```/i.exec(s);
   return m ? m[1] : s;
 }
-function largestBraceRun(s) {
-  const start = s.indexOf("{");
-  const end = s.lastIndexOf("}");
-  return (start !== -1 && end > start) ? s.slice(start, end + 1) : s;
-}
 function dropTrailingCommas(s) {
   return s.replace(/,(\s*[}\]])/g, "$1");
 }
-
-/* returns { steps: [...] } or null if even the repair could not read it */
-export function parsePlan(raw) {
-  const text = String(raw == null ? "" : raw);
-  const tries = [text, dropTrailingCommas(largestBraceRun(stripFence(text)))];
-  for (const t of tries) {
-    try {
-      const j = JSON.parse(t);
-      if (j && Array.isArray(j.steps)) return j;
-    } catch { /* try the next repair, or give up below */ }
+/* the first balanced {...} or [...] in the text, honouring a brace or a
+   bracket inside a quoted string (single or double: a model that already
+   drifted into single-quoted JSON should not also have its own apostrophes
+   inside a string value miscounted as structure). Returns null if nothing
+   ever opens, or opens and never closes (a truncated answer). */
+function extractBalanced(s) {
+  const text = String(s || "");
+  let start = -1, openCh = "", closeCh = "";
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === "{" || c === "[") { start = i; openCh = c; closeCh = c === "{" ? "}" : "]"; break; }
+  }
+  if (start === -1) return null;
+  let depth = 0, inStr = false, quote = "", esc = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === quote) inStr = false;
+      continue;
+    }
+    if (c === '"' || c === "'") { inStr = true; quote = c; continue; }
+    if (c === openCh) depth++;
+    else if (c === closeCh) { depth--; if (depth === 0) return text.slice(start, i + 1); }
   }
   return null;
 }
-
-/* the safe fallback: one look at the whole ecosystem, then straight to
-   synthesis. Never empty handed, never a guess dressed as a plan. */
-export function fallbackPlan() {
-  return { steps: [{ kind: "tool", name: "observatory", args: {}, why: "the plan could not be read, so this looks at the whole picture first" }] };
+/* single-quoted JSON, turned into real JSON: a quoted span (single or
+   double) is read whole and re-emitted double-quoted with any double quote
+   already inside it escaped, rather than a blind global replace of every
+   apostrophe, which would just as happily wreck "reelA's own reach" sitting
+   inside an already-correct double-quoted string. */
+function singleToDoubleQuotes(s) {
+  const text = String(s || "");
+  let out = "", i = 0;
+  while (i < text.length) {
+    const c = text[i];
+    if (c === "'" || c === '"') {
+      const quote = c;
+      let j = i + 1, buf = "";
+      while (j < text.length && text[j] !== quote) {
+        if (text[j] === "\\" && j + 1 < text.length) { buf += text[j] + text[j + 1]; j += 2; continue; }
+        buf += text[j]; j++;
+      }
+      out += '"' + buf.replace(/\\?"/g, '\\"') + '"';
+      i = j + 1;
+    } else { out += c; i++; }
+  }
+  return out;
 }
+function tryParseAsPlan(t) {
+  try {
+    const j = JSON.parse(t);
+    if (j && Array.isArray(j.steps)) return j;
+    if (Array.isArray(j)) return { steps: j };
+    return null;
+  } catch { return null; }
+}
+/* returns { steps: [...] } or null if even the repair could not read it */
+export function parsePlan(raw) {
+  const cleaned = stripThink(String(raw == null ? "" : raw));
+  const balanced = extractBalanced(cleaned);
+  const tries = [cleaned, dropTrailingCommas(stripFence(cleaned))];
+  if (balanced) tries.push(dropTrailingCommas(balanced));
+  for (const t of tries) {
+    const p = tryParseAsPlan(t);
+    if (p) return p;
+  }
+  /* the one repair attempt beyond plain reading: fix single quotes on
+     whichever candidate came closest to real JSON */
+  const repaired = dropTrailingCommas(singleToDoubleQuotes(balanced || stripFence(cleaned)));
+  return tryParseAsPlan(repaired);
+}
+
+/* the safe fallback, no longer one fixed read: which tools it reaches for
+   is chosen from plain keywords in the owner's own question, since a plan
+   that could not be parsed is not a plan that could not be understood --
+   the question itself is still there to read. Observatory always runs
+   first (the whole picture, the one thing every question can use), the
+   analyst and strategist subagents always run last (a reading needs a
+   reader), and whatever the keywords below matched runs between the two.
+   Never empty handed, never a guess dressed as a plan. */
+export function fallbackPlan(message) {
+  const q = " " + String(message || "").toLowerCase() + " ";
+  const steps = [{ kind: "tool", name: "observatory", args: {}, why: "the plan could not be read, so this looks at the whole picture first" }];
+  const add = (name, args, why) => {
+    if (!steps.some(s => s.kind === "tool" && s.name === name && JSON.stringify(s.args) === JSON.stringify(args || {})))
+      steps.push({ kind: "tool", name, args: args || {}, why });
+  };
+  if (/\bkind\b|\bsubject\b|what to post|which (kind|type)/.test(q)) {
+    add("insights", {}, "the question asks by kind or subject, which insights breaks down");
+    add("numbers", {}, "and the week's own numbers by network");
+  }
+  if (/\bsite\b|\bvisitors?\b|\breaders?\b/.test(q)) add("visitors", {}, "the question is about the site itself, not one network");
+  for (const net of ["facebook", "instagram", "youtube", "threads"]) {
+    if (q.includes(net)) {
+      add("numbers", {}, "the question names a network, and numbers carries every network's own week");
+      add("reconcileRead", { network: net }, "checking " + net + " against the record");
+    }
+  }
+  if (/\bpackage\b|\bdraft\b/.test(q)) add("package", {}, "the question asks for a package or a draft");
+  if (/line.?up|next week/.test(q)) { add("lineup", {}, "the question is about the line-up"); add("shelf", {}, "and what the shelf holds to fill it"); }
+  steps.push({ kind: "subagent", name: "analyst", args: {}, why: "read what the numbers say" });
+  steps.push({ kind: "subagent", name: "strategist", args: {}, why: "turn the reading into a recommendation" });
+  return { steps };
+}
+
+/* letters only, lower case: "reconcileRead", "reconcile Read", "RECONCILE_READ"
+   and "reconcile-read" all fold to the same key, so a free model's own
+   habit of re-casing or re-spacing a tool name it was given verbatim in
+   the system prompt (seen live: "Reconcile Read", "site_search") does not
+   silently drop a step whose name it otherwise got right. */
+const foldName = s => String(s || "").toLowerCase().replace(/[^a-z]/g, "");
+const TOOL_FOLD = new Map(TOOL_NAMES.map(n => [foldName(n), n]));
+const ROLE_FOLD = new Map(SUBAGENT_ROLES.map(n => [foldName(n), n]));
 
 /* a plan step is trusted only if its shape and its name are both known; an
    unknown tool, an unknown subagent, or an action step is either accepted
@@ -152,13 +267,19 @@ export function validatePlan(plan) {
   const out = [];
   for (const s of steps) {
     if (!s || typeof s !== "object") continue;
-    const kind = s.kind;
-    const name = String(s.name || "");
+    const kind = foldName(s.kind);
+    const rawName = String(s.name || "");
     const why = String(s.why || "").slice(0, 300);
     const args = (s.args && typeof s.args === "object") ? s.args : {};
-    if (kind === "tool" && TOOL_NAMES.includes(name)) out.push({ kind, name, args, why });
-    else if (kind === "subagent" && SUBAGENT_ROLES.includes(name)) out.push({ kind, name, args, why });
-    else if (kind === "action") out.push({ kind, name, args, why });
+    if (kind === "tool") {
+      const canon = TOOL_FOLD.get(foldName(rawName));
+      if (canon) out.push({ kind: "tool", name: canon, args, why });
+    } else if (kind === "subagent") {
+      const canon = ROLE_FOLD.get(foldName(rawName));
+      if (canon) out.push({ kind: "subagent", name: canon, args, why });
+    } else if (kind === "action") {
+      out.push({ kind: "action", name: rawName, args, why });
+    }
     /* anything else (an unknown tool name, a malformed kind) is dropped
        rather than guessed at; the plan simply does less than it claimed */
     if (out.length >= BUDGETS.maxSteps) break;
@@ -521,6 +642,44 @@ const unguardDecimals = s => s.split(DECIMAL_GUARD).join(".");
 /* splits on sentence boundaries, then on semicolons within each sentence;
    a clause that fails is dropped, a sentence with nothing left is dropped
    whole rather than left as stray punctuation */
+/* debris cleanup, run over the critic's own final text. A dropped clause
+   that sat inside a parenthesis or a comma list can leave punctuation
+   behind that no longer makes sense on its own -- "(verse, dhikr, )", an
+   orphaned "and" right before a closing bracket, a doubled comma, a
+   doubled space -- even when the drop itself was correct (2026-09-24, a
+   live run: a free model answered "reel type (verse, dhikr, ). It only
+   shows..." once it had run out of real kind names to name, a debris
+   shape this tidies whether it came from a clause this critic dropped or
+   from the model's own raw prose trailing off). Never changes which words
+   survived, only how the punctuation around a gap reads once something,
+   somewhere, is gone; run to a fixed point since undoing one gap can
+   reveal another right next to it (an emptied "(verse, )" becomes "()"
+   only after the trailing comma is fixed, and only then is it caught by
+   the empty-brackets pass). */
+function tidyPunctuation(text) {
+  let s = String(text || "");
+  for (let i = 0; i < 5; i++) {
+    const before = s;
+    s = s
+      .replace(/,\s*(and|or)\b(?=\s*[.)\]])/gi, "")   // ", and )" / ", and." -> ")" / "."
+      .replace(/\(\s*(and|or)\b\s*/gi, "(")            // "( and " -> "("
+      .replace(/,\s*,/g, ",")                          // doubled comma
+      .replace(/,\s*\)/g, ")")                          // ", )" -> ")"
+      .replace(/\(\s*,/g, "(")                          // "( ," -> "("
+      .replace(/,\s*\]/g, "]")
+      .replace(/\[\s*,/g, "[")
+      .replace(/\(\s*\)/g, "")                          // now-empty ()
+      .replace(/\[\s*\]/g, "")                          // now-empty []
+      .replace(/,\s*\./g, ".")                          // ", ." -> "."
+      .replace(/\(\s+/g, "(").replace(/\s+\)/g, ")")    // padding just inside a bracket
+      .replace(/\s+([,.;:])/g, "$1")                    // a space before punctuation
+      .replace(/\s{2,}/g, " ")
+      .trim();
+    if (s === before) break;
+  }
+  return s;
+}
+
 function checkAndClean(text, evidence) {
   const evNums = [...evidence].filter(v => typeof v === "number");
   const dropped = [];
@@ -539,7 +698,7 @@ function checkAndClean(text, evidence) {
     });
     if (survivors.length) kept.push(survivors.join(";"));
   }
-  return { text: kept.join(" ").replace(/\s+/g, " ").trim(), dropped };
+  return { text: tidyPunctuation(kept.join(" ")), dropped };
 }
 
 /* the mechanical pass: strips a stray em or en dash first (never counted
@@ -783,6 +942,10 @@ const SYNTH_SYSTEM = "You are the synthesiser inside NOOR's Lantern agent. You a
   + "{\"type\":\"draft\",\"network\":string,\"text\":string} (built only from a package tool's own words, never invented)\n"
   + "Never invent a \"proposal\" artifact: a proposal only ever comes from the agent's own action step, never from you.\n"
   + "Never state a number, a date or a clock time this run's own tool data did not give you. Never use an em dash or an en dash; use a comma or a full stop.\n"
+  + "Answer the owner's own question directly, with whatever breakdown the JSON actually carries (byKind, bySubject, byHour, byNetwork and the rest are "
+  + "included precisely because a question about which kind or subject does best needs them); read the JSON before deciding it is missing something. "
+  + "Only say a breakdown is not available when the JSON you were actually given truly does not carry it, and say so once, plainly, never as a reason "
+  + "to answer a different, easier question instead of the one asked.\n"
   + HOUSE_RULES.map(r => "- " + r).join("\n");
 
 /* the per-tool JSON budget handed to the synthesis model: divided across
@@ -791,15 +954,105 @@ const SYNTH_SYSTEM = "You are the synthesiser inside NOOR's Lantern agent. You a
    run with only one or two tools gets to hand over most of what each one
    found rather than an even smaller slice than it needs */
 const SYNTH_JSON_BUDGET = 6000;
+
+/* the breakdowns a real question is most likely to need an answer from,
+   in the order they are worth keeping: a "which kind reaches most" or
+   "what should we post more of" question lives in byKind and bySubject,
+   not in a 30-day trend or an hourly matrix. Named here once so both
+   api/observatory.js's own shape and api/_insights.js's own shape (two
+   different tools, the same field names for the same idea) are read the
+   same way, with no per-tool special case. */
+const BREAKDOWN_PRIORITY = ["byKind", "bySubject", "byHour", "byNetwork", "kindTotals", "top", "subjectTop", "subjectBottom", "notes", "sentences"];
+
+function jsonSize(v) { try { return JSON.stringify(v).length; } catch { return 0; } }
+/* a scalar, or a small plain object, cheap enough to always keep whole:
+   this is where "reach 5319, views 17498" actually lives (api/observatory
+   .js's own `summary`), and it is worth more than any breakdown below it */
+const isCheap = v => v == null || typeof v === "number" || typeof v === "string" || typeof v === "boolean";
+
+/* fits `value` into `budget` characters without ever cutting a row (or a
+   key) in half: an array keeps as many of its own whole entries as fit, in
+   order; a plain object keeps as many of its own whole entries as fit; a
+   value with nothing removable that still does not fit is dropped rather
+   than sliced mid-JSON, which the old flat slice(0,per)+"…(truncated)"
+   used to do -- handing the model a string that was not even valid JSON
+   inside its own "compact JSON", past whatever byte the cut fell on. */
+function fitToBudget(value, budget) {
+  if (budget < 2) return undefined;
+  if (Array.isArray(value)) {
+    const kept = []; let used = 2;
+    for (const row of value) {
+      const add = jsonSize(row) + (kept.length ? 1 : 0);
+      if (used + add > budget) break;
+      kept.push(row); used += add;
+    }
+    return kept.length || !value.length ? kept : undefined;
+  }
+  if (value && typeof value === "object") {
+    const kept = {}; let used = 2; let any = false;
+    for (const k of Object.keys(value)) {
+      const add = jsonSize(value[k]) + k.length + 4;
+      if (used + add > budget) continue;
+      kept[k] = value[k]; used += add; any = true;
+    }
+    return any || !Object.keys(value).length ? kept : undefined;
+  }
+  return jsonSize(value) <= budget ? value : undefined;
+}
+
+/* one tool's own data, compacted by priority rather than by a flat
+   truncation: summary numbers first (whatever they cost), then the named
+   breakdowns in BREAKDOWN_PRIORITY order (each trimmed to fit whatever
+   budget is left, sample size n included since every row already carries
+   its own), then everything else -- a long tail like a 30-day trend or an
+   hour-by-weekday matrix -- with whatever budget the two passes above did
+   not spend. A tool whose own data is an array (lineup, slots) or a bare
+   scalar is fit to the whole budget directly, the same rule as a single
+   breakdown. */
+function compactOne(data, budget) {
+  if (data == null || typeof data !== "object") {
+    let s; try { s = JSON.stringify(data); } catch { s = String(data); }
+    return (s || "null").slice(0, budget);
+  }
+  if (Array.isArray(data)) return JSON.stringify(fitToBudget(data, budget) || []);
+
+  const out = {}; let used = 2;
+  const keys = Object.keys(data);
+  const breakdownSet = new Set(BREAKDOWN_PRIORITY);
+
+  /* PASS 1: cheap scalars and small summary objects, always kept */
+  for (const k of keys) {
+    if (breakdownSet.has(k)) continue;
+    const v = data[k];
+    const smallObject = v && typeof v === "object" && !Array.isArray(v) && jsonSize(v) < 500;
+    if (!isCheap(v) && !smallObject) continue;
+    out[k] = v; used += jsonSize(v) + k.length + 4;
+  }
+  /* PASS 2: the named breakdowns, in fixed priority order */
+  for (const k of BREAKDOWN_PRIORITY) {
+    if (!(k in data) || k in out) continue;
+    const remaining = budget - used - k.length - 4;
+    if (remaining <= 20) continue;
+    const trimmed = fitToBudget(data[k], remaining);
+    if (trimmed !== undefined) { out[k] = trimmed; used += jsonSize(trimmed) + k.length + 4; }
+  }
+  /* PASS 3: the long tail -- everything else, cut first when the budget
+     runs out, since it is read last */
+  for (const k of keys) {
+    if (k in out || breakdownSet.has(k)) continue;
+    const remaining = budget - used - k.length - 4;
+    if (remaining <= 20) continue;
+    const trimmed = fitToBudget(data[k], remaining);
+    if (trimmed !== undefined) { out[k] = trimmed; used += jsonSize(trimmed) + k.length + 4; }
+  }
+  let s; try { s = JSON.stringify(out); } catch { s = "{}"; }
+  return s;
+}
+
 export function compactToolOutputs(toolOutputs) {
   const list = toolOutputs || [];
   const per = Math.max(300, Math.floor(SYNTH_JSON_BUDGET / Math.max(1, list.length)));
-  return list.map(t => {
-    let s;
-    try { s = JSON.stringify(t.data); } catch { s = String(t.data); }
-    if (s && s.length > per) s = s.slice(0, per) + "…(truncated)";
-    return { name: t.name, json: s || "null" };
-  });
+  return list.map(t => ({ name: t.name, json: compactOne(t && t.data, per) }));
 }
 
 export function synthesisPrompt(message, toolOutputs, subagentOutputs, threadContext) {
@@ -813,16 +1066,28 @@ export function synthesisPrompt(message, toolOutputs, subagentOutputs, threadCon
       + (findings ? "\n\nSubagent findings:\n" + findings : "") });
   return { messages: msgs, compact };
 }
-export function parseSynthesis(raw) {
-  const text = String(raw == null ? "" : raw);
-  const tries = [text, dropTrailingCommas(largestBraceRun(stripFence(text)))];
-  for (const t of tries) {
-    try {
-      const p = JSON.parse(t);
-      if (p && typeof p.answer === "string") return { answer: p.answer, artifacts: Array.isArray(p.artifacts) ? p.artifacts : [] };
-    } catch { /* fall through to the next repair */ }
-  }
+function tryParseAsSynthesis(t) {
+  try {
+    const p = JSON.parse(t);
+    if (p && typeof p.answer === "string") return { answer: p.answer, artifacts: Array.isArray(p.artifacts) ? p.artifacts : [] };
+  } catch { /* fall through to the next repair */ }
   return null;
+}
+/* the same robustness parsePlan() above keeps, for the exact same reason:
+   a free model answering the synthesis prompt drifts into a reasoning
+   preamble or a fenced block exactly as readily as one answering the
+   planner prompt does */
+export function parseSynthesis(raw) {
+  const cleaned = stripThink(String(raw == null ? "" : raw));
+  const balanced = extractBalanced(cleaned);
+  const tries = [cleaned, dropTrailingCommas(stripFence(cleaned))];
+  if (balanced) tries.push(dropTrailingCommas(balanced));
+  for (const t of tries) {
+    const p = tryParseAsSynthesis(t);
+    if (p) return p;
+  }
+  const repaired = dropTrailingCommas(singleToDoubleQuotes(balanced || stripFence(cleaned)));
+  return tryParseAsSynthesis(repaired);
 }
 
 /* ---------------------------------------------------------------------------
@@ -851,11 +1116,11 @@ export async function runAgent(input) {
   /* ---- PLAN ---- */
   let plan = null;
   if (route && timeLeftMs() > MODEL_CALL_MARGIN_MS) {
-    const planCall = await route({ tier: "fast", messages: planPrompt(message, threadContext), opts: { max_tokens: 600, timeout: callTimeoutMs() } });
+    const planCall = await route({ tier: "fast", json: true, messages: planPrompt(message, threadContext), opts: { max_tokens: 600, timeout: callTimeoutMs() } });
     modelCalls++;
     if (planCall && planCall.ok) plan = parsePlan(planCall.content);
   }
-  if (!plan) plan = fallbackPlan();
+  if (!plan) plan = fallbackPlan(message);
   const steps = validatePlan(plan);
   await emit("plan", { steps: steps.map(s => ({ kind: s.kind, name: s.name, why: s.why })) });
 
@@ -931,7 +1196,7 @@ export async function runAgent(input) {
   if (route && modelCalls < BUDGETS.maxModelCalls && timeLeftMs() > MODEL_CALL_MARGIN_MS) {
     const { messages: synthMessages, compact } = synthesisPrompt(message, toolOutputs, subagentOutputs, threadContext);
     evidence = evidenceFromCompact(compact);
-    const got = await route({ tier: "strong", messages: synthMessages, opts: { max_tokens: 1800, timeout: callTimeoutMs() } });
+    const got = await route({ tier: "strong", json: true, messages: synthMessages, opts: { max_tokens: 1800, timeout: callTimeoutMs() } });
     modelCalls++;
     const parsed = got && got.ok ? parseSynthesis(got.content) : null;
     if (parsed) { answer = parsed.answer; artifacts = parsed.artifacts; }
