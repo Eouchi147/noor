@@ -344,6 +344,22 @@ console.log("\na verse carries the verse itself, Arabic always, English when the
   ok(body !== noNote.object.title, "the draft is not merely the title with nothing behind it");
 }
 
+console.log("\na verse with no written note still carries its English when the shelf itself holds one (24 September 2026)");
+{
+  const shelf = await buildPackage("verse:19-36");
+  ok(shelf.object.text.includes("And indeed, Allah is my Lord and your Lord, so worship Him."),
+    "verse:19-36 carries the shelf's own Saheeh meaning, the same words its reel already carries");
+  ok(shelf.object.text.includes("Saheeh International"), "and it is labelled the way the reel labels it");
+  ok(shelf.object.detail === shelf.object.arabic && shelf.object.arabic.length > 0, "the Arabic still follows it");
+  ok(!shelf.gaps.some(g => /English meaning/i.test(g)), "so the gap the owner found live is gone: no English meaning gap is named for it");
+  const shelfBody = shelf.drafts.instagram.text;
+  ok(shelfBody.includes("And indeed, Allah is my Lord and your Lord"), "and the Instagram draft carries that same English, not merely the title and the Arabic");
+
+  const neither = await buildPackage("verse:2-1");
+  ok(neither.object.text === "", "a verse held by neither a local note nor the shelf still honestly carries no English text");
+  ok(neither.gaps.some(g => /no English meaning is held locally for this verse/i.test(g)), "and the gap still names exactly what is missing");
+}
+
 console.log("\nthe dictionary lookup answers only its own keys (item 4, 24 September 2026)");
 {
   for (const bad of ["__proto__", "constructor", "toString", "hasOwnProperty", "valueOf"]) {

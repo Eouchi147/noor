@@ -82,6 +82,16 @@ const quranTable = () => once("quran", () => readJSON("tools/reels/quran-uthmani
 export const surahRow = n => (quranTable().surahs || {})[String(n)] || null;
 const shelfRefs = () => once("shelf", () => (readText("tools/reels/verses.txt") || "").split("\n")
   .map(l => l.split("#")[0].trim()).filter(l => /^\d{1,3}:\d{1,3}(-\d{1,3})?$/.test(l)));
+/* the shelf's own English, one file, for every one of its 600 verses:
+   tools/reels/verses.json, the master table verses.txt's own header
+   comment says the reel captions' meaning is drawn from (Saheeh
+   International, keyed "surah:ayah", one entry per verse). api/_package.js
+   reads this as its fallback when a verse has no locally written note
+   (verse/<s>.json), so a shelf verse's Content Factory draft never falls
+   back to Arabic alone while its own reel already carries the meaning. */
+const shelfVerses = () => once("shelfVerses", () => readJSON("tools/reels/verses.json") || { edition: "", verses: {} });
+export const shelfVerseMeaning = (s, a) => (shelfVerses().verses || {})[s + ":" + a] || null;
+export const shelfVerseEdition = () => shelfVerses().edition || "";
 
 /* The people, the places and the Names. prophets-data.js, characters.js and
    places.js are page scripts, object literals rather than JSON

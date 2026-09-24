@@ -188,16 +188,31 @@ function buildLight(id) {
     tags: tagsFor("light", L), date: L.d ? clean(L.d) : "" };
 }
 
+/* the reel's own credit line for this edition (api/page.js's verse room
+   prints it under the English as n2-credit, "Saheeh International"), reused
+   here verbatim rather than invented a second time for the draft */
+const TRANSLATION_LABEL = { "en.sahih": "Saheeh International" };
+
 /* A verse's draft must carry the verse itself, not merely its own title.
-   page.js's only LOCAL source of an English meaning is verseNotes' own
-   .sense (verse/<s>.json, written for 1,280 verses); an English rendering
-   from api.alquran.cloud (page.js's own ayah()) is a network fetch and
-   this file makes none. Where a note exists, its sense leads (text), the
-   Arabic follows (detail), so buildDrafts' body reads sense-then-Arabic;
-   where none exists, text is empty and detail carries the Arabic alone,
-   so the body is never empty and never just the title repeated back --
-   the fault a verse with no note used to have. gapsFor names the missing
-   note honestly rather than silently dropping the English half. */
+   page.js's first LOCAL source of an English meaning is verseNotes' own
+   .sense (verse/<s>.json, written for 1,280 verses). Where that is silent,
+   the second local source is the shelf itself: tools/reels/verses.json,
+   the very file every one of the 600 shelf reels already draws its own
+   caption's meaning from (PAGE.shelfVerseMeaning), so a verse whose reel
+   is already carrying its English never has to say locally that none is
+   held -- the gap the owner found live on the best-performing post of the
+   fortnight, verse:19-36. A range only takes the shelf's word when every
+   verse in it has one; one missing verse leaves the whole range short
+   rather than quietly reading half a passage as if it were whole. An
+   English rendering from api.alquran.cloud (page.js's own ayah()) is a
+   network fetch and this file makes none, so it is never a third source
+   here. Where a note exists, its sense leads (text); failing that, the
+   shelf's own wording, labelled the way the reel labels it; the Arabic
+   always follows (detail), so buildDrafts' body reads text-then-Arabic.
+   Only when neither local source holds a meaning is text empty and detail
+   left to carry the Arabic alone -- the fault a verse with neither note
+   nor shelf entry still has. gapsFor names that honestly rather than
+   silently dropping the English half. */
 function buildVerse(idRaw) {
   const ref = PAGE.parseRef(idRaw);
   if (!ref) return null;
@@ -207,9 +222,21 @@ function buildVerse(idRaw) {
   const vn = PAGE.verseNotes(ref.s, ref.a);
   const row = PAGE.surahRow(ref.s);
   const name = row ? row.translit : "";
-  const sense = vn && vn.sense ? clean(vn.sense) : "";
+  let text = vn && vn.sense ? clean(vn.sense) : "";
+  if (!text) {
+    const shelfParts = [];
+    for (let a = ref.a; a <= ref.b; a++) {
+      const m = PAGE.shelfVerseMeaning(ref.s, a);
+      if (!m || !m.text) { shelfParts.length = 0; break; }
+      shelfParts.push(clean(m.text));
+    }
+    if (shelfParts.length) {
+      const label = TRANSLATION_LABEL[PAGE.shelfVerseEdition()] || "";
+      text = shelfParts.join(" ") + (label ? " (" + label + ")" : "");
+    }
+  }
   return { type: "verse", id: ref.id, title: "Qur'an " + ref.label + (name ? ", " + name : ""),
-    url: SITE + "/verse/" + ref.id, text: sense, detail: arabic,
+    url: SITE + "/verse/" + ref.id, text, detail: arabic,
     arabic, sources: ["Qur'an " + ref.label], tags: tagsFor("verse"), surah: name };
 }
 
