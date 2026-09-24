@@ -358,7 +358,7 @@ console.log('\nthe door');
   const u = new URL(TH.authUrl('noorcodex.com', 'st.ate'));
   ok(u.origin + u.pathname === 'https://threads.net/oauth/authorize', 'the consent is asked at threads.net');
   ok(u.searchParams.get('redirect_uri') === 'https://noorcodex.com/threads/callback', 'the redirect is /threads/callback on the site');
-  ok(u.searchParams.get('scope') === 'threads_basic,threads_content_publish' && u.searchParams.get('response_type') === 'code', 'the two scopes: basic and publish, nothing else');
+  ok(u.searchParams.get('scope') === 'threads_basic,threads_content_publish,threads_manage_insights' && u.searchParams.get('response_type') === 'code', 'three scopes: basic, publish and, since 24 September 2026, insights, so a re-consent actually carries what the missing-permission message asks for');
   ok(u.searchParams.get('client_id') === '1234567890' && u.searchParams.get('state') === 'st.ate', 'the app id and the state ride along');
   const vj = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
   ok(vj.rewrites.some(r => r.source === '/threads/callback' && r.destination === '/api/threads?action=callback'), 'vercel.json sends /threads/callback to the door');

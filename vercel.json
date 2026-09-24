@@ -9,13 +9,16 @@
       "memory": 1536
     },
     "api/insights.js": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "assets/reel-subjects.json"
     },
     "api/warm.js": {
-      "maxDuration": 120
+      "maxDuration": 120,
+      "includeFiles": "assets/reel-subjects.json"
     },
     "api/house.js": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "assets/reel-subjects.json"
     },
     "api/page.js": {
       "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,prophets-data.js,characters.js,places.js,allah.html,assets/*.json,i18n/en.json,reels/index.json,tools/reels/verses.txt,tools/reels/quran-uthmani.json,verse/*.json}"

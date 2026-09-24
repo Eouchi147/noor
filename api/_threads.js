@@ -47,7 +47,19 @@ const AUTH_URL = "https://threads.net/oauth/authorize";
 const CODE_URL = "https://graph.threads.net/oauth/access_token";
 const LONG_URL = "https://graph.threads.net/access_token";
 const REFRESH_URL = "https://graph.threads.net/refresh_access_token";
-export const SCOPE = "threads_basic,threads_content_publish";
+/* threads_manage_insights added 24 September 2026: without it, opening
+   /api/threads?action=auth again to fix a missing-permission read (the
+   console's own message, api/_insights.js's refresh()) would have asked
+   Meta for a token that still could not read insights -- the same fault
+   the door exists to fix, granting a scope that never asked for it. Meta's
+   own Threads API documentation, developers.facebook.com/docs/threads/
+   insights, names this permission for the insights endpoint and confirms
+   the six media metrics api/_insights.js asks for (views, likes, replies,
+   reposts, quotes, shares; views and shares marked "in development" there,
+   which is why fetchInstagram's own two-set fallback is not repeated here:
+   a name still in development is asked for plainly and a refusal reads as
+   an ordinary error, not a second probe). */
+export const SCOPE = "threads_basic,threads_content_publish,threads_manage_insights";
 export const TEXT_MAX = 500;
 export const DAILY_LIMIT = 250;        /* Meta's ceiling, stated, not enforced: see the note above */
 export const TOKEN_LIFE_DAYS = 60;
@@ -67,6 +79,11 @@ const notReadyYet = out => Number(out.code) === 24 || Number(out.sub) === 427900
 
 export const configured = () => !!env("TH_TOKEN");
 export const doorReady = () => !!(env("TH_APP_ID") && env("TH_APP_SECRET"));
+/* the raw token, for api/_insights.js's own insights read: the same shape
+   api/social.js already gives igToken() and pageToken() to their own reader.
+   Never logged, never put in a url; graphGet (api/_insights.js) sends it only
+   in the authorization header, the same as every send() above. */
+export const token = () => env("TH_TOKEN");
 
 /* the token is never shown, in an error, a log or a url that got echoed */
 export function mask(s) {

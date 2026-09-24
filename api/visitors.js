@@ -162,7 +162,8 @@ export default async function handler(req, res) {
       ...days.map(d => ["HGETALL", "nvh:" + d + ":dur"]),
       ...days.map(d => ["HGETALL", "nvh:" + d + ":rr"]),
       ...months.map(m => ["HGETALL", "nmh:" + m + ":rt"]),
-      ...days.map(d => ["HGETALL", "nvh:" + d + ":filt"])
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":filt"]),
+      ...days.map(d => ["HGETALL", "nvh:" + d + ":src"])
     ]).catch(() => []);
     function toObj(x) {
       if (!x) return {};
@@ -175,7 +176,11 @@ export default async function handler(req, res) {
     const rr = (hashes.slice(2 * N, 3 * N) || []).map(toObj);
     const M = months.length;
     const rt = (hashes.slice(3 * N, 3 * N + M) || []).map(toObj);
-    const fl = (hashes.slice(3 * N + M) || []).map(toObj);
+    const fl = (hashes.slice(3 * N + M, 4 * N + M) || []).map(toObj);
+    /* the coarse source, per day: read only to compare this week against
+       last (arrivals, below); "what brought them" over the season still
+       reads the monthly count further down, unchanged */
+    const srcDaily = (hashes.slice(4 * N + M) || []).map(toObj);
     const views = (values[0] || []).map(x => parseInt(x, 10) || 0);
     const people = (values[1] || []).map(x => parseInt(x, 10) || 0);
     const dims = dimKeys.length ? (values[2] || []).map(x => parseInt(x, 10) || 0) : [];
@@ -228,6 +233,31 @@ export default async function handler(req, res) {
     out.countries = Object.entries(cAgg).map(([k, v]) => ({ c: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 20);
     out.rooms = Object.entries(rAgg).map(([k, v]) => ({ r: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 14);
     out.sources = Object.entries(sAgg).map(([k, v]) => ({ s: k, n: v })).sort((a, b) => b.n - a.n).slice(0, 14);
+
+    /* arrivals (masterplan step 8, conversion): the five networks the shelf
+       actually posts to, the last seven COMPLETE days against the seven
+       before them, from the daily source hash above. A refuter's review
+       caught the first version comparing a partial today (however few
+       hours old) plus six full days against seven full days, which always
+       makes the newer side look weaker than it is; today (days[N-1]) is
+       left out entirely now, so both sides are seven whole days. thisWeek
+       is days[N-8..N-2] (ending yesterday, UTC), lastWeek is days[N-15..N-9];
+       the console's own label says "the last 7 days", never "this week", so
+       it cannot be read as a calendar week that includes today. A family
+       with nothing in the earlier window reads as "new", not a minus
+       number that looks like a drop. */
+    const ARRIVAL_NETS = ["instagram", "facebook", "youtube", "threads", "pinterest"];
+    const weekSum = (from, to) => {
+      const t = {}; ARRIVAL_NETS.forEach(k => t[k] = 0);
+      for (let i = from; i < to; i++) { const h = srcDaily[i] || {}; ARRIVAL_NETS.forEach(k => t[k] += h[k] || 0); }
+      return t;
+    };
+    const thisWk = weekSum(N - 8, N - 1), lastWk = weekSum(N - 15, N - 8);
+    out.arrivals = {
+      thisWeek: { from: days[N - 8], to: days[N - 2] }, lastWeek: { from: days[N - 15], to: days[N - 9] },
+      byNetwork: ARRIVAL_NETS.map(k => ({ net: k, thisWeek: thisWk[k], lastWeek: lastWk[k],
+        delta: lastWk[k] ? thisWk[k] - lastWk[k] : (thisWk[k] ? "new" : 0) }))
+    };
     return res.status(200).json(out);
   } catch {
     return res.status(200).json(out);

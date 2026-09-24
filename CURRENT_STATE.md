@@ -84,6 +84,19 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
 - `tests/content-graph.mjs` (16 checks) fails if the shelves drift from the graph by one link or
   one place in order.
 
+## Shipped 24 September (masterplan step 8, analytics, and the related words)
+
+- Analytics already read Instagram, Facebook and YouTube per post; now Threads too (views, likes,
+  replies, reposts, quotes, shares; needs threads_manage_insights, so the owner authorises the
+  Threads app once more), a fold by SUBJECT (a Light's group, a verse's surah, a word's category,
+  a film's field; `assets/reel-subjects.json` from `scripts/graph/run.sh`), the best and weakest
+  posts by subject, and ARRIVALS: visits from each network, the last 7 complete days against the
+  7 before (beacon counts the source daily now; threads.com recognised).
+- Related words: citations and names no longer pass for dictionary terms (the grade "hasan" on
+  al-Hasan's room, "sahih" beside a citation); 23 of 1,270 rooms changed, every loss spurious.
+  Curated person words ship as `assets/person-words.json`. Verse ranges read 2:255-257.
+- Found, not yet fixed: fold() makes Mu'tah (the battle) and Mut'ah (the fiqh word) the same.
+
 ## Decided and not yet done
 
 - The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for

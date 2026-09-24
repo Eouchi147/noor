@@ -12,6 +12,12 @@
    day count and a clock; and numbers(), the arithmetic that folds a
    fortnight of those photographs into this week against the one before it.
 
+   And the learning loop (masterplan section 12): Threads media insights
+   read and folded the same way Instagram's are, with the same missing
+   permission stop; and the subject fold, a Light's group, a verse's surah,
+   a word's dictionary category and a film's field, bucketed by MIN_BUCKET
+   the same as everything else here, with the top ten and bottom five.
+
    Meta and Google are stubbed. This repository has no credentials.
 
    Run:  node tests/insights.mjs
@@ -21,6 +27,7 @@ const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fai
 
 process.env.FB_PAGE_ID = '123'; process.env.FB_PAGE_TOKEN = 'tok';
 process.env.IG_USER_ID = '456'; process.env.IG_TOKEN = 'igtok';
+process.env.TH_TOKEN = 'thtok';
 process.env.KV_REST_API_URL = 'https://kv.test';
 process.env.KV_REST_API_TOKEN = 't';
 process.env.YT_CLIENT_ID = 'c'; process.env.YT_CLIENT_SECRET = 's'; process.env.YT_REFRESH_TOKEN = 'r';
@@ -40,10 +47,19 @@ function pipeline(cmds) {
 
 let calls = [];
 let igMode = 'ok';            /* ok | noperm | refuse:<id> | oldnames */
+let thMode = 'ok';            /* ok | noperm | refuse:<id> */
 const igAnswer = (id, metrics) => {
   const base = 100 + (parseInt(id.replace(/\D/g, ''), 10) || 0) * 10;
   const data = metrics.split(',').map(name => ({ name, period: 'lifetime', values: [{ value:
     name === 'reach' ? base : name === 'views' ? base * 3 : name === 'ig_reels_avg_watch_time' ? 4200 : 7 }] }));
+  return { data };
+};
+/* Threads has no reach metric: views stands in, the way the top of
+   api/_insights.js's THREADS note says */
+const thAnswer = (id, metrics) => {
+  const base = 100 + (parseInt(id.replace(/\D/g, ''), 10) || 0) * 10;
+  const data = metrics.split(',').map(name => ({ name, values: [{ value:
+    name === 'views' ? base : name === 'likes' ? 9 : name === 'replies' ? 3 : name === 'reposts' ? 2 : name === 'quotes' ? 1 : 4 }] }));
   return { data };
 };
 globalThis.fetch = async (url, opt) => {
@@ -56,6 +72,13 @@ globalThis.fetch = async (url, opt) => {
   if (u.includes('googleapis.com/youtube/v3/videos')) {
     const ids = decodeURIComponent(u.split('id=')[1]).split(',');
     return J({ items: ids.map(id => ({ id, statistics: { viewCount: '900', likeCount: '12', commentCount: '1' } })) });
+  }
+  const mt = u.match(/^https:\/\/graph\.threads\.net\/v1\.0\/([^/]+)\/insights\?metric=(.+)$/);
+  if (mt) {
+    const id = mt[1], metrics = mt[2];
+    if (thMode === 'noperm') return J({ error: { message: '(#10) Application does not have permission for this action', code: 10 } }, 400);
+    if (thMode === 'refuse:' + id) return J({ error: { message: 'Unsupported get request. Object with ID does not exist', code: 100 } }, 400);
+    return J(thAnswer(id, metrics));
   }
   const mv = u.match(/\/v21\.0\/([^/]+)\/video_insights\?metric=(.+)$/);
   if (mv) {
@@ -299,6 +322,115 @@ console.log('\nFacebook and YouTube');
   ok(none.zz && /no such video/.test(none.zz.error), 'a video YouTube does not list is an error, not a zero');
 }
 
+console.log('\nThreads: media insights, the same shape and the same missing permission stop as Instagram');
+{
+  calls = []; thMode = 'ok';
+  const t = await INS.fetchThreads('th1', { now: NOW });
+  ok(!t.error && t.views === 110 && t.reach === null && t.likes === 9 && t.comments === 3 && t.reposts === 2 && t.quotes === 1 && t.shares === 4,
+     'views stand in for reach (Threads has none), replies read as comments: ' + JSON.stringify(t));
+  ok(calls.length === 1 && calls[0].includes('graph.threads.net/v1.0/th1/insights?metric=views,likes,replies,reposts,quotes,shares'),
+     'one call, the six names, no fallback set');
+  ok(!calls.some(u => /access_token=/.test(calls[0])), 'no token travels in the query string');
+
+  thMode = 'noperm';
+  const tp = await INS.fetchThreads('th2', { now: NOW });
+  ok(tp.needs === 'threads_manage_insights', 'a token without the permission is named the same way Instagram\'s is');
+  thMode = 'ok';
+
+  /* collect() and refresh() read a Threads id from the slot record exactly
+     as they read Instagram's, Facebook's and YouTube's */
+  store.clear(); calls = [];
+  const thRec = { d: '2026-09-08', s: 'reelA' };
+  const thRecords = { [thRec.d + '#' + thRec.s]: { at: NOW, slot: 'reelA', state: 'sent', title: 'One verse about light',
+    results: { instagram: { ok: true, id: 'igT1' }, threads: { ok: true, id: 'thT1' } } } };
+  const thReadSlot = async (d, s) => thRecords[d + '#' + s] || null;
+  const posts = await INS.collect(1, { readSlot: thReadSlot, manifest: MANIFEST, now: thRec.d + 'T12:00:00Z' });
+  const p = posts.find(x => x.media.threads);
+  ok(p && p.media.threads === 'thT1', 'a Threads id on the record is collected the same way the others are');
+
+  const r = await INS.refresh(1, { readSlot: thReadSlot, manifest: MANIFEST, now: thRec.d + 'T12:00:00Z' });
+  ok(r.fetched === 2 && !r.needs, 'both networks on the one post are read');
+  const savedTh = JSON.parse(store.get(INS.K_INS('threads', 'thT1')));
+  ok(savedTh && savedTh.views === 110, 'the Threads read is cached under nsoc:ins:threads:<id>, the same key shape as the others');
+
+  const agg = INS.aggregate(posts.map(x => ({ ...x, ins: { instagram: { at: NOW, reach: 100, views: 300 }, threads: savedTh } })));
+  ok(agg.byNetwork.some(n => n.net === 'threads'), 'Threads takes its own row in "by network"');
+
+  /* the batch stops on a Threads refusal exactly as it does on Instagram's,
+     and says what TH_TOKEN needs */
+  store.clear(); calls = []; thMode = 'noperm';
+  const rp = await INS.refresh(1, { readSlot: thReadSlot, manifest: MANIFEST, now: thRec.d + 'T12:00:00Z' });
+  ok(rp.needs === 'threads_manage_insights' && /TH_TOKEN/.test(rp.say) && /threads_manage_insights/.test(rp.say),
+     'the owner is told the token needs the permission and where to paste the fresh one: ' + rp.say);
+  thMode = 'ok';
+}
+
+console.log('\nthe subject fold: read from assets/reel-subjects.json (scripts/graph/derive_reel_subjects.py), never lights/, the dictionary or api/page.js live');
+{
+  const fsMod = await import('node:fs');
+  const SUBJ = JSON.parse(fsMod.readFileSync(new URL('../assets/reel-subjects.json', import.meta.url), 'utf8')).subjects;
+  const light = SUBJ['abdurrahman-ibn-awf-market'];
+  ok(light && light.group, 'the shipped file carries a Light reel\'s own entry, derived from lights/all.json at build time');
+  const sLight = INS.subjectOf('reel:light', { id: 'abdurrahman-ibn-awf-market' });
+  ok(sLight && sLight.group === light.group && sLight.label === light.label,
+     'subjectOf reads exactly what the shipped file holds for a Light: ' + JSON.stringify(sLight));
+  const sVerse = INS.subjectOf('reel:verse', { id: 'verse-2-255' });
+  ok(sVerse && sVerse.group === 'surah:2' && /^Surah 2/.test(sVerse.label),
+     'a verse reel\'s subject is its surah: ' + JSON.stringify(sVerse));
+  const sWord = INS.subjectOf('reel:word', { id: 'word-abu-bakr' });
+  ok(sWord && sWord.group === 'word:History' && sWord.label === 'History',
+     'a word reel\'s subject is the dictionary\'s own category: ' + JSON.stringify(sWord));
+  const sFilm = INS.subjectOf('reel:short', { id: 'short-algebra', room: 'heroes.html#f-mathematics' });
+  ok(sFilm && sFilm.group === 'film:mathematics' && sFilm.label === 'Mathematics',
+     'a film\'s subject is the field named after its room\'s #f-: ' + JSON.stringify(sFilm));
+  ok(INS.subjectOf('reel:name', { id: 'name-ad-darr' }) === null, 'a Name reel is not tied to one of the four rooms, so the file carries no entry and it carries no subject');
+  ok(INS.subjectOf('reel:light', { id: 'no-such-light' }) === null, 'an id the file does not carry is no subject, not a guess');
+  ok(INS.subjectOf('reel:verse', null) === null, 'no card at all is no subject');
+  ok(INS.subjectOf('reel:verse', { room: 'x' }) === null, 'a card with no id at all is no subject either, since the lookup is by id, read once and cached, from a file api/_insights.js never asks lights/, the dictionary or api/page.js for');
+
+  /* the aggregate's own fold: a bucket needs five, the same MIN_BUCKET the
+     kinds and hours already keep to; the top ten and bottom five are a
+     plain list and carry no floor of their own */
+  const mk = (subj, reach, i) => ({ date: '2026-09-0' + (1 + (i % 9)), slot: 's', hour: 8, kind: 'reel:verse', title: 'hook ' + i,
+    media: { instagram: 'i' + i }, subject: subj, ins: { instagram: { at: NOW, reach, views: reach * 3 } } });
+  const posts = [];
+  let i = 0;
+  const A = { group: 'surah:2', label: 'Surah 2 (Al-Baqarah)' }, B = { group: 'surah:114', label: 'Surah 114 (An-Nas)' };
+  /* ten of A and five of B: fifteen subject-bearing posts, the floor a
+     refuter's review set below which "top ten" and "bottom five" would
+     overlap (see subjectBottom's own comment in api/_insights.js). At
+     exactly fifteen the two lists still meet edge to edge with nothing
+     shared, which is the case this fixture proves. */
+  for (let k = 0; k < 10; k++) posts.push(mk(A, 3000 + k, i++));
+  for (let k = 0; k < 5; k++) posts.push(mk(B, 300 + k, i++));
+  posts.push(mk(null, 999, i++));                                     /* no subject: not in the fold at all */
+  const agg = INS.aggregate(posts);
+  ok(agg.bySubject.length === 2, 'two subject groups, the one post with no subject left out');
+  ok(agg.bySubject[0].label === A.label && agg.bySubject[0].n === 10, 'the best subject leads, with its own count');
+  ok(agg.subjectTop.length === 10 && agg.subjectTop[0].reach === 3009 && agg.subjectTop[0].subject === A.label,
+     'the top ten by reach carries the hook, the reach and the subject\'s own label');
+  ok(agg.subjectBottom.length === 5 && agg.subjectBottom[0].reach === 300, 'the bottom five, lowest first');
+  ok(!agg.subjectBottom.some(r => r.subject === A.label), 'the bottom five, in this fixture, are all the weaker subject, with no overlap against the top ten');
+  ok(agg.sentences.some(s => /Surah 2.*Surah 114/.test(s) && /Surah 2.*×/.test(s)), 'a plain sentence names the two subjects with enough posts: ' + agg.sentences.join(' '));
+
+  /* below fifteen subject-bearing posts, top ten and bottom five would
+     share entries; a refuter's review caught this and the fix leaves
+     subjectBottom empty rather than repeat the best list as "weakest" */
+  const overlap = [];
+  let j = 0;
+  for (let k = 0; k < 6; k++) overlap.push(mk(A, 3000 + k, j++));
+  for (let k = 0; k < 5; k++) overlap.push(mk(B, 300 + k, j++));
+  const aggOverlap = INS.aggregate(overlap);
+  ok(aggOverlap.subjectTop.length === 10, 'eleven subject-bearing posts still draw a top ten');
+  ok(aggOverlap.subjectBottom.length === 0, 'but under fifteen, the bottom five would overlap the top ten, so it is left empty rather than misleading');
+
+  /* a subject bucket under five posts draws no sentence of its own */
+  const few = [];
+  for (let k = 0; k < 3; k++) few.push(mk(A, 3000 + k, i++));
+  const aggFew = INS.aggregate(few);
+  ok(aggFew.bySubject.length === 1 && !aggFew.sentences.some(s => /Surah 2/.test(s)), 'three posts make a bucket but no sentence');
+}
+
 console.log('\nytStats: a batch of videos.list, statistics and contentDetails together');
 {
   const calls2 = [];
@@ -434,6 +566,58 @@ console.log('\nthe numbers: two weeks side by side, from the snapshots alone, no
   ok(slotA && slotA.hour === 8 && slotA.thisWeek.posts === 1, 'per slot hour, reelA carries its own hour and its own reading');
 
   ok(!/igtok|pagetok|ss-yt-tok|yt-access/.test(JSON.stringify(n)), 'no token or secret name leaks into the aggregate');
+}
+
+console.log('\nthe deploy gap: subjectOf works from a copy of the tree that has no lights/, scripts/ or tools/ at all');
+{
+  /* A refuter's review found the first version of the subject fold read
+     lights/all.json, assets/dict-index.json and tools/reels/quran-uthmani.json
+     live, through api/page.js -- and none of api/insights.js, api/house.js or
+     api/warm.js carried those paths in vercel.json's includeFiles, so on
+     Vercel the fold would have shipped silently empty. This proves the fix
+     rather than asserting it: a copy of ONLY what actually deploys (api/,
+     for the code, plus the one small assets/reel-subjects.json the derive
+     step writes, nothing else) still resolves a Light, a word, a verse
+     (with its surah name) and a film, with lights/, scripts/ and tools/
+     entirely absent from the copy, not merely unread. */
+  const fsMod = await import('node:fs');
+  const osMod = await import('node:os');
+  const pathMod = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const REPO = pathMod.dirname(pathMod.dirname(fileURLToPath(import.meta.url)));
+  const DEPLOY = fsMod.mkdtempSync(pathMod.join(osMod.tmpdir(), 'noor-deploy-'));
+  fsMod.cpSync(pathMod.join(REPO, 'api'), pathMod.join(DEPLOY, 'api'), { recursive: true });
+  fsMod.mkdirSync(pathMod.join(DEPLOY, 'assets'));
+  fsMod.cpSync(pathMod.join(REPO, 'assets', 'reel-subjects.json'), pathMod.join(DEPLOY, 'assets', 'reel-subjects.json'));
+  ok(!fsMod.existsSync(pathMod.join(DEPLOY, 'lights')) && !fsMod.existsSync(pathMod.join(DEPLOY, 'scripts')) && !fsMod.existsSync(pathMod.join(DEPLOY, 'tools')),
+     'the copy carries no lights/, scripts/ or tools/ directory at all, the same as the deployed function');
+
+  const script = `
+    process.chdir(${JSON.stringify(DEPLOY)});
+    process.env.FB_PAGE_ID = '123'; process.env.FB_PAGE_TOKEN = 'tok';
+    process.env.IG_USER_ID = '456'; process.env.IG_TOKEN = 'igtok';
+    process.env.TH_TOKEN = 'thtok';
+    const INS = await import(${JSON.stringify(pathMod.join(DEPLOY, 'api', '_insights.js'))});
+    const out = {
+      light: INS.subjectOf('reel:light', { id: 'abdurrahman-ibn-awf-market' }),
+      word: INS.subjectOf('reel:word', { id: 'word-abu-bakr' }),
+      verse: INS.subjectOf('reel:verse', { id: 'verse-2-255' }),
+      film: INS.subjectOf('reel:short', { id: 'short-algebra', room: 'heroes.html#f-mathematics' })
+    };
+    process.stdout.write(JSON.stringify(out));
+  `;
+  const scriptFile = pathMod.join(DEPLOY, 'run.mjs');
+  fsMod.writeFileSync(scriptFile, script);
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, [scriptFile], { cwd: DEPLOY, encoding: 'utf8' });
+  ok(r.status === 0, 'the copy runs clean with no lights/, scripts/ or tools/ on disk: ' + (r.stderr || '').slice(-400));
+  let out = {};
+  try { out = JSON.parse(r.stdout || '{}'); } catch { }
+  ok(out.light && out.light.group === 'light:trades' && out.light.label === 'Trades', 'a Light still resolves: ' + JSON.stringify(out.light));
+  ok(out.word && out.word.group === 'word:History' && out.word.label === 'History', 'a word still resolves: ' + JSON.stringify(out.word));
+  ok(out.verse && out.verse.group === 'surah:2' && out.verse.label === 'Surah 2 (Al-Baqarah)', 'a verse still resolves, with its surah name: ' + JSON.stringify(out.verse));
+  ok(out.film && out.film.group === 'film:mathematics' && out.film.label === 'Mathematics', 'a film still resolves: ' + JSON.stringify(out.film));
+  fsMod.rmSync(DEPLOY, { recursive: true, force: true });
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

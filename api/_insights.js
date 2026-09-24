@@ -9,9 +9,23 @@
    WHERE THE NUMBERS COME FROM. Every slot record (api/social.js, readSlot)
    carries the id each network gave the post. For an Instagram id this asks
    GET /{ig-media-id}/insights; for a Facebook post GET /{post-id}/insights;
-   for a YouTube Short GET videos?part=statistics. Nothing here is computed
-   from anything the house made up: a number is Meta's or Google's, or it is
+   for a YouTube Short GET videos?part=statistics; for a Threads post GET
+   /{threads-media-id}/insights (below). Nothing here is computed from
+   anything the house made up: a number is Meta's or Google's, or it is
    absent and the post is counted as "not read".
+
+   THREADS. GET https://graph.threads.net/v1.0/{media-id}/insights?metric=
+   views,likes,replies,reposts,quotes,shares, per Meta's Threads API
+   documentation (developers.facebook.com/docs/threads/insights): a media's
+   views stand for what Instagram calls reach (Threads gives no separate
+   reach metric), likes and replies are counted as they are named, and
+   reposts and quotes are kept beside shares rather than folded into it,
+   since none of the three is the other. The permission is
+   threads_manage_insights: a token made only for threads_content_publish
+   (api/_threads.js's own SCOPE) answers with the same code 10 or 200 the
+   Instagram path already reads, detected on the first media exactly as the
+   Instagram permission is, so the batch stops and the console names
+   TH_TOKEN rather than showing a column of refusals.
 
    WHAT IS CACHED. Each media's answer is kept in the store under
    nsoc:ins:<network>:<id> with the time it was fetched, and asked for again
@@ -81,10 +95,13 @@
    batch stops, and the owner is told what to generate rather than being
    shown a hundred and forty refusals.
 --------------------------------------------------------------------------- */
+import fs from "node:fs";
+import path from "node:path";
 import { kv, kvReady } from "./_kv.js";
 import { SLOTS, SLOT_IDS, REEL_SLOTS, chooseReel } from "./_schedule.js";
 import { readSlot, igToken, graphBase, pageToken, igConfigured, fbConfigured } from "./social.js";
 import * as YT from "./_youtube.js";
+import * as TH from "./_threads.js";
 
 export const K_INS = (net, id) => "nsoc:ins:" + net + ":" + id;
 export const CACHE_MS = 6 * 3600 * 1000;      /* an answer is good for six hours */
@@ -93,6 +110,7 @@ export const BATCH = 40;                      /* media per call */
 export const BUDGET_MS = 42000;               /* of the sixty seconds, leaving room to answer */
 export const MIN_BUCKET = 5;                  /* a sentence needs this many in a bucket */
 export const NEEDS_IG = "instagram_manage_insights";
+export const NEEDS_TH = "threads_manage_insights";
 
 const GRAPH_FB = "https://graph.facebook.com/v21.0";
 const YT_VIDEOS = "https://www.googleapis.com/youtube/v3/videos";
@@ -108,6 +126,10 @@ export const FB_METRICS = {
   full: ["post_total_media_view_unique", "post_media_view", "post_clicks", "post_reactions_like_total"],
   bare: ["post_media_view", "post_clicks", "post_reactions_like_total"]
 };
+/* Threads media insights, one set, no fallback: Meta's Threads API names
+   these six for a single post (developers.facebook.com/docs/threads/insights)
+   and none of them has been retired the way the Facebook names above were. */
+export const TH_METRICS = ["views", "likes", "replies", "reposts", "quotes", "shares"];
 /* Meta answered "(#100) The value must be a valid insights metric" to the
    old sets, 44 posts running, on the first live read: half the names were
    retired (see the dates at the top) and the API does not say which it
@@ -185,20 +207,90 @@ export const kindLabel = k => KIND_LABEL[k] || String(k || "").replace(/^(reel|c
 export const hourOf = slot => { const s = SLOTS.find(x => x.id === slot); return s ? s.at : null; };
 const halfOf = slot => (SLOTS.find(x => x.id === slot) || {}).reel || "";
 
-export function kindOf(rec, manifest) {
+/* the card a record's hook names, so both kindOf and subjectOf read the same
+   match rather than guessing twice */
+function matchedCard(rec, manifest) {
   const slot = rec && rec.slot;
-  if (!REEL_SLOTS.includes(slot)) return "card:" + slot;
+  if (!REEL_SLOTS.includes(slot)) return null;
   const cards = (manifest && Array.isArray(manifest.cards)) ? manifest.cards : [];
   const title = String(rec.title || "").trim();
   if (title) {
     const hit = cards.find(c => c && String(c.hook || "").trim() === title);
-    if (hit) return "reel:" + (hit.kind || "light");
+    if (hit) return hit;
   }
   if (cards.length && rec.date) {
     const c = chooseReel(cards, rec.date, halfOf(slot), null);
-    if (c) return "reel:" + (c.kind || "light");
+    if (c) return c;
   }
-  return "reel:reel";
+  return null;
+}
+export function kindOf(rec, manifest) {
+  const slot = rec && rec.slot;
+  if (!REEL_SLOTS.includes(slot)) return "card:" + slot;
+  const c = matchedCard(rec, manifest);
+  return c ? "reel:" + (c.kind || "light") : "reel:reel";
+}
+
+/* ---------------------------------------------------------------------------
+   THE SUBJECT (masterplan section 12, the learning loop)
+
+   A kind says a reel was a Light, a verse, a word or a silent film; it does
+   not say WHICH Light, WHICH surah, WHICH word's category, or WHICH field a
+   film's hero worked in. The rota can lean on "verse reels beat word reels"
+   already; it cannot yet lean on "Surah al-Baqarah beats Surah an-Nas", and
+   that is the finer question a production batch actually needs answered.
+
+   THE DEPLOY GAP THIS FIXES. The first version of this read lights/all.json,
+   assets/dict-index.json and the reels' own Qur'an table live, through
+   api/page.js's lightById(), groupOf(), dictionary() and surahRow(). A
+   refuter's review found that api/page.js's own includeFiles (vercel.json)
+   is set on api/page.js and api/sitemap.js alone; api/insights.js,
+   api/house.js (which reaches this file's collect() through api/_flow.js)
+   and api/warm.js carried none of it, so on Vercel those source files would
+   simply not be present in the function's filesystem and the subject fold
+   would ship empty, with no error at all -- the same class of fault
+   scripts/graph/derive_person_words.py already exists to prevent for
+   relatedWords()'s person-word exemptions.
+
+   So this reads a small, pre-derived file instead:
+   scripts/graph/derive_reel_subjects.py (run by scripts/graph/run.sh, the
+   same step that derives assets/entity-graph.json and
+   assets/person-words.json) walks reels/index.json once, at build time, and
+   writes assets/reel-subjects.json: one entry per reel id that has a
+   subject, `{ group, label }`. This file never touches lights/, tools/reels/
+   or api/page.js again; it reads assets/reel-subjects.json the way
+   api/page.js's own dictionary() reads assets/dict-index.json, and
+   vercel.json's includeFiles for api/insights.js, api/house.js and
+   api/warm.js now name it explicitly, so the three functions that can reach
+   this code all carry the one small file they need.
+
+   The four kinds a subject exists for, computed by the derive script:
+     reel:light  the card's id IS a Light's id (lights/all.json); its group
+                 is the same first-shared-tag grouping api/page.js's own
+                 groupOf gives the Light's own room.
+     reel:verse  the card's id is "verse-<surah>-<ayah...>"; the surah number
+                 is the subject, named with its transliteration.
+     reel:word   the card's id is "word-<slug>"; the dictionary entry names
+                 its own category.
+     reel:short  a film's card carries `room`, "heroes.html#f-<field>"; the
+                 field after f- is the subject.
+   A Name, a Did you know, a This day and a du'a reel are not tied to one of
+   these four rooms in the shelf's own data (a Did you know's source Light is
+   kept in tools/reels/know.json, not in reels/index.json), so they carry no
+   entry in the file and no subject here, rather than a guessed one. */
+let REEL_SUBJECTS = null;
+function reelSubjects() {
+  if (REEL_SUBJECTS) return REEL_SUBJECTS;
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(process.cwd(), "assets", "reel-subjects.json"), "utf8"));
+    REEL_SUBJECTS = (j && j.subjects && typeof j.subjects === "object") ? j.subjects : {};
+  } catch { REEL_SUBJECTS = {}; }
+  return REEL_SUBJECTS;
+}
+export function subjectOf(kind, card) {
+  if (!card || !card.id) return null;
+  const s = reelSubjects()[card.id];
+  return s ? { group: s.group, label: s.label } : null;
 }
 
 /* ---------------------------------------------------------------------------
@@ -227,9 +319,10 @@ export async function collect(days, opts = {}) {
   }
   const posts = [];
   for (const r of recs) {
-    const kind = kindOf(r, opts.manifest);
+    const card = matchedCard(r, opts.manifest);
+    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, opts.manifest);
     const media = {};
-    for (const net of ["instagram", "facebook", "youtube"]) {
+    for (const net of ["instagram", "facebook", "youtube", "threads"]) {
       const x = r.results[net];
       /* a card sent as a story only (social.cardsFeed off) carries the
          STORY's id: a story is gone in a day and answers under no post
@@ -238,7 +331,7 @@ export async function collect(days, opts = {}) {
     }
     if (!Object.keys(media).length) continue;
     posts.push({ date: r.date, slot: r.slot, hour: hourOf(r.slot), kind, reel: REEL_SLOTS.includes(r.slot),
-                 title: String(r.title || ""), at: r.at || "", media });
+                 title: String(r.title || ""), at: r.at || "", media, subject: subjectOf(kind, card) });
   }
   return posts;
 }
@@ -365,6 +458,26 @@ export async function fetchFacebook(id, opts = {}) {
   return { at: now, error: msg, code };
 }
 
+/* one Threads post: the six names above, one call, no fallback set (see the
+   THREADS note at the top of the file for the source and the permission) */
+export async function fetchThreads(id, opts = {}) {
+  const now = opts.now ? new Date(opts.now).toISOString() : new Date().toISOString();
+  const tok = opts.thToken || TH.token();
+  if (!tok) return { at: now, error: "no Threads token" };
+  let r;
+  try { r = await graphGet(`${TH.API}/${id}/insights?metric=${TH_METRICS.join(",")}`, tok, opts.fetch); }
+  catch (e) { return { at: now, error: String(e && e.message || e).slice(0, 160) }; }
+  if (r.ok) {
+    const m = rows(r.j);
+    return { at: now, reach: null, views: m.views != null ? m.views : null,
+             likes: m.likes != null ? m.likes : null, comments: m.replies != null ? m.replies : null,
+             shares: m.shares != null ? m.shares : null, reposts: m.reposts, quotes: m.quotes, metrics: TH_METRICS.join(",") };
+  }
+  const code = metaCode(r.j), msg = metaErr(r.j) || ("http " + r.status);
+  if (permissionMissing(code, msg)) return { at: now, error: msg, code, needs: NEEDS_TH };
+  return { at: now, error: msg, code };
+}
+
 /* YouTube answers for up to fifty ids in one call */
 export async function fetchYouTube(ids, opts = {}) {
   const now = opts.now ? new Date(opts.now).toISOString() : new Date().toISOString();
@@ -420,9 +533,10 @@ export async function refresh(days, opts = {}) {
     .sort((a, b) => rank(a, !!opts.force) - rank(b, !!opts.force));
   const batch = due.slice(0, cap);
   const out = { ok: true, days, posts: posts.length, media: all.length, due: due.length, fetched: 0, errors: 0, partial: false };
-  let needs = "";
+  let needs = "", needsNet = "";
   const canIG = opts.igToken || igConfigured();
   const canFB = opts.fbToken || fbConfigured();
+  const canTH = opts.thToken || TH.configured();
 
   /* YouTube first, because it is one call for all of them */
   const yt = batch.filter(x => x.net === "youtube");
@@ -440,9 +554,15 @@ export async function refresh(days, opts = {}) {
         const p = posts.find(q => q.media.instagram === x.id);
         v = await fetchInstagram(x.id, !!(p && p.reel), opts);
       }
-      if (v && v.needs) { needs = v.needs; break; }   /* not cached: fix the token and it reads at once */
+      if (v && v.needs) { needs = v.needs; needsNet = "instagram"; break; }   /* not cached: fix the token and it reads at once */
     } else if (x.net === "facebook") {
       v = canFB ? await fetchFacebook(x.id, opts) : { at: new Date(nowMs).toISOString(), error: "Facebook is not configured" };
+    } else if (x.net === "threads") {
+      if (!canTH) v = { at: new Date(nowMs).toISOString(), error: "Threads is not configured" };
+      else {
+        v = await fetchThreads(x.id, opts);
+        if (v && v.needs) { needs = v.needs; needsNet = "threads"; break; }   /* same stop, so a hundred refusals never queue up */
+      }
     }
     await cacheWrite(x.key, v, opts);
     out.fetched++;
@@ -453,8 +573,12 @@ export async function refresh(days, opts = {}) {
   out.ms = Date.now() - t0;
   if (needs) {
     out.needs = needs;
-    out.say = "The Instagram token can post but cannot read what a post did: it was made without " + needs + ". " +
-              "Generate a new token with that permission added and paste it into Vercel as IG_TOKEN, then redeploy and press Read again.";
+    out.say = needsNet === "threads"
+      ? "The Threads token can post but cannot read what a post did: it was made without " + needs + ". " +
+        "Open /api/threads?action=auth and authorise the app again; Meta will now ask you to approve the insights permission as well. " +
+        "Paste the fresh TH_TOKEN it shows into Vercel, then redeploy and press Read again."
+      : "The Instagram token can post but cannot read what a post did: it was made without " + needs + ". " +
+        "Generate a new token with that permission added and paste it into Vercel as IG_TOKEN, then redeploy and press Read again.";
   }
   return out;
 }
@@ -495,7 +619,7 @@ export function aggregate(posts) {
   /* the Instagram reading is what the kinds and hours are judged by: it is
      the network that shows a reel to people who do not follow the account */
   const ig = [];
-  const perNet = { instagram: [], facebook: [], youtube: [] };
+  const perNet = { instagram: [], facebook: [], youtube: [], threads: [] };
   const top = [];
   let read = 0, unread = 0, refused = 0;
   /* what each network said when it refused, once per network and counted,
@@ -513,7 +637,7 @@ export function aggregate(posts) {
         continue;
       }
       read++;
-      const row = { date: p.date, slot: p.slot, hour: p.hour, kind: p.kind, title: p.title, net, id: p.media[net],
+      const row = { date: p.date, slot: p.slot, hour: p.hour, kind: p.kind, title: p.title, net, id: p.media[net], subject: p.subject || null,
                     reach: v.reach != null ? v.reach : null, views: v.views != null ? v.views : null,
                     likes: v.likes, comments: v.comments, saved: v.saved, shares: v.shares };
       row.url = net === "youtube" ? "https://youtube.com/shorts/" + p.media[net] : "";
@@ -536,13 +660,33 @@ export function aggregate(posts) {
              views: { median: median(rowsN.map(x => x.views)), mean: r1(mean(rowsN.map(x => x.views))) },
              likes: { median: median(rowsN.map(x => x.likes)) } };
   });
+  /* the subject fold: Instagram's reels with a derivable subject (light,
+     verse, word or film, subjectOf above), bucketed by that subject rather
+     than by kind. The top ten and bottom five are a plain list, not a
+     sentence, so they carry no MIN_BUCKET floor of their own -- the same as
+     the top ten by reach above; only a generalisation drawn across a whole
+     bucket (the sentence below) needs five posts under it. */
+  const igSubj = ig.filter(x => x.subject && x.reach != null);
+  const bySubject = bucket(igSubj, x => x.subject.group)
+    .map(b => ({ group: b.key, label: b.items[0].subject.label, n: b.n, reach: b.reach, views: b.views }))
+    .sort((a, b) => (b.reach.median || 0) - (a.reach.median || 0));
+  const bySubjSorted = igSubj.slice().sort((a, b) => b.reach - a.reach);
+  const subjectRow = r => ({ title: r.title, subject: r.subject.label, reach: r.reach, date: r.date, slot: r.slot, at: HH(r.hour) });
+  const subjectTop = bySubjSorted.slice(0, 10).map(subjectRow);
+  /* a refuter's review caught this: top takes the first ten, bottom (before
+     the reverse) takes the last five, and those two ranges overlap for any
+     list shorter than fifteen -- with, say, six subject-bearing posts the
+     "Weakest" list would just repeat the "Best" one in reverse order. Below
+     fifteen there is nothing distinct left to call weakest, so the list is
+     left empty rather than shown misleadingly. */
+  const subjectBottom = bySubjSorted.length >= 15 ? bySubjSorted.slice(-5).reverse().map(subjectRow) : [];
   top.sort((a, b) => b.n - a.n);
   return {
     posts: posts.length, read, unread, refused, refusedBy,
-    byKind, byHour, byNetwork, byFamily,
+    byKind, byHour, byNetwork, byFamily, bySubject, subjectTop, subjectBottom,
     top: top.slice(0, 10).map(t => ({ title: t.title, kind: t.kind, label: kindLabel(t.kind), hour: t.hour, at: HH(t.hour), net: t.net,
                                        id: t.id, url: t.url, measure: t.measure, n: t.n, reach: t.reach, views: t.views, date: t.date, slot: t.slot })),
-    sentences: sentences({ byKind, byHour, byNetwork, byFamily, read })
+    sentences: sentences({ byKind, byHour, byNetwork, byFamily, bySubject, read })
   };
 }
 
@@ -589,6 +733,18 @@ export function sentences(agg) {
     if (r != null && r >= 1.2) out.push(`Instagram reaches ${r}× Facebook's median.`);
     else if (r != null && r <= 1 / 1.2) out.push(`Facebook reaches ${x(fbN.reach.median, igN.reach.median)}× Instagram's median.`);
     else if (r != null) out.push(`Instagram and Facebook reach about the same.`);
+  }
+  /* the subjects (masterplan section 12): which surah, which Light's group,
+     which dictionary category, which field of the achievements room, is
+     what a next production batch actually needs to hear */
+  const subs = (agg.bySubject || []).filter(enough);
+  if (subs.length >= 2) {
+    const best = subs[0], worst = subs[subs.length - 1];
+    const ratio = x(best.reach.median, worst.reach.median);
+    if (ratio != null && ratio >= 1.2)
+      out.push(`Among the subjects with enough posts, ${best.label} reach ${ratio}× the median of ${worst.label} (${fmt(best.reach.median)} against ${fmt(worst.reach.median)}, ${best.n} and ${worst.n} posts).`);
+    else if (ratio != null)
+      out.push(`No subject stands out yet: the medians sit between ${fmt(worst.reach.median)} and ${fmt(best.reach.median)}.`);
   }
   if (!out.length) out.push(`Not enough yet: ${agg.read || 0} readings so far, and a sentence needs ${MIN_BUCKET} posts in a bucket.`);
   return out;
@@ -684,6 +840,7 @@ export async function snapshot(opts = {}) {
 
   const canIG = opts.igToken || igConfigured();
   const canFB = opts.fbToken || fbConfigured();
+  const canTH = opts.thToken || TH.configured();
   let ytToken = opts.ytToken || "";
   if (!ytToken && YT.configured()) {
     const t = await YT.accessToken(opts.fetch).catch(e => ({ ok: false, err: String(e && e.message || e) }));
@@ -726,6 +883,10 @@ export async function snapshot(opts = {}) {
     if (fb && fb.ok && fb.id && !fb.storyOnly)
       stats.facebook = canFB ? statRow(await fetchFacebook(fb.id, opts), atIso)
                               : { error: "Facebook is not configured", at: atIso };
+    const th = rec.results.threads;
+    if (th && th.ok && th.id)
+      stats.threads = canTH ? statRow(await fetchThreads(th.id, opts), atIso)
+                             : { error: "Threads is not configured", at: atIso };
     const yt = rec.results.youtube;
     const ytWanted = [];
     if (yt && yt.ok && yt.id) ytWanted.push(["youtube", yt.id]);
@@ -767,7 +928,7 @@ export async function snapshot(opts = {}) {
    leaves the building for this action, the same restraint read() keeps
    above it. */
 const WEEKDAY_LABEL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const NET_LABEL = { instagram: "Instagram", facebook: "Facebook", youtube: "YouTube" };
+const NET_LABEL = { instagram: "Instagram", facebook: "Facebook", youtube: "YouTube", threads: "Threads" };
 const sum = xs => { const a = xs.filter(x => typeof x === "number" && isFinite(x)); return a.length ? a.reduce((s, x) => s + x, 0) : null; };
 function weekBucket(rows) {
   let eng = 0, base = 0;
@@ -867,6 +1028,6 @@ export async function numbers(opts = {}) {
     best: best && { kind: best.key, label: best.label, engagement: best.thisWeek.engagement },
     worst: worst && { kind: worst.key, label: worst.label, engagement: worst.thisWeek.engagement },
     films, read, unread,
-    missingToken: { instagram: !(opts.igToken || igConfigured()), facebook: !(opts.fbToken || fbConfigured()), youtube: !YT.configured() }
+    missingToken: { instagram: !(opts.igToken || igConfigured()), facebook: !(opts.fbToken || fbConfigured()), youtube: !YT.configured(), threads: !(opts.thToken || TH.configured()) }
   };
 }

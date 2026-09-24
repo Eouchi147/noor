@@ -150,6 +150,11 @@ const SOURCES = [
   [/(^|\.)chat\.openai\.com$|(^|\.)chatgpt\.com$|(^|\.)perplexity\.ai$|(^|\.)claude\.ai$|(^|\.)gemini\.google\.com$/, "ai"],
   [/(^|\.)linkedin\.com$|^lnkd\.in$/, "linkedin"],
   [/(^|\.)pinterest\./, "pinterest"],
+  /* Threads moved its own public hostname from threads.net to threads.com
+     in 2025; threads.net still resolves (old links, old share sheets), so
+     both are matched, the .net one first since it is the one already
+     proved in tests/traffic.mjs and still seen in the wild. */
+  [/(^|\.)threads\.(net|com)$/, "threads"],
   [/(^|\.)islamicboard\.com$|(^|\.)turntoislam\.com$|(^|\.)ummah\.com$/, "forum"],
   [/(^|\.)mail\.google\.com$|(^|\.)outlook\.|(^|\.)mail\.yahoo\./, "email"]
 ];
@@ -311,10 +316,16 @@ export default async function handler(req, res) {
     ["EXPIRE", "nm:" + month + ":r:" + room, "35000000"]
   ];
   /* the source is counted once per person per day, so one reader
-     browsing ten rooms does not look like ten arrivals. */
+     browsing ten rooms does not look like ten arrivals. Kept by month
+     (above, for "what brought them" over the season) and, since the
+     masterplan's step 8 asked to compare this week against last, by day
+     too (nvh:<day>:src): the same coarse family already promised in
+     legal.html, just counted at the grain a week-over-week read needs. */
   if (firstToday && src) {
     cmds.push(["INCR", "nm:" + month + ":s:" + src]);
     cmds.push(["EXPIRE", "nm:" + month + ":s:" + src, "35000000"]);
+    cmds.push(["HINCRBY", "nvh:" + day + ":src", src, "1"]);
+    cmds.push(["EXPIRE", "nvh:" + day + ":src", "8000000"]);
   }
   if (firstToday) {
     cmds.push(["INCR", "nv:" + day + ":people"]);

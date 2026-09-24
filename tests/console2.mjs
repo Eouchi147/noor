@@ -44,7 +44,19 @@ const LOG = { log: [{ at: '2026-09-07T12:00:00Z', slot: 'light', state: 'partial
 const VIS = { enabled: true, store: 'redis', totals: { views30: 310, people30: 85 }, cleanFrom: '2026-09-04',
   days: [{ date: '2026-08-30', views: 60, people: 20, filtered: 30 }, { date: '2026-09-04', views: 80, people: 34, filtered: 28 }, { date: '2026-09-07', views: 90, people: 31, filtered: 30 }],
   rooms: [{ r: 'quran', n: 40 }, { r: 'names', n: 12 }], countries: [{ c: 'FR', n: 30 }, { c: 'MA', n: 20 }], sources: [{ s: 'google', n: 25 }],
-  filtered: { total: 88, by: { bot: 80, noua: 8 } } };
+  filtered: { total: 88, by: { bot: 80, noua: 8 } },
+  /* arrivals (masterplan step 8): the last 7 complete days against the 7
+     before them, per network, from the beacon's own daily source hash
+     (api/visitors.js); the field names stay thisWeek/lastWeek but never
+     include today, and the console's own label says "last 7 days" */
+  arrivals: { thisWeek: { from: '2026-08-31', to: '2026-09-06' }, lastWeek: { from: '2026-08-24', to: '2026-08-30' },
+    byNetwork: [
+      { net: 'instagram', thisWeek: 40, lastWeek: 30, delta: 10 },
+      { net: 'facebook', thisWeek: 12, lastWeek: 15, delta: -3 },
+      { net: 'youtube', thisWeek: 0, lastWeek: 0, delta: 0 },
+      { net: 'threads', thisWeek: 6, lastWeek: 0, delta: 'new' },
+      { net: 'pinterest', thisWeek: 0, lastWeek: 0, delta: 0 }
+    ] } };
 const INBOX = { ok: true, counts: { new: 1 }, items: [{ id: 'm1', at: '2026-09-07T09:00:00Z', body: 'Salam, thank you for the library', from: 'a reader', kind: 'note', status: 'new' }] };
 const QUEUE = { queue: [{ entry: 'e1', slug: 'first-light', title: 'First light', cid: 'c9', name: 'anon', body: 'A reply that waits, and goes on for long enough that the row can only show the start of it, which is why the whole of it opens when the row is tapped', at: '2026-09-07T08:00:00Z', state: 'pending', why: 'link' }] };
 const HOUSE = { store: true, storeKind: 'redis', lanternConfigured: true, lanternModel: 'x/inkling:free', moneyMode: 'quiet', weekly: 3, mrr: 120, activeCount: 4,
@@ -57,10 +69,27 @@ const INS = { ok: true, enabled: true, days: 14, media: 70, read: 62, unread: 6,
            { kind: 'card:word', label: 'word cards', n: 9, reach: { median: 1000, mean: 1040 }, views: { median: 1200, mean: 1250 } },
            { kind: 'reel:word', label: 'word reels', n: 11, reach: { median: 300, mean: 320 }, views: { median: 900, mean: 950 } }],
   byHour: [{ hour: 8, label: '08:00', n: 12, reach: { median: 2400 }, views: { median: 7100 } }, { hour: 21, label: '21:00', n: 11, reach: { median: 300 }, views: { median: 900 } }],
-  byNetwork: [{ net: 'instagram', n: 32, reach: { median: 1000 }, views: { median: 1900 } }, { net: 'facebook', n: 30, reach: { median: 500 }, views: { median: 800 } }],
+  byNetwork: [{ net: 'instagram', n: 32, reach: { median: 1000 }, views: { median: 1900 } }, { net: 'facebook', n: 30, reach: { median: 500 }, views: { median: 800 } },
+              { net: 'threads', n: 6, reach: { median: null }, views: { median: 200 } }],
+  bySubject: [{ group: 'surah:2', label: 'Surah 2 (Al-Baqarah)', n: 6, reach: { median: 3000 }, views: { median: 8000 } },
+              { group: 'surah:114', label: 'Surah 114 (An-Nas)', n: 5, reach: { median: 300 }, views: { median: 900 } }],
+  subjectTop: [{ title: 'The light in the heart', subject: 'Surah 2 (Al-Baqarah)', reach: 3200, date: '2026-09-02', slot: 'reelA', at: '08:00' }],
+  subjectBottom: [{ title: 'A verse said quietly', subject: 'Surah 114 (An-Nas)', reach: 280, date: '2026-09-01', slot: 'reelE', at: '21:00' }],
   top: [{ title: 'One verse about light', kind: 'reel:verse', label: 'verse reels', hour: 8, at: '08:00', net: 'instagram', id: 'ig1', url: '', measure: 'reach', n: 4100, date: '2026-09-02', slot: 'reelA' },
         { title: 'A Short', kind: 'reel:verse', label: 'verse reels', hour: 8, at: '08:00', net: 'youtube', id: 'y1', url: 'https://youtube.com/shorts/y1', measure: 'views', n: 3900, date: '2026-09-03', slot: 'reelA' }],
   sentences: ['Verse reels reach 8× the median of word reels (2,400 against 300, 12 and 11 posts).', 'The 21:00 slot reaches least (median 300 over 11 posts).'] };
+/* "The numbers": this week against last, from the daily snapshot (a
+   different shape than INS above, which is the live cache read; the two
+   must not be confused, the way the console's own numHtml and insHtml never
+   read one another's fields) */
+const NUM = { ok: true, thisWeek: { from: '2026-09-01', to: '2026-09-07' }, lastWeek: { from: '2026-08-25', to: '2026-08-31' },
+  byNetwork: [
+    { net: 'instagram', label: 'Instagram', thisWeek: { posts: 9, views: 12000, engagement: 0.041 }, lastWeek: { posts: 8, views: 9000, engagement: 0.03 }, delta: { posts: 1, views: 3000, engagement: 0.011 } },
+    { net: 'facebook', label: 'Facebook', thisWeek: { posts: 9, views: 3000, engagement: 0.02 }, lastWeek: { posts: 0, views: null, engagement: null }, delta: { posts: 9, views: 'new', engagement: 'new' } },
+    { net: 'threads', label: 'Threads', thisWeek: { posts: 4, views: 500, engagement: 0.06 }, lastWeek: { posts: 2, views: 300, engagement: 0.05 }, delta: { posts: 2, views: 200, engagement: 0.01 } }
+  ],
+  best: { kind: 'reel:word', label: 'word reels', engagement: 0.07 }, worst: { kind: 'reel:short', label: 'silent films', engagement: 0.01 },
+  films: [], missingToken: { instagram: false, facebook: false, youtube: true, threads: false } };
 
 /* ---- the six rooms, fed the shapes their endpoints really answer with ---- */
 const LIGHTS = { probe: 'lights', date: '2026-09-07', hijri: { y: 1448, m: 3, d: 24, name: 'Rabi al-Awwal' },
@@ -296,7 +325,7 @@ async function open_(w, h, posted, errors, opts = {}) {
       if (opts.legacy) { const t = JSON.parse(JSON.stringify(TODAY)); t.slots = t.slots.map(x => x.id === 'light' ? { id: 'light', at: 12, state: 'due', title: '' } : x); t.legacy = { state: 'sent', at: '2026-09-07T12:01:00Z', title: 'The card' }; return r.fulfill(J(t)); }
       return r.fulfill(J(TODAY));
     }
-    if (u.includes('/api/insights')) return r.fulfill(J(INS));
+    if (u.includes('/api/insights')) return r.fulfill(J(u.includes('action=numbers') ? NUM : INS));
     if (u.includes('/api/visitors')) return r.fulfill(J(VIS));
     if (u.includes('/api/inbox')) return r.fulfill(J(INBOX));
     if (u.includes('/reels/index.json')) return r.fulfill(J({ n: 2, cards: [{ id: 'a', slot: 'morning', hook: 'A', caption: 'x' }, { id: 'b', slot: 'evening', hook: 'B', caption: 'y' }] }));
@@ -498,6 +527,24 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/One verse about light/.test(rAll) && /A Short/.test(rAll) && /views/.test(rAll), 'the top ten lists the posts, a Short by its views');
   ok(await pg.evaluate(() => !!document.querySelector('#s-readers a[href="https://youtube.com/shorts/y1"]')), 'with a link where the network gives one');
   ok(!/needs a permission/.test(r), 'no permission is asked for when none is missing');
+  /* Threads, folded the same way Instagram and Facebook are */
+  ok(/Threads/.test(rAll), 'Threads takes its own row in "by network"');
+  /* the subject fold (masterplan section 12): a Light's group, a verse's
+     surah, a word's category, a film's field, and the best and weakest
+     posts by subject */
+  ok(/Surah 2 \(Al-Baqarah\)/.test(rAll) && /Surah 114 \(An-Nas\)/.test(rAll), 'the subject fold names the surahs, best first');
+  ok(/The light in the heart/.test(rAll) && /A verse said quietly/.test(rAll), 'best and weakest by subject list their own hooks');
+  /* The numbers: this week against last, Threads among the networks and a
+     network with no token read as "not connected", never a zero */
+  ok(/This week vs last/.test(rAll), 'the numbers carry their own week label');
+  ok(/4 posts/.test(rAll) && /\+200 views/.test(rAll), 'Threads\' own row: posts, views and the delta against last week');
+  ok(/not connected/.test(rAll), 'a network with no token reads as not connected, not a silent zero');
+  /* arrivals (masterplan step 8, conversion): visits by network, the last
+     seven complete days against the seven before, from the beacon's own
+     store; never "this week", since today is never in either window */
+  ok(/Arrivals by network/.test(rAll) && /last 7 days vs the 7 before/.test(rAll), 'the arrivals fold is drawn, labelled honestly');
+  ok(/40 visits, last 7 days/.test(rAll) && /30 the 7 before/.test(rAll) && /\+10/.test(rAll), 'instagram\'s own arrivals row, the two windows and the delta');
+  ok(/6 visits, last 7 days/.test(rAll) && /new/.test(rAll), 'threads arrived new in the last 7 days, nothing to compare against the window before');
   posted.length = 0;
   await pg.click('#ins-read');
   await pg.waitForTimeout(900);

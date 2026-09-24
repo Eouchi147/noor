@@ -955,7 +955,7 @@ function retryChan(id,ch,b){var k=id+"|"+ch;if(INFLIGHT[k])return Promise.resolv
 function diagBox(id,j,offerRetry){if(offerRetry===undefined)offerRetry=true;
   return '<div class="diag">'+(j.said?'<p class="said">'+esc(j.said)+(j.code!=null?' <span class="muted">(Meta code '+esc(j.code)+(j.sub!=null?", "+esc(j.sub):"")+')</span>':'')+'</p>':'')
     +'<b style="color:var(--cream)">'+esc(j.cause||"no cause established")+'</b>'
-    +((j.checks||[]).length?'<h4>Checked just now</h4><ul>'+j.checks.map(function(c){return '<li><span class="'+(c.ok?"ok":"no")+'">'+(c.ok?"✓":"✗")+'</span> '+esc(c.name)+' — '+esc(c.detail)+'</li>'}).join("")+'</ul>':'')
+    +((j.checks||[]).length?'<h4>Checked just now</h4><ul>'+j.checks.map(function(c){return '<li><span class="'+(c.ok?"ok":"no")+'">'+(c.ok?"✓":"✗")+'</span> '+esc(c.name)+': '+esc(c.detail)+'</li>'}).join("")+'</ul>':'')
     +((j.steps||[]).length?'<h4>What to do</h4><ol style="margin:4px 0 0;padding-left:18px">'+j.steps.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ol>':'')
     +'<div class="acts">'+(j.canRetry&&offerRetry?'<button class="btn" data-retry="'+esc(id)+'|'+esc(j.where)+'">Retry '+esc(j.where)+'</button>':'')+'<button class="btn ghost" id="cl">Close</button></div></div>'}
 function whyChan(id,ch){sheet('<h2>'+esc(ch)+' · what went wrong</h2><p class="sub">'+esc(id)+'</p><div class="sk" style="height:60px"></div>');
@@ -983,9 +983,12 @@ function preview(id){sheet('<h2>'+esc(id)+'</h2><p class="sub">'+esc(SLOT_WHAT[i
    networks (api/insights). Bars are median reach by kind and by hour, the
    top ten by reach, and only the sentences the numbers support. Nothing here
    is drawn from a bucket of fewer than five; the server says so itself. */
-var NET_NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube"};
+var NET_NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",threads:"Threads"};
 function insBars(rows,lab){if(!rows.length)return '<div class="empty">Nothing read yet.</div>';var mx=rows.reduce(function(m,r){return Math.max(m,(r.reach&&r.reach.median)||0)},0)||1;
   return '<div class="bars">'+rows.map(function(r){var med=r.reach&&r.reach.median!=null?r.reach.median:null;return '<div class="b"><span class="n" title="'+esc(r.n)+' posts">'+esc(lab(r))+' <span class="faint">'+esc(r.n)+'</span></span><span class="t"><i data-w="'+(med==null?0:Math.round(med/mx*100))+'"></i></span><span class="v">'+(med==null?"·":Math.round(med).toLocaleString())+'</span></div>'}).join("")+'</div>'}
+/* the subject fold's own top and bottom lists: a hook, its subject, and its
+   reach, the same row shape the top ten already draws in */
+function subjList(rows){return rows.length?'<div class="list">'+rows.map(function(r){return '<div class="row"><div class="t"><b>'+esc(r.title)+'</b><span>'+esc(r.subject)+' · '+esc(r.date)+(r.at?' · '+esc(r.at)+' UTC':'')+'</span></div><div class="r"><b style="color:var(--cream)">'+Number(r.reach).toLocaleString()+'</b><div class="faint" style="font-family:var(--f-mono);font-size:10px">reach</div></div></div>'}).join("")+'</div>':'<div class="empty">Nothing read yet.</div>'}
 function insHtml(ins){
   if(!ins||ins.ok===false)return '<div class="card"><div class="empty">'+esc((ins&&ins.error)||"The posts could not be read back.")+'</div></div>';
   var need=INS_NEEDS?'<div class="card" style="border-color:#4a3f1f"><span class="pill wait">needs a permission</span><p class="small" style="margin:8px 0 0">'+esc(INS_NEEDS)+'</p></div>':'';
@@ -999,7 +1002,16 @@ function insHtml(ins){
     +'<details class="fold" open><summary>By kind<span class="pill">'+((ins.byKind||[])[0]?esc(ins.byKind[0].label)+" lead":"")+'</span></summary><div class="in">'+insBars(ins.byKind||[],function(r){return r.label})+'</div></details>'
     +'<details class="fold"><summary>By hour<span class="pill">'+(ins.byHour||[]).length+' slots</span></summary><div class="in">'+insBars(ins.byHour||[],function(r){return r.label+" UTC"})+'</div></details>'
     +'<details class="fold"><summary>By network<span class="pill">'+(ins.byNetwork||[]).map(function(n){return NET_NAME[n.net]||n.net}).join(" · ")+'</span></summary><div class="in">'+insBars(ins.byNetwork||[],function(r){return NET_NAME[r.net]||r.net})+'</div></details>'
+    +'<details class="fold"><summary>By subject<span class="pill">'+((ins.bySubject||[])[0]?esc(ins.bySubject[0].label)+" leads":"")+'</span></summary><div class="in">'+insBars(ins.bySubject||[],function(r){return r.label})+'</div></details>'
     +'<details class="fold"><summary>The top ten<span class="pill">by reach</span></summary><div class="in">'+(top.length?'<div class="list">'+top.map(function(t){return '<div class="row"><div class="t"><b>'+esc(t.title||t.slot)+'</b><span>'+esc(t.label)+' · '+esc(t.at)+' UTC · '+esc(NET_NAME[t.net]||t.net)+' · '+esc(t.date)+(t.url?' · <a href="'+esc(t.url)+'" target="_blank" rel="noopener">open</a>':'')+'</span></div><div class="r"><b style="color:var(--cream)">'+Number(t.n).toLocaleString()+'</b><div class="faint" style="font-family:var(--f-mono);font-size:10px">'+esc(t.measure)+'</div></div></div>'}).join("")+'</div>':'<div class="empty">Nothing read yet.</div>')+'</div></details>'
+    +'<details class="fold"><summary>Best by subject<span class="pill">by reach</span></summary><div class="in">'+subjList(ins.subjectTop||[])+'</div></details>'
+    /* a refuter's review caught this: below fifteen subject-bearing posts the
+       server itself leaves subjectBottom empty, since the "weakest" range
+       would just repeat entries already shown above as "best". Rather than
+       draw an empty fold that reads as "nothing read yet" underneath a
+       populated Best list, the whole fold is left out until there is enough
+       to call something weakest without repeating the best. */
+    +((ins.subjectBottom||[]).length?'<details class="fold"><summary>Weakest by subject<span class="pill">by reach</span></summary><div class="in">'+subjList(ins.subjectBottom)+'</div></details>':'')
     +says;
 }
 /* Read again: a batch of forty, asked for until the house says it is done */
@@ -1032,7 +1044,7 @@ function numHtml(nb){
   if(!nb||nb.ok===false)return '<div class="card"><div class="empty">'+esc((nb&&nb.error)||"No snapshot yet. Press Refresh to take the first one.")+'</div></div>';
   var head='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">This week vs last</b><button class="btn ghost sm" id="nb-refresh">Refresh</button></div>'
     +'<p class="muted small" style="margin:6px 0 0">'+esc(nb.thisWeek?nb.thisWeek.from+' to '+nb.thisWeek.to:"")+'</p>'
-    +'<div class="list" style="margin-top:8px">'+["instagram","facebook","youtube"].map(function(n){return numRow(n,nb)}).join("")+'</div></div>';
+    +'<div class="list" style="margin-top:8px">'+["instagram","facebook","youtube","threads"].map(function(n){return numRow(n,nb)}).join("")+'</div></div>';
   var bw=(nb.best||nb.worst)?'<div class="card"><p class="small" style="margin:0;color:var(--text)">'
     +(nb.best?'Best this week: <b style="color:var(--cream)">'+esc(nb.best.label)+'</b>, '+pct(nb.best.engagement)+' engagement.':'')
     +(nb.worst?' Worst: <b style="color:var(--cream)">'+esc(nb.worst.label)+'</b>, '+pct(nb.worst.engagement)+'.':'')+'</p></div>':'';
@@ -1042,6 +1054,26 @@ function numHtml(nb){
       return '<div class="row"><div class="t"><b>'+esc(f.title||f.slot)+'</b><span>'+esc(f.date)+' · '+(yt.views!=null?yt.views.toLocaleString()+" views":"not read")+(wide.views!=null?' · '+wide.views.toLocaleString()+" views (wide)":"")+'</span></div></div>'}).join("")
     +'</div></div></details>':'';
   return head+bw+filmsHtml;
+}
+/* ---- Arrivals (masterplan step 8, conversion): visits the beacon could
+   place at one of the five networks the shelf posts to, the last seven
+   COMPLETE days against the seven before them (api/visitors.js's own
+   arrivals, read from the site's own store, never a network call). Never
+   "this week": a refuter's review caught an earlier version comparing a
+   partial today against seven whole days, which always made today's side
+   look weaker than it was; today is left out of both windows now, so the
+   label says "last 7 days" and means exactly seven full ones, ending
+   yesterday. A family with nothing counted either window is left out
+   rather than shown as a flat zero. ---- */
+var ARR_NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",threads:"Threads",pinterest:"Pinterest"};
+function arrivalsHtml(ar){
+  var rows=((ar&&ar.byNetwork)||[]).filter(function(r){return r.thisWeek||r.lastWeek});
+  if(!rows.length)return '';
+  return '<details class="fold"><summary>Arrivals by network<span class="pill">last 7 days vs the 7 before</span></summary><div class="in"><div class="list">'
+    +rows.map(function(r){var isNew=r.delta==="new";var dv=isNew?"new":((r.delta>=0?"+":"")+r.delta);
+      return '<div class="row"><div class="t"><b>'+esc(ARR_NAME[r.net]||r.net)+'</b><span>'+(r.thisWeek||0)+' visits, last 7 days · '+(r.lastWeek||0)+' the 7 before</span></div>'
+        +'<div class="r small" style="color:'+(isNew||r.delta>=0?"var(--good)":"var(--bad)")+'">'+esc(dv)+'</div></div>'}).join("")
+    +'</div></div></details>';
 }
 /* Refresh: one snapshot, forced, then the fold is read again */
 function nbRefresh(b){var was=b.textContent;b.disabled=true;b.textContent="Reading…";
@@ -1071,12 +1103,12 @@ function drawReaders(force){
     el.innerHTML=
       '<div class="stat"><div class="c"><div class="v">'+tod+'</div><div class="l">readers today</div></div><div class="c"><div class="v">'+people.toLocaleString()+'</div><div class="l">readers · 30 d</div></div><div class="c"><div class="v">'+views.toLocaleString()+'</div><div class="l">page views · 30 d</div></div><div class="c"><div class="v">'+pp+'</div><div class="l">pages per reader</div></div></div>'
       +'<p class="sec">The last 30 days</p><div class="card">'+chart+'</div>'
-      +'<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">What is counted</b><span class="pill '+(me?"good":"bad")+'">'+(me?"this browser is not counted":"this browser IS counted")+'</span></div><p class="muted small" style="margin:8px 0 0">Turned away in 30 days: <b style="color:var(--text)">'+(f.total||0).toLocaleString()+'</b>'+(f.by&&Object.keys(f.by).length?' — '+Object.keys(f.by).map(function(k){return esc(f.by[k])+" "+esc({bot:"crawlers & previewers",noua:"no browser name",preview:"preview builds"}[k]||k)}).join(" · "):'')+'.</p><button class="btn ghost sm" id="mytoggle" style="margin-top:10px">'+(me?"Count this browser":"Stop counting this browser")+'</button></div>'
+      +'<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b style="color:var(--cream);font-size:13.5px">What is counted</b><span class="pill '+(me?"good":"bad")+'">'+(me?"this browser is not counted":"this browser IS counted")+'</span></div><p class="muted small" style="margin:8px 0 0">Turned away in 30 days: <b style="color:var(--text)">'+(f.total||0).toLocaleString()+'</b>'+(f.by&&Object.keys(f.by).length?': '+Object.keys(f.by).map(function(k){return esc(f.by[k])+" "+esc({bot:"crawlers & previewers",noua:"no browser name",preview:"preview builds"}[k]||k)}).join(" · "):'')+'.</p><button class="btn ghost sm" id="mytoggle" style="margin-top:10px">'+(me?"Count this browser":"Stop counting this browser")+'</button></div>'
       +'<details class="fold"><summary>What brought them<span class="pill">'+((v.sources||[])[0]?esc(v.sources[0].s)+" leads":"")+'</span></summary><div class="in">'+bars(v.sources||[],people,function(r){return r.s})+'</div></details>'
       +'<details class="fold"><summary>From where<span class="pill">'+(v.countries||[]).length+' countries</span></summary><div class="in">'+bars(v.countries||[],people,function(r){return r.c})+'</div></details>'
       +'<details class="fold"><summary>Which rooms<span class="pill">'+((v.rooms||[])[0]?esc(v.rooms[0].r)+" leads":"")+'</span></summary><div class="in">'+bars(v.rooms||[],views,function(r){return r.r})+'</div></details>'
       +'<p class="sec" id="anchor-insights">What strangers watch</p>'+insHtml(ins)
-      +'<p class="sec" id="anchor-numbers">The numbers</p>'+numHtml(nb)
+      +'<p class="sec" id="anchor-numbers">The numbers</p>'+numHtml(nb)+arrivalsHtml(v.arrivals)
       +'<p class="sec" id="anchor-inbox">The inbox</p>'+(ib.ok===false?'<div class="empty">The inbox is not set up.</div>':(items.length?'<div class="list">'+items.slice(0,20).map(function(m,i){return '<div class="row tap" data-msg="'+i+'"><div class="ic" style="color:'+(m.status==="new"?"var(--gold)":"var(--faint)")+'">'+ICO.mail+'</div><div class="t"><b>'+esc(m.from||m.kind||"someone")+(m.status==="new"?' <span class="pill good" style="margin-left:6px">new</span>':'')+'</b><span>'+esc(String(m.body||"").slice(0,90))+'</span></div><div class="r small muted">'+esc(ago(m.at))+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing has arrived.</div>'))
       +'<p class="sec" id="anchor-journal">Replies waiting to be read</p>'+(q.length?'<div class="list">'+q.map(function(c,i){return '<div class="row hold"><div class="ic">'+ICO.pen+'</div><div class="t tap" data-held="'+i+'"><b>'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b><span>'+esc(String(c.body||"").slice(0,90))+(c.why?' · <i style="color:var(--wait);font-style:normal">flagged: '+esc(c.why)+'</i>':'')+'</span></div><div class="acts2"><button class="btn sm" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger sm" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button></div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>');
     setTimeout(function(){el.querySelectorAll(".bars .t i").forEach(function(i){i.style.width=i.dataset.w+"%"})},50);
@@ -1125,7 +1157,7 @@ function drawHouse(force){
     var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"]];
     el.innerHTML=
       '<p class="sec">Health</p><div class="list">'
-      +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off — nothing is remembered")
+      +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off, nothing is remembered")
       +'<div class="row" id="lantern-row"><div class="ic" style="color:'+(lit?"var(--good)":"var(--bad)")+'">'+(lit?ICO.ok:ICO.warn)+'</div><div class="t"><b>The Lantern</b><span id="lantern-sub">'+(lit?"Key set · first in line: "+esc(String(lnModel).split("/").pop().replace(":free","")):"No OpenRouter key on this deployment")+'</span></div>'+(lit?'<button class="btn ghost sm" id="lantern-test">Test it</button>':'')+'</div>'
       +hrow(!!h.stripeConfigured,"Stripe",h.stripeConfigured?"Configured · "+(h.moneyMode||"")+" mode":"Not configured")
       +hrow(true,"The ladder",d.mode||"off")+'</div>'
@@ -1694,7 +1726,7 @@ function learningMap(){
       +'</td></tr></table></td>'};
   var mapSec=function(n,kick,title){
     return '<tr><td style="padding:26px 24px 4px">'
-      +'<div style="font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+GD+'">'+n+' — '+kick+'</div>'
+      +'<div style="font:800 10px Arial,sans-serif;letter-spacing:3px;color:'+GD+'">'+n+' · '+kick+'</div>'
       +'<div style="font:800 20px Georgia,serif;color:'+PAPER+';margin-top:4px">'+title+'</div></td></tr>'};
   var mapRow=function(n,ar,en,body,hi){
     return '<tr><td style="padding:5px 24px">'
@@ -1718,7 +1750,7 @@ function learningMap(){
     +'<tr><td align="center" style="padding:22px 24px 0"><div style="font-size:54px;line-height:1.2;color:'+G+'">&#1606;&#1615;&#1608;&#1585;</div>'
     +'<div style="font:800 10px Arial,sans-serif;letter-spacing:4px;color:rgba(255,254,247,.55);margin-top:4px">LIGHT UPON LIGHT</div></td></tr>'
     +'<tr><td align="center" style="padding:14px 24px 0"><div style="font:800 30px Georgia,serif;color:'+PAPER+'">Islam: <span style="color:'+G+'">Light Upon Light</span></div>'
-    +'<div style="font:13px Georgia,serif;color:rgba(255,254,247,.6);margin-top:6px">&#1606;&#1615;&#1608;&#1585;&#1612; &#1593;&#1614;&#1604;&#1614;&#1609;&#1648; &#1606;&#1615;&#1608;&#1585;&#1612; — Qur&rsquo;an 24:35</div>'
+    +'<div style="font:13px Georgia,serif;color:rgba(255,254,247,.6);margin-top:6px">&#1606;&#1615;&#1608;&#1585;&#1612; &#1593;&#1614;&#1604;&#1614;&#1609;&#1648; &#1606;&#1615;&#1608;&#1585;&#1612; · Qur&rsquo;an 24:35</div>'
     +'<div style="font:14px/1.7 Arial,sans-serif;color:rgba(255,254,247,.78);margin-top:12px;max-width:440px">Islam means peace through surrender to the One who is Light itself. Here is the whole map, on one page.</div></td></tr>'
     +mapSec('01','THE CORE','What Islam actually is')
     +'<tr><td style="padding:10px 20px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>'

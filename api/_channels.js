@@ -614,7 +614,7 @@ export async function sendReddit(shaped, opts = {}) {
   return {
     ok: false, draft: true,
     err: cooling
-      ? "holding — " + Math.ceil(every - daysSince) + " more day(s) before the next one"
+      ? "holding, " + Math.ceil(every - daysSince) + " more day(s) before the next one"
       : (subs.length ? "ready for you to post" : "ready, but no subreddit is set"),
     why: "Nothing is posted to Reddit automatically. Automated posting is read as spam and answered with a shadowban you cannot see. This is a draft with a one-click link; you post it yourself.",
     cooling, daysSince: Number.isFinite(daysSince) ? Math.floor(daysSince) : null, every,

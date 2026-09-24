@@ -67,6 +67,11 @@ specs
 #     allah.html                  assets/entity-graph.json
 #     (the last five since 16 September 2026: the prophet, companion,
 #     character, place and Name rooms of api/page.js read them)
+#     assets/reel-subjects.json   (api/insights.js, api/house.js and
+#     api/warm.js, since 24 September 2026: the subject fold, derived by
+#     scripts/graph/derive_reel_subjects.py so those three functions never
+#     have to open lights/all.json, assets/dict-index.json or
+#     tools/reels/quran-uthmani.json themselves)
 #
 # The two under tools/ are why tools/ is trimmed rather than dropped: vercel.json
 # lists them in includeFiles, and a parent directory that never arrives cannot

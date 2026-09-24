@@ -344,15 +344,138 @@ const chapterHook = t => String(t || "").includes(":")
   ? esc(t.split(":")[0]) + ': <span class="n2-g">' + esc(t.split(":").slice(1).join(":").trim()) + "</span>"
   : keyPhrase(t);
 
-/* the dictionary words a text mentions, by term or id, whole words only */
-export function relatedWords(text, limit = 6) {
+/* a citation names a collection and a number ("Bukhari 1834", "Tirmidhi 3925,
+   sahih", "Abu Dawud 1522 - Nasa'i (sahih)") and was being read as the
+   dictionary's own words: /place/p-makkah quoted "the best of Allah's earth"
+   (Tirmidhi 3925, sahih) and grew a "Sahih" word that had nothing to do with
+   the room. Stripped before matching: a collection name with its number, a
+   bare collection name next to a grading note, a grading word alone in
+   parentheses, "Sahih al-Bukhari"/"Sahih Muslim" named outright (always the
+   book, never the abstract grade), and a verse reference. */
+const CITE_COLLECTIONS = "bukhari|muslim|tirmidhi|abu dawud|nasa['’]?i|ibn majah|ahmad|muwatta|tabarani|sahihayn";
+const CITE_GRADES = "sahih|hasan|da['’]?if|gharib|mutawatir|munkar";
+const CITATIONS = new RegExp(
+  "\\(\\s*(?:al-)?(?:" + CITE_COLLECTIONS + ")\\b[^()]*\\)" +
+  "|\\b(?:al-)?(?:" + CITE_COLLECTIONS + ")\\b\\.?\\s*\\d+[a-z]?" +
+  "|\\b(?:al-)?(?:" + CITE_COLLECTIONS + ")\\b\\s*\\([^()]*\\)" +
+  "|\\bSahih\\s+(?:al-)?(?:Bukhari|Muslim)\\b" +
+  "|\\(\\s*(?:graded\\s+)?(?:" + CITE_GRADES + ")(?:\\s*[\\/,]\\s*(?:" + CITE_GRADES + "))*\\s*\\)" +
+  "|\\b\\d{1,3}:\\d{1,3}(?:-\\d{1,3})?\\b"
+, "gi");
+const stripCitations = s => String(s || "").replace(CITATIONS, " ");
+const wordTok = s => String(s || "").match(/[A-Za-z0-9؀-ۿ']+/g) || [];
+/* ibn/bin/bint/abu/umm are kinship words: nothing else in the library's
+   prose is built that way, so they are always a name signal. "al-" is not:
+   it is the ordinary Arabic article, and al-Masjid al-Haram is a place, not
+   a person, even though "Haram" is also the dictionary's word for
+   forbidden. So "al-" only reads as a name when what follows is a given
+   name the graph already knows, from the prophets and the characters. */
+const NAME_BEFORE = new Set(["ibn", "bin", "bint", "abu", "umm"]);
+const NAME_AFTER = new Set(["ibn", "bin", "bint"]);
+const TECH_CATS = new Set(["Hadith", "Law and life"]);
+/* the prophets and the companions carry real given names (Hasan, Yunus);
+   the angels, jinn, animals and end time figures more often carry a
+   descriptive epithet with an ordinary noun inside it (Hamalat al-Arsh,
+   Bearers of the Throne), so only the first two groups feed this set --
+   else "al-Arsh" in that very title would teach the guard that Arsh is a
+   given name and cost the room its own best word, the Throne. */
+let GIVEN_NAMES = null;
+function givenNames() {
+  if (!GIVEN_NAMES) {
+    GIVEN_NAMES = new Set();
+    const skip = new Set(["al", "ibn", "bin", "bint", "abu", "umm", "the", "and", "of"]);
+    for (const p of prophets()) for (const t of fold(p.en).split(" ")) if (t.length >= 3 && !skip.has(t)) GIVEN_NAMES.add(t);
+    for (const c of characters()) if (c.group === "companions") for (const t of fold(c.titleEn).split(" ")) if (t.length >= 3 && !skip.has(t)) GIVEN_NAMES.add(t);
+  }
+  return GIVEN_NAMES;
+}
+/* assets/person-words.json (scripts/graph/derive_person_words.py, run by
+   scripts/graph/run.sh from scripts/graph/same-as.json's own curated word:
+   pairs; same-as.json itself never deploys, .vercelignore's /scripts/, so
+   this small derived file is what the live site actually reads): a
+   dictionary word same-as.json already says IS a companion, a place or a
+   figure written twice (word:khadijah is companion:c-khadijah). The name
+   guard below exists to stop a technical term from being misread as a
+   person's name; it must not then strip the very word that names that
+   person, or every Light that ever wrote "Khadijah bint Khuwaylid" or
+   "Fatimah bint Muhammad" lost her own word the moment her father's name
+   followed. */
+let PERSON_WORDS = null;
+function personWords() {
+  if (!PERSON_WORDS) {
+    const j = readJSON("assets/person-words.json");
+    PERSON_WORDS = new Set(Array.isArray(j && j.words) ? j.words : []);
+  }
+  return PERSON_WORDS;
+}
+/* "X of Y", capitalised mid sentence, usually names a person's title (Aziz
+   of Egypt) -- unless Y is a collection's own compiler (Sunan of Abu Dawud,
+   Muwatta of Malik), which names a book the same way "Sahih al-Bukhari"
+   does, so the rule below leaves it alone. */
+const BOOK_AUTHOR_WORDS = new Set(fold(CITE_COLLECTIONS.replace(/[|']/g, " ")).split(" ").filter(w => w.length >= 3));
+/* true when every sighting of a key in a room's own words reads as someone's
+   name rather than the term the dictionary defines: preceded by ibn/bint/
+   abu/umm, followed by ibn/bin/bint, preceded by al- when the key itself is
+   a given name the graph already knows ("al-Hasan ibn Ali" is a man, not
+   the hadith grade "Hasan"; "al-Masjid al-Haram" stays a place, since no
+   one in the library is named Haram), or, for a technical word such as a
+   hadith grade or a fiqh term, a capitalised title read mid sentence as
+   "X of Y" ("Aziz of Egypt" is Yusuf's minister, not the rare hadith the
+   dictionary defines; "Sunan of Abu Dawud" is spared, see above). A key
+   that also stands free of a name anywhere in the text is kept:
+   bukhari-sahih-870 still shows "Sahih" for "his Sahih contains roughly
+   7,275 reports", which is the term itself, not a name. */
+function everyOccurrenceIsAName(keyWords, rawWords, foldWords, technical) {
+  let seen = 0, named = 0;
+  for (let i = 0; i + keyWords.length <= foldWords.length; i++) {
+    let ok = true;
+    for (let j = 0; j < keyWords.length; j++) if (foldWords[i + j] !== keyWords[j]) { ok = false; break; }
+    if (!ok) continue;
+    seen++;
+    const end = i + keyWords.length - 1, before = rawWords[i - 1], after = rawWords[end + 1];
+    let isName = (before && NAME_BEFORE.has(fold(before))) || (after && NAME_AFTER.has(fold(after)));
+    if (!isName && before && fold(before) === "al" && givenNames().has(keyWords.join(" "))) isName = true;
+    if (!isName && technical && i > 0 && /^[A-Z]/.test(rawWords[i]) && after && after.toLowerCase() === "of"
+      && rawWords[end + 2] && /^[A-Z]/.test(rawWords[end + 2]) && !BOOK_AUTHOR_WORDS.has(fold(rawWords[end + 2]))) isName = true;
+    if (isName) named++;
+  }
+  return seen > 0 && named === seen;
+}
+/* the dictionary words a text mentions, by term or id, whole words only.
+   `self`, given only by an entity room (besideEntity), is the room's own
+   name and the dictionary id the graph's curated same-as already says is
+   the same record (assets/entity-graph.json's `word`): the room never
+   calls its own name a related word unless the dictionary entry really is
+   that entity, the way place:p-makkah's own word "makkah" is. A refuter's
+   review found the first cut of this too wide: p-badr's own title is "The
+   Wells of Badr", and it lost the dictionary's own word for the battle,
+   Badr, along with Mount Uhud losing Uhud, Mina losing Jamarat, the
+   Prophet's Mosque losing Rawdah, Iblis losing his other name Shaytan, and
+   Hamalat al-Arsh losing the Throne it carries -- six rooms where the
+   entity's title names the very thing the word defines, not a look-alike
+   sharing its spelling. The guard now fires only when the shared token is
+   either a technical word (a hadith grade, a fiqh term: Al-Aziz on the
+   Names page is not the rare hadith Aziz) or a given name the prophets or
+   companions actually carry (Umm Ayman's own name, Barakah, is not the
+   dictionary's word for a blessing, even though nothing else marks it as
+   a name in her own account). */
+export function relatedWords(text, limit = 6, self) {
   const D = dictionary();
-  const hay = " " + fold(text) + " ";
+  const cleaned = stripCitations(text);
+  const hay = " " + fold(cleaned) + " ";
+  const rawWords = wordTok(cleaned), foldWords = rawWords.map(fold);
+  const selfTokens = self && self.name ? fold(self.name).split(" ") : [];
+  const selfSame = (self && self.same) || "";
   const out = [];
   for (const id of Object.keys(D)) {
     const e = D[id];
     const keys = [fold(e.t), fold(id.replace(/-/g, " "))].filter(k => k.length >= 3);
-    if (keys.some(k => hay.includes(" " + k + " "))) out.push({ id, ...e });
+    const hit = keys.find(k => hay.includes(" " + k + " "));
+    if (!hit) continue;
+    if (!personWords().has(id) && everyOccurrenceIsAName(hit.split(" "), rawWords, foldWords, TECH_CATS.has(e.cat))) continue;
+    if (selfTokens.length && id !== selfSame && selfTokens.includes(fold(e.t))
+      && (TECH_CATS.has(e.cat) || givenNames().has(fold(e.t)))) continue;
+    out.push({ id, ...e });
   }
   /* the longer term is the more particular one: Badr before Qur'an */
   return out.sort((a, b) => fold(b.t).length - fold(a.t).length).slice(0, limit);
@@ -383,7 +506,7 @@ export function parseRef(ref) {
   if (s < 1 || s > 114 || a < 1 || b < a || b - a > 20) return null;
   const row = surahRow(s);
   if (row && b > row.count) return null;
-  return { s, a, b, id: s + "-" + a + (b > a ? "-" + b : ""), label: s + ":" + a + (b > a ? "–" + b : "") };
+  return { s, a, b, id: s + "-" + a + (b > a ? "-" + b : ""), label: s + ":" + a + (b > a ? "-" + b : "") };
 }
 const isoDate = d => d.toISOString().slice(0, 10);
 const longDate = d => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).replace(",", "");
@@ -1035,17 +1158,31 @@ const refList = (rows, eyebrow) => rows.length ? `<p class="n2-eyebrow">${eyebro
   `<li><a href="${attr(r.href)}"><b>${esc(r.t)}${r.s ? `<small>${esc(r.s)}</small>` : ""}</b>${r.ar ? `<span class="n2-ar" lang="ar">${esc(r.ar)}</span>` : ""}</a></li>`).join("")}</ul>` : "";
 const chapterList = (ns, eyebrow) => { const rows = ns.map(n => chapters().find(c => c.id === n)).filter(Boolean); return rows.length ? `<p class="n2-eyebrow">${eyebrow}</p><ul class="n2-list">${rows.map(c =>
   `<li><a href="/path/${c.id}"><span class="n2-num">${c.id}</span><b>${esc(c.titleEn)}</b><span class="n2-ar" lang="ar">${esc(c.titleAr || "")}</span></a></li>`).join("")}</ul>` : ""; };
+/* the room's own name, for relatedWords()'s self guard: a prophet, a
+   companion, a character, a place or one of the Names, by the same key
+   besideEntity is called with */
+function selfNameOf(key) {
+  const [fam, id] = String(key || "").split(":");
+  if (fam === "prophet") return (prophetById(id) || {}).en || "";
+  if (fam === "companion" || fam === "character") return (characterById(id) || {}).titleEn || "";
+  if (fam === "place") return (placeById(id) || {}).titleEn || "";
+  if (fam === "name") { const n = nameRow(Number(id)); return n ? n.translit : ""; }
+  return "";
+}
 /* "Read beside it" for one of these rooms: the word for the same entity
    first, then the words its own text names, then the words that name it;
    the Lights that name it; the chapters; the people and places named either
    way; the stories written from a Name. All of it from the graph's edges,
    except the words the text names, which relatedWords() reads as every
-   room does. */
+   room does, told never to call the room's own name a related word unless
+   the dictionary entry really is this entity (E.word, the graph's curated
+   same-as). */
 function besideEntity(key, text, extra) {
   const E = edgesOf(key), D = dictionary();
   const word = id => (id && D[id]) ? { id, ...D[id] } : null;
   const seen = new Set(), words = [];
-  for (const w of [word(E.word), ...relatedWords(text), ...(Array.isArray(E.words) ? E.words : []).map(word)]) if (w && !seen.has(w.id)) { seen.add(w.id); words.push(w); }
+  const self = { name: selfNameOf(key), same: E.word || "" };
+  for (const w of [word(E.word), ...relatedWords(text, 6, self), ...(Array.isArray(E.words) ? E.words : []).map(word)]) if (w && !seen.has(w.id)) { seen.add(w.id); words.push(w); }
   const lightsL = (Array.isArray(E.lights) ? E.lights : []).map(lightById).filter(Boolean).slice(0, 8);
   const people = (Array.isArray(E.people) ? E.people : []).map(entityRef).filter(Boolean);
   const placesL = (Array.isArray(E.places) ? E.places : []).map(id => entityRef("place:" + id)).filter(Boolean);

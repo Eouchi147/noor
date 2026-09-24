@@ -50,7 +50,7 @@ export const READ_MS = 6000;
 
 /* the networks the beacon can name a referrer as, in the spelling api/beacon.js
    writes them. Anything else it saw is not one of ours and is not summed. */
-export const CLICK_NETS = ["instagram", "facebook", "youtube", "telegram", "pinterest", "x", "linkedin", "reddit", "tiktok"];
+export const CLICK_NETS = ["instagram", "facebook", "youtube", "threads", "telegram", "pinterest", "x", "linkedin", "reddit", "tiktok"];
 export const INSIGHT_NETS = ["instagram", "facebook", "youtube"];
 
 const iso = t => new Date(t).toISOString().slice(0, 10);

@@ -320,12 +320,16 @@ console.log("\n=== a verse range parses ===");
 {
   const p = page.parseRef;
   const a = p("94:5-6"), b = p("94-5-6"), c = p("2:255");
-  ok(a && a.s === 94 && a.a === 5 && a.b === 6 && a.id === "94-5-6" && a.label === "94:5–6", "94:5-6 parses to surah 94, ayahs 5 to 6");
+  /* the house writes no en dash: a reel's own range label (14:40-41) is a
+     plain hyphen, and parseRef's label matched it, not the mark it used to
+     carry (14:6, a Qur'an range read live on noorcodex.com) */
+  ok(a && a.s === 94 && a.a === 5 && a.b === 6 && a.id === "94-5-6" && a.label === "94:5-6", "94:5-6 parses to surah 94, ayahs 5 to 6, its label a plain hyphen");
   ok(b && b.s === 94 && b.a === 5 && b.b === 6, "the hyphen form 94-5-6 parses the same");
   ok(c && c.a === 255 && c.b === 255 && c.id === "2-255", "a single ayah parses");
   ok(!p("0:1") && !p("115:1") && !p("2:300") && !p("2:6-3") && !p("2") && !p("abc"), "impossible references are refused");
   const r = await call({ kind: "verse", ref: "94:5-6" });
-  ok(r.code === 200 && r.body.includes("94:5–6") && r.body.split('class="n2-s"').length === 3, "the range page renders both ayahs");
+  const NO_DASH = new RegExp("[" + String.fromCharCode(8211, 8212) + "]");
+  ok(r.code === 200 && r.body.includes("94:5-6") && !NO_DASH.test(r.body) && r.body.split('class="n2-s"').length === 3, "the range page renders both ayahs, its label a plain hyphen and no en dash");
   const v3 = await call({ kind: "verse", ref: "3:139" });
   ok(v3.body.includes("Surah Ali &#39;Imran") && !v3.body.includes("Imran</b>") && !v3.body.includes("Al <b>Imran"), "the surah name comes from the uthmani table even when the live API offers a different, unescaped one (content-009)");
 }
@@ -444,6 +448,22 @@ const families = {};
   { const r = await call({ kind: "name", n: "65" }); ok(r.code === 200 && r.body.includes("Al-Maajid") && r.body.includes('href="https://noorcodex.com/name/65"/>'), "Al-Maajid, the second Name from that root, has its own room by number"); }
   for (const [q, what] of [[{ kind: "companion", id: "a-jibril" }, "an angel asked for as a companion"], [{ kind: "character", id: "c-abubakr" }, "a companion asked for as a character"], [{ kind: "prophet", id: "nope" }, "a prophet that is not"], [{ kind: "name", n: "100" }, "a hundredth Name"]]) {
     const r = await call(q); ok(r.code === 404 && r.body.includes("There is no room"), what + " is a 404 in the shell");
+  }
+  /* content-011: a name that looks like a dictionary term is not the term.
+     Al-Hasan ibn Ali's own room used to read his name as the hadith grade
+     Hasan, and Makkah's own room read a citation's "(Tirmidhi 3925, sahih)"
+     as the grade Sahih. Both were look-alikes; a room that genuinely
+     discusses grading (al-Bukhari's Sahih) still reads beside the word. */
+  {
+    const hasan = await call({ kind: "companion", id: "c-hasan" });
+    ok(hasan.code === 200 && !/dictionary\/hasan"/.test(hasan.body) && hasan.body.includes('href="/dictionary/hasan-ibn-ali"'),
+      "al-Hasan ibn Ali's room reads beside his own word, not the hadith grade Hasan his name only resembles");
+    const makkah = await call({ kind: "place", id: "p-makkah" });
+    ok(makkah.code === 200 && !/dictionary\/sahih"/.test(makkah.body) && makkah.body.includes('href="/dictionary/makkah"'),
+      "Makkah's room reads beside its own word, not the grade Sahih a citation in its account carries");
+    const grading = await call({ kind: "light", id: "bukhari-sahih-870" });
+    ok(grading.code === 200 && grading.body.includes('href="/dictionary/sahih"'),
+      "a Light that genuinely discusses al-Bukhari's Sahih still reads beside the word Sahih");
   }
   /* every room of every family: 200, one h1, its canonical, no dash, no
      undefined or null printed, JSON-LD that parses, no picture */
@@ -840,6 +860,13 @@ console.log("\n=== the deployment ===");
      && (inc.includes("assets/entity-graph.json") || inc.includes("assets/*.json")) && inc.length <= 256
      && fs.existsSync("assets/entity-graph.json"),
      "api/page.js includes the people, the places, the Names and the graph that ties them, under 256 characters");
+  /* relatedWords()'s name guard must not strip the very word that names a
+     companion or a place same-as.json already curates (khadijah, fatimah);
+     scripts/ never deploys, so the guard reads assets/person-words.json
+     instead, which must both exist and ride the same assets/*.json glob */
+  ok(inc.includes("assets/*.json") && fs.existsSync("assets/person-words.json")
+     && !fs.readFileSync(".vercelignore", "utf8").split("\n").some(l => l.trim() === "assets/*.json" || l.trim() === "/assets/*.json"),
+     "and the curated person words, so a Light does not lose Khadijah's own word off the live site");
   /* the verse rooms read their written sense and words from verse/<s>.json
      (seo-008, 22 September); without this line the section renders in every
      test and on no live page, because the test reads the disk and Vercel

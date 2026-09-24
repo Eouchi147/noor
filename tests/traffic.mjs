@@ -127,6 +127,35 @@ console.log('\nwhat it records');
   ok(!keys.some(k => /:filtered$/.test(k)), 'a real reader adds nothing to the turned-away count');
 }
 
+console.log('\narrivals: the coarse source, monthly and, since the masterplan\'s step 8, daily too');
+async function pingSrc(src, n = 1) {
+  SEEN.length = 0;
+  const req = { method: 'POST', headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126.0 Safari/537.36', host: 'noorcodex.com' }, body: { p: '/quran', n, s: src, h: 12 } };
+  const res = { setHeader() {}, status() { return this; }, end() { return this; }, json() { return this; } };
+  await beacon(req, res);
+  return SEEN;
+}
+{
+  const FAMILIES = [
+    ['l.threads.net', 'threads'], ['threads.net', 'threads'],
+    /* Threads moved its own public hostname to threads.com in 2025; the old
+       one still resolves and both must fold the same way */
+    ['threads.com', 'threads'], ['l.threads.com', 'threads'], ['www.threads.com', 'threads'],
+    ['l.instagram.com', 'instagram'], ['lm.facebook.com', 'facebook'], ['m.facebook.com', 'facebook'],
+    ['youtube.com', 'youtube'], ['youtu.be', 'youtube'], ['pinterest.com', 'pinterest']
+  ];
+  for (const [host, fam] of FAMILIES) {
+    const seen = await pingSrc(host);   /* noor-fx.js sends the bare hostname, never the whole referrer url */
+    const monthly = seen.find(c => c[0] === 'INCR' && new RegExp(':s:' + fam + '$').test(String(c[1])));
+    const daily = seen.find(c => c[0] === 'HINCRBY' && /:src$/.test(String(c[1])) && c[2] === fam);
+    ok(monthly, host + ' folds to the "' + fam + '" family, same as the shelf\'s own posting names it');
+    ok(daily, host + ' is also counted in the day\'s own hash, for a this-week-against-last read');
+  }
+  const second = await pingSrc('l.threads.net', 2);   /* n=2: not the day's first ping */
+  ok(!second.some(c => /:s:threads$/.test(String(c[1]))) && !second.some(c => /:src$/.test(String(c[1]))),
+     'the source is counted once a day per person; the daily hash keeps the same rule as the monthly count');
+}
+
 globalThis.fetch = realFetch;
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

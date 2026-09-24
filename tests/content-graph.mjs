@@ -22,6 +22,16 @@
        fails, the file in the repository was hand edited, resorted, or the
        rules changed without a regeneration; proved sensitive to order by
        reversing one room's own list and checking that is caught too);
+     - assets/person-words.json matches what derive_person_words.py produces
+       from scripts/graph/same-as.json right now, byte for byte: the file
+       relatedWords() (api/page.js) actually reads, since same-as.json
+       itself never deploys, and drift here is the live site quietly losing
+       khadijah, fatimah and the rest of the curated word: pairs;
+     - assets/reel-subjects.json matches what derive_reel_subjects.py
+       produces from the shelf right now, byte for byte: the file
+       subjectOf() (api/_insights.js) actually reads, since lights/all.json,
+       the dictionary and tools/reels/quran-uthmani.json never deploy, and
+       drift here is the console's subject fold quietly falling silent;
      - two builds over the same unchanged tree write byte-identical graphs.
    The full build is a few seconds (about 5 on this machine); the suite
    builds it twice for the determinism check, so budget under a minute.
@@ -204,6 +214,49 @@ if (buildA.ok) {
     }
   }
 } else skip('entity-graph drift (no graph)');
+
+console.log('\n=== assets/person-words.json matches same-as.json right now ===');
+{
+  // api/page.js's relatedWords() reads this file, not same-as.json itself,
+  // since scripts/ never deploys (.vercelignore's /scripts/): a drift here
+  // is the live site quietly losing the exemption a Light like
+  // "Khadijah bint Khuwaylid" depends on, the exact bug a refuter found.
+  const derivedOut = path.join(SCRATCH, 'person-words.derived.json');
+  const d = run('python3', [path.join(GRAPH_DIR, 'derive_person_words.py'), '--same-as', path.join(GRAPH_DIR, 'same-as.json'), '--out', derivedOut]);
+  ok(d.code === 0, 'derive_person_words.py runs against same-as.json: ' + d.err.slice(-300));
+  if (d.code === 0) {
+    const shipped = fs.readFileSync(path.join(ROOT, 'assets', 'person-words.json'), 'utf8');
+    const derived = fs.readFileSync(derivedOut, 'utf8');
+    ok(shipped === derived, 'assets/person-words.json is byte-identical to what run.sh\'s derive step produces right now');
+    const shippedWords = JSON.parse(shipped).words;
+    ok(shippedWords.includes('khadijah') && shippedWords.includes('fatimah'), 'and it carries khadijah and fatimah, the pair a refuter\'s review named');
+  }
+  fs.rmSync(derivedOut, { force: true });
+}
+
+console.log('\n=== assets/reel-subjects.json matches the shelf right now ===');
+{
+  // api/_insights.js's subjectOf() reads this file, not lights/all.json,
+  // assets/dict-index.json or tools/reels/quran-uthmani.json themselves,
+  // since none of those deploy: a drift here is the live subject fold
+  // quietly falling out of step with the Lights or the shelf's own plan,
+  // the exact deploy gap a refuter's review found (api/_insights.js used
+  // to import api/page.js's groupOf()/dictionary() for this, which none
+  // of api/insights.js, api/house.js or api/warm.js carried includeFiles
+  // for).
+  const derivedOut = path.join(SCRATCH, 'reel-subjects.derived.json');
+  const d = run('python3', [path.join(GRAPH_DIR, 'derive_reel_subjects.py'), '--repo', ROOT, '--out', derivedOut]);
+  ok(d.code === 0, 'derive_reel_subjects.py runs against the shelf: ' + d.err.slice(-300));
+  if (d.code === 0) {
+    const shipped = fs.readFileSync(path.join(ROOT, 'assets', 'reel-subjects.json'), 'utf8');
+    const derived = fs.readFileSync(derivedOut, 'utf8');
+    ok(shipped === derived, 'assets/reel-subjects.json is byte-identical to what run.sh\'s derive step produces right now');
+    const shippedSubjects = JSON.parse(shipped).subjects;
+    ok(shippedSubjects && shippedSubjects['abdurrahman-ibn-awf-market'] && shippedSubjects['verse-2-255'] && shippedSubjects['word-abu-bakr'] && shippedSubjects['short-algebra'],
+       'and it carries a Light, a verse, a word and a film, the four kinds a subject can be derived for');
+  }
+  fs.rmSync(derivedOut, { force: true });
+}
 
 console.log('\n=== deterministic: two builds over an unchanged tree agree ===');
 if (buildA.ok) {
