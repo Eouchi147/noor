@@ -209,7 +209,7 @@ const halfOf = slot => (SLOTS.find(x => x.id === slot) || {}).reel || "";
 
 /* the card a record's hook names, so both kindOf and subjectOf read the same
    match rather than guessing twice */
-function matchedCard(rec, manifest) {
+export function matchedCard(rec, manifest) {
   const slot = rec && rec.slot;
   if (!REEL_SLOTS.includes(slot)) return null;
   const cards = (manifest && Array.isArray(manifest.cards)) ? manifest.cards : [];

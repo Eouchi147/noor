@@ -70,6 +70,9 @@ of them you must **redeploy** (Deployments → ⋯ → Redeploy) for the change 
 |---|---|---|---|
 | `OPENROUTER_API_KEY` | Starts `sk-or-`. | openrouter.ai/keys | Every AI feature falls back to written text. Site still fine. |
 | `OPENROUTER_MODEL` | *Optional.* Force one model. **Ignored if it is not free.** | none | The house picks the best free model itself. This is the recommended state. |
+| `GROQ_API_KEY` | The Lantern's fast provider (`api/_llm.js`): free `gpt-oss` and `qwen` models, tens of requests a second. Free belongs to the account, not the model: make this key from an account with **no billing enabled**, or a model this router treats as free could still be charged to you. | console.groq.com/keys | That provider is simply absent; the Lantern still routes to Gemini and OpenRouter. |
+| `GEMINI_API_KEY` | The Lantern's strong provider: free 3.x Flash and Flash-Lite models. Same rule: use a key from an account with **no billing enabled**. | aistudio.google.com/apikey | Same: that provider is absent, no error. |
+| `OPENROUTER_DAILY` | *Optional.* Raises the Lantern's conservative OpenRouter daily budget (default 40) if your account has purchased credits and holds a larger free-request ceiling. | none | The router stays at the cautious default of 40 free OpenRouter requests a day. |
 | `ALLOW_PAID_MODELS` | Set to `1` **only** if you intend to be billed. | none | Paid models are dropped before the request is made. Leave unset. |
 
 ### Required for the store (strongly recommended)
@@ -305,6 +308,44 @@ quietly did nothing while reporting success. Nothing threw and nothing logged.
 `tests/api-audit.mjs` now fails the build on any `.ok` read off an `askOpenRouter`
 result.
 
+### The Lantern agent, `api/_agent.js` and `api/lantern-agent.js`
+
+An owner-only strategist in the console's own Lantern room, not a public feature and
+not the daily-light Lantern. It reads a request, makes a short plan (a fast-tier model
+call, capped at eight steps, ten model calls and 120 seconds of wall time), works
+through the plan calling the house's own **fourteen read-only tools** (the Observatory,
+insights, the numbers, visitors, a reconcile read, the Content Factory's `package`, the
+Content Graph, the shelf, a predicted lineup, slot records, recent changes, site search,
+its own playbook, and Jev), hands parts of the reading to subagents on the router's
+free models (an analyst, a strategist, a writer, a critic), and answers with sourced
+numbers, a chart, a table or a draft. `api/_agent.js` is pure and carries every decision
+(the plan, the budgets, the critic); `api/lantern-agent.js` is wiring only, the real
+router, the real tools, the real store for the ledger and the thread.
+
+**Every number the agent prints is checked mechanically, not asked to be honest.**
+Before an answer reaches the console, a critic pass strips any em dash or en dash that
+slipped through a model, and removes any number in the answer that does not appear in
+this run's own tool output, replacing it with "an unverified figure" and logging the
+removal. A tool's own output is also run back through the router's `scrub()` and its
+journal-marker check before it ever reaches a subagent, the same guard `api/_llm.js`
+keeps for every other call, so per-person data never reaches a model twice over.
+
+**At most five autonomous actions a day, each logged with a real undo where one
+exists.** Only two things the agent may ever do without asking first, because only two
+already have a safe, existing, owner-honoured door: refreshing the network numbers
+(`api/insights.js`'s own refresh and snapshot) and teaching the duplicate guard from a
+reconciliation (`api/social.js`'s `teachGuard`, undone by writing the guard's hash entry
+back to exactly what it held before). **A third possibility was considered and
+rejected**: reordering or skipping a single reel within a day's unsent lineup. There is
+no existing, safe, owner-honoured mechanism for this; `api/overrides.js` is an unrelated
+text-patch layer for site copy, and `api/_schedule.js`'s `pin` parameter is an internal
+repair path the poster itself uses only on an already-sent slot, never an owner-facing
+door to choose a reel ahead of time. So a lineup change is always a **proposal**: the
+agent explains why nothing was changed and points at the exact slot to open by hand in
+the Posts room. Every proposal needs the owner's own one-tap yes; approving one that
+maps to an existing safe endpoint runs it and logs it, approving anything else only
+records the decision.
+
 ---
 
 ## 4. The store, every key
@@ -378,7 +419,10 @@ stripped from everything public.
 | `/api/assistant` | admin | The console's own assistant |
 | `/api/marketing` | admin | The writing room |
 | `/api/house` | admin | The whole house in one call: `?action=steward` reads every record and answers with findings, each with the one call that would fix it; `?action=flow` draws the funnel from posts to gifts. Reads only. |
+| `/api/observatory` | admin | The Observatory room in one call: the 30-day per-network trend, the weekday by hour matrix, kind and subject folds, posting health per day, site visitors and library coverage, composed from `_insights.js`'s `numbers()`, the stored snapshots and slot records, and the shipped Content Graph files; kept ten minutes, `?fresh=1` goes round it. Reads only, no network call. |
 | `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate |
+| `/api/lantern-models` | admin | Which of Groq, Gemini and OpenRouter are configured, the live free models per tier, today's and the last week's usage against the budgets, the last model that answered each tier, and `?action=probe` (POST): one tiny prompt through each tier, latency and the model that answered |
+| `/api/lantern-agent` | owner only | The Lantern agent (masterplan step, "the Lantern agent"): `POST {message, thread}` streams Server-Sent Events (`start`, `plan`, `step`, `subagent`, `artifact`, `action`, `proposal`, `token`, `done`, `error`) while it plans, reads the house's own read-only tools, hands parts of the work to subagents on the router's free models, and answers with sourced numbers, a chart or a draft. `POST {action:"approve"\|"decline", id}` answers a proposal; `POST {action:"undo", id}` reverses a logged action where a real recipe exists. `GET ?action=ledger` and `?action=proposals` read what it has done and what still waits for a yes. See "The Lantern agent" below and OPERATIONS.md's own runbook for what it may do alone. |
 | `/api/reel` | yes | `?id=<reel id>`: the reel's bytes, streamed from the store as `video/mp4` with ranges, so a phone can share the file and a network that refuses the store's URL has one that answers plainly |
 | `/api/podcast` | yes | `/podcast.xml` (rewrite): the verse reels as a podcast feed, RSS 2.0 with the itunes namespace, cached a day |
 | `/api/beacon`, `/api/visitors` | yes (write) | Anonymous counters |
@@ -485,6 +529,7 @@ node tests/nightshift.mjs             # 31 · every background job, and that it 
 node tests/i18n.mjs                   # 7  · no reader ever sees a translation key  (server :8433)
 node tests/house.mjs                  # 129 · the steward's rules and the flow, everything stubbed
 node tests/insights.mjs               # 58 · what strangers watched, Meta and Google stubbed
+node tests/observatory.mjs            # 31 · the Observatory's composition, null vs zero, the 5-post floor, the owner gate
 node tests/api-audit.mjs              # 129 · every route: auth, caching, secrets, cold start
 node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
 node tests/content-graph.mjs          # 16 · the Content Graph builds, validates, and matches the shelf
@@ -543,6 +588,25 @@ python3 /tmp/vercelish.py    # :8433, mimics Vercel's clean URLs
    - **unknown**, read the per-model table underneath; it holds the exact words each
      one returned.
 4. The site is not down. Every AI surface has a written fallback.
+
+### The Lantern agent (admin2's own room) will not answer, or a proposal sits stuck
+
+1. Same lock as every other room in admin2: check the model chips at the top of the
+   Lantern room first, the same read `/api/lantern-models` gives the System pane.
+2. A run that ends with "could not finish" names exactly which step it dropped and
+   why (out of time, out of model calls, or the tool itself answered `ok: false`); it
+   is not a bug, it is the budget working as written (eight steps, ten model calls,
+   120 seconds).
+3. A proposal that never resolves: it needs the owner's own Approve or Decline in the
+   room; nothing times it out and nothing executes it on its own. If it is a lineup
+   change, approving it only records the decision, since no safe endpoint exists to
+   run it, by design; open the slot by hand in Posts.
+4. The actions ledger caps at five a day. Past the cap, the agent still answers, it
+   simply will not act on its own again until the date rolls over (UTC).
+5. This room can never post, never change the rota beyond the two doors above, and
+   never touch money or a secret. If it appears to have done any of those, that is a
+   bug, not a feature, and the ledger's own `before` and `undo` fields are where to
+   start reading.
 
 ### "Nightly" says never, or more than 36h
 

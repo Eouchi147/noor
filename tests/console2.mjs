@@ -64,6 +64,54 @@ const HOUSE = { store: true, storeKind: 'redis', lanternConfigured: true, lanter
               { market: 'ID', status: 'trialing', amount: 6, cadence: 'week', currency: 'USD', email: 'h@x.y', name: 'B', started: '2026-09-01', renews: '2026-09-14', endsAfterWeek: false, approved: false, gname: '', gurl: '', gline: '', subscription: 'sub_ID2' }],
   gifts: { total30d: 90, count30d: 3, monthly: 60, recent: [{ amount: 30, currency: 'USD', when: '2026-09-01', email: 'a@b.c' }] } };
 const LANTERN = { ok: true, answered: 'x/inkling:free', reply: 'lit', tried: [{ model: 'x/inkling:free', ms: 900, err: '' }], ms: 950 };
+/* ---- the Lantern agent (api/lantern-agent.js, api/lantern-models.js): a
+   stubbed SSE run carrying the same event shapes and artifact specs the
+   real route sends, so the console's own thinking stream, chart, table
+   toggle, proposal and ledger are proved without a live model or store ---- */
+const LANT_MODELS = { ok: true, providers: { openrouter: 'set', groq: 'missing', gemini: 'set' },
+  tiers: { fast: ['x/inkling:free'], strong: ['x/inkling:free'], long: ['x/inkling:free'] },
+  good: { fast: 'x/inkling:free', strong: 'x/inkling:free', long: '' }, usage: {}, store: 'redis', storeReady: true };
+/* two entries: one still reversible (a real undo recipe, no undone flag)
+   and one already undone (the same kind of recipe, but flagged, which
+   must hide Undo on its own -- proves the console greys a row from the
+   ledger's own `undone` flag, not merely from the undo recipe's kind) */
+const LANT_LEDGER = { ok: true, cap: 5, countToday: 2, items: [
+  { id: '20260924-aaaa', who: 'lantern (on its own)', what: 'reconcile-teach', args: { network: 'instagram' }, why: 'a duplicate slipped through last night on instagram',
+    at: '2026-09-24T04:05:00Z', ok: true, undo: { kind: 'reconcile-teach-revert', keys: [{ reel: 'r1', network: 'instagram', before: '2026-08-01#dawn' }] } },
+  { id: '20260924-bbbb', who: 'lantern (on its own)', what: 'reconcile-teach', args: { network: 'facebook' }, why: 'a duplicate slipped through on facebook too',
+    at: '2026-09-24T03:40:00Z', ok: true, undo: { kind: 'reconcile-teach-revert', keys: [{ reel: 'r2', network: 'facebook', before: null }] },
+    undone: true, undoneAt: '2026-09-24T04:10:00Z' }
+] };
+const sseEvent = (type, data) => 'event: ' + type + '\ndata: ' + JSON.stringify(data) + '\n\n';
+const LANT_PROPOSAL_ID = 'prop-lineup-1';
+const LANT_SSE = [
+  sseEvent('start', { thread: 'thread-console2', budgets: { maxSteps: 8, maxModelCalls: 10, maxWallMs: 120000 } }),
+  sseEvent('plan', { steps: [
+    { kind: 'tool', name: 'observatory', why: 'read the whole ecosystem before saying anything' },
+    { kind: 'subagent', name: 'analyst', why: 'read what the numbers say' }
+  ] }),
+  sseEvent('step', { tool: 'observatory', summary: 'reach 14300, views 38400, 4 pattern notes.', phase: 'done' }),
+  sseEvent('subagent', { role: 'analyst', summary: 'Instagram carries the week; Facebook reaches almost nobody.', phase: 'done' }),
+  sseEvent('artifact', { type: 'chart', spec: { kind: 'bars', title: 'Reach by network', sub: 'This week', rows: [
+    { label: 'Instagram', n: 18, v: 14000 }, { label: 'Facebook', n: 18, v: 210 }, { label: 'YouTube', n: 5, v: 9000 }
+  ] } }),
+  sseEvent('artifact', { type: 'table', title: 'This week against last', headers: ['Network', 'Posts', 'Views'], rows: [
+    ['Instagram', '18', '22,000'], ['Facebook', '18', '260']
+  ] }),
+  /* the real shape api/_agent.js's buildProposal() returns, plus the id
+     and at api/lantern-agent.js's emit() adds before this is ever sent
+     (2026-09-24 review: the id must exist from the first byte, not be
+     stitched on afterwards) -- why (the planner's own reason) and
+     evidence (this run's own numbers) are two different fields here on
+     purpose, so the console can show them as two different things */
+  sseEvent('proposal', { id: LANT_PROPOSAL_ID, at: '2026-09-24T12:00:05Z', type: 'other', requested: 'lineup-change', args: {},
+    description: 'There is no existing, safe, owner-honoured way to reorder a slot automatically, so nothing was changed; approving this only records that you asked for it.',
+    why: 'reelB is thinner than reelA', reason: 'no safe autonomous mechanism exists for this in the current build',
+    evidence: 'reelA reach 4100 over 1 post, reelB reach 900 over 1 post, from this run\'s own reading.' }),
+  sseEvent('action', { id: 'a-console2', who: 'lantern', what: 'refresh-insights', args: {}, why: 'the cache was over an hour old', undo: { kind: 'noop' } }),
+  sseEvent('token', { text: 'Instagram reaches 14,000 this week, Facebook 210. The gap has not moved in four weeks.' }),
+  sseEvent('done', { thread: 'thread-console2', notCompleted: [], exhausted: false, modelCalls: 3, toolCalls: 2 })
+].join('');
 const INS = { ok: true, enabled: true, days: 14, media: 70, read: 62, unread: 6, refused: 2, stale: 8, readAt: '2026-09-07T11:00:00Z',
   byKind: [{ kind: 'reel:verse', label: 'verse reels', n: 12, reach: { median: 2400, mean: 2510 }, views: { median: 7100, mean: 7300 } },
            { kind: 'card:word', label: 'word cards', n: 9, reach: { median: 1000, mean: 1040 }, views: { median: 1200, mean: 1250 } },
@@ -90,6 +138,79 @@ const NUM = { ok: true, thisWeek: { from: '2026-09-01', to: '2026-09-07' }, last
   ],
   best: { kind: 'reel:word', label: 'word reels', engagement: 0.07 }, worst: { kind: 'reel:short', label: 'silent films', engagement: 0.01 },
   films: [], missingToken: { instagram: false, facebook: false, youtube: true, threads: false } };
+
+/* ---- the Observatory: one call, the whole ecosystem, fed the shape
+   api/observatory.js really composes (dates ascending, null where nothing
+   was recorded, a real zero kept a zero) ---- */
+const OBS_DATES = Array.from({ length: 30 }, (_, i) => new Date(Date.parse('2026-08-26T00:00:00Z') + i * 86400000).toISOString().slice(0, 10));
+function obsTrendRow(d, i) { return { date: d, posts: i % 4 === 0 ? 0 : 1, views: i % 4 === 0 ? null : 600 + i * 8, reach: i % 4 === 0 ? null : 300 + i * 5, engaged: i % 4 === 0 ? null : 20 + i, engagement: i % 4 === 0 ? null : 0.05 }; }
+/* Facebook, live, carries the same eleven posts a day Instagram does and
+   reaches almost nobody with them -- a real, small, present number, not the
+   same curve as Instagram's own (the two shared one generator here once,
+   which drew two identical lines under two different names) and not a
+   silence either, which is Threads' own shape below. */
+function obsFbRow(d, i) { return { date: d, posts: i % 4 === 0 ? 0 : 1, views: i % 4 === 0 ? null : 30 + (i % 6), reach: i % 4 === 0 ? null : 18 + (i % 5), engaged: i % 4 === 0 ? null : 1, engagement: i % 4 === 0 ? null : 0.02 }; }
+const OBS = {
+  ok: true, at: '2026-09-24T12:00:00Z', windowDays: 30, cached: false,
+  summary: {
+    thisWeek: { from: '2026-09-18', to: '2026-09-24' }, lastWeek: { from: '2026-09-11', to: '2026-09-17' },
+    reach: { value: 14300, delta: 1150 }, views: { value: 38400, delta: 1150 },
+    visitors: { value: 620, delta: 40, sparkline: [70, 80, 75, 90, 88, 95, 100, 92, 96, 101, 99, 103, 110, 108] },
+    posts: { value: 62, delta: 4, sparkline: [8, 9, 10, 9, 10, 9, 10, 9, 10, 9, 10, 9, 10, 9] },
+    networks: [
+      { net: 'instagram', label: 'Instagram', posts: 18, postsDelta: 1, reach: 14000, reachDelta: 1200, views: 22000, viewsDelta: 900, engagement: 0.052, engagementDelta: 0.004, sparkline: [900, 1000, 1100, 950, 1050, 1200, 1180, 1300, 1250, 1400, 1350, 1500, 1450, 1600] },
+      { net: 'facebook', label: 'Facebook', posts: 18, postsDelta: 0, reach: 210, reachDelta: -15, views: 260, viewsDelta: -20, engagement: 0.018, engagementDelta: -0.002, sparkline: [10, 12, 9, 11, 14, 10, 13, 12, 15, 11, 14, 12, 16, 13] },
+      { net: 'youtube', label: 'YouTube', posts: 5, postsDelta: 1, reach: null, reachDelta: null, viewsDelta: 300, views: 16000, engagement: 0.031, engagementDelta: 0.002, sparkline: [1000, 1100, null, 1200, 1300, null, 1400, 1500, 1450, 1600, 1550, 1700, 1650, 1800] },
+      /* Threads: no row at all this week or last -- posts is null, not 0,
+         because nothing was ever recorded, and the scoreboard says so in
+         words rather than drawing a row of "·" */
+      { net: 'threads', label: 'Threads', posts: null, postsDelta: null, reach: null, reachDelta: null, views: null, viewsDelta: null, engagement: null, engagementDelta: null, sparkline: [] }
+    ]
+  },
+  notes: [
+    "Instagram's reach rose by 1,200 people, 9 percent on the week before.",
+    'The 19:00 UTC post (a late reel) engages best this week, and the 09:00 UTC post (a coming-up card) least.',
+    'Word reels lead engagement this week, over 11 posts in the last 30 days.',
+    '1 day in the last 30 caught a duplicate before it went out twice.'
+  ],
+  funnel: [
+    { net: 'instagram', label: 'Instagram', posts: 18, reach: 14000, engaged: 900, visits: 210 },
+    { net: 'facebook', label: 'Facebook', posts: 18, reach: 210, engaged: 22, visits: 6 },
+    { net: 'youtube', label: 'YouTube', posts: 5, reach: null, engaged: 400, visits: 30 },
+    { net: 'threads', label: 'Threads', posts: null, reach: null, engaged: null, visits: null }
+  ],
+  trend30: { dates: OBS_DATES, networks: {
+    instagram: OBS_DATES.map(obsTrendRow), facebook: OBS_DATES.map(obsFbRow),
+    youtube: OBS_DATES.map((d, i) => ({ date: d, posts: i % 6 === 0 ? 1 : 0, views: i % 6 === 0 ? 1500 + i * 10 : null, reach: null, engaged: i % 6 === 0 ? 30 : null, engagement: null })),
+    threads: OBS_DATES.map(d => ({ date: d, posts: 0, views: null, reach: null, engaged: null, engagement: null }))
+  } },
+  /* the six hours a reel actually goes out (api/_schedule.js's SLOTS: 08,
+     11, 14, 17, 19, 21 UTC), every weekday, present or not -- 42 cells, not
+     3 hours' worth */
+  weekdayHour: [0, 1, 2, 3, 4, 5, 6].flatMap(wd => [8, 11, 14, 17, 19, 21].map(h => ({ weekday: wd, label: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][wd], hour: h, at: (h < 10 ? '0' : '') + h + ':00', instagramReach: (wd + h) % 5 === 0 ? null : 200 + wd * 20 + h * 3, instagramN: (wd + h) % 5 === 0 ? 0 : 2, youtubeViews: (wd + h) % 4 === 0 ? null : 900 + wd * 40, youtubeN: (wd + h) % 4 === 0 ? 0 : 1 }))),
+  byKind: [
+    { kind: 'reel:word', label: 'word reels', thisWeek: { posts: 11, views: 9000, reach: 4000, engagement: 0.07 }, lastWeek: { posts: 9, views: 7000, reach: 3200, engagement: 0.05 }, delta: { posts: 2, views: 2000, reach: 800, engagement: 0.02 } },
+    { kind: 'reel:verse', label: 'verse reels', thisWeek: { posts: 15, views: 11000, reach: 5200, engagement: 0.05 }, lastWeek: { posts: 13, views: 9800, reach: 4900, engagement: 0.045 }, delta: { posts: 2, views: 1200, reach: 300, engagement: 0.005 } }
+  ],
+  kindDaily: { 'reel:word': OBS_DATES.map(d => ({ date: d, posts: 1, engagement: 0.05 })) },
+  kindTotals: [{ kind: 'reel:word', label: 'word reels', n: 11 }, { kind: 'reel:verse', label: 'verse reels', n: 15 }, { kind: 'reel:name', label: 'Name reels', n: 2 }],
+  bySubject: [
+    { group: 'surah:2', label: 'Surah 2 (Al-Baqarah)', n: 6, reach: { median: 3800, mean: 3900 } },
+    { group: 'word:Worship', label: 'Worship', n: 2, reach: { median: 1200, mean: 1250 } }
+  ],
+  visitors: VIS,
+  postingHealth: { days: OBS_DATES.map((d, i) => ({ date: d, sent: i % 5 === 0 ? 0 : (i % 4 === 0 ? 0 : 9), partial: i % 4 === 0 && i % 5 !== 0 ? 1 : 0, failed: i % 5 === 0 ? 1 : 0, pending: 0, none: i % 5 === 0 ? 9 : 0, retried: i % 6 === 0 ? 1 : 0, duplicates: i === 3 ? 1 : 0 })) },
+  library: {
+    corpus: { types: [
+      { type: 'light', total: 350, withReel: 304 }, { type: 'word', total: 523, withReel: 523 },
+      { type: 'name', total: 99, withReel: 99 }, { type: 'day', total: 25, withReel: 21 },
+      { type: 'dua', total: 18, withReel: 18 }, { type: 'verse', total: 2981, withReel: 600 }
+    ], films: { total: 52, traced: 34 } },
+    shelf: { total: 1509, byKind: { verse: 593, word: 422, know: 225, name: 99, light: 79, short: 52, day: 21, dua: 18 } },
+    postedByNetwork: { instagram: 1300, facebook: 1290, youtube: 400, threads: 1100 }
+  },
+  missingToken: { instagram: false, facebook: false, youtube: true, threads: false }
+};
 
 /* ---- the six rooms, fed the shapes their endpoints really answer with ---- */
 const LIGHTS = { probe: 'lights', date: '2026-09-07', hijri: { y: 1448, m: 3, d: 24, name: 'Rabi al-Awwal' },
@@ -285,6 +406,16 @@ async function open_(w, h, posted, errors, opts = {}) {
     const q = r.request(), u = q.url();
     if (q.method() === 'POST' && u.includes('/api/')) {
       const b = JSON.parse(q.postData() || '{}'); posted.push({ url: u.replace(BASE, ''), body: b });
+      if (u.includes('/api/lantern-agent')) {
+        if (b.action === 'approve') return r.fulfill(J({ ok: true, executed: false, note: 'Recorded.' }));
+        if (b.action === 'decline') return r.fulfill(J({ ok: true, declined: b.id }));
+        if (b.action === 'undo') return r.fulfill(J({ ok: true, reverted: 1 }));
+        /* the ask itself: a real SSE body, delivered whole (Playwright's
+           route.fulfill cannot stream chunk by chunk), which the client's
+           own reader.read() loop still consumes correctly since it only
+           ever processes whatever bytes have arrived */
+        return new Promise(res => setTimeout(() => res(r.fulfill({ status: 200, contentType: 'text/event-stream; charset=utf-8', body: LANT_SSE })), 350));
+      }
       if (u.includes('/api/journal') && b.action === 'queue') return r.fulfill(J(QUEUE));
       if (u.includes('/api/journal') && b.action === 'triage') return r.fulfill(J({ ok: true, entries: 2, replies: 7 }));
       if (u.includes('/api/journal') && b.action === 'save') return r.fulfill(J({ ok: true, entry: { id: 'e3', slug: 'a-new-entry' } }));
@@ -320,6 +451,11 @@ async function open_(w, h, posted, errors, opts = {}) {
       posted.push({ url: u.replace(BASE, ''), method: 'GET', body: {} });
       return r.fulfill(J(opts.settings ? opts.settings() : SETTINGS()));
     }
+    if (u.includes('/api/lantern-models')) return r.fulfill(J(LANT_MODELS));
+    if (u.includes('/api/lantern-agent')) {
+      if (u.includes('action=ledger')) return r.fulfill(J(LANT_LEDGER));
+      if (u.includes('action=proposals')) return r.fulfill(J({ ok: true, items: [] }));
+    }
     if (u.includes('/api/admin-data?probe=lantern')) return r.fulfill(J(LANTERN));
     if (u.includes('/api/admin-data?probe=lights')) {
       if (u.includes('date=')) posted.push({ url: u.replace(BASE, ''), method: 'GET', body: {} });
@@ -352,6 +488,7 @@ async function open_(w, h, posted, errors, opts = {}) {
       return r.fulfill(J(u.includes('id=no-such') ? { ok: false, error: 'no such object: no-such' } : PKG));
     }
     if (u.includes('/api/insights')) return r.fulfill(J(u.includes('action=numbers') ? NUM : INS));
+    if (u.includes('/api/observatory')) return r.fulfill(J(opts.observatory ? opts.observatory() : OBS));
     if (u.includes('/api/visitors')) return r.fulfill(J(VIS));
     if (u.includes('/api/inbox')) return r.fulfill(J(INBOX));
     if (u.includes('/reels/index.json')) return r.fulfill(J({ n: 2, cards: [{ id: 'a', slot: 'morning', hook: 'A', caption: 'x' }, { id: 'b', slot: 'evening', hook: 'B', caption: 'y' }] }));
@@ -610,8 +747,8 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/redis/i.test(hs) || /store/i.test(hs), 'the store is reported');
   ok(/\$90/.test(hs) && /30 USD/.test(hs), 'giving is shown');
   ok(/Amina/.test(hs) && /15 EUR/.test(hs) && /lit on the wall/.test(hs), 'a guardian is shown by the name they chose, with what they give');
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'lights,legacy,marketing,journal,night,system,controls',
-     'the seven rooms are cards on the hub, in order, with Controls right after System');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'lights,legacy,marketing,journal,night,system,controls,observatory,lantern',
+     'the nine rooms are cards on the hub, in order, with the Lantern last');
   ok(await pg.evaluate(() => !document.querySelector('#s-house a[href^="/admin#"]')) && !/rest of the house/i.test(hs),
      'and nothing on the hub points back into the old console');
   ok(/421/.test(hs) && /questioned/.test(hs), 'the Lights card carries a live number: the library is counted');
@@ -731,10 +868,10 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok((await surfaceOn(pg)) === 's-flow', 'a reload on #flow lands back on the map');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
 
-  console.log(label + ' · the seven rooms open, route and draw');
+  console.log(label + ' · the eight rooms open, route and draw');
   const ROOMS = [['lights', 'Lights'], ['legacy', 'Legacy'], ['marketing', 'Marketing'],
                  ['journal', 'Journal desk'], ['night', 'Night shift'], ['system', 'System'],
-                 ['controls', 'Controls']];
+                 ['controls', 'Controls'], ['observatory', 'Observatory']];
   for (const [id, name] of ROOMS) {
     await pg.click('nav.bar [data-s="house"]');
     await pg.waitForSelector('#s-house [data-room="' + id + '"]', { timeout: 15000 });
@@ -757,6 +894,133 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
     await pg.waitForTimeout(200);
     ok((await surfaceOn(pg)) === 's-house', 'and the back affordance returns to House');
   }
+
+  console.log(label + ' · the Observatory: every chart has a table twin, a tooltip, and nothing overflows');
+  await pg.click('nav.bar [data-s="house"]');
+  await pg.waitForSelector('#s-house [data-room="observatory"]', { timeout: 15000 });
+  await pg.click('#s-house [data-room="observatory"]');
+  await pg.waitForSelector('#s-observatory.on .viz', { timeout: 15000 });
+  await pg.waitForTimeout(300);
+  const vizCount = await pg.evaluate(() => document.querySelectorAll('#s-observatory .viz').length);
+  ok(vizCount >= 6, 'at least six charts are on the room: ' + vizCount);
+  const toggles = await pg.evaluate(() => document.querySelectorAll('#s-observatory .viz [data-tv]').length);
+  ok(toggles === vizCount, 'every chart card carries its own table toggle: ' + toggles + ' of ' + vizCount);
+  /* press the first toggle and see the table appear, the chart hide, and the
+     button's own word and aria-pressed state flip with it */
+  const firstId = await pg.evaluate(() => document.querySelector('#s-observatory .viz').id);
+  await pg.click('#' + firstId + ' [data-tv]');
+  const flipped = await pg.evaluate(id => {
+    const card = document.getElementById(id);
+    const btn = card.querySelector('[data-tv]');
+    return { tableShown: !card.querySelector('.vtb').hidden, chartHidden: card.querySelector('.vzc').hidden,
+             label: btn.textContent, pressed: btn.getAttribute('aria-pressed'), hasTable: !!card.querySelector('table.dt') };
+  }, firstId);
+  ok(flipped.tableShown && flipped.chartHidden, 'the table toggle actually swaps the chart for its table');
+  ok(flipped.label === 'Chart' && flipped.pressed === 'true', 'the button says what pressing it again would do, and aria-pressed agrees');
+  ok(flipped.hasTable, 'the table view is a real <table>, every value reachable without hovering anything');
+  await pg.click('#' + firstId + ' [data-tv]');
+  ok(await pg.evaluate(id => document.getElementById(id).querySelector('.vzc').hidden === false, firstId), 'a second press returns to the chart');
+  /* a mark that carries a tooltip is also a tab stop, so the same value
+     reaches a keyboard, not only a pointer (interaction.md's own rule) */
+  const tipTarget = await pg.evaluate(() => { const el = document.querySelector('#s-observatory [data-tip]'); return el ? el.tabIndex : null; });
+  ok(tipTarget === 0, 'a mark that shows on hover is reachable by keyboard focus too: tabindex ' + tipTarget);
+  await pg.hover('#s-observatory [data-tip]');
+  await pg.waitForTimeout(120);
+  ok(await pg.evaluate(() => document.getElementById('obs-tip').classList.contains('on')), 'hovering a mark opens the tooltip');
+  await pg.mouse.move(2, 2);
+  await pg.waitForTimeout(80);
+  ok(await pg.evaluate(() => !document.getElementById('obs-tip').classList.contains('on')), 'and moving the pointer away closes it again');
+  ok(await noSideScroll(pg), 'the Observatory does not scroll sideways at ' + w + 'px');
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-observatory-full.png', fullPage: true });
+  ok(errors.length === 0, 'no console error and no failed request while the Observatory drew: ' + errors.slice(0, 3).join(' | '));
+
+  console.log(label + ' · the Lantern: it plans, thinks aloud, draws a chart with a table twin, offers a proposal, and keeps a ledger');
+  await pg.click('nav.bar [data-s="house"]');
+  await pg.waitForSelector('#s-house [data-room="lantern"]', { timeout: 15000 });
+  await pg.click('#s-house [data-room="lantern"]');
+  await pg.waitForSelector('#s-lantern.on .lant-in', { timeout: 15000 });
+  await pg.waitForTimeout(250);
+  ok(await pg.evaluate(() => location.hash) === '#lantern', 'the hash follows it to #lantern');
+  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'The Lantern', 'the top bar names it: The Lantern');
+  ok(await pg.evaluate(() => !!document.querySelector('#s-lantern.on .back')), 'and a way back to House sits at the top of it');
+  const starterCount = await pg.evaluate(() => document.querySelectorAll('#s-lantern [data-lant-start]').length);
+  ok(starterCount === 4, 'the four starter prompts are offered: ' + starterCount);
+  ok(await noSideScroll(pg), 'the Lantern does not scroll sideways before a word is asked, at ' + w + 'px');
+
+  /* one starter, clicked: the thinking panel opens at once (the fake
+     answer is held back 350ms on purpose, the same device console2.mjs
+     already uses for a slow package, so the open state is caught for real
+     rather than guessed at) */
+  await pg.click('#s-lantern [data-lant-start]');
+  await pg.waitForTimeout(80);
+  ok(await pg.evaluate(() => { const d = document.querySelector('#s-lantern .lant-think'); return d && d.open; }),
+     'the thinking stream opens the moment a question is sent');
+  ok(await pg.evaluate(() => document.getElementById('lant-send').disabled), 'the Ask button is held down while a run is in flight');
+
+  await pg.waitForSelector('#s-lantern .lant-artifacts .lant-proposal', { timeout: 15000 });
+  await pg.waitForTimeout(150);
+  ok(await pg.evaluate(() => { const d = document.querySelector('#s-lantern .lant-think'); return d && !d.open; }),
+     'and folds again once the run is done');
+  ok(await pg.evaluate(() => !document.getElementById('lant-send').disabled), 'the Ask button is free again');
+  const thinkSteps = await pg.evaluate(() => document.querySelectorAll('#s-lantern .lant-think .lant-step').length);
+  ok(thinkSteps >= 2, 'the folded panel still holds what it did: ' + thinkSteps + ' step(s) (a tool and a subagent)');
+  const thread = await pg.evaluate(() => document.querySelector('#s-lantern .lant-msg.assistant') ? document.querySelector('#s-lantern .lant-msg.assistant').textContent : '');
+  ok(/14,000|14000/.test(thread), 'the answer in the thread carries a real number, not a placeholder');
+  ok(await pg.evaluate(() => { const a = document.querySelector('#lant-thread .lant-msg.assistant'); return !!a && a.getAttribute('aria-live') === 'polite'; }),
+     'the answer sits in its own aria-live region for a screen reader');
+  const threadOrder = await pg.evaluate(() => [...document.querySelectorAll('#lant-thread .lant-msg')].map(m => m.className));
+  ok(threadOrder.length >= 2 && threadOrder[0].includes('user') && threadOrder[threadOrder.length - 1].includes('assistant'),
+     'the thread keeps the question above its own answer, oldest at the top: ' + threadOrder.join(' | '));
+
+  /* the chart and its table twin: the same obsBars/vizCard the Observatory
+     draws, reused rather than a second chart engine */
+  const chartToggle = await pg.evaluate(() => { const c = document.querySelector('#s-lantern .lant-artifacts .viz'); return c ? !!c.querySelector('[data-tv]') : false; });
+  ok(chartToggle, 'the chart artifact carries its own table toggle');
+  const chartId = await pg.evaluate(() => document.querySelector('#s-lantern .lant-artifacts .viz').id);
+  await pg.click('#' + chartId + ' [data-tv]');
+  const chartFlipped = await pg.evaluate(id => {
+    const card = document.getElementById(id);
+    return { tableShown: !card.querySelector('.vtb').hidden, chartHidden: card.querySelector('.vzc').hidden, hasTable: !!card.querySelector('table.dt') };
+  }, chartId);
+  ok(chartFlipped.tableShown && chartFlipped.chartHidden && chartFlipped.hasTable, 'pressing the toggle swaps the Lantern\'s own chart for a real table');
+  const lantVizCount = await pg.evaluate(() => document.querySelectorAll('#s-lantern .lant-artifacts .viz').length);
+  ok(lantVizCount >= 2, 'the standalone table artifact drew as its own card too: ' + lantVizCount + ' cards');
+
+  /* the proposal: reordering a reel has no safe door, so it only ever
+     offers Approve/Decline, never runs on its own */
+  ok(await pg.evaluate(() => !!document.querySelector('#s-lantern .lant-proposal')), 'a proposal is drawn with its own reasoning');
+  const propText = await pg.evaluate(() => document.querySelector('#s-lantern .lant-proposal').textContent);
+  ok(/no existing, safe, owner-honoured way/.test(propText), 'and it says plainly why nothing was changed on its own');
+  ok(/Why:/.test(propText) && /reelB is thinner than reelA/.test(propText), 'the planner\'s own Why is shown on the proposal');
+  ok(/Evidence:/.test(propText) && /reelA reach 4100/.test(propText), 'and this run\'s own Evidence is shown separately from Why');
+  await pg.click('#s-lantern .lant-proposal [data-lant-approve]');
+  await pg.waitForTimeout(150);
+  const approvePost = posted.find(p => p.url.includes('/api/lantern-agent') && p.body && p.body.action === 'approve');
+  ok(!!approvePost && approvePost.body.id === 'prop-lineup-1', 'approving a proposal posts exactly the approve action and its id');
+  ok(await pg.evaluate(() => !document.querySelector('#s-lantern .lant-proposal')), 'and the card leaves the page once answered');
+  ok(await pg.evaluate(() => /Recorded/.test(document.getElementById('toast').textContent)), 'the toast says a decision was recorded, not that an action ran, since no safe door exists for it');
+
+  /* the ledger: what the Lantern already did on its own today, with an
+     Undo where a real recipe exists */
+  const ledgerText = await pg.evaluate(() => document.getElementById('lant-ledger').textContent);
+  ok(/Taught the duplicate guard from Instagram/.test(ledgerText) && /2 of 5/.test(ledgerText), 'the ledger says what happened in words, with today\'s count against the cap: ' + ledgerText.slice(0, 80));
+  ok(!/reconcile-teach/.test(ledgerText) && !/refresh-insights/.test(ledgerText), 'and never leaks the internal action key itself');
+  const undoneRow = await pg.evaluate(() => {
+    const rows = [...document.querySelectorAll('#lant-ledger .row')];
+    const r = rows.find(x => /Facebook/.test(x.textContent));
+    return r ? { hasUndo: !!r.querySelector('[data-lant-undo]'), greyed: r.classList.contains('undone') } : null;
+  });
+  ok(undoneRow && !undoneRow.hasUndo && undoneRow.greyed, 'an already-undone action is greyed out and offers no second Undo: ' + JSON.stringify(undoneRow));
+  ok(await pg.evaluate(() => !!document.querySelector('#lant-ledger [data-lant-undo]')), 'the still-reversible action carries an Undo button');
+  await pg.click('#lant-ledger [data-lant-undo]');
+  await pg.waitForTimeout(150);
+  const undoPost = posted.find(p => p.url.includes('/api/lantern-agent') && p.body && p.body.action === 'undo');
+  ok(!!undoPost, 'pressing Undo posts the undo action for that logged entry');
+  ok(await pg.evaluate(() => /Undone/.test(document.getElementById('toast').textContent)), 'and the toast confirms it');
+
+  ok(await noSideScroll(pg), 'the Lantern does not scroll sideways once it has answered, at ' + w + 'px');
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-lantern.png', fullPage: true });
+  ok(errors.length === 0, 'no console error and no failed request while the Lantern worked: ' + errors.slice(0, 3).join(' | '));
 
   console.log(label + ' · what each room says');
   const roomText = async id => {

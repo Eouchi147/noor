@@ -332,14 +332,27 @@ console.log('\nthe whole road, store to verdict');
   ok(one.ledgerWalk.from === '2026-09-07' && !(one.beyondReach || []).length && (one.twice || []).some(t => t.reel === 'short-zakat'),
      'asked for one day, the pass reads back to the oldest video on the channel (' + one.ledgerWalk.from + ') so nothing is left beyond reach');
 
-  /* the guard is taught what the channel holds, and only that */
+  /* the guard is taught what the channel holds, and only that. Zakat's own
+     field carries an older day WITH a real slot suffix beforehand, on
+     purpose (2026-09-24 review): the Lantern agent's own undo replays
+     `taught[].before` byte for byte, and an earlier cut of this kept only
+     the date half of it, so undoing a teach put back "2026-09-01" where
+     "2026-09-01#dawn" had actually been. */
   kvCalls.length = 0;
-  const taught = await SOC.teachGuard('youtube', 'noorcodex.com', { date: '2026-09-22', days: 30 });
   const H = HASH['nsoc:reels:postedch'];
+  H['short-zakat|youtube'] = '2026-09-01#dawn';
+  const taught = await SOC.teachGuard('youtube', 'noorcodex.com', { date: '2026-09-22', days: 30 });
   ok(taught.ok && H['short-zakat|youtube'] === '2026-09-21#',
      'the guard now remembers the Zakat film went to YouTube, at its latest day on the channel (' + H['short-zakat|youtube'] + ')');
+  const zakatTaught = taught.taught.find(t => t.reel === 'short-zakat');
+  ok(zakatTaught && zakatTaught.before === '2026-09-01#dawn',
+     'and what it is taught carries the field\'s own exact prior value, slot and all, not just the date half of it: ' + JSON.stringify(zakatTaught));
   ok(H['short-tawaf|youtube'] === '2026-09-15#reelD' && !taught.taught.some(t => t.reel === 'short-tawaf'),
      'a reel whose sends were all recorded has nothing to teach and is left exactly as it was');
+  const revertZakat = await SOC.revertTaught([{ reel: 'short-zakat', network: 'youtube', before: zakatTaught.before }]);
+  ok(revertZakat.ok && H['short-zakat|youtube'] === '2026-09-01#dawn',
+     'and the Lantern agent\'s own undo, replaying that value, restores the field to exactly what it held before, byte for byte');
+  H['short-zakat|youtube'] = '2026-09-21#';
   ok(kvCalls.filter(c => c !== 'GET' && c !== 'HGET').every(c => c === 'HSET') && taught.written === taught.taught.length,
      'it writes one kind of thing, the guard\u2019s own memory, and says how many (' + taught.written + ')');
   ok(!wire.some(w => /^(POST|PUT|DELETE|PATCH) https:\/\/(www\.)?googleapis/.test(w)), 'and nothing at all to YouTube');

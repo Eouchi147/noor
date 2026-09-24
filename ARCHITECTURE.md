@@ -54,6 +54,82 @@ the long form; `OPERATIONS.md` is the day to day.
 - **The Lantern**: `api/_models.js`, the best free model on OpenRouter, refreshed nightly
   by `api/warm.js`, which also runs the night shift (`api/_nightshift.js`).
 
+## The Lantern's models
+
+`api/_llm.js` (2026-09-24) adds two more free providers beside OpenRouter, so the Lantern
+is never down to one throat to choke: Groq (`GROQ_API_KEY`, OpenAI-compatible, an allow-list
+of four confirmed-free models: `openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
+`openai/gpt-oss-safeguard-20b`, `qwen/qwen3.8-27b`) and Gemini (`GEMINI_API_KEY`,
+OpenAI-compatible endpoint, an allow-list of the free 3.x Flash and Flash-Lite family). Each
+allow-list is intersected with that provider's own live `/models` endpoint before a name is
+ever tried, and neither provider has an `ALLOW_PAID_MODELS`-style escape hatch: only
+OpenRouter's existing one applies, and only to OpenRouter. `route({ tier, messages })` walks
+one of three orders (`fast`: Groq gpt-oss-20b, Gemini Flash-Lite, OpenRouter's best free;
+`strong` and `long`: Gemini's newest free Flash, Groq gpt-oss-120b, OpenRouter's best free),
+falling back on any error, timeout or empty reply, and remembers the model that last answered
+each tier (`nllm:good:<tier>`, the same idea as `_models.js`'s `nlm:good`). A per-provider,
+per-model token bucket in the store (`api/_kv.js`) keeps every provider well under its
+published free ceiling (Groq 25 RPM / 800 RPD / 150K tokens a day; Gemini 8 RPM / 150 RPD,
+conservative since Google does not publish 3.x numbers; OpenRouter 15 RPM / 40 RPD unless
+`OPENROUTER_DAILY` is set); when every bucket for a tier is empty the caller is told plainly
+when the day resets, never left with a silent failure. `scrub()` runs on every outbound
+message: it redacts emails, phone numbers, IP addresses, tokens and keys of every common
+shape, and cookie values, and refuses outright, before anything is sent, any text carrying a
+Journal store-key marker (`nj:e`, `nj:c`, `nj:list`, and the rest) or a visitor-identifying
+field, since the Journal's anonymity is a wall, not a routing preference. A message marked
+per-person (as opposed to an aggregate) is never sent to Gemini at all, since Gemini's free
+terms allow training on submitted content. `api/lantern-models.js` is the owner-gated window
+onto all of this: which providers are configured, the live free chain per tier, the week's
+usage against the budgets, the last good model per tier, and a one-prompt-per-tier probe.
+
+## The Lantern agent
+
+`api/_agent.js` (2026-09-24) is a pure, testable orchestrator: no import of a model, a
+store or the network, so `tests/agent.mjs` proves its plan parsing, its budgets, its
+critic and its action rules with none of the three. It runs in four stages. **PLAN**: a
+fast-tier model call turns the owner's message into a short list of steps (a tool, a
+subagent or an action), capped at eight steps, ten model calls total and 120 seconds of
+wall time (`BUDGETS`); a plan that will not parse falls back to one step, reading the
+Observatory. **TOOLS**: fourteen named, read-only functions (`TOOL_NAMES`), wired in
+`api/lantern-agent.js` to the house's own existing readers (`observatory.js`,
+`_insights.js`, `visitors.js`, `social.js`'s `reconcile`, `_package.js`, the Content
+Graph's own JSON, `page.js`'s shelf, `_schedule.js`'s `chooseReel`, `changes.txt`,
+the search index, `_playbook.js`, `_jev.js`); every tool's output is run back through
+the router's own `scrub()` before it can reach a model, the same journal-anonymity wall
+`api/_llm.js` keeps everywhere else. **SUBAGENTS**: an analyst, a strategist, a writer
+and a critic, each one model call on the router's own tiers, reading `api/_playbook.js`
+for its system prompt, a small structured set of principles from published research on
+social platforms' own stated ranking factors, each one labelled exactly as the research
+marked it (`verified primary`, `reported`, or `folklore`), plus the house's own rules
+(no em dash, no invented fact, no face, sources shown). **SYNTHESIS**: a strong-tier
+call turns the run's tool output and subagent notes into an answer with artifacts
+(a chart, a table, a draft, a proposal); a mechanical critic then runs regardless of
+budget, stripping any dash that slipped through and replacing any number in the answer
+that does not appear in this run's own tool output with "an unverified figure",
+logging every removal, since a language model is never trusted to police its own
+output, exactly the pattern `OPERATIONS.md`'s guard table already keeps for the day's
+light and the day's brief.
+
+**Three fixed possibilities for acting alone were named in the design; two are wired.**
+Refreshing the network numbers and teaching the duplicate guard from a reconciliation
+each already have a safe, existing, owner-honoured door (`api/insights.js`'s refresh and
+snapshot, `api/social.js`'s `teachGuard`, now paired with a new `revertTaught()` so the
+guard's own hash entries can be written back to exactly what they held before). The
+third, reordering or skipping a reel within a day's unsent lineup, has no such door:
+`api/overrides.js` patches site copy, unrelated, and `api/_schedule.js`'s `pin`
+parameter is an internal repair path the poster itself uses only on a slot already
+sent. Rather than build a new write path for it, the agent always turns a lineup
+change into a **proposal**, and says so in its own words. At most five autonomous
+actions run in a day (`AUTONOMOUS_DAILY_CAP`), each logged to `nlan:actions` with who,
+what, why, the state before, and an undo recipe where one exists; a proposal needs the
+owner's own Approve or Decline, and approving one that has no safe endpoint records the
+decision without running anything. `api/lantern-agent.js` streams the whole run as
+Server-Sent Events (`start`, `plan`, `step`, `subagent`, `artifact`, `action`,
+`proposal`, `token`, `done`, `error`) to a new room in `admin2.html`, "The Lantern",
+whose own thinking panel stays open while a run is in flight and folds once it ends,
+and whose charts and tables reuse the Observatory's own drawing functions rather than
+a second chart engine.
+
 ## The Content Graph
 
 Masterplan step 5. `scripts/graph/` (`extract_js.mjs`, `build_graph.py`, `validate_graph.py`,

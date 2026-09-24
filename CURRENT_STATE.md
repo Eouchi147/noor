@@ -111,6 +111,23 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
   Instagram. The owner chose to wait a week before changing the line-up; a scheduled task
   re-reads on 1 October.
 
+## Shipped 24 September (the Lantern agent, the Observatory, the model router)
+
+- **The Observatory** (console, House, `/api/observatory`): every number side by side: a hero
+  band and a per-network scoreboard, pattern notes computed from the data, the funnel, 30-day
+  trends, a weekday by hour heatmap at the six posting hours, kind and subject performance with the
+  5-post floor, site readers, posting health, library coverage. Nothing invented; null is absent.
+- **The model router** (`api/_llm.js`, `/api/lantern-models`): OpenRouter, Groq and Gemini free
+  tiers only, tiered (fast, strong, long), token buckets under the free limits, fallback, a
+  scrubber on every outbound message, journal text refused, per-person rows never sent to Gemini.
+  Groq and Gemini keys must come from accounts with no billing. Keys: the owner's to create.
+- **The Lantern agent** (console, House, `/api/lantern-agent`, owner only): plans, calls 14
+  read-only tools, runs analyst, strategist, writer and critic subagents on the free models,
+  streams its thinking, answers with grounded numbers (a critic drops any clause whose number is
+  not in this run's evidence), charts, drafts and proposals. On its own, at most 5 a day, logged
+  with undo: refresh the numbers, teach the duplicate guard. Everything else is a proposal the
+  owner approves. There is no safe way yet to change one day's reel, so that is a proposal too.
+
 ## Decided and not yet done
 
 - The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for

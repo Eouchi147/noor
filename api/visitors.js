@@ -124,17 +124,17 @@ function verify(cookieHeader, secret) {
   return A.length === B.length && crypto.timingSafeEqual(A, B);
 }
 
-export default async function handler(req, res) {
-  /* An admin or per reader answer must never sit in a shared cache.
-     Nine routes were shipping with no Cache-Control at all, which
-     leaves the decision to whatever proxy is in front of them. */
-  res.setHeader("Cache-Control", "no-store");
-  const SECRET = process.env.ADMIN_SECRET;
-  if (!SECRET) return res.status(501).json({ error: "admin not configured" });
-  if (!verify(req.headers.cookie, SECRET)) return res.status(401).json({ error: "locked" });
+/* The reading, apart from the gate and the response. Pulled out so the
+   Observatory room (api/observatory.js) can fold this same read into its
+   one composed answer without a second network round trip or a second copy
+   of the store-speaking block above: that block stays written twice on
+   purpose (this file and beacon.js, per the comment at its top), not three
+   times. Never throws: a store fault is caught here exactly as the handler
+   below always returned the partial `out` rather than a 500. */
+export async function computeVisitors() {
   const enabled = kvReady();
   const out = { enabled, store: kvKind(), days: [], countries: [], rooms: [], sources: [], totals: { views30: 0, people30: 0 } };
-  if (!enabled) return res.status(200).json(out);
+  if (!enabled) return out;
 
   try {
     const days = [];
@@ -258,8 +258,20 @@ export default async function handler(req, res) {
       byNetwork: ARRIVAL_NETS.map(k => ({ net: k, thisWeek: thisWk[k], lastWeek: lastWk[k],
         delta: lastWk[k] ? thisWk[k] - lastWk[k] : (thisWk[k] ? "new" : 0) }))
     };
-    return res.status(200).json(out);
+    return out;
   } catch {
-    return res.status(200).json(out);
+    return out;
   }
+}
+
+export default async function handler(req, res) {
+  /* An admin or per reader answer must never sit in a shared cache.
+     Nine routes were shipping with no Cache-Control at all, which
+     leaves the decision to whatever proxy is in front of them. */
+  res.setHeader("Cache-Control", "no-store");
+  const SECRET = process.env.ADMIN_SECRET;
+  if (!SECRET) return res.status(501).json({ error: "admin not configured" });
+  if (!verify(req.headers.cookie, SECRET)) return res.status(401).json({ error: "locked" });
+  const out = await computeVisitors();
+  return res.status(200).json(out);
 }

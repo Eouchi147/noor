@@ -372,6 +372,187 @@ svg.flow .pulse{fill:var(--gold)}
 .notes p{color:var(--faint);font-size:12.5px;line-height:1.55;margin:0 0 6px}
 .flowbar{display:flex;align-items:center;gap:8px;margin:0 0 10px}
 .flowbar .seg{flex:1;min-width:0}
+
+/* ---- the Observatory: every number the house keeps, side by side ----
+   No chart here needs a second hue to tell its series apart. A weekday by
+   hour grid is one sequential blue, validated as a ramp (node
+   scripts/validate_palette.js --ordinal, the four steps below, worst
+   adjacent step 0.06+ of lightness, the darkest step still 2.13:1 on this
+   card's own background). Every trend that would otherwise need four
+   colours for four networks is drawn as four small panels instead, one
+   line each, the gold the reel's own sparkline already wears -- the
+   network's name is the label, never its hue. Only state (sent, failed,
+   waiting) uses colour to mean something, and that palette (--good,
+   --bad, --gold as "waiting") is the one the rest of this console already
+   uses for the same three meanings, each always beside its own word. */
+.viz{padding:16px 18px}
+.viz .vh{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.viz .vh b{font-family:var(--f-disp);font-size:15px;color:var(--cream);flex:1;min-width:120px}
+.viz .vh .vs{width:100%;order:3;font-size:11.5px;color:var(--faint)}
+.viz .tv{flex:0 0 auto}
+.viz .vzc{overflow-x:auto}
+.viz .vtb[hidden]{display:none}
+table.dt{width:100%;border-collapse:collapse;font-size:12px}
+table.dt th{text-align:left;color:var(--faint);font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-bottom:1px solid var(--line)}
+table.dt td{padding:5px 8px;border-bottom:1px solid var(--line);color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.dt tr:last-child td{border-bottom:0}
+
+/* THE HERO TILES: the three or four headline numbers, big, one row, never
+   sharing a grid with the per-network scoreboard below it -- the two used to
+   sit in one six-wide grid and eight tiles wrapped into an uneven two-row
+   mess with orphans at 1280. Two columns under 560px, four from there up,
+   which is exactly the count the hero ever carries so the row never wraps. */
+.otiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 4px}
+@media(min-width:560px){.otiles{grid-template-columns:repeat(4,1fr)}}
+.otiles.n3{grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.otiles.n3{grid-template-columns:repeat(3,1fr)}}
+.otile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.otile .l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.otile .v{font-family:var(--f-disp);font-size:28px;font-weight:600;color:var(--cream);line-height:1.15;margin-top:3px;font-variant-numeric:tabular-nums}
+.otile .d{font-family:var(--f-mono);font-size:11px;margin-top:3px}
+.otile .d.up{color:var(--good)}.otile .d.dn{color:var(--bad)}.otile .d.na{color:var(--faint)}
+.otile svg.spk{width:100%;height:26px;display:block;margin-top:8px}
+
+/* THE SCOREBOARD: one row a network, name then posts then reach-or-views
+   then engagement then the week's move then the 30-day line, in that fixed
+   order every row -- a real scoreboard's own promise, that the eye can drop
+   straight down one column without re-reading a label. A network with
+   nothing posted and nothing to compare against says so in words, `.empty`,
+   rather than rendering four dashes that read as a chart still loading. */
+.scoreboard{display:flex;flex-direction:column;gap:6px;margin:16px 0 4px}
+.srow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 15px}
+.srow .sname{font-family:var(--f-disp);font-size:14px;font-weight:600;color:var(--cream);width:100px;flex:0 0 auto}
+.srow .sstat{width:78px;flex:0 0 auto}
+.srow .sstat .sl{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.srow .sstat .sv{font-family:var(--f-mono);font-size:13.5px;color:var(--text);font-variant-numeric:tabular-nums;margin-top:1px;white-space:nowrap}
+.srow .schip{width:74px;flex:0 0 auto}
+.srow .schip .d{font-family:var(--f-mono);font-size:12px}
+.srow .sspark{flex:1 1 100px;min-width:80px;max-width:190px}
+.srow .sspark svg.spk{width:100%;height:24px;display:block}
+.srow.empty .snote{font-size:12.5px;color:var(--faint)}
+@media(max-width:480px){.srow{padding:10px 13px}.srow .sname{width:100%}}
+
+.notesc p{color:var(--text);font-size:13px;line-height:1.6;margin:0 0 8px;padding-left:14px;position:relative}
+.notesc p::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--gold-dim)}
+
+.panelgrid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.panelgrid.n2{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:560px){.panelgrid.n4{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.panelgrid.n4{grid-template-columns:repeat(4,1fr)}}
+/* the small multiples carry no box of their own: they already sit inside
+   one viz card, so a second bordered, filled panel around each of the four
+   would be a card drawn inside a card, four times over. A hairline top rule
+   is enough to say "this one is separate" without saying it four times */
+.trendp{border-top:1px solid var(--line);padding:10px 0 0}
+.trendp b{display:block;font-family:var(--f-disp);font-size:12.5px;color:var(--cream);margin:0 0 6px}
+.trendp svg{width:100%;height:96px;display:block;overflow:visible}
+.trendp .pk{fill:var(--faint)}
+.trendp .pt{fill:var(--gold);opacity:0;transition:opacity .1s}
+.trendp .pt:hover,.trendp .pt:focus-visible{opacity:.3;outline:none}
+@media(prefers-reduced-motion:reduce){.trendp .pt{transition:none}}
+
+/* THE HEATMAP: 08, 11, 14, 17, 19, 21 UTC -- the six reel hours read from
+   the schedule itself, never the three or however many hours happened to
+   have a number this month. A 2px gap between rounded cells (the skill's
+   own anatomy: cells are marks, not a seamless fill) and a cell big enough
+   at six columns to read on a phone without the tooltip. */
+.heat{display:grid;gap:2px;grid-auto-rows:36px}
+.heat .hd{font-family:var(--f-mono);font-size:10px;color:var(--faint);display:flex;align-items:center;justify-content:center}
+.heat .cell{border-radius:5px;cursor:pointer;min-width:32px}
+.heat .cell:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.heat .rowlab{font-size:10.5px;color:var(--muted);display:flex;align-items:center;padding-right:4px;white-space:nowrap}
+.heatscale{display:flex;align-items:center;gap:4px;margin-top:10px;font-family:var(--f-mono);font-size:9.5px;color:var(--faint)}
+.heatscale i{width:16px;height:10px;border-radius:2px;display:inline-block}
+
+.bars.floor .b.low{opacity:.45}
+.bars .b .n .nn{display:block}
+.bars .b .n .sub{display:block;font-size:10px;color:var(--faint)}
+/* THE METERS (library coverage): each row is its own corpus's own share, so
+   the value needs both the raw count and the percent on one line -- "304 of
+   350" was wrapping onto three lines in a 40px column built for a plain
+   number. A wider, fixed-width value column and tabular figures fix it; the
+   percent sits beside the count rather than under it. */
+.bars.meter .b{grid-template-columns:112px 1fr 130px}
+.bars.meter .b .v{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bars.meter .b .v .pct{color:var(--gold-dim);font-weight:600;min-width:34px;text-align:right}
+@media(max-width:420px){.bars.meter .b{grid-template-columns:94px 1fr 112px;gap:6px}}
+
+.fungrid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.fungrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1100px){.fungrid{grid-template-columns:repeat(4,1fr)}}
+.funp{border-top:1px solid var(--line);padding:10px 0 0}
+.funp b{display:block;font-family:var(--f-disp);font-size:12.5px;color:var(--cream);margin:0 0 8px}
+.funp .st{display:flex;align-items:center;gap:8px;margin:4px 0}
+.funp .st .sl{width:64px;font-size:10.5px;color:var(--faint);flex:0 0 auto}
+.funp .st .tk{flex:1;height:14px;background:var(--panel2);border-radius:4px;overflow:hidden}
+.funp .st .tk i{display:block;height:100%;background:var(--gold);border-radius:4px}
+.funp .st .sv{width:52px;text-align:right;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);flex:0 0 auto}
+
+.cal{display:flex;flex-wrap:wrap;gap:3px}
+.cal .d{width:20px;height:20px;border-radius:4px;background:var(--panel2);border:1px solid var(--line);cursor:pointer}
+.cal .d:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.cal .d.sent{background:var(--good);border-color:var(--good)}
+.cal .d.partial{background:var(--gold);border-color:var(--gold)}
+.cal .d.failed{background:var(--bad);border-color:var(--bad)}
+.cal .d.pending{background:var(--blue);border-color:var(--blue)}
+.cal .d.none{opacity:.5}
+.cal .d.dup::after{content:"";position:absolute}
+.calwrap{position:relative}
+.callg{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;font-size:11px;color:var(--muted)}
+.callg i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:-1px}
+
+#obs-tip{position:fixed;z-index:60;background:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;font-size:11.5px;color:var(--text);pointer-events:none;opacity:0;transition:opacity .1s;max-width:220px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#obs-tip.on{opacity:1}
+#obs-tip b{color:var(--cream);font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.bars .t i,#obs-tip{transition:none}}
+
+/* ---- The Lantern: a chat column, a thinking stream that folds when the
+   run is done, an artifacts area, an actions ledger with Undo, the models
+   status. No new colour: gold for the one thing that matters (Send, a
+   working step), the same good/bad/wait triad every other room wears. */
+.lant-starters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.lant-starters button{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-size:12.5px;color:var(--text)}
+.lant-starters button:active{border-color:var(--line2)}
+.lant-in{display:flex;gap:8px;align-items:flex-end}
+.lant-in textarea{flex:1;font:inherit;font-size:14px;background:var(--ink);color:var(--text);border:1px solid var(--line2);border-radius:12px;padding:11px 13px;resize:vertical;min-height:44px;max-height:180px}
+.lant-in .go{flex:0 0 auto;background:var(--gold);color:#1a1608;font-weight:700;border-radius:10px;padding:12px 16px;font-size:14px}
+.lant-in .go:disabled{opacity:.5}
+.lant-thread{display:flex;flex-direction:column;gap:10px;margin:14px 0;max-height:70vh;overflow-y:auto;overflow-x:hidden;padding-right:2px}
+.lant-turn{display:flex;flex-direction:column;gap:8px}
+.lant-msg{border-radius:14px;padding:11px 14px;font-size:13.5px;line-height:1.55;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+.lant-msg.user{background:var(--panel2);border:1px solid var(--line);color:var(--cream);align-self:flex-end}
+.lant-msg.assistant{background:var(--panel);border:1px solid var(--line);color:var(--text)}
+.lant-msg .note{margin-top:8px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);padding-top:6px}
+.lant-think{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0}
+.lant-think summary{padding:11px 14px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--gold-dim);letter-spacing:.04em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px}
+.lant-think summary::-webkit-details-marker{display:none}
+.lant-think summary .n{margin-left:auto;font-family:var(--f-mono);color:var(--faint);text-transform:none;letter-spacing:0;font-size:11px}
+.lant-think .body{padding:0 14px 12px}
+.lant-step{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);overflow-wrap:anywhere}
+.lant-step:first-child{border-top:0}
+.lant-step .ic{flex:0 0 auto;width:16px;height:16px;border-radius:50%;margin-top:2px;background:var(--panel2);border:1px solid var(--line2)}
+.lant-step .ic.ok{background:var(--good);border-color:var(--good)}
+.lant-step .ic.wait{background:var(--gold);border-color:var(--gold)}
+.lant-step .ic.bad{background:var(--bad);border-color:var(--bad)}
+.lant-step b{color:var(--text);font-weight:600}
+.lant-artifacts{display:flex;flex-direction:column;gap:12px;margin:0}
+.lant-draft{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.lant-draft .hd{display:flex;align-items:center;gap:8px;margin:0 0 8px;flex-wrap:wrap}
+.lant-draft .hd b{font-family:var(--f-disp);font-size:14px;color:var(--cream);flex:1;overflow-wrap:anywhere}
+.lant-draft .hd .cnt{font-family:var(--f-mono);font-size:11px;color:var(--faint)}
+.lant-draft pre{white-space:pre-wrap;font:inherit;font-size:13px;color:var(--text);margin:0 0 8px;overflow-wrap:anywhere}
+.lant-proposal{background:var(--panel);border:1px solid var(--gold-dim);border-radius:12px;padding:13px 15px;overflow-wrap:anywhere}
+.lant-proposal b{display:block;font-family:var(--f-disp);font-size:14px;color:var(--cream);margin:0 0 4px}
+.lant-proposal .ev{font-size:12px;color:var(--muted);margin:6px 0}
+.lant-proposal .acts{display:flex;gap:8px;margin-top:10px}
+.lant-ledger .row .u{font-size:11.5px}
+.lant-ledger .row.undone{opacity:.5}
+.lant-ledger .row.undone .u{color:var(--faint)}
+.lant-models{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.lant-models .m{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 11px;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.lant-models .m i{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.lant-models .m.on i{background:var(--good)}
+@media(prefers-reduced-motion:reduce){.lant-step .ic{transition:none}}
 </style>
 </head>
 <body>
@@ -414,6 +595,8 @@ svg.flow .pulse{fill:var(--gold)}
     <section class="surf" id="s-night"></section>
     <section class="surf" id="s-system"></section>
     <section class="surf" id="s-controls"></section>
+    <section class="surf" id="s-observatory"></section>
+    <section class="surf" id="s-lantern"></section>
   </main>
 
   <nav class="bar" aria-label="Surfaces">
@@ -429,6 +612,7 @@ svg.flow .pulse{fill:var(--gold)}
 <div id="veil"></div>
 <div id="sheet" role="dialog" aria-modal="true"><div class="grip"></div><div id="sheet-in"></div></div>
 <div id="toast" role="status"></div>
+<div id="obs-tip" role="tooltip"></div>
 
 <script>
 (function(){
@@ -525,6 +709,11 @@ var stewardQ=function(f){return cached("steward",function(){return get("/api/hou
 function stewardAgain(){return get("/api/house?action=steward&fresh=1").then(function(r){C.steward={at:Date.now(),v:r.j};return r.j})}
 var FLOW_DAYS=14;
 var flowQ=function(f){var d=FLOW_DAYS;return cached("flow:"+d,function(){return get("/api/house?action=flow&days="+d).then(function(r){return r.j})},f)};
+/* the Observatory's one call: everything the room draws, composed and kept
+   ten minutes by the server itself (api/observatory.js's own cache); this
+   client cache is the console's usual courtesy on top of that, a minute,
+   so switching away and back inside it costs nothing more */
+var obsQ=function(f){return cached("obs",function(){return get("/api/observatory").then(function(r){return r.j})},f)};
 /* a read whose failure must not take a whole surface down with it: the card
    it feeds says so itself and the rest of the surface still draws */
 function soft(p){return p.then(function(v){return v},function(){return null})}
@@ -543,12 +732,13 @@ var CUR="today";
    House and remembered in the hash, so a reload lands in the room the owner
    was standing in. Nothing here counts the surfaces: the bar's columns are
    counted from the buttons that are in it. */
-var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1};
+var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,observatory:1,lantern:1};
 var NAMES={reels:"Today's reels",today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
-  lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",controls:"Controls"};
+  lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",controls:"Controls",
+  observatory:"Observatory",lantern:"The Lantern"};
 var LOAD={reels:drawReels,today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
   lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
-  controls:drawControls};
+  controls:drawControls,observatory:drawObservatory,lantern:drawLantern};
 var LOADED={};
 function show(s,force){
   if(!NAMES[s]||!$("s-"+s))s="today";
@@ -1160,9 +1350,11 @@ function drawHouse(force){
       journal:jo?[String((jo.entries||[]).length),"entries"+(nHeld?" · "+nHeld+" waiting":" · nothing waiting")]:["·","the journal could not be read"],
       night:ni?[String((ni.findings||[]).length),"flagged · "+(ni.brief?"the brief is written":"no brief yet")]:["·","the night could not be read"],
       system:[keysSet+" of 3","keys set · the ladder is "+(d.mode||"off")],
-      controls:sd?[setHere+" of "+sd.length,"dials set here · the rest are default"]:["·","the dials could not be read"]
+      controls:sd?[setHere+" of "+sd.length,"dials set here · the rest are default"]:["·","the dials could not be read"],
+      observatory:["30 d","every network, the site and the shelf, side by side"],
+      lantern:["5 a day","plans, reads the house's own numbers, and asks before it acts"]
     };
-    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"]];
+    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["observatory","Observatory","The whole ecosystem, at a glance"],["lantern","The Lantern","Ask it to plan, and it will, judged by its own sources"]];
     el.innerHTML=
       '<p class="sec">Health</p><div class="list">'
       +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off, nothing is remembered")
@@ -1437,6 +1629,643 @@ function wireFlow(el,f){
     var g=e.target.closest&&e.target.closest("[data-stage]");
     if(g&&f&&f.ok){e.preventDefault();flowSheet(f,g.getAttribute("data-stage"))}
   };
+}
+
+/* ===========================================================================
+   THE OBSERVATORY
+
+   One call (/api/observatory), composed server side from what every other
+   room already reads: this room draws it. No chart here invents a second
+   colour to tell a network from another; a weekday by hour grid is the one
+   validated sequential ramp below, every other multi-network picture is
+   small multiples in the single gold the rest of this console already uses
+   for "the one series that matters", and the only colour that carries a
+   meaning of its own is the fixed sent/failed/waiting set the state chips
+   already wear everywhere else in this file. Every chart below carries a
+   table-view twin (the WCAG-clean equivalent, the dataviz skill's own
+   phrase for it) behind a "Table" button, a tooltip that shows on hover
+   and on keyboard focus alike, and a legend wherever two or more things
+   share a picture. ========================================================= */
+var OBS_RAMP=["#b7d3f6","#6da7ec","#2a78d6","#184f95"];  /* one hue, four steps, validated
+   node scripts/validate_palette.js "#b7d3f6,#6da7ec,#2a78d6,#184f95" --ordinal --mode dark
+   --surface "#161A2A": lightness monotone, every adjacent step >=0.06 apart,
+   the darkest step still 2.13:1 on this card's own background. */
+function obsN(v){return v==null?"·":fnum(v)}
+function obsDelta(v,label){
+  if(v==null)return '<div class="d na">'+esc(label||"no prior week")+'</div>';
+  var cls=v>0?"up":v<0?"dn":"na";
+  return '<div class="d '+cls+'">'+(v>0?"+":"")+fnum(v)+(label?" "+esc(label):" vs last week")+'</div>';
+}
+/* the scoreboard's own chip: the same up/down colouring as obsDelta, a bare
+   number rather than "+1,204 vs last week" -- the row is already labelled
+   "this week against last" once, at the top of the whole band */
+function obsChip(v){
+  if(v==null)return '<div class="d na">no prior week</div>';
+  var cls=v>0?"up":v<0?"dn":"na";
+  return '<div class="d '+cls+'">'+(v>0?"+":"")+fnum(v)+'</div>';
+}
+function sparkSvg(values){
+  var xs=(values||[]).map(function(v,i){return{i:i,v:v}}).filter(function(p){return typeof p.v==="number"&&isFinite(p.v)});
+  if(xs.length<2)return '';
+  var W=100,H=26,pad=2,n=values.length;
+  var vs=xs.map(function(p){return p.v}),mn=Math.min.apply(null,vs),mx=Math.max.apply(null,vs);
+  if(mn>0)mn=0; var rng=(mx-mn)||1;
+  var pts=xs.map(function(p){return (pad+(p.i/(n-1))*(W-2*pad)).toFixed(1)+","+(H-pad-((p.v-mn)/rng)*(H-2*pad)).toFixed(1)}).join(" ");
+  return '<svg class="spk" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+pts+'" fill="none" stroke="var(--gold)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
+}
+/* the four network small multiples: a bigger line with a filled area, an
+   8px end dot (marks-and-anatomy's own floor for a marker), the last
+   value written beside it (one of the room's four direct labels), and a
+   transparent 20px hit circle over every point carrying the tooltip and a
+   tab stop, so the exact number is reachable by mouse and by keyboard alike */
+/* where a direct label goes beside its point without running off either
+   edge of the viewBox: start (label to the right) when there is room, end
+   (label to the left) failing that, middle clamped inside the box failing
+   both -- var(--f-mono) is a fixed-width face, so a character really is a
+   steady fraction of its own font-size and this estimate holds without
+   ever having to measure the rendered text */
+function placeLabel(x,str,fs,W,pad){
+  var w=str.length*fs*0.62;
+  if(x+8+w<=W-pad)return{anchor:"start",x:x+8};
+  if(x-8-w>=pad)return{anchor:"end",x:x-8};
+  return{anchor:"middle",x:Math.min(W-pad-w/2,Math.max(pad+w/2,x))};
+}
+function trendSvgBig(values,dates,label){
+  var xs=(values||[]).map(function(v,i){return{i:i,v:v,d:dates[i]}}).filter(function(p){return typeof p.v==="number"&&isFinite(p.v)});
+  if(xs.length<2)return '';
+  /* H matches the CSS pixel height of .trendp svg exactly (96): this SVG
+     scales non-uniformly (preserveAspectRatio none, so the line always
+     fills the card's own width), and a viewBox height that does not match
+     the rendered height stretches every circle into an ellipse and every
+     digit taller than it is wide -- the bug a shorter card never showed at
+     64/64, and a taller one would have, unnoticed, the moment it shipped. */
+  var W=280,H=96,pad=8,n=values.length;
+  var vs=xs.map(function(p){return p.v}),mn=Math.min(0,Math.min.apply(null,vs)),mx=Math.max.apply(null,vs);
+  var rng=(mx-mn)||1;
+  var X=function(i){return pad+(i/(n-1))*(W-2*pad)},Y=function(v){return H-pad-((v-mn)/rng)*(H-2*pad)};
+  var line=xs.map(function(p,k){return (k?"L":"M")+X(p.i).toFixed(1)+","+Y(p.v).toFixed(1)}).join(" ");
+  var area=line+" L"+X(xs[xs.length-1].i).toFixed(1)+","+(H-pad)+" L"+X(xs[0].i).toFixed(1)+","+(H-pad)+" Z";
+  var last=xs[xs.length-1];
+  /* the peak: the room's own promise that a trend this tall is read, not
+     just glanced at -- the endpoint alone hides a spike earlier in the
+     month. Not drawn at all when the peak IS the endpoint, so the chart
+     never labels the same point twice. A sparse network (a post every few
+     days, not every day) can peak or end well short of the viewBox's own
+     right edge, so where a label goes is worked out from the point's real
+     position and the label's own length, never assumed from the point's
+     place in the full 30-day index. */
+  var peak=xs.reduce(function(a,b){return b.v>a.v?b:a},xs[0]);
+  var showPeak=peak.i!==last.i&&peak.v>0;
+  var peakStr=fnum(peak.v)+" peak", lastStr=fnum(last.v)+" now";
+  var peakPos=placeLabel(X(peak.i),peakStr,9.5,W,pad);
+  var lastPos=placeLabel(X(last.i),lastStr,11,W,pad);
+  var dots=xs.map(function(p){return '<circle class="pt" cx="'+X(p.i).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="10" tabindex="0" role="img" data-tip="'+esc(p.d+" | "+fnum(p.v)+" "+label)+'"/>'}).join("");
+  return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="'+esc(label+", the last 30 days, peak "+fnum(peak.v)+", now "+fnum(last.v))+'">'
+    +'<path d="'+area+'" fill="var(--gold)" opacity=".14"/><path d="'+line+'" fill="none" stroke="var(--gold)" stroke-width="2" vector-effect="non-scaling-stroke"/>'
+    +(showPeak?'<circle cx="'+X(peak.i).toFixed(1)+'" cy="'+Y(peak.v).toFixed(1)+'" r="3" fill="var(--faint)"/>'
+      +'<text class="pk" text-anchor="'+peakPos.anchor+'" x="'+peakPos.x.toFixed(1)+'" y="'+Math.max(11,Y(peak.v)-7).toFixed(1)+'" font-size="9.5" font-family="var(--f-mono)">'+esc(peakStr)+'</text>':'')
+    +'<circle cx="'+X(last.i).toFixed(1)+'" cy="'+Y(last.v).toFixed(1)+'" r="4" fill="var(--gold)" stroke="var(--panel2)" stroke-width="2"/>'
+    +'<text text-anchor="'+lastPos.anchor+'" x="'+lastPos.x.toFixed(1)+'" y="'+Math.max(11,Y(last.v)-6).toFixed(1)+'" font-size="11" fill="var(--cream)" font-family="var(--f-mono)">'+esc(lastStr)+'</text>'+dots+'</svg>';
+}
+/* the wrapper every chart shares: a title, an optional one-line note, the
+   Table button, the picture, and the table it toggles to */
+function vizCard(id,title,sub,body,table){
+  return '<div class="card viz" id="'+id+'"><div class="vh"><b>'+esc(title)+'</b>'+(sub?'<span class="vs">'+esc(sub)+'</span>':'')
+    +'<button class="btn ghost sm tv" data-tv="'+id+'" aria-pressed="false">Table</button></div>'
+    +'<div class="vzc">'+body+'</div><div class="vtb" hidden>'+table+'</div></div>';
+}
+/* a real <table>, every value reachable without hovering anything. Every
+   room that draws one hands dt() rows it built itself, in shape, except
+   the Lantern's own table artifact (admin2.html's lantArtifact): that one
+   is a model's own JSON, read here exactly as it arrived (api/_agent.js's
+   validateArtifact already drops a row that was never an array at all,
+   but a row inside a row that survived that pass could still be malformed
+   in a way the schema check does not catch), so a row that is not itself
+   an array is drawn as its own single cell rather than crashing r.map on
+   a string (2026-09-24: this is exactly what the refuter's own pw.mjs
+   sends on purpose, to prove it). */
+function dt(headers,rows){
+  return '<table class="dt"><thead><tr>'+headers.map(function(h){return '<th>'+esc(h)+'</th>'}).join("")+'</tr></thead>'
+    +'<tbody>'+(rows||[]).map(function(r){
+      var cells=Array.isArray(r)?r:[r];
+      return '<tr>'+cells.map(function(c){return '<td>'+esc(c==null?"·":c)+'</td>'}).join("")+'</tr>';
+    }).join("")+'</tbody></table>';
+}
+var OBS_NETLABEL={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",threads:"Threads"};
+
+function obsSummary(o){
+  var s=o.summary||{};
+  var head='<p class="sec">This week against last, '+esc((s.thisWeek&&s.thisWeek.from)||"")+' to '+esc((s.thisWeek&&s.thisWeek.to)||"")+'</p>';
+  /* THE HERO: the four headline numbers this room exists to answer at a
+     glance, big, with their own delta and sparkline. Nothing else shares
+     this row -- the per-network detail is the scoreboard below it, so four
+     tiles never has to become eight and wrap. */
+  var tiles=[
+    ["Reach, every network",s.reach&&s.reach.value,s.reach&&s.reach.delta,null],
+    ["Views, every network",s.views&&s.views.value,s.views&&s.views.delta,null],
+    ["Site visitors",s.visitors&&s.visitors.value,s.visitors&&s.visitors.delta,s.visitors&&s.visitors.sparkline],
+    ["Posts sent",s.posts&&s.posts.value,s.posts&&s.posts.delta,s.posts&&s.posts.sparkline]
+  ].map(function(t){return '<div class="otile"><div class="l">'+esc(t[0])+'</div><div class="v">'+obsN(t[1])+'</div>'+obsDelta(t[2])+(t[3]?sparkSvg(t[3]):'')+'</div>'}).join("");
+  /* THE SCOREBOARD: one row a network, the same five columns in the same
+     order every row -- name, posts, reach or views (whichever that network
+     actually gives), engagement, the week's move, the 30-day line. A
+     network with nothing posted this week and nothing the week before says
+     so in words instead of a row of "·" that reads as still loading. */
+  var rows=(s.networks||[]).map(function(n){
+    var hasReach=n.reach!=null,val=hasReach?n.reach:n.views,valDelta=hasReach?n.reachDelta:n.viewsDelta;
+    var quiet=n.posts==null&&val==null&&n.postsDelta==null;
+    if(quiet)return '<div class="srow empty"><div class="sname">'+esc(n.label)+'</div><div class="snote">No numbers yet.</div></div>';
+    return '<div class="srow">'
+      +'<div class="sname">'+esc(n.label)+'</div>'
+      +'<div class="sstat"><div class="sl">Posts</div><div class="sv">'+obsN(n.posts)+'</div></div>'
+      +'<div class="sstat"><div class="sl">'+(hasReach?"Reach":"Views")+'</div><div class="sv">'+obsN(val)+'</div></div>'
+      +'<div class="sstat"><div class="sl">Engaged</div><div class="sv">'+(n.engagement!=null?Math.round(n.engagement*100)+"%":"·")+'</div></div>'
+      +'<div class="schip">'+obsChip(valDelta)+'</div>'
+      +'<div class="sspark">'+(sparkSvg(n.sparkline)||'<p class="faint small" style="margin:0">Not enough data yet.</p>')+'</div>'
+      +'</div>';
+  }).join("");
+  return head+'<div class="otiles">'+tiles+'</div><div class="scoreboard">'+rows+'</div>';
+}
+/* the three to five plain sentences the server already computed
+   (api/observatory.js's own patternNotes): read here, never recomputed,
+   so the room never disagrees with the numbers it is standing beside */
+function obsNotes(o){
+  var notes=o.notes||[];
+  if(!notes.length)return '';
+  return '<div class="card notesc">'+notes.map(function(n){return '<p>'+esc(n)+'</p>'}).join("")+'</div>';
+}
+function obsFunnel(o){
+  var rows=(o.funnel||[]).filter(function(f){return f.posts!=null||f.reach!=null});
+  if(!rows.length)return '';
+  var body='<div class="fungrid">'+rows.map(function(f){
+    var stages=[["Posts",f.posts],["Reach",f.reach],["Engaged",f.engaged],["Site visits",f.visits]];
+    var max=Math.max.apply(null,stages.map(function(x){return x[1]||0}))||1;
+    return '<div class="funp"><b>'+esc(f.label)+'</b>'+stages.map(function(st){
+      var known=st[1]!=null,w=known?Math.max(4,Math.round(st[1]/max*100)):0;
+      return '<div class="st" tabindex="0" role="img" data-tip="'+esc(f.label+" , "+st[0]+" | "+(known?fnum(st[1]):"not tracked"))+'"><div class="sl">'+esc(st[0])+'</div><div class="tk"><i style="width:'+w+'%"></i></div><div class="sv">'+(known?fnum(st[1]):"·")+'</div></div>';
+    }).join("")+'</div>';
+  }).join("")+'</div>';
+  var table=dt(["Network","Posts","Reach","Engaged","Site visits"],rows.map(function(f){return [f.label,obsN(f.posts),obsN(f.reach),obsN(f.engaged),obsN(f.visits)]}));
+  return vizCard("viz-funnel","The funnel, this week","Post to reach to engagement to a visit to the site, per network",body,table);
+}
+function obsTrend(o){
+  var t=o.trend30||{dates:[],networks:{}};
+  var body='<div class="panelgrid n4">'+["instagram","facebook","youtube","threads"].map(function(net){
+    var rows=(t.networks&&t.networks[net])||[];
+    var vals=rows.map(function(r){return r.reach!=null?r.reach:r.views});
+    var label=rows.some(function(r){return r.reach!=null})?"reach":"views";
+    var svg=trendSvgBig(vals,t.dates,label);
+    return '<div class="trendp"><b>'+esc(OBS_NETLABEL[net])+'</b>'+(svg||'<p class="faint small" style="margin:4px 0 0">Not enough data yet.</p>')+'</div>';
+  }).join("")+'</div>';
+  var table='';
+  if((t.dates||[]).length){
+    var rows2=t.dates.map(function(d,i){return [d].concat(["instagram","facebook","youtube","threads"].map(function(net){var r=(t.networks[net]||[])[i];return r?obsN(r.reach!=null?r.reach:r.views):"·"}))});
+    table=dt(["Date","Instagram","Facebook","YouTube","Threads"],rows2);
+  }
+  return vizCard("viz-trend","Thirty days, one network per panel","Reach where a network gives it, views otherwise; one axis a panel, never two on one",body,table);
+}
+function obsHeat(o){
+  var cells=o.weekdayHour||[];
+  if(!cells.length)return '';
+  var hours=[];cells.forEach(function(c){if(hours.indexOf(c.hour)<0)hours.push(c.hour)});hours.sort(function(a,b){return a-b});
+  var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  function grid(key,nKey,unit){
+    var present=cells.filter(function(c){return c[key]!=null});
+    if(!present.length)return '<p class="faint small">Not enough data yet.</p>';
+    var vals=present.map(function(c){return c[key]}),mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
+    var by={};cells.forEach(function(c){by[c.weekday+":"+c.hour]=c});
+    var html='<div class="heat" style="grid-template-columns:44px repeat('+hours.length+',1fr)"><div></div>'
+      +hours.map(function(h){return '<div class="hd">'+String(h).padStart(2,"0")+'</div>'}).join("");
+    for(var wd=0;wd<7;wd++){
+      html+='<div class="rowlab">'+WD[wd]+'</div>';
+      html+=hours.map(function(h){
+        var c=by[wd+":"+h],v=c?c[key]:null,n=c&&c[nKey]||0;
+        var bucket=v==null?-1:Math.min(3,Math.floor(((v-mn)/((mx-mn)||1))*3.999));
+        var bg=bucket<0?"var(--panel2)":OBS_RAMP[bucket];
+        var tip=WD[wd]+" "+String(h).padStart(2,"0")+":00 UTC | "+(v==null?"no post recorded":fnum(v)+" "+unit+", median of "+n+" post"+(n===1?"":"s"));
+        return '<div class="cell" tabindex="0" role="img" style="background:'+bg+(bucket<0?";border:1px dashed var(--line2)":"")+'" data-tip="'+esc(tip)+'"></div>';
+      }).join("");
+    }
+    html+='</div><div class="heatscale"><span>Fewer</span>'+OBS_RAMP.map(function(c){return '<i style="background:'+c+'"></i>'}).join("")+'<span>More</span><span class="faint" style="margin-left:10px">dashed = no post that hour</span></div>';
+    return html;
+  }
+  var body='<p class="vs" style="margin:0 0 8px">Instagram, median reach</p>'+grid("instagramReach","instagramN","reach")
+    +'<p class="vs" style="margin:14px 0 8px">YouTube, median views</p>'+grid("youtubeViews","youtubeN","views");
+  var table=dt(["Weekday","Hour","Instagram reach (median)","Posts","YouTube views (median)","Posts"],
+    cells.map(function(c){return [c.label,c.at,obsN(c.instagramReach),c.instagramN||0,obsN(c.youtubeViews),c.youtubeN||0]}));
+  return vizCard("viz-heat","When a post is seen","One hue, light to dark: which weekday and hour reaches and views run highest",body,table);
+}
+function obsBars(id,title,sub,rows,labelFn,subFn,valFn,unitFn){
+  if(!rows.length)return vizCard(id,title,sub,'<p class="faint small">Not enough posted yet to say.</p>',"");
+  var max=Math.max.apply(null,rows.map(function(r){return valFn(r)||0}))||1;
+  var body='<div class="bars floor">'+rows.map(function(r){
+    var v=valFn(r),n=(r.n!=null?r.n:0),low=n<5,w=Math.round((v||0)/max*100);
+    return '<div class="b'+(low?" low":"")+'" tabindex="0" data-tip="'+esc(labelFn(r)+" | "+(unitFn?unitFn(r):obsN(v))+(low?" ("+n+" posts, under the 5 post floor)":""))+'">'
+      +'<div class="n"><span class="nn">'+esc(labelFn(r))+'</span><span class="sub">'+esc(subFn(r))+'</span></div>'
+      +'<div class="t"><i style="width:'+w+'%"></i></div><div class="v">'+(unitFn?unitFn(r):obsN(v))+'</div></div>';
+  }).join("")+'</div>';
+  var table=dt(["Name","Posts","Value"],rows.map(function(r){return [labelFn(r),r.n,unitFn?unitFn(r):obsN(valFn(r))]}));
+  return vizCard(id,title,sub,body,table);
+}
+function obsKindSubject(o){
+  var kinds=(o.byKind||[]).map(function(x){return {label:x.label,n:x.thisWeek.posts,v:x.thisWeek.reach!=null?x.thisWeek.reach:x.thisWeek.views}});
+  var a=obsBars("viz-kind","What kind reaches furthest","This week, Instagram reach where it exists, else views",kinds,
+    function(r){return r.label},function(r){return r.n+" post"+(r.n===1?"":"s")+", this week"},function(r){return r.v},function(r){return obsN(r.v)});
+  var subs=(o.bySubject||[]).map(function(x){return {label:x.label,n:x.n,v:x.reach.median}});
+  var b=obsBars("viz-subject","What subject reaches furthest","Instagram reach, median, over the last 30 days",subs,
+    function(r){return r.label},function(r){return r.n+" post"+(r.n===1?"":"s")+", 30 days"},function(r){return r.v},function(r){return obsN(r.v)});
+  return a+b;
+}
+function obsVisitors(o){
+  var v=o.visitors||{};
+  var days=(v.days||[]).slice(-14);
+  var spark=sparkSvg(days.map(function(d){return d.people}));
+  var head='<div class="otiles n3"><div class="otile"><div class="l">Readers, 30 days</div><div class="v">'+obsN(v.totals&&v.totals.people30)+'</div></div>'
+    +'<div class="otile"><div class="l">Page views, 30 days</div><div class="v">'+obsN(v.totals&&v.totals.views30)+'</div></div>'
+    +'<div class="otile"><div class="l">Readers, last 14 days</div>'+(spark||'<p class="faint small" style="margin:8px 0 0">Not enough data yet.</p>')+'</div></div>';
+  var countries=(v.countries||[]).slice(0,8).map(function(c){return {label:c.c,n:c.n,v:c.n}});
+  var rooms=(v.rooms||[]).slice(0,8).map(function(c){return {label:c.r,n:c.n,v:c.n}});
+  var sources=(v.sources||[]).slice(0,8).map(function(c){return {label:c.s,n:c.n,v:c.n}});
+  var byCountry=obsBars("viz-vcountry","By country","Last 30 days",countries,function(r){return r.label},function(){return "";},function(r){return r.v},function(r){return obsN(r.v)});
+  var byRoom=obsBars("viz-vroom","By room","Last 30 days",rooms,function(r){return r.label},function(){return "";},function(r){return r.v},function(r){return obsN(r.v)});
+  var bySource=obsBars("viz-vsource","By source","Last 30 days",sources,function(r){return r.label},function(){return "";},function(r){return r.v},function(r){return obsN(r.v)});
+  return head+'<div class="panelgrid n2" style="margin-top:10px">'+byCountry+byRoom+'</div><div style="margin-top:10px">'+bySource+'</div>';
+}
+function obsHealth(o){
+  var days=(o.postingHealth&&o.postingHealth.days)||[];
+  if(!days.length)return '';
+  var legend='<div class="callg"><span><i style="background:var(--good)"></i>sent</span><span><i style="background:var(--gold)"></i>half sent</span>'
+    +'<span><i style="background:var(--bad)"></i>failed</span><span><i style="background:var(--blue)"></i>still finishing</span>'
+    +'<span><i style="background:var(--panel2);border:1px solid var(--line)"></i>nothing recorded</span></div>';
+  var cells=days.map(function(d){
+    var st=d.failed>0&&!d.sent&&!d.partial?"failed":d.partial>0?"partial":d.sent>0?"sent":d.pending>0?"pending":"none";
+    var marks=[];if(d.retried)marks.push(d.retried+" retried");if(d.duplicates)marks.push(d.duplicates+" duplicate"+(d.duplicates>1?"s":"")+" caught");
+    var tip=d.date+" | "+d.sent+" sent, "+d.partial+" half sent, "+d.failed+" failed"+(marks.length?", "+marks.join(", "):"");
+    return '<div class="d '+st+'" tabindex="0" role="img" data-tip="'+esc(tip)+'"></div>';
+  }).join("");
+  var body='<div class="calwrap"><div class="cal">'+cells+'</div></div>'+legend;
+  var table=dt(["Date","Sent","Half sent","Failed","Retried","Duplicates caught"],days.map(function(d){return [d.date,d.sent,d.partial,d.failed,d.retried,d.duplicates]}));
+  return vizCard("viz-health","Posting health, the last 30 days","One square a day; a square with nothing recorded is not a failure, it is unread",body,table);
+}
+/* a meter, not a bar: each row is its OWN percentage of its OWN total, six
+   corpora of very different sizes (18 du'as, 2,981 verses) side by side, so
+   a small, fully covered corpus (Names, 99 of 99) never reads as nearly
+   empty next to a large one the way one shared cross-row scale would draw
+   it -- the bar chart's own scale would double-encode size and coverage in
+   one length and lose the second. */
+function obsMeters(id,title,sub,rows){
+  if(!rows.length)return vizCard(id,title,sub,'<p class="faint small">Not enough posted yet to say.</p>',"");
+  /* the value is one line, count then percent, both tabular: "304 of 350"
+     wrapped onto three lines in a 40px column built for a plain bar's
+     number, so the meter gets its own wider value column (.bars.meter,
+     the stylesheet's own comment carries the why) */
+  var body='<div class="bars meter">'+rows.map(function(r){
+    var pct=r.total>0?Math.round(r.v/r.total*100):0;
+    return '<div class="b" tabindex="0" data-tip="'+esc(r.label+" | "+r.v+" of "+r.total+", "+pct+" percent")+'">'
+      +'<div class="n"><span class="nn">'+esc(r.label)+'</span></div>'
+      +'<div class="t"><i style="width:'+pct+'%"></i></div><div class="v"><span class="cnt">'+r.v+' of '+r.total+'</span><span class="pct">'+pct+'%</span></div></div>';
+  }).join("")+'</div>';
+  var table=dt(["Type","Has a reel","Total","Share"],rows.map(function(r){return [r.label,r.v,r.total,(r.total>0?Math.round(r.v/r.total*100):0)+"%"]}));
+  return vizCard(id,title,sub,body,table);
+}
+/* the shelf's own kind field (reels/index.json's card.kind) is a plain
+   lowercase word, "verse" or "short" -- not an internal id the way a slot
+   name is, but not what the owner reads elsewhere in this room either, so
+   it gets the same friendly name the library corpus above already uses */
+var OBS_TYPE_LABEL={light:"Lights",word:"Words",name:"Names",day:"Days",dua:"Du'as",verse:"Verses",short:"Silent films",know:"Did you knows"};
+function obsLibrary(o){
+  var lib=o.library||{};var corpus=(lib.corpus&&lib.corpus.types)||[];
+  var rows=corpus.filter(function(t){return t.total!=null}).map(function(t){return {label:OBS_TYPE_LABEL[t.type]||t.type,v:t.withReel,total:t.total}});
+  var cov=obsMeters("viz-libcov","How much of the library has a reel","Each row is its own share of its own total, not compared against the others",rows);
+  var films=lib.corpus&&lib.corpus.films;
+  var filmsLine=films?'<p class="faint small" style="margin:8px 0 0">The heroes and Hajj films: '+films.traced+' of '+films.total+' trace to one record each.</p>':'';
+  var shelf=lib.shelf||{};var byKind=shelf.byKind||{};
+  var shelfRows=Object.keys(byKind).sort(function(a,b){return byKind[b]-byKind[a]}).map(function(k){return {label:OBS_TYPE_LABEL[k]||k,n:byKind[k],v:byKind[k]}});
+  var shelfBars=obsBars("viz-shelf","What is left on the shelf","Cards not yet posted to every network, "+obsN(shelf.total)+" in total",shelfRows,
+    function(r){return r.label},function(){return "";},function(r){return r.v;},function(r){return obsN(r.v)});
+  var posted=lib.postedByNetwork||{};
+  var postedRows=Object.keys(posted).map(function(k){return {label:OBS_NETLABEL[k]||k,n:posted[k],v:posted[k]}}).sort(function(a,b){return b.v-a.v;});
+  var postedBars=postedRows.length?obsBars("viz-postednet","Reels posted, by network","Every network a reel has ever reached, counted once each",postedRows,
+    function(r){return r.label},function(){return "";},function(r){return r.v;},function(r){return obsN(r.v)}):"";
+  return cov+filmsLine+'<div class="panelgrid n2" style="margin-top:10px">'+shelfBars+postedBars+'</div>';
+}
+
+var OBS_TIP_WIRED=false;
+function obsWireTip(){
+  if(OBS_TIP_WIRED)return;OBS_TIP_WIRED=true;
+  var tip=$("obs-tip");
+  function show(el,ev){
+    var t=el.getAttribute("data-tip");if(!t)return;
+    var parts=t.split("|");
+    tip.innerHTML=(parts[0]?esc(parts[0].trim())+"<br>":"")+"<b>"+esc((parts[1]||parts[0]).trim())+"</b>";
+    tip.classList.add("on");
+    var x=(ev&&ev.clientX!=null)?ev.clientX:el.getBoundingClientRect().left+el.offsetWidth/2;
+    var y=(ev&&ev.clientY!=null)?ev.clientY:el.getBoundingClientRect().top;
+    if(!ev||ev.clientX==null){var r=el.getBoundingClientRect();x=r.left+r.width/2;y=r.top}
+    tip.style.left=Math.min(window.innerWidth-230,Math.max(6,x+12))+"px";
+    tip.style.top=Math.max(6,y-38)+"px";
+  }
+  function hide(){tip.classList.remove("on")}
+  document.body.addEventListener("pointerover",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)show(el,e)});
+  document.body.addEventListener("pointermove",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)show(el,e)});
+  document.body.addEventListener("pointerout",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)hide()});
+  document.body.addEventListener("focusin",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)show(el)});
+  document.body.addEventListener("focusout",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)hide()});
+}
+function drawObservatory(force){
+  var el=$("s-observatory");
+  obsWireTip();
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The Observatory</p>'+skel(3);el.dataset.built="1"}
+  return obsQ(force).then(function(o){
+    o=o||{};
+    if(o.ok===false){el.innerHTML=BACK+'<p class="sec">The Observatory</p><div class="card"><b style="color:var(--bad)">'+esc(o.error||"The Observatory could not be read.")+'</b></div>';return}
+    el.innerHTML=BACK+'<p class="sec">The Observatory</p><p class="muted small" style="margin:-6px 0 14px">Every number across the library, the networks and the site, side by side, so a pattern one room hides has somewhere to show.</p>'
+      +obsSummary(o)+obsNotes(o)
+      +'<p class="sec">The funnel</p>'+obsFunnel(o)
+      +'<p class="sec">Thirty days, network by network</p>'+obsTrend(o)
+      +'<p class="sec">The best hour to post</p>'+obsHeat(o)
+      +'<p class="sec">What reaches furthest</p>'+obsKindSubject(o)
+      +'<p class="sec">The site</p>'+obsVisitors(o)
+      +'<p class="sec">Posting health</p>'+obsHealth(o)
+      +'<p class="sec">The library</p>'+obsLibrary(o);
+    el.onclick=function(e){
+      var b=e.target.closest&&e.target.closest("[data-tv]");if(!b)return;
+      var card=$(b.dataset.tv);if(!card)return;
+      var showTable=card.querySelector(".vtb").hidden;
+      card.querySelector(".vzc").hidden=showTable;card.querySelector(".vtb").hidden=!showTable;
+      b.textContent=showTable?"Chart":"Table";b.setAttribute("aria-pressed",showTable?"true":"false");
+    };
+  }).catch(function(){el.innerHTML=BACK+'<p class="sec">The Observatory</p><div class="card"><b style="color:var(--bad)">The Observatory could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+
+/* ===========================================================================
+   THE LANTERN
+
+   An owner-only agent: POST /api/lantern-agent {message, thread} streams
+   Server-Sent Events (start, plan, step, subagent, token, artifact, action,
+   proposal, done, error) while it plans, reads the house's own tools, hands
+   parts to subagents, and answers. Everything api/_agent.js decided is read
+   here exactly as it arrives, never reordered or guessed at; every piece of
+   model text is escaped before it reaches the page, the same discipline
+   every other room in this console already keeps for a reader-facing string.
+
+   THE THINKING STREAM is a <details> open while a run is in flight and
+   folded the moment it ends, so the owner sees the working while it works
+   and a short answer once it is done, not a wall of steps left open forever.
+   ARTIFACTS reuse the Observatory's own chart functions (obsBars, trendSvgBig,
+   dt, vizCard): no second chart engine, no new colour.
+   =========================================================================== */
+var LANT={thread:"",busy:false,turns:[]};
+var LANT_STARTERS=["What should we post more of?","Why is Facebook at zero?","Plan next week's reels","Make a package for the best verse of the month"];
+var lantModelsQ=function(f){return cached("lantmodels",function(){return get("/api/lantern-models").then(function(r){return r.j})},f)};
+function lantLedger(){return get("/api/lantern-agent?action=ledger").then(function(r){return r.j})}
+function lantProposals(){return get("/api/lantern-agent?action=proposals").then(function(r){return r.j})}
+
+/* human words for what would otherwise be an internal action key or a
+   raw hex id leaking into the room: the ledger's own "what" (an
+   ACTION_TYPES slug from api/_agent.js) and a proposal's "requested".
+   Never print nlan:*, a proposal id or an action key to the owner --
+   say in words what the house did or asks, the same rule every other
+   room here already keeps for a reader-facing string. */
+var LANT_WHAT={"refresh-insights":"Refreshed the network numbers","reconcile-teach":"Taught the duplicate guard","lineup-change":"Change today's line-up"};
+var LANT_NET={instagram:"Instagram",facebook:"Facebook",threads:"Threads",tiktok:"TikTok",youtube:"YouTube",x:"X"};
+function lantWhatText(what,args){
+  var base=LANT_WHAT[what]||("an action the room does not have a plain name for (" + String(what||"unknown") + ")");
+  if(what==="reconcile-teach"&&args&&args.network){
+    var net=LANT_NET[String(args.network).toLowerCase()]||args.network;
+    base+=" from "+net+"'s real posts";
+  }
+  return base;
+}
+function lantStepRow(s){
+  var icon=s.error?"bad":((s.phase==="done"||s.phase==="incomplete")?"ok":"wait");
+  var who=s.tool?("Tool: "+esc(s.tool)):(s.role?("Subagent: "+esc(s.role)):"Plan");
+  var bits=[];
+  if(s.why)bits.push(esc(s.why));
+  if(s.summary)bits.push(esc(s.summary));
+  if(s.gist)bits.push(esc(s.gist));
+  if(s.error)bits.push(esc(s.error));
+  if(s.items)bits.push(s.items.map(esc).join("; "));
+  return '<div class="lant-step"><span class="ic '+icon+'"></span><span><b>'+who+'</b>'+(bits.length?" , "+bits.join(" , "):"")+'</span></div>';
+}
+function lantThinkHtml(think,open,done){
+  think=think||[];
+  var count=think.length;
+  return '<details class="lant-think"'+(open?' open':'')+'><summary>Show thinking<span class="n">'+count+(done?" step"+(count===1?"":"s"):" so far")+'</span></summary>'
+    +'<div class="body">'+(count?think.map(lantStepRow).join(""):'<p class="muted small" style="margin:8px 0">Nothing to show yet.</p>')+'</div></details>';
+}
+/* one artifact, drawn with the room's own tools: a bars chart and a trend
+   both reuse Observatory's own functions so a reader never meets a second
+   way of drawing the same kind of picture; a table is dt(); a draft is a
+   plain box with Copy and a character count; a proposal carries Approve
+   and Decline, which the console's own click handler below wires. */
+function lantArtifact(a,idx){
+  var id="lant-art-"+idx;
+  if(a.type==="chart"&&a.spec&&a.spec.kind==="bars"){
+    var rows=(a.spec.rows||[]).map(function(r){return {label:r.label,n:r.n||0,v:r.v}});
+    return obsBars(id,a.spec.title||"Chart",a.spec.sub||"",rows,function(r){return r.label},function(r){return r.n+" post"+(r.n===1?"":"s")},function(r){return r.v},function(r){return obsN(r.v)});
+  }
+  if(a.type==="chart"&&a.spec&&a.spec.kind==="trend"){
+    var dates=a.spec.dates||[];var series=a.spec.series||{};var names=Object.keys(series);
+    var body='<div class="panelgrid n2">'+names.map(function(n){return '<div class="trendp"><b>'+esc(n)+'</b>'+(trendSvgBig(series[n],dates,n)||'<p class="faint small" style="margin:4px 0 0">Not enough data yet.</p>')+'</div>'}).join("")+'</div>';
+    var table=dates.length?dt(["Date"].concat(names),dates.map(function(d,i){return [d].concat(names.map(function(n){return obsN((series[n]||[])[i])}))})):"";
+    return vizCard(id,a.spec.title||"Trend",a.spec.sub||"",body,table);
+  }
+  if(a.type==="table"){
+    var headers=a.headers||[];var trows=a.rows||[];
+    return vizCard(id,a.title||"Table","",dt(headers,trows),dt(headers,trows));
+  }
+  if(a.type==="draft"){
+    var text=String(a.text||"");
+    return '<div class="lant-draft" id="'+id+'"><div class="hd"><b>Draft: '+esc(a.network||"")+'</b><span class="cnt">'+text.length+' characters</span>'
+      +'<button class="btn ghost sm" data-lant-copy="'+id+'-pre">Copy</button></div><pre id="'+id+'-pre">'+esc(text)+'</pre></div>';
+  }
+  if(a.type==="proposal"){
+    var pid=a.id||"";
+    var head=a.requested?lantWhatText(a.requested,a.args):"Proposal";
+    return '<div class="lant-proposal" id="'+id+'"><b>'+esc(head)+'</b><p class="small">'+esc(a.description||"")+'</p>'
+      +(a.why?'<p class="ev"><b>Why: </b>'+esc(a.why)+'</p>':'')
+      +(a.evidence?'<p class="ev"><b>Evidence: </b>'+esc(a.evidence)+'</p>':'')
+      +(a.reason?'<p class="ev"><b>Note: </b>'+esc(a.reason)+'</p>':'')
+      +(a.change?'<p class="ev"><b>Change: </b>'+esc(a.change)+'</p>':'')
+      +(a.undo?'<p class="ev"><b>Undo: </b>'+esc(a.undo)+'</p>':'')
+      +(pid?'<div class="acts"><button class="btn sm" data-lant-approve="'+esc(pid)+'">Approve</button><button class="btn ghost sm" data-lant-decline="'+esc(pid)+'">Decline</button></div>'
+           :'<p class="muted small" style="margin:8px 0 0">This proposal carries no id and cannot be decided from here.</p>')
+      +'</div>';
+  }
+  return '';
+}
+/* one turn of the thread, oldest at the top, newest at the bottom: the
+   question first, then (for the answer's own turn) its thinking, then
+   the answer text itself, then whatever it made -- the fixed order the
+   refuter's review asked for, so a reader always meets a claim after
+   the working that grounds it and before the picture that follows from
+   it, never scrambled by whichever SSE event happened to arrive first. */
+function lantTurnHtml(t,idx){
+  if(t.role==="user")return '<div class="lant-turn"><div class="lant-msg user">'+esc(t.content||"")+'</div></div>';
+  var think=lantThinkHtml(t.think,!t.done,!!t.done);
+  var answer=(t.content||t.done)?('<div class="lant-msg assistant" aria-live="polite">'+esc(t.content||"")
+      +(t.notCompleted&&t.notCompleted.length?'<div class="note">Could not finish: '+t.notCompleted.map(esc).join("; ")+'</div>':'')+'</div>'):'';
+  var arts=(t.artifacts||[]).map(function(a,ai){return lantArtifact(a,idx+"-"+ai)}).join("");
+  return '<div class="lant-turn">'+think+answer+(arts?'<div class="lant-artifacts">'+arts+'</div>':'')+'</div>';
+}
+function lantRenderThread(){
+  var el=$("lant-thread");if(!el)return;
+  el.innerHTML=LANT.turns.map(function(t,i){return lantTurnHtml(t,i)}).join("");
+  lantScrollBottom(el);
+}
+function lantModelsHtml(m){
+  if(!m)return '';
+  var providers=m.providers||m.configured||{};
+  var keys=Object.keys(providers);
+  if(!keys.length)return '';
+  return '<div class="lant-models">'+keys.map(function(k){
+    var on=providers[k]==="set"||providers[k]===true;
+    return '<div class="m'+(on?" on":"")+'"><i></i>'+esc(k)+' '+(on?"set":"missing")+'</div>';
+  }).join("")+'</div>';
+}
+function lantLedgerHtml(items,cap,countToday){
+  if(!items||!items.length)return '<p class="muted small">Nothing taken yet today.</p>';
+  return '<p class="muted small" style="margin:-4px 0 10px">'+(countToday||0)+' of '+(cap||5)+' autonomous actions used today.</p>'
+    +'<div class="list lant-ledger">'+items.slice(0,20).map(function(e){
+    var canUndo=!e.undone&&e.undo&&e.undo.kind&&e.undo.kind!=="noop";
+    return '<div class="row'+(e.undone?" undone":"")+'"><div class="t"><b>'+esc(lantWhatText(e.what,e.args))+'</b><span>'+esc(e.why||"")+' · '+esc(ago(e.at))+'</span></div>'
+      +(canUndo?'<button class="btn ghost sm" data-lant-undo="'+esc(e.id)+'">Undo</button>':'<span class="u muted">'+(e.undone?"undone":(e.ok?"done":"failed"))+'</span>')+'</div>';
+  }).join("")+'</div>';
+}
+/* proposals the owner has not yet said yes or no to, kept whole across a
+   reload since api/lantern-agent.js now saves each one before it is ever
+   streamed (see that file's header, 2026-09-24): reusing lantArtifact's
+   own proposal card here means Approve and Decline behave exactly the
+   same whether a proposal is met live in a run's own thread or found
+   waiting here after the console was reopened. */
+function lantProposalsHtml(items){
+  if(!items||!items.length)return '';
+  return '<p class="sec">Waiting for a yes or a no</p><div class="lant-artifacts">'
+    +items.map(function(a,i){return lantArtifact(a,"open-"+i)}).join("")+'</div>';
+}
+function lantRemoveProposalDom(id){
+  [].slice.call(document.querySelectorAll("[data-lant-approve],[data-lant-decline]")).forEach(function(b){
+    var v=b.dataset.lantApprove||b.dataset.lantDecline;
+    if(v===id){var card=b.closest(".lant-proposal");if(card)card.remove()}
+  });
+}
+
+function lantScrollBottom(el){try{el.scrollTop=el.scrollHeight}catch(e){}}
+
+function drawLantern(force){
+  var el=$("s-lantern");
+  if(!el.dataset.built){
+    el.innerHTML=BACK+'<p class="sec">The Lantern</p>'
+      +'<p class="muted small" style="margin:-6px 0 14px">Plans a request, reads the house\'s own numbers and files, and answers with sources. It never posts, never changes the rota, and never touches money or a secret. At most five things a day on its own; everything else asks first.</p>'
+      +'<div id="lant-models"></div>'
+      +'<div id="lant-proposals"></div>'
+      +'<div id="lant-starters" class="lant-starters"></div>'
+      +'<div class="lant-in"><textarea id="lant-text" rows="2" placeholder="Ask the Lantern" aria-label="Ask the Lantern"></textarea><button class="go" id="lant-send">Ask</button></div>'
+      +'<div id="lant-thread" class="lant-thread" role="log" aria-label="Conversation with the Lantern"></div>'
+      +'<p class="sec">Actions it has taken</p><div id="lant-ledger"></div>';
+    el.dataset.built="1";
+    $("lant-starters").innerHTML=LANT_STARTERS.map(function(s){return '<button type="button" data-lant-start="'+esc(s)+'">'+esc(s)+'</button>'}).join("");
+    var ta=$("lant-text");
+    ta.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();lantSend()}});
+    $("lant-send").addEventListener("click",lantSend);
+    el.addEventListener("click",function(e){
+      var tv=e.target.closest&&e.target.closest("[data-tv]");
+      if(tv){var card=$(tv.dataset.tv);if(!card)return;
+        var showTable=card.querySelector(".vtb").hidden;
+        card.querySelector(".vzc").hidden=showTable;card.querySelector(".vtb").hidden=!showTable;
+        tv.textContent=showTable?"Chart":"Table";tv.setAttribute("aria-pressed",showTable?"true":"false");return}
+      var st=e.target.closest&&e.target.closest("[data-lant-start]");
+      if(st){$("lant-text").value=st.dataset.lantStart;lantSend();return}
+      var cp=e.target.closest&&e.target.closest("[data-lant-copy]");
+      if(cp){var pre=$(cp.dataset.lantCopy);if(pre&&navigator.clipboard)navigator.clipboard.writeText(pre.textContent).then(function(){toast("Copied.")});return}
+      var ap=e.target.closest&&e.target.closest("[data-lant-approve]");
+      if(ap){var pid=ap.dataset.lantApprove;if(!pid)return;ap.disabled=true;post("/api/lantern-agent",{action:"approve",id:pid}).then(function(r){
+        toast(r.j&&r.j.ok?(r.j.executed?"Done.":"Recorded."):"It refused.",!(r.j&&r.j.ok));lantRefreshLedger();lantRefreshProposals();lantRemoveProposalDom(pid)}).catch(unreachable(ap));return}
+      var dc=e.target.closest&&e.target.closest("[data-lant-decline]");
+      if(dc){var did=dc.dataset.lantDecline;if(!did)return;dc.disabled=true;post("/api/lantern-agent",{action:"decline",id:did}).then(function(){toast("Declined.");lantRefreshProposals();lantRemoveProposalDom(did)}).catch(unreachable(dc));return}
+      var un=e.target.closest&&e.target.closest("[data-lant-undo]");
+      if(un){un.disabled=true;var was=un.textContent;un.textContent="Undoing…";post("/api/lantern-agent",{action:"undo",id:un.dataset.lantUndo}).then(function(r){
+        toast(r.j&&r.j.ok?"Undone.":(r.j&&r.j.error)||"Could not undo.",!(r.j&&r.j.ok));lantRefreshLedger()}).catch(unreachable(un,was));return}
+    });
+  }
+  return Promise.all([lantModelsQ(force),lantLedger(),lantProposals()]).then(function(a){
+    $("lant-models").innerHTML=lantModelsHtml(a[0]);
+    var lg=a[1]||{};
+    $("lant-ledger").innerHTML=lantLedgerHtml(lg.items,lg.cap,lg.countToday);
+    var pr=a[2]||{};
+    $("lant-proposals").innerHTML=lantProposalsHtml(pr.items);
+    lantRenderThread();
+  }).catch(function(){});
+}
+function lantRefreshLedger(){lantLedger().then(function(lg){lg=lg||{};var el=$("lant-ledger");if(el)el.innerHTML=lantLedgerHtml(lg.items,lg.cap,lg.countToday)})}
+function lantRefreshProposals(){lantProposals().then(function(pr){pr=pr||{};var el=$("lant-proposals");if(el)el.innerHTML=lantProposalsHtml(pr.items)})}
+
+/* the stream itself: fetch (not EventSource, since the request is a POST
+   with a body) read a chunk at a time, split on the blank line SSE uses
+   between events, and dispatch each one exactly as api/lantern-agent.js
+   sent it. A run that fails outright (the network itself, not a model)
+   still folds the thinking panel and tells the owner plainly. */
+function lantSend(){
+  if(LANT.busy)return;
+  var ta=$("lant-text");var text=(ta.value||"").trim();
+  if(!text)return;
+  ta.value="";
+  LANT.busy=true;
+  LANT.turns.push({role:"user",content:text});
+  /* the one assistant turn this run fills in as events arrive: pushed now,
+     at the bottom, so streaming steps only ever grow this same turn in
+     place -- never a second, out-of-order bubble further up the thread. */
+  var turn={role:"assistant",content:"",think:[],artifacts:[],notCompleted:[],done:false};
+  LANT.turns.push(turn);
+  var sendBtn=$("lant-send");sendBtn.disabled=true;sendBtn.textContent="Asking…";
+  lantRenderThread();
+  var done=false;
+  function finish(errText){
+    if(done)return;done=true;
+    LANT.busy=false;sendBtn.disabled=false;sendBtn.textContent="Ask";
+    turn.done=true;
+    if(errText&&!turn.content)turn.content=errText;
+    lantRenderThread();
+    lantRefreshLedger();
+    lantRefreshProposals();
+  }
+  function onEvent(type,data){
+    if(type==="start"){LANT.thread=data.thread||LANT.thread;return}
+    if(type==="plan"){(data.steps||[]).forEach(function(s){turn.think.push({why:s.why,tool:s.kind==="tool"?s.name:null,role:s.kind==="subagent"?s.name:null,phase:"planned"})});lantRenderThread();return}
+    if(type==="step"){
+      if(data.phase==="incomplete"){turn.think.push({items:data.items,error:""})}
+      else turn.think.push(data);
+      lantRenderThread();return}
+    if(type==="subagent"){turn.think.push(data);lantRenderThread();return}
+    if(type==="artifact"){turn.artifacts.push(data);lantRenderThread();return}
+    if(type==="action"){toast(lantWhatText(data.what,data.args)+", on its own.");lantRefreshLedger();return}
+    if(type==="proposal"){turn.artifacts.push({type:"proposal",id:data.id,requested:data.requested,args:data.args,description:data.description,why:data.why,reason:data.reason,evidence:data.evidence,undo:""});lantRenderThread();return}
+    if(type==="token"){turn.content=data.text||"";lantRenderThread();return}
+    if(type==="done"){turn.notCompleted=data.notCompleted||[];finish();return}
+    if(type==="error"){finish(data.error||"The Lantern could not answer.");return}
+  }
+  fetch("/api/lantern-agent",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,thread:LANT.thread})})
+    .then(function(r){
+      if(r.status===401){relock();finish("The key has expired. Enter it again.");return}
+      if(!r.ok||!r.body){finish("The Lantern could not be reached.");return}
+      var reader=r.body.getReader();var dec=new TextDecoder();var buf="";
+      function pump(){
+        return reader.read().then(function(res){
+          if(res.done){finish();return}
+          buf+=dec.decode(res.value,{stream:true});
+          var parts=buf.split("\n\n");buf=parts.pop();
+          parts.forEach(function(block){
+            var m=/event: (\S+)\ndata: ([\s\S]*)/.exec(block);
+            if(!m)return;
+            var data=null;try{data=JSON.parse(m[2])}catch(e){data={}}
+            onEvent(m[1],data);
+          });
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(){finish("Could not reach the house.")});
 }
 
 /* ===========================================================================

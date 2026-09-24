@@ -1556,6 +1556,30 @@ async function notePostedChannels(date, rec) {
   try { await kv(cmds); return cmds.length; } catch { return 0; }
 }
 
+/* THE READ SIDE OF THE SAME HASH, for the Observatory room (api/observatory.js).
+   One field is `<reel>|<channel>`: this counts the distinct reels each
+   channel has ever answered ok for, which findDuplicate above already
+   trusts more than the all-networks ledger (K_POSTED) does. A single
+   HGETALL, the same one-round-trip shape backfillPosted already reads this
+   hash with; no field here is ever written by this function, only counted. */
+export async function postedChannelCounts() {
+  if (!kvReady()) return {};
+  let raw = [];
+  try { raw = (await kv([["HGETALL", K_POSTED_CH]]))[0] || []; } catch { return {}; }
+  const pairs = Array.isArray(raw) ? raw : Object.entries(raw).flat();
+  const byChannel = {};
+  for (let i = 0; i + 1 < pairs.length; i += 2) {
+    const field = String(pairs[i]);
+    const bar = field.lastIndexOf("|");
+    if (bar < 0) continue;
+    const ch = field.slice(bar + 1);
+    (byChannel[ch] = byChannel[ch] || new Set()).add(field.slice(0, bar));
+  }
+  const out = {};
+  for (const ch of Object.keys(byChannel)) out[ch] = byChannel[ch].size;
+  return out;
+}
+
 /* THE ONE TIME CATCH UP, NOT A READ ON EVERY SEND.
    findDuplicate above trusts K_POSTED_CH, and that hash only ever grows
    forward: a record written before this fix shipped, or one nothing has
@@ -1725,13 +1749,40 @@ export async function teachGuard(network, host, opts = {}) {
     const day = latest.get(r);
     if (wasDay && wasDay >= day) { known++; return; }
     cmds.push(["HSET", K_POSTED_CH, r + "|" + network, day + "#"]);
-    taught.push({ reel: r, day, before: wasDay || null });
+    /* `before` is the field's own EXACT prior value, whole ("date#slot" or
+       a bare "date" from before the slot suffix existed), not merely
+       wasDay: an earlier cut of this kept only the date half for the
+       Lantern agent's own undo (api/_agent.js's runAction), which meant
+       undoing a teach on a field that had carried a real slot ("2026-08-
+       01#dawn") put back "2026-08-01" instead, a value that had never
+       actually been there. revertTaught() below writes this back byte for
+       byte, so it has to be given the byte for byte original. */
+    taught.push({ reel: r, day, before: was || null });
   });
   if (cmds.length) {
     try { await kv(cmds); }
     catch (e) { return { ok: false, why: "the store refused the write: " + String(e && e.message || e).slice(0, 120), network }; }
   }
   return { ok: true, network, written: cmds.length, known, taught };
+}
+
+/* the exact inverse of teachGuard's own write, for the Lantern agent's
+   ledger (api/_agent.js's undoAction): teachGuard only ever writes a field
+   that was empty or held an older day, and it hands back that field's OWN
+   prior value on every entry it teaches (`taught[].before`), so undoing is
+   putting each field back to precisely what it held, never a guess. A field
+   that had nothing before (before: null) is deleted outright rather than
+   left holding an empty string, since an empty string is not what "nothing
+   was ever taught here" looked like before this ran. */
+export async function revertTaught(entries) {
+  const list = Array.isArray(entries) ? entries.filter(e => e && e.reel && e.network) : [];
+  if (!list.length) return { ok: true, reverted: 0 };
+  if (!kvReady()) return { ok: false, why: "the store is not configured" };
+  const cmds = list.map(e => e.before
+    ? ["HSET", K_POSTED_CH, e.reel + "|" + e.network, e.before]
+    : ["HDEL", K_POSTED_CH, e.reel + "|" + e.network]);
+  try { await kv(cmds); return { ok: true, reverted: cmds.length }; }
+  catch (e) { return { ok: false, why: "the store refused the write: " + String(e && e.message || e).slice(0, 120) }; }
 }
 
 /* the whole pass: what the network has, what we think we sent, and the
