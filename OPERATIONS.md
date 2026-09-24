@@ -359,6 +359,7 @@ stripped from everything public.
 | `/api/ask` | gated | The Lantern's public question box. Rate limited per reader. |
 | `/api/guide` | gated | The quiet clarifier |
 | `/api/page` | yes | Server renders a Light, a verse, a surah, a chapter of the Path, the day, and the prophet, companion, character and place rooms, from `vercel.json`'s rewrites |
+| `/api/package` | admin | `?id=<content_id or a site path>`: the Content Factory (masterplan step 6). Resolves one library object through `api/page.js`'s own loaders and answers its canonical facts, what the shelf and the graph already have for it, and one deterministic per-platform draft (YouTube, Instagram, Facebook, Threads, Pinterest, an X thread, Reddit). Nothing is posted, no model is called. `id` takes either form: a content_id (`light:<id>`, `verse:2-255`, `word:<id>`, `prophet:<id>`, `companion:<id>`, `figure:<id>` for a character, `place:<id>`, `chapter:<n>` for a Path chapter, `surah:<n>`, `name:<n>` for a Name by its 1-99 position, or `name:<slug>`, the graph's own id, the exact one this route itself prints back) or the room's own site path (`/light/<id>`, `/verse/2-255`, `/dictionary/<id>`, `/prophet/<id>`, `/companion/<id>`, `/character/<id>`, `/place/<id>`, `/path/<n>`, `/surah/<n>`, `/name/<n>`). A Name's own content_id in the answer (`content_id`, and `derivatives`' keys) is the Content Graph's slug (`name:al-majeed`), read off `assets/reel-sources.json`'s `names` map, not reconstructed here, since two Names (Al-Majid at position 48 and 65) share a transliteration and only the graph's own disambiguation is authoritative. A `derivatives.films` row can name a "short" film the graph traced to a `hero:` or `page:` target rather than one of the ten types above; that row still shows in the JSON, since it is real, but a reader can never ask this route about `hero:` or `page:` directly (they answer 400, an unknown type), so only the films traced to a Light or a word (5 of the 35 the graph carries today) are ever reachable through a package built here. `id` over 200 characters, or a site-path id whose `%`-escape `decodeURIComponent` cannot read, is refused (400) rather than crashed on or echoed back whole; `word:__proto__` and the like answer 404, never the prototype chain, since the dictionary lookup checks the object's own keys only. |
 | `/api/sitemap` | yes | `/sitemap-rooms.xml`: every server-rendered address `api/page.js` can answer |
 | `/api/journal` | yes (write) | Journal entries and replies. **Every reply is pre-moderated.** |
 | `/api/journal-page` | yes | Server-renders `/journal/<slug>` (rewrite in `vercel.json`) |
@@ -415,12 +416,17 @@ so changing the menu means regenerating or re-injecting across every page.
 **The Content Graph**, `sh scripts/graph/run.sh`: rebuilds `build/graph/noor-content-graph.json`
 (git ignored, out of the deployment), validates it, regenerates `assets/entity-graph.json` (the
 prophet, companion, character, place and name rooms' "Read beside it" shelf, ranked by relevance
-since api/page.js shows only the first 8 of a list), and rewrites the generated counts block in
-`CONTENT_STATUS.md`. Run it whenever a Light, a dictionary word, a Path chapter, a prophet, a
-companion, a character, a place, a Name or one of the eight stories is added, renamed or removed;
-`tests/content-graph.mjs` is the guard that catches a forgotten run (it fails if
-`assets/entity-graph.json` has drifted from what the graph would derive right now, byte for byte,
-order included, since a resorted list is a reader seeing different links, not a harmless drift).
+since api/page.js shows only the first 8 of a list), `assets/person-words.json`, `assets/reel-
+subjects.json`, `assets/reel-sources.json` (which reel cards and which "short" films the shelf
+carries for a given content_id, and each of the 99 Names' own content_id, both read straight off
+the graph's own `reel_of` edges and each Name node's own `url`, so `api/_package.js`'s derivatives
+and a Name's content_id are the graph's own answer, not a second guess), and rewrites the generated
+counts block in `CONTENT_STATUS.md`. Run it whenever a Light, a dictionary word, a Path chapter, a
+prophet, a companion, a character, a place, a Name, one of the eight stories, the reels' shelf or
+the film briefs is added, renamed or removed; `tests/content-graph.mjs` is the guard that catches a
+forgotten run (it fails if any of these derived files has drifted from what the graph would derive
+right now, byte for byte, order included, since a resorted list is a reader seeing different links,
+not a harmless drift).
 
 ### The Illuminations Library
 

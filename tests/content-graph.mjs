@@ -32,6 +32,11 @@
        subjectOf() (api/_insights.js) actually reads, since lights/all.json,
        the dictionary and tools/reels/quran-uthmani.json never deploy, and
        drift here is the console's subject fold quietly falling silent;
+     - assets/reel-sources.json matches what derive_reel_sources.py produces
+       from the graph's own reel_of edges right now, byte for byte: the file
+       api/_package.js actually reads for a package's derivatives (which
+       reel, which film) and for a Name's own content_id, and stays under
+       400 KB;
      - two builds over the same unchanged tree write byte-identical graphs.
    The full build is a few seconds (about 5 on this machine); the suite
    builds it twice for the determinism check, so budget under a minute.
@@ -257,6 +262,34 @@ console.log('\n=== assets/reel-subjects.json matches the shelf right now ===');
   }
   fs.rmSync(derivedOut, { force: true });
 }
+
+console.log('\n=== assets/reel-sources.json matches the graph\'s own reel_of edges right now ===');
+if (buildA.ok) {
+  // api/_package.js (the Content Factory) reads this file, never the 7 MB
+  // graph itself, so a drift here is a package quietly losing a reel or a
+  // film it should have shown, or a Name resolving to a content_id the
+  // graph does not actually use.
+  const derivedOut = path.join(SCRATCH, 'reel-sources.derived.json');
+  const d = run('python3', [path.join(GRAPH_DIR, 'derive_reel_sources.py'), '--graph', buildA.file, '--out', derivedOut]);
+  ok(d.code === 0, 'derive_reel_sources.py runs against the freshly built graph: ' + d.err.slice(-300));
+  if (d.code === 0) {
+    const shipped = fs.readFileSync(path.join(ROOT, 'assets', 'reel-sources.json'), 'utf8');
+    const derived = fs.readFileSync(derivedOut, 'utf8');
+    ok(shipped === derived, 'assets/reel-sources.json is byte-identical to what run.sh\'s derive step produces right now');
+    const j = JSON.parse(shipped);
+    ok(j.sources['light:quran-guards-itself'] && Array.isArray(j.sources['light:quran-guards-itself'].reels),
+       'a Light with a reel card lists it');
+    ok(j.sources['word:ihram'] && Array.isArray(j.sources['word:ihram'].films) && j.sources['word:ihram'].films.length === 2,
+       'a word with two traced films (the Hajj shorts) lists both');
+    const knowTarget = Object.entries(j.sources).find(([, v]) => (v.reels || []).some(r => r.id.startsWith('know-')));
+    ok(!!knowTarget, 'a Did you know card, untraceable by id alone, is found under its own Light by the graph\'s edge');
+    ok(j.names['1'] && j.names['1'].startsWith('name:'), 'the Names carry the graph\'s own content_id, keyed by the room\'s position');
+    ok(Object.keys(j.names).length === 99, 'all 99 Names are mapped');
+    const stat = fs.statSync(path.join(ROOT, 'assets', 'reel-sources.json'));
+    ok(stat.size < 400000, 'the file stays small (' + stat.size + ' bytes)');
+  }
+  fs.rmSync(derivedOut, { force: true });
+} else skip('reel-sources drift (no graph)');
 
 console.log('\n=== deterministic: two builds over an unchanged tree agree ===');
 if (buildA.ok) {

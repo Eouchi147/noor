@@ -135,7 +135,11 @@ export const nameRow = n => {
    derived from the audit's graph at confidence 0.8 and above): the Lights that
    name it, the chapters, its word, the words that name it, people, places */
 const entityGraph = () => once("egraph", () => { const j = readJSON("assets/entity-graph.json"); return (j && typeof j === "object") ? j : {}; });
-const edgesOf = key => { const e = entityGraph()[key]; return (e && typeof e === "object") ? e : {}; };
+/* exported for api/_package.js: the content factory's "related rooms" for a
+   prophet, a companion, a character, a place or a Name reads the same edges
+   this room's own "Read beside it" section does, rather than opening
+   entity-graph.json a second time or walking the source files again */
+export const edgesOf = key => { const e = entityGraph()[key]; return (e && typeof e === "object") ? e : {}; };
 
 /* the manifest of rendered reels: on disk when the shelf's pull request has
    landed, else fetched from the site; absent, the shelf is the reference list */

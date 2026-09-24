@@ -116,6 +116,24 @@ const MARKETING = { kind: 'outreach', variants: [
 const WEEK = { kind: 'week', week: [
   { day: 'Monday', channel: 'r/islam', title: 'A word that carries two meanings', body: 'The Monday post.', leads_with: 'the Madrasa' },
   { day: 'Tuesday', channel: 'masjid email', title: 'A free learning map', body: 'The Tuesday email.', leads_with: 'the Cradle' }] };
+/* the Content Factory (masterplan step 6): one stubbed answer, the same
+   shape api/package.js really returns, so the console's own card is proved
+   without rebuilding the content graph inside a browser test */
+const PKG = { ok: true, content_id: 'light:quran-guards-itself', object: {
+    type: 'light', id: 'quran-guards-itself', title: 'The book makes a claim about its own survival',
+    url: 'https://noorcodex.com/light/quran-guards-itself', text: 'In Surah al-Hijr the Qur’an calls itself the Reminder.',
+    sources: ['Qur’an 15:9'], arabic: '' },
+  derivatives: { reels: [], films: [], related: [{ type: 'light', title: 'Ramadan was when the text was checked', url: 'https://noorcodex.com/light/jibril-ramadan-review' }] },
+  gaps: ['No reel exists yet for this Light.', 'No film exists yet for this Light.'],
+  drafts: {
+    instagram: { text: 'The book makes a claim about its own survival\n\nhttps://noorcodex.com/light/quran-guards-itself' },
+    facebook: { text: 'The book makes a claim about its own survival\n\nhttps://noorcodex.com/light/quran-guards-itself' },
+    threads: { text: 'The book makes a claim\n\nhttps://noorcodex.com/light/quran-guards-itself' },
+    pinterest: { title: 'The book makes a claim about its own survival', text: 'Evergreen note.', link: 'https://noorcodex.com/light/quran-guards-itself' },
+    reddit: { title: 'The book makes a claim about its own survival', text: 'Source: Qur’an 15:9\n\nFuller version: https://noorcodex.com/light/quran-guards-itself' },
+    youtube: { title: 'The book makes a claim about its own survival', description: 'https://noorcodex.com/light/quran-guards-itself' },
+    x: ['1/2 The book makes a claim about its own survival', '2/2 Source: Qur’an 15:9 https://noorcodex.com/light/quran-guards-itself']
+  } };
 const VET = { verdict: 'review', score: 62, reasons: ['The site sells clothing and says nothing about its finance.'], questions: ['Do you take interest bearing credit?'] };
 
 /* ---- the dials, in the shape GET /api/settings?all=1 really answers with ----
@@ -324,6 +342,14 @@ async function open_(w, h, posted, errors, opts = {}) {
         post: { title: TODAY.slots.find(s => s.id === 'light').title, body: 'The card text', image: '/api/card?slot=light' }, shaped: { instagram: { text: 'The card text #noor' } } }));
       if (opts.legacy) { const t = JSON.parse(JSON.stringify(TODAY)); t.slots = t.slots.map(x => x.id === 'light' ? { id: 'light', at: 12, state: 'due', title: '' } : x); t.legacy = { state: 'sent', at: '2026-09-07T12:01:00Z', title: 'The card' }; return r.fulfill(J(t)); }
       return r.fulfill(J(TODAY));
+    }
+    if (u.includes('/api/package')) {
+      posted.push({ url: u.replace(BASE, ''), method: 'GET', body: {} });
+      /* a slow answer, held open on purpose, to prove a second Enter while
+         the first request is still in flight is refused rather than firing
+         a second overlapping one (item 4, 24 September 2026) */
+      if (u.includes('id=slow-package')) { return new Promise(res => setTimeout(() => res(r.fulfill(J(PKG))), 500)); }
+      return r.fulfill(J(u.includes('id=no-such') ? { ok: false, error: 'no such object: no-such' } : PKG));
     }
     if (u.includes('/api/insights')) return r.fulfill(J(u.includes('action=numbers') ? NUM : INS));
     if (u.includes('/api/visitors')) return r.fulfill(J(VIS));
@@ -827,6 +853,53 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   await pg.click('#armor-list [data-ar="gh"]');
   await pg.waitForTimeout(200);
   ok(await pg.evaluate(() => /1 of 7 closed/.test(document.getElementById('armor-list').innerText)), 'the armor counts what is still open');
+
+  /* Make a package · the Content Factory (masterplan step 6) */
+  ok(await pg.evaluate(() => !!document.getElementById('pkg-id') && !!document.getElementById('pkg-go')), 'Make a package carries an address field and a button');
+  posted.length = 0;
+  await pg.fill('#pkg-id', 'light:quran-guards-itself');
+  await pg.click('#pkg-go');
+  await pg.waitForTimeout(400);
+  ok(posted.some(x => x.url.startsWith('/api/package') && x.url.includes('id=light%3Aquran-guards-itself')),
+     'pressing it asks /api/package for exactly the id typed');
+  const pkgOut = await pg.evaluate(() => document.getElementById('pkg-out').innerText);
+  ok(/The book makes a claim about its own survival/.test(pkgOut) && /light:quran-guards-itself/.test(pkgOut), 'the object comes back named, with its content_id');
+  ok(/No reel exists yet/.test(pkgOut) && /No film exists yet/.test(pkgOut), 'the gaps are shown in plain sentences');
+  ok(/Ramadan was when the text was checked/.test(pkgOut), 'a related room from the graph is listed');
+  ok(await pg.evaluate(() => {
+    var els = [...document.querySelectorAll('#pkg-out b')].map(function (b) { return b.textContent; });
+    return els.some(function (t) { return t.indexOf('Threads') === 0; }) && els.some(function (t) { return t.indexOf('Instagram') === 0; })
+      && els.some(function (t) { return t.indexOf('X thread') === 0; }) && els.some(function (t) { return t.indexOf('Reddit') === 0; });
+  }), 'one block per platform is drawn, YouTube, Instagram, Facebook, Threads, Pinterest, Reddit and each X post');
+  ok(/\/ 500 characters/.test(pkgOut) && /\/ 2200 characters/.test(pkgOut) && /\/ 280 characters/.test(pkgOut),
+     'each block carries its character count against that platform\'s own limit');
+  ok(/Destination link/.test(pkgOut) && /light\/quran-guards-itself/.test(pkgOut.split('Destination link')[1] || ''),
+     'the Pinterest destination link is shown too, since the description above never carries it');
+  await pg.evaluate(() => { navigator.clipboard = navigator.clipboard || {}; navigator.clipboard.writeText = function (t) { window.__testClipboard = t; return Promise.resolve(); }; });
+  await pg.click('#pkg-out [data-pkg-cp]');
+  await pg.waitForTimeout(150);
+  ok(await pg.evaluate(() => window.__testClipboard === 'The book makes a claim about its own survival'),
+     'the first block\'s Copy button (YouTube’s own title) copies exactly that block\'s text, not the whole page');
+  posted.length = 0;
+  await pg.fill('#pkg-id', 'slow-package');
+  await pg.focus('#pkg-id');
+  await pg.keyboard.press('Enter');
+  await pg.keyboard.press('Enter');
+  await pg.keyboard.press('Enter');
+  await pg.waitForTimeout(700);
+  ok(posted.filter(x => x.url.includes('id=slow-package')).length === 1,
+     'the console ignores Enter while a request is still in flight, so three fast presses ask the house only once');
+
+  posted.length = 0;
+  await pg.fill('#pkg-id', 'no-such-thing');
+  await pg.click('#pkg-go');
+  await pg.waitForTimeout(400);
+  ok(/Nothing came back|no such object/i.test(await pg.evaluate(() => document.getElementById('pkg-out').innerText)), 'an address nothing answers to is told so plainly');
+  await pg.fill('#pkg-id', '');
+  await pg.focus('#pkg-id');
+  await pg.keyboard.press('Enter');
+  await pg.waitForTimeout(200);
+  ok(/Type a room address/.test(await pg.evaluate(() => document.getElementById('pkg-state').textContent)), 'Enter in the field works the same as the button, and an empty field is refused before it asks the house');
 
   const jw = await roomText('journal');
   ok(/First light/.test(jw) && /published/.test(jw) && /draft/.test(jw), 'the Journal desk lists every entry with its state');

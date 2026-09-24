@@ -1852,6 +1852,11 @@ function drawMarketing(force){
     +'<p class="muted small" style="margin:6px 0 0">One press, seven ready-to-paste pieces, Monday to Sunday, each on a different channel and a different room of the house. Ten minutes a day to paste them is the whole job.</p>'
     +'<div class="acts"><button class="btn" id="wk-go">Write my week</button><span class="muted small" id="wk-state" style="align-self:center"></span></div>'
     +'<div id="wk-out"></div></div>'
+    +'<p class="sec">Make a package · one object, every platform</p>'
+    +'<div class="card"><p class="muted small" style="margin:0 0 10px">The Content Factory (masterplan step 6): type a room address or a content id and the library\'s own words come back shaped for YouTube, Instagram, Facebook, Threads, Pinterest, an X thread and Reddit, plus what the shelf and the graph already know about it. Nothing is posted. Examples: /light/..., /verse/2-255, /dictionary/tawhid, /prophet/musa, /companion/c-bilal, /place/p-badr, /path/8, /surah/19, /name/1.</p>'
+    +'<div class="frm"><input class="fi full" id="pkg-id" placeholder="/light/... or a content id" aria-label="Room address or content id"/></div>'
+    +'<div class="acts"><button class="btn" id="pkg-go">Make the package</button><span class="muted small" id="pkg-state" style="align-self:center"></span></div></div>'
+    +'<div id="pkg-out"></div>'
     +'<p class="sec">The pipeline · ten rows a day</p><div id="pipe-list"></div>'
     +'<div class="acts" style="margin-top:0"><button class="btn ghost sm" id="pipe-add">Add a row</button><span class="muted small" style="align-self:center">Saved on this device only. Tap a stage to mark it.</span></div>'
     +'<p class="sec">Anonymity armor · do these once</p><div id="armor-list"></div>';
@@ -1879,8 +1884,74 @@ function drawMarketing(force){
       document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u2)},5000);return void toast("Saved as noor-learning-map.html.")}
     if(b.id==="mk-go")return mkWrite(b);
     if(b.id==="wk-go")return mkWeek(b);
+    if(b.id==="pkg-go")return pkgGo(b);
+    if(b.dataset.pkgCp!=null)return pkgCopy(b);
+  };
+  el.onkeydown=function(e){
+    if(e.key!=="Enter"||!e.target||e.target.id!=="pkg-id")return;
+    e.preventDefault();pkgGo($("pkg-go"));
   };
   return Promise.resolve();
+}
+/* ---- Make a package: the Content Factory ----
+   One press asks /api/package for one library object and gets back its own
+   words, shaped for every platform, with a character count against that
+   platform's own limit so the owner never has to count by hand, and a Copy
+   button per block: the same paste-and-post habit the rest of this room
+   already uses. Nothing here posts anything. */
+function pkgBlock(label,text,limit){
+  var n=(text||"").length,over=n>limit;
+  return '<div class="card" style="margin-top:10px"><div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap">'
+    +'<b style="color:var(--cream)">'+esc(label)+'</b>'
+    +'<span class="faint small" style="margin-left:auto'+(over?';color:var(--bad)':'')+'">'+n+' / '+limit+' characters</span></div>'
+    +'<div class="msg" style="margin-top:8px">'+esc(text||"")+'</div>'
+    +'<div class="acts"><button class="btn ghost sm" data-pkg-cp="1">Copy</button></div></div>';
+}
+function pkgRoomList(rows){
+  return (rows&&rows.length)?rows.map(function(x){return esc(x.title||x.hook||x.id||"")}).join(", "):"none yet";
+}
+function pkgRender(r){
+  if(!r||!r.ok)return '<div class="card"><b style="color:var(--bad)">Nothing came back.</b><p class="muted small" style="margin:6px 0 0">'+esc((r&&r.error)||"Check the address and try again.")+'</p></div>';
+  var o=r.object||{},d=r.derivatives||{},g=r.gaps||[],dr=r.drafts||{};
+  var h='<div class="card"><b style="color:var(--cream)">'+esc(o.title||"")+'</b>'
+    +'<p class="muted small" style="margin:6px 0 0">'+esc(r.content_id||"")+' &middot; <a href="'+esc(o.url||"#")+'" target="_blank" rel="noopener">'+esc(o.url||"")+'</a></p>'
+    +(o.text?'<p class="small" style="margin:8px 0 0">'+esc(o.text)+'</p>':'')
+    +(o.sources&&o.sources.length?'<p class="muted small" style="margin:8px 0 0">Sources: '+esc(o.sources.join(", "))+'</p>':'<p class="muted small" style="margin:8px 0 0">No sources recorded.</p>')
+    +(o.arabic?'<p class="small" lang="ar" translate="no" style="margin:8px 0 0">'+esc(o.arabic)+'</p>':'')+'</div>';
+  h+='<p class="sec">Derivatives</p><div class="card">'
+    +'<p class="small" style="margin:0">Reels &middot; '+pkgRoomList(d.reels)+'</p>'
+    +'<p class="small" style="margin:6px 0 0">Films &middot; '+pkgRoomList(d.films)+'</p>'
+    +'<p class="small" style="margin:6px 0 0">Related rooms &middot; '+pkgRoomList(d.related)+'</p></div>';
+  if(g.length)h+='<p class="sec">Gaps</p><div class="card"><ul class="small" style="margin:0;padding-left:18px">'+g.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div>';
+  h+='<p class="sec">Drafts</p>';
+  if(dr.youtube)h+=pkgBlock("YouTube · title",dr.youtube.title,100)+pkgBlock("YouTube · description",dr.youtube.description,4900);
+  if(dr.instagram)h+=pkgBlock("Instagram",dr.instagram.text,2200);
+  if(dr.facebook)h+=pkgBlock("Facebook",dr.facebook.text,2200);
+  if(dr.threads)h+=pkgBlock("Threads",dr.threads.text,500);
+  if(dr.pinterest)h+=pkgBlock("Pinterest · title",dr.pinterest.title,100)+pkgBlock("Pinterest · description",dr.pinterest.text,500)
+    +'<p class="muted small" style="margin:-4px 0 10px">Destination link (paste into Pinterest\'s own field, the description above never carries it) &middot; <a href="'+esc(dr.pinterest.link||"")+'" target="_blank" rel="noopener">'+esc(dr.pinterest.link||"")+'</a></p>';
+  if(dr.reddit)h+=pkgBlock("Reddit · title",dr.reddit.title,300)+pkgBlock("Reddit · body",dr.reddit.text,4000);
+  if(dr.x&&dr.x.length)dr.x.forEach(function(t,i){h+=pkgBlock("X thread · post "+(i+1)+" of "+dr.x.length,t,280)});
+  return h;
+}
+function pkgGo(b){
+  /* Enter in the field calls this directly, bypassing the browser's own
+     disabled-button click guard, so a second Enter while the first request
+     is still in flight is refused here too rather than firing a second
+     overlapping request. */
+  if(!b||b.disabled)return;
+  var st=$("pkg-state"),out=$("pkg-out"),val=(($("pkg-id")||{}).value||"").trim();
+  if(!val){st.textContent="Type a room address or a content id first.";return}
+  b.disabled=true;st.textContent="Building the package.";out.innerHTML='<div class="card"><div class="sk" style="height:60px"></div></div>';
+  get("/api/package?id="+encodeURIComponent(val)).then(function(r){
+    b.disabled=false;st.textContent="";
+    if(r.locked)return;
+    out.innerHTML=pkgRender(r.j||{});
+  }).catch(function(){b.disabled=false;st.textContent="";out.innerHTML='<div class="card"><b style="color:var(--bad)">Could not reach the house.</b></div>'});
+}
+function pkgCopy(b){
+  var card=b.closest(".card"),m=card&&card.querySelector(".msg");
+  if(m)copyText(m.textContent)
 }
 function mkWrite(b){
   var st=$("mk-state"),out=$("mk-out");

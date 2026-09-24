@@ -66,7 +66,9 @@ specs
 #     characters.js               places.js
 #     allah.html                  assets/entity-graph.json
 #     (the last five since 16 September 2026: the prophet, companion,
-#     character, place and Name rooms of api/page.js read them)
+#     character, place and Name rooms of api/page.js read them; since 24
+#     September 2026 api/package.js reads the same set, through the same
+#     loaders, to build a content package on command)
 #     assets/reel-subjects.json   (api/insights.js, api/house.js and
 #     api/warm.js, since 24 September 2026: the subject fold, derived by
 #     scripts/graph/derive_reel_subjects.py so those three functions never

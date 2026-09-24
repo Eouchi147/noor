@@ -97,6 +97,20 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
   Curated person words ship as `assets/person-words.json`. Verse ranges read 2:255-257.
 - Found, not yet fixed: fold() makes Mu'tah (the battle) and Mut'ah (the fiqh word) the same.
 
+## Shipped 24 September (masterplan step 6, in the owner's narrow form)
+
+- "Make a package" in the console's Marketing room (`/api/package?id=`, owner only): one library
+  object (a Light, verse, word, prophet, companion, place, chapter, surah or Name, by content_id
+  or by its address) becomes drafts for YouTube, Instagram, Facebook, Threads, Pinterest, an X
+  thread and Reddit, built from the object's own words and sources, never a model; its reels and
+  films (`assets/reel-sources.json` from the graph) and plain gaps ("no reel yet"). Nothing is
+  posted; the owner copies what he wants. Checked over all 1,907 objects: within every limit, no
+  word lost from a thread, no source that does not back its text, no dash.
+- First live analytics (24 Sept): YouTube strongest (12,014 views in a week), Instagram growing
+  (5,319 reached), Facebook about zero, Threads about one view a post; verse reels lead on
+  Instagram. The owner chose to wait a week before changing the line-up; a scheduled task
+  re-reads on 1 October.
+
 ## Decided and not yet done
 
 - The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for
