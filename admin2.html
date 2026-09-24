@@ -1002,7 +1002,15 @@ function insHtml(ins){
     +'<details class="fold" open><summary>By kind<span class="pill">'+((ins.byKind||[])[0]?esc(ins.byKind[0].label)+" lead":"")+'</span></summary><div class="in">'+insBars(ins.byKind||[],function(r){return r.label})+'</div></details>'
     +'<details class="fold"><summary>By hour<span class="pill">'+(ins.byHour||[]).length+' slots</span></summary><div class="in">'+insBars(ins.byHour||[],function(r){return r.label+" UTC"})+'</div></details>'
     +'<details class="fold"><summary>By network<span class="pill">'+(ins.byNetwork||[]).map(function(n){return NET_NAME[n.net]||n.net}).join(" · ")+'</span></summary><div class="in">'+insBars(ins.byNetwork||[],function(r){return NET_NAME[r.net]||r.net})+'</div></details>'
-    +'<details class="fold"><summary>By subject<span class="pill">'+((ins.bySubject||[])[0]?esc(ins.bySubject[0].label)+" leads":"")+'</span></summary><div class="in">'+insBars(ins.bySubject||[],function(r){return r.label})+'</div></details>'
+    +(function(){
+      /* a subject is ranked only once it has five posts behind it, the same
+         floor the sentences keep: on the first live read every verse reel was
+         its own surah, one post each, and "Maryam leads" rested on one post */
+      var all=ins.bySubject||[], ok=all.filter(function(r){return (r.n||0)>=5}), thin=all.length-ok.length;
+      return '<details class="fold"><summary>By subject<span class="pill">'+(ok[0]?esc(ok[0].label)+" leads":"not enough yet")+'</span></summary><div class="in">'
+        +(ok.length?insBars(ok,function(r){return r.label}):'<div class="empty">No subject has five posts yet.</div>')
+        +(thin?'<p class="faint small" style="margin:8px 0 0">'+thin+' more subject'+(thin===1?' has':'s have')+' fewer than five posts and '+(thin===1?'is':'are')+' not ranked yet.</p>':'')
+        +'</div></details>'})()
     +'<details class="fold"><summary>The top ten<span class="pill">by reach</span></summary><div class="in">'+(top.length?'<div class="list">'+top.map(function(t){return '<div class="row"><div class="t"><b>'+esc(t.title||t.slot)+'</b><span>'+esc(t.label)+' · '+esc(t.at)+' UTC · '+esc(NET_NAME[t.net]||t.net)+' · '+esc(t.date)+(t.url?' · <a href="'+esc(t.url)+'" target="_blank" rel="noopener">open</a>':'')+'</span></div><div class="r"><b style="color:var(--cream)">'+Number(t.n).toLocaleString()+'</b><div class="faint" style="font-family:var(--f-mono);font-size:10px">'+esc(t.measure)+'</div></div></div>'}).join("")+'</div>':'<div class="empty">Nothing read yet.</div>')+'</div></details>'
     +'<details class="fold"><summary>Best by subject<span class="pill">by reach</span></summary><div class="in">'+subjList(ins.subjectTop||[])+'</div></details>'
     /* a refuter's review caught this: below fifteen subject-bearing posts the
