@@ -72,7 +72,10 @@ const SLOT_NOUN = {
   dawn: "morning card", lead: "coming-up card", light: "day's card", word: "word card", dusk: "chapter card",
   reelA: "morning reel", reelC: "noon reel", reelD: "afternoon reel", reelB: "evening reel", reelF: "late reel", reelE: "night reel"
 };
-const slotPhrase = s => s.label + " UTC" + (SLOT_NOUN[s.slot] ? " (a " + SLOT_NOUN[s.slot] + ")" : " post");
+/* "the 21:00 UTC night reel", "the 09:00 UTC coming-up card": the clock
+   and the noun, no article to agree with the noun (the live page once read
+   "a afternoon reel") */
+const slotPhrase = s => s.label + " UTC " + (SLOT_NOUN[s.slot] || "post");
 const r1 = x => x == null ? null : Math.round(x * 10) / 10;
 const sum = xs => { const a = xs.filter(x => typeof x === "number" && isFinite(x)); return a.length ? a.reduce((s, x) => s + x, 0) : null; };
 const weekdayOf = d => new Date(d + "T00:00:00Z").getUTCDay();
@@ -353,7 +356,13 @@ function patternNotes(ins, visitorsThis, visitorsLast, postingDays, kindTotals) 
     out.push("The " + slotPhrase(bestSlot) + " engages best this week, and the " + slotPhrase(worstSlot) + " least.");
   if (ins.best) {
     const lead = (kindTotals || []).find(k => k.kind === ins.best.kind);
-    if (lead && lead.n >= MIN_BUCKET) out.push(ins.best.label + " lead engagement this week, over " + lead.n + " posts in the last 30 days.");
+    /* a kind the shelf could not name ("reel:reel", labelled just "reels")
+       says nothing the owner can act on, so no sentence is drawn from it */
+    const named = ins.best.kind && !/^reel:reel$/.test(ins.best.kind);
+    if (named && lead && lead.n >= MIN_BUCKET) {
+      const lab = String(ins.best.label || "");
+      out.push(lab.charAt(0).toUpperCase() + lab.slice(1) + " lead engagement this week, over " + lead.n + " posts in the last 30 days.");
+    }
   }
   const zero = (ins.byNetwork || []).filter(n => n.thisWeek.posts === 0 && n.lastWeek.posts === 0);
   if (zero.length) out.push((zero.length === 1 ? "One network, " : zero.length + " networks, ")
