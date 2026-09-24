@@ -291,6 +291,10 @@ export async function checkAndReserve(provider, model, now) {
   const caps = CAPS[provider];
   if (!caps) return { ok: true };
   if (!kvReady()) return { ok: true };
+  /* OpenRouter's free allowance belongs to the account, not to a model:
+     fifty requests a day however they are spread across its free names. Now
+     that a tier walks several of them, one bucket stands for all. */
+  if (provider === "openrouter") model = "*";
   const rpd = typeof caps.rpd === "function" ? caps.rpd() : caps.rpd;
   const mKey = rlKey(provider, model, "m", minuteEpoch(now));
   const dKey = rlKey(provider, model, "d", dayStr(now));
@@ -502,10 +506,45 @@ export async function chainFor(tier, opts = {}) {
     if (!providerPresent(step.provider)) continue;
     const ids = await freeModels(step.provider, false);
     if (!ids.length) continue;
+    /* OpenRouter's free list is several names deep and a name can be on it
+       and still refuse this house: on the first live probe, 24 September,
+       the only name tried answered 403 "only available on agentic
+       harnesses" and the whole tier went dark. So the tier takes the first
+       few free names, not one, and steps past any name that refused this
+       house in the last day. */
+    if (step.provider === "openrouter") {
+      const refused = await refusedSet(ids.slice(0, OR_DEPTH + 4));
+      let n = 0;
+      for (const id of ids) {
+        if (n >= OR_DEPTH) break;
+        if (refused.has(id)) continue;
+        push("openrouter", id); n++;
+      }
+      continue;
+    }
     const model = resolveModel(step.provider, step.pick, ids);
     if (model) push(step.provider, model);
   }
   return out;
+}
+
+/* how many OpenRouter free names a tier walks, and the memory of a name that
+   refused the house outright (403, 404: not a passing fault, a door) */
+const OR_DEPTH = 4;
+const K_REFUSED = id => "nllm:refused:" + id;
+const REFUSED_S = 24 * 3600;
+async function refusedSet(ids) {
+  const out = new Set();
+  if (!kvReady() || !ids.length) return out;
+  try {
+    const r = await kv(ids.map(id => ["GET", K_REFUSED(id)]));
+    ids.forEach((id, i) => { if (r && r[i]) out.add(id); });
+  } catch { }
+  return out;
+}
+async function rememberRefused(id, why) {
+  if (!kvReady()) return;
+  try { await kv([["SET", K_REFUSED(id), String(why || "refused").slice(0, 160)], ["EXPIRE", K_REFUSED(id), String(REFUSED_S)]]); } catch { }
 }
 
 /* ---------------------------------------------------------------------------
@@ -556,6 +595,7 @@ export async function route(task = {}) {
     anyAttempted = true;
     const got = await chatOnce(cand.provider, cand.model, messages, task.opts || {});
     tried.push({ provider: cand.provider, model: cand.model, ms: got.ms, err: got.ok ? "" : got.error });
+    if (!got.ok && cand.provider === "openrouter" && (got.status === 403 || got.status === 404)) await rememberRefused(cand.model, got.error);
     const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
     await recordUsage(cand.provider, now, tokens);
     if (got.ok) {
