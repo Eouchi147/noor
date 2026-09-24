@@ -14,8 +14,8 @@ is right and this file is a bug: fix it in the same commit.
 |---|---|
 | **What it is** | A free Islamic library and school. No ads, no trackers, no account. |
 | **Where it lives** | `noorcodex.com` and `noorcodex.ca` |
-| **Repo** | `github.com/Eouchi147/noor`, branch `noor-v2-illuminated` |
-| **Host** | Vercel. Static files plus 30 serverless routes under `/api`. |
+| **Repo** | `github.com/Eouchi147/noor`, branch `main` |
+| **Host** | Vercel. Static files plus 32 serverless routes under `/api`. |
 | **Database** | Redis, via `REDIS_URL` or Upstash/Vercel KV REST. Everything dynamic. |
 | **AI** | OpenRouter, free models only, never billed unless deliberately allowed. |
 | **Money** | Stripe. Gifts only. No subscriptions sold, no paywall, ever. |
@@ -136,6 +136,43 @@ picture from the server, so bytes, data URIs, localhost and preview hostnames
 are all refused. `publicHost()` forces the production domain no matter which
 deployment composed the post, because a preview hostname baked into a live
 Instagram post is a dead image within days.
+
+### Pinterest
+
+| Variable | What it does |
+|---|---|
+| `PIN_APP_ID`, `PIN_APP_SECRET` | The Pinterest app's own credentials |
+| `PIN_BOARD_ID`, `PIN_BOARD_NAME` | The board a pin lands on |
+| `PIN_MEDIA_EVERY_MS`, `PIN_MEDIA_WAIT_MS`, `PIN_VIDEO_RESERVE_MS` | Built in timing: how often media status is polled and how long a video upload is given |
+
+### Threads
+
+| Variable | What it does |
+|---|---|
+| `TH_TOKEN`, `TH_USER_ID` | Shown once by `/api/threads?action=auth`, pasted into Vercel by hand. The token lives sixty days; `?action=renew` shows a fresh one. |
+| `TH_IMAGE_WAIT_MS`, `TH_POLL_WAIT_MS` | Built in timing for the container upload and its status poll |
+
+### YouTube
+
+| Variable | What it does |
+|---|---|
+| `YT_CLIENT_ID`, `YT_CLIENT_SECRET` | The OAuth client that uploads Shorts and wide videos |
+
+### The poster's own clock, all built in defaults, none of them required
+
+`CHANNEL_MIN_MS`, `DUP_WINDOW_DAYS`, `FB_ADOPT_MAX_MS`, `HEAL_MAX_TRIES`,
+`HEAL_PER_RUN`, `HEAL_REEL_RESERVE_MS`, `HEAL_RESERVE_MS`, `IG_POLL_BUDGET_MS`,
+`IG_POLL_EVERY_MS`, `IG_POLL_FLOOR_MS`, `PENDING_MAX_MS`, `POSTED_GRACE_DAYS`,
+`PUBLIC_HOST`, `REELS_MANIFEST_TTL_MS`, `RUN_BUDGET_MS`, `STORY_RESERVE_MS`
+and `WRITE_RESERVE_MS` tune how long a run waits, how many times it retries and
+how it spaces its own calls; every one has a working default in the code and
+none needs to be set to run the house. `PUBLIC_HOST` overrides the hostname a
+route builds an absolute link from, where `SITE_HOST` does not reach.
+
+`VERCEL_URL` is set by Vercel itself on every deployment, never by hand; a few
+routes read it only as a last fallback for the request's own host. `LEDGER_FLOOR`
+is named in `NOOR.md` and lives only in Controls (The Ledger); it is deliberately
+left out of this file.
 
 ---
 
@@ -321,7 +358,8 @@ stripped from everything public.
 | `/api/illuminations` | yes | The day's light, the verse lamp, the Friday light. `?kind=light` now draws from the Illuminations Library via `_lights.js`; the written treasury is the last resort behind it. |
 | `/api/ask` | gated | The Lantern's public question box. Rate limited per reader. |
 | `/api/guide` | gated | The quiet clarifier |
-| `/api/daily-light` | internal | Called by illuminations |
+| `/api/page` | yes | Server renders a Light, a verse, a surah, a chapter of the Path, the day, and the prophet, companion, character and place rooms, from `vercel.json`'s rewrites |
+| `/api/sitemap` | yes | `/sitemap-rooms.xml`: every server-rendered address `api/page.js` can answer |
 | `/api/journal` | yes (write) | Journal entries and replies. **Every reply is pre-moderated.** |
 | `/api/journal-page` | yes | Server-renders `/journal/<slug>` (rewrite in `vercel.json`) |
 | `/api/inbox` | yes (write) | The feedback door |
@@ -344,7 +382,9 @@ stripped from everything public.
 | `/api/podcast` | yes | `/podcast.xml` (rewrite): the verse reels as a podcast feed, RSS 2.0 with the itunes namespace, cached a day |
 | `/api/beacon`, `/api/visitors` | yes (write) | Anonymous counters |
 | `/api/warm` | cron | The nightly breath |
-| `/api/license`, `/api/guardians`, `/api/sponsor-checkout` | none | **Retired sponsor program.** Referenced nowhere. Safe to delete when you are sure. |
+| `/api/threads` | owner only | `?action=auth`/`?action=renew` connect and refresh the Threads token; the callback trades a consent code for it |
+| `/api/youtube` | owner only | `?action=auth`/`?action=status` connect YouTube and read the day's upload count; the callback trades a consent code for a refresh token |
+| `/api/guardians`, `/api/sponsor-checkout` | none | **Retired sponsor program**, kept only as a 410 so an old bookmark closes kindly. `/api/license` and `license.html` are gone; `/license` redirects to `/school`. |
 
 **Every admin route checks `ADMIN_SECRET` and sets `Cache-Control: no-store`.**
 `tests/api-audit.mjs` enforces both.

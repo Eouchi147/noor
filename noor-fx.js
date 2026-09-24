@@ -1103,7 +1103,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
   var CSS =
     ".noor-social{margin:1.5rem auto 0;padding:0 1rem;text-align:center;max-width:100%}" +
     ".noor-social p.noor-social-label{margin:0 0 .1rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;" +
-      "font-size:10px;font-weight:600;line-height:1.6;letter-spacing:.2em;text-transform:uppercase;color:" + DIM + "}" +
+      "font-size:12px;font-weight:600;line-height:1.6;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,254,247,.62)}" +
     ".noor-social ul.noor-social-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.1rem;margin:0;padding:0;list-style:none}" +
     ".noor-social ul.noor-social-row>li{margin:0;padding:0;list-style:none;line-height:0}" +
     ".noor-social a.noor-social-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;" +

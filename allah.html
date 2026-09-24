@@ -428,7 +428,7 @@ body.reading .draft{opacity:0}
 
 <header class="hero">
   <div class="hero-in">
-    <p class="ayah">لَيْسَ كَمِثْلِهِ شَيْءٌ</p>
+    <p class="ayah" lang="ar" dir="rtl">لَيْسَ كَمِثْلِهِ شَيْءٌ</p>
     <p class="ayah-ref">Qur'an 42:11</p>
     <h1>The Ninety-Nine <em>Names</em></h1>
     <p class="lede">Every other room in this library has something you can draw. This one has the
@@ -524,12 +524,12 @@ body.reading .draft{opacity:0}
   <div class="wrap">
     <p class="eyebrow" style="justify-content:center">Ayat al-Kursi &middot; 2:255</p>
     <h2>Neither drowsiness nor sleep</h2>
-    <p class="big ar">لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ</p>
+    <p class="big ar" lang="ar" dir="rtl">لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ</p>
     <p class="say" style="margin:2rem auto 0">Every created thing that keeps watch eventually stops
     keeping watch. The verse the Prophet &#65018; called the greatest in the Book makes its case by
     naming a limit and then denying it: the One holding the heavens and the earth in place is not
     tired by holding them.</p>
-    <p class="big ar" style="margin-top:2.2rem">وَلَا يَئُودُهُ حِفْظُهُمَا</p>
+    <p class="big ar" lang="ar" dir="rtl" style="margin-top:2.2rem">وَلَا يَئُودُهُ حِفْظُهُمَا</p>
     <p class="ayah-ref" style="margin-top:.8rem">And their preservation does not weary Him</p>
   </div>
 </section>
@@ -542,7 +542,7 @@ body.reading .draft{opacity:0}
     ninety-nine but to use them, and the classical practice is to match the name to the need: to ask
     the Provider for provision, the Forgiving for forgiveness, the Guide when you do not know which
     way to go.</p>
-    <p class="big ar" style="font-family:Amiri,serif; direction:rtl; font-size:clamp(1.3rem,3.2vw,1.8rem);
+    <p class="big ar" lang="ar" dir="rtl" style="font-family:Amiri,serif; direction:rtl; font-size:clamp(1.3rem,3.2vw,1.8rem);
       line-height:2; color:var(--gold-hi); max-width:40rem; margin:2.2rem 0 0">
       وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا</p>
     <p class="ayah-ref" style="margin-top:.9rem">To Allah belong the most beautiful names, so call
@@ -558,21 +558,21 @@ body.reading .draft{opacity:0}
     three, but because there are three ways a person forgets it.</p>
     <div class="doors">
       <a class="door" href="/dictionary/tawhid-al-rububiyyah">
-        <span class="ar a">الرُّبُوبِيَّة</span>
+        <span class="ar a" lang="ar" dir="rtl">الرُّبُوبِيَّة</span>
         <h3>Lordship</h3>
         <p>That He alone creates, owns and sustains. The part almost everyone concedes, and the part
         that settles nothing on its own.</p>
         <span class="go">Open &rarr;</span>
       </a>
       <a class="door" href="/dictionary/tawhid-al-uluhiyyah">
-        <span class="ar a">الأُلُوهِيَّة</span>
+        <span class="ar a" lang="ar" dir="rtl">الأُلُوهِيَّة</span>
         <h3>Worship</h3>
         <p>That He alone is worshipped. This is the one the messengers were sent with, and the one
         their people fought them over.</p>
         <span class="go">Open &rarr;</span>
       </a>
       <a class="door" href="/dictionary/asma-wa-sifat">
-        <span class="ar a">الأَسْمَاء وَالصِّفَات</span>
+        <span class="ar a" lang="ar" dir="rtl">الأَسْمَاء وَالصِّفَات</span>
         <h3>Names and Attributes</h3>
         <p>That He is as He described Himself, without denying a word of it and without picturing
         Him as a larger version of something made.</p>
@@ -611,15 +611,15 @@ body.reading .draft{opacity:0}
   <div class="panel">
     <button class="shut" id="shut" aria-label="Close">&times;</button>
     <p class="idx" id="p-i"></p>
-    <p class="a ar" id="p-a"></p>
+    <p class="a ar" id="p-a" lang="ar" dir="rtl"></p>
     <p class="t" id="p-t"></p>
     <p class="m" id="p-m"></p>
 
     <div class="body" id="p-body" tabindex="0">
-      <p class="root"><span class="rc ar" id="p-rc"></span><span class="rg" id="p-rg"></span></p>
+      <p class="root"><span class="rc ar" id="p-rc" lang="ar" dir="rtl"></span><span class="rg" id="p-rg"></span></p>
       <p class="deep" id="p-d"></p>
       <figure class="qref">
-        <p class="av ar" id="p-va"></p>
+        <p class="av ar" id="p-va" lang="ar" dir="rtl"></p>
         <p class="ae" id="p-ve"></p>
         <cite><span id="p-vr"></span><span class="src" id="p-vs"></span></cite>
       </figure>
@@ -1200,7 +1200,7 @@ NAMES.forEach(([a, t, m], i) => {
   b.className = "name"; b.type = "button"; b.dataset.i = i;
   b.style.animationDelay = (i % 12) * .35 + "s";
   b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, "0") + '</span>' +
-                '<span class="a ar"></span><span class="t"></span><span class="m"></span>';
+                '<span class="a ar" lang="ar" dir="rtl"></span><span class="t"></span><span class="m"></span>';
   b.querySelector(".a").textContent = a;
   b.querySelector(".t").textContent = t;
   b.querySelector(".m").textContent = m;
@@ -1327,7 +1327,7 @@ const NOTS = [
     const d = document.createElement("div");
     d.className = "not";
     d.style.transitionDelay = (i % 3) * .12 + "s";
-    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.lang = "ar"; sa.dir = "rtl"; sa.textContent = a;
     const p = document.createElement("p"); p.textContent = en;
     const c = document.createElement("cite"); c.textContent = ref;
     d.append(sa, p, c); box.appendChild(d);
@@ -1362,7 +1362,7 @@ const HASHR_NAMES = ["Ar-Rahman","Ar-Raheem","Al-Malik","Al-Quddus","As-Salam","
 
   HASHR_VERSES.forEach(([a, en, ref]) => {
     const d = document.createElement("div"); d.className = "hv";
-    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.lang = "ar"; sa.dir = "rtl"; sa.textContent = a;
     const p = document.createElement("p"); p.className = "en"; p.textContent = en;
     const c = document.createElement("cite"); c.textContent = "Al-Hashr " + ref;
     d.append(sa, p, c); vbox.appendChild(d);
@@ -1373,7 +1373,7 @@ const HASHR_NAMES = ["Ar-Rahman","Ar-Raheem","Al-Malik","Al-Quddus","As-Salam","
   idx.forEach(i => {
     const [a, t] = NAMES[i];
     const c = document.createElement("span"); c.className = "chip"; c.dataset.i = i;
-    const sa = document.createElement("span"); sa.className = "a ar"; sa.textContent = a;
+    const sa = document.createElement("span"); sa.className = "a ar"; sa.lang = "ar"; sa.dir = "rtl"; sa.textContent = a;
     const st = document.createElement("span"); st.textContent = t;
     c.append(sa, st); cbox.appendChild(c);
   });

@@ -425,9 +425,16 @@ if (chromium) {
   };
   const settle = pg => pg.waitForTimeout(1500);
 
-  /* --- the phone, without the API: a static server has none --- */
+  /* --- the phone, without the API: a static server has none ---
+     reels/index.json is a real file in the tree, so a plain static server
+     answers it same as the live site would; the calm door this block proves
+     only shows with no manifest either, so the two fetches index.html tries
+     (home.json, then index.json) are refused here the way a genuine outage
+     would refuse them, not the way a file that happens to be missing would. */
   {
     const pg = await newPage({ width: 390, height: 844 }, true);
+    await pg.route('**/reels/index.json', r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
+    await pg.route('**/reels/home.json', r => r.fulfill({ status: 404, contentType: 'application/json', body: '{}' }));
     await pg.goto(BASE + '/', { waitUntil: 'load' }); await settle(pg);
     const st = await pg.evaluate(() => ({
       glow: document.querySelectorAll('.n2-glow').length,
@@ -712,9 +719,17 @@ if (chromium) {
        card held only on the day it was typed */
     const S2 = await import('../api/_schedule.js');
     const inline2 = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
-    const walk2 = new Function(inline2.slice(inline2.indexOf('function hash32'), inline2.indexOf('function verse()')) + '; return { ROTA: ROTA, HALVES: HALVES };')();
+    /* rotaRow, not the bare ROTA table, decides which half carries a verse:
+       on a shelf with no short (the fixture below has none) the afternoon
+       row is swapped for afternoonUntilShorts, exactly as verse() itself
+       reads it a few lines below in the same file. Reading ROTA[h][dow]
+       straight, as this used to, missed that swap and could name the wrong
+       half on a day the two rows disagree, sending every assertion after it
+       chasing a card nobody rendered. */
+    const walk2 = new Function(inline2.slice(inline2.indexOf('function hash32'), inline2.indexOf('function verse()')) + '; return { ROTA: ROTA, HALVES: HALVES, rotaRow: rotaRow };')();
     const todayISO = new Date().toISOString().slice(0, 10), dow = new Date(todayISO + 'T12:00:00Z').getUTCDay();
-    const halfUsed = walk2.HALVES.filter(h => walk2.ROTA[h][dow] === 'verse')[0] || 'morning';
+    const noShorts = !REELS.cards.some(c => c && (c.kind || 'light') === 'short');
+    const halfUsed = walk2.HALVES.filter(h => walk2.rotaRow(h, noShorts)[dow] === 'verse')[0] || 'morning';
     const want = S2.chooseReel(REELS.cards, todayISO, halfUsed, null);
     const wantId = String(want.id).replace(/^verse-/, ''), wantRef = wantId.replace(/^(\d+)-(\d+)/, '$1:$2');
     const wantMeaning = want.caption.split(/\n\s*\n/)[1].trim();

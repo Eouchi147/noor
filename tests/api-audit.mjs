@@ -54,7 +54,7 @@ const PUBLIC_WRITE_OK = new Set([
   'warm.js',         /* cron only */
   'ledger.js', 'settings.js', 'overrides.js', 'admin-data.js', 'admin-auth.js',
   'admin-guardians.js', 'admin-vet.js', 'assistant.js', 'marketing.js',
-  'guide.js', 'ask.js', 'daily-light.js', 'journal-page.js',
+  'guide.js', 'ask.js', 'journal-page.js',
   'guardians.js', 'sponsor-checkout.js'
 ]);
 for (const f of routes) {

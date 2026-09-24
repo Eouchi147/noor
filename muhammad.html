@@ -284,7 +284,7 @@ footer a:hover{text-decoration:underline}
 
 <header class="hero">
   <div class="hero-in">
-    <p class="ayah">وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ</p>
+    <p class="ayah" lang="ar" dir="rtl">وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ</p>
     <p class="ref">Qur'an 21:107</p>
     <h1>Twenty-Three <em>Years</em></h1>
     <p class="lede">From a cave above Makkah to a grave in Madinah, and then the harder question:
@@ -408,7 +408,7 @@ footer a:hover{text-decoration:underline}
 
 <section class="close">
   <div class="wrap">
-    <p class="ayah">الرَّفِيقَ الْأَعْلَى</p>
+    <p class="ayah" lang="ar" dir="rtl">الرَّفِيقَ الْأَعْلَى</p>
     <p class="ref">Bukhari 4463 &middot; Bukhari 4438</p>
     <h2 style="margin-top:1.4rem">&ldquo;O Allah &mdash; the Highest Companion.&rdquo;</h2>
     <p class="say" style="margin:0 auto">He said it three times, and he passed. Abu Bakr stood before
@@ -564,7 +564,7 @@ STATIONS.forEach((s, i) => {
   const card = document.createElement("div"); card.className = "card";
   const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
   card.appendChild(mk("span", "yr", yr));
-  const an = mk("span", "arn ar", ar); card.appendChild(an);
+  const an = mk("span", "arn ar", ar); an.lang = "ar"; an.dir = "rtl"; card.appendChild(an);
   card.appendChild(mk("h3", null, title));
   const q = mk("p", "q", qEn); const qc = mk("cite", null, qRef); q.appendChild(qc); card.appendChild(q);
   const h = mk("p", "h", hEn); const hc = mk("cite", null, hRef); h.appendChild(hc); card.appendChild(h);

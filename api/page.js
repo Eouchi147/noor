@@ -244,6 +244,61 @@ const tokenHref = (typ, id) => {
   return "";
 };
 const unmark = s => esc(s).replace(/\{\{([a-z]+):([^|{}]+)\|([^{}]*)\}\}/g, (m, typ, id, label) => { const h = tokenHref(typ, id); return h ? `<a href="${attr(h)}">${label}</a>` : label; });
+/* the same cross links, unwound to plain text (no anchor, no escaping) for a
+   description or a share line, which read as text and never as markup */
+const plainMark = s => String(s || "").replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1");
+/* Audit seo-007: eleven chapters' summary line alone (the sentence a chapter
+   opens on) reads under 50 characters, since it was written as a hook for the
+   page's own h1, not as a search description. Nothing here is written new:
+   the summary is followed by whole sentences of the chapter's own details
+   (its cross links unwound to their plain label) until the description reads
+   like one, capped where clip() already caps every other room's. */
+/* a plain sentence, folded for comparison only: no leading article, no
+   punctuation, one space between words, so "The books fly." and "Books
+   fly." (node 69) read as the one sentence they are */
+const normSent = s => String(s || "").toLowerCase().replace(/^(the|a|an)\s+/, "").replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
+/* a unit that opens on a lower-case letter (once its own leading quote mark
+   or comma is looked past) is not a sentence: it is the back half of one
+   the split above cut in two, or, in node 69, an aside repeated mid-run
+   ("do you recognize this? do you recognize this?"), and reads as a
+   non-sequitur on its own */
+const startsSentence = u => { const m = String(u || "").match(/[A-Za-z]/); return !m || m[0] === m[0].toUpperCase(); };
+const chapterDesc = N => {
+  let s = String(N.summary || "").replace(/\s+/g, " ").trim();
+  if (s.length < 50 && N.details) {
+    const rest = plainMark(N.details).replace(/\s+/g, " ").trim();
+    const raw = rest.match(/[^.!?]+[.!?]+/g) || [rest];
+    /* [^.!?]+[.!?]+ splits on every sentence-ending mark, including one that
+       falls inside a quotation (node 8, Qur'an 11:44's disembarkation order
+       runs three sentences deep before the closing mark), so a quote that
+       opens here is folded back together with however many of the following
+       fragments it takes to close, never left to end mid-thought. A quote
+       that never closes before the details run out stays merged into one
+       long, honestly unbalanced unit, which the odd-quote-count check below
+       then simply never selects: a stray mark two paragraphs later is never
+       mistaken for its close. */
+    const units = [];
+    for (let i = 0; i < raw.length;) {
+      let unit = raw[i].trim(), j = i;
+      while ((unit.match(/"/g) || []).length % 2 === 1 && j + 1 < raw.length) { j++; unit += " " + raw[j].trim(); }
+      units.push(unit);
+      i = j + 1;
+    }
+    let cur = s, safe = s;
+    for (const unit of units) {
+      if (!unit || (unit.match(/"/g) || []).length % 2 === 1 || !startsSentence(unit)) continue;
+      const ns = normSent(unit), nCur = normSent(cur);
+      if (ns && nCur && (nCur.includes(ns) || ns.includes(nCur))) continue;
+      const joined = cur ? cur + " " + unit : unit;
+      if (joined.length > 158) continue;
+      cur = joined;
+      safe = cur;
+      if (safe.length >= 50) break;
+    }
+    s = safe;
+  }
+  return clip(s || N.details, 158);
+};
 /* The house prints no em dash and no en dash. The 99 Names in allah.html
    carry 179 em dashes, written as the page was written (the content audit's
    content-006 asks for them to go); until the data is corrected the room
@@ -364,9 +419,22 @@ const BAR = [
   ["Words", "/dictionary", '<path d="M4 18h16M4 6h16M4 12h10"/>'],
   ["More", "/#search", '<circle cx="5.5" cy="6" r="1.6"/><circle cx="5.5" cy="12" r="1.6"/><circle cx="5.5" cy="18" r="1.6"/><path d="M11 6h8M11 12h8M11 18h8"/>']
 ];
+/* Audit seo-006: the old suffix, " · NOOR Codex of Light" (22 characters),
+   pushed 406 room titles past the 60 characters a result cuts at. The audit
+   itself found the sentence titles are the best hooks on the site, so the
+   fix is the suffix alone, never the sentence in front of it: a title is
+   never trimmed anywhere, room or static page, since a cut sentence can
+   assert the opposite of what it said whole. */
+const TITLE_SUFFIX = " · NOOR";
 export function shell(o) {
-  const title = o.title + " · NOOR Codex of Light";
-  const canonical = SITE + o.path;
+  const title = String(o.title || "") + TITLE_SUFFIX;
+  const pageUrl = SITE + o.path;
+  /* Audit seo-026: a dated /today?date= page renders the same Light as its
+     own room, /light/<id>, so it is a near-duplicate of one; o.canonical, set
+     only by the dated day page, points a search engine straight at the room
+     that owns the content, while og:url below still names the address the
+     reader is actually on, for a share to land where it was opened. */
+  const canonical = o.canonical || pageUrl;
   /* Search opens the sheet (assets/noor-search.js, fetched by noor-fx.js on a
      room that does not carry it) and nothing else. It used to carry the menu
      dial's data-nm-open as well, which on a page that loads the dial always
@@ -401,7 +469,7 @@ ${o.noindex ? '<meta name="robots" content="noindex"/>' : ""}<meta name="theme-c
 <meta property="og:site_name" content="NOOR Codex of Light"/>
 <meta property="og:title" content="${attr(o.title)}"/>
 <meta property="og:description" content="${attr(o.desc)}"/>
-<meta property="og:url" content="${attr(canonical)}"/>
+<meta property="og:url" content="${attr(pageUrl)}"/>
 <meta property="og:image" content="${attr(o.image || OG_DEFAULT)}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="${attr(o.title)}"/>
@@ -593,7 +661,7 @@ ${walk(prev && ["/path/" + prev.id, prev.titleEn, "Chapter " + prev.id], next &&
 <div class="n2-row">${go("/path", "All " + list.length + " chapters")}${go("/?node=" + n, "In the Path room")}</div>
 </section>`;
   return { status: 200, html: shell({
-    title: N.titleEn + " · The Path, chapter " + n, path: url, desc: clip(N.summary || N.details, 158), active: "/path",
+    title: N.titleEn + " · The Path, chapter " + n, path: url, desc: chapterDesc(N), active: "/path",
     crumbs: [["The Path of Creation", "/path"], [N.titleEn, url]], pill: ["/path", "The Path"],
     image: img ? SITE + img : "",
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: N.titleEn, alternativeHeadline: N.titleAr || undefined, description: clip(N.summary, 200),
@@ -681,7 +749,7 @@ async function versePage(refRaw) {
   const reel = row ? `<section class="n2-idea" id="reel">
 <p class="n2-eyebrow">The reel${reciter ? ` <small>· recited by ${esc(reciter)}</small>` : ""}</p>
 <div class="n2-reel" id="reelbox">
-<video playsinline preload="metadata"${cover ? ` poster="${attr(cover)}"` : ""} src="${attr(video)}" aria-label="The reel for Qur'an ${attr(ref.label)}"></video>
+<video playsinline preload="none"${cover ? ` poster="${attr(cover)}"` : ""} src="${attr(video)}" aria-label="The reel for Qur'an ${attr(ref.label)}"></video>
 <button class="n2-play" type="button" aria-label="Play the reel"><span>${SVG.play}</span></button>
 </div>
 <p class="n2-credit">The recitation alone, nothing under it</p>
@@ -844,7 +912,7 @@ ${walk(prevRow && ["/surah/" + (n - 1), prevRow.translit, "Surah " + (n - 1)], n
   return { status: 200, html: shell({
     title: "Surah " + name + " (" + n + ")", path: url, desc, active: "/quran", crumbs: [["The Mushaf", "/quran"], ["Surah " + name, url]], pill: ["/quran", "The Mushaf"],
     ld: [{ "@context": "https://schema.org", "@type": "Chapter", name: "Surah " + name, alternateName: ar || undefined, position: n, url: SITE + url,
-      description: desc, inLanguage: ["ar", "en"],
+      description: desc, inLanguage: ["ar", "en"], publisher: PUBLISHER,
       isPartOf: { "@type": "Book", name: "The Qur'an", inLanguage: "ar", url: SITE + "/quran" } }],
     body }) };
 }
@@ -924,8 +992,13 @@ ${(node.lessons || []).length ? `<p class="n2-dim">${esc(node.lessons[0])}</p>` 
 ${ROOMS()}
 ${walk(prev, next)}
 </section>`;
+  /* Audit seo-026: a dated day (not /today itself) shows the same Light as
+     /light/<id>; its canonical points there rather than at itself, so the
+     two are not near-duplicates competing in the index. /today, the day's
+     own address, keeps its own canonical, since nothing else answers it. */
+  const canonical = (!isToday && card && card.id && lightById(card.id)) ? SITE + "/light/" + card.id : undefined;
   return { status: 200, html: shell({
-    title: isToday ? "Today's light" : "The light of " + longDate(date), path: url, ogType: "website",
+    title: isToday ? "Today's light" : "The light of " + longDate(date), path: url, ogType: "website", canonical,
     desc: card ? clip(card.title + ". " + card.story, 158) : "One Light, one word and one chapter of the Path, every day.",
     active: "/today", crumbs: [["Today", "/today"]],
     ld: [{ "@context": "https://schema.org", "@type": "WebPage", name: "Today's light", url: SITE + url, datePublished: date,

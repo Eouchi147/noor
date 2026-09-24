@@ -49,7 +49,7 @@ console.log('\n[1] the arrival');
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(900);
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ' \u2192 ' + errors.join(' | ') : ''));
-  ok(await page.locator('.n2-idea').count() === 6, 'six screens');
+  ok(await page.locator('.n2-idea').count() === 7, 'seven screens');
   ok(await page.locator('#top .hm-doors a').count() === 4, 'four destinations on the first screen');
   ok(await page.locator('#hm-search').count() === 1, 'one search, above them');
   ok(await page.locator('.n2-bar a').count() === 5, 'the bar carries five doors');
@@ -205,7 +205,7 @@ console.log('\n[7] reduced motion · search');
   const { ctx, page, errors } = await newPage({ reducedMotion: 'reduce' });
   await page.goto(BASE + '/index.html', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
-  ok(errors.length === 0 && await page.locator('.n2-idea').count() === 6, 'reduced motion healthy: the six screens are all there');
+  ok(errors.length === 0 && await page.locator('.n2-idea').count() === 7, 'reduced motion healthy: the seven screens are all there');
   /* The "/" key opens the one sheet the whole site now has: the map of the
      house when it is empty, the search once two letters are typed. It used to
      open assets/noor-search.js's own overlay while the bar's Search opened a
@@ -494,6 +494,35 @@ console.log('\n[11b] Friday, once');
   const admErr = errors.filter(e => !/\/api\/|Failed to load resource|Unexpected token|JSON/i.test(e));
   ok(admErr.length === 0, 'no JS errors after walking every tab' + (admErr.length ? ' \u2192 ' + admErr.join(' | ') : ''));
   await ctx.close();
+}
+
+/* 12. Arabic marked by class alone (audit seo-013)
+   ------------------------------------------------------------------
+   allah.html, muhammad.html and prophets.html build some of their Arabic in
+   the markup and some of it at runtime, a few names a `createElement` call
+   away from ever having a `lang` set on them at all. A source scan can miss
+   the runtime kind entirely, since the attribute is never a literal string in
+   the file; this walks the live DOM instead, the way a screen reader or a
+   crawler meets it, and asks every element carrying an Arabic-only class
+   (.ar, .ayah, .arn, .amiri, a font-amiri or font-quran class) whether it or
+   an ancestor actually carries lang="ar". */
+console.log('\n[12] Arabic marked by class alone');
+{
+  const SEL = '.ar,.ayah,.arn,.amiri,[class*=font-amiri],.font-quran';
+  for (const pg of ['allah', 'muhammad', 'prophets']) {
+    const { ctx, page, errors } = await newPage();
+    await page.goto(BASE + '/' + pg + '.html', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(1200);
+    const found = await page.evaluate(sel => document.querySelectorAll(sel).length, SEL);
+    ok(found > 0, pg + '.html still has Arabic-by-class elements to check (' + found + ')');
+    const unmarked = await page.evaluate(sel => [...document.querySelectorAll(sel)]
+      .filter(e => !e.closest('[lang="ar"]'))
+      .map(e => e.outerHTML.slice(0, 80)), SEL);
+    ok(unmarked.length === 0, pg + '.html: every Arabic-by-class element has lang="ar" on itself or an ancestor' +
+      (unmarked.length ? ' \u2192 ' + unmarked.slice(0, 3).join(' | ') : ''));
+    ok(errors.length === 0, pg + '.html: no JS errors');
+    await ctx.close();
+  }
 }
 
 await browser.close();

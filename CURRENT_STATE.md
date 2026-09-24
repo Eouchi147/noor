@@ -3,7 +3,7 @@
 Kept current by the Director after every shipped batch. Dates are UTC. `HANDOFF.md` says how
 to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line by line record.
 
-## Live on main (23 September 2026)
+## Live on main (24 September 2026)
 
 - **The films**: 52 on the shelf (`reels/index.json`, kind `short`), each with its tall file,
   wide file and cover on the store; the eleven Hajj films among them. Rendered on the owner's
@@ -52,6 +52,22 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
 - **The Mushaf reading view** (the 17 September prototype): word meanings on tap, transliteration,
   the "How you read" sheet with a Day page, chrome that steps aside while reading, the verse seal.
   Bismillah shown twice on 95 and 97 fixed.
+
+## Shipped 24 September (audit leftovers)
+
+- Search: room titles keep their full sentence with a short " · NOOR"; long descriptions trimmed,
+  thin chapter descriptions built only from each chapter's own text; the sitemap loses its
+  redirecting slashes and gains /three-lives; verse lastmod comes from the reel's own upload date;
+  /today's dated pages point to the Light they show; structured data gains authors and real HowTo
+  steps (no invented dates); Arabic on the Names, the Prophet and the Prophets pages is marked as
+  Arabic for screen readers and engines.
+- Speed and structure: two old rooms on the current shell version, a dead route removed, the
+  Follow the light label readable, tap targets on the verse shelf and the language row, the Hajj
+  badges no longer clipped, OPERATIONS.md matches the routes and variables, stale tests corrected.
+- Left on purpose: hreflang and language detection (per-language SEO is paused by the owner);
+  kids-engine.js cannot be deferred (the games bind to it inline).
+- Found, not yet fixed: chapter 60's summary says "the plea arrives one node late" (an old slip for
+  "too late"); changing the English moves its translation key, so it rides the next content pass.
 
 ## Decided and not yet done
 

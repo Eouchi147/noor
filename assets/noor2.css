@@ -150,7 +150,10 @@ html[data-n2]:not(.n2-live) .n2-idea>*{opacity:1;transform:none;filter:none}
    anything that has named itself a button or a call to action, and those
    keep the ink they chose. */
 .n2-main a:where(:not([class*="cta"]):not([class*="btn"]):not([class*="chip"])){color:var(--n2-goldhi);text-decoration-thickness:1px;text-underline-offset:3px}
-.n2-list-a{color:var(--n2-parch)}
+/* perf-020: the surah headings on the verses shelf sat at 21px tall, under
+   the 24px a tap needs; the link now fills a comfortable 44px band instead
+   of the bare line of text. */
+.n2-list-a{display:block;color:var(--n2-parch);min-height:44px;padding:10px 0}
 
 /* the Arabic */
 .n2-quran{font-family:var(--n2-quran);font-size:clamp(26px,7.2vw,38px);line-height:1.9;direction:rtl;text-align:right;color:var(--n2-parch);

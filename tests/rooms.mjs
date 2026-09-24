@@ -91,7 +91,7 @@ for (const [name, q, canon, type] of KINDS) {
   const r = await call(q);
   rendered[name] = r.body;
   ok(r.code === 200, name + " answers 200");
-  ok(/<title>[^<]+· NOOR Codex of Light<\/title>/.test(r.body), name + " has a title");
+  ok(/<title>[^<]+· NOOR<\/title>/.test(r.body), name + " has a title");
   ok(r.body.includes('<link rel="canonical" href="https://noorcodex.com' + canon + '"/>'), name + " has its canonical " + canon);
   ok(r.body.includes('<meta name="description"') && r.body.includes('property="og:image"') && r.body.includes('name="twitter:card" content="summary_large_image"'), name + " has description, og:image and twitter card");
   let data = [];
@@ -105,11 +105,27 @@ for (const [name, q, canon, type] of KINDS) {
   else ok(r.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", name + " is cached a day at the edge");
   ok(r.headers["Content-Type"] === "text/html; charset=utf-8", name + " is HTML");
 }
+/* Audit seo-019: the surah's Chapter named no publisher. A Light and a
+   chapter's Article carry no datePublished or dateModified at all, since a
+   last-edit date is not a publication date and none truthful exists yet;
+   printing none is the honest answer, not a guessed one. */
+{
+  const lightLd = ld(rendered.light).flat().find(x => x["@type"] === "Article");
+  ok(lightLd && !("datePublished" in lightLd) && !("dateModified" in lightLd), "a Light's Article prints no date it cannot back");
+  const pathLd = ld(rendered.path).flat().find(x => x["@type"] === "Article");
+  ok(pathLd && !("datePublished" in pathLd) && !("dateModified" in pathLd), "a chapter's Article prints no date it cannot back");
+  const surahLd = ld(rendered.surah).flat().find(x => x["@type"] === "Chapter");
+  ok(surahLd && surahLd.publisher && surahLd.publisher.name, "the surah's Chapter names a publisher");
+}
 ok(rendered.light.includes('<span class="n2-g">'), "the Light's key phrase is set in gold");
 ok(rendered.light.includes("Source · Qur&#39;an 3:123"), "the Light's source line is shown");
 ok(rendered.light.includes("/dictionary/badr"), "the Light reads beside the word Badr");
 ok(rendered.light.includes("/light/badr-wells-on-the-caravan-road") && rendered.light.includes('<ul class="n2-shelf">'), "the Light reads beside a related Light, on a shelf");
 ok(rendered.verse.includes("<video") && rendered.verse.includes("https://example.org/verse-94-5-6.mp4") && !/<video[^>]*autoplay/.test(rendered.verse), "the verse carries its reel, not autoplaying");
+/* Audit perf-018: the verse room preloaded its reel from github.com with
+   preload="metadata", a request every reader paid whether or not they ever
+   pressed play; the home page's own reel already waits for the tap. */
+ok(/<video playsinline preload="none"/.test(rendered.verse), "the verse room's reel waits for a tap, like the home page's");
 ok(rendered.verse.includes("Saheeh International") && rendered.verse.includes("recited by Mishary Rashid Alafasy"), "the verse names its translation and its reciter");
 ok(rendered.verse.includes('href="/quran?surah=94&amp;ayah=5"') && rendered.verse.includes('href="/surah/94"'), "the verse links the Mushaf and its surah");
 ok(rendered.verse.includes("/dictionary/sabr"), "the verse reads beside the caption's word");
@@ -178,6 +194,45 @@ ok(/chapter 2 of 71 · Al-Bidaya/.test(rendered.path), "the chapter names its pe
   }
   ok(drawn === 19 && events === 118, "all nineteen chapters of the Hour draw all 118 events (" + drawn + " chapters, " + events + " events)");
 }
+/* Audit seo-007's chapterDesc, refuter's review: a description built from a
+   chapter's own summary and details must never stop inside a quotation it
+   opened (node 8, Qur'an 11:44), never repeat a sentence the summary already
+   carries in substance (node 69, "Books fly." / "The books fly."), and never
+   invent a word the chapter's own text does not have. All 71 are rendered
+   and checked here, not sampled, since a chapter is a narrow, countable
+   set and the whole point is that none of them is quietly wrong. */
+{
+  const descOf = html => (html.match(/<meta name="description" content="([^"]*)"/) || ["", ""])[1];
+  const plainStrip = s => String(s || "").replace(/\{\{[a-z]+:[^|{}]+\|([^{}]*)\}\}/g, "$1");
+  let under50 = [];
+  for (let n = 1; n <= 71; n++) {
+    const r = await call({ kind: "path", n: String(n) });
+    const N = JSON.parse(fs.readFileSync("node/" + n + ".json", "utf8"));
+    const d = descOf(r.body).replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+    ok(d.length > 0 && d.length <= 158, "chapter " + n + "'s description is set and within 158 characters (" + d.length + ")");
+    /* a smart-quote pair (“ ”, used for "Read!" and two other short quoted
+       lines) balances on its own two characters, not on ", so only a plain
+       double-quote mark is counted here */
+    const qCount = (d.match(/"/g) || []).length;
+    ok(qCount % 2 === 0, "chapter " + n + "'s description never ends inside an open quotation (" + JSON.stringify(d) + ")");
+    /* every word of the description must trace to the chapter's own summary
+       or details (cross links unwound to their plain label); nothing here
+       is written new */
+    const src = (String(N.summary || "") + " " + plainStrip(N.details || "")).toLowerCase();
+    const srcWords = new Set(src.replace(/[^a-z0-9' ]/g, " ").split(/\s+/).filter(Boolean));
+    const descWords = d.toLowerCase().replace(/[^a-z0-9' ]/g, " ").split(/\s+/).filter(Boolean);
+    const stray = descWords.filter(w => !srcWords.has(w));
+    ok(stray.length === 0, "chapter " + n + "'s description uses only the chapter's own words" + (stray.length ? " → " + stray.join(", ") : ""));
+    if (d.length < 50) under50.push(n);
+  }
+  /* the summary alone reads under 50 characters on eleven chapters; the
+     naive first version of this stopped at the first sentence too long to
+     fit and gave up, leaving five of those (19, 22, 23, 57, 62) short. Once
+     it keeps looking past an oversized sentence for a shorter true one
+     later in the same chapter's details, all seventy-one honestly clear 50;
+     none is padded to get there and none is left short that need not be. */
+  ok(under50.length === 0, "every chapter's description honestly clears 50 characters from its own text" + (under50.length ? " → still short: " + under50.join(",") : ""));
+}
 ok(rendered.today.includes("Badr is the only battle") && rendered.today.includes("The word") && rendered.today.includes("The Path"), "the day shows the home page's light, the word and the chapter");
 ok(rendered.today.includes("/today?date="), "the day walks to the day before");
 ok(rendered.lights.split("/light/").length > 350, "the Lights shelf lists every Light");
@@ -243,7 +298,12 @@ console.log("\n=== a walk by date ===");
   const y = d.toISOString().slice(0, 10);
   const r = await call({ kind: "today", date: y });
   ok(r.code === 200 && r.body.includes('href="/today"') && r.body.includes("The day after"), "yesterday links to the day after (today)");
-  ok(r.body.includes("/today?date=" + y + '"'), "yesterday's canonical carries its date");
+  ok(r.body.includes('property="og:url" content="https://noorcodex.com/today?date=' + y + '"'), "yesterday's og:url still carries its own date");
+  /* Audit seo-026: a dated day is the same Light as its own room, so its
+     canonical now points there, not at itself, and /today keeps its own. */
+  ok(r.body.includes('<link rel="canonical" href="https://noorcodex.com/light/battle-of-badr-624"/>') && !new RegExp('<link rel="canonical" href="https://noorcodex\\.com/today\\?date=' + y).test(r.body),
+    "yesterday's canonical points at the Light it shows, not at itself");
+  ok(rendered.today.includes('<link rel="canonical" href="https://noorcodex.com/today"/>'), "the day's own /today keeps its own canonical");
   ok(r.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", "a dated day is a record and keeps for a day");
   const far = await call({ kind: "today", date: "2020-01-01" });
   ok(far.body.includes('href="https://noorcodex.com/today"/>'), "a date out of range falls back to today");
@@ -359,7 +419,7 @@ const families = {};
     const r = await call(q);
     families[name] = r.body;
     ok(r.code === 200 && r.headers["Cache-Control"] === "public, s-maxage=86400, stale-while-revalidate=604800", name + " answers 200 and keeps for a day");
-    ok(r.body.includes('<link rel="canonical" href="https://noorcodex.com' + canon + '"/>') && /<title>[^<]+· NOOR Codex of Light<\/title>/.test(r.body), name + " has its canonical " + canon + " and a title");
+    ok(r.body.includes('<link rel="canonical" href="https://noorcodex.com' + canon + '"/>') && /<title>[^<]+· NOOR<\/title>/.test(r.body), name + " has its canonical " + canon + " and a title");
     ok((r.body.match(/<h1\b/g) || []).length === 1 && /<section class="n2-idea n2-in">/.test(r.body), name + " has one h1 and its first screen arrives already there");
     let data = []; try { data = ld(r.body); } catch { }
     const types = data.flat().map(x => x["@type"]);
@@ -433,6 +493,16 @@ console.log("\n=== the rooms' sitemap ===");
   ok(r.body.includes("<loc>https://noorcodex.com/today</loc><lastmod>" + today + "</lastmod>"), "only the day's page is stamped today");
   ok(r.body.includes("<loc>https://noorcodex.com/verse/94-5-6</loc><lastmod>2026-09-07</lastmod>"), "a verse carries the day its reel was uploaded");
   ok(r.body.startsWith('<?xml version="1.0" encoding="UTF-8"?>') && r.body.trim().endsWith("</urlset>"), "the XML opens and closes");
+  /* Audit seo-014: the manifest row itself carries no "uploaded" field in
+     production (reels/index.json), only its sidecar (reels/<id>.json) does;
+     without a read of that sidecar 1,735 of 1,738 URLs shared one lastmod.
+     The farm this suite runs in has no reels/ folder at all (the stub above
+     stands in for it, which is why the render above still reads "2026-09-07"
+     off the stub's own row), so the sidecar read is checked in the source
+     and in vercel.json here, not by a render. */
+  ok(/reels\/"\s*\+\s*id\s*\+\s*"\.json/.test(fs.readFileSync("api/sitemap.js", "utf8")), "a verse's own sidecar is read for its uploaded date");
+  const vShip = JSON.parse(fs.readFileSync("vercel.json", "utf8"));
+  ok(vShip.functions["api/sitemap.js"].includeFiles.includes("reels/verse-*.json"), "and vercel.json ships those sidecars to the function");
 }
 
 console.log("\n=== nothing half finished, no faces ===");
@@ -777,7 +847,7 @@ console.log("\n=== the deployment ===");
   ok(inc.includes("verse/*.json"), "and the verse notes, so the verse rooms can show what each verse says");
   ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => v.functions["api/sitemap.js"].includeFiles.includes(f)), "and api/sitemap.js includes what it lists");
   ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 6, "what was in vercel.json is still there");
-  ok(/max-age=300/.test(cc("/reels/(index|home)\\.json")), "the reels manifests are kept five minutes and revalidated in the background");
+  ok(/max-age=300/.test(cc("/reels/(.*)\\.json")), "the reels manifests and every reel's own sidecar are kept five minutes and revalidated in the background");
   /* The scripts and stylesheets under /assets were immutable for a year while
      the pages asked for them at a hand-written ?v= that nobody moved, so an
      edit to any of them reached new readers only. They revalidate now; the
@@ -788,14 +858,61 @@ console.log("\n=== the deployment ===");
   ok(!["path.html", "lights.html", "today.html", "verses.html", "surah.html", "light.html", "prophet.html", "companion.html", "character.html", "place.html", "name.html"].some(f => fs.existsSync(f)), "no static page collides with a room");
   ok(!["light", "path", "today", "verses", "surah", "prophet", "companion", "character", "place", "name"].some(d => fs.existsSync(d) && fs.statSync(d).isDirectory()), "no folder collides with a shelf (lights/ is why the shelf is /light)");
   ok(fs.readFileSync("index.html", "utf8").includes('href="/light"') && !fs.readFileSync("index.html", "utf8").includes('href="/lights"'), "the home page links the shelf at /light");
+  /* Audit seo-018: two of the four broken internal targets. */
+  ok(/id="women"/.test(fs.readFileSync("theology.html", "utf8")), "theology.html answers its own #women anchor");
+  ok(["kids/mushaf.html", "kids/letters.html", "kids/cradle.html"].every(f => !fs.readFileSync(f, "utf8").includes('href="/index"')), "the three kids wordmarks link / not /index");
+  /* Audit seo-019: the ten static Articles carried no author and no image;
+     the masjid start guide's HowTo carried no step. */
+  {
+    const STATIC_ARTICLES = ["protection.html", "marriage.html", "soul.html", "teens.html", "sermon.html", "good-life.html", "hajj.html", "pillars.html", "simulation.html", "three-lives.html"];
+    for (const f of STATIC_ARTICLES) {
+      const t = fs.readFileSync(f, "utf8");
+      const blocks = [...t.matchAll(/<script type="application\/ld\+json">([^]*?)<\/script>/g)].map(m => { try { return JSON.parse(m[1]); } catch { return null; } });
+      const d = blocks.find(b => b && b["@type"] === "Article");
+      ok(d && d.author && d.image, f + "'s Article names its author and image");
+    }
+    const start = fs.readFileSync("masjid/start.html", "utf8");
+    const startLd = JSON.parse(start.match(/<script type="application\/ld\+json">([^]*?)<\/script>/)[1]);
+    ok(Array.isArray(startLd.step) && startLd.step.length > 0, "masjid/start.html's HowTo carries its steps, drawn from its own headings");
+  }
+  /* Audit seo-013: allah.html, muhammad.html and prophets.html marked their
+     Arabic by class alone, so a screen reader or a crawler read it as
+     English. This checks the static markup only, by source, since a
+     regression there is cheap to catch on every run; the runtime kind, a
+     handful of spans allah.html builds with createElement three, five and
+     six hundred lines down where no literal class="..." string ever names
+     lang or dir, is not something a source scan can see at all (that is
+     exactly how three of them shipped unmarked the first time). The live,
+     authoritative check of every page, static and runtime spans alike, is
+     tests/e2e.mjs section 12, which walks the rendered DOM in a browser. */
+  {
+    const AR_TOKENS = ["ar", "ayah", "arn", "amiri"];
+    const isArClass = c => AR_TOKENS.includes(c) || c.startsWith("font-amiri") || c === "font-quran";
+    const arTags = t => [...t.matchAll(/<[a-zA-Z0-9]+\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
+      .filter(m => m[1].split(/\s+/).some(isArClass));
+    for (const f of ["allah.html", "muhammad.html", "prophets.html"]) {
+      const t = fs.readFileSync(f, "utf8");
+      const tags = arTags(t);
+      ok(tags.length > 0, f + " still has Arabic-by-class spans to check");
+      ok(tags.every(m => /lang="ar"/.test(m[0]) && /dir="rtl"/.test(m[0])), f + "'s static Arabic-by-class spans all carry lang=\"ar\" dir=\"rtl\" (" + tags.filter(m => !/lang="ar"/.test(m[0]) || !/dir="rtl"/.test(m[0])).length + " missing)");
+    }
+    ok(/an\.lang = "ar"; an\.dir = "rtl"/.test(fs.readFileSync("muhammad.html", "utf8")), "muhammad.html's station Arabic, built at runtime, also gets lang and dir");
+    const allahT = fs.readFileSync("allah.html", "utf8");
+    const allahRuntime = [...allahT.matchAll(/sa\.className = "a ar";[^\n]*/g)];
+    ok(allahRuntime.length === 3 && allahRuntime.every(m => /sa\.lang = "ar"; sa\.dir = "rtl"/.test(m[0])), "allah.html's three createElement Arabic spans also get lang and dir at the source");
+  }
   ok(!/href="\/lights"/.test(Object.values(rendered).join("")) && !fs.readFileSync("api/sitemap.js", "utf8").includes('"/lights"'), "no room and no sitemap entry points at /lights");
   const robots = fs.readFileSync("robots.txt", "utf8");
   ok(robots.includes("Sitemap: https://noorcodex.com/sitemap.xml") && robots.includes("Sitemap: https://noorcodex.com/sitemap-rooms.xml"), "robots.txt names both sitemaps");
   ok(robots.includes("Disallow: /admin2\n") && robots.includes("Disallow: /admin2.html"), "robots.txt keeps the new console out");
   const sm = fs.readFileSync("sitemap.xml", "utf8");
   const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  ok(locs.length === 607, "the static sitemap holds 607 pages (" + locs.length + ")");
+  ok(locs.length === 608, "the static sitemap holds 608 pages (" + locs.length + ")");
   ok(!["ha", "ja", "ko", "ku", "so", "sw", "zh"].some(l => locs.includes("https://noorcodex.com/" + l)), "the seven thin language roots are gone");
+  /* Audit arch-022: /three-lives was a whole indexable room the sitemap never
+     named, so no crawler was offered it at all. */
+  ok(locs.includes("https://noorcodex.com/three-lives"), "three-lives is listed (arch-022)");
+  ok(!locs.some(l => /\/[a-z0-9-]+\/$/.test(l)), "no static entry ends in a slash the router would redirect");
   ok((sm.match(/<lastmod>/g) || []).length === locs.length && sm.includes("<lastmod>2026-09-09</lastmod>"), "every static page carries a lastmod");
   const ign = fs.readFileSync(".vercelignore", "utf8");
   const lines = ign.split("\n").filter(l => l && !l.startsWith("#"));
