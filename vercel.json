@@ -10,15 +10,15 @@
     },
     "api/insights.js": {
       "maxDuration": 60,
-      "includeFiles": "assets/reel-subjects.json"
+      "includeFiles": "{assets/reel-subjects.json,reels/index.json}"
     },
     "api/warm.js": {
       "maxDuration": 120,
-      "includeFiles": "assets/reel-subjects.json"
+      "includeFiles": "{assets/reel-subjects.json,reels/index.json}"
     },
     "api/house.js": {
       "maxDuration": 60,
-      "includeFiles": "assets/reel-subjects.json"
+      "includeFiles": "{assets/reel-subjects.json,reels/index.json}"
     },
     "api/observatory.js": {
       "maxDuration": 60,

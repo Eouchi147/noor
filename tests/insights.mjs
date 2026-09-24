@@ -568,6 +568,47 @@ console.log('\nthe numbers: two weeks side by side, from the snapshots alone, no
   ok(!/igtok|pagetok|ss-yt-tok|yt-access/.test(JSON.stringify(n)), 'no token or secret name leaks into the aggregate');
 }
 
+console.log('\nkind at read time: a stored "reel:reel" (the shelf could not be read the day it was written) is asked again here, not trusted forever (2026-09-24, a live run: warm.js\'s own manifest fetch answered nothing one night, and every reel that day stayed "reel:reel" in the store from then on)');
+{
+  store.clear(); calls = [];
+  const dates2 = INS.datesBack(14, new Date(NOW));
+  const put2 = (i, slot, kind, title, stats) => store.set(INS.K_STATS(dates2[i], slot),
+    JSON.stringify({ date: dates2[i], slot, hour: INS.hourOf(slot), kind, reel: /^reel/.test(slot), title, at: NOW, stats }));
+  /* written the night the shelf could not be read: every reel that day
+     landed under the catch-all, even though its own title is right there
+     on the shelf MANIFEST already names throughout this file */
+  put2(0, 'reelA', 'reel:reel', 'One verse about light', { instagram: { views: 1000, reach: 500, likes: 40, comments: 10, shares: 0, saves: 0, at: NOW } });
+  put2(1, 'reelC', 'reel:reel', 'The word for patience', { instagram: { views: 800, reach: 400, likes: 20, comments: 5, shares: 0, saves: 0, at: NOW } });
+
+  const n2 = await INS.numbers({ manifest: MANIFEST, now: NOW });
+  const verse2 = n2.byKind.find(k => k.kind === 'reel:verse');
+  ok(verse2 && verse2.thisWeek.posts === 1 && verse2.label === 'verse reels', 'a stored "reel:reel" whose title matches a shelf hook is counted under its real kind: ' + JSON.stringify(verse2));
+  const word2 = n2.byKind.find(k => k.kind === 'reel:word');
+  ok(word2 && word2.thisWeek.posts === 1, 'a second one, the same read');
+  ok(!n2.byKind.some(k => k.kind === 'reel:reel'), 'neither stays under the catch-all once the shelf can name it');
+
+  /* a title even a real shelf cannot name (no hook match, no manifest at
+     all to fall back on) is the only case that honestly stays "reel:reel",
+     and it is labelled in plain words, never the raw id */
+  ok(INS.reclassifyKind({ kind: 'reel:reel', slot: 'reelA', title: 'One verse about light' }, MANIFEST) === 'reel:verse',
+     'reclassifyKind reads the shelf directly, the same fold numbers() uses');
+  ok(INS.reclassifyKind({ kind: 'reel:verse', slot: 'reelA', title: 'anything at all' }, MANIFEST) === 'reel:verse',
+     'a kind already known is never second-guessed by the shelf');
+  ok(INS.reclassifyKind({ kind: 'reel:reel', slot: 'reelA', title: 'no hook anywhere' }, { cards: [] }) === 'reel:reel',
+     'with no shelf at all to ask, the catch-all stays honest rather than guessing');
+  ok(INS.kindLabel('reel:reel') === 'reels whose kind could not be matched', 'and it is never shown as the raw internal id');
+  ok(INS.reclassifyKind({ slot: 'word' }, MANIFEST) === 'reel:reel', 'a card slot with no kind at all falls back honestly, never invented');
+}
+
+console.log('\nthe shelf, read locally: reels/index.json beside this file, no network call, an HTTP fetch only as the very last resort');
+{
+  const local = INS.localManifest();
+  ok(local && Array.isArray(local.cards) && local.cards.length > 0, 'the real reels/index.json is read straight off disk: ' + (local ? local.cards.length : 0) + ' cards');
+  let fetched = false;
+  const shelf = await INS.shelfManifest({ base: 'https://example.test', fetch: async () => { fetched = true; return { ok: true, json: async () => ({ cards: [] }) }; } });
+  ok(shelf === local && fetched === false, 'the local file answers first; the HTTP fallback is never even called while it is there');
+}
+
 console.log('\nthe deploy gap: subjectOf works from a copy of the tree that has no lights/, scripts/ or tools/ at all');
 {
   /* A refuter's review found the first version of the subject fold read

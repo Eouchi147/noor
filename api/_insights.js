@@ -199,13 +199,54 @@ export async function fbMetricSet(id, tok, opts = {}) {
 --------------------------------------------------------------------------- */
 export const KIND_LABEL = {
   "reel:verse": "verse reels", "reel:word": "word reels", "reel:know": "Did you know reels",
-  "reel:day": "This day reels", "reel:light": "day's-card reels", "reel:name": "Name reels", "reel:dua": "du'a reels", "reel:reel": "reels",
+  "reel:day": "This day reels", "reel:light": "day's-card reels", "reel:name": "Name reels", "reel:dua": "du'a reels",
+  "reel:reel": "reels whose kind could not be matched",
   "reel:short": "silent films",
   "card:dawn": "dawn cards", "card:light": "day's cards", "card:word": "word cards", "card:dusk": "chapter cards", "card:lead": "coming-up cards"
 };
 export const kindLabel = k => KIND_LABEL[k] || String(k || "").replace(/^(reel|card):/, "");
 export const hourOf = slot => { const s = SLOTS.find(x => x.id === slot); return s ? s.at : null; };
 const halfOf = slot => (SLOTS.find(x => x.id === slot) || {}).reel || "";
+
+/* THE SHELF, READ LOCALLY (2026-09-24 review). Every caller used to reach
+   the shelf only by an HTTP fetch of its own public /reels/index.json --
+   api/insights.js's own manifest(), warm.js's own copy of the same fetch --
+   a network call to your own site, made from inside your own site, that a
+   slow cold start or a bad deploy can simply fail with no error the caller
+   ever sees. That is exactly what baked "reel:reel" into a month of daily
+   snapshots: warm.js's own fetch answered nothing one night, snapshot()
+   wrote every reel of that day under the catch-all kind, and nothing ever
+   corrected it afterward, because numbers() and the Observatory's own kind
+   folds trusted the stored kind forever after, never asking the shelf
+   again. observatory.js already ships reels/index.json beside itself
+   (vercel.json's includeFiles); this reads the same file the same way, so
+   collect(), snapshot() and numbers() can all ask the shelf without
+   leaving the function at all. Read once and kept: the file does not
+   change within one function's own lifetime. */
+let LOCAL_SHELF;
+export function localManifest() {
+  if (LOCAL_SHELF !== undefined) return LOCAL_SHELF;
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(process.cwd(), "reels", "index.json"), "utf8"));
+    LOCAL_SHELF = (j && Array.isArray(j.cards)) ? j : null;
+  } catch { LOCAL_SHELF = null; }
+  return LOCAL_SHELF;
+}
+/* the local read first, an HTTP fetch of the caller's own site only as the
+   very last resort, for a deployment whose own includeFiles was never set
+   for this function. Callers that already have a manifest (a test's own
+   fixture, a caller that read one already) are left alone: this is asked
+   only when nobody has handed one in. */
+export async function shelfManifest(opts = {}) {
+  const local = localManifest();
+  if (local) return local;
+  if (!opts.base) return null;
+  try {
+    const F = opts.fetch || fetch;
+    const r = await F(String(opts.base).replace(/\/$/, "") + "/reels/index.json", { cache: "no-store" });
+    return r.ok ? await r.json() : null;
+  } catch { return null; }
+}
 
 /* the card a record's hook names, so both kindOf and subjectOf read the same
    match rather than guessing twice */
@@ -229,6 +270,25 @@ export function kindOf(rec, manifest) {
   if (!REEL_SLOTS.includes(slot)) return "card:" + slot;
   const c = matchedCard(rec, manifest);
   return c ? "reel:" + (c.kind || "light") : "reel:reel";
+}
+
+/* KIND AT READ TIME (2026-09-24 review). A stored record's own kind was
+   fixed forever the day snapshot() wrote it; if the shelf it had that day
+   could not name the reel, "reel:reel" is what stayed in the store even
+   after the shelf could name it perfectly well on every later read. So a
+   stored "reel:reel" (or a record with no kind at all, the same fault in
+   an older shape) is never trusted as final: it is asked of the shelf
+   again, right here, with whatever manifest THIS read has, before the
+   fold. A record already carrying a real kind is returned exactly as
+   stored; the shelf is never asked to overrule a kind it already gave. An
+   optional pre-computed `card` (a caller who already ran matchedCard for
+   its own reason, observatory.js's own subject fold) is reused rather than
+   matched twice. */
+export function reclassifyKind(rec, manifest, card) {
+  const kind = rec && rec.kind;
+  if (kind && kind !== "reel:reel") return kind;
+  const c = card !== undefined ? card : matchedCard(rec, manifest);
+  return c ? "reel:" + (c.kind || "light") : (kind || "reel:reel");
 }
 
 /* ---------------------------------------------------------------------------
@@ -306,6 +366,13 @@ export function datesBack(days, now) {
 
 export async function collect(days, opts = {}) {
   const read = opts.readSlot || readSlot;
+  /* only defaulted when the caller did not hand one in at all: a test or a
+     caller that deliberately passed manifest: null to prove the no-shelf
+     behaviour is left exactly as it asked. api/house.js's own flow action
+     (through _flow.js's own collect() call) never fetched a manifest at
+     all, which is the same fault warm.js had, one call earlier; this default
+     is what gives it the shelf without api/house.js ever needing to know it. */
+  const manifest = opts.manifest !== undefined ? opts.manifest : localManifest();
   const dates = datesBack(Math.max(1, Math.min(60, Number(days) || 14)), opts.now);
   const wanted = [];
   for (const d of dates) for (const s of SLOT_IDS) wanted.push([d, s]);
@@ -319,8 +386,8 @@ export async function collect(days, opts = {}) {
   }
   const posts = [];
   for (const r of recs) {
-    const card = matchedCard(r, opts.manifest);
-    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, opts.manifest);
+    const card = matchedCard(r, manifest);
+    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, manifest);
     const media = {};
     for (const net of ["instagram", "facebook", "youtube", "threads"]) {
       const x = r.results[net];
@@ -829,6 +896,11 @@ function statRowYT(v, atIso) {
 export async function snapshot(opts = {}) {
   const t0 = Date.now();
   const read = opts.readSlot || readSlot;
+  /* the local file preferred, warm.js's own HTTP fetch only when the
+     caller could not read it at all (2026-09-24 review: this is the exact
+     call that baked "reel:reel" into a month of snapshots when that fetch
+     answered nothing) */
+  const manifest = opts.manifest !== undefined ? opts.manifest : localManifest();
   const nowMs = nowMsOf(opts.now);
   const today = new Date(nowMs).toISOString().slice(0, 10);
   const budget = opts.budgetMs != null ? opts.budgetMs : SNAPSHOT_BUDGET_MS;
@@ -903,7 +975,7 @@ export async function snapshot(opts = {}) {
     /* date and slot forced from the walk's own loop, not trusted from the
        record: the same defensiveness collect() keeps above, for a record
        whatever shape an older write left it in */
-    const kind = kindOf({ ...rec, date: d, slot: s }, opts.manifest);
+    const kind = kindOf({ ...rec, date: d, slot: s }, manifest);
     const record = { date: d, slot: s, hour: hourOf(s), kind, reel: REEL_SLOTS.includes(s),
                       title: String(rec.title || ""), at: atIso, stats };
     try {
@@ -968,6 +1040,10 @@ function sideBySide(thisRows, lastRows, keyOf, labelOf) {
 }
 
 export async function numbers(opts = {}) {
+  /* local file first: this is what lets a record stored under the
+     catch-all "reel:reel" be read correctly here even though snapshot()
+     wrote it under that name permanently (2026-09-24 review) */
+  const manifest = opts.manifest !== undefined ? opts.manifest : localManifest();
   const dates = datesBack(14, opts.now);              /* dates[0] is today, dates[6..13] is the week before */
   const keys = [];
   for (const d of dates) for (const s of SLOT_IDS) keys.push(K_STATS(d, s));
@@ -980,6 +1056,10 @@ export async function numbers(opts = {}) {
     if (!rec || !rec.stats) { unread++; return; }
     const thisWeek = dates.indexOf(d) < 7;
     const weekday = new Date(d + "T00:00:00Z").getUTCDay();
+    /* a stored "reel:reel" (or no kind at all) is re-asked of the shelf
+       right here, with the manifest THIS call has, rather than trusted as
+       final forever just because it is what snapshot() once wrote */
+    const kind = reclassifyKind(rec, manifest);
     /* the wide upload beside a short's own Short is the same post, not a
        second one: its views are folded into the "youtube" row below rather
        than counted as a row of its own, so byKind/byWeekday/bySlot (which
@@ -993,11 +1073,11 @@ export async function numbers(opts = {}) {
       read++;
       if (net === "youtubeWide") continue;
       const views = (net === "youtube" && wideStat && !wideStat.error) ? sum([v.views, wideStat.views]) : v.views;
-      flat.push({ net, kind: rec.kind, hour: rec.hour, weekday, date: d, slot: rec.slot, title: rec.title,
+      flat.push({ net, kind, hour: rec.hour, weekday, date: d, slot: rec.slot, title: rec.title,
                   views, reach: v.reach, likes: v.likes, comments: v.comments, shares: v.shares, saves: v.saves });
     }
     (thisWeek ? rowsThis : rowsLast).push(...flat);
-    if (rec.kind === "reel:short" && flat.length)
+    if (kind === "reel:short" && flat.length)
       films.push({ date: d, slot: rec.slot, title: rec.title, week: thisWeek ? "this" : "last", stats: rec.stats });
   });
 
@@ -1025,8 +1105,8 @@ export async function numbers(opts = {}) {
     byKind: byKind.map(x => ({ kind: x.key, label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
     byWeekday: byWeekday.map(x => ({ weekday: Number(x.key), label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
     bySlot: bySlot.map(x => ({ slot: x.key, hour: hourOf(x.key), label: x.label, thisWeek: x.thisWeek, lastWeek: x.lastWeek, delta: x.delta })),
-    best: best && { kind: best.key, label: best.label, engagement: best.thisWeek.engagement },
-    worst: worst && { kind: worst.key, label: worst.label, engagement: worst.thisWeek.engagement },
+    best: best && { kind: best.key, label: best.label, engagement: best.thisWeek.engagement, window: "this week" },
+    worst: worst && { kind: worst.key, label: worst.label, engagement: worst.thisWeek.engagement, window: "this week" },
     films, read, unread,
     missingToken: { instagram: !(opts.igToken || igConfigured()), facebook: !(opts.fbToken || fbConfigured()), youtube: !YT.configured(), threads: !(opts.thToken || TH.configured()) }
   };

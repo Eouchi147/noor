@@ -162,6 +162,31 @@ console.log('\nthe 5-post floor: a kind or subject with fewer than five posts is
   ok(word && word.n === 2 && word.n < INS.MIN_BUCKET, 'the kind under the floor is still in the answer, not dropped, so the room can fade it: ' + (word && word.n));
 }
 
+console.log('\nkind at read time: a stored "reel:reel" is asked of the shelf again here too, not only in numbers() (2026-09-24, a live run: kindTotals held "106" reels the shelf could have named, and none of them were)');
+{
+  store.clear(); hashes.clear();
+  /* the exact live fault: written the night the shelf could not be read,
+     with a real hook (reels/index.json's own "Al-Fatiha · 1:1-7", a verse
+     card) that this call's own manifest, read straight off disk, can name */
+  putStats(0, 'reelA', 'reel:reel', 8, 'Al-Fatiha · 1:1-7', { instagram: { views: 300, reach: 200, likes: 5, comments: 1, shares: 0, saves: 0, at: NOW } });
+  const out = await OBS.compose({ now: NOW });
+  const verse = out.kindTotals.find(k => k.kind === 'reel:verse');
+  ok(verse && verse.n === 1 && verse.label === 'verse reels', 'kindTotals reclassifies it under its real kind, not the catch-all: ' + JSON.stringify(verse));
+  ok(!out.kindTotals.some(k => k.kind === 'reel:reel'), 'and it never appears as the raw "reel:reel" once the shelf can name it');
+  ok(!JSON.stringify(out.kindDaily).includes('"reel:reel"'), 'kindDaily\'s own keys are reclassified the same way, not left as the raw id');
+}
+
+console.log('\nevery figure labels its own window: the 30-day breakdowns never let a model mistake them for the 7-day summary (2026-09-24, "106 posts" this week, when it was really a month\'s own count)');
+{
+  store.clear(); hashes.clear();
+  putStats(0, 'reelA', 'reel:verse', 8, 'v0', { instagram: { views: 100, reach: 200, likes: 1, comments: 0, shares: 0, saves: 0, at: NOW } });
+  const out = await OBS.compose({ now: NOW });
+  ok(out.windowDays === 30, 'the room\'s own top-level window is stated: 30 days of trend and kind history');
+  ok(out.summary.windowDays === 7, 'the summary block states its own, different window right beside it: 7');
+  ok(out.kindTotals.every(k => k.windowDays === 30), 'every kindTotals row carries its own 30-day window');
+  ok(out.bySubject.every(s => s.windowDays === 30), 'every bySubject row carries its own 30-day window too');
+}
+
 console.log('\nposting health: state, retries and duplicates read from the slot records, never invented');
 {
   store.clear(); hashes.clear();

@@ -38,7 +38,7 @@ import { kv, kvReady, kvKind } from "./_kv.js";
 import { SLOT_IDS, REEL_SLOTS } from "./_schedule.js";
 import { readSlot, postedChannelCounts } from "./social.js";
 import {
-  numbers, hourOf, kindLabel, matchedCard, subjectOf,
+  numbers, hourOf, kindLabel, matchedCard, subjectOf, reclassifyKind,
   cacheRead, K_STATS, datesBack, median, mean, MIN_BUCKET
 } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
@@ -72,10 +72,15 @@ const SLOT_NOUN = {
   dawn: "morning card", lead: "coming-up card", light: "day's card", word: "word card", dusk: "chapter card",
   reelA: "morning reel", reelC: "noon reel", reelD: "afternoon reel", reelB: "evening reel", reelF: "late reel", reelE: "night reel"
 };
+/* exported so any caller holding a bare slot id ("reelA" and the rest of
+   api/_schedule.js's own SLOTS) can turn it into the same owner-facing
+   word this file already uses, rather than inventing a second name for the
+   same slot (api/lantern-agent.js's own tool sanitizer, 2026-09-24) */
+export const slotLabel = id => SLOT_NOUN[id] || "post";
 /* "the 21:00 UTC night reel", "the 09:00 UTC coming-up card": the clock
    and the noun, no article to agree with the noun (the live page once read
    "a afternoon reel") */
-const slotPhrase = s => s.label + " UTC " + (SLOT_NOUN[s.slot] || "post");
+const slotPhrase = s => s.label + " UTC " + slotLabel(s.slot);
 const r1 = x => x == null ? null : Math.round(x * 10) / 10;
 const sum = xs => { const a = xs.filter(x => typeof x === "number" && isFinite(x)); return a.length ? a.reduce((s, x) => s + x, 0) : null; };
 const weekdayOf = d => new Date(d + "T00:00:00Z").getUTCDay();
@@ -194,6 +199,13 @@ async function walkStats(dates, manifest, opts) {
     const [d] = wanted[i];
     const wd = weekdayOf(d), hh = rec.hour;
     const ck = wd + ":" + hh;
+    /* the card matched once per record, then reused for both the kind fold
+       below and the subject fold already here: a stored "reel:reel" (the
+       shelf could not be read the day snapshot() wrote it) is asked of
+       THIS call's own manifest before either fold trusts it, the same
+       review that fixed numbers() (2026-09-24) */
+    const card = matchedCard(rec, manifest);
+    const kind = reclassifyKind(rec, manifest, card);
     for (const net of Object.keys(rec.stats)) {
       if (net === "youtubeWide") continue;             /* folded into youtube below, same as numbers() */
       const v = rec.stats[net];
@@ -216,7 +228,7 @@ async function walkStats(dates, manifest, opts) {
       }
 
       const dk = (byDateKind[d] = byDateKind[d] || {});
-      const krow = (dk[rec.kind] = dk[rec.kind] || { posts: 0, engSum: 0, engBase: 0 });
+      const krow = (dk[kind] = dk[kind] || { posts: 0, engSum: 0, engBase: 0 });
       /* a slot posts to several networks; the kind trend counts the SLOT once
          (the first network's own pass through it), the same restraint
          numbers() keeps for byWeekday and bySlot */
@@ -224,8 +236,7 @@ async function walkStats(dates, manifest, opts) {
       krow.engSum += eng; krow.engBase += base;
 
       if (net === "instagram" && v.reach != null) {
-        const card = matchedCard(rec, manifest);
-        const subj = subjectOf(rec.kind, card);
+        const subj = subjectOf(kind, card);
         if (subj) subjRows.push({ group: subj.group, label: subj.label, reach: v.reach, date: d });
       }
     }
@@ -256,15 +267,20 @@ async function walkStats(dates, manifest, opts) {
     const r = (byDateKind[d] || {})[k];
     return { date: d, posts: r ? r.posts : 0, engagement: r && r.engBase > 0 ? r1(r.engSum / r.engBase) : null };
   });
+  /* windowDays on every row, not only once at the top of compose()'s own
+     return: a live run read this 30-day total as if it were the week the
+     owner actually asked about (2026-09-24, "106 posts" this week when
+     Instagram had 36; kindTotals' own 30-day count sat right beside a
+     7-day summary with nothing on either one saying which was which). */
   const kindTotals = [...kindsSeen].map(k => {
     const posts = (kindDaily[k] || []).reduce((a, x) => a + x.posts, 0);
-    return { kind: k, label: kindLabel(k), n: posts };
+    return { kind: k, label: kindLabel(k), n: posts, windowDays: dates.length };
   }).sort((a, b) => b.n - a.n);
 
   const subjBuckets = {};
   for (const r of subjRows) (subjBuckets[r.group] = subjBuckets[r.group] || { label: r.label, reach: [] }).reach.push(r.reach);
   const bySubject = Object.keys(subjBuckets).map(g => ({
-    group: g, label: subjBuckets[g].label, n: subjBuckets[g].reach.length,
+    group: g, label: subjBuckets[g].label, n: subjBuckets[g].reach.length, windowDays: dates.length,
     reach: { median: median(subjBuckets[g].reach), mean: r1(mean(subjBuckets[g].reach)) }
   })).sort((a, b) => (b.reach.median || 0) - (a.reach.median || 0));
 
@@ -428,6 +444,11 @@ export async function compose(opts = {}) {
   const reachLast = overallSpan(lastWeekDates);
 
   const summary = {
+    /* this block's own window, stated plainly rather than left to the top
+       level windowDays (30, the trend and kind history below it): every
+       figure here is the 7 days named in thisWeek, never the 30 (2026-09-24
+       review, the "106 posts" fault) */
+    windowDays: 7,
     thisWeek: { from: thisWeekDates[thisWeekDates.length - 1], to: thisWeekDates[0] },
     lastWeek: { from: lastWeekDates[lastWeekDates.length - 1], to: lastWeekDates[0] },
     reach: { value: reachThis.reach, delta: (reachThis.reach != null && reachLast.reach != null) ? reachThis.reach - reachLast.reach : null },
@@ -486,6 +507,10 @@ export async function compose(opts = {}) {
 
   return {
     ok: true, at: now,
+    /* the room's OWN default span, for the trend, the weekday grid and the
+       30-day kind and subject history below; summary carries its own
+       windowDays (7) right beside it, since that block alone is this week
+       against the one before, never this 30 (2026-09-24 review) */
     windowDays: 30,
     summary, funnel,
     trend30: { dates: dates.slice().reverse(), networks: statsWalk.trend30 },

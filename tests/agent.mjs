@@ -119,6 +119,43 @@ console.log('\nplan validation: only known tools and subagents survive, capped a
   ok(A.validatePlan(tooMany).length === A.BUDGETS.maxSteps, 'a plan with 20 steps is capped at the ' + A.BUDGETS.maxSteps + '-step budget');
 }
 
+console.log('\nplan coverage: what a real model\'s own plan forgot, the question\'s own keywords supply (2026-09-24, a live run: a real model\'s plan named observatory alone for "which kind of reel reaches most people on Instagram, and what should we post more of")');
+{
+  const names = steps => steps.map(s => s.kind + ':' + s.name);
+  /* the exact live fault: a valid, parsed plan of one step, for a question
+     this file's own keyword map already knows needs insights and numbers,
+     and "what should" already knows needs a reading */
+  const one = A.validatePlan({ steps: [{ kind: 'tool', name: 'observatory', args: {}, why: 'the whole picture' }] });
+  const covered = A.ensurePlanCoverage(one, 'Which kind of reel reaches most people on Instagram, and what should we post more of? Keep it short.');
+  ok(names(covered).includes('tool:insights') && names(covered).includes('tool:numbers'),
+    'a one-step plan for a question that needs numbers gets insights and numbers added: ' + names(covered).join());
+  ok(names(covered).includes('subagent:analyst') && names(covered).includes('subagent:strategist'),
+    'and "what should" gets a reader added too, even though the model\'s own plan never asked for one: ' + names(covered).join());
+  ok(covered[0].kind === 'tool' && covered[0].name === 'observatory', 'the model\'s own first step is kept, never replaced');
+
+  /* a plan that already covers what the question needs is left exactly as
+     it was, not padded with a duplicate */
+  const full = A.validatePlan({ steps: [
+    { kind: 'tool', name: 'observatory', args: {}, why: 'a' },
+    { kind: 'tool', name: 'insights', args: {}, why: 'b' },
+    { kind: 'tool', name: 'numbers', args: {}, why: 'c' },
+    { kind: 'subagent', name: 'analyst', args: {}, why: 'd' },
+    { kind: 'subagent', name: 'strategist', args: {}, why: 'e' }
+  ] });
+  const same = A.ensurePlanCoverage(full, 'what should we post more of?');
+  ok(same.length === full.length, 'a plan that already covers the question is never padded: ' + same.length);
+
+  /* a question with none of the keywords and none of "what should/why/plan"
+     is left exactly as the model planned it */
+  const untouched = A.ensurePlanCoverage(A.validatePlan({ steps: [{ kind: 'tool', name: 'observatory', args: {}, why: 'a' }] }), 'Hello.');
+  ok(untouched.length === 1, 'a question that asks for nothing in particular is left as the model planned it: ' + untouched.length);
+
+  /* the step budget still holds even once coverage tops a plan up */
+  const nearFull = A.validatePlan({ steps: Array.from({ length: A.BUDGETS.maxSteps - 1 }, (_, i) => ({ kind: 'tool', name: 'observatory', args: { n: i }, why: 'x' })) });
+  const topped = A.ensurePlanCoverage(nearFull, 'which kind, why, site visitors, Facebook, package, line-up: what should we post more of?');
+  ok(topped.length <= A.BUDGETS.maxSteps, 'coverage never pushes a plan past its own step budget: ' + topped.length);
+}
+
 console.log('\nthe critic: a number this run actually found survives, an invented one drops its whole clause, never spliced');
 {
   const toolOutputs = [{ name: 'insights', data: { read: 62, unread: 6, engagement: 0.052 } }];
@@ -308,7 +345,12 @@ console.log('\nthe full run: budgets, the stream\'s own order, and an honest ans
   ok(events.includes('step') && events.includes('subagent'), 'a tool step and a subagent both appear in the stream');
   ok(!events.includes('done'), 'runAgent itself never emits done: that is the HTTP layer\'s own signal that the stream is closing, and runAgent is also called outside any stream at all');
   ok(/4200|4,200/.test(out.answer), 'the synthesised answer, grounded in a number the tools actually gave, comes through: ' + out.answer);
-  ok(out.toolCalls === 1 && out.modelCalls === 3, 'exactly the calls this plan needed were spent: plan + one subagent + synthesis = 3 model calls, ' + out.modelCalls + ' spent');
+  /* "what should" adds strategist too, since the model's own plan named
+     analyst but forgot the reader that turns a reading into a
+     recommendation (ensurePlanCoverage, 2026-09-24): plan + analyst +
+     strategist + synthesis = 4 model calls, one more than this plan alone */
+  ok(out.plan.some(s => s.kind === 'subagent' && s.name === 'strategist'), 'coverage adds strategist for a "what should" question the model\'s own plan forgot it for: ' + JSON.stringify(out.plan));
+  ok(out.toolCalls === 1 && out.modelCalls === 4, 'exactly the calls this topped-up plan needed were spent: plan + analyst + strategist + synthesis = 4 model calls, ' + out.modelCalls + ' spent');
 }
 
 console.log('\nartifacts and gists never skip the critic: a malformed or invented one is dropped with a note, a real one keeps its own numbers');
@@ -483,6 +525,38 @@ function cookieFor(secret) {
   const exp = Date.now() + 100000;
   const sig = crypto.createHmac('sha256', secret).update(String(exp)).digest('hex');
   return 'noor_admin=' + exp + '.' + sig;
+}
+
+console.log('no internal id ever reaches a model or the answer: humanizeIds (2026-09-24, a live run: "generic reels (reel:reel) were posted", the raw internal id read straight out of the tool\'s own JSON)');
+{
+  const REEL_ID_RX = /\breel:\w+/;
+  const SLOT_ID_RX = /\b(reelA|reelB|reelC|reelD|reelE|reelF)\b/;
+  const shaped = {
+    byKind: [{ kind: 'reel:verse', label: 'verse reels', thisWeek: { posts: 3 } }, { kind: 'reel:reel', label: 'x', thisWeek: { posts: 1 } }],
+    kindDaily: { 'reel:word': [{ date: '2026-09-24', posts: 1 }], 'reel:reel': [{ date: '2026-09-24', posts: 1 }] },
+    kindTotals: [{ kind: 'reel:name', label: 'x', n: 2 }],
+    bySlot: [{ slot: 'reelA', hour: 8, label: '08:00' }, { slot: 'dawn', hour: 5, label: '05:00' }],
+    best: { kind: 'reel:verse', label: 'x' },
+    nested: { deeper: [{ kind: 'card:light', slot: 'reelE' }] },
+    untouched: { network: 'instagram', note: 'a plain sentence, left exactly as it was' }
+  };
+  const clean = LA.humanizeIds(shaped);
+  const flat = JSON.stringify(clean);
+  ok(!REEL_ID_RX.test(flat), 'no raw "reel:kind" id survives anywhere in the walked JSON: ' + flat);
+  ok(!SLOT_ID_RX.test(flat), 'no raw slot id survives either: ' + flat);
+  ok(clean.byKind[0].kind === 'verse reels' && clean.byKind[1].kind === 'reels whose kind could not be matched',
+    'a kind id becomes its own human label, the catch-all included: ' + JSON.stringify(clean.byKind));
+  ok(Object.keys(clean.kindDaily).includes('word reels') && !('reel:word' in clean.kindDaily),
+    'an object KEY shaped like a kind id is renamed the same way a value is: ' + Object.keys(clean.kindDaily).join());
+  ok(clean.bySlot[0].slot === 'morning reel' && clean.bySlot[1].slot === 'morning card',
+    'a slot id becomes the owner\'s own word for it: ' + JSON.stringify(clean.bySlot));
+  ok(clean.nested.deeper[0].kind === 'day\'s cards' && clean.nested.deeper[0].slot === 'night reel',
+    'the walk reaches an array nested inside an object, not only the top level: ' + JSON.stringify(clean.nested));
+  ok(clean.untouched.network === 'instagram' && clean.untouched.note === 'a plain sentence, left exactly as it was',
+    'ordinary text and known network names are left alone, nothing over-corrected');
+  ok(Array.isArray(LA.humanizeIds(['reel:verse', 'reelA', 'plain text'])) &&
+     JSON.stringify(LA.humanizeIds(['reel:verse', 'reelA', 'plain text'])) === JSON.stringify(['verse reels', 'morning reel', 'plain text']),
+    'a bare array of strings is walked the same way as an array of objects');
 }
 
 console.log('the owner gate: no secret, no cookie, the right cookie');

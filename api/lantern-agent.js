@@ -38,8 +38,8 @@ import { kv, kvReady } from "./_kv.js";
 import { route as llmRoute, scrub } from "./_llm.js";
 import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS } from "./_agent.js";
 import { playbookLookup } from "./_playbook.js";
-import { cached as observatoryCached } from "./observatory.js";
-import { read as insightsRead, numbers as insightsNumbers, refresh as insightsRefresh, snapshot as insightsSnapshot } from "./_insights.js";
+import { cached as observatoryCached, slotLabel } from "./observatory.js";
+import { read as insightsRead, numbers as insightsNumbers, refresh as insightsRefresh, snapshot as insightsSnapshot, kindLabel } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
 import { reconcile as socialReconcile, teachGuard as socialTeachGuard, readSlot, revertTaught } from "./social.js";
 import { chooseReel, SLOTS, REEL_SLOTS, SLOT_IDS } from "./_schedule.js";
@@ -60,6 +60,38 @@ const HOST = () => "https://" + SITE();
 
 function readJSON(rel) { try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), rel), "utf8")); } catch { return null; } }
 
+/* NEVER AN INTERNAL ID REACHES A MODEL (2026-09-24 review). A live run asked
+   "which kind of reel reaches most people" and the answer named "reel:reel"
+   in plain sight: a tool's own data carries "reel:verse" or "reelA" because
+   that is how the house itself keeps the record, but a model reading a raw
+   id like that has no way to know what it means and no way to check, so
+   every tool's data is walked once here before it ever reaches a subagent,
+   the synthesis step or the owner's own answer. Every internal kind id
+   (KIND_LABEL's own keys, including the "reel:reel" catch-all) and every
+   slot id (api/_schedule.js's own SLOTS) is replaced with the exact word
+   the owner already reads elsewhere in this console -- kindLabel() and
+   observatory.js's own SLOT_NOUN -- never a second, newly invented name for
+   the same thing. A key shaped like a kind id (kindDaily's own object keys)
+   is renamed the same way a value would be. */
+const SLOT_ID_SET = new Set(SLOT_IDS);
+const KIND_ID_RX = /^(reel|card):[\w-]+$/;
+function humanizeIds(value) {
+  if (Array.isArray(value)) return value.map(humanizeIds);
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const k of Object.keys(value)) {
+      const key = KIND_ID_RX.test(k) ? kindLabel(k) : k;
+      out[key] = humanizeIds(value[k]);
+    }
+    return out;
+  }
+  if (typeof value === "string") {
+    if (KIND_ID_RX.test(value)) return kindLabel(value);
+    if (SLOT_ID_SET.has(value)) return slotLabel(value);
+  }
+  return value;
+}
+
 /* ---------------------------------------------------------------------------
    THE TOOLS. Every one reads only; every one but "jev" is deterministic and
    calls no model at all; none sends a per-person row (the agent's own
@@ -74,7 +106,10 @@ function readJSON(rel) { try { return JSON.parse(fs.readFileSync(path.join(proce
    house, nothing new spent), so its own text is scrubbed here the same way
    a subagent's own prompt is scrubbed before it is sent, and its return
    carries `modelCall: true` so api/_agent.js's step loop counts it against
-   the run's model-call budget exactly as it counts a subagent.
+   the run's model-call budget exactly as it counts a subagent. Every tool
+   here is wrapped once, below, so its own `data` never carries a raw kind
+   or slot id regardless of which tool it came from or which one is added
+   here next.
 --------------------------------------------------------------------------- */
 function buildTools(req) {
   const tools = {};
@@ -251,8 +286,22 @@ function buildTools(req) {
   };
   tools.action_undo_reconcile_teach = async (undo) => revertTaught(undo && undo.keys);
 
+  /* the one place every tool's own data passes through humanizeIds, so a
+     tool added here next gets the same guarantee without anyone having to
+     remember it; an action's own return (no `data` field) passes through
+     untouched. */
+  for (const name of Object.keys(tools)) {
+    const fn = tools[name];
+    tools[name] = async (...args) => {
+      const r = await fn(...args);
+      return (r && typeof r === "object" && "data" in r) ? { ...r, data: humanizeIds(r.data) } : r;
+    };
+  }
+
   return tools;
 }
+
+export { humanizeIds };
 
 /* ---------------------------------------------------------------------------
    THE LEDGER. One list, newest first, and a per-day counter that resets by

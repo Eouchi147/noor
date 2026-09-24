@@ -224,13 +224,14 @@ export function parsePlan(raw) {
    analyst and strategist subagents always run last (a reading needs a
    reader), and whatever the keywords below matched runs between the two.
    Never empty handed, never a guess dressed as a plan. */
-export function fallbackPlan(message) {
-  const q = " " + String(message || "").toLowerCase() + " ";
-  const steps = [{ kind: "tool", name: "observatory", args: {}, why: "the plan could not be read, so this looks at the whole picture first" }];
-  const add = (name, args, why) => {
-    if (!steps.some(s => s.kind === "tool" && s.name === name && JSON.stringify(s.args) === JSON.stringify(args || {})))
-      steps.push({ kind: "tool", name, args: args || {}, why });
-  };
+/* the keyword map itself, factored out so both the fallback plan (nothing
+   could be read at all) and ensurePlanCoverage below (a plan WAS read, but
+   still missed what the question asked for) draw on exactly the same
+   reading of the question, never two competing ideas of what a keyword
+   means. */
+function keywordTools(q) {
+  const out = [];
+  const add = (name, args, why) => out.push({ name, args: args || {}, why });
   if (/\bkind\b|\bsubject\b|what to post|which (kind|type)/.test(q)) {
     add("insights", {}, "the question asks by kind or subject, which insights breaks down");
     add("numbers", {}, "and the week's own numbers by network");
@@ -244,9 +245,54 @@ export function fallbackPlan(message) {
   }
   if (/\bpackage\b|\bdraft\b/.test(q)) add("package", {}, "the question asks for a package or a draft");
   if (/line.?up|next week/.test(q)) { add("lineup", {}, "the question is about the line-up"); add("shelf", {}, "and what the shelf holds to fill it"); }
+  return out;
+}
+
+export function fallbackPlan(message) {
+  const q = " " + String(message || "").toLowerCase() + " ";
+  const steps = [{ kind: "tool", name: "observatory", args: {}, why: "the plan could not be read, so this looks at the whole picture first" }];
+  const add = (name, args, why) => {
+    if (!steps.some(s => s.kind === "tool" && s.name === name && JSON.stringify(s.args) === JSON.stringify(args || {})))
+      steps.push({ kind: "tool", name, args: args || {}, why });
+  };
+  for (const t of keywordTools(q)) add(t.name, t.args, t.why);
   steps.push({ kind: "subagent", name: "analyst", args: {}, why: "read what the numbers say" });
   steps.push({ kind: "subagent", name: "strategist", args: {}, why: "turn the reading into a recommendation" });
   return { steps };
+}
+
+/* PLAN COVERAGE (2026-09-24, a live run: the planner parsed this time, a
+   real model answered valid JSON, but it named observatory alone for
+   "which kind of reel reaches most people on Instagram, and what should we
+   post more of", a question this same keyword map already knows needs
+   insights and numbers, and "what should" already knows needs a reading,
+   not a photograph alone). A plan the model actually produced is never
+   replaced here, only topped up: whatever its own steps missed, that the
+   question's own words ask for, is added exactly the way the fallback plan
+   above already builds one from nothing; and a question that asks "what
+   should", "why" or names "the plan" always gets a reader (analyst, then
+   strategist) even when the model's own plan forgot to ask for one, since
+   answering such a question from raw tool data alone, with nobody reading
+   it, is the same silence the fallback plan itself was built to end. The
+   mechanical critic (below, checkAndClean/critic) needs no step of its own
+   here: it already runs on every answer this function returns, regardless
+   of what the plan asked for or the budget left. */
+export function ensurePlanCoverage(steps, message) {
+  const q = " " + String(message || "").toLowerCase() + " ";
+  const out = steps.slice();
+  const hasTool = (name, args) => out.some(s => s.kind === "tool" && s.name === name && JSON.stringify(s.args || {}) === JSON.stringify(args || {}));
+  const hasSubagent = name => out.some(s => s.kind === "subagent" && s.name === name);
+  for (const t of keywordTools(q)) {
+    if (out.length >= BUDGETS.maxSteps) break;
+    if (!hasTool(t.name, t.args)) out.push({ kind: "tool", name: t.name, args: t.args, why: t.why });
+  }
+  if (/what should|\bwhy\b|\bplan\b/.test(q)) {
+    if (out.length < BUDGETS.maxSteps && !hasSubagent("analyst"))
+      out.push({ kind: "subagent", name: "analyst", args: {}, why: "the question asks what should be done, which wants a reading of the numbers, not only the numbers themselves" });
+    if (out.length < BUDGETS.maxSteps && !hasSubagent("strategist"))
+      out.push({ kind: "subagent", name: "strategist", args: {}, why: "and a recommendation, not only a reading" });
+  }
+  return out;
 }
 
 /* letters only, lower case: "reconcileRead", "reconcile Read", "RECONCILE_READ"
@@ -1121,7 +1167,7 @@ export async function runAgent(input) {
     if (planCall && planCall.ok) plan = parsePlan(planCall.content);
   }
   if (!plan) plan = fallbackPlan(message);
-  const steps = validatePlan(plan);
+  const steps = ensurePlanCoverage(validatePlan(plan), message);
   await emit("plan", { steps: steps.map(s => ({ kind: s.kind, name: s.name, why: s.why })) });
 
   /* ---- STEPS ---- */

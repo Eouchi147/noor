@@ -18,7 +18,7 @@
 import crypto from "crypto";
 import { ownerGate } from "./_owner.js";
 import { kvReady, kvKind } from "./_kv.js";
-import { read, refresh, snapshot, numbers } from "./_insights.js";
+import { read, refresh, snapshot, numbers, shelfManifest } from "./_insights.js";
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -26,15 +26,13 @@ const json = (res, code, obj) => {
   return res.status(code).json(obj);
 };
 
-/* the shelf, so a reel's kind can be named; the production host, because a
-   preview deployment has no /reels of its own */
+/* the shelf, so a reel's kind can be named: read straight off this
+   deployment's own disk (vercel.json's includeFiles), the production host's
+   own /reels/index.json asked over HTTP only when that local read fails
+   (2026-09-24 review: that fetch answering nothing, one night, is what
+   baked "reel:reel" into a month of daily snapshots in the first place) */
 const SITE = () => (process.env.SITE_HOST || "noorcodex.com").replace(/^https?:\/\//, "").replace(/\/$/, "");
-async function manifest() {
-  try {
-    const r = await fetch("https://" + SITE() + "/reels/index.json", { cache: "no-store" });
-    return r && r.ok ? await r.json() : null;
-  } catch { return null; }
-}
+async function manifest() { return shelfManifest({ base: "https://" + SITE() }); }
 
 /* THE SAME DOOR api/social.js OPENS FOR ITS OWN CRON, FOR EXACTLY ONE
    ACTION. The nightly snapshot is taken by the warm run's own daily cron
@@ -77,7 +75,7 @@ export default async function handler(req, res) {
       return json(res, 200, { ...out, enabled: true, store: kvKind() });
     }
     if (String(q.action || "") === "numbers") {
-      const out = await numbers({});
+      const out = await numbers({ manifest: await manifest() });
       return json(res, 200, { ...out, enabled: true, store: kvKind() });
     }
     const out = await read(days, { manifest: await manifest() });

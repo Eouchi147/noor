@@ -88,9 +88,13 @@ export default async function handler(req, res) {
   if (!kvReady()) {
     out.stats = { ok: false, skipped: "store not ready" };
   } else try {
-    const { snapshot } = await import("./_insights.js");
-    let manifest = null;
-    try { const rm = await fetch(base + "/reels/index.json", { cache: "no-store" }); manifest = rm.ok ? await rm.json() : null; } catch { }
+    /* the shelf read locally first, this file's own copy of the HTTP fetch
+       kept only as the last resort (2026-09-24 review): that fetch answering
+       nothing, silently, one night, is exactly what baked "reel:reel" into
+       a month of daily snapshots and stayed there, since nothing downstream
+       used to ask the shelf again after snapshot() wrote its answer. */
+    const { snapshot, shelfManifest } = await import("./_insights.js");
+    const manifest = await shelfManifest({ base });
     out.stats = await snapshot({ manifest, budgetMs: 25000 });
   } catch (e) { out.stats = { ok: false, error: String(e && e.message || e).slice(0, 60) }; }
 
