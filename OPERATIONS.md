@@ -412,6 +412,16 @@ so changing the menu means regenerating or re-injecting across every page.
 `scripts/synergy.py` emits the "Where to go from here" band **with its own stylesheet**
 ,  never hand-write that markup, it will render unstyled.
 
+**The Content Graph**, `sh scripts/graph/run.sh`: rebuilds `build/graph/noor-content-graph.json`
+(git ignored, out of the deployment), validates it, regenerates `assets/entity-graph.json` (the
+prophet, companion, character, place and name rooms' "Read beside it" shelf, ranked by relevance
+since api/page.js shows only the first 8 of a list), and rewrites the generated counts block in
+`CONTENT_STATUS.md`. Run it whenever a Light, a dictionary word, a Path chapter, a prophet, a
+companion, a character, a place, a Name or one of the eight stories is added, renamed or removed;
+`tests/content-graph.mjs` is the guard that catches a forgotten run (it fails if
+`assets/entity-graph.json` has drifted from what the graph would derive right now, byte for byte,
+order included, since a resorted list is a reader seeing different links, not a harmless drift).
+
 ### The Illuminations Library
 
 `scripts/gen-lights.py` is the only generator that is also a **validator**. It reads
@@ -471,6 +481,7 @@ node tests/house.mjs                  # 129 · the steward's rules and the flow,
 node tests/insights.mjs               # 58 · what strangers watched, Meta and Google stubbed
 node tests/api-audit.mjs              # 129 · every route: auth, caching, secrets, cold start
 node tests/symbols.mjs                # no symbol of another faith is drawn anywhere
+node tests/content-graph.mjs          # 16 · the Content Graph builds, validates, and matches the shelf
 node tests/dials.mjs                  # the console's switches actually switch    (server :8433)
 node tests/figures.mjs                # every drawing on every page, 3 widths     (server :8433)
 node tests/mushaf.mjs                 # 42 · the Qur'an player and verse layer  (server :8433)

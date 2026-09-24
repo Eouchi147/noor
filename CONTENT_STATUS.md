@@ -20,3 +20,39 @@ Total narrative: ~30,800 words · 107 ayat cited · 161 hadith cited with source
 
 ## Regeneration
 Edit `scripts/patches/*` → `node scripts/build.mjs` → `node scripts/build-i18n.mjs`.
+
+
+<!-- graph-counts:start -->
+### The graph's own counts
+
+Written by `scripts/graph/write_counts.py`, part of `scripts/graph/run.sh`; do not edit by hand, it is overwritten on the next run. Source: `build/graph/noor-content-graph.json`.
+
+| type | count |
+|---|---|
+| chapter | 71 |
+| companion | 58 |
+| day | 25 |
+| dua | 18 |
+| figure | 75 |
+| hadith | 681 |
+| hero | 60 |
+| kid | 137 |
+| light | 350 |
+| name | 99 |
+| page | 76 |
+| place | 34 |
+| prophet | 25 |
+| reel | 1617 |
+| story | 8 |
+| surah | 114 |
+| verse | 2981 |
+| word | 523 |
+
+The reel plan: 1565 cards, 1565 traced to a content object by a `reel_of` edge, 0 not.
+
+The heroes and Hajj "short" films (masterplan's flagship derivatives, outside the plan, named by a `room` field): 52 total, 34 traced, either a `room` fragment naming exactly one graph node, a field-section film matched to one gift by its own brief (`tools/films/briefs/plate-<x>.json`), or a hajj.html fragment naming nothing traced honestly to the page itself; 18 not, listed by scripts/graph/build_graph.py's own `short_untraced` flag rather than guessed from the reel's own title:
+- 15: a field section on heroes.html, several gifts, not one record
+- 1: brief eyebrow names more than one gift: hero:gift-how-light-enters-the-eye, hero:gift-the-long-road-to-eyeglasses
+- 1: no gift in f-mathematics shares a name with the brief
+- 1: no gift in f-word-and-page shares a name with the brief
+<!-- graph-counts:end -->

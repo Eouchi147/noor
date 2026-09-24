@@ -69,6 +69,21 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
 - Found, not yet fixed: chapter 60's summary says "the plea arrives one node late" (an old slip for
   "too late"); changing the English moves its translation key, so it rides the next content pass.
 
+## Shipped 24 September (masterplan step 5, the Content Graph)
+
+- The graph the content audit built outside the house now lives in it: `scripts/graph/run.sh`
+  builds the NOOR Content Graph from the repository's own files (about 6,950 objects, 18 types,
+  27,000 ties), validates it, regenerates `assets/entity-graph.json` (the related shelves of the
+  prophet, companion, character, place and Name rooms, ranked by relevance) and the counts in
+  `CONTENT_STATUS.md`. Deterministic; `build/graph/` is git ignored and never deployed.
+- The content_id is `<type>:<id>` (ARCHITECTURE.md, "The Content Graph"): every one of the 1,565
+  planned cards traces to its object; 34 of the 52 films trace through their room or their brief,
+  18 are named in the test with the reason they cannot yet.
+- `scripts/graph/same-as.json` names one canonical id for records that are one thing under two
+  ids (content-003); no id in the site's data was renamed.
+- `tests/content-graph.mjs` (16 checks) fails if the shelves drift from the graph by one link or
+  one place in order.
+
 ## Decided and not yet done
 
 - The site wide wordmark line "Learn Islam": one stylesheet line, but the stylesheet is cached for
