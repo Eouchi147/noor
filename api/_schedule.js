@@ -353,7 +353,7 @@ function pickStep(list, step, salt, seen) {
   return oldest || first;
 }
 
-export function chooseReel(cards, dateStr, half, hijri, seen) {
+export function chooseReel(cards, dateStr, half, hijri, seen, bias, report) {
   const all = (cards || []).filter(c => c && c.id);
   /* ids already sent to some channel inside the duplicate guard's window; a
      Set, an array, or nothing at all, which is the same as nothing */
@@ -381,11 +381,33 @@ export function chooseReel(cards, dateStr, half, hijri, seen) {
        can land on the same card in the same week. */
     const list = all.filter(c => kindOf(c) === kind && (!c.slot || c.slot === half || kind !== "light"));
     if (list.length) {
+      /* AN EXPERIMENT'S OWN ARM (api/_experiments.js's biasFrom, the day's
+         {kind, match}). Only when the kind this loop is actually walking is
+         the one the test is about, and only when the arm's own pool -- this
+         kind's cards, filtered by the arm's predicate -- still holds at
+         least 8 the duplicate guard has not already sent: a pool thinner
+         than that would walk itself dry inside a week and start repeating,
+         which a test needs at least as much as an ordinary day does. Every
+         other case (no bias, the wrong kind, a pool run thin) is exactly
+         today's walk over the whole kind, untouched. */
+      let pool = list;
+      if (bias && bias.kind === kind && typeof bias.match === "function") {
+        const arm = list.filter(bias.match);
+        const fresh = arm.filter(c => !avoid.has(c.id)).length;
+        /* `report`, an optional 7th argument, out only -- a caller that
+           needs to know whether the arm's own pool was actually walked
+           (never merely offered) sets a property here rather than this
+           function changing what it returns; slotExtras below is the one
+           caller that needs it, to tag exp on a slot record only when it
+           is true (2026-09-25 fix: a card the fallback pool happened to
+           still match by chance was being tagged as the arm's own pick). */
+        if (fresh >= 8) { pool = arm; if (report) report.usedArm = true; }
+      }
       /* the kind the rota asked for walks by slot count; a stand-in kind (the
          shelf mid-render) and the day's card, which has one slot a half a
          week and cannot meet itself, walk by the day as before */
-      if (kind === want && kind !== "light") return pickStep(list, reelStep(kind, dateStr, half, noShorts), "reel:" + kind, avoid);
-      return pick(list, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind, avoid);
+      if (kind === want && kind !== "light") return pickStep(pool, reelStep(kind, dateStr, half, noShorts), "reel:" + kind, avoid);
+      return pick(pool, dateStr, kind === "light" ? "reel:" + half : "reel:" + kind, avoid);
     }
   }
   /* the shelf holds only the old day's cards, filed as morning and evening,
@@ -457,6 +479,10 @@ function buildSlotInner(slot, ctx) {
       kind: r.kind || "light",
       only: ["facebook", "instagram", "youtube", "pinterest", "telegram", "threads"]
     };
+    /* which arm of a running experiment this reel actually was
+       (api/_experiments.js's own biasFrom), carried through so
+       api/social.js's own writeSlot can put {id, arm} on the slot record */
+    if (r.exp) out.exp = r.exp;
     /* A SILENT SHORT CARRIES MORE THAN A CAPTION. shapeRaw's short branch
        (api/_channels.js) reads p.story, p.title, p.hook, p.payoff, p.tags,
        p.wide, p.src and p.room; none of those existed on the post this
@@ -639,7 +665,7 @@ function buildSlotInner(slot, ctx) {
    the machine used to send, which is worse than the full one and better than
    none.
 --------------------------------------------------------------------------- */
-export async function slotExtras(base, date, index, slot, hijri, pin, seen) {
+export async function slotExtras(base, date, index, slot, hijri, pin, seen, bias) {
   const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
@@ -654,14 +680,30 @@ export async function slotExtras(base, date, index, slot, hijri, pin, seen) {
     /* a repair is pinned to the reel that went out: the record names it, and
        the rota's walk moves when the shelf grows (every Monday), so a retry
        composed from the rota came out as a different card and was refused
-       as drift (every reel of 15 September 2026 after the shelf grew) */
-    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null, seen);
+       as drift (every reel of 15 September 2026 after the shelf grew).
+       A pin skips chooseReel entirely, so `report` below stays untouched
+       and a repair never carries exp -- honest, since a pinned repair is
+       not the arm's own pool being walked, whatever it happens to match. */
+    const report = {};
+    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null, seen, bias || null, report);
     /* the row carries the video's own URL once the shelf is on the Blob
        store; an older manifest has none, and the file is on the site */
     const isUrl = v => typeof v === "string" && /^https:\/\//.test(v);
     if (c) out.reel = { ...c,
       video: isUrl(c.video) ? c.video : base + "/reels/" + c.id + ".mp4",
       cover: isUrl(c.cover) ? c.cover : base + "/reels/" + c.id + "-cover.jpg" };
+    /* exp is written only when the arm's own pool was actually walked to
+       reach this card (chooseReel's own `report.usedArm`, above), never
+       merely because the card the picker landed on happens to match the
+       arm's predicate: a pool run thin falls back to the whole kind (the
+       same walk any ordinary day gets), and a card from THAT walk can
+       still, by chance, satisfy the arm's own match -- tagging that as the
+       arm's own pick would credit the test with a post it never actually
+       leaned toward (2026-09-25 fix). Carried on the reel row so buildSlot
+       can lift it onto the post, and social.js's own writeSlot can lift it
+       onto the slot record -- {id, arm}, nothing else. */
+    if (out.reel && report.usedArm && bias)
+      out.reel.exp = { id: bias.id, arm: bias.arm };
     return out;
   }
   if (!slot || slot === "dusk") {

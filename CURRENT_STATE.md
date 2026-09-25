@@ -5,6 +5,13 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
 
 ## Live on main (24 September 2026)
 
+- **Experiments** (masterplan step 9, `api/_experiments.js`, `api/experiments.js`): a real A/B
+  split over the verse shelf (length, or reciter against reciter), owner-planned, `chooseReel`
+  leaning the picker toward the day's own arm, a seeded permutation test on watched share reading
+  the result once the full window has closed; `api/_insights.js`'s `learn` block (watch time by
+  kind, length and reciter) and the Observatory's own `experiment` card read it, with a Plan
+  button on the card itself. Nothing is planned yet; the owner starts the first one (the verse
+  length question) from that card, or `POST /api/experiments`.
 - **The films**: 52 on the shelf (`reels/index.json`, kind `short`), each with its tall file,
   wide file and cover on the store; the eleven Hajj films among them. Rendered on the owner's
   Mac (`./plates.sh`), published by `tools/films/publish-shorts.sh`, which refuses to shrink the

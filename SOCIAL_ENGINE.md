@@ -233,6 +233,62 @@ counts as one post everywhere, not only in the network fold; and a bucket with n
 week before reads its delta as `"new"` rather than a null the console could not tell apart
 from an error.
 
+## Experiments (masterplan step 9, 25 September 2026)
+
+`chooseReel` (`api/_schedule.js`) takes an optional sixth argument, `bias`
+(`{kind, match}`, from `api/_experiments.js`'s `biasFrom`): only when the kind it is
+walking is the one an experiment is about, and that kind's cards filtered by the arm's
+own predicate still number at least eight the duplicate guard has not already sent, it
+walks that arm's pool instead of the whole kind, with the same walk and the same salt.
+Every other day, and every call with no bias at all, is exactly the walk described
+above, untouched -- `tests/reels-kinds.mjs` proves it. Which arm a day leans toward is
+day parity from the test's own start (day zero A, day one B); the reading (`evaluate`)
+scores each posted reel by what it actually was, its own `secs` and `reciter`, never by
+which day it went out.
+
+`api/social.js`'s `composeSlot` (the on-demand door, `sendSlot`) and `runDue` (the
+hourly cron) each read the day's own bias once, `_experiments.biasFor(date, opts)`, a
+KV fault caught and answered `null` so a store outage never costs a post; the card the
+picker actually chose carries `exp: {id, arm}` onto the slot's own
+`nsoc:slot:<date>#<slot>` record only when `chooseReel` actually walked the arm's own
+pool to reach it (its optional 7th argument, `report`, `{usedArm: true}` set only on
+that branch) -- never merely because the card a starved pool's fallback happened to
+land on still satisfies the arm's own predicate by coincidence (a 25 September review
+fix: `_schedule.js:689` used to check the CARD against the predicate again, which a
+fallback walk over the whole kind could pass by chance without the arm's own pool ever
+being the thing walked). The plan preview (`?action=plan`/`today`), the Lantern's
+`lineup` tool and `_insights.js`'s own `matchedCard` fallback (reconstructing which
+card a record with no matching hook actually was) all read the same bias, so every
+view of a day's line-up agrees with what was actually sent. Planning and stopping a
+test is `POST /api/experiments`, owner only; see `OPERATIONS.md`.
+
+**Stopping stops, and a malformed state degrades rather than crashes (25 September
+review).** `biasFromAny` (the one function `biasFor`, the live posting path, and
+`_insights.js`'s own reconstruction all call) caps every history entry at its own
+`stoppedAt` date: a test ended early, or a planned test cancelled before it ever
+started, never leans the picker again from the day it was stopped, even for a date
+still inside what would have been its original window. `readState` sanitizes
+`current` and `history` on the way in (a null entry, a shape with no `id` or `start`,
+is dropped, never thrown on), so a corrupted `nexp:state` degrades to "nothing
+running, nothing finished" everywhere it is read, including `api/observatory.js`'s own
+`compose()`, where the `experiment` and `learn` blocks now fail on their own without
+blanking the rest of the room. `planExperiment` and `stopExperiment` read the store
+through a raw call that is allowed to throw, unlike every other reader's safe one: a
+genuine KV fault refuses the plan or the stop outright rather than being read as an
+empty store and overwriting real history with nothing. Planning also now checks the id
+with `Object.hasOwn` (never a bracket read), a real calendar date that is today (UTC)
+or later, and only the argument keys the registry actually documents, each a short
+string. `evaluate`'s primary metric is watched share, `watched`'s own median, since
+every test here asks what holds attention, not what travels furthest; reach still rides
+beside it. "Ready" now means the full window has closed, never a peek from day 14; a
+verdict is given only once both arms cleared `minPerArm` (10) AND the permutation test
+calls the gap unlikely to be chance (`p < 0.05`) AND the medians differ by at least ten
+percent -- either alone is not enough. `GET /api/experiments` and the Lantern's
+`experiment` tool now read the Observatory's own ten minute cache for the evaluation
+(a plan or a stop clears it, `observatory.invalidateCache`) instead of paying for a
+fresh 60 day collect (about 660 slot reads) on every question; the Lantern's `lineup`
+tool reads `nexp:state` once per call, not once per day previewed.
+
 ## What remains (masterplan sections 9, 11, 12)
 
 - The record as the Distribution Manager wants it: publish time per network, permalink on
@@ -244,4 +300,7 @@ from an error.
 - Platform specific shaping beyond the caption: covers for Facebook and YouTube, alt
   text, the recitation's language for YouTube, hooks per platform.
 - Retention proper (watch time beyond Instagram's own reel average) and conversion per
-  reel and per kind; the numbers above are read only, still nothing feeds the rota.
+  reel and per kind; watch time by kind, verse length and reciter now reads back
+  through `_insights.js`'s own `learn` block, and a planned A/B test can lean the rota
+  toward an arm (see "Experiments" above), but nothing yet chooses a test's own next
+  question on its own.

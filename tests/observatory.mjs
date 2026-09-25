@@ -217,6 +217,52 @@ console.log('\nthe library, read from the shipped files, nothing invented');
   ok(out.library.shelf.total > 0, 'the shelf as it stands right now is read from reels/index.json: ' + out.library.shelf.total);
 }
 
+console.log('\nthe test now running, and what holds attention (masterplan step 9)');
+{
+  store.clear(); hashes.clear();
+  const out = await OBS.compose({ now: NOW });
+  ok(out.experiment === null && out.experimentState === null, 'no test planned: experiment and experimentState both read null, not a guess dressed as one');
+  ok(out.learn && Array.isArray(out.learn.watchByKind) && Array.isArray(out.learn.verseByLength)
+     && Array.isArray(out.learn.verseByReciter) && Array.isArray(out.learn.sentences),
+     'learn always carries its own shape, empty or not: ' + JSON.stringify(Object.keys(out.learn || {})));
+
+  const future = new Date(Date.parse(NOW) + 5 * 86400000).toISOString().slice(0, 10);
+  store.set('nexp:state', JSON.stringify({ current: { id: 'verse-length', start: future, args: {} }, history: [] }));
+  const out2 = await OBS.compose({ now: NOW });
+  ok(out2.experiment && out2.experiment.id === 'verse-length' && out2.experiment.status === 'planned',
+     'a test planned for the future reads as planned, right here beside everything else: ' + JSON.stringify(out2.experiment));
+  ok(/Planned to start/.test(out2.experiment.sentence), 'and the sentence says so plainly: ' + out2.experiment.sentence);
+
+  /* a fault reading either insightsRead or the experiment state must never
+     blank the rest of the room: experiment and learn degrade to null on
+     their own, everything else this call already builds (the library, the
+     shelf, summary) reads exactly as it does with no fault at all */
+  const brokenInsights = async () => { throw new Error('boom: the collect() this stands in for choked on something'); };
+  const out3 = await OBS.compose({ now: NOW, insightsRead: brokenInsights });
+  ok(out3.ok === true && out3.experiment === null && out3.learn === null, 'a broken insights read degrades experiment and learn to null, never a thrown error: ' + JSON.stringify({ experiment: out3.experiment, learn: out3.learn }));
+  ok(out3.library && out3.library.shelf.total > 0 && out3.summary, 'and the rest of the room reads exactly as it does with no fault: the library, the summary, still whole');
+
+  /* experimentState: a test really is current, but the full reading could
+     not be built (insightsRead itself failed) -- the room must still be
+     able to say WHICH test that is, never confuse "the numbers could not
+     be read" with "nothing is running", since the card's own Plan/Stop
+     choice depends on telling those two apart */
+  store.set('nexp:state', JSON.stringify({ current: { id: 'verse-length', start: future, args: {} }, history: [] }));
+  const out3b = await OBS.compose({ now: NOW, insightsRead: brokenInsights });
+  ok(out3b.experiment === null, 'the full reading is still null, since insightsRead itself failed: ' + JSON.stringify(out3b.experiment));
+  ok(out3b.experimentState && out3b.experimentState.id === 'verse-length' && out3b.experimentState.start === future && out3b.experimentState.status === 'planned',
+     'but experimentState still names the test, its start and its status, built from nexp:state alone: ' + JSON.stringify(out3b.experimentState));
+  store.set('nexp:state', JSON.stringify({ current: null, history: [] }));
+
+  const brokenExpState = async () => { throw new Error('boom: nexp:state could not be read'); };
+  const out4 = await OBS.compose({ now: NOW, expReadState: brokenExpState });
+  ok(out4.ok === true && out4.experiment === null, 'a broken experiment state read degrades the same way: ' + JSON.stringify(out4.experiment));
+  ok(out4.learn && Array.isArray(out4.learn.watchByKind), 'learn itself is unaffected, since it never depended on nexp:state at all: ' + JSON.stringify(Object.keys(out4.learn || {})));
+  ok(out4.library && out4.library.shelf.total > 0, 'and the rest of the room is still whole');
+
+  store.delete('nexp:state');
+}
+
 console.log('\nthe ten minute cache');
 {
   store.clear(); hashes.clear();
@@ -231,6 +277,16 @@ console.log('\nthe ten minute cache');
   ok(JSON.stringify(second.summary) === JSON.stringify(first.summary), 'and it is the SAME answer, not one that quietly picked up the new post');
   const forced = await OBS.cached({ now: NOW, fresh: true });
   ok(forced.cached === false, 'fresh=1 goes round the cache the same way /api/house already lets it');
+
+  /* invalidateCache: a plan or a stop clears this cache from underneath a
+     GET /api/experiments or a Lantern experiment tool call that reused it,
+     so the next reader recomputes rather than answering from an evaluation
+     of whatever test used to be current */
+  const third = await OBS.cached({ now: NOW });
+  ok(third.cached === true, 'still within the window, still cached');
+  await OBS.invalidateCache({});
+  const fourth = await OBS.cached({ now: NOW });
+  ok(fourth.cached === false, 'invalidateCache clears it: the very next read recomposes, cache window notwithstanding');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

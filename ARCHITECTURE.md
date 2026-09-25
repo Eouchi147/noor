@@ -130,6 +130,36 @@ whose own thinking panel stays open while a run is in flight and folds once it e
 and whose charts and tables reuse the Observatory's own drawing functions rather than
 a second chart engine.
 
+## Experiments
+
+Masterplan step 9, the learning loop. `api/_experiments.js` is pure code and a small
+store wrapper, no route of its own attached: `EXPERIMENTS` names two tests today
+(`verse-length`, `reciter-pair`, both over the verse shelf, `arms` a function of the
+test's own `args` so `reciter-pair`'s two named reciters build their own predicates at
+plan time), `armFor`/`biasFrom`/`biasFromAny` are pure day-parity and window
+arithmetic with no store at all, `evaluate` is a seeded permutation test on the
+difference of medians of `log(reach+1)` (`tests/experiments.mjs` proves it
+deterministic), and `readState`/`writeState`/`planExperiment`/`stopExperiment` are the
+one KV key, `nexp:state`. `api/experiments.js` is the owner-gated route, thin, the same
+shape as `api/lantern-models.js`. `api/_schedule.js`'s `chooseReel` takes an optional
+sixth argument, `bias` (`{kind, match}`): only when the kind it is walking matches and
+the arm's own pool still holds at least eight cards the duplicate guard has not sent,
+it walks that pool instead of the whole kind, with the same walk and the same salt --
+every other call, with no bias or the wrong kind, is untouched, which is what keeps
+`tests/reels-kinds.mjs` passing unchanged. `api/social.js`'s `composeSlot` and
+`runDue` each read the day's own bias once (`biasFor`, a KV fault answering `null`,
+never a failed post) and a slot the picker chose from an arm carries `exp: {id, arm}`
+on its own record. `api/_insights.js`'s `matchedCard` takes the same `bias` for its
+own `chooseReel` fallback (reconstructing which card a historical record without a
+matching hook actually was), and its `read()` now carries `igRows` (the raw Instagram
+reel rows, `secs`, `reciter`, `lengthBand`, `watch`, `watched`) and a `learn` block
+(watch time by kind, verse length and reciter, each with its own `n` and up to three
+plain sentences) built from them. `api/observatory.js`'s `compose()` adds `experiment`
+(the current test's own reading, or `null`) and `learn` (the same block) to what it
+already composes; `api/lantern-agent.js` reads both through a new `experiment` tool,
+and starting a test from the Lantern is a proposal only (`experiment-plan`), never an
+autonomous action.
+
 ## The Content Graph
 
 Masterplan step 5. `scripts/graph/` (`extract_js.mjs`, `build_graph.py`, `validate_graph.py`,

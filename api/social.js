@@ -51,6 +51,7 @@
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
 import { planDay, buildSlot, dueNow, slotExtras, chooseReel, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
+import { biasFor as expBiasFor } from "./_experiments.js";
 import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
@@ -2372,7 +2373,14 @@ export async function composeSlot(host, date, slotId, opts = {}) {
      not worth a read; every other composition hands the picker what has
      already gone out */
   const seen = opts.extras || opts.reel ? null : (opts.seen || await recentlyPosted(date));
-  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null, seen);
+  /* an experiment's own lean for today (api/_experiments.js's biasFor), read
+     once here and never allowed to cost a post: a KV fault answers null,
+     the same "no bias" a day with no test running already gets. Skipped
+     entirely when opts.extras already stands in (a caller who composed the
+     reel itself, or a pinned repair), the same short circuit seen above. */
+  const bias = (opts.extras || opts.reel) ? null
+    : (opts.bias !== undefined ? opts.bias : await expBiasFor(date, opts).catch(() => null));
+  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null, seen, bias);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
@@ -2482,6 +2490,10 @@ export async function sendSlot(host, date, slotId, opts = {}) {
 
   const rec = { at: out.at, slot: slotId, state: slotState(results),
     title: post.title, lvl: post.lvl, results };
+  /* which arm of a running experiment this reel was (api/_schedule.js's own
+     buildSlot, lifted from slotExtras' bias check): only present when a
+     bias actually applied to this exact reel, never a bare id with no arm */
+  if (post.exp) rec.exp = post.exp;
   nameReel(rec, post);
   /* the record is written BEFORE the stories: if the function is cut off
      while a story is being made, the feed post is already on the record and
@@ -3062,6 +3074,11 @@ export async function runDue(host, date, now, opts = {}) {
   /* once for the run, not once a slot: every slot of this run steps past the
      same set, and two slots of one run cannot pick the same reel either */
   const seen = opts.seen || await recentlyPosted(date);
+  /* the same one-read-a-run rule for an experiment's own lean today
+     (api/_experiments.js's biasFor): a KV fault answers null, never a
+     failed post, and every slot this run sends agrees on which arm today
+     is, the same as they already agree on `seen`. */
+  const bias = opts.bias !== undefined ? opts.bias : await expBiasFor(date, opts).catch(() => null);
   for (const slot of due) {
     if (posted >= cap) break;
     let post;
@@ -3072,7 +3089,7 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image, slot: "light" };
     } else {
-      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, null, seen);
+      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, null, seen, bias);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
@@ -3141,6 +3158,7 @@ export async function runDue(host, date, now, opts = {}) {
 
     const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
+    if (post.exp) rec.exp = post.exp;
     nameReel(rec, post);
     /* on the record first, then the stories: see sendSlot */
     await writeSlot(date, slot.id, rec);
@@ -3423,6 +3441,11 @@ export default async function handler(req, res) {
       const now = new Date(), hour = now.getUTCHours();
       const slots = [];
       const shelf = action === "today" ? await readManifest(host) : null;
+      /* the same lean an actual post would use today, read once, so the
+         Today room's own preview never shows a different card than the one
+         the machine will actually send (api/_experiments.js's biasFor; a
+         KV fault answers null, the room simply shows the un-biased pick) */
+      const bias = shelf ? await expBiasFor(date, {}).catch(() => null) : null;
       for (const s of SLOTS) {
         if (!plan.slots.includes(s.id)) continue;
         const rec = await readSlot(date, s.id);
@@ -3436,7 +3459,7 @@ export default async function handler(req, res) {
           results: rec ? rec.results : null
         };
         if (shelf && s.reel) {
-          const c = chooseReel(shelf.cards, date, s.reel, plan.hijri || null);
+          const c = chooseReel(shelf.cards, date, s.reel, plan.hijri || null, null, bias);
           const r = c ? rowUrls(c, host) : null;
           row.reel = r ? { id: r.id, kind: r.kind || "light", hook: r.hook || "", caption: r.caption || "",
                            cover: r.cover, video: r.video, secs: r.secs != null ? r.secs : null } : null;

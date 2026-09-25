@@ -58,6 +58,10 @@ console.log('\nthe fallback plan: no longer one fixed read, chosen from the ques
   ok(names(pkg).includes('tool:package'), 'a question asking for a package reaches for package: ' + names(pkg).join());
   const line = A.fallbackPlan("Plan next week's line-up");
   ok(names(line).includes('tool:lineup') && names(line).includes('tool:shelf'), 'a question about the line-up reaches for lineup and shelf: ' + names(line).join());
+  const test = A.fallbackPlan('Are we running any A/B tests, and which one works better?');
+  ok(names(test).includes('tool:experiment'), 'a question about a test reaches for the experiment tool: ' + names(test).join());
+  const watch = A.fallbackPlan('Do shorter verse reels hold people better than longer ones?');
+  ok(A.priorityFor('shorter verse reels hold people better').includes('learn'), 'and a question about length keeps insights\' own learn block first: ' + A.priorityFor('shorter verse reels').join());
   ok(names(bare).join() === names(A.fallbackPlan()).join(), 'no message at all is the same as an empty one, never a crash');
   for (const p of [bare, kind, site, net, pkg, line]) {
     ok(p.steps[0].kind === 'tool' && p.steps[0].name === 'observatory', 'observatory always runs first');
@@ -279,6 +283,10 @@ console.log('\nautonomous actions: the two real ones execute and log an undo rec
 
   const r3 = await A.runAction({ kind: 'action', name: 'lineup-change', args: { slot: 'reelD' }, why: 'reorder the afternoon reel' }, { tools: {}, ledger: makeLedger(0), emit });
   ok(r3.kind === 'proposal' && r3.proposal.description.includes('no existing, safe'), 'a lineup change is never an autonomous action, only a proposal, and says why');
+
+  const r3b = await A.runAction({ kind: 'action', name: 'experiment-plan', args: { id: 'verse-length' }, why: 'the owner asked to start a test' }, { tools: {}, ledger: makeLedger(0), emit });
+  ok(r3b.kind === 'proposal' && !A.ACTION_TYPES.includes('experiment-plan'), 'starting an experiment is likewise never an autonomous action: ' + JSON.stringify(A.ACTION_TYPES));
+  ok(/records the request/.test(r3b.proposal.description) && /Plan button/.test(r3b.proposal.description), 'and the proposal tells the owner where to actually plan it: ' + r3b.proposal.description);
 
   const cappedLedger = makeLedger(A.AUTONOMOUS_DAILY_CAP);
   const r4 = await A.runAction({ kind: 'action', name: 'refresh-insights', args: {}, why: 'try a sixth' }, { tools: toolsA, ledger: cappedLedger, emit });

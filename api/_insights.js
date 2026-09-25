@@ -102,6 +102,16 @@ import { SLOTS, SLOT_IDS, REEL_SLOTS, chooseReel } from "./_schedule.js";
 import { readSlot, igToken, graphBase, pageToken, igConfigured, fbConfigured } from "./social.js";
 import * as YT from "./_youtube.js";
 import * as TH from "./_threads.js";
+import { EXPERIMENTS, biasFromAny, readState as readExpState } from "./_experiments.js";
+
+/* the experiment state, read once and never let a store fault reach a
+   reader: collect() and read() both lean on this so every record in one
+   call sees the same state, and a KV outage reconstructs history exactly as
+   it did before an experiment ever existed (bias null everywhere) rather
+   than failing the read. */
+async function readExpStateSafe(opts) {
+  try { return await readExpState(opts); } catch { return { current: null, history: [] }; }
+}
 
 export const K_INS = (net, id) => "nsoc:ins:" + net + ":" + id;
 export const CACHE_MS = 6 * 3600 * 1000;      /* an answer is good for six hours */
@@ -249,8 +259,15 @@ export async function shelfManifest(opts = {}) {
 }
 
 /* the card a record's hook names, so both kindOf and subjectOf read the same
-   match rather than guessing twice */
-export function matchedCard(rec, manifest) {
+   match rather than guessing twice. `bias` (api/_experiments.js's own
+   {id, arm, kind, match}, or null) is the one thing this fallback could not
+   see before an experiment existed: a title that matches no hook can only be
+   rebuilt by re-running the picker, and the picker itself now leans toward
+   an experiment's own arm on the days it ran, so the fallback must lean the
+   same way or it reconstructs the WRONG card for those days. A caller that
+   never heard of an experiment passes nothing and gets exactly the old
+   behaviour. */
+export function matchedCard(rec, manifest, bias) {
   const slot = rec && rec.slot;
   if (!REEL_SLOTS.includes(slot)) return null;
   const cards = (manifest && Array.isArray(manifest.cards)) ? manifest.cards : [];
@@ -260,15 +277,15 @@ export function matchedCard(rec, manifest) {
     if (hit) return hit;
   }
   if (cards.length && rec.date) {
-    const c = chooseReel(cards, rec.date, halfOf(slot), null);
+    const c = chooseReel(cards, rec.date, halfOf(slot), null, null, bias || null);
     if (c) return c;
   }
   return null;
 }
-export function kindOf(rec, manifest) {
+export function kindOf(rec, manifest, bias) {
   const slot = rec && rec.slot;
   if (!REEL_SLOTS.includes(slot)) return "card:" + slot;
-  const c = matchedCard(rec, manifest);
+  const c = matchedCard(rec, manifest, bias);
   return c ? "reel:" + (c.kind || "light") : "reel:reel";
 }
 
@@ -373,6 +390,13 @@ export async function collect(days, opts = {}) {
      all, which is the same fault warm.js had, one call earlier; this default
      is what gives it the shelf without api/house.js ever needing to know it. */
   const manifest = opts.manifest !== undefined ? opts.manifest : localManifest();
+  /* the experiment state, read once for the whole window rather than once a
+     record: a run over sixty days would otherwise ask the store sixty times
+     for the one thing that never changes mid-walk. readExpStateSafe never
+     throws (a KV outage answers "no test"), so a store fault reconstructs
+     history exactly as it did before an experiment ever existed, bias null
+     everywhere, rather than failing the read. */
+  const expState = opts.expState !== undefined ? opts.expState : await readExpStateSafe(opts);
   const dates = datesBack(Math.max(1, Math.min(60, Number(days) || 14)), opts.now);
   const wanted = [];
   for (const d of dates) for (const s of SLOT_IDS) wanted.push([d, s]);
@@ -386,8 +410,15 @@ export async function collect(days, opts = {}) {
   }
   const posts = [];
   for (const r of recs) {
-    const card = matchedCard(r, manifest);
-    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, manifest);
+    /* biasFromAny is defensive on its own now (a malformed history entry is
+       sanitized away, never thrown on), but this call is guarded again
+       here regardless: this loop runs once a record, up to sixty days
+       times eleven slots, and one record's bad data must never cost every
+       other record in the same window its own kind and card */
+    let bias = null;
+    try { bias = expState ? biasFromAny(expState, r.date, EXPERIMENTS) : null; } catch { bias = null; }
+    const card = matchedCard(r, manifest, bias);
+    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, manifest, bias);
     const media = {};
     for (const net of ["instagram", "facebook", "youtube", "threads"]) {
       const x = r.results[net];
@@ -397,8 +428,13 @@ export async function collect(days, opts = {}) {
       if (x && x.ok && x.id && !x.storyOnly) media[net] = String(x.id);
     }
     if (!Object.keys(media).length) continue;
+    /* only what the learning loop actually needs off the card, not the
+       whole thing (its video url, its caption, its cover): a verse reel's
+       own length and reciter, the two attributes an experiment's arm can
+       be built from (api/_experiments.js's own EXPERIMENTS registry) */
+    const cardInfo = card ? { secs: card.secs != null ? card.secs : null, reciter: card.reciter || null } : null;
     posts.push({ date: r.date, slot: r.slot, hour: hourOf(r.slot), kind, reel: REEL_SLOTS.includes(r.slot),
-                 title: String(r.title || ""), at: r.at || "", media, subject: subjectOf(kind, card) });
+                 title: String(r.title || ""), at: r.at || "", media, subject: subjectOf(kind, card), card: cardInfo });
   }
   return posts;
 }
@@ -682,6 +718,29 @@ function bucket(list, keyOf) {
 }
 
 /* posts: what collect() returns, each with .ins = { instagram: {...}, ... } */
+/* a verse reel's own length, in the three bands a viewer would actually
+   feel the difference between: the reels themselves are baked (the
+   masterplan's own note that a hook cannot be re-cut without a re-render),
+   but their length was never chosen for a reason -- this is the read that
+   lets one be. */
+const LENGTH_BAND_LABEL = { short: "under 20 seconds", mid: "20 to 30 seconds", long: "over 30 seconds" };
+export function lengthBandOf(secs) {
+  if (typeof secs !== "number" || !isFinite(secs)) return null;
+  if (secs < 20) return "short";
+  if (secs <= 30) return "mid";
+  return "long";
+}
+/* the share of a reel's own length an average viewer actually watched:
+   Instagram's own ig_reels_avg_watch_time is milliseconds, the shelf's own
+   `secs` is the reel's true length, and a rewatched reel can answer more
+   than its own length -- capped at 3 (three full loops) rather than left to
+   climb, since a number past that is Instagram's own noise, not a longer
+   watch. Null when either half is missing, never zero standing in for it. */
+export function watchedOf(watchMs, secs) {
+  if (watchMs == null || typeof secs !== "number" || !secs) return null;
+  return Math.round(Math.min(watchMs / 1000 / secs, 3) * 100) / 100;
+}
+
 export function aggregate(posts) {
   /* the Instagram reading is what the kinds and hours are judged by: it is
      the network that shows a reel to people who do not follow the account */
@@ -704,9 +763,16 @@ export function aggregate(posts) {
         continue;
       }
       read++;
+      /* the reel this post actually was, so a length or a reciter can be
+         asked about without re-matching a hook a second time; collect()
+         already carries only what the learning loop needs off the card */
+      const secs = p.card && p.card.secs != null ? p.card.secs : null;
+      const reciter = p.card && p.card.reciter ? p.card.reciter : null;
+      const watch = v.watch != null ? v.watch : null;
       const row = { date: p.date, slot: p.slot, hour: p.hour, kind: p.kind, title: p.title, net, id: p.media[net], subject: p.subject || null,
                     reach: v.reach != null ? v.reach : null, views: v.views != null ? v.views : null,
-                    likes: v.likes, comments: v.comments, saved: v.saved, shares: v.shares };
+                    likes: v.likes, comments: v.comments, saved: v.saved, shares: v.shares,
+                    watch, secs, lengthBand: lengthBandOf(secs), reciter, watched: watchedOf(watch, secs) };
       row.url = net === "youtube" ? "https://youtube.com/shorts/" + p.media[net] : "";
       (perNet[net] = perNet[net] || []).push(row);
       if (net === "instagram") ig.push(row);
@@ -753,8 +819,74 @@ export function aggregate(posts) {
     byKind, byHour, byNetwork, byFamily, bySubject, subjectTop, subjectBottom,
     top: top.slice(0, 10).map(t => ({ title: t.title, kind: t.kind, label: kindLabel(t.kind), hour: t.hour, at: HH(t.hour), net: t.net,
                                        id: t.id, url: t.url, measure: t.measure, n: t.n, reach: t.reach, views: t.views, date: t.date, slot: t.slot })),
-    sentences: sentences({ byKind, byHour, byNetwork, byFamily, bySubject, read })
+    sentences: sentences({ byKind, byHour, byNetwork, byFamily, bySubject, read }),
+    /* the raw Instagram reel rows, for whatever asks a finer question than a
+       fold answers (api/_experiments.js's own evaluate(), which classifies a
+       reel by its own secs/reciter inside a test's window rather than by
+       any bucket here) */
+    igRows: ig,
+    learn: learn(ig)
   };
+}
+
+/* ---------------------------------------------------------------------------
+   WHAT HOLDS ATTENTION (masterplan step 9, the learning loop)
+
+   Everything above answers who was reached; this answers who stayed. A reel
+   can reach a thousand people and lose all of them in the first second, and
+   nothing above this line would ever say so -- Instagram's own average watch
+   time is the one number that can. Kept apart from the kind/hour/network
+   folds above because it asks a narrower question (verse reels only, for
+   the length and reciter reads) and needs its own floor: MIN_BUCKET for a
+   kind comparison, 3 for a first look at a kind or a reciter on its own,
+   since "not enough yet" is worth saying sooner here than a whole sentence
+   would need it to be. */
+const WATCH_KIND_MIN = 3;
+function learn(ig) {
+  const timed = ig.filter(r => r.watched != null);
+  const byKind = {};
+  for (const r of timed) (byKind[r.kind] = byKind[r.kind] || []).push(r);
+  const watchByKind = Object.keys(byKind).map(k => {
+    const list = byKind[k];
+    return { kind: k, label: kindLabel(k), n: list.length,
+             watched: median(list.map(x => x.watched)),
+             watchSecs: r1(median(list.map(x => x.watch != null ? x.watch / 1000 : null))) };
+  }).filter(x => x.n >= WATCH_KIND_MIN).sort((a, b) => (b.watched || 0) - (a.watched || 0));
+
+  const verse = ig.filter(r => r.kind === "reel:verse" && r.lengthBand);
+  const verseByLength = ["short", "mid", "long"].map(band => {
+    const list = verse.filter(r => r.lengthBand === band);
+    if (!list.length) return null;
+    return { band, label: LENGTH_BAND_LABEL[band], n: list.length,
+             reach: median(list.map(x => x.reach)), watched: median(list.map(x => x.watched)) };
+  }).filter(Boolean);
+
+  const byReciter = {};
+  for (const r of verse) if (r.reciter) (byReciter[r.reciter] = byReciter[r.reciter] || []).push(r);
+  const verseByReciter = Object.keys(byReciter).map(name => {
+    const list = byReciter[name];
+    return { reciter: name, n: list.length, reach: median(list.map(x => x.reach)), watched: median(list.map(x => x.watched)) };
+  }).filter(x => x.n >= WATCH_KIND_MIN).sort((a, b) => (b.reach || 0) - (a.reach || 0));
+
+  const out = [];
+  const kindsEnough = watchByKind.filter(x => x.n >= MIN_BUCKET);
+  if (kindsEnough.length >= 2) {
+    const best = kindsEnough[0], worst = kindsEnough[kindsEnough.length - 1];
+    if (best.kind !== worst.kind && best.watched != null && worst.watched != null)
+      out.push(`${cap(best.label)} hold ${Math.round(best.watched * 100)} percent of their own length watched on average, against ${Math.round(worst.watched * 100)} percent for ${worst.label} (${best.n} and ${worst.n} reels).`);
+  }
+  const shortBand = verseByLength.find(b => b.band === "short"), longBand = verseByLength.find(b => b.band === "long");
+  if (shortBand && longBand && shortBand.n >= MIN_BUCKET && longBand.n >= MIN_BUCKET && shortBand.reach != null && longBand.reach != null) {
+    const higher = shortBand.reach >= longBand.reach ? shortBand : longBand, lower = higher === shortBand ? longBand : shortBand;
+    out.push(`Verse reels ${higher.label} reach a median of ${fmt(higher.reach)}, against ${fmt(lower.reach)} for those ${lower.label} (${higher.n} and ${lower.n} reels).`);
+  }
+  const reciterEnough = verseByReciter.filter(x => x.n >= MIN_BUCKET);
+  if (reciterEnough.length >= 2) {
+    const best = reciterEnough[0], worst = reciterEnough[reciterEnough.length - 1];
+    if (best.reciter !== worst.reciter && best.reach != null && worst.reach != null)
+      out.push(`Verses recited by ${best.reciter} reach a median of ${fmt(best.reach)}, against ${fmt(worst.reach)} for ${worst.reciter} (${best.n} and ${worst.n} reels).`);
+  }
+  return { watchByKind, verseByLength, verseByReciter, sentences: out.slice(0, 3) };
 }
 
 /* ---------------------------------------------------------------------------

@@ -116,8 +116,8 @@ const { SLOT_IDS } = await import('../api/_schedule.js');
 
 /* ---------- fixed records: fourteen days, a kind per slot, an id per network ---------- */
 const MANIFEST = { cards: [
-  { id: 'v1', kind: 'verse', hook: 'One verse about light' }, { id: 'w1', kind: 'word', hook: 'The word for patience' },
-  { id: 'k1', kind: 'know', hook: 'Did you know the first minaret' }, { id: 'c1', kind: 'codex', hook: 'The Codex' } ] };
+  { id: 'v1', kind: 'verse', hook: 'One verse about light', secs: 15, reciter: 'Test Reciter' }, { id: 'w1', kind: 'word', hook: 'The word for patience', secs: 22 },
+  { id: 'k1', kind: 'know', hook: 'Did you know the first minaret', secs: 25 }, { id: 'c1', kind: 'codex', hook: 'The Codex', secs: 18 } ] };
 const HOOK = { reelA: 'One verse about light', reelC: 'The word for patience', reelD: 'Did you know the first minaret', reelB: 'One verse about light', reelE: 'The word for patience' };
 const NOW = '2026-09-08T12:00:00Z';
 const dates = INS.datesBack(14, new Date(NOW));
@@ -141,6 +141,9 @@ console.log('\ncollecting the records');
   ok(posts.length === 14 * 9, 'every slot record of the fortnight is a post: ' + posts.length);
   const a = posts.find(p => p.slot === 'reelA');
   ok(a.kind === 'reel:verse' && a.hour === 8 && a.reel, 'a reel is named by matching its hook on the shelf, with its hour');
+  ok(a.card && a.card.secs === 15 && a.card.reciter === 'Test Reciter', 'and it carries the matched card\'s own length and reciter, for the learning loop: ' + JSON.stringify(a.card));
+  const w = posts.find(p => p.slot === 'reelC');
+  ok(w.card && w.card.secs === 22 && w.card.reciter === null, 'a word reel carries its own length but no reciter: ' + JSON.stringify(w.card));
   ok(posts.find(p => p.slot === 'word').kind === 'card:word', 'a card is its slot, keyed apart from the reel of the same name');
   const dusk0 = posts.find(p => p.slot === 'dusk' && p.date === dates[0]);
   ok(dusk0 && !dusk0.media.instagram && dusk0.media.facebook, 'a network that refused carries no id and is not asked');
@@ -228,6 +231,49 @@ console.log('\nthe batch, the cap and partial');
   const rd = await INS.read(14, { ...opts, now: '2026-09-08T18:30:00Z' });
   ok(rd.ok && rd.read > 0 && rd.byKind.length >= 4 && rd.byHour.length === 9 && rd.stale === rd.media - 40, 'the read folds the cache into kinds, hours and a stale count without a network call');
   ok(rd.sentences.length >= 2 && !/Not enough/.test(rd.sentences[0]), 'and with a fortnight read it has something to say: ' + rd.sentences[0]);
+  /* v1 (secs 15, reciter Test Reciter) is the only verse on this manifest,
+     so every real verse row this read produced carries the same length and
+     reciter, and Meta's own stub answers 4200ms of watch time for every id */
+  ok(Array.isArray(rd.igRows) && rd.igRows.length > 0, 'read() carries the raw Instagram reel rows for whatever asks a finer question: ' + rd.igRows.length);
+  const vrow = rd.igRows.find(r => r.kind === 'reel:verse');
+  ok(vrow.secs === 15 && vrow.lengthBand === 'short' && vrow.reciter === 'Test Reciter' && vrow.watch === 4200,
+     'a verse row carries its own length, band and reciter: ' + JSON.stringify(vrow));
+  ok(vrow.watched === Math.round((4200 / 1000 / 15) * 100) / 100, 'and the share of its own length actually watched, rounded: ' + vrow.watched);
+  ok(rd.learn && Array.isArray(rd.learn.watchByKind) && rd.learn.watchByKind.some(k => k.kind === 'reel:verse'),
+     'learn.watchByKind carries a real entry for verse reels: ' + JSON.stringify(rd.learn.watchByKind));
+  ok(rd.learn.verseByLength.some(b => b.band === 'short'), 'learn.verseByLength carries the short band');
+  ok(rd.learn.verseByReciter.some(r => r.reciter === 'Test Reciter'), 'learn.verseByReciter carries the one reciter on this manifest');
+}
+
+console.log('\nwatch time and what holds attention (masterplan step 9)');
+{
+  const mkV = (i, secs, reciter, reach, watched) => ({ date: '2026-09-0' + (1 + (i % 9)), slot: 's', hour: 8, kind: 'reel:verse', title: 't' + i,
+    media: { instagram: 'v' + i }, card: { secs, reciter },
+    ins: { instagram: { at: NOW, reach, watch: Math.round(watched * secs * 1000) } } });
+  const mkW = (i, secs, reach, watched) => ({ date: '2026-09-0' + (1 + (i % 9)), slot: 's', hour: 16, kind: 'reel:word', title: 'w' + i,
+    media: { instagram: 'w' + i }, card: { secs, reciter: null },
+    ins: { instagram: { at: NOW, reach, watch: Math.round(watched * secs * 1000) } } });
+  const posts = [];
+  for (let k = 0; k < 6; k++) posts.push(mkV(k, 14, 'Qari A', 300 + k, 0.9));           /* short verses, held well */
+  for (let k = 0; k < 6; k++) posts.push(mkV(6 + k, 36, 'Qari B', 100 + k, 0.6));       /* long verses, held less */
+  for (let k = 0; k < 6; k++) posts.push(mkW(k, 20, 150 + k, 0.4));                     /* words, held least of the three */
+  const a = INS.aggregate(posts);
+  const l = a.learn;
+  const verseKind = l.watchByKind.find(x => x.kind === 'reel:verse'), wordKind = l.watchByKind.find(x => x.kind === 'reel:word');
+  ok(verseKind.n === 12 && verseKind.watched === 0.75, 'verse reels: twelve rows, watched share is the median of both bands: ' + verseKind.watched);
+  ok(wordKind.n === 6 && wordKind.watched === 0.4, 'word reels: their own, lower, watched share: ' + wordKind.watched);
+  const shortBand = l.verseByLength.find(b => b.band === 'short'), longBand = l.verseByLength.find(b => b.band === 'long');
+  ok(shortBand.n === 6 && shortBand.watched === 0.9 && shortBand.reach === 302.5, 'the short band: n, watched and median reach: ' + JSON.stringify(shortBand));
+  ok(longBand.n === 6 && longBand.watched === 0.6 && longBand.reach === 102.5, 'the long band, the same reading');
+  const qA = l.verseByReciter.find(r => r.reciter === 'Qari A'), qB = l.verseByReciter.find(r => r.reciter === 'Qari B');
+  ok(qA.n === 6 && qA.reach === 302.5 && qB.n === 6 && qB.reach === 102.5, 'each reciter with at least three reels gets its own reading, sorted by reach');
+  ok(l.verseByReciter[0].reciter === 'Qari A', 'sorted by reach, descending');
+  const s = l.sentences.join(' ');
+  ok(l.sentences.length === 3, 'three sentences, one for each comparison this manifest actually supports: ' + l.sentences.length);
+  ok(/Verse reels hold 75 percent/.test(s) && /40 percent for word reels/.test(s), 'the kind sentence, in whole percent: ' + s);
+  ok(/Verse reels under 20 seconds reach a median of 303, against 103 for those over 30 seconds/.test(s), 'the length sentence: ' + s);
+  ok(/Verses recited by Qari A reach a median of 303, against 103 for Qari B/.test(s), 'the reciter sentence: ' + s);
+  ok(!/[\u2014\u2013]/.test(s), 'no dash anywhere in the learn sentences');
 }
 
 console.log('\nthe budget');

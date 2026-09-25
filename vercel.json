@@ -24,6 +24,10 @@
       "maxDuration": 60,
       "includeFiles": "{reels/index.json,assets/reel-sources.json,CONTENT_STATUS.md}"
     },
+    "api/experiments.js": {
+      "maxDuration": 60,
+      "includeFiles": "{assets/reel-subjects.json,reels/index.json}"
+    },
     "api/lantern-agent.js": {
       "maxDuration": 150,
       "includeFiles": "{lights/all.json,node/*.json,study/*.json,nodes-index.js,noor-guide-data.js,prophets-data.js,characters.js,places.js,allah.html,assets/*.json,reels/index.json,tools/reels/verses.json,tools/reels/quran-uthmani.json,verse/*.json,CONTENT_STATUS.md}"

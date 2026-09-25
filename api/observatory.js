@@ -39,9 +39,10 @@ import { SLOT_IDS, REEL_SLOTS } from "./_schedule.js";
 import { readSlot, postedChannelCounts } from "./social.js";
 import {
   numbers, hourOf, kindLabel, matchedCard, subjectOf, reclassifyKind,
-  cacheRead, K_STATS, datesBack, median, mean, MIN_BUCKET
+  cacheRead, K_STATS, datesBack, median, mean, MIN_BUCKET, read as insightsRead
 } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
+import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, evaluate as expEvaluate } from "./_experiments.js";
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -111,6 +112,21 @@ export async function readCache(opts = {}) {
     if (nowMs - Date.parse(v.at) > CACHE_MS) return null;
     return v;
   } catch { return null; }
+}
+
+/* api/experiments.js's own GET and the Lantern's `experiment` tool both read
+   this cache's own `experiment` field instead of paying for a fresh 60 day
+   collect every time (api/_insights.js's own read(), about 660 slot reads);
+   a plan or a stop changes what that field means, so both of those doors
+   call this once, right after a successful write, so the next reader (this
+   room, the console's experiments door, the Lantern) recomputes rather than
+   answers from an evaluation of a test that is no longer current. A KV
+   fault here changes nothing that was not already going to expire on its
+   own in ten minutes. */
+export async function invalidateCache(opts = {}) {
+  const ready = opts.kvReady || kvReady;
+  if (!ready()) return;
+  try { await (opts.kv || kv)([["DEL", K_OBS]]); } catch { /* the ten minute expiry still catches it */ }
 }
 
 /* ---------------------------------------------------------------------------
@@ -402,12 +418,29 @@ export async function compose(opts = {}) {
   const shelf = shelfNow();
   const manifest = shelf.manifest;
 
-  const [ins, visitors, statsWalk, postingDays, postedNets] = await Promise.all([
+  /* THE EXPERIMENT AND LEARN BLOCKS DEGRADE ON THEIR OWN. insightsRead and
+     expReadState each get their own catch inside this Promise.all, not the
+     bare call: a fault in either (a malformed nexp:state that somehow
+     survived _experiments.js's own sanitizer, a store outage mid read)
+     used to reject the WHOLE Promise.all, which meant a bad reading of a
+     test could blank the entire room -- visitors, the trend, posting
+     health, all of it -- over two fields that are allowed to simply be
+     null. Every other promise here already answers its own question
+     independently; these two now do too. */
+  const [ins, visitors, statsWalk, postingDays, postedNets, insRead, expState] = await Promise.all([
     numbers(opts),
     (opts.computeVisitors || computeVisitors)(),
     walkStats(dates, manifest, opts),
     walkSlots(dates, opts),
-    (opts.postedChannelCounts || postedChannelCounts)()
+    (opts.postedChannelCounts || postedChannelCounts)(),
+    /* the same reel rows the learning loop and an experiment's own reading
+       are both built from (api/_insights.js's read(), 60 days -- enough to
+       cover any test this registry runs today, 28 days, whichever half of
+       it has posted so far). opts.insightsRead/opts.expReadState, the same
+       injection every other call in this list already takes, so a test can
+       prove the degrade without needing the store itself to actually fail. */
+    (opts.insightsRead || insightsRead)(60, opts).catch(() => null),
+    (opts.expReadState || expReadState)(opts).catch(() => ({ current: null, history: [] }))
   ]);
 
   /* site visitors, this 7 days against the 7 before, by date so the two
@@ -492,6 +525,34 @@ export async function compose(opts = {}) {
 
   const notes = patternNotes(ins, visitorsThis, visitorsLast, postingDays, statsWalk.kindTotals);
 
+  /* the test now running, if any (masterplan step 9): the same evaluate()
+     tests/experiments.mjs already proves, read off the same rows the learn
+     block below is built from, so the two never disagree about what an
+     Instagram reel actually did. Both degrade to null on their own: a fault
+     reading either insRead or expState above (caught there, not here)
+     never blanks anything else in this room, and resolveCurrent/evaluate
+     are pure and never throw on a state the sanitizer already validated. */
+  const currentExp = expState ? expResolveCurrent(expState, EXPERIMENTS) : null;
+  const experiment = (currentExp && insRead) ? expEvaluate(currentExp, insRead.igRows || [], now) : null;
+  const learn = (insRead && insRead.learn) || null;
+  /* experimentState: a small, always-available fact -- which test is
+     current, its question, its start, and its status (planned/running/
+     ready) -- built from nexp:state alone, never the insights read. Status
+     is pure arithmetic over the test's own start and today's date, so
+     evaluate() answers it correctly even handed no rows at all (empty
+     bucket, but idx/windowOver need nothing else). This is what lets the
+     card distinguish "insRead itself failed, so the full reading (n,
+     median reach, watch share, a verdict) could not be computed" from
+     "nothing is planned or running at all" -- two very different facts
+     that used to look identical (both `experiment: null`) to any reader. */
+  let experimentState = null;
+  if (currentExp) {
+    try {
+      const skeleton = expEvaluate(currentExp, [], now);
+      if (skeleton) experimentState = { id: skeleton.id, question: skeleton.question, start: skeleton.start, status: skeleton.status };
+    } catch { experimentState = null; }
+  }
+
   const library = {
     corpus: (() => {
       const gc = graphCounts();
@@ -521,6 +582,7 @@ export async function compose(opts = {}) {
     postingHealth: { days: postingDays },
     library,
     notes,
+    experiment, experimentState, learn,
     missingToken: ins.missingToken
   };
 }

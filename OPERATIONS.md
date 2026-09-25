@@ -346,6 +346,62 @@ the Posts room. Every proposal needs the owner's own one-tap yes; approving one 
 maps to an existing safe endpoint runs it and logs it, approving anything else only
 records the decision.
 
+### Experiments, `api/_experiments.js` and `api/experiments.js`
+
+A test is a real A/B split over the verse shelf, never a guess dressed as one: the
+registry (`EXPERIMENTS` in `api/_experiments.js`) names two for now, `verse-length`
+(under 20 seconds against over 30) and `reciter-pair` (two named reciters, chosen at
+plan time). Only one test runs at a time, in `nexp:state = {current, history}`,
+sanitized on every read (a corrupted entry is dropped, never thrown on, so a bad key
+degrades to "nothing running, nothing finished" everywhere it is read). The day a
+test's window covers leans `chooseReel` (`api/_schedule.js`) toward that day's own arm
+(day zero A, day one B, by parity from the test's own start), but only when the arm's
+own pool of cards still holds at least eight the duplicate guard has not already sent;
+every other day, and every day with no test running, the rota is untouched. A slot the
+picker actually walked the arm's own pool to choose carries `exp: {id, arm}` on its own
+`nsoc:slot:<date>#<slot>` record; a card a starved pool's fallback merely happens to
+match is never tagged. A KV fault reading the test's own state never blocks a post: the
+day is simply un-biased, exactly as if no test existed. **Stopping a test stops it at
+once**: every history entry is capped at its own `stoppedAt` date, so a test ended
+early, or a planned test cancelled before it ever started, never leans the picker again
+from that day on, even for a date still inside what would have been its original
+window.
+
+**Planning one.** `POST /api/experiments {action:"plan", id, start, args}`, owner
+only. Refuses a second test while one is current (stop it first), an unknown id (an id
+checked with `Object.hasOwn`, never a bracket read), a start that is not a real
+calendar date or is already in the past (UTC), an argument key the test does not
+document, an overlong argument string, or (`reciter-pair`) reciters not both named or
+not both carrying at least 20 verse reels on the shelf. A KV read fault while planning
+or stopping refuses outright, rather than being read as an empty store and overwriting
+real history with nothing. `POST {action:"stop"}` ends the current test and folds its
+final reading into `history`. `GET /api/experiments` answers the registry, the state
+and, when one is current, its reading so far: `n`, median reach and median watch share
+per arm, a status (`planned`, `running` or `ready`, ready only once the full window has
+closed, never a peek from day 14) and, once ready, a verdict (`A`, `B` or `none`) from
+a seeded permutation test on the difference of medians of watch share (`watched`, the
+question every test here actually asks; reach is reported beside it, never what
+decides), verdict given only when both arms actually have `minPerArm` (10) reels that
+answered a watch time (never merely `minPerArm` reels matched to the arm, a real but
+watch-time-free reel among them) AND p < 0.05 AND the medians differ by at least ten
+percentage points (an absolute gap, not a ratio, so a lower arm that medians to zero
+never blocks a verdict). The same reading is in the Observatory's own `experiment`
+block, and readable in the Lantern through its `experiment` tool, each through a
+read-only door onto that cache (never composing or writing it themselves; both fall
+back to a fresh insights read on a cold or mismatched cache); a test that IS current
+but whose full reading could not be built still names itself (`experimentState`: id,
+question, start, status) rather than reading as if nothing were running at all, on the
+Observatory's own card as much as here. Starting one from the Lantern is a proposal
+only (`experiment-plan`), never run on its own -- the owner plans it here or from the
+console's own Plan button.
+
+**The first test.** Nothing is planned yet. The intended first test is verse length,
+from a day of the owner's own choosing: `POST /api/experiments
+{"action":"plan","id":"verse-length","start":"<a date, YYYY-MM-DD, today or later>"}`,
+from the owner's own browser, the console's experiment card ("Plan: shorter vs longer
+verses, from ..."), or approving the Lantern's own proposal, which only records the
+request. Nothing plans itself.
+
 ---
 
 ## 4. The store, every key
@@ -385,6 +441,7 @@ records the decision.
 | `nsoc:slot:<date>#<slot>` | One slot's record: per network `{ ok, id, error }`; a card since 9 September 2026 carries `{ story, ok, storyOnly }` per Meta network (stories only, `social.cardsFeed` off); `results.phone` is what the owner shared by hand from the console's Reels room, a note and never a network | `social.js` |
 | `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
 | `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
+| `nexp:state` | The experiment now running (or none) and its finished history: `{current: {id, start, args}\|null, history: [...]}` | `_experiments.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -420,7 +477,8 @@ stripped from everything public.
 | `/api/marketing` | admin | The writing room |
 | `/api/house` | admin | The whole house in one call: `?action=steward` reads every record and answers with findings, each with the one call that would fix it; `?action=flow` draws the funnel from posts to gifts. Reads only. |
 | `/api/observatory` | admin | The Observatory room in one call: the 30-day per-network trend, the weekday by hour matrix, kind and subject folds, posting health per day, site visitors and library coverage, composed from `_insights.js`'s `numbers()`, the stored snapshots and slot records, and the shipped Content Graph files; kept ten minutes, `?fresh=1` goes round it. Reads only, no network call. |
-| `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate |
+| `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate, now with a `learn` block (watch time by kind, verse length and reciter) |
+| `/api/experiments` | owner only | The experiment now running, if any, with its reading so far; `POST {action:"plan", id, start, args}` and `POST {action:"stop"}`. See "Experiments" above. |
 | `/api/lantern-models` | admin | Which of Groq, Gemini and OpenRouter are configured, the live free models per tier, today's and the last week's usage against the budgets, the last model that answered each tier, and `?action=probe` (POST): one tiny prompt through each tier, latency and the model that answered |
 | `/api/lantern-agent` | owner only | The Lantern agent (masterplan step, "the Lantern agent"): `POST {message, thread}` streams Server-Sent Events (`start`, `plan`, `step`, `subagent`, `artifact`, `action`, `proposal`, `token`, `done`, `error`) while it plans, reads the house's own read-only tools, hands parts of the work to subagents on the router's free models, and answers with sourced numbers, a chart or a draft. `POST {action:"approve"\|"decline", id}` answers a proposal; `POST {action:"undo", id}` reverses a logged action where a real recipe exists. `GET ?action=ledger` and `?action=proposals` read what it has done and what still waits for a yes. See "The Lantern agent" below and OPERATIONS.md's own runbook for what it may do alone. |
 | `/api/reel` | yes | `?id=<reel id>`: the reel's bytes, streamed from the store as `video/mp4` with ranges, so a phone can share the file and a network that refuses the store's URL has one that answers plainly |

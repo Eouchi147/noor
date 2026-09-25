@@ -1876,6 +1876,69 @@ function obsKindSubject(o){
     function(r){return r.label},function(r){return r.n+" post"+(r.n===1?"":"s")+", 30 days"},function(r){return r.v},function(r){return obsN(r.v)});
   return a+b;
 }
+/* masterplan step 9, the learning loop: what an experiment (if any) has
+   found so far, and what strangers actually watch. Every number here is
+   api/observatory.js's own experiment/learn blocks, read exactly as they
+   arrived; nothing is computed in the room itself. */
+/* the two controls this card actually offers, both owner-only POSTs to
+   /api/experiments: Plan (only shown with nothing current, starts the one
+   test this build knows how to word a button for, verse length, from
+   tomorrow UTC) and Stop (only shown with a test current, planned or
+   running or ready), with a confirm step inside the card itself, never a
+   browser dialog (the same restraint every other irreversible control in
+   this console already keeps, admin2.html's own "nothing irreversible
+   happens without a sheet or a second tap first"). */
+function obsExpTomorrow(){return new Date(Date.now()+86400000).toISOString().slice(0,10)}
+function obsExperiment(o){
+  var e=o.experiment,es=o.experimentState;
+  if(!e&&!es){
+    var tmr=obsExpTomorrow();
+    return '<div class="card"><p class="muted small" style="margin:0 0 10px">No test is running or planned.</p>'
+      +'<div class="acts"><button class="btn ghost sm" data-act="exp-plan" data-expid="verse-length" data-start="'+esc(tmr)+'">Plan: shorter vs longer verses, from '+esc(tmr)+'</button></div></div>';
+  }
+  /* a test IS current (nexp:state says so, experimentState is built from
+     that alone) but the full reading could not come back this time (the
+     insights read itself failed): never confuse that with nothing running
+     -- name the test, say the numbers are not in hand, offer Stop, never
+     Plan (a second test cannot be planned while one is current anyway). */
+  if(!e){
+    var stopRow='<div class="acts" style="margin-top:10px" id="exp-stop-row"><button class="btn ghost sm" data-act="exp-stop-ask">Stop this test</button></div>';
+    return '<div class="card"><p class="vs" style="margin:0 0 6px">'+esc(es.question||"")+'</p>'
+      +'<p class="muted small" style="margin:0">Started (or planned to start) '+esc(es.start||"")+'. Numbers unavailable right now.</p>'
+      +stopRow+'</div>';
+  }
+  var pct=e.days>0?Math.min(100,Math.round(e.day/e.days*100)):0;
+  var arms=(e.arms||[]).map(function(a){
+    var reachV=a.reach!=null?obsN(a.reach):'·',watchedV=a.watched!=null?Math.round(a.watched*100)+'%':'·';
+    return '<div class="otile" tabindex="0" data-tip="'+esc(a.label+' | '+a.n+' reels, median reach '+reachV+', '+watchedV+' of the reel watched')+'">'
+      +'<div class="l">'+esc(a.label)+'</div><div class="v">'+reachV+'</div>'
+      +'<div class="d na">'+a.n+' reel'+(a.n===1?'':'s')+', '+watchedV+' watched</div></div>';
+  }).join("");
+  var bar='<div class="bars" style="margin:12px 0 4px"><div class="b" style="grid-template-columns:1fr"><div class="t" tabindex="0" data-tip="'
+    +esc('Day '+e.day+' of '+e.days)+'"><i style="width:'+pct+'%"></i></div></div></div>';
+  var body='<p class="vs" style="margin:0 0 10px">'+esc(e.question)+'</p>'
+    +'<div class="otiles">'+arms+'</div>'+bar
+    +'<p class="small" style="margin:8px 0 0">'+esc(e.sentence)+'</p>'
+    +'<div class="acts" style="margin-top:10px" id="exp-stop-row"><button class="btn ghost sm" data-act="exp-stop-ask">Stop this test</button></div>';
+  var table=dt(["Arm","Reels","Median reach","Watched"],(e.arms||[]).map(function(a){
+    return [a.label,a.n,a.reach!=null?obsN(a.reach):'·',a.watched!=null?Math.round(a.watched*100)+'%':'·'];
+  }));
+  var sub=e.status==='planned'?'Planned to start '+e.start:'Day '+e.day+' of '+e.days+', '+e.status;
+  return vizCard("viz-experiment",'The test now running',sub,body,table);
+}
+function obsLearn(o){
+  var l=o.learn||{};
+  var kinds=(l.watchByKind||[]).map(function(x){return {label:x.label,n:x.n,v:Math.round((x.watched||0)*100)}});
+  var a=obsBars("viz-watch","What holds attention","Share of a reel's own length watched, on average, by kind",kinds,
+    function(r){return r.label},function(r){return r.n+" reel"+(r.n===1?"":"s")},function(r){return r.v},function(r){return r.v+"%"});
+  var lenRows=(l.verseByLength||[]).map(function(x){return {label:x.label,n:x.n,v:Math.round((x.watched||0)*100)}});
+  var b=lenRows.length?obsBars("viz-verselen","Verse length and watch time","Short against long, how much of the reel people actually watch",lenRows,
+    function(r){return r.label},function(r){return r.n+" reel"+(r.n===1?"":"s")},function(r){return r.v},function(r){return r.v+"%"}):"";
+  var recRows=(l.verseByReciter||[]).map(function(x){return {label:x.reciter,n:x.n,v:Math.round((x.watched||0)*100)}});
+  var c=recRows.length?obsBars("viz-reciter","By reciter","Share of the reel watched, by reciter",recRows,
+    function(r){return r.label},function(r){return r.n+" reel"+(r.n===1?"":"s")},function(r){return r.v},function(r){return r.v+"%"}):"";
+  return a+((b||c)?'<div class="panelgrid n2" style="margin-top:10px">'+b+c+'</div>':"");
+}
 function obsVisitors(o){
   var v=o.visitors||{};
   var days=(v.days||[]).slice(-14);
@@ -1985,15 +2048,47 @@ function drawObservatory(force){
       +'<p class="sec">Thirty days, network by network</p>'+obsTrend(o)
       +'<p class="sec">The best hour to post</p>'+obsHeat(o)
       +'<p class="sec">What reaches furthest</p>'+obsKindSubject(o)
+      +'<p class="sec">The test now running</p>'+obsExperiment(o)
+      +'<p class="sec">What holds attention</p>'+obsLearn(o)
       +'<p class="sec">The site</p>'+obsVisitors(o)
       +'<p class="sec">Posting health</p>'+obsHealth(o)
       +'<p class="sec">The library</p>'+obsLibrary(o);
     el.onclick=function(e){
-      var b=e.target.closest&&e.target.closest("[data-tv]");if(!b)return;
-      var card=$(b.dataset.tv);if(!card)return;
-      var showTable=card.querySelector(".vtb").hidden;
-      card.querySelector(".vzc").hidden=showTable;card.querySelector(".vtb").hidden=!showTable;
-      b.textContent=showTable?"Chart":"Table";b.setAttribute("aria-pressed",showTable?"true":"false");
+      var b=e.target.closest&&e.target.closest("[data-tv]");
+      if(b){
+        var card=$(b.dataset.tv);if(!card)return;
+        var showTable=card.querySelector(".vtb").hidden;
+        card.querySelector(".vzc").hidden=showTable;card.querySelector(".vtb").hidden=!showTable;
+        b.textContent=showTable?"Chart":"Table";b.setAttribute("aria-pressed",showTable?"true":"false");
+        return;
+      }
+      var a=e.target.closest&&e.target.closest("[data-act]");
+      if(!a)return;
+      var act=a.dataset.act;
+      if(act==="exp-plan"){
+        var start=a.dataset.start,was=a.textContent;a.disabled=true;a.textContent="Planning…";
+        post("/api/experiments",{action:"plan",id:a.dataset.expid,start:start}).then(function(r){
+          if(!r.ok||r.j.ok===false){a.disabled=false;a.textContent=was;return toast((r.j&&r.j.error)||"It refused.",true)}
+          toast("Planned to start "+start+".");C.obs=null;drawObservatory(true)
+        }).catch(unreachable(a,was));
+        return;
+      }
+      if(act==="exp-stop-ask"){
+        a.outerHTML='<span class="small muted">Really stop it? </span><button class="btn ghost sm" data-act="exp-stop-yes">Yes, stop</button> <button class="btn ghost sm" data-act="exp-stop-no">Never mind</button>';
+        return;
+      }
+      if(act==="exp-stop-no"){
+        drawObservatory(true);
+        return;
+      }
+      if(act==="exp-stop-yes"){
+        var stopWas=a.textContent;a.disabled=true;a.textContent="Stopping…";
+        post("/api/experiments",{action:"stop"}).then(function(r){
+          if(!r.ok||r.j.ok===false){toast((r.j&&r.j.error)||"It refused.",true);return drawObservatory(true)}
+          toast("The test is stopped.");C.obs=null;drawObservatory(true)
+        }).catch(unreachable(a,stopWas));
+        return;
+      }
     };
   }).catch(function(){el.innerHTML=BACK+'<p class="sec">The Observatory</p><div class="card"><b style="color:var(--bad)">The Observatory could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
 }

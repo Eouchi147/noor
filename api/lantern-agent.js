@@ -38,11 +38,12 @@ import { kv, kvReady } from "./_kv.js";
 import { route as llmRoute, scrub } from "./_llm.js";
 import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS } from "./_agent.js";
 import { playbookLookup } from "./_playbook.js";
-import { cached as observatoryCached, slotLabel } from "./observatory.js";
+import { cached as observatoryCached, readCache as observatoryReadCache, slotLabel } from "./observatory.js";
 import { read as insightsRead, numbers as insightsNumbers, refresh as insightsRefresh, snapshot as insightsSnapshot, kindLabel } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
 import { reconcile as socialReconcile, teachGuard as socialTeachGuard, readSlot, revertTaught } from "./social.js";
 import { chooseReel, SLOTS, REEL_SLOTS, SLOT_IDS } from "./_schedule.js";
+import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, evaluate as expEvaluate, biasFromAny as expBiasFromAny } from "./_experiments.js";
 import * as PAGE from "./page.js";
 import { buildPackage } from "./_package.js";
 import { judge as jevJudge } from "./_jev.js";
@@ -182,15 +183,64 @@ function buildTools(req) {
     const from = String((args && args.fromDate) || new Date().toISOString().slice(0, 10));
     const days = Math.max(1, Math.min(14, parseInt((args && args.days) || 3, 10) || 3));
     const cards = await PAGE.manifest();
+    /* the experiment state is read once for the whole preview, not once a
+       day: biasFromAny itself is pure arithmetic (no store call at all)
+       once the state is in hand, the same restraint api/_insights.js's own
+       collect() already keeps over a sixty day window. A KV fault answers
+       the same empty state a house with no test ever had, so a bad read
+       here never breaks the preview, only ever costs it a lean. */
+    const state = await expReadState({}).catch(() => ({ current: null, history: [] }));
     const out = [];
     for (let i = 0; i < days; i++) {
       const d = new Date(Date.parse(from + "T00:00:00Z") + i * 86400000).toISOString().slice(0, 10);
+      /* the same lean a real post would use that day (api/_experiments.js's
+         biasFromAny), so this preview never shows a different card than the
+         one the machine will actually choose */
+      let bias = null;
+      try { bias = expBiasFromAny(state, d, EXPERIMENTS); } catch { bias = null; }
       for (const s of SLOTS.filter(x => x.reel)) {
-        const c = chooseReel(cards, d, s.reel, null);
+        const c = chooseReel(cards, d, s.reel, null, null, bias);
         out.push({ date: d, slot: s.id, hour: s.at, half: s.reel, card: c ? { id: c.id, kind: c.kind, hook: c.hook } : null });
       }
     }
     return { data: out, summary: "predicted " + out.length + " reel slots over " + days + " day(s) from " + from + ". This is what the rota would choose today, not a promise: it recomputes at post time." };
+  };
+
+  /* the current or most recently stopped test, read the same way
+     GET /api/experiments answers the console, minus nothing secret: there
+     is nothing secret in it, an experiment is a question about reach and
+     watch time, never a person. Reading its evaluation used to cost about
+     660 slot reads (insightsRead's own 60 day collect) every time this
+     tool ran; it now reuses the Observatory's own ten minute cache, read
+     only (api/observatory.js's own `readCache`, a plain GET with no
+     compose and no write -- `cached`, the door tools.observatory above
+     uses, is for the one room that owns that cache, and would otherwise
+     have this read-only tool composing the whole dashboard and writing it
+     back on a cold cache, paying the very 660 reads this was meant to
+     avoid). A cold or mismatched cache falls back to a fresh read. */
+  tools.experiment = async () => {
+    const state = await expReadState({}).catch(() => ({ current: null, history: [] }));
+    const current = expResolveCurrent(state, EXPERIMENTS);
+    let evaluation = null;
+    if (current) {
+      try {
+        const obs = await observatoryReadCache({});
+        evaluation = (obs && obs.experiment && obs.experiment.id === current.id && obs.experiment.start === current.start)
+          ? obs.experiment : null;
+      } catch { evaluation = null; }
+      if (!evaluation) {
+        const ins = await insightsRead(60, {}).catch(() => ({ igRows: [] }));
+        evaluation = expEvaluate(current, ins.igRows || [], new Date().toISOString());
+      }
+    }
+    const registry = Object.keys(EXPERIMENTS).map(id => {
+      const e = EXPERIMENTS[id];
+      return { id: e.id, question: e.question, kind: e.kind, days: e.days };
+    });
+    const summary = evaluation
+      ? "running: " + evaluation.question + " " + evaluation.sentence
+      : (state.history && state.history.length ? state.history.length + " test(s) finished; none running now." : "no test running.");
+    return { data: { registry, current: evaluation, history: state.history || [] }, summary };
   };
 
   tools.slots = async (args) => {

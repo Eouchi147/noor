@@ -68,7 +68,7 @@ const MODEL_CALL_MARGIN_MS = 12000;
    with the one named exception below */
 export const TOOL_NAMES = [
   "observatory", "insights", "numbers", "visitors", "reconcileRead", "package",
-  "graph", "shelf", "lineup", "slots", "recentChanges", "siteSearch", "playbook", "jev"
+  "graph", "shelf", "lineup", "slots", "recentChanges", "siteSearch", "playbook", "jev", "experiment"
 ];
 /* "jev" is the one tool that is not deterministic and not free: api/_jev.js
    judges a piece of text with a model call of its own, over the house's
@@ -251,6 +251,7 @@ function keywordTools(q) {
   }
   if (/\bpackage\b|\bdraft\b/.test(q)) add("package", {}, "the question asks for a package or a draft");
   if (/line.?up|next week/.test(q)) { add("lineup", {}, "the question is about the line-up"); add("shelf", {}, "and what the shelf holds to fill it"); }
+  if (/\btests?\b|experiment|a\/b|which works better/.test(q)) add("experiment", {}, "the question asks about a test");
   return out;
 }
 
@@ -351,6 +352,8 @@ const PLANNER_SYSTEM = "You are the planner inside NOOR's Lantern agent. Read th
   + "Actions the agent may take on its own, at most " + AUTONOMOUS_DAILY_CAP + " a day, each logged and undoable: " + ACTION_TYPES.join(", ") + ". "
   + "Reordering, skipping or choosing a reel for a slot is NOT an available action in this build; if the request needs that, "
   + "end the plan with an action step named \"lineup-change\" so it is offered to the owner as a proposal, never done alone. "
+  + "Starting an experiment (an A/B test of verse length or reciter) is likewise NOT an available action; if the request asks to start, "
+  + "plan or run one, end the plan with an action step named \"experiment-plan\" so it is offered to the owner as a proposal, never done alone. "
   + "At most " + BUDGETS.maxSteps + " steps. Read tools before subagents; a subagent should usually follow the tool reads it needs.";
 
 function planPrompt(message, threadContext) {
@@ -878,6 +881,8 @@ export function buildProposal(type, requested, args, why, reason, evidence) {
 function proposalDescription(requested, args, reason) {
   if (requested === "lineup-change")
     return "Reorder or skip a reel in today's line-up. There is no existing, safe, owner-honoured way to do this automatically, so nothing was changed; approving this only records that you asked for it, and the console shows you which slot to open by hand in the Posts room.";
+  if (requested === "experiment-plan")
+    return "Start an experiment. There is no existing, safe, owner-honoured way to do this automatically, so nothing was started; approving it only records the request. The test itself still has to be started from the Observatory's own experiment card, by its Plan button, never on its own.";
   if (ACTION_TYPES.includes(requested))
     return "Run " + requested + " now" + (reason ? " (" + reason + ")" : "") + ".";
   return "A step the agent could not take on its own (" + requested + "): " + (reason || "no safe mechanism exists for this yet") + ".";
@@ -1014,7 +1019,7 @@ const SYNTH_JSON_BUDGET = 6000;
    api/observatory.js's own shape and api/_insights.js's own shape (two
    different tools, the same field names for the same idea) are read the
    same way, with no per-tool special case. */
-const BREAKDOWN_PRIORITY = ["byKind", "bySubject", "byHour", "bySlot", "byNetwork", "kindTotals", "top", "subjectTop", "subjectBottom", "notes", "sentences"];
+const BREAKDOWN_PRIORITY = ["byKind", "bySubject", "byHour", "bySlot", "byNetwork", "kindTotals", "top", "subjectTop", "subjectBottom", "notes", "sentences", "learn"];
 /* the fixed order above, with whatever the owner's own words ask about
    moved to the front: a question about the hour keeps byHour and bySlot
    before anything else, one naming a network keeps byNetwork first */
@@ -1024,6 +1029,10 @@ export function priorityFor(message) {
   if (/\bhours?\b|\bwhen\b|what time|\bslots?\b|o'?clock/.test(q)) first.push("bySlot", "byHour");
   if (/facebook|instagram|youtube|threads|pinterest|\bnetworks?\b|\bplatforms?\b/.test(q)) first.push("byNetwork");
   if (/\bsubjects?\b|\bthemes?\b|\bsurah|\btopics?\b/.test(q)) first.push("bySubject");
+  /* a question about a test, a length or a reciter, or plain watch time,
+     needs api/_insights.js's own `learn` block (watch time by kind, verse
+     length, reciter) kept whole rather than trimmed away by the long tail */
+  if (/\btests?\b|experiment|a\/b|which works better|\blength\b|reciters?|watch(ed|\s?time)?/.test(q)) first.push("learn");
   return first.concat(BREAKDOWN_PRIORITY.filter(k => !first.includes(k)));
 }
 
