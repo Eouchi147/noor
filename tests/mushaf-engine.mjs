@@ -65,7 +65,10 @@ const st=()=>page.evaluate(()=>({i:NOOR_MUSHAF.playingIdx,stuck:NOOR_MUSHAF.stuc
   sub:document.getElementById('p-sub').textContent}));
 
 console.log('\n=== the first tap blesses the players ===');
-await page.click('#t-listen');
+/* "Listen to surah" is the same flag "Play to the end of the surah" toggles
+   in the player's own settings now (25 September 2026); #t-listen is gone. */
+await page.click('#p-more');
+await page.click('#o-auto');
 await page.waitForTimeout(400);
 ok((await st()).blessed===true,'both players carry the reader\'s tap from the first verse on');
 

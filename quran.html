@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8"/><!--oldrooms-v1--><style>html,body{background:#0A1024!important;color:#FFFEF7!important}:root{--n2-parchment-room:1}#site-header{display:none}.wgo>h2{color:#FFFEF7!important}.wgo>.wgo-s{color:rgba(255,254,247,.6)!important}.wgo-c{background:#0A1024!important}.wgo-c b{color:#FFFEF7!important}.wgo-c span{color:rgba(255,254,247,.68)!important}.evb.editorial{color:rgba(255,254,247,.28)!important;background:rgba(22,28,44,.05)!important}#qhero{background:linear-gradient(175deg,#0A0D14 0%,#0F121A 55%,#121724 100%)!important}.gview{background:#0A1024!important;color:rgba(255,254,247,.68)!important}.gview.on{background:#111A33!important}.glegend{color:rgba(255,254,247,.68)!important}.glegend b{color:rgba(255,254,247,.68)!important}#gate-count{color:rgba(255,254,247,.68)!important}.gate{background:#0A1024!important}.gate:hover{background:linear-gradient(168deg,#0A1024,#0A1024)!important}.gate.active{background:linear-gradient(160deg,#0A1024,#0D1428)!important}.gate .seal{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)!important}.gate .gmn{color:rgba(255,254,247,.68)!important}.gchip.mk{background:#0D1428!important}.gchip.md{color:#FFFEF7!important;background:#0D1428!important}.gate .gct{color:rgba(255,254,247,.68)!important}.bismillah{color:#FFFEF7!important}.bismillah small{color:rgba(255,254,247,.68)!important}.tool{color:rgba(255,254,247,.78)!important;background:#0A1024!important}.tool.on{background:#111A33!important}.navarrow{background:#0A1024!important}#surah-select{background:linear-gradient(160deg,#0A1024,#0A1024)!important}.skel{background:linear-gradient(90deg,rgba(22,28,44,.06),rgba(22,28,44,.12),rgba(22,28,44,.06))!important}.sp-heart{background:rgba(10,16,36,.05)!important}.sp-theme{background:rgba(10,16,36,.045)!important}.sp-btn{background:rgba(10,16,36,.05)!important}.sp-virtue{background:rgba(10,16,36,.045)!important}.sp-badge.ok{background:rgba(110,122,155,.14)!important}#player{background:linear-gradient(180deg,#11151F,#0A0D14)!important}.olang{background:rgba(10,16,36,.05)!important}#p-pill{background:linear-gradient(160deg,#121724,#0A0D14)!important}.vw{background:#0A1024!important}.vw b{color:#FFFEF7!important}.vw em{color:rgba(255,254,247,.58)!important}.vsense{color:rgba(255,254,247,.82)!important}.vnote p{color:rgba(255,254,247,.74)!important}.vsrc{color:rgba(255,254,247,.48)!important}.vlinks h6{color:rgba(255,254,247,.42)!important}.vlink{background:#0A1024!important;color:rgba(255,254,247,.72)!important}.vnone{color:rgba(255,254,247,.6)!important}.vwait{color:rgba(255,254,247,.6)!important}.vno{color:rgba(255,254,247,.68)!important}.ayah .ar{color:#FFFEF7!important}.ayah.playing .ar .w.now{color:#FFFEF7!important}.ayah .trans{color:rgba(255,254,247,.94)!important}.vact{color:rgba(255,254,247,.62)!important}.shead-k{color:rgba(255,254,247,.66)!important}.shead h2{color:#FFFEF7!important}.shead h2 em{color:rgba(255,254,247,.64)!important}.shead-i{color:rgba(255,254,247,.84)!important}#qnav .qrow2 select.tool{color:rgba(255,254,247,.18)!important}.qstat{color:rgba(255,254,247,.55)!important}#q-toast{background:#0F121A!important}#qnav .tlab{color:rgba(255,254,247,.75)!important}#q-pick{background:linear-gradient(160deg,#0A1024,#0D1428)!important}#s-scrim{background:rgba(10,13,20,.55)!important}#s-sheet{background:#0A1024!important}#s-search{background:#0A1024!important}#s-close{background:#0A1024!important;color:rgba(255,254,247,.7)!important}.srow:hover{background:#0A1024!important}.srow.on{background:linear-gradient(160deg,#0A1024,#FFF1CE)!important}.srow .sn{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)!important}.srow .st span{color:rgba(255,254,247,.5)!important}.snone{color:rgba(255,254,247,.5)!important}.ih-41c4c868.ih-41c4c868.ih-41c4c868{background:linear-gradient(160deg,#0A0D14,#121724)!important}.ih-fff7d1a6.ih-fff7d1a6.ih-fff7d1a6{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#0A0D14,#121724)!important}</style><link rel="stylesheet" href="/assets/noor2.css?v=14"/><link rel="stylesheet" href="/assets/noor2-skin.css?v=14"/><link rel="stylesheet" href="/assets/noor2-night.css?v=14"/><link rel="stylesheet" href="/assets/noor2-legible.css?v=14"/>
+<meta charset="UTF-8"/>
+<!-- Day is the Mushaf's own default, agreed with the owner: parchment and ink
+     until a reader asks for the evening. This runs before the room's own
+     dark-by-default styles a few characters below ever get to paint, so the
+     class is already on <html> the first time anything is drawn -- no flash
+     of night before Day takes it back. Night is opt-in only: the room reads
+     the one flag the reading settings sheet already writes, noor-quran-night,
+     and anything other than the literal "1" (absent, "0", a stray value) is
+     Day. Keep this in step with the fuller check further down the page that
+     the same flag drives once the room's own script has loaded. -->
+<script>try{if(localStorage.getItem("noor-quran-night")!=="1")document.documentElement.classList.add("noor-day")}catch(e){document.documentElement.classList.add("noor-day")}</script>
+<!--oldrooms-v1--><style>html,body{background:#0A1024!important;color:#FFFEF7!important}:root{--n2-parchment-room:1}#site-header{display:none}.wgo>h2{color:#FFFEF7!important}.wgo>.wgo-s{color:rgba(255,254,247,.6)!important}.wgo-c{background:#0A1024!important}.wgo-c b{color:#FFFEF7!important}.wgo-c span{color:rgba(255,254,247,.68)!important}.evb.editorial{color:rgba(255,254,247,.28)!important;background:rgba(22,28,44,.05)!important}#qhero{background:linear-gradient(175deg,#0A0D14 0%,#0F121A 55%,#121724 100%)!important}.gview{background:#0A1024!important;color:rgba(255,254,247,.68)!important}.gview.on{background:#111A33!important}.glegend{color:rgba(255,254,247,.68)!important}.glegend b{color:rgba(255,254,247,.68)!important}#gate-count{color:rgba(255,254,247,.68)!important}.gate{background:#0A1024!important}.gate:hover{background:linear-gradient(168deg,#0A1024,#0A1024)!important}.gate.active{background:linear-gradient(160deg,#0A1024,#0D1428)!important}.gate .seal{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)!important}.gate .gmn{color:rgba(255,254,247,.68)!important}.gchip.mk{background:#0D1428!important}.gchip.md{color:#FFFEF7!important;background:#0D1428!important}.gate .gct{color:rgba(255,254,247,.68)!important}.bismillah{color:#FFFEF7!important}.bismillah small{color:rgba(255,254,247,.68)!important}.tool{color:rgba(255,254,247,.78)!important;background:#0A1024!important}.tool.on{background:#111A33!important}.navarrow{background:#0A1024!important}#surah-select{background:linear-gradient(160deg,#0A1024,#0A1024)!important}.skel{background:linear-gradient(90deg,rgba(22,28,44,.06),rgba(22,28,44,.12),rgba(22,28,44,.06))!important}.sp-heart{background:rgba(10,16,36,.05)!important}.sp-theme{background:rgba(10,16,36,.045)!important}.sp-btn{background:rgba(10,16,36,.05)!important}.sp-virtue{background:rgba(10,16,36,.045)!important}.sp-badge.ok{background:rgba(110,122,155,.14)!important}#player{background:linear-gradient(180deg,#11151F,#0A0D14)!important}.olang{background:rgba(10,16,36,.05)!important}#p-pill{background:linear-gradient(160deg,#121724,#0A0D14)!important}.vw{background:#0A1024!important}.vw b{color:#FFFEF7!important}.vw em{color:rgba(255,254,247,.58)!important}.vsense{color:rgba(255,254,247,.82)!important}.vnote p{color:rgba(255,254,247,.74)!important}.vsrc{color:rgba(255,254,247,.48)!important}.vlinks h6{color:rgba(255,254,247,.42)!important}.vlink{background:#0A1024!important;color:rgba(255,254,247,.72)!important}.vnone{color:rgba(255,254,247,.6)!important}.vwait{color:rgba(255,254,247,.6)!important}.vno{color:rgba(255,254,247,.68)!important}.ayah .ar{color:#FFFEF7!important}.ayah.playing .ar .w.now{color:#FFFEF7!important}.ayah .trans{color:rgba(255,254,247,.94)!important}.vact{color:rgba(255,254,247,.62)!important}.shead-k{color:rgba(255,254,247,.66)!important}.shead h2{color:#FFFEF7!important}.shead h2 em{color:rgba(255,254,247,.64)!important}.shead-i{color:rgba(255,254,247,.84)!important}#qnav .qrow2 select.tool{color:rgba(255,254,247,.18)!important}.qstat{color:rgba(255,254,247,.55)!important}#q-toast{background:#0F121A!important}#qnav .tlab{color:rgba(255,254,247,.75)!important}#q-pick{background:linear-gradient(160deg,#0A1024,#0D1428)!important}#s-scrim{background:rgba(10,13,20,.55)!important}#s-sheet{background:#0A1024!important}#s-search{background:#0A1024!important}#s-close{background:#0A1024!important;color:rgba(255,254,247,.7)!important}.srow:hover{background:#0A1024!important}.srow.on{background:linear-gradient(160deg,#0A1024,#FFF1CE)!important}.srow .sn{background:radial-gradient(circle at 40% 32%,#151C2E,#0A0D14)!important}.srow .st span{color:rgba(255,254,247,.5)!important}.snone{color:rgba(255,254,247,.5)!important}.ih-41c4c868.ih-41c4c868.ih-41c4c868{background:linear-gradient(160deg,#0A0D14,#121724)!important}.ih-fff7d1a6.ih-fff7d1a6.ih-fff7d1a6{background:radial-gradient(circle at 50% 30%,rgba(201,162,39,.25),transparent 60%),linear-gradient(160deg,#0A0D14,#121724)!important}</style><link rel="stylesheet" href="/assets/noor2.css?v=14"/><link rel="stylesheet" href="/assets/noor2-skin.css?v=14"/><link rel="stylesheet" href="/assets/noor2-night.css?v=14"/><link rel="stylesheet" href="/assets/noor2-legible.css?v=14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="description" content="The NOOR Mushaf: read, listen, translate and understand the Qur'an, an illuminated reading room. Uthmani script, eighteen reciters, translations in nineteen languages, surah gates and guided context."/>
 <meta property="og:type" content="website"/>
@@ -25,7 +36,13 @@
 <title>Qur'an · NOOR Codex of Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Newsreader (the surah's meaning, in the opening and in every sheet's own
+     h3) and IBM Plex Mono (every reference and count in the room) were both
+     already named in this file's own CSS, on the strength that a browser
+     falls back to Georgia or ui-monospace rather than erroring -- so the
+     fallback was the only one most readers ever saw. Both are loaded now,
+     alongside the faces already asked for. -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/tw.css?v=49"/>
 <script src="noor-fx.js" defer></script>
 <script src="noor-ink.js" defer></script>
@@ -97,7 +114,9 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
    overridden two hundred lines further down. A rule nobody can see is a rule
    the next person has to read anyway. Both are gone; the spine of light and
    the numeral are below, once. */
-/* .playbtn is a .vact now */
+/* the gutter's own .playbtn is gone (25 September 2026): Listen is a
+   .vact now, .vlisten, in the row under every verse's meaning -- see THE
+   READING SURFACE, further down, for why. */
 .eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
 .eq i{width:2.5px;background:currentColor;border-radius:2px;animation:eqq 1s ease-in-out infinite}
 .eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
@@ -121,26 +140,90 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 /* navigator toolbar */
 .tool{border:1px solid rgba(44,36,22,.14);border-radius:var(--r);padding:.5rem .85rem;font-size:.78rem;font-weight:600;color:rgba(44,36,22,.78);background:#fff;transition:border-color .2s,color .2s,background-color .2s;cursor:pointer;font-family:inherit;min-height:40px}
 .tool:hover{border-color:var(--gold);color:var(--ink)}
-/* the surah's name is the room's title, so it keeps the pill */
-#q-pick{border-radius:999px}
 .qnone{margin:10px 14px 0;font-size:12px;line-height:1.6;color:rgba(255,254,247,.6);max-width:46rem}
 .tool.on{background:var(--ink);color:var(--gold);border-color:var(--ink)}
-/* "How you read" used to carry its own name in the row, but a name next to
-   "Browse the 114 gates" and "Listen to surah" is what pushed the bar onto
-   a second line on a phone; the room already has one, and an icon with an
-   aria-label and a title tooltip loses nothing but the width. */
-.tool-icon{padding:.5rem;width:44px;justify-content:center}
-.navarrow{width:2.4rem;height:2.4rem;border-radius:var(--r);border:1px solid rgba(44,36,22,.15);background:#fff;font-size:1rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .2s}
-.navarrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+/* ---- the top bar, carried from the prototype (25 September 2026) --------
+   "Browse the 114 gates", "Listen to surah" and a boxed <select> used to sit
+   in this row with the picker; the owner asked for one quiet row that says
+   which surah this is and offers two doors out of it. Browse now lives
+   inside the picker sheet itself (#s-gates below, #s-sheet), and Listen to
+   surah is the same flag "Play to the end of the surah" already toggles in
+   the player's own settings (#o-auto) -- one control for one question,
+   not two that could disagree. */
+/* #q-pick, its arrows and the hidden <select> beside it all sit on #qnav's
+   own bar, which is Tailwind's bg-parchment and stays that pale colour in
+   both Day and Night (see #qnav in the markup) -- so none of the three
+   carry a background of their own in either mode. Without !important here,
+   an old unconditional rule above (oldrooms-v1, #q-pick and .navarrow and
+   #surah-select all painted #0A1024) still wins on specificity and a
+   reader saw dark boxes sitting on a pale bar. */
+#q-pick{display:flex;align-items:center;gap:.55rem;flex:1 1 auto;min-width:0;
+  min-height:44px;padding:.3rem .5rem;border:0;background:none!important;border-radius:var(--r);
+  text-align:start;font-family:inherit;cursor:pointer;transition:background-color .18s}
+#q-pick:hover{background:rgba(44,36,22,.05)!important}
+#surah-select{background:none!important}
+.qp-num{flex:none;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:.7rem;font-weight:700;
+  color:var(--gold);border:1px solid rgba(44,36,22,.16);border-radius:999px;padding:.15rem .55rem;min-width:1.6rem;text-align:center}
+.qp-nm{min-width:0;flex:1}
+.qp-nm b{display:block;font-family:Newsreader,Georgia,serif;font-weight:500;font-size:1.02rem;line-height:1.2;
+  color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* the meta line's own .58 alpha read at 3.91:1 in Day, under this size's
+   4.5:1 floor, and carried no Night value of its own at all -- the top
+   bar's meta line was the room's own report of it, nearly unreadable in
+   the dark. */
+.qp-nm span{display:block;font-size:.71rem;color:rgba(44,36,22,.68);line-height:1.35;margin-top:1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html:not(.noor-day) .qp-nm span{color:rgba(255,254,247,.68)}
+.qp-caret{flex:none;color:rgba(44,36,22,.4)}
+html:not(.noor-day) .qp-caret{color:rgba(255,254,247,.5)}
+/* a small, quiet way to step one surah at a time, beside the surah's own
+   name rather than boxed apart from it */
+.navarrow{width:44px;height:44px;flex:none;border:0;border-radius:var(--r);background:none!important;
+  font-size:1.15rem;font-weight:600;color:rgba(44,36,22,.68);cursor:pointer;transition:background-color .18s,color .18s;
+  display:grid;place-items:center}
+.navarrow:hover:not(:disabled){background:rgba(44,36,22,.06)!important;color:var(--ink)}
 .navarrow:disabled{opacity:.3;cursor:default}
-#surah-select{border:1.5px solid rgba(201,162,39,.5);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF8E1);color:var(--ink);font-weight:700;font-size:.8rem;padding:.34rem .9rem;max-width:14rem;font-family:inherit}
+/* #qnav itself follows the reading Day/Night toggle (white in Day, the
+   room's own dark in Night, see html.noor-day #qnav below) -- the arrow's
+   ink was left a literal Day brown and read at 1.09:1 on the Night bar.
+   html.noor-day is written synchronously before paint (top of <head>), so
+   :not(.noor-day) is Night here with no flash while noor2.js still has to
+   measure the page to know it. */
+html:not(.noor-day) .navarrow{color:rgba(255,254,247,.68)}
+html:not(.noor-day) .navarrow:hover:not(:disabled){color:#FFFEF7}
+/* the shared night sheet (assets/noor2-night.css) still draws this button
+   the old, boxed way -- a 1px border, scoped to this room by id so it
+   cannot be dropped from here -- which read as one arrow boxed and the
+   other not, since a disabled prev-s fades the same border to invisible
+   at .3 opacity and next-s keeps it. Neither arrow carries a box in the
+   prototype; this unconditionally kills it in both lights. */
+.navarrow{border:0!important}
+/* the two icon doors on the right: the study companion and how you read.
+   Quiet, the way the prototype's own #top drew them -- a glyph with a
+   label only assistive tech reads, not a bordered box. */
+.qicon{width:44px;height:44px;flex:none;display:grid;place-items:center;border:0;background:none;
+  border-radius:var(--r);color:rgba(44,36,22,.62);cursor:pointer;transition:background-color .18s,color .18s}
+.qicon:hover,.qicon:focus-visible{background:rgba(44,36,22,.06);color:var(--ink)}
+.qicon[hidden]{display:none}
+html:not(.noor-day) .qicon{color:rgba(255,254,247,.68)}
+html:not(.noor-day) .qicon:hover,html:not(.noor-day) .qicon:focus-visible{background:rgba(255,254,247,.08);color:#FFFEF7}
+html:not(.noor-day) .qp-caret{color:rgba(255,254,247,.5)}
+/* the surah <select> still exists and still drives openSurah on change --
+   assistive tech and anything else that reaches for a plain form control
+   can still use it -- it is only no longer the thing a sighted reader sees:
+   #q-pick, drawn from the same choice, is. */
+.qn-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;padding:0;margin:-1px}
 .skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06));background-size:200% 100%;animation:skl 1.2s linear infinite;border-radius:.5rem}
 @keyframes skl{to{background-position:-200% 0}}
 #room{max-width:48rem;margin-inline:auto}
-.rh-study{margin-top:.9rem;border:1px solid rgba(244,212,106,.45);background:rgba(244,212,106,.07);color:#F4D46A;border-radius:999px;padding:.5rem 1rem;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s}
-.rh-study:hover{background:rgba(244,212,106,.16);border-color:rgba(244,212,106,.75)}
-/* the study companion */
-#study-slot{margin-top:1.5rem}
+/* a quiet line under the opening, not a second loud control: the study
+   companion now opens as its own sheet (#studysheet, below), reached from
+   here or from the book icon in the top bar */
+.rh-study{display:inline-flex;align-items:center;gap:.3rem;margin-top:1.1rem;
+  min-height:44px;padding:0 .3rem;border:0;background:none;color:#F4D46A;
+  font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer}
+.rh-study:hover,.rh-study:focus-visible{text-decoration:underline}
+.rh-study[hidden]{display:none}
 /* ---------- the study companion, brought into the room --------------------
    It was written when the page around it was cream, so it is a warm brown card
    with a gold glow in it: exactly right against parchment, and against the
@@ -151,6 +234,11 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 .sp{position:relative;background:#0D1428;border:1px solid rgba(201,162,39,.34);
   border-radius:calc(var(--r) + 4px);padding:1.5rem 1.15rem 1.6rem;color:#FFFEF7;overflow:hidden}
 @media (min-width:640px){.sp{padding:1.7rem 1.6rem 1.8rem}}
+/* the companion opens inside #studysheet now, a sheet that already supplies
+   its own ground, border and padding -- a card inside a card was the same
+   fault #room's own masthead once had. Only the wrapper's own chrome is
+   reset here; every .sp- child keeps the type it has always drawn in. */
+#studysheet .sp{background:none!important;border:0!important;border-radius:0!important;padding:0!important;overflow:visible!important}
 .sp-eye{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#F4D46A;font-weight:800;margin:0}
 .sp-title{font-size:1.4rem;font-weight:800;color:#F4D46A;margin:.3rem 0 0;line-height:1.25}
 .sp-title span{font-weight:400;font-size:.95rem;color:rgba(255,254,247,.6)}
@@ -203,9 +291,15 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
    smaller than 44 pixels; the one control the hand reaches for most, play, is
    sixty. The bar carries the verse's own progress as a hairline of gold along
    its top, so the reader can see the ayah breathe without reading a clock. */
+/* oldrooms-v1, at the very top of <head>, still paints #player with its
+   own unconditional !important gradient -- a different dark than this
+   room's own, and one this rule cannot out-rank without !important of its
+   own, since two !important declarations settle by source order and
+   oldrooms-v1 comes first. The room's own night keeps its own colour. */
 #player{position:fixed;left:0;right:0;bottom:0;z-index:60;
   transform:translateY(115%);transition:transform .34s cubic-bezier(.2,.8,.25,1);
-  background:linear-gradient(180deg,#1F1A11,#14100A);border-top:1px solid rgba(201,162,39,.38);
+  background-color:#14100A!important;background-image:linear-gradient(180deg,#1F1A11,#14100A)!important;
+  border-top:1px solid rgba(201,162,39,.38);
   box-shadow:0 -10px 34px rgba(20,16,10,.45);padding-bottom:env(safe-area-inset-bottom,0px)}
 #player.show{transform:none}
 #player .inner{max-width:46rem;margin:0 auto;padding:.4rem .75rem .55rem}
@@ -303,7 +397,7 @@ html[dir="rtl"] .vx.on .vxc{transform:rotate(-90deg)}
 .vlink:hover{border-color:rgba(201,162,39,.55);background:rgba(201,162,39,.07)}
 .vnone,.vwait{font-size:.8rem;line-height:1.8;color:rgba(44,36,22,.6);margin:0}
 .vnone a{color:#8a6d13;text-decoration:underline}
-@media (max-width:520px){.vx,.vpan{margin-inline-start:0}}
+@media (max-width:520px){.vpan{margin-inline-start:0}}
 
 /* the four evidence badges, the same four the teaching rooms use and with the
    same four meanings, so a reader who has learned them once has learned them */
@@ -343,93 +437,63 @@ html[dir="rtl"] #player .pbar i{transform-origin:right center}
    grown a control at a time, and a verse that was a right-aligned line, a
    left-aligned line, and forty four pixels of nothing between them.
 
-   It is one design now, and the design is a COLUMN AND A GUTTER.
-
-     the gutter   holds the one thing the room is for -- the recitation --
-                  as a control that is always there, at forty four pixels,
-                  in gold, with the ayah's number under it. Nothing about
-                  the play control is revealed, hovered, or earned: it is
-                  the first thing beside every verse, on every device.
-
-     the column   holds the scripture and its meaning, hanging off one edge,
-                  at one measure, in one rhythm. The two lines are no longer
-                  strangers at opposite sides of a wide screen.
+   It was a COLUMN AND A GUTTER after that: the recitation as a bordered
+   control beside every ayah, because "the play button next to each verse
+   looks dark on dark, we can't even see it" -- true of the text button that
+   used to sit there. But a whole verse is already the recitation's own tap
+   target (see "tapping a verse starts the recitation there", below), so a
+   second, permanent control beside every one of two hundred and eighty six
+   verses was answering a question already answered. The owner's second
+   word on it, carried from the prototype: tapping IS the control; what was
+   missing was seeing it, not a column. A verse is one column now, full
+   width, and a "Listen" pill takes the gutter's place in the quiet action
+   row every verse already carries under its meaning -- filled in gold, at
+   rest, not only on hover, so the eye finds it without needing to touch
+   the page first.
 
    Between two verses there is a rule, and the rule is drawn in the ink of the
    page rather than in gold: gold at a quarter is a warm smudge in the night
    and a ghost on parchment. Ink at .16 turns over with the palette and is a
    line in both.
    ============================================================================ */
-#room{--ar-size:1.72rem;--gut:2.9rem}
-@media (min-width:768px){#room{--ar-size:2rem;--gut:3.1rem}}
+#room{--ar-size:1.72rem}
+@media (min-width:768px){#room{--ar-size:2rem}}
 .mushaf{margin-top:1.1rem}
 
 .ayah{
   position:relative;
-  display:grid;
-  grid-template-columns:var(--gut) minmax(0,1fr);
-  column-gap:.9rem;
-  align-items:start;
-  padding:1.15rem .1rem 3rem .9rem;
+  display:block;
+  padding:1.15rem .1rem 1.15rem .9rem;
   border-bottom:1px solid rgba(44,36,22,.16);
   scroll-margin-top:150px;
   transition:background-color .26s ease}
 .ayah:last-child{border-bottom:0}
-@media (max-width:560px){.ayah{padding:1rem .1rem 2.75rem .8rem}}
+@media (max-width:560px){.ayah{padding:1rem .1rem 1rem .8rem}}
 .ayah:focus{outline:none}
 .ayah:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
 
 /* THE VERSE BEING RECITED IS MARKED BY LIGHT, NOT BY A BOX.
    A line down its leading edge and a breath of gold on the ground: enough to
-   find the place at a glance, not enough to become a widget. */
+   find the place at a glance, not enough to become a widget. The edge shipped
+   on its own; the wash, carried from the prototype's own .ayah.on, did not --
+   this is that breath, low enough in alpha that no text sitting on it moves
+   off the contrast this room already holds every word to, in either light. */
 .ayah::before{content:"";position:absolute;inset-block:.5rem;inset-inline-start:0;width:2px;
   border-radius:2px;background:linear-gradient(180deg,rgba(244,212,106,.95),rgba(201,162,39,.3));
   opacity:0;transform:scaleY(.4);transform-origin:top;
   transition:opacity .28s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
 .ayah.playing::before{opacity:1;transform:scaleY(1)}
+.ayah.playing{background:linear-gradient(180deg,rgba(201,162,39,.07),transparent 65%)}
 
-/* ---------- the gutter ----------------------------------------------------
-   "The play button next to each verse looks dark on dark, we can't even see
-   it." It was a text button in a row that only appeared on the verse you were
-   already on -- which is to say, on a page of two hundred and eighty six
-   verses, nowhere. So it stopped being a thing to reveal and became a thing
-   to see: a bordered gold control, forty four pixels, beside every ayah, with
-   the ayah's number printed beneath it in the mono the house counts in. */
-.vrail{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;padding-top:.55rem}
-.playbtn{
-  width:var(--gut);height:var(--gut);flex:none;padding:0;
-  display:grid;place-items:center;
-  border:1px solid rgba(201,162,39,.5);border-radius:var(--r);
-  background:rgba(201,162,39,.1);color:var(--gold);cursor:pointer;
-  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease}
-.playbtn .vg{display:grid;place-items:center;width:1.05rem;height:1.05rem;color:inherit}
-.playbtn .vg svg{width:1.05rem;height:1.05rem}
-.playbtn:hover,.playbtn:focus-visible{background:rgba(201,162,39,.22);border-color:var(--gold);transform:translateY(-1px)}
-.playbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-/* sounding: the one filled shape on the reading surface. The ink on it is a
-   chromatic brown on purpose -- the night turns neutrals over and would have
-   written parchment on gold. */
-/* A filled gold control keeps its dark ink in both lights. The ground is
-   written as a literal on purpose: scripts/build-night.py leaves the ink of
-   a rule alone only when it can SEE that the rule paints its own opaque
-   ground, and var(--gold) is not something it can read. Written as var()
-   this came out gold-on-gold at 1.05:1. */
-.playbtn.on{background:#C9A227;border-color:#C9A227;color:#3B2A05}
-.playbtn.on:hover{background:#F4D46A;border-color:#F4D46A;color:#3B2A05}
-.vno{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:.78rem;font-weight:600;
-  letter-spacing:.03em;color:rgba(44,36,22,.68);font-variant-numeric:tabular-nums;line-height:1}
-#room .ayah.playing .vno{color:#8a6d13}
-
-/* ---------- the column ---------------------------------------------------- */
-.ayah .ar{grid-column:2;margin:0;
+.ayah .ar{margin:0;
   font-family:'Amiri Quran',Amiri,serif;font-size:var(--ar-size);line-height:1.95;
-  color:#241D12;text-align:end;direction:rtl;
+  color:#241D12;text-align:right;direction:rtl;
   transition:text-shadow .26s ease}
 .ayah.playing .ar{text-shadow:0 0 14px rgba(201,162,39,.30),0 0 3px rgba(201,162,39,.16)}
 .ayah .ar .w{transition:color .22s ease,text-shadow .22s ease}
 .ayah.playing .ar .w.now{color:#14100A;text-shadow:0 0 16px rgba(244,212,106,.75),0 0 5px rgba(201,162,39,.55)}
 /* the hairline the recitation fills, right to left, the way the script runs */
-.kline{grid-column:2;display:block;height:2px;margin:.5rem 0 0;border-radius:2px;
+.kline{display:block;height:2px;margin:.5rem 0 0;border-radius:2px;
   background:rgba(201,162,39,.16);opacity:0;transition:opacity .26s ease}
 .ayah.playing .kline{opacity:1}
 .kline i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(201,162,39,.35),#C9A227 55%,#F4D46A);
@@ -437,47 +501,78 @@ html[dir="rtl"] #player .pbar i{transform-origin:right center}
 html[dir="rtl"] .kline i{transform-origin:right center}
 /* The meaning is the half of the page most readers actually read, so it is
    set like text and not like a caption. */
-.ayah .trans{grid-column:2;margin:.6rem 0 0;font-size:1rem;line-height:1.78;
+.ayah .trans{margin:.6rem 0 0;font-size:1rem;line-height:1.78;
   color:rgba(44,36,22,.94);max-width:38rem}
-.ayah .vpan{grid-column:2}
 
-/* ---------- the two quiet actions ------------------------------------------
-   Copy and Study belong to the verse the reader is ON: the one being recited,
-   the one they tapped, or the one holding keyboard focus. Every other verse is
-   just the verse.
-
-   The row is taken out of the flow entirely and laid in the air the verse
-   already keeps beneath its meaning, so arriving and leaving cannot move a
-   single pixel of the page -- which is the promise tests/mushaf.mjs holds this
-   room to, and the first attempt at hiding this row broke it by collapsing a
-   height instead. */
-.arow{position:absolute;inset-block-end:.4rem;
-  inset-inline-start:calc(.9rem + var(--gut) + .9rem);
-  display:flex;align-items:center;gap:.1rem;height:44px;
-  opacity:0;pointer-events:none;transition:opacity .24s ease}
-.arow>*{visibility:hidden}
-.ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow,.ayah:hover>.arow{
-  opacity:1;pointer-events:auto}
-.ayah.playing>.arow>*,.ayah.at>.arow>*,.ayah:focus-within>.arow>*,.ayah:hover>.arow>*{visibility:visible}
+/* ---------- one row: Listen, Study, Copy --------------------------------
+   Listen and Study were two lines once -- Listen always shown beneath the
+   meaning, Copy and Study a second, separately hover-gated row beneath
+   that -- which read as two designs stacked on each other and left Listen
+   the only tall thing on the page (28 September 2026). They are one row
+   now: Listen and Study are the same shape and the same height, side by
+   side; Copy stays the quiet text action it always was, at the row's own
+   end. Study and Copy still belong to the verse the reader is ON (the one
+   being recited, the one they tapped, or the one holding keyboard focus);
+   Listen does not wait on any of that, for the same reason it never did --
+   a reader has to SEE how to play a verse before touching the page. .arow
+   sits inside .vrow now instead of floating over the verse, but visibility
+   (never display) is still what hides its own children, so the space they
+   would take is held open and a recitation moving on never slides the
+   page -- the promise tests/mushaf.mjs holds this room to. */
+.vrow{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .6rem;margin:.9rem 0 0}
+.vpill{display:inline-flex;align-items:center;gap:.42rem;min-height:44px;
+  padding:0 .85rem;border-radius:var(--r);cursor:pointer;
+  font-family:inherit;font-size:.78rem;font-weight:700;letter-spacing:.01em;
+  border:1px solid rgba(201,162,39,.4);
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.vpill svg,.vpill .vg{width:.95rem;height:.95rem;flex:none}
+.vpill:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.vlisten{color:var(--gold);background:rgba(201,162,39,.13)}
+#room .vlisten:hover,#room .vlisten:focus-visible{color:var(--gold);background:rgba(201,162,39,.24);border-color:var(--gold)}
+/* sounding: the one filled shape on the reading surface. The ink on it is a
+   chromatic brown on purpose -- the night turns neutrals over and would have
+   written parchment on gold. A filled gold control keeps its dark ink in
+   both lights: written as var(--gold) this came out gold-on-gold, 1.05:1,
+   so the fill and its ink are both literal here on purpose. */
+.vlisten.on{background:#C9A227;border-color:#C9A227;color:#3B2A05}
+#room .vlisten.on:hover,#room .vlisten.on:focus-visible{background:#F4D46A;border-color:#F4D46A;color:#3B2A05}
+.vx{color:var(--gold);background:rgba(201,162,39,.05);border-color:rgba(201,162,39,.3)}
+#room .vx:hover,#room .vx:focus-visible{background:rgba(201,162,39,.16);border-color:var(--gold)}
+#room .vx.on{background:rgba(201,162,39,.16);border-color:var(--gold)}
+.vx .vxc{font-style:normal;font-size:.85rem;opacity:.65;transition:transform .22s ease;margin-inline-start:.1rem}
+.vx.on .vxc{transform:rotate(90deg)}
+/* .arow is a flag now, not a box: Study and Copy each wear it directly, as
+   ordinary flex items inside .vrow beside Listen, rather than sitting in a
+   wrapping div of their own. Flex-wrap gives Listen and Study first claim
+   on the row (Copy, last in source, is the one that gives way to a second
+   line on a narrow phone) and visibility keeps whichever of them fades the
+   row's own height reserved regardless -- a recitation moving on never
+   slides the page, the promise tests/mushaf.mjs holds this room to. */
+.arow{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .24s ease}
+.ayah.playing .arow,.ayah.at .arow,.ayah:focus-within .arow,.ayah:hover .arow{
+  opacity:1;pointer-events:auto;visibility:visible}
 @media (hover:none){
-  .ayah:hover>.arow{opacity:0;pointer-events:none}
-  .ayah:hover>.arow>*{visibility:hidden}
-  .ayah.playing>.arow,.ayah.at>.arow,.ayah:focus-within>.arow{opacity:1;pointer-events:auto}
-  .ayah.playing>.arow>*,.ayah.at>.arow>*,.ayah:focus-within>.arow>*{visibility:visible}}
+  .ayah:hover .arow{opacity:0;pointer-events:none;visibility:hidden}
+  .ayah.playing .arow,.ayah.at .arow,.ayah:focus-within .arow{opacity:1;pointer-events:auto;visibility:visible}}
 @media (prefers-reduced-motion:reduce){.arow{transition:opacity .12s ease}}
 .vact{display:inline-flex;align-items:center;gap:.42rem;
-  min-height:44px;padding:0 .7rem;margin-inline-start:-.7rem;
+  min-height:44px;padding:0 .7rem;
   background:none;border:0;border-radius:var(--r);cursor:pointer;
   font-family:inherit;font-size:.76rem;font-weight:600;letter-spacing:.01em;
   color:rgba(44,36,22,.62);transition:color .18s ease,background-color .18s ease}
-.vact+.vact{margin-inline-start:0}
 .vact svg{width:.9rem;height:.9rem;flex:none;opacity:.9}
 #room .vact:hover,#room .vact:focus-visible{color:#8a6d13;background:rgba(201,162,39,.09)}
 .vact:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
-.vact .vxc{font-style:normal;font-size:.8rem;opacity:.6;transition:transform .22s ease}
-.vact.on .vxc{transform:rotate(90deg)}
-#room .vact.on{color:#8a6d13}
 @media (max-width:400px){.vact span{font-size:.78rem}}
+html.noor-day .vlisten{background:rgba(131,105,25,.1)!important;border-color:rgba(131,105,25,.35)!important}
+html.noor-day .vlisten:hover{background:rgba(131,105,25,.18)!important;border-color:#836919!important}
+/* the idle-mark override above matched .vlisten.on too, so the fill that
+   marks the sounding verse read 2.63:1 in Day -- gold ink asked for
+   against the idle mark's own pale wash instead of its own solid fill.
+   Named back here, the way html.noor-day already does for every other
+   .on state it would otherwise have swallowed. */
+html.noor-day .vlisten.on{background:#C9A227!important;border-color:#C9A227!important;color:#3B2A05!important}
+html.noor-day .vlisten.on:hover,html.noor-day .vlisten.on:focus-visible{background:#F4D46A!important;border-color:#F4D46A!important;color:#3B2A05!important}
 
 /* ---------- a word, tapped for its meaning ---------------------------------
    Only a verse the library has actually written words for offers this: the
@@ -509,35 +604,34 @@ html[dir="rtl"] .kline i{transform-origin:right center}
   color:rgba(255,254,247,.55);font-style:italic;letter-spacing:.01em;max-width:38rem}
 body.no-tl .ayah .tl{display:none}
 
-/* ---------- the surah's masthead ------------------------------------------
+/* ---------- the surah's masthead, carried from the prototype's #opening ---
    It was a dark card floating on a dark page -- a rectangle with a gradient
    inside it, which in the night is a shape you can only find by its edge, and
    the "line between the suras" a reader could not see. A surah does not need
-   a box. It needs its name, said once, at the top of its own page: the number
-   and the facts in the mono the house counts in, the name at the size of a
-   title, the Arabic in gold at the trailing edge, and one rule under all of
-   it -- the same rule that separates two ayat, so the page has one language
-   for "this ends here". */
-.shead{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:.9rem;
-  padding:1.5rem 0 1.05rem;border-bottom:1px solid rgba(44,36,22,.16)}
-.shead-k{margin:0;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(44,36,22,.66);line-height:1.5}
-.shead h2{margin:.44rem 0 0;font-size:1.85rem;font-weight:800;letter-spacing:-.022em;
-  line-height:1.14;color:#2C2416;text-wrap:balance}
-.shead h2 em{font-style:normal;font-weight:500;color:rgba(44,36,22,.64)}
+   a box. It needs its name, said once, at the top of its own page, centred
+   the way the prototype's own opening sets it: the Arabic large and gold,
+   the meaning under it at the size of a title, in Newsreader rather than
+   the room's own sans, the facts in the mono the house counts in, and one
+   rule under all of it -- the same rule that separates two ayat, so the
+   page has one language for "this ends here". */
+.shead{text-align:center;padding:1.5rem 0 1.05rem;border-bottom:1px solid rgba(44,36,22,.16)}
+.shead-ar{margin:0 0 .3rem;font-family:'Amiri Quran',Amiri,serif;font-size:2.3rem;line-height:1.65;
+  color:var(--gold);direction:rtl}
+.shead h2{margin:0;font-size:1.7rem;font-weight:500;font-family:Newsreader,Georgia,serif;
+  line-height:1.25;color:#2C2416;text-wrap:balance}
+.shead h2 em{font-style:normal;font-weight:400;font-size:.62em;color:rgba(44,36,22,.64)}
 /* the surah's name is a door to its own room (/surah/<n>: the context, the
    themes, the verses worth knowing); the heading reads as it always did */
 .shead h2 a.shead-a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(201,162,39,.55)}
 .shead h2 a.shead-a:hover,.shead h2 a.shead-a:focus-visible{color:var(--gold);border-bottom-color:var(--gold);outline:none}
-.shead-ar{margin:0;font-family:'Amiri Quran',Amiri,serif;font-size:2.25rem;line-height:1.5;
-  color:var(--gold);direction:rtl;white-space:nowrap}
+.shead-k{margin:.5rem 0 0;font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(44,36,22,.66);line-height:1.5}
 .shead-i{margin:1.05rem 0 0;font-size:.98rem;line-height:1.78;color:rgba(44,36,22,.84);max-width:38rem}
 @media (max-width:560px){
-  .shead{grid-template-columns:1fr;align-items:start;gap:.15rem}
-  .shead h2{font-size:1.45rem}
-  /* it is set rtl, so its own start edge is the right one */
-  .shead-ar{font-size:1.75rem;text-align:start;margin-top:.4rem}
+  .shead{padding:1.15rem 0 .9rem}
+  .shead-ar{font-size:1.85rem}
+  .shead h2{font-size:1.35rem}
   .shead-i{font-size:.94rem}
 }
 /* Once a surah is open this is a reading room. The arrival's headline and the
@@ -546,52 +640,16 @@ body.reading #qhero,body.reading #vlamp{display:none}
 
 /* ---------- one shape for the toolbar -------------------------------------
    "The option for the Qur'an player has dark on dark illegible items, and you
-   did not make clear how to change reciters." Both were the same fault: eight
-   controls at four weights, centred in a row, none of them saying which one
-   the room is for.
-
-   They are two groups now -- where you are, and what you do -- and exactly one
-   of them is filled: Listen. The filled state and the engaged state are both
-   written in a chromatic brown on gold rather than in a neutral, because the
-   night turns neutrals over and would otherwise have written parchment on
-   gold, which is the illegibility this is fixing. */
-#qnav .qgrp{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;min-width:0}
-#qnav .qrow.qrow1{justify-content:space-between;gap:.5rem}
-#qnav .qrow.qrow2{justify-content:flex-start;gap:.15rem;margin-top:.1rem}
-/* What a reader chooses about how they read is a set of choices, not a second
-   row of buttons: quieter, smaller, and out of the way of the one control the
-   room is for. */
-#qnav .qrow2 .tool{border-color:transparent;background:none;min-height:44px;
-  font-size:.76rem;padding:.3rem .6rem;font-weight:600}
-#qnav .qrow2 .tool:hover{border-color:rgba(201,162,39,.45)}
-#qnav .qrow2 select.tool{border-color:rgba(44,36,22,.18)}
-/* the legacy always-on block up top (line 4, never scoped to either
-   mode) sets these two selects to a near-vanishing .18 alpha -- meant,
-   maybe, to look quiet, but on the room's own dark ground that reads as
-   blank, and the day toggle's own #qnav .tool colour below cannot beat
-   it either, since that legacy rule carries #qnav's own id and wins on
-   specificity regardless of which comes first. Restated here at that
-   same specificity, so the one written later is the one that is read;
-   the day line under it then outweighs both, carrying the day toggle's
-   own class besides. */
-#qnav .qrow2 select.tool{color:rgba(255,254,247,.82)!important}
-html.noor-day #qnav .qrow2 select.tool{color:rgba(44,36,22,.78)!important}
-#qnav .qrow2 .tlab{font-size:.78rem;letter-spacing:.02em;margin-inline-start:.5rem}
-/* On a phone these four choices wrapped onto two more lines and pushed the
-   surah off the top of the screen, with "Reciter" orphaned from the control it
-   names. They stay on one line and scroll. */
-@media (max-width:560px){
-  #qnav .qrow.qrow2{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;padding-block:.1rem}
-  #qnav .qrow.qrow2::-webkit-scrollbar{display:none}
-  #qnav .qrow2>*{flex:none}
-  #qnav #t-recite{max-width:11rem}
-}
-.qstat{font-size:.7rem;color:rgba(44,36,22,.55);font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
-#qnav .tool.primary{background:#C9A227;border-color:#C9A227;color:#3B2A05;font-weight:700}
-#qnav .tool.primary:hover{background:#F4D46A;border-color:#F4D46A;color:#3B2A05}
-#qnav .tool.on,#qnav .tool.primary.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A;font-weight:700}
-#qnav .tool.on:hover,#qnav .tool.primary.on:hover{background:#4A360A;border-color:var(--gold);color:#F4D46A}
+   did not make clear how to change reciters." That was the second row, and
+   the second row is gone (25 September 2026), carried from the prototype:
+   translation language, reciter and the translation switch are rows inside
+   "How you read" now (#rsheet below); Browse the 114 gates moved into the
+   surah picker sheet (#s-gates); Listen to surah is the same flag "Play to
+   the end of the surah" already toggles in the player's own settings
+   (#o-auto). The bar left standing holds one thing: which surah this is. */
+.qstat{flex:1;min-width:0;font-size:.68rem;color:rgba(44,36,22,.55);
+  font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;text-align:end;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #gates-aside .gview.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A}
 #room .tool.on{background:#3B2A05;border-color:rgba(201,162,39,.6);color:#F4D46A}
 /* the companion opens from the masthead, and wears the room's radius */
@@ -639,8 +697,12 @@ html.noor-day #qnav .qrow2 select.tool{color:rgba(44,36,22,.78)!important}
 /* "The player settings option is not obvious." It was a bare glyph among five
    other bare glyphs. It keeps its place and takes an outline, so the one
    control that opens something reads as a control. */
-.pbtn.ring{border:1px solid rgba(244,212,106,.42);border-radius:var(--r)}
-.pbtn.ring[aria-expanded="true"]{background:#3B2A05;border-color:rgba(201,162,39,.7);color:#F4D46A}
+/* named .opts, not .ring: .ring is also Tailwind's own utility class, an
+   unconditional 3px blue box-shadow (--tw-ring-color's own default) meant
+   for a focus state, and this button wore it at rest on every screenshot
+   until the two names were told apart -- a class name is not a namespace. */
+.pbtn.opts{border:1px solid rgba(244,212,106,.42);border-radius:var(--r)}
+.pbtn.opts[aria-expanded="true"]{background:#3B2A05;border-color:rgba(201,162,39,.7);color:#F4D46A}
 
 /* A thumb needs forty four pixels and the house does not make exceptions for
    a narrow phone, so nothing here shrinks below it. What gives instead is the
@@ -673,45 +735,31 @@ html.noor-day #qnav .qrow2 select.tool{color:rgba(44,36,22,.78)!important}
 }
 
 /* ---------- the navigator, collapsed once the reading starts --------------
-   Scrolling into the surah folds the second row of tools away and leaves the
-   picker, the gates and the listen control: three thumb-sized things. */
+   One row, at every width now: the surah, its arrows, and two doors out of
+   it. There is no longer a second row to fold, and no narrow-only swap
+   between a boxed select and a picker button -- #q-pick is what every
+   reader sees, the width it has to work in is what changes. */
 /* the navigator sits flush under the site header rather than 94 pixels below
    it, where a strip of the page used to scroll through the gap */
 #qnav{top:calc(3.5rem + var(--safetop,0px))}
-#qnav .qrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.45rem}
-/* the second row of the navigator: what a reader chooses about how they read
-   this page. Translation and Reciter are the same kind of decision and sit
-   as the same kind of control. */
-#qnav .tlab{font-size:.75rem;font-weight:600;color:rgba(44,36,22,.75);letter-spacing:.01em}
-#qnav #t-recite{max-width:13rem;text-overflow:ellipsis}
-@media (max-width:430px){#qnav #t-recite{max-width:9.5rem}}
-#qnav .qrow2{max-height:6rem;opacity:1;overflow:hidden;transition:max-height .28s ease,opacity .2s ease,margin .28s ease}
-body.qscrolled #qnav .qrow2{max-height:0;opacity:0;margin:0}
+#qnav .qrow{display:flex;flex-wrap:nowrap;align-items:center;gap:.15rem}
 body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 .tool,.gview{min-height:44px;display:inline-flex;align-items:center;gap:.3rem}
-.tool:focus-visible,.gview:focus-visible,.navarrow:focus-visible,#q-pick:focus-visible,#gate-search:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.navarrow{width:44px;height:44px}
+.tool:focus-visible,.gview:focus-visible,.navarrow:focus-visible,#q-pick:focus-visible,#gate-search:focus-visible,.qicon:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 #gate-search{min-height:44px}
 /* this box is white in both modes (bg-white, unscoped) -- so its own
    placeholder needs the same dark ink #s-search's does in Day, in both
    modes, not only when Day is asked for. */
 #gate-search::placeholder{color:rgba(44,36,22,.7)}
-#surah-select{min-height:44px;max-width:min(22rem,42vw)}
-#q-pick{display:none}
-#q-pick{align-items:center;gap:.45rem;min-height:44px;max-width:min(18rem,44vw);border:1.5px solid rgba(201,162,39,.55);border-radius:999px;background:linear-gradient(160deg,#FFFDF4,#FFF6E2);color:var(--ink);font-family:inherit;font-weight:700;font-size:.82rem;padding:0 .95rem;cursor:pointer}
-#q-pick b{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#q-pick::after{content:"";width:.42rem;height:.42rem;flex:none;border-inline-end:2px solid #C9A227;border-block-end:2px solid #C9A227;transform:rotate(45deg) translateY(-1px)}
-@media (max-width:639.5px){
-  #q-pick{display:inline-flex}
-  #surah-select,#prev-s,#next-s{display:none}
-}
+@media (max-width:420px){.qp-nm span{display:none}}
 
 /* ---------- the surah sheet ----------------------------------------------- */
 #s-sheet[hidden],#s-scrim[hidden],#p-pill[hidden]{display:none!important}
 #s-scrim{position:fixed;inset:0;z-index:78;background:rgba(20,16,10,.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);animation:fadein .2s ease both}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
-#s-sheet{position:fixed;left:0;right:0;bottom:0;z-index:79;display:flex;flex-direction:column;
-  max-height:min(86vh,42rem);background:#FFFEF7;border-top:1px solid rgba(201,162,39,.4);
+#s-sheet{position:fixed;top:auto;left:0;right:0;bottom:0;z-index:79;display:flex;flex-direction:column;
+  opacity:1;backdrop-filter:none;-webkit-backdrop-filter:none;
+  max-height:min(86vh,42rem);max-height:min(86dvh,42rem);background:#FFFEF7;border-top:1px solid rgba(201,162,39,.4);
   border-start-start-radius:1.25rem;border-start-end-radius:1.25rem;box-shadow:0 -18px 50px rgba(20,16,10,.4);
   padding-bottom:env(safe-area-inset-bottom,0px);animation:sheetin .28s cubic-bezier(.2,.8,.25,1) both}
 @keyframes sheetin{from{transform:translateY(14%);opacity:.4}to{transform:none;opacity:1}}
@@ -723,6 +771,14 @@ body.qscrolled #qnav>div{padding-top:.25rem;padding-bottom:.25rem}
 #s-search:focus{border-color:rgba(201,162,39,.8);box-shadow:0 0 0 3px rgba(201,162,39,.16)}
 #s-close{min-height:44px;min-width:44px;border:1px solid rgba(44,36,22,.14);background:#fff;border-radius:999px;padding:0 .85rem;font:inherit;font-size:.75rem;font-weight:700;color:rgba(44,36,22,.7);cursor:pointer}
 #s-close:focus-visible,#s-search:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* the picker's own way back to the landing index: the one door out of a
+   sheet built to search 114 rows, for a reader who came here to browse
+   rather than to search */
+#s-gates{display:flex;align-items:center;gap:.4rem;width:100%;min-height:44px;
+  padding:.55rem 1rem;border:0;border-bottom:1px solid rgba(44,36,22,.08);background:none;
+  font:inherit;font-size:.78rem;font-weight:700;color:var(--gold);text-align:start;cursor:pointer}
+#s-gates:hover{background:rgba(201,162,39,.07)}
+#s-gates:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 #s-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.35rem .55rem 1rem}
 .srow{display:flex;align-items:center;gap:.7rem;width:100%;min-height:56px;padding:.5rem .6rem;border:0;border-radius:.9rem;background:none;font-family:inherit;text-align:start;color:var(--ink);cursor:pointer}
 .srow:hover{background:#FFF8E4}
@@ -797,12 +853,13 @@ html:not(.noor-day) .srow.on .sa{color:#F4D46A!important}
 /* ======================================================================
    THE READING VIEW, CARRIED FROM THE PROTOTYPE APPROVED 17 SEPTEMBER 2026
    Two bottom sheets (a word's meaning, and "How you read"), the chrome that
-   steps back while a reader is reading, and a Day a reader can ask for on a
-   room that is night by default. Nothing here is a second theme system: the
-   dark ground and gold this room already wears is night; html.noor-day
-   restores the parchment and ink this same stylesheet already declares for
-   .gate, .tool, .vw and the rest, a few lines above every rule that darkens
-   them again for the ground this room ships on.
+   steps back while a reader is reading, and Night for a reader who asks for
+   it, on a room that is Day by default (25 September 2026). Nothing here is
+   a second theme system: the parchment and ink this room paints first is
+   Day; html.noor-day is what a reader's browser already carries the moment
+   the page draws, from the tiny script at the top of <head>, and every dark
+   literal below (the room's own night, still written first in most of these
+   rules for history's sake) only shows once a reader has asked for it.
    ====================================================================== */
 
 /* ---- the two bottom sheets: one shape, shared ---- */
@@ -811,27 +868,65 @@ html:not(.noor-day) .srow.on .sa{color:#F4D46A!important}
   opacity:0;pointer-events:none;transition:opacity .22s ease}
 #read-scrim.on{opacity:1;pointer-events:auto}
 #read-scrim[hidden]{display:none}
-#wordsheet,#rsheet{position:fixed;inset-inline:0;bottom:0;z-index:89;
-  max-width:34rem;margin:0 auto;background:#14100A;color:#FFFEF7;
+/* THE SHEET BUG THE OWNER FOUND, AT ITS ROOT (25 September 2026).
+   "How you read" opened to a strip of its own title at the bottom edge of a
+   2000x1088 window, the rest of it below the screen. It was never stuck
+   mid-animation: assets/noor2.js, the shared bottom bar's own script, walks
+   every position:fixed element on the page looking for small floating
+   things -- a toast, a "back to the top" pill -- that sit low on the screen
+   and need lifting clear of the site's bottom bar, and it has no way to
+   tell a modal dialog from one of those. This sheet is exactly that shape:
+   fixed, narrower than half the window, anchored near the bottom. It got
+   caught, measured mid-open, and permanently pinned with an inline `bottom`
+   that script writes once with !important and never revisits.
+   The fix belongs in this file, not the shared script every room on the
+   site loads: the sheets below carry n2-sheet-wrap, the exact class that
+   script's own scan already knows to step around (it is also the class the
+   shared header uses for its own burger sheet, which is why the scan skips
+   it in the first place). That class comes with a look of its own though
+   -- an inset:0 box, hidden at opacity:0 until an "n2-show" class this room
+   never adds, blurred with backdrop-filter -- so every property it would
+   otherwise leak through is named again here, where an id beats a class
+   regardless of source order, to keep this sheet's own shape exactly what
+   it already was. #studysheet (25 September 2026) is drawn from the same
+   rule for the same reason: it carries the same class and needs the same
+   fix, not a second copy of it. */
+#wordsheet,#rsheet,#studysheet{position:fixed;top:auto;inset-inline:0;bottom:0;z-index:89;
+  max-width:34rem;margin:0 auto;background:#14100A;color:#FFFEF7;opacity:1;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
   border-top:1px solid rgba(201,162,39,.4);
   border-start-start-radius:1.25rem;border-start-end-radius:1.25rem;
   padding:.4rem 1.25rem calc(1.4rem + env(safe-area-inset-bottom,0px));
-  max-height:78vh;overflow-y:auto;
+  /* dvh accounts for a mobile browser's own retracting toolbar; vh first,
+     for the browser that has never heard of dvh, is not thrown away -- an
+     unsupported unit invalidates only the declaration that names it. */
+  max-height:78vh;max-height:78dvh;overflow-y:auto;
   transform:translateY(102%);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
-#wordsheet.on,#rsheet.on{transform:none}
-#wordsheet[hidden],#rsheet[hidden]{display:none}
-@media (min-width:640px){#wordsheet,#rsheet{left:50%;right:auto;width:min(34rem,calc(100vw - 3rem));transform:translate(-50%,102%);bottom:1.5rem;border-radius:1.25rem}
-  #wordsheet.on,#rsheet.on{transform:translate(-50%,0)}}
-@media (prefers-reduced-motion:reduce){#read-scrim,#wordsheet,#rsheet{transition:none}}
+/* THE OPEN STATE DOES NOT WAIT ON A TRANSITION TO ARRIVE.
+   .on's own transform is the resting value a reader sees whether or not any
+   animation plays -- that was already true -- but getting there is a
+   @keyframes run now, not a transition timed against a class flip a frame
+   later: a transition needs the browser to have already painted the closed
+   state once before it can animate away from it, which is why the room used
+   to open every sheet inside a requestAnimationFrame. A keyframe animation
+   has no such handshake to miss, so it cannot leave a sheet half arrived. */
+@keyframes rsheetin{from{transform:translateY(102%)}to{transform:translateY(0)}}
+#wordsheet.on,#rsheet.on,#studysheet.on{transform:none;animation:rsheetin .32s cubic-bezier(.2,.7,.2,1) both}
+#wordsheet[hidden],#rsheet[hidden],#studysheet[hidden]{display:none}
+@media (min-width:640px){#wordsheet,#rsheet,#studysheet{left:50%;right:auto;width:min(34rem,calc(100vw - 3rem));transform:translate(-50%,102%);bottom:1.5rem;border-radius:1.25rem}
+  @keyframes rsheetin{from{transform:translate(-50%,102%)}to{transform:translate(-50%,0)}}
+  #wordsheet.on,#rsheet.on,#studysheet.on{transform:translate(-50%,0)}}
+@media (prefers-reduced-motion:reduce){#read-scrim,#wordsheet,#rsheet,#studysheet{transition:none}
+  #wordsheet.on,#rsheet.on,#studysheet.on{animation:none}}
 .rgrip{width:38px;height:4px;border-radius:99px;background:rgba(255,254,247,.2);margin:.6rem auto .9rem}
 /* a modal dialog needs a control inside it a reader can close it with, not
    only Escape or a tap on the scrim behind it -- the same thing gives the
    sheet something to hand focus to the instant it opens */
-#w-close{position:absolute;top:.7rem;inset-inline-end:.7rem;min-width:44px;min-height:44px;
+#w-close,#stu-close{position:absolute;top:.7rem;inset-inline-end:.7rem;min-width:44px;min-height:44px;
   border:1px solid rgba(255,254,247,.22);background:rgba(255,254,247,.06);border-radius:999px;
   font:inherit;font-size:.7rem;font-weight:700;letter-spacing:.02em;color:rgba(255,254,247,.75);cursor:pointer}
-#w-close:hover{border-color:var(--gold);color:#F4D46A}
-#w-close:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#w-close:hover,#stu-close:hover{border-color:var(--gold);color:#F4D46A}
+#w-close:focus-visible,#stu-close:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 /* ---- the word's own meaning ---- */
 #wordsheet .wa{font-family:'Amiri Quran',Amiri,serif;font-size:2.15rem;line-height:1.7;
   color:#F4D46A;direction:rtl;text-align:center;margin:0}
@@ -841,11 +936,16 @@ html:not(.noor-day) .srow.on .sa{color:#F4D46A!important}
   color:rgba(255,254,247,.5);letter-spacing:.08em;margin-top:1rem}
 /* ---- "How you read" ---- */
 #rsheet h3{font-family:Newsreader,Georgia,serif;font-weight:500;font-size:1.15rem;margin:0 0 .2rem;color:#FFFEF7}
-#rsheet .row{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.85rem 0;border-top:1px solid rgba(255,254,247,.12)}
+#rsheet .row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:.5rem 1rem;padding:.85rem 0;border-top:1px solid rgba(255,254,247,.12)}
 #rsheet .row:first-of-type{border-top:0}
 #rsheet .lbl{font-size:.92rem;color:#FFFEF7}
 #rsheet .lbl small{display:block;font-size:.72rem;color:rgba(255,254,247,.5);margin-top:.15rem}
+/* the two selects moved in here from the navigator's own second row keep
+   the same "tool" box the rest of the room draws a select or a button in,
+   just capped so a long translation edition cannot push the sheet wide */
+#rsheet select.tool{max-width:12rem;min-height:40px;flex:none;text-overflow:ellipsis}
+@media (max-width:380px){#rsheet select.tool{max-width:9rem}}
 #rsheet .seg{display:flex;gap:.25rem;background:rgba(255,254,247,.06);border-radius:12px;padding:4px;flex:none}
 #rsheet .seg button{min-width:38px;min-height:40px;padding:0 .55rem;border-radius:9px;
   font-size:.78rem;font-weight:600;color:rgba(255,254,247,.6);font-family:inherit}
@@ -876,12 +976,14 @@ body.chrome-hidden #qnav{transform:translateY(calc(-100% - 6rem))}
 body.chrome-hidden:not(.p-active) #player.show{transform:translateY(calc(100% - 3px))!important}
 @media (prefers-reduced-motion:reduce){#qnav{transition:none}}
 
-/* ---- Day, on a room that is Night by default ----
+/* ---- Day, now the room's own default ----
    Every value below is copied from this same stylesheet's own declaration
    for the parchment ground -- the one every one of these selectors carried
-   before it was darkened for this room's permanent night a few hundred
-   lines above. Nothing here is invented; it is the room's own day, given
-   a door back. */
+   before a night-only room darkened it a few hundred lines above, back when
+   Night was what a visitor saw with nothing chosen. The tiny script at the
+   top of <head> puts html.noor-day on every visitor who has not asked for
+   the evening, so these rules are what most of the room actually draws;
+   nothing here is invented, it is the room's own day, given back its place. */
 /* the site's own always-on night (noor2-night.css, loaded after this
    room's own styles, on every page, this one included) redefines --ink
    for html.n2-night.n2-room -- classes this room carries unconditionally,
@@ -904,11 +1006,14 @@ html.noor-day .gchip.md{color:#4d5c38!important;background:#F3F6EC!important}
 html.noor-day .bismillah{color:#241D12!important}
 html.noor-day .bismillah small{color:rgba(44,36,22,.68)!important}
 html.noor-day .tool{background:#fff!important;color:rgba(44,36,22,.78)!important}
-html.noor-day .navarrow{background:#fff!important}
-html.noor-day #surah-select{background:linear-gradient(160deg,#FFFDF4,#FFF8E1)!important}
-html.noor-day #q-pick{background:linear-gradient(160deg,#FFFDF4,#FFF6E2)!important}
+/* the gates' own search box carries Tailwind's bg-white, which the site's
+   always-on night (noor2-night.css, unconditional on this room, day or
+   not) turns navy for every .bg-white element regardless of what this
+   toggle says -- the one Day gap Day coverage missed, invisible while
+   Night was the default because it already matched the room around it. */
+html.noor-day #gate-search{background:#fff!important;color:#2C2416!important;border-color:rgba(44,36,22,.15)!important}
 html.noor-day .skel{background:linear-gradient(90deg,rgba(44,36,22,.06),rgba(44,36,22,.12),rgba(44,36,22,.06))!important}
-html.noor-day #qnav .tlab,html.noor-day .qstat{color:rgba(44,36,22,.7)!important}
+html.noor-day .qstat{color:rgba(44,36,22,.7)!important}
 html.noor-day #s-sheet{background:#FFFEF7!important}
 html.noor-day #s-search,html.noor-day #s-close{background:#fff!important;color:rgba(44,36,22,.7)!important}
 /* the search box's own placeholder is drawn by the browser, not written
@@ -941,8 +1046,6 @@ html.noor-day .ayah.playing .ar .w.now{color:#14100A!important}
 html.noor-day .ayah .trans{color:rgba(44,36,22,.94)!important}
 html.noor-day .ayah .tl{color:rgba(44,36,22,.55)!important}
 html.noor-day .vact{color:rgba(44,36,22,.72)!important}
-html.noor-day .vno{color:rgba(44,36,22,.68)!important}
-html.noor-day .ayah.playing .vno{color:#8a6d13!important}
 html.noor-day .shead-k{color:rgba(44,36,22,.66)!important}
 html.noor-day .shead h2{color:#2C2416!important}
 html.noor-day .shead h2 em{color:rgba(44,36,22,.64)!important}
@@ -951,6 +1054,34 @@ html.noor-day .gview{background:#fff!important;color:rgba(44,36,22,.68)!importan
 html.noor-day .glegend,html.noor-day .glegend b,html.noor-day #gate-count{color:rgba(44,36,22,.68)!important}
 html.noor-day .wgo>h2{color:#2C2416!important}
 html.noor-day .wgo>.wgo-s{color:rgba(44,36,22,.6)!important}
+/* THE STUDY COMPANION, the surah-wide one (.sp), carried no Day rule at
+   all: a second, permanently night card sitting inside an otherwise Day
+   page whenever a reader opened it. Every value below is the same card's
+   own night colour, given the room's day ink and gold the way every other
+   component on this page already was. */
+html.noor-day .sp{background:#FFFEF7!important;color:#2C2416!important;border-color:rgba(201,162,39,.4)!important}
+html.noor-day .sp-eye,html.noor-day .sp-k{color:#836919!important}
+html.noor-day .sp-title{color:#836919!important}
+html.noor-day .sp-title span{color:rgba(44,36,22,.68)!important}
+html.noor-day .sp-line{color:rgba(44,36,22,.68)!important}
+html.noor-day .sp-p{color:rgba(44,36,22,.82)!important}
+html.noor-day .sp-heart{background:rgba(44,36,22,.045)!important}
+html.noor-day .sp-heart p{color:rgba(44,36,22,.88)!important}
+html.noor-day .sp-chip{color:rgba(44,36,22,.78)!important}
+html.noor-day .sp-theme{background:rgba(44,36,22,.04)!important}
+html.noor-day .sp-theme b{color:#836919!important}
+html.noor-day .sp-theme span{color:rgba(44,36,22,.72)!important}
+html.noor-day .sp-btn{background:rgba(44,36,22,.035)!important}
+html.noor-day .sp-btn .ic{color:#836919!important}
+html.noor-day .sp-btn b{color:#836919!important}
+html.noor-day .sp-btn span{color:rgba(44,36,22,.78)!important}
+html.noor-day .sp-virtue{background:rgba(44,36,22,.04)!important}
+html.noor-day .sp-virtue p{color:rgba(44,36,22,.85)!important}
+html.noor-day .sp-src{color:rgba(44,36,22,.72)!important}
+html.noor-day .sp-note{color:rgba(44,36,22,.68)!important}
+html.noor-day .mvcap{fill:rgba(44,36,22,.6)!important}
+html.noor-day .sp-badge.ok{color:#3f6b3f!important;background:#EAF3E3!important;border-color:rgba(63,107,63,.4)!important}
+html.noor-day .sp-badge.weak{color:#8a5a2d!important;background:#FBEEE0!important;border-color:rgba(138,90,45,.4)!important}
 /* the support banner is sponsor.js's own room, not this one's -- every
    colour on it, the row, the mark beside it, the text, is written inline
    by that shared script, and only an !important rule reaches past an
@@ -962,8 +1093,72 @@ html.noor-day [data-noor-sponsor] .nsp-t,html.noor-day [data-noor-sponsor] span{
    and the sparkle that marks the Verse Lamp and the "every surah opened
    in full" line, hoisted out of an inline style before this toggle
    existed to ask it for a second value. */
-html.noor-day #t-study{color:#836919!important;border-color:rgba(131,105,25,.45)!important;background:rgba(131,105,25,.08)!important}
+html.noor-day #t-study{color:#836919!important}
 html.noor-day .ih-03499c6a.ih-03499c6a.ih-03499c6a,html.noor-day .ih-031328a5.ih-031328a5.ih-031328a5{color:#836919!important}
+/* "How you read" and the word meaning sheet carried no day rule at all --
+   the one door the owner actually presses stayed the room's night no
+   matter which theme a reader had chosen, which is the bug he reported:
+   the sheet was not stuck, it was correctly full of its own text, just
+   written in white on a ground this toggle never told to turn light. */
+html.noor-day .rgrip{background:rgba(44,36,22,.18)!important}
+html.noor-day #wordsheet,html.noor-day #rsheet,html.noor-day #studysheet{background:#FFFEF7!important;color:#2C2416!important;
+  border-top-color:rgba(201,162,39,.45)!important}
+html.noor-day #w-close,html.noor-day #stu-close{border-color:rgba(44,36,22,.18)!important;background:rgba(44,36,22,.05)!important;
+  color:rgba(44,36,22,.72)!important}
+html.noor-day #w-close:hover,html.noor-day #stu-close:hover{color:#836919!important}
+/* the word sheet's own Arabic used the room's night-only bright gold, which
+   is the 1.44:1 this toggle needs its own value for, the same way every
+   other gold-on-a-ground pairing in this file already gets one */
+html.noor-day #wordsheet .wa{color:#836919!important}
+html.noor-day #wordsheet .wt{color:rgba(44,36,22,.68)!important}
+html.noor-day #wordsheet .wg{color:#241D12!important}
+html.noor-day #wordsheet .wref{color:rgba(44,36,22,.68)!important}
+html.noor-day #rsheet h3{color:#241D12!important}
+html.noor-day #rsheet .row{border-top-color:rgba(44,36,22,.12)!important}
+html.noor-day #rsheet .lbl{color:#241D12!important}
+html.noor-day #rsheet .lbl small{color:rgba(44,36,22,.68)!important}
+html.noor-day #rsheet .seg{background:rgba(44,36,22,.06)!important}
+html.noor-day #rsheet .seg button{color:rgba(44,36,22,.68)!important}
+html.noor-day #rsheet .seg button.on{background:#836919!important;color:#FFFEF7!important}
+html.noor-day #rsheet .sw{background:rgba(44,36,22,.16)!important}
+html.noor-day #rsheet .sw::after{background:#FFFEF7!important}
+html.noor-day #rsheet .sw[aria-checked="true"]{background:#836919!important}
+html.noor-day #rsheet select.tool{background:#fff!important;color:#2C2416!important;border-color:rgba(44,36,22,.18)!important}
+/* THE PLAYER NEVER HAD A DAY OF ITS OWN.
+   Every other room here was given a Day rule when the default flipped
+   (25 September 2026); the bar on the bottom edge was not, so a reader in
+   Day still met a black dock with gold ink the moment a surah opened --
+   the very thing this toggle exists to spare them. The prototype's own
+   --bar is a translucent parchment with ink text and a hairline rule; this
+   is that, in the file's own established Day palette. */
+html.noor-day #player{background:rgba(255,254,247,.96)!important;
+  border-top:1px solid rgba(44,36,22,.14)!important;
+  box-shadow:0 -8px 22px rgba(44,36,22,.08)!important}
+html.noor-day #p-open:hover{background:rgba(44,36,22,.05)!important}
+html.noor-day #p-open b{color:#2C2416!important}
+html.noor-day #p-open span{color:rgba(44,36,22,.68)!important}
+html.noor-day .pbtn{border-color:rgba(44,36,22,.2)!important;background:rgba(44,36,22,.045)!important;color:#2C2416!important}
+html.noor-day .pbtn:hover{background:rgba(44,36,22,.09)!important;border-color:rgba(44,36,22,.34)!important}
+html.noor-day .pbtn:focus-visible{outline-color:#836919!important}
+html.noor-day .pbtn.main{background:radial-gradient(circle at 40% 32%,#F4D46A,#C9A227)!important;color:#241D12!important;border:0!important}
+html.noor-day .pbtn.on{background:rgba(131,105,25,.16)!important;border-color:rgba(131,105,25,.55)!important;color:#5f4b12!important}
+html.noor-day .pbtn.opts[aria-expanded="true"]{background:#FFF3CE!important;border-color:rgba(131,105,25,.55)!important;color:#5f4b12!important}
+html.noor-day #p-follow.off{opacity:.5!important}
+html.noor-day #player .pbar{background:rgba(44,36,22,.12)!important}
+html.noor-day #player .pbar:hover{background:rgba(44,36,22,.22)!important}
+html.noor-day #player .pbar i{background:linear-gradient(90deg,#A8841C,#C9A227)!important}
+html.noor-day .pset{border-bottom-color:rgba(44,36,22,.12)!important}
+html.noor-day .pset-row{border-top-color:rgba(44,36,22,.12)!important}
+html.noor-day .pset-row>.lb{color:rgba(44,36,22,.85)!important}
+html.noor-day .pset-row>.lb small{color:rgba(44,36,22,.6)!important}
+html.noor-day .pset-row .val{color:#836919!important}
+html.noor-day .opt{border-color:rgba(44,36,22,.22)!important;background:rgba(44,36,22,.04)!important;color:#5f4b12!important}
+html.noor-day .opt[aria-checked="true"]{background:#836919!important;color:#FFFEF7!important;border-color:transparent!important}
+html.noor-day .olang{border-color:rgba(44,36,22,.22)!important;background:#fff!important;color:#5f4b12!important}
+html.noor-day .seg button{border-color:rgba(44,36,22,.22)!important;color:rgba(44,36,22,.7)!important}
+html.noor-day .seg button.on{background:#836919!important;color:#FFFEF7!important;border-color:transparent!important}
+html.noor-day #p-pill{background:linear-gradient(160deg,#fff,#FFFDF4)!important;color:#836919!important;
+  border-color:rgba(201,162,39,.5)!important;box-shadow:0 8px 24px rgba(44,36,22,.16)!important}
 
 </style>
 <link rel="canonical" href="https://noorcodex.com/quran"/>
@@ -1020,31 +1215,30 @@ html.noor-day .ih-03499c6a.ih-03499c6a.ih-03499c6a,html.noor-day .ih-031328a5.ih
 <nav id="qnav" class="sticky top-[94px] md:top-14 z-30 bg-parchment border-b border-ink/5">
 <div class="max-w-6xl mx-auto px-4 py-2">
 <div class="qrow qrow1">
-<div class="qgrp">
 <button class="navarrow" id="prev-s" aria-label="Previous surah" disabled>‹</button>
-<select id="surah-select" aria-label="Choose surah"><option value="">Choose a surah</option></select>
+<button type="button" id="q-pick" aria-haspopup="dialog" aria-controls="s-sheet" aria-label="Choose a surah">
+<span class="qp-num" id="qp-num" aria-hidden="true"></span>
+<span class="qp-nm"><b id="qp-en">Choose a surah</b><span id="qp-meta"></span></span>
+<svg class="qp-caret" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</button>
 <button class="navarrow" id="next-s" aria-label="Next surah" disabled>›</button>
-<button type="button" id="q-pick" aria-haspopup="dialog" aria-label="Choose a surah"><b>Choose a surah</b></button>
+<span id="t-status" class="qstat" role="status"></span>
+<button class="qicon" id="t-study-open" type="button" aria-haspopup="dialog" aria-controls="studysheet" aria-label="The study companion for this surah" title="The study companion" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true" style="width:1.15rem;height:1.15rem;display:block"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></button>
+<button class="qicon" id="t-settings" type="button" aria-haspopup="dialog" aria-controls="rsheet" aria-label="How you read" title="How you read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="width:1.15rem;height:1.15rem;display:block"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.1"/><circle cx="10" cy="17" r="2.1"/></svg></button>
 </div>
-<div class="qgrp">
-<button class="tool" id="t-gates">☰ Browse the 114 gates</button>
-<button class="tool primary" id="t-listen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>Listen to surah</button>
-<button class="tool tool-icon" id="t-settings" type="button" aria-haspopup="dialog" aria-controls="rsheet" aria-label="How you read" title="How you read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="width:1rem;height:1rem;display:block"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.1"/><circle cx="10" cy="17" r="2.1"/></svg></button>
-<span id="t-status" class="qstat"></span>
+<!-- the surah <select> still exists, and openSurah still answers to it, for
+     anything that reaches for a plain form control; it is visually hidden
+     because #q-pick above, built from the same SURAHS row, is what a
+     sighted reader sees and taps now. -->
+<select id="surah-select" aria-label="Choose surah" class="qn-vh"><option value="">Choose a surah</option></select>
 </div>
-</div>
-<div class="qrow qrow2">
-<button class="tool on" id="t-trans">Translation</button>
-<select id="t-lang" class="tool" style="appearance:auto" aria-label="Translation"></select>
-<!-- The reciter used to live only inside the player's settings sheet, behind
-     a bare glyph, which meant a reader who wanted a different voice had to
-     find a control that did not say what it was. It belongs here, beside the
-     translation, where the choices about how you read this page already are.
-     The two selects are kept in step. -->
-<span class="tlab" id="t-recite-lab">Reciter</span>
-<select id="t-recite" class="tool" style="appearance:auto" aria-label="Reciter"></select>
-</div>
-</div>
+<!-- The Translation switch used to live here too, its own pill in a second
+     row. "How you read" already asks the same question (#rs-trans below),
+     so #t-trans stays only as the one place transOn is actually toggled --
+     rs-trans and the player's own o-trans both still call its click(), kept
+     rather than rewritten three times over, and it needs nothing a reader
+     can see to do that job. -->
+<button type="button" id="t-trans" class="on" hidden aria-hidden="true" tabindex="-1"></button>
 </nav>
 
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
@@ -1132,17 +1326,18 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 
 <!-- THE SURAH SHEET · search by name or by number, one thumb's reach -->
 <div id="s-scrim" hidden></div>
-<div id="s-sheet" role="dialog" aria-modal="true" aria-label="Choose a surah" hidden>
+<div id="s-sheet" class="n2-sheet-wrap" role="dialog" aria-modal="true" aria-label="Choose a surah" hidden>
 <div class="sh-top">
 <input id="s-search" type="search" inputmode="search" autocomplete="off" placeholder="Surah name, meaning or number" aria-label="Search the surahs"/>
 <button type="button" id="s-close">Close</button>
 </div>
+<button type="button" id="s-gates">☰ Browse the 114 gates</button>
 <div id="s-list" role="listbox" aria-label="The 114 surahs"></div>
 </div>
 
 <!-- WORD SHEET: tap one Arabic word on a written verse for its meaning -->
 <div id="read-scrim" hidden></div>
-<div id="wordsheet" role="dialog" aria-modal="true" aria-labelledby="w-ref" hidden>
+<div id="wordsheet" class="n2-sheet-wrap" role="dialog" aria-modal="true" aria-labelledby="w-ref" hidden>
 <div class="rgrip" aria-hidden="true"></div>
 <button type="button" id="w-close" aria-label="Close">Close</button>
 <p class="wa" id="w-ar" translate="no">.</p>
@@ -1152,7 +1347,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 </div>
 
 <!-- "HOW YOU READ": one sheet for size, translation, transliteration, day and night -->
-<div id="rsheet" role="dialog" aria-modal="true" aria-labelledby="rs-ttl" hidden>
+<div id="rsheet" class="n2-sheet-wrap" role="dialog" aria-modal="true" aria-labelledby="rs-ttl" hidden>
 <div class="rgrip" aria-hidden="true"></div>
 <h3 id="rs-ttl">How you read</h3>
 <div class="row">
@@ -1167,20 +1362,39 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 </span>
 </div>
 <div class="row">
-<span class="lbl">Translation<small>the language chosen above</small></span>
+<span class="lbl">Translation<small>Sahih International, and the rest below</small></span>
 <button type="button" class="sw" id="rs-trans" role="switch" aria-checked="true" aria-label="Show the translation"></button>
+</div>
+<div class="row">
+<span class="lbl" id="rs-lang-lbl">Translation language</span>
+<select id="t-lang" class="tool" style="appearance:auto" aria-label="Translation language"></select>
 </div>
 <div class="row">
 <span class="lbl">Transliteration<small>how the Arabic sounds</small></span>
 <button type="button" class="sw" id="rs-tl" role="switch" aria-checked="false" aria-label="Show the transliteration"></button>
 </div>
 <div class="row">
+<span class="lbl" id="rs-recite-lbl">Reciter<small>Eighteen voices, every one of them checked</small></span>
+<select id="t-recite" class="tool" style="appearance:auto" aria-label="Reciter"></select>
+</div>
+<div class="row">
 <span class="lbl" id="rs-theme-lbl">Day / Night<small>the ground the Qur'an rests on</small></span>
 <span class="seg" id="rs-theme" role="group" aria-labelledby="rs-theme-lbl">
-<button type="button" data-v="day" aria-pressed="false">Day</button>
-<button type="button" data-v="night" aria-pressed="true">Night</button>
+<button type="button" data-v="day" aria-pressed="true">Day</button>
+<button type="button" data-v="night" aria-pressed="false">Night</button>
 </span>
 </div>
+</div>
+
+<!-- THE STUDY COMPANION: the whole surah's own context, themes and virtue,
+     carried from the prototype's #studysheet. It used to sit in the page,
+     under the last verse; it is a sheet now, reached from the book icon in
+     the top bar or the quiet line under the surah's opening, so a long
+     companion never pushes a verse below the fold. -->
+<div id="studysheet" class="n2-sheet-wrap" role="dialog" aria-modal="true" aria-label="The study companion" hidden>
+<div class="rgrip" aria-hidden="true"></div>
+<button type="button" id="stu-close" aria-label="Close">Close</button>
+<div id="stu-body"></div>
 </div>
 
 <!-- BOTTOM PLAYER -->
@@ -1203,7 +1417,7 @@ g("vl-play").addEventListener("click",function(){ if(window.playAyah)playAyah(RE
 <button class="pbtn step" id="p-next" aria-label="Next verse"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.6 5H18v14h-2.4zM4.5 5v14l9.9-7z"/></svg></button>
 <button type="button" id="p-open" aria-haspopup="dialog" aria-label="Choose a surah"><b id="p-title">·</b><span id="p-sub"></span></button>
 <button class="pbtn" id="p-follow" aria-label="Follow the recitation" aria-pressed="true" title="Following the recitation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="7.5" opacity=".5"/><path d="M12 2.4v2.3M12 19.3v2.3M2.4 12h2.3M19.3 12h2.3"/></svg></button>
-<button class="pbtn ring" id="p-more" title="Recitation settings: reciter, repeat, speed and size" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
+<button class="pbtn opts" id="p-more" title="Recitation settings: reciter, repeat, speed and size" aria-label="Recitation settings" aria-expanded="false" aria-controls="p-sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.1" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="2.1" fill="currentColor" stroke="none"/></svg></button>
 <button class="pbtn" id="p-stop" aria-label="Stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
 </div>
 </div>
@@ -1325,14 +1539,17 @@ SURAHS.forEach(s=>{const o=document.createElement("option");o.value=s[0];o.textC
 sel.addEventListener("change",()=>{if(sel.value)openSurah(+sel.value,1,true);});
 $("prev-s").addEventListener("click",()=>{if(cur>1)openSurah(cur-1,1,true);});
 $("next-s").addEventListener("click",()=>{if(cur<114)openSurah(cur+1,1,true);});
-/* on a phone the navigator has to hold the picker, the gates and the listen
-   control on one line, so the two labels say the same thing in fewer words */
-const narrow=()=>innerWidth<560;
-function gatesLabel(){$("t-gates").textContent=aside.classList.contains("folded")
- ?(narrow()?"☰ The gates":"☰ Browse the 114 gates")
- :(narrow()?"☰ Close":"☰ Close the gates");}
-$("t-gates").addEventListener("click",()=>{aside.classList.toggle("folded");gatesLabel();
- if(!aside.classList.contains("folded"))aside.scrollIntoView({behavior:"smooth",block:"start"});});
+/* "Browse the 114 gates" used to be its own pill in the bar; it lives in the
+   surah picker now (#s-gates, inside #s-sheet), the one place a reader who
+   opened the picker to find a different surah is already standing. It
+   unfolds the landing index the same way the old button did and returns
+   there, closing whatever surah is open in the reading below it. */
+function openGatesIndex(){
+ openPicker(false);
+ aside.classList.remove("folded");
+ aside.scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("s-gates").addEventListener("click",openGatesIndex);
 
 /* ---------- gates: 114 tiles, tiles or compact list ---------- */
 /* ---------- the study companion, fetched one surah at a time ----------
@@ -1403,19 +1620,17 @@ async function openSurah(n,gotoAyah,user){
     JSON.stringify({n:n,ayah:gotoAyah||1,at:Date.now()}));}catch(e){}
   sel.value=String(n); pickLabel(n);
   $("prev-s").disabled=n<=1; $("next-s").disabled=n>=114;
-  if(user){aside.classList.add("folded");gatesLabel();}   /* fold the 114 away, reading first */
+  if(user)aside.classList.add("folded");   /* fold the 114 away, reading first */
   const[num,en,ar,meaning,count,place]=SURAHS[n-1];
   document.body.classList.add("reading");   /* the arrival's hero is a front door, not a reading room */
   roomHead.innerHTML=`
    <header class="shead">
-     <div>
-       <p class="shead-k">Surah ${num} of 114 · ${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
-       <h2><a class="shead-a" href="/surah/${num}" title="The room for Surah ${en}: its context, its themes and the verses worth knowing">${en}</a><em> · ${meaning}</em></h2>
-     </div>
-     <p class="shead-ar" translate="no">${ar}</p>
+     <p class="shead-ar font-quran" translate="no">${ar}</p>
+     <h2><a class="shead-a" href="/surah/${num}" title="The room for Surah ${en}: its context, its themes and the verses worth knowing">${meaning}</a><em> · ${en}</em></h2>
+     <p class="shead-k">Surah ${num} of 114 · ${place==="M"?"Meccan":"Medinan"} · ${count} ayat</p>
    </header>
    <p class="shead-i">${INTROS[num]||`Surah ${en}, ${meaning}. ${place==="M"?"Revealed in Makkah, in the years when faith itself was the whole message.":"Revealed in Madinah, where faith became a community."}`}</p>
-   <button type="button" id="t-study" class="rh-study" style="display:none">✦ Open the study companion</button>`;
+   <button type="button" id="t-study" class="rh-study" hidden>Open the study companion for this surah ›</button>`;
   roomBody.innerHTML=`<div class="space-y-4 py-6">${Array.from({length:4},()=>`<div class="skel h-16"></div>`).join("")}</div>`;
   $("t-status").textContent="Opening…";
   if(user)setTimeout(()=>roomHead.scrollIntoView({behavior:"smooth",block:"start"}),60);  /* jump straight to the reader */
@@ -1427,16 +1642,27 @@ async function openSurah(n,gotoAyah,user){
     ayahs=arb.ayahs; trans=tr.ayahs;
     renderAyahs(n);
     $("t-status").textContent="";
+    /* THE PLAYER IS VISIBLE FROM THE MOMENT A SURAH IS OPEN, carried from the
+       prototype (25 September 2026): it used to wait off the bottom edge
+       until the first verse actually started sounding, which is also what
+       made a pause look like the bar had left -- it had not, the bar simply
+       had never been asked to show itself for anything short of sound. A
+       surah with nothing playing yet still names itself and the reciter, so
+       a first tap knows where the round control will take it. */
+    if(playingIdx<0){
+      playerShow(true);
+      $("p-title").textContent=SURAHS[n-1][1];
+      $("p-sub").textContent="Tap play, or a verse, to begin · "+reciterShort();
+    }
     if(gotoAyah&&gotoAyah>1)setTimeout(()=>document.getElementById(`a-${gotoAyah}`)?.scrollIntoView({behavior:"smooth"}),150);
     history.replaceState(null,"",`?surah=${n}${gotoAyah&&gotoAyah>1?`&ayah=${gotoAyah}`:""}`);
   }catch(err){
     roomBody.innerHTML=`<div class="text-center py-14 max-w-sm mx-auto">
       <p class="font-quran text-3xl text-gold mb-3">﷽</p>
       <p class="text-sm text-ink/60 leading-relaxed mb-4">The Mushaf could not be reached, the text service may be blocked on your network.</p>
-      <button class="tool on" onclick="openSurah(${n},1)">Try again</button></div>
-      <div id="study-slot"></div>`;
+      <button class="tool on" onclick="openSurah(${n},1)">Try again</button></div>`;
     $("t-status").textContent="";
-    mountStudy(n);   /* the companion is carried in the page, so it opens even when the text service is down */
+    mountStudy(n);   /* the companion is fetched separately, so it opens even when the text service is down */
   }
 }
 
@@ -1477,17 +1703,14 @@ function renderAyahs(n){
    const ar=wordSpans.join(" ");
    const written=hasVerse(n,v);
    return `<article class="ayah${written?" hw":""}" id="a-${v}" data-i="${i}" tabindex="0">
-    <div class="vrail">
-      <button class="playbtn" type="button" data-play="${i}" aria-label="Play ayah ${v}"><i class="vg" aria-hidden="true">${TRI}</i></button>
-      <span class="vno" aria-hidden="true">${v}</span>
-    </div>
     <p class="ar" translate="no">${ar?ar+" ":""}<span class="w-tail">${lastSpan} <span class="seal" aria-hidden="true">${arabicNum(v)}</span></span></p>
     <span class="kline" aria-hidden="true"><i></i></span>
     <p class="trans ${transOn?"":"hidden"}">${esc(trans[i]?.text||"")}</p>
     ${written?`<p class="tl"></p>`:""}
-    <div class="arow">
-      <button class="vact copyb" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
-      ${written?`<button type="button" class="vact vx" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study this verse</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
+    <div class="vrow">
+      <button class="vpill vlisten" type="button" data-play="${i}" aria-label="Listen to verse ${v}"><i class="vg" aria-hidden="true">${TRI}</i><span>Listen</span></button>
+      ${written?`<button type="button" class="vpill vx arow" data-vx="${v}" aria-expanded="false" aria-controls="vp-${v}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 1 4 18.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5a2.5 2.5 0 0 0 2.5-2.5z"/></svg><span>Study this verse</span><i class="vxc" aria-hidden="true">›</i></button>`:""}
+      <button class="vact copyb arow" data-copy="${i}" aria-label="Copy verse ${v} with its reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-6A3.5 3.5 0 0 0 3 6.5v6A2.5 2.5 0 0 0 5.5 15"/></svg><span>Copy</span></button>
     </div>${written?`<div class="vpan" id="vp-${v}" hidden></div>`:""}</article>`;}).join("");
   /* THE VERSES ARE NOT IN A BOX.
      They used to be wrapped in a card, and the verse being recited got a
@@ -1496,7 +1719,6 @@ function renderAyahs(n){
      document: the text sits on the page, and what separates one ayah from the
      next is rhythm and a hairline, not a border. */
   roomBody.innerHTML=`<div class="mushaf">${html}</div>
-   <div id="study-slot"></div>
    <div class="flex justify-between items-center py-5 text-sm">
      ${cur>1?`<button class="tool" onclick="openSurah(${cur-1},1,true)">‹ ${SURAHS[cur-2][1]}</button>`:"<span></span>"}
      ${cur<114?`<button class="tool" onclick="openSurah(${cur+1},1,true)">${SURAHS[cur][1]} ›</button>`:"<span></span>"}
@@ -1627,15 +1849,25 @@ function studyHTML(n){
 function mountStudy(n){
  /* The record for this surah may not be here yet. Fetch it, then render. The
     reader sees the surah open immediately either way: the companion is a
-    second layer and never blocks the text. */
+    second layer and never blocks the text.
+
+    It used to fill #study-slot, sitting in the page under the last verse.
+    At 1440x900 a long companion pushed the next surah's own opening far
+    below the fold and, worse, sat between a reader and the verses they
+    came to read. It is a sheet now (#studysheet), the same shape #rsheet
+    already fixed, opened from the book icon in the top bar or the quiet
+    line under the surah's own opening -- never from the page's own flow. */
  studyFetch(n).then(function(){
    if (cur !== n) return;            /* they moved on while it was in flight */
    let html=""; try{ html=studyHTML(n) }catch(e){ html="" }
-   const slot=$("study-slot");
-   if(slot){ slot.innerHTML=html;
-     if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(slot)}catch(e){}} }
-   const b=roomHead.querySelector("#t-study");
-   if(b)b.style.display=(html&&slot)?"":"none";
+   const body=$("stu-body");
+   if(body){ body.innerHTML=html;
+     if(html&&window.NOOR_MO&&NOOR_MO.animate){try{NOOR_MO.animate(body)}catch(e){}} }
+   const has=!!(html&&body);
+   const link=roomHead.querySelector("#t-study");
+   if(link)link.hidden=!has;
+   const icon=$("t-study-open");
+   if(icon)icon.hidden=!has;
  });
 }
 
@@ -1734,7 +1966,7 @@ function playStudyAyah(num){
 function studyAct(el){
  const sp=el.getAttribute("data-sp");
  if(sp!==null){const flow=el.getAttribute("data-flow")==="1";   /* a movement plays on; a single stop plays once */
-  continuous=flow;listenLabel(continuous);$("t-listen").classList.toggle("on",continuous);
+  continuous=flow;autoBtn();
   playStudyAyah(+sp);return true;}
  const sg=el.getAttribute("data-sg");
  if(sg!==null){openSurah(+sg,1,true);return true;}
@@ -1743,8 +1975,9 @@ function studyAct(el){
 roomBody.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-sp],[data-sg]");if(el)studyAct(el);});
 roomBody.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;
  const el=e.target.closest&&e.target.closest(".mvg[data-sp]");if(!el)return;e.preventDefault();studyAct(el);});
-roomHead.addEventListener("click",e=>{if(!e.target.closest||!e.target.closest("#t-study"))return;
- const el=$("study-slot");if(el&&el.firstChild)el.scrollIntoView({behavior:"smooth",block:"start"});});
+roomHead.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("#t-study");
+ if(b)openReadSheet("studysheet",b);});
+$("t-study-open").addEventListener("click",e=>openReadSheet("studysheet",e.currentTarget));
 
 /* ---------- audio engine v2: 4-source fallback, stall watchdog, honest UI ----------
    The equalizer only dances when sound is actually coming out. While a server
@@ -1778,10 +2011,6 @@ const ICO_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
    needs its own idea of whether the recitation is actually going */
 function setToggle(playing){$("p-toggle").innerHTML=playing?ICO_PAUSE:ICO_PLAY;
  document.body.classList.toggle("sounding",!!playing);}
-function listenLabel(on){autoBtn();$("t-listen").innerHTML=on
- ?`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop`
- :`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:.7rem;height:.7rem;display:inline-block;vertical-align:-1px;margin-inline-end:.3rem"><path d="M8 5v14l11-7z"/></svg>${narrow()?"Listen":"Listen to surah"}`;}
-addEventListener("resize",()=>{gatesLabel();listenLabel(continuous);},{passive:true});
 const TRI=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
 const LOAD=`<span style="font-weight:800;letter-spacing:1px">…</span>`;
 
@@ -1854,10 +2083,11 @@ function readerMoved(){if(follow&&playingIdx>=0)setFollow(false);}
 addEventListener("keydown",e=>{if(/^(Arrow|Page|Home|End)/.test(e.key)||e.key===" ")readerMoved();});
 
 /* ---------- the two elements that actually change ----------
-   The old setPlaying walked every .ayah and every .playbtn in the document on
-   every verse change: five hundred and seventy elements twice a minute on
-   Al-Baqarah, which is precisely the jank a phone in battery saver reports.
-   The previous verse and its button are remembered instead. */
+   The old setPlaying walked every .ayah and every .vlisten (then .playbtn) in
+   the document on every verse change: five hundred and seventy elements
+   twice a minute on Al-Baqarah, which is precisely the jank a phone in
+   battery saver reports. The previous verse and its button are remembered
+   instead. */
 let prevAy=null, prevBtn=null;
 /* This used to write the glyph into the BUTTON, which threw away the word
    beside it: the first time a surah was played every "Listen" on the page
@@ -1917,7 +2147,7 @@ function setPlaying(i,loading){playingIdx=i;
  karaokeBind(null);
  followEl=null;
  if(i<0){progress(0);pill(false);return;}
- const el=roomBody.querySelector(`.ayah[data-i="${i}"]`), b=el&&el.querySelector(".playbtn");
+ const el=roomBody.querySelector(`.ayah[data-i="${i}"]`), b=el&&el.querySelector(".vlisten");
  if(el){el.classList.add("playing");el.setAttribute("aria-current","true");
   /* The verse being recited IS the verse the reader is on. They used to be two
      separate ideas -- the one you tapped and the one that is sounding -- and on
@@ -2003,7 +2233,7 @@ function stopAudio(){killAudio();dropPre();sweepOff();beatOff();stalling=false;
  setPlaying(-1);continuous=false;paused=false;stuckAt=-1;retryRound=0;playerShow(false);progress(0);
  autoBtn();sheetOpen(false);
  setFollow(true);            /* the next listen starts following again */
- listenLabel(false);$("t-listen").classList.remove("on");setToggle(false);
+ setToggle(false);
  mediaSession(false);}
 
 function say(msg,ms){$("t-status").textContent=msg;
@@ -2164,7 +2394,7 @@ function surahEnded(){
       surah's verses in ayahs. Reciting those under the new surah's name would
       be a lie, so the recitation stops unless the new text really rendered. */
    if(cur!==n||!roomBody.querySelector('.ayah[data-i="0"]')){stopAudio();return;}
-   continuous=true;listenLabel(true);$("t-listen").classList.add("on");
+   continuous=true;autoBtn();
    follow=wasFollow;followBtn(follow);
    $("t-status").textContent="Continuing into "+SURAHS[n-1][1]+"…";
    setTimeout(()=>{if($("t-status").textContent.indexOf("Continuing")===0)$("t-status").textContent="";},3000);
@@ -2196,16 +2426,9 @@ roomBody.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if
  bless();
  const i=+b.dataset.play;
  if(playingIdx===i&&audio){$("p-toggle").click();return;}
- continuous=false;dropPre();listenLabel(false);$("t-listen").classList.remove("on");
+ continuous=false;dropPre();autoBtn();
  follow=true;followBtn(true);   /* they chose this verse: follow it */
  playAyah(i);});
-$("t-listen").addEventListener("click",()=>{
- if(continuous){stopAudio();return;}
- if(!ayahs.length)return;
- bless();
- continuous=true;listenLabel(true);$("t-listen").classList.add("on");
- follow=true;followBtn(true);
- playAyah(playingIdx>=0?playingIdx:0);});
 $("p-follow").addEventListener("click",()=>setFollow(!follow));
 $("p-bar").addEventListener("click",e=>{
  if(!audio||!audio.duration||!isFinite(audio.duration))return;
@@ -2218,7 +2441,10 @@ $("p-toggle").addEventListener("click",()=>{
  bless();
  /* a verse that would not load is retried from here, from its first mirror */
  if(stuckAt>=0){const i=stuckAt;stuckAt=-1;retryFor=-1;retryRound=0;playAyah(i,0);return;}
- if(!audio){if(playingIdx>=0)playAyah(playingIdx,0);return;}
+ /* the round control is the player's own play button, visible before anything
+    has sounded: a tap on it with nothing chosen yet begins at the first verse,
+    the same as tapping the verse itself would. */
+ if(!audio){if(ayahs.length){follow=true;followBtn(true);playAyah(playingIdx>=0?playingIdx:0,0);}return;}
  if(paused){
   const p=audio.play();
   if(p&&p.catch)p.catch(()=>{});
@@ -2271,8 +2497,8 @@ $("o-repeat").addEventListener("click",()=>{repeatOne=!repeatOne;repeatBtn();
  if(repeatOne)dropPre();else if(playingIdx>=0)preloadNext(playingIdx);
  playerLabel();mediaSession(playingIdx>=0);});
 $("o-auto").addEventListener("click",()=>{
- if(continuous){continuous=false;listenLabel(false);$("t-listen").classList.remove("on");}
- else{continuous=true;listenLabel(true);$("t-listen").classList.add("on");
+ if(continuous){continuous=false;autoBtn();}
+ else{continuous=true;autoBtn();
   if(playingIdx<0&&ayahs.length){bless();follow=true;followBtn(true);playAyah(0);}}
  playerLabel();});
 $("o-rate").addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-rate]");if(!b)return;
@@ -2351,7 +2577,10 @@ $("p-pill").addEventListener("click",()=>{setFollow(true);pill(false);});
    thumb can hit. */
 let pickOpener=null;
 function pickLabel(n){const b=$("q-pick");if(!b)return;
- const s=SURAHS[n-1];b.innerHTML="<b>"+(s?(s[0]+" · "+s[1]):"Choose a surah")+"</b>";}
+ const s=SURAHS[n-1];
+ $("qp-num").textContent=s?s[0]:"";
+ $("qp-en").textContent=s?s[1]:"Choose a surah";
+ $("qp-meta").textContent=s?(s[3]+" · "+(s[5]==="M"?"Meccan":"Medinan")+" · "+s[4]+" ayat"):"";}
 function pickRows(q){
  q=(q||"").trim().toLowerCase();
  const list=SURAHS.filter(s=>!q||String(s[0])===q||s[1].toLowerCase().includes(q)||s[3].toLowerCase().includes(q)||s[2].includes(q));
@@ -2378,10 +2607,11 @@ $("s-search").addEventListener("input",e=>pickRows(e.target.value));
 $("s-list").addEventListener("click",e=>{const r=e.target.closest&&e.target.closest("[data-sn]");if(!r)return;
  openPicker(false);openSurah(+r.dataset.sn,1,true);});
 $("w-close").addEventListener("click",closeReadSheet);
+$("stu-close").addEventListener("click",closeReadSheet);
 addEventListener("keydown",e=>{
  if(e.key==="Escape"){
   if(!$("s-sheet").hidden){openPicker(false);return;}
-  if(document.querySelector("#wordsheet.on,#rsheet.on")){closeReadSheet();return;}
+  if(document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on")){closeReadSheet();return;}
   if($("p-sheet").classList.contains("open")){sheetOpen(false);$("p-more").focus();return;}
  }
  /* a modal dialog does not hand Tab to whatever the page behind it holds:
@@ -2392,7 +2622,7 @@ addEventListener("keydown",e=>{
     rather than an .on class (openPicker toggles it, not a shared sheet
     routine), so it is asked for that way instead. */
  if(e.key==="Tab"){
-  const open=document.querySelector("#wordsheet.on,#rsheet.on")||(!$("s-sheet").hidden?$("s-sheet"):null);
+  const open=document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on")||(!$("s-sheet").hidden?$("s-sheet"):null);
   if(!open)return;
   const items=[...open.querySelectorAll("button,[href],input,select,textarea,[tabindex]")]
    .filter(el=>el.tabIndex>=0&&!el.disabled&&el.getClientRects().length);
@@ -2498,11 +2728,11 @@ function openReadSheet(id,opener){
  if(f)try{f.focus({preventScroll:true});}catch(e){}
 }
 function closeReadSheet(){
- const open=document.querySelector("#wordsheet.on,#rsheet.on");
+ const open=document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on");
  if(!open)return;
  open.classList.remove("on");$("read-scrim").classList.remove("on");
  setTimeout(()=>{if(!open.classList.contains("on"))open.hidden=true;
-  if(!document.querySelector("#wordsheet.on,#rsheet.on"))$("read-scrim").hidden=true;},reduced()?0:260);
+  if(!document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on"))$("read-scrim").hidden=true;},reduced()?0:260);
  if(rsOpener)try{rsOpener.focus({preventScroll:true});}catch(e){}
  rsOpener=null;
 }
@@ -2595,15 +2825,17 @@ function setTl(on){
 }
 document.body.classList.toggle("no-tl",!tlOn);
 
-/* ---- Day / Night on the reading surface: night by default, matching how
-   this room already ships. html.noor-day is declared with the room's own
+/* ---- Day / Night on the reading surface: Day by default, agreed with the
+   owner 25 September 2026. html.noor-day is declared with the room's own
    parchment colours, each one copied from this same stylesheet's own
    declaration for it a few hundred lines above where the room darkens
-   every one of them again for the night it wears when nobody has asked.
-   No second theme system: one room, one set of tokens, a door back to the
-   one it was written in first. */
-let nightOn=true;
-try{if(localStorage.getItem("noor-quran-night")==="0")nightOn=false;}catch(e){}
+   every one of them again for the night a reader asks for. No second theme
+   system: one room, one set of tokens. A tiny script at the very top of
+   <head> already set html.noor-day before the first paint, from the same
+   flag read the same way, so a reload never flashes dark before this line
+   runs; nightOn is kept in step with it rather than re-deciding on its own. */
+let nightOn=false;
+try{if(localStorage.getItem("noor-quran-night")==="1")nightOn=true;}catch(e){}
 function setNight(on){
  nightOn=on;
  document.documentElement.classList.toggle("noor-day",!on);
@@ -2674,7 +2906,7 @@ let chromeY=0,chromeTick=0,chromeGestureUntil=0,chromeSettle=0;
 function chromeMayHide(){
  if(!$("s-sheet").hidden)return false;
  if($("p-sheet").classList.contains("open"))return false;
- if(document.querySelector("#wordsheet.on,#rsheet.on"))return false;
+ if(document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on"))return false;
  /* :focus-visible, not mere activeElement: a button a reader just tapped
     keeps document.activeElement long after the tap is over, and a scroll
     that followed it is the reader reading again, not still at the button.
@@ -2760,7 +2992,6 @@ renderGates("");
 const usp=new URLSearchParams(location.search);
 const s0=+usp.get("surah")||0,a0=+usp.get("ayah")||1;
 if(s0>=1&&s0<=114){aside.classList.add("folded");openSurah(s0,a0,false);}
-gatesLabel();
 /* Nothing to wait for any more: the gates render from the surah table, and each
    companion arrives when its surah is opened. */
 function studyReady(){ renderGates($("gate-search").value); if(cur) mountStudy(cur); }
@@ -2789,7 +3020,7 @@ window.NOOR_MUSHAF={
  get sounding(){return document.body.classList.contains("sounding")},
  get pActive(){return document.body.classList.contains("p-active")},
  get tlOn(){return tlOn}, get nightOn(){return nightOn},
- get readSheet(){const o=document.querySelector("#wordsheet.on,#rsheet.on");return o?o.id:null}};
+ get readSheet(){const o=document.querySelector("#wordsheet.on,#rsheet.on,#studysheet.on");return o?o.id:null}};
 })();
 </script>
 

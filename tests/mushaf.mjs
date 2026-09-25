@@ -137,7 +137,7 @@ await page.waitForTimeout(900);
 let box=await page.locator('#a-40').boundingBox();
 ok(box && box.y>0 && box.y<420,'a verse below the fold is brought into view (y='+(box?Math.round(box.y):'null')+')');
 ok(await page.locator('.ayah.playing').count()===1,'exactly one verse is marked playing');
-ok(await page.locator('.playbtn.on').count()===1,'exactly one play button is lit');
+ok(await page.locator('.vlisten.on').count()===1,'exactly one Listen control is lit');
 
 /* the next verse down is now comfortably on screen. Playing it must not move
    the page at all: that is the whole difference from scrollIntoView. */
@@ -174,7 +174,11 @@ ok(await page.locator('#p-follow.off').count()===1,'and the player says so');
    off, that advance must not drag the page anywhere */
 TONE=TONE_SHORT;
 await page.evaluate(()=>window.scrollTo(0,0));
-await page.locator('#t-listen').click();
+/* "Listen to surah" is the same flag "Play to the end of the surah" toggles
+   in the player's own settings now (25 September 2026); #t-listen is gone. */
+await page.locator('#p-more').click();
+await page.locator('#o-auto').click();
+await page.locator('#p-more').click();
 await page.waitForTimeout(700);
 await page.mouse.wheel(0,900);
 await page.waitForTimeout(250);
@@ -211,7 +215,8 @@ await page.goto(BASE+'/quran?surah=112',{waitUntil:'domcontentloaded'});
 await page.waitForSelector('.ayah');
 audioHits.length=0;
 TONE=TONE_SHORT;
-await page.locator('#t-listen').click();
+await page.locator('#p-more').click();
+await page.locator('#o-auto').click();
 await page.waitForTimeout(600);
 const early=audioHits.length;
 const pre1=await page.evaluate(()=>NOOR_MUSHAF.preloaded);
@@ -234,7 +239,7 @@ console.log('\n=== 7. stop leaves nothing behind ===');
 await page.locator('#p-stop').click();
 await page.waitForTimeout(400);
 ok(await page.locator('.ayah.playing').count()===0,'no verse left marked');
-ok(await page.locator('.playbtn.on').count()===0,'no button left lit');
+ok(await page.locator('.vlisten.on').count()===0,'no button left lit');
 ok(await page.evaluate(()=>!document.body.classList.contains('has-player')),'the player is put away');
 ok(await page.evaluate(()=>NOOR_MUSHAF.follow===true),'following is armed again for next time');
 ok(await page.evaluate(()=>NOOR_MUSHAF.preloaded===-1),'and the preloaded verse is let go');

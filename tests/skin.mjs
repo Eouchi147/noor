@@ -35,7 +35,12 @@ const BASE = "http://127.0.0.1:" + port;
 for (let i = 0; i < 50; i++) { try { const r = await fetch(BASE + "/robots.txt"); if (r.ok) break; } catch {} await new Promise(r => setTimeout(r, 100)); }
 
 const PAGES = [
-  ["quran", "/quran.html", "dark", "was parchment"],
+  /* the Mushaf is the one room the owner asked to keep its own light
+     (25 September 2026): Day by default, Night only for a reader who asks
+     for it in "How you read", so the skin correctly reads its ground as
+     parch rather than folding it into the house's otherwise universal
+     night -- it is not "was parchment, forced to night" like the rest. */
+  ["quran", "/quran.html", "parch"],
   ["allah", "/allah.html", "dark"],
   ["kids", "/kids.html", "dark"],
   ["prophets", "/prophets.html", "dark", "was parchment"]
@@ -120,7 +125,10 @@ for (const [name, p, tone, was] of PAGES) {
     if (m.share) ok(/rgb\(255, 254, 247\)/.test(m.shareInk), "and the share in its footer wears parchment (" + m.shareInk + ")");
   }
   {
-    if (m.headerBg) ok(/rgba\(4, 6, 15/.test(m.headerBg) && /blur/.test(m.headerBlur), "the night page's header is translucent night with a blur (" + m.headerBg + ")");
+    /* a parch-toned room (only the Mushaf, by its own day/night toggle) may
+       hide the shared #site-header entirely and read its own navigator
+       instead -- transparent is that room saying so, not a broken header */
+    if (m.headerBg && m.headerBg !== "rgba(0, 0, 0, 0)") ok(/rgba\(4, 6, 15/.test(m.headerBg) && /blur/.test(m.headerBlur), "the night page's header is translucent night with a blur (" + m.headerBg + ")");
   }
   await page.screenshot({ path: path.join(OUT, "skin-" + name + ".png") });
   /* to the end, in steps: the long rooms grow as they are scrolled */

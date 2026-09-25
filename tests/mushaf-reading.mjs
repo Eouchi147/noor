@@ -44,6 +44,14 @@ const EXE = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const BASE = 'http://127.0.0.1:8433';
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
+/* the same relative luminance WCAG's own contrast ratio is built from,
+   used on its own below to ask a plain question a full contrast pairing
+   does not: is the player's own ground actually light, or actually dark. */
+const luminance = rgb => {
+  const m = (rgb.match(/[\d.]+/g) || [0, 0, 0]).map(Number);
+  const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  return 0.2126 * f(m[0]) + 0.7152 * f(m[1]) + 0.0722 * f(m[2]);
+};
 
 /* Al-Fatiha's own Uthmani text, Tanzil, the same source verse/1.json's own
    words[] was written against -- copied here rather than read from
@@ -229,7 +237,7 @@ await page.route('**/verse/1.json', route => setTimeout(() => route.continue(), 
 await page.goto(BASE + '/quran?surah=1', { waitUntil: 'domcontentloaded' });
 await page.waitForSelector('.ayah');
 await page.waitForTimeout(300);
-await page.locator('#a-1 .playbtn').click();   /* the rail's own play button: 1:1 starts sounding */
+await page.locator('#a-1 .vlisten').click();   /* the verse's own Listen pill: 1:1 starts sounding */
 await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 0 && NOOR_MUSHAF.sounding, { timeout: 8000 });
 await page.locator('#a-1 .ar .w').nth(0).click();   /* held: verse/1.json has not been asked for yet this visit */
 await page.waitForTimeout(700);
@@ -311,15 +319,18 @@ ok(transBefore !== transAfter, 'the translation toggled');
 ok(await page.locator('#o-trans').evaluate(el => el.textContent) === (transAfter ? 'On' : 'Off'), 'the player sheet\'s own switch agrees with it');
 await page.locator('#rs-trans').click();   /* put it back on, for the next surfaces this file reads */
 await page.waitForTimeout(150);
-/* night: html.noor-day is the door back to the room's own parchment */
-ok(!(await page.evaluate(() => document.documentElement.classList.contains('noor-day'))), 'night is the default');
-await page.locator('#rs-theme button[data-v="day"]').click();
-await page.waitForTimeout(200);
-ok(await page.evaluate(() => document.documentElement.classList.contains('noor-day')), 'day can be asked for');
-ok(await page.locator('#a-4 .ar').evaluate(el => getComputedStyle(el).color) === 'rgb(36, 29, 18)', 'and the Arabic itself turns to ink on parchment');
+/* day / night: html.noor-day is Day, and Day is the room's own default now
+   (agreed with the owner 25 September 2026) -- the tiny script at the top
+   of <head> already put it there before this page ever painted. */
+ok(await page.evaluate(() => document.documentElement.classList.contains('noor-day')), 'Day is the default');
+ok(await page.locator('#a-4 .ar').evaluate(el => getComputedStyle(el).color) === 'rgb(36, 29, 18)', 'and the Arabic itself is ink on parchment to start with');
 await page.locator('#rs-theme button[data-v="night"]').click();
 await page.waitForTimeout(200);
-ok(!(await page.evaluate(() => document.documentElement.classList.contains('noor-day'))), 'and night is one tap back');
+ok(!(await page.evaluate(() => document.documentElement.classList.contains('noor-day'))), 'Night can be asked for');
+ok(await page.locator('#a-4 .ar').evaluate(el => getComputedStyle(el).color) === 'rgb(255, 254, 247)', 'and the Arabic turns to light on the deep ground');
+await page.locator('#rs-theme button[data-v="day"]').click();
+await page.waitForTimeout(200);
+ok(await page.evaluate(() => document.documentElement.classList.contains('noor-day')), 'and Day is one tap back');
 await page.keyboard.press('Escape');
 await page.waitForTimeout(300);
 
@@ -348,10 +359,10 @@ await page.waitForTimeout(250);
 ok(!(await page.evaluate(() => NOOR_MUSHAF.chromeHidden)), 'and a scroll back up brings them back');
 
 console.log('\n=== 14. a sounding player never leaves, even scrolled past ===');
-/* the rail's own play button, not the Arabic: on this surah every word now
+/* the verse's own Listen pill, not the Arabic: on this surah every word now
    aligns, so a tap on the text itself would open the word sheet instead */
 await page.evaluate(() => { if (document.activeElement) document.activeElement.blur(); });
-await page.locator('#a-2 .playbtn').click();
+await page.locator('#a-2 .vlisten').click();
 await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 1, { timeout: 8000 });
 await page.waitForTimeout(400);
 ok(await page.evaluate(() => NOOR_MUSHAF.sounding), 'the recitation is sounding');
@@ -680,7 +691,6 @@ async function auditScenario(label, night, surah, openSheet) {
   await apage.goto(BASE + '/quran?surah=' + surah, { waitUntil: 'domcontentloaded' });
   await apage.waitForSelector('.ayah');
   await apage.waitForTimeout(600);
-  try { await apage.waitForSelector('.sp', { timeout: 2500 }); } catch (e) { /* study companion may not seat on every verse */ }
   if (openSheet) await openSheet(apage);
   await apage.waitForTimeout(350);
   const offenders = await apage.evaluate(auditContrast);
@@ -691,10 +701,14 @@ async function auditScenario(label, night, surah, openSheet) {
 for (const night of [false, true]) {
   const mode = night ? 'Night' : 'Day';
   for (const surah of [1, 2]) {
-    await auditScenario(mode + ', surah ' + surah + ', base and study companion', night, surah, null);
+    await auditScenario(mode + ', surah ' + surah + ', base reading surface', night, surah, null);
     await auditScenario(mode + ', surah ' + surah + ', "How you read" sheet open', night, surah, async p => { await p.locator('#t-settings').click(); await p.waitForTimeout(250); });
     await auditScenario(mode + ', surah ' + surah + ', word sheet open', night, surah, async p => { await p.locator('#a-4 .ar .w').first().click(); await p.waitForTimeout(250); });
     await auditScenario(mode + ', surah ' + surah + ', surah picker sheet open', night, surah, async p => { await p.locator('#q-pick').click(); await p.waitForTimeout(250); });
+    await auditScenario(mode + ', surah ' + surah + ', study companion sheet open', night, surah, async p => {
+      await p.locator('#t-study-open').waitFor({ state: 'visible', timeout: 4000 }).catch(() => {});
+      await p.locator('#t-study-open').click(); await p.waitForTimeout(400);
+    });
   }
 }
 
@@ -721,7 +735,76 @@ console.log('\n=== 18b. on a wide screen the sheet is a sheet, not a sliver ==='
   const r2 = await page.locator('#rsheet').evaluate(el => el.getBoundingClientRect().width);
   ok(r2 >= 480 && r2 <= 560, 'and so is How you read (' + Math.round(r2) + 'px)');
   await page.keyboard.press('Escape');
+  await page.waitForTimeout(300);
+  await page.locator('#t-study-open').waitFor({ state: 'visible', timeout: 4000 }).catch(() => {});
+  await page.locator('#t-study-open').click();
+  await page.waitForSelector('#studysheet.on');
+  await page.waitForTimeout(350);
+  const r3 = await page.locator('#studysheet').evaluate(el => el.getBoundingClientRect().width);
+  ok(r3 >= 480 && r3 <= 560, 'and so is the study companion (' + Math.round(r3) + 'px)');
+  await page.keyboard.press('Escape');
   await page.setViewportSize({ width: 360, height: 780 });
+}
+
+console.log('\n=== 18c. the Arabic reads against its own right edge, not the left ===');
+{
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto(BASE + '/quran?surah=1', { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.ayah');
+  await page.waitForTimeout(300);
+  /* the line starts at the column's right edge and runs left, the way
+     Arabic itself runs -- text-align:end resolved to the LEFT once,
+     since "end" in a direction:rtl block is the left edge, and the
+     Arabic hugged the left under its own seal. Line boxes, not the
+     paragraph's own box, since a short verse's <p> can run the full
+     column width while its text sits nowhere near one edge of it. */
+  const edge = await page.evaluate(() => {
+    const ar = document.querySelector('.ayah .ar');
+    const ayah = document.querySelector('.ayah');
+    const cs = getComputedStyle(ayah);
+    const colRight = ayah.getBoundingClientRect().right - parseFloat(cs.paddingRight);
+    const range = document.createRange();
+    range.selectNodeContents(ar);
+    const rects = [...range.getClientRects()];
+    const lineRight = Math.max(...rects.map(r => r.right));
+    return Math.abs(lineRight - colRight);
+  });
+  ok(edge <= 2, 'the Arabic line box\'s right edge sits within 2px of the verse column\'s own right edge (' + edge.toFixed(1) + 'px off)');
+}
+
+console.log('\n=== 18d. the player is its own light in Day and its own dark in Night ===');
+{
+  await page.evaluate(() => { try { localStorage.setItem('noor-quran-night', '0'); } catch (e) {} });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.ayah');
+  await page.waitForTimeout(400);
+  const dayBg = await page.locator('#player').evaluate(el => getComputedStyle(el).backgroundColor);
+  ok(luminance(dayBg) > 0.6, 'the player reads as a light ground in Day, parchment not navy (' + dayBg + ')');
+
+  await page.evaluate(() => { try { localStorage.setItem('noor-quran-night', '1'); } catch (e) {} });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.ayah');
+  await page.waitForTimeout(400);
+  const nightBg = await page.locator('#player').evaluate(el => getComputedStyle(el).backgroundColor);
+  ok(luminance(nightBg) < 0.25, 'and its own dark ground in Night, kept (' + nightBg + ')');
+}
+
+console.log('\n=== 18e. Listen and Study are one row, the same shape ===');
+{
+  await page.waitForTimeout(150);
+  const cmp = await page.evaluate(() => {
+    const listen = document.querySelector('#a-4 .vlisten');
+    const study = document.querySelector('#a-4 .vx');
+    if (!listen || !study) return null;
+    const lr = listen.getBoundingClientRect(), sr = study.getBoundingClientRect();
+    return { lTop: Math.round(lr.top), sTop: Math.round(sr.top), lH: Math.round(lr.height), sH: Math.round(sr.height) };
+  });
+  ok(!!cmp, 'verse 4 carries both a Listen and a Study pill to compare (it always has, for this promise to mean anything)');
+  if (cmp) {
+    ok(Math.abs(cmp.lTop - cmp.sTop) <= 2, 'Listen and Study share the same offsetTop (' + cmp.lTop + ' vs ' + cmp.sTop + ')');
+    ok(Math.abs(cmp.lH - cmp.sH) <= 2, 'and the same height (' + cmp.lH + 'px vs ' + cmp.sH + 'px)');
+  }
+  await page.evaluate(() => { try { localStorage.setItem('noor-quran-night', '0'); } catch (e) {} });
 }
 
 console.log('\n=== 19. nothing threw ===');

@@ -204,11 +204,18 @@ for (const W of [390, 1280]) {
   ok(await page.locator('#player').isVisible(), 'the bar is in the page before a note is played');
   ok(await page.evaluate(() => getComputedStyle(document.getElementById('player')).position) === 'fixed',
     'it is fixed to the viewport, not laid out in the flow');
-  const hidden = await page.evaluate(() => {
+  /* It used to wait off the bottom edge until a note played, which is the
+     owner's own complaint: a reader opening a surah could not tell there
+     was a player at all until they found the verse's own tap target by
+     accident. The prototype's own bar is seated from the moment a surah
+     is open (25 September 2026) -- paused, naming the reciter, waiting for
+     a tap -- and only leaves the edge on a scroll past the threshold
+     (test 13, mushaf-reading.mjs), never merely for being unplayed. */
+  const seatedIdle = await page.evaluate(() => {
     const r = document.getElementById('player').getBoundingClientRect();
-    return r.top >= innerHeight - 2;
+    return Math.abs(r.bottom - innerHeight) < 2;
   });
-  ok(hidden, 'and it waits off the bottom edge until there is something to play');
+  ok(seatedIdle, 'and it is seated on the bottom edge as soon as the surah opens, before anything has played');
   await page.screenshot({ path: 'tests/shots/quran-' + W + '-idle.png', fullPage: false });
 
   console.log('\n=== 3. one tap plays, the next pauses ===');
@@ -232,28 +239,29 @@ for (const W of [390, 1280]) {
   ok(await page.evaluate(() => !NOOR_MUSHAF.paused), 'and starts it again');
 
   /* THE PLAY CONTROL IS NEVER HIDDEN AND NEVER SWALLOWED.
-     Two faults, one promise. It used to be a text button in a row that only
-     appeared on the verse the reader was already on -- which on a page of two
-     hundred and eighty six verses is nowhere -- and painting it once threw the
-     word beside it away. It lives in the verse's own gutter now: a bordered
-     gold control at forty four pixels beside EVERY ayah, with the ayah's
-     number printed under it. This holds it to all of that at once. */
+     It used to be a text button in a row that only appeared on the verse the
+     reader was already on -- which on a page of two hundred and eighty six
+     verses is nowhere -- then a bordered gutter control beside every ayah.
+     The gutter is gone (25 September 2026, carried from the prototype): the
+     whole verse is the recitation's own tap target now (see below), and a
+     second, permanent column beside every verse only repeated that. What the
+     gutter protected still has to hold: a visible, thumb-sized Listen pill on
+     every verse, never behind a hover, filled in gold so the eye finds it
+     without touching the page first. */
   {
     const rail = await page.evaluate(() => [...document.querySelectorAll('.ayah')].map(a => {
-      const b = a.querySelector('.playbtn'), n = a.querySelector('.vno');
-      if (!b || !n) return null;
+      const b = a.querySelector('.vlisten');
+      if (!b) return null;
       const r = b.getBoundingClientRect(), c = getComputedStyle(b);
-      return { w: Math.round(r.width), h: Math.round(r.height), o: +c.opacity,
-               vis: c.visibility, num: n.textContent.trim() };
+      return { w: Math.round(r.width), h: Math.round(r.height), o: +c.opacity, vis: c.visibility };
     }));
-    ok(rail.length === 7 && rail.every(x => x), 'every verse carries its own play control');
-    ok(rail.every(x => x.w >= 40 && x.h >= 40), 'each one is a thumb-sized target (' + rail[0].w + '×' + rail[0].h + ')');
+    ok(rail.length === 7 && rail.every(x => x), 'every verse carries its own Listen control');
+    ok(rail.every(x => x.h >= 40), 'each one is a thumb-sized target (' + rail[0].w + '×' + rail[0].h + ')');
     ok(rail.every(x => x.o === 1 && x.vis === 'visible'), 'and it is visible at rest, on every verse, with nothing to hover or reveal');
-    ok(rail.map(x => x.num).join(',') === '1,2,3,4,5,6,7', 'and each still prints its own number (' + rail.map(x => x.num).join(',') + ')');
   }
-  ok(await page.locator('#a-2 .playbtn .eq').count() === 1, 'the sounding verse wears the equaliser');
+  ok(await page.locator('#a-2 .vlisten .eq').count() === 1, 'the sounding verse wears the equaliser');
   {
-    const marks = await page.evaluate(() => [...document.querySelectorAll('.playbtn')].map(b => {
+    const marks = await page.evaluate(() => [...document.querySelectorAll('.vlisten')].map(b => {
       const c = getComputedStyle(b);
       return { fg: c.color, bg: c.backgroundColor, on: b.classList.contains('on') };
     }));
@@ -272,9 +280,11 @@ for (const W of [390, 1280]) {
       'the sounding one is filled, and its ink reads on the fill (' +
       ratio(lit[0].fg, lit[0].bg).toFixed(2) + ':1, ' + lit[0].fg + ' on ' + lit[0].bg + ')');
   }
+  const heightBefore = await page.locator('#a-2').evaluate(el => el.getBoundingClientRect().height);
   await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
   await page.locator('#p-toggle').click(); await page.waitForTimeout(250);
-  ok(await page.locator('#a-2 .vno').innerText().then(t => t.trim() === '2'), 'and the number under it survives a pause and a restart');
+  const heightAfter = await page.locator('#a-2').evaluate(el => el.getBoundingClientRect().height);
+  ok(heightBefore === heightAfter, 'and the verse does not change height across a pause and a restart (' + heightBefore + 'px)');
 
   console.log('\n=== 4. the verse being recited carries the light ===');
   ok(await page.locator('.ayah.playing').count() === 1, 'exactly one verse is lit');
@@ -532,6 +542,12 @@ for (const W of [390, 1280]) {
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) continue;                     /* not on screen */
       if (getComputedStyle(el).visibility === 'hidden') continue;
+      /* #surah-select is the old <select> kept only so anything reaching for
+         a plain form control still finds one (see #q-pick above it) -- it is
+         shrunk to a single clipped pixel on purpose, the standard way to
+         hide a control from sight without hiding it from assistive tech,
+         and it is never the thing a sighted thumb is asked to find. */
+      if (getComputedStyle(el).clip === 'rect(0px, 0px, 0px, 0px)') continue;
       if (r.height < 44 || r.width < 44) bad.push((el.id || el.className || el.tagName) + ' ' + Math.round(r.width) + '×' + Math.round(r.height));
     }
     return bad;
@@ -564,9 +580,12 @@ console.log('\n================ a recitation that stalls ================');
 {
   const { ctx, page, errors } = await room(390, 844);
   await open(page, 2);
-  /* "Listen to surah" is the reader's own way of asking for the whole thing,
-     which is what Al-Baqarah was being played with */
-  await page.locator('#t-listen').click();
+  /* "Listen to surah" is the same flag "Play to the end of the surah" toggles
+     in the player's own settings now (25 September 2026); #t-listen is gone,
+     which is what Al-Baqarah is being played with here */
+  await page.locator('#p-more').click();
+  await page.locator('#o-auto').click();
+  await page.locator('#p-more').click();
   await page.waitForFunction(() => NOOR_MUSHAF.playingIdx === 0, { timeout: 8000 });
   await page.waitForTimeout(400);
   ok(await page.evaluate(() => NOOR_MUSHAF.continuous), 'the surah is playing to its end');
