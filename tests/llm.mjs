@@ -31,6 +31,7 @@ delete process.env.ALLOW_PAID_MODELS;
 delete process.env.OPENROUTER_DAILY;
 
 const LAST = {};
+const GEMINI_EXTRA = [];
 let groqAnswers = null, geminiAnswers = null, orAnswers = null, orModels = null;
 
 function orModel(id, price) {
@@ -86,7 +87,7 @@ globalThis.fetch = async (url, opt) => {
   if (url.includes("generativelanguage.googleapis.com") && url.includes("/models")) {
     return { ok: true, status: 200, json: async () => ({ data: [
       { id: "gemini-3.8-flash" }, { id: "gemini-3.5-flash-lite" }, { id: "gemini-3.1-pro-preview" } /* not on the allow-list: no free tier */
-    ] }) };
+    ].concat(GEMINI_EXTRA) }) };
   }
   if (url.includes("generativelanguage.googleapis.com") && url.includes("/chat/completions")) {
     const body = JSON.parse(opt.body);
@@ -196,6 +197,23 @@ console.log("\n=== 3c. thinking names answer, and their thinking stays out ===")
   const b = await L.chatOnce("openrouter", "deepseek/deepseek-chat-v3:free", [{ role: "user", content: "hi" }]);
   ok(b.ok && b.content === "lit", "thinking before a lone closing tag is cut too (" + JSON.stringify(b.content) + ")");
   orAnswers = null;
+}
+
+console.log("\n=== 3d. a busy Gemini flash hands over to the next flash ===");
+{
+  /* 25 September: gemini-3.8-flash answered 503 all morning */
+  GEMINI_EXTRA.push({ id: "gemini-3.7-flash" });
+  await L.freeModels("gemini", true);
+  const strong = await L.chainFor("strong", { skipGood: true });
+  ok(strong[0].model === "gemini-3.8-flash" && strong[1].model === "gemini-3.7-flash" && strong[2].provider === "groq",
+     "strong: newest flash, then the next flash, then groq (" + strong.slice(0, 3).map(c => c.model).join(", ") + ")");
+  geminiAnswers = m => m === "gemini-3.8-flash" ? { ok: false, status: 503, why: "busy" } : { ok: true, text: "lit" };
+  STORE.delete("nllm:good:strong");
+  const got = await L.route({ tier: "strong", messages: [{ role: "user", content: "hi" }] });
+  ok(got.ok && got.model === "gemini-3.7-flash", "a 503 on the newest flash is answered by the next (" + got.model + ")");
+  geminiAnswers = null; GEMINI_EXTRA.length = 0;
+  await L.freeModels("gemini", true);
+  STORE.delete("nllm:good:strong");
 }
 
 console.log("\n=== 4. buckets block and skip ===");

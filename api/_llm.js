@@ -538,6 +538,14 @@ export async function chainFor(tier, opts = {}) {
       }
       continue;
     }
+    /* Gemini's newest flash answered 503 (busy) for a whole morning on
+       25 September while the key itself was fine, so a flash step also
+       carries the next live flash name before the walk leaves Gemini */
+    if (step.provider === "gemini" && step.pick === "flash") {
+      let n = 0;
+      for (const id of GEMINI_FLASH_ORDER) { if (n >= 2) break; if (ids.includes(id)) { push("gemini", id); n++; } }
+      continue;
+    }
     const model = resolveModel(step.provider, step.pick, ids);
     if (model) push(step.provider, model);
   }
