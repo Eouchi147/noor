@@ -30,6 +30,7 @@ delete process.env.OPENROUTER_MODEL;
 delete process.env.ALLOW_PAID_MODELS;
 delete process.env.OPENROUTER_DAILY;
 
+const LAST = {};
 let groqAnswers = null, geminiAnswers = null, orAnswers = null, orModels = null;
 
 function orModel(id, price) {
@@ -76,7 +77,7 @@ globalThis.fetch = async (url, opt) => {
     ] }) };
   }
   if (url.includes("api.groq.com") && url.includes("/chat/completions")) {
-    const body = JSON.parse(opt.body);
+    const body = JSON.parse(opt.body); LAST.groq = body;
     const a = groqAnswers ? groqAnswers(body.model) : { ok: true, text: "lit" };
     if (!a.ok) return { ok: false, status: a.status || 500, json: async () => ({ error: { message: a.why || "error" } }), text: async () => a.why || "" };
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: a.text } }], usage: { total_tokens: 12 } }) };
@@ -98,7 +99,7 @@ globalThis.fetch = async (url, opt) => {
     return { ok: true, status: 200, json: async () => ({ data: orModels }) };
   }
   if (url.includes("openrouter.ai/api/v1/chat/completions")) {
-    const body = JSON.parse(opt.body);
+    const body = JSON.parse(opt.body); LAST.or = body;
     const a = orAnswers ? orAnswers(body.model) : { ok: true, text: "lit" };
     if (!a.ok) return { ok: false, status: a.status || 500, json: async () => ({ error: { message: a.why || "error" } }), text: async () => a.why || "" };
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: a.text } }], usage: { total_tokens: 20 } }) };
@@ -178,6 +179,23 @@ console.log("\n=== 3b. a remembered name never jumps a higher provider ===");
   ok(fast3[0].provider === "gemini", "with no groq key, gemini leads and the openrouter memory waits (" + fast3[0].provider + ")");
   process.env.GROQ_API_KEY = saved;
   STORE.delete("nllm:good:fast"); STORE.delete("nllm:good:strong");
+}
+
+console.log("\n=== 3c. thinking names answer, and their thinking stays out ===");
+{
+  /* 25 September: Groq's gpt-oss spent a short budget thinking and
+     returned nothing; a free OpenRouter name wrote its thinking into the reply */
+  await L.chatOnce("groq", "openai/gpt-oss-20b", [{ role: "user", content: "hi" }], { max_tokens: 50 });
+  ok(LAST.groq && LAST.groq.reasoning_effort === "low", "groq gpt-oss is asked for low effort (" + (LAST.groq && LAST.groq.reasoning_effort) + ")");
+  await L.chatOnce("openrouter", "deepseek/deepseek-chat-v3:free", [{ role: "user", content: "hi" }]);
+  ok(LAST.or && LAST.or.reasoning && LAST.or.reasoning.exclude === true, "openrouter is asked to keep thinking out of the reply");
+  orAnswers = () => ({ ok: true, text: "<think>The user asks for one word.</think>\nlit" });
+  const a = await L.chatOnce("openrouter", "deepseek/deepseek-chat-v3:free", [{ role: "user", content: "hi" }]);
+  ok(a.ok && a.content === "lit", "a think block is cut from the reply (" + JSON.stringify(a.content) + ")");
+  orAnswers = () => ({ ok: true, text: "The user asks for one word, so\n</think>\nlit" });
+  const b = await L.chatOnce("openrouter", "deepseek/deepseek-chat-v3:free", [{ role: "user", content: "hi" }]);
+  ok(b.ok && b.content === "lit", "thinking before a lone closing tag is cut too (" + JSON.stringify(b.content) + ")");
+  orAnswers = null;
 }
 
 console.log("\n=== 4. buckets block and skip ===");

@@ -43,7 +43,7 @@ export default async function handler(req, res) {
         for (const tier of TIER_NAMES) {
           each[tier] = [];
           for (const c of await chainFor(tier, { skipGood: true })) {
-            const got = await chatOnce(c.provider, c.model, [{ role: "user", content: "Reply with exactly one word: lit" }], { max_tokens: 12, temperature: 0, timeout: 9000 });
+            const got = await chatOnce(c.provider, c.model, [{ role: "user", content: "Reply with exactly one word: lit" }], { max_tokens: 200, temperature: 0, timeout: 9000 });
             each[tier].push({ provider: c.provider, model: c.model, ok: !!got.ok, ms: got.ms, error: got.ok ? "" : String(got.error || "").slice(0, 200), said: got.ok ? String(got.content || "").slice(0, 40) : "" });
           }
         }
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         const got = await route({
           tier,
           messages: [{ role: "user", content: "Reply with exactly one word: lit" }],
-          opts: { max_tokens: 12, temperature: 0, timeout: 9000 }
+          opts: { max_tokens: 200, temperature: 0, timeout: 9000 }
         });
         probe[tier] = {
           ok: got.ok, provider: got.provider || "", model: got.model || "",

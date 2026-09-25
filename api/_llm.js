@@ -392,6 +392,13 @@ export async function chatOnce(provider, model, messages, opts = {}) {
   if (opts.tools) body.tools = opts.tools;
   if (opts.tool_choice) body.tool_choice = opts.tool_choice;
   if (opts.response_format) body.response_format = opts.response_format;
+  /* Groq's gpt-oss names think before they answer, and the thinking is
+     paid out of max_tokens: on 25 September a short budget came back with
+     no answer at all. Low effort leaves the budget to the answer. On
+     OpenRouter, a name that thinks is asked to keep the thinking out of
+     the reply, since one free name wrote it straight into the text. */
+  if (provider === "groq" && /gpt-oss/.test(model)) body.reasoning_effort = opts.reasoning_effort || "low";
+  if (provider === "openrouter") body.reasoning = { exclude: true };
 
   const headers = { "content-type": "application/json", Authorization: "Bearer " + key };
   if (provider === "openrouter") {
@@ -415,7 +422,7 @@ export async function chatOnce(provider, model, messages, opts = {}) {
     }
     const j = await r.json();
     const choice = ((j.choices || [])[0] || {}).message || {};
-    const content = String(choice.content || "").trim();
+    const content = String(choice.content || "").replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/^[\s\S]*?<\/think>/i, "").trim();
     const tool_calls = choice.tool_calls || null;
     const usage = j.usage || {};
     if (!content && !tool_calls) return { ok: false, error: "empty", provider, model, ms };
