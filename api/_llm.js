@@ -490,13 +490,22 @@ export async function chainFor(tier, opts = {}) {
     if (model && !seen.has(k)) { seen.add(k); out.push({ provider, model }); }
   };
 
+  /* The last good name only jumps the queue inside the tier's leading
+     provider. On 25 September the fast, strong and long tiers all still
+     opened on an OpenRouter name remembered from the days when OpenRouter
+     was the only key, so Groq and Gemini, set that morning, were never
+     asked. A remembered name from a lower provider now waits its turn. */
+  let lead = "";
+  for (const step of order) {
+    if (providerPresent(step.provider) && (await freeModels(step.provider, false)).length) { lead = step.provider; break; }
+  }
   if (!opts.skipGood) {
     const good = await goodFor(tier);
     if (good) {
       const idx = good.indexOf(":");
       const gp = idx === -1 ? "" : good.slice(0, idx);
       const gm = idx === -1 ? "" : good.slice(idx + 1);
-      if (gp && providerPresent(gp)) {
+      if (gp && gp === lead && providerPresent(gp)) {
         const ids = await freeModels(gp, false);
         if (ids.includes(gm)) push(gp, gm);
       }

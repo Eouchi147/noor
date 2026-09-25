@@ -14,7 +14,7 @@
 
 import { ownerGate } from "./_owner.js";
 import { kvReady, kvKind } from "./_kv.js";
-import { providersConfigured, chainFor, usageReport, goodFor, route } from "./_llm.js";
+import { providersConfigured, chainFor, usageReport, goodFor, route, chatOnce } from "./_llm.js";
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -35,6 +35,20 @@ export default async function handler(req, res) {
       if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
       if (body.action !== "probe") return json(res, 400, { ok: false, error: "unknown action" });
 
+      /* {action:"probe", each:true} asks every name in every tier once,
+         directly, so a provider that the router never reaches (because a
+         name above it answered) is still known to work */
+      if (body.each) {
+        const each = {};
+        for (const tier of TIER_NAMES) {
+          each[tier] = [];
+          for (const c of await chainFor(tier, { skipGood: true })) {
+            const got = await chatOnce(c.provider, c.model, [{ role: "user", content: "Reply with exactly one word: lit" }], { max_tokens: 12, temperature: 0, timeout: 9000 });
+            each[tier].push({ provider: c.provider, model: c.model, ok: !!got.ok, ms: got.ms, error: got.ok ? "" : String(got.error || "").slice(0, 200), said: got.ok ? String(got.content || "").slice(0, 40) : "" });
+          }
+        }
+        return json(res, 200, { ok: true, each });
+      }
       const probe = {};
       for (const tier of TIER_NAMES) {
         const t0 = Date.now();

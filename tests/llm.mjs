@@ -159,6 +159,27 @@ console.log("\n=== 3. fallback across providers ===");
   groqAnswers = null; geminiAnswers = null; orAnswers = null;
 }
 
+console.log("\n=== 3b. a remembered name never jumps a higher provider ===");
+{
+  /* 25 September: every tier opened on an OpenRouter name remembered from
+     the days before the Groq and Gemini keys, so neither was ever asked */
+  STORE.set("nllm:good:fast", "openrouter:deepseek/deepseek-chat-v3:free");
+  STORE.set("nllm:good:strong", "openrouter:deepseek/deepseek-chat-v3:free");
+  const fast = await L.chainFor("fast");
+  ok(fast[0].provider === "groq", "fast: groq still first despite a remembered openrouter name (" + fast[0].provider + ")");
+  const strong = await L.chainFor("strong");
+  ok(strong[0].provider === "gemini", "strong: gemini still first (" + strong[0].provider + ")");
+  STORE.set("nllm:good:fast", "groq:openai/gpt-oss-20b");
+  const fast2 = await L.chainFor("fast");
+  ok(fast2[0].provider === "groq" && fast2[0].model === "openai/gpt-oss-20b", "a remembered name inside the leading provider is still honoured");
+  const saved = process.env.GROQ_API_KEY; delete process.env.GROQ_API_KEY;
+  STORE.set("nllm:good:fast", "openrouter:meta-llama/llama-3.3-70b-instruct:free");
+  const fast3 = await L.chainFor("fast");
+  ok(fast3[0].provider === "gemini", "with no groq key, gemini leads and the openrouter memory waits (" + fast3[0].provider + ")");
+  process.env.GROQ_API_KEY = saved;
+  STORE.delete("nllm:good:fast"); STORE.delete("nllm:good:strong");
+}
+
 console.log("\n=== 4. buckets block and skip ===");
 {
   STORE.clear();
