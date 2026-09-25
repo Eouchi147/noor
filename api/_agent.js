@@ -236,6 +236,12 @@ function keywordTools(q) {
     add("insights", {}, "the question asks by kind or subject, which insights breaks down");
     add("numbers", {}, "and the week's own numbers by network");
   }
+  /* 25 September, live: "which kind of post, and at what hour" was
+     answered "no breakdown by hour", though numbers carries every slot */
+  if (/\bhours?\b|\bwhen\b|what time|\bslots?\b|o'?clock/.test(q)) {
+    add("insights", {}, "the question asks when, and insights breaks reach down by hour");
+    add("numbers", {}, "and numbers carries every slot's own week");
+  }
   if (/\bsite\b|\bvisitors?\b|\breaders?\b/.test(q)) add("visitors", {}, "the question is about the site itself, not one network");
   for (const net of ["facebook", "instagram", "youtube", "threads"]) {
     if (q.includes(net)) {
@@ -1008,7 +1014,18 @@ const SYNTH_JSON_BUDGET = 6000;
    api/observatory.js's own shape and api/_insights.js's own shape (two
    different tools, the same field names for the same idea) are read the
    same way, with no per-tool special case. */
-const BREAKDOWN_PRIORITY = ["byKind", "bySubject", "byHour", "byNetwork", "kindTotals", "top", "subjectTop", "subjectBottom", "notes", "sentences"];
+const BREAKDOWN_PRIORITY = ["byKind", "bySubject", "byHour", "bySlot", "byNetwork", "kindTotals", "top", "subjectTop", "subjectBottom", "notes", "sentences"];
+/* the fixed order above, with whatever the owner's own words ask about
+   moved to the front: a question about the hour keeps byHour and bySlot
+   before anything else, one naming a network keeps byNetwork first */
+export function priorityFor(message) {
+  const q = " " + String(message || "").toLowerCase() + " ";
+  const first = [];
+  if (/\bhours?\b|\bwhen\b|what time|\bslots?\b|o'?clock/.test(q)) first.push("bySlot", "byHour");
+  if (/facebook|instagram|youtube|threads|pinterest|\bnetworks?\b|\bplatforms?\b/.test(q)) first.push("byNetwork");
+  if (/\bsubjects?\b|\bthemes?\b|\bsurah|\btopics?\b/.test(q)) first.push("bySubject");
+  return first.concat(BREAKDOWN_PRIORITY.filter(k => !first.includes(k)));
+}
 
 function jsonSize(v) { try { return JSON.stringify(v).length; } catch { return 0; } }
 /* a scalar, or a small plain object, cheap enough to always keep whole:
@@ -1055,7 +1072,8 @@ function fitToBudget(value, budget) {
    not spend. A tool whose own data is an array (lineup, slots) or a bare
    scalar is fit to the whole budget directly, the same rule as a single
    breakdown. */
-function compactOne(data, budget) {
+function compactOne(data, budget, priority) {
+  const order = priority || BREAKDOWN_PRIORITY;
   if (data == null || typeof data !== "object") {
     let s; try { s = JSON.stringify(data); } catch { s = String(data); }
     return (s || "null").slice(0, budget);
@@ -1075,7 +1093,7 @@ function compactOne(data, budget) {
     out[k] = v; used += jsonSize(v) + k.length + 4;
   }
   /* PASS 2: the named breakdowns, in fixed priority order */
-  for (const k of BREAKDOWN_PRIORITY) {
+  for (const k of order) {
     if (!(k in data) || k in out) continue;
     const remaining = budget - used - k.length - 4;
     if (remaining <= 20) continue;
@@ -1095,14 +1113,15 @@ function compactOne(data, budget) {
   return s;
 }
 
-export function compactToolOutputs(toolOutputs) {
+export function compactToolOutputs(toolOutputs, message) {
   const list = toolOutputs || [];
   const per = Math.max(300, Math.floor(SYNTH_JSON_BUDGET / Math.max(1, list.length)));
-  return list.map(t => ({ name: t.name, json: compactOne(t && t.data, per) }));
+  const priority = priorityFor(message);
+  return list.map(t => ({ name: t.name, json: compactOne(t && t.data, per, priority) }));
 }
 
 export function synthesisPrompt(message, toolOutputs, subagentOutputs, threadContext) {
-  const compact = compactToolOutputs(toolOutputs);
+  const compact = compactToolOutputs(toolOutputs, message);
   const evidenceText = compact.map(t => t.name + ": " + t.json).join("\n");
   const findings = subagentOutputs.map(s => s.role + ": " + String(s.content || "").slice(0, 600)).join("\n\n");
   const msgs = [{ role: "system", content: SYNTH_SYSTEM }];
@@ -1156,6 +1175,7 @@ export async function runAgent(input) {
   const toolOutputs = [];      /* { name, args, summary, data } */
   const subagentOutputs = [];  /* { role, content } */
   const notCompleted = [];
+  const deferred = [];         /* proposal-only action steps, built after the critic */
 
   const threadContext = buildThreadContext(thread);
 
@@ -1198,6 +1218,12 @@ export async function runAgent(input) {
       continue;
     }
 
+    /* 25 September, live: the planner asked for a line-up change before
+       any data was read, and its own guess ("video posts at 3-4 PM")
+       became the proposal while the checked answer said the opposite. A
+       step that can only ever be a proposal now waits for the checked
+       answer and carries that answer, never the plan's own guess. */
+    if (step.kind === "action" && !ACTION_TYPES.includes(String(step.name || ""))) { deferred.push(step); continue; }
     if (step.kind === "action") {
       const r = await runAction(step, { tools, ledger, emit, toolOutputs });
       if (r.kind === "error") notCompleted.push(step.name + " (" + r.error + ")");
@@ -1268,6 +1294,13 @@ export async function runAgent(input) {
     else if (note) notCompleted.push("an artifact was dropped: " + note);
   }
 
+  for (const step of deferred) {
+    const suggestion = firstSentences(checked.text, 400);
+    if (!suggestion) { notCompleted.push(step.name + " (no checked answer to propose from)"); continue; }
+    await runAction({ ...step, args: { suggestion }, why: "the recommendation in this run's checked answer, offered for you to act on by hand" },
+      { tools, ledger, emit, toolOutputs });
+  }
+
   if (notCompleted.length) await emit("step", { phase: "incomplete", items: notCompleted });
   /* "done" is not emitted here: it is the transport's own signal that the
      whole HTTP stream is closing, and this function is also called outside
@@ -1282,6 +1315,16 @@ export async function runAgent(input) {
     modelCalls, toolCalls: toolOutputs.length,
     exhausted: timeLeftMs() <= 0 || modelCalls >= BUDGETS.maxModelCalls || steps.length >= BUDGETS.maxSteps
   };
+}
+
+/* whole sentences only, up to `max` characters, so a proposal never ends mid-thought */
+function firstSentences(text, max) {
+  const s = String(text || "").replace(/\s+/g, " ").trim();
+  if (s.length <= max) return s;
+  const parts = s.split(/(?<=[.!?])\s+/);
+  let out = "";
+  for (const p of parts) { const next = out ? out + " " + p : p; if (next.length > max) break; out = next; }
+  return out || s.slice(0, max).replace(/\s+\S*$/, "");
 }
 
 function summariseData(data) {

@@ -383,6 +383,47 @@ console.log('\nartifacts and gists never skip the critic: a malformed or invente
   ok(out.notCompleted.some(x => /artifact was dropped/.test(x) && /proposal/.test(x)), 'the drop of the model-invented proposal is logged so the owner can see it: ' + JSON.stringify(out.notCompleted));
 }
 
+console.log('\na line-up proposal carries the checked answer, never the plan\'s own guess (25 September, live)');
+{
+  const plan = { steps: [
+    { kind: 'action', name: 'lineup-change', args: { suggestion: 'Increase posts of type "Video" during 3-4 PM next week' }, why: 'video posts at 3-4 PM yield the highest engagement' },
+    { kind: 'tool', name: 'insights', args: {}, why: 'read it' }
+  ] };
+  const synth = { answer: 'Verse reels reached the most people this week, a median of 122. The 19:00 slot did best. More verse reels at 19:00 is the reading.', artifacts: [] };
+  const route = async ({ messages }) => {
+    if (/planner/.test(messages[0].content)) return { ok: true, content: JSON.stringify(plan) };
+    if (/synthesiser/.test(messages[0].content)) return { ok: true, content: JSON.stringify(synth) };
+    return { ok: true, content: 'fine' };
+  };
+  const tools = {
+    insights: async () => ({ data: { byKind: [{ kind: 'verse', median: 122, n: 36 }], bySlot: [{ label: '19:00', reach: 900 }] }, summary: 'verse median 122, 19:00 best.' }),
+    numbers: async () => ({ data: { bySlot: [{ label: '19:00', reach: 900 }] }, summary: '19:00 best.' })
+  };
+  const events = [];
+  const out = await A.runAgent({ message: 'Which kind of post should we make more of next week, and at what hour?', thread: [], tools, route, emit: (ty, d) => events.push([ty, d]) });
+  const props = events.filter(e => e[0] === 'proposal').map(e => e[1]);
+  ok(props.length === 1, 'one proposal is still offered: ' + props.length);
+  ok(props[0] && !/Video|3-4/.test(JSON.stringify(props[0])), 'the plan\'s own guess never reaches the proposal: ' + JSON.stringify(props[0] && props[0].args));
+  ok(props[0] && /19:00/.test(props[0].args.suggestion) && /122/.test(props[0].args.suggestion), 'the proposal carries the checked answer: ' + JSON.stringify(props[0] && props[0].args));
+  const iAns = events.findIndex(e => e[0] === 'proposal'), iPlan = events.findIndex(e => e[0] === 'plan');
+  ok(iAns > iPlan && events.slice(0, iAns).some(e => e[0] === 'step'), 'the proposal is built after the tools have run');
+  ok(out.plan.some(s => s.name === 'numbers'), 'a question about the hour also reads numbers, which carries every slot');
+}
+
+console.log('\ncompaction follows the question: an hour question keeps the hours first');
+{
+  const pr = A.priorityFor('what hour should we post?');
+  ok(pr[0] === 'bySlot' && pr[1] === 'byHour', 'an hour question puts bySlot and byHour first: ' + pr.slice(0, 3).join(','));
+  ok(A.priorityFor('what should we post more of?')[0] === 'byKind', 'any other question keeps byKind first');
+  const row = i => ({ kind: 'k' + i, n: 10, reach: 1000 + i, views: 2000 + i, median: 100 + i });
+  const data = { byKind: Array.from({ length: 60 }, (_, i) => row(i)), bySubject: Array.from({ length: 60 }, (_, i) => row(i)), byHour: [{ hour: 19, label: '19:00', n: 9, reach: 4321 }] };
+  const tight = [1, 2, 3, 4, 5, 6].map(i => ({ name: 't' + i, data: i === 1 ? data : {} }));
+  const plain = A.compactToolOutputs(tight, 'which kind reaches most?')[0].json;
+  const hourly = A.compactToolOutputs(tight, 'at what hour?')[0].json;
+  ok(!/4321/.test(plain), 'with a tight budget and a kind question, the hours may be cut');
+  ok(/4321/.test(hourly), 'with the same budget and an hour question, the hours survive');
+}
+
 console.log('\nthe wall clock budget: a run out of time answers with what it has and says so');
 {
   let t = 0;
