@@ -473,6 +473,25 @@ function everyOccurrenceIsAName(keyWords, rawWords, foldWords, technical) {
    companions actually carry (Umm Ayman's own name, Barakah, is not the
    dictionary's word for a blessing, even though nothing else marks it as
    a name in her own account). */
+const APOS = /['\u2018\u2019\u02BC\u02BB\u02BF\u02BE`]/;
+const aposNorm = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  .replace(/['\u2018\u2019\u02BC\u02BB\u02BF\u02BE`]/g, "'").toLowerCase();
+/* true only when the text writes this word with an apostrophe, and never in
+   the term's own place: "Mu'tah" against the term "Mut'ah". A text that
+   writes the word bare ("Quran", "dua") is not a clash and still matches. */
+function aposClash(term, text) {
+  const words = aposNorm(term).replace(/[^a-z' ]+/g, " ").trim().split(/\s+/).filter(w => w.includes("'"));
+  if (!words.length) return false;
+  const toks = aposNorm(text).split(/[^a-z']+/).filter(Boolean);
+  for (const w of words) {
+    const bare = w.replace(/'/g, "");
+    const seen = toks.filter(t => t.replace(/'/g, "") === bare);
+    if (!seen.length) continue;
+    const withApos = seen.filter(t => t.includes("'"));
+    if (withApos.length === seen.length && !withApos.some(t => t.replace(/^'+|'+$/g, "") === w.replace(/^'+|'+$/g, ""))) return true;
+  }
+  return false;
+}
 export function relatedWords(text, limit = 6, self) {
   const D = dictionary();
   const cleaned = stripCitations(text);
@@ -486,6 +505,12 @@ export function relatedWords(text, limit = 6, self) {
     const keys = [fold(e.t), fold(id.replace(/-/g, " "))].filter(k => k.length >= 3);
     const hit = keys.find(k => hay.includes(" " + k + " "));
     if (!hit) continue;
+    /* AN APOSTROPHE IS PART OF THE WORD. fold() drops it, so Mu'tah (the
+       battle, 8 AH) and Mut'ah (the fiqh term) fold to the same "mutah", and
+       the companions who fell at Mu'tah were shown the marriage term beside
+       them. A term written with an apostrophe (or a hamza or ayn mark) is
+       matched only where the text writes that same letter at the same place. */
+    if (APOS.test(e.t) && aposClash(e.t, cleaned)) continue;
     if (!personWords().has(id) && everyOccurrenceIsAName(hit.split(" "), rawWords, foldWords, TECH_CATS.has(e.cat))) continue;
     if (selfTokens.length && id !== selfSame && selfTokens.includes(fold(e.t))
       && (TECH_CATS.has(e.cat) || givenNames().has(fold(e.t)))) continue;

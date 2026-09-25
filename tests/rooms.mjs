@@ -464,6 +464,17 @@ const families = {};
     const grading = await call({ kind: "light", id: "bukhari-sahih-870" });
     ok(grading.code === 200 && grading.body.includes('href="/dictionary/sahih"'),
       "a Light that genuinely discusses al-Bukhari's Sahih still reads beside the word Sahih");
+    /* the apostrophe is part of the word: Mu'tah (the battle) is not
+       Mut'ah (the fiqh term), though both fold to "mutah" */
+    const battle = page.relatedWords("Zayd ibn Harithah led the army at Mu'tah in 8 AH and fell there.", 8).map(w => w.id);
+    const fiqh = page.relatedWords("Sunni jurists hold that mut\u2019ah was abolished.", 8).map(w => w.id);
+    const bare = page.relatedWords("He recited the Quran and made dua.", 8).map(w => w.id);
+    ok(!battle.includes("mutah") && fiqh.includes("mutah") && bare.includes("quran") && bare.includes("dua"),
+      "Mu'tah the battle no longer reads as Mut'ah the fiqh term, and a word written without its apostrophe still matches");
+    for (const id of ["c-zayd", "c-jafar", "c-khalid"]) {
+      const r = await call({ kind: "companion", id });
+      if (r.code === 200) ok(!/dictionary\/mutah"/.test(r.body), id + "'s room does not read beside the fiqh term Mut'ah");
+    }
   }
   /* every room of every family: 200, one h1, its canonical, no dash, no
      undefined or null printed, JSON-LD that parses, no picture */
