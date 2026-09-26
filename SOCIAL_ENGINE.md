@@ -289,6 +289,90 @@ percent -- either alone is not enough. `GET /api/experiments` and the Lantern's
 fresh 60 day collect (about 660 slot reads) on every question; the Lantern's `lineup`
 tool reads `nexp:state` once per call, not once per day previewed.
 
+## Lineup overrides (26 September 2026, corrected the same day)
+
+A safe, single-day override on one reel slot: skip it, or swap it for a named card,
+without ever standing up a second schedule. `api/_lineup.js` owns every real decision
+(`nsoc:override:<date>`, a hash of `<slot>: {action:"skip"}\|{action:"swap", id}, at,
+by, note`); it never imports `social.js` or `lantern-agent.js`, so the three doors that
+use it -- the posting path, the owner's own `api/lineup.js`, and the Lantern -- stay
+one-directional. Only the six reel slots (`REEL_SLOTS`) take one, only for today or up
+to `MAX_DAYS_AHEAD` (7) days out, UTC, and `validateOverride` refuses a slot that
+already carries any record at all, or whose send is this second in flight (its own
+ten minute claim, `K_CLAIM`) -- the door closes the moment the day has decided, or is
+in the middle of deciding, never after.
+
+**Reading fails open; writing fails closed.** `overrideFor`, the posting path's own
+read, answers "no override" on a KV fault, a malformed value or a swap id that has
+since left the shelf -- never blocks a post, never risks a double one. `setOverride`
+and `clearOverride` are the opposite, and (the same-day review's own MEDIUM finding)
+now read the day's own existing overrides through a raw call that is allowed to throw,
+never the safe one that answers `{}` on a fault: the safe read's own emptiness used to
+be spread straight into the write, which would have silently erased every OTHER slot's
+override that same day actually held, the moment a single GET happened to fail. A swap
+id outside the slot's own half of the day (a LIGHT card only: `chooseReel` never binds
+any other kind to a half at all, so checking it for every kind used to refuse a
+perfectly good swap on four of six slots -- HIGH finding, corrected the same day), one
+already in the duplicate guard's recent window, one already chosen for another slot
+that day, or one already set for a swap on some OTHER day inside that same window, is
+refused outright, as is any doubt about the day, the slot or the action.
+
+**A swap can go stale between being set and being posted (HIGH finding, corrected the
+same day).** The card can enter the duplicate guard's own window in the meantime (posted
+somewhere else), or another slot's own pick can land on it first. Trusting the pin
+regardless meant the guard refused the actual send on every channel at once, and the
+slot recorded "sent" over having posted nothing at all. `chooseReelWithOverride`
+(`api/_lineup.js`) now checks both before ever handing back the swapped card; a swap
+that no longer holds falls back to the ordinary pick and marks the choice
+`{..., fellBack:true, reason}` instead, so the record says plainly that a swap was
+asked for and why it did not hold, rather than reading as an unremarkable day.
+`api/social.js`'s `reelOverridePlan` (called from `sendSlot`, `runDue` and the
+`?action=slot` preview) calls this same function before ever pinning the card via the
+`slotExtras` mechanism a drift-repairing retry already trusted; `overrideForRecord`
+marks the sent record whenever the swap actually held OR fell back, and marks nothing
+at all only when the id had simply left the shelf. Every one of the day's views now
+builds the same inputs the same way (`buildDayContext`, one function, in `api/_lineup.js`):
+`api/lineup.js`'s `GET`, the `?action=plan`/`today` preview, the Lantern's `lineup` tool
+and its approve conflict check all pass the identical `seen` and `hijri` into
+`chooseReelWithOverride`, so none of them can disagree with what the poster itself would
+choose -- `tests/lineup.mjs` proves it.
+
+**The Lantern applies a concrete proposal, never a vague one.** `lineup-change` was
+already an approval-only proposal (never in `ACTION_TYPES`, never autonomous); it now
+also *does something* the moment it is approved, but only when `args` name a real
+`{date, slot, action, id?}` (`lineupArgsConcrete`, `api/_agent.js`). `handleApprove`
+(`api/lantern-agent.js`) reads the prior override and the duplicate guard's own window
+through the same raw, throw-on-fault calls setOverride's own write path uses (MEDIUM
+finding above), then calls `setOverride` itself, exactly as the console's own Change
+control would, and records both `before` and `after` (the exact entry it just wrote) on
+the ledger. **Undo restores the exact prior entry, byte for byte** -- the same `at`,
+`by` and `note` it always carried, through a dedicated `restoreOverride` rather than a
+fresh `setOverride` call, which would otherwise re-stamp a new `at` onto what should be
+a return trip, not a new decision (MEDIUM finding, corrected the same day). When there
+was no prior entry, undo clears the slot only if it still carries exactly what this
+approval's own `after` set (compared by `at` and `by`); a slot changed again since --
+another approval, or the console's own Change control -- refuses the undo ("the slot
+was changed again since; undo it in the Posts room") rather than silently discarding
+whatever that later decision was.
+
+**The console.** The Posts room's own Change control sits on every open reel slot,
+today and tomorrow: hidden the moment a slot carries any record at all, including
+`queued` (the middle rung's own draft already waiting on Post now, corrected the same
+day -- it used to offer Change there too, only for the server to refuse it). Skip, Swap
+(a small picker, search by hook or id; a LIGHT card's own half narrows its candidates,
+every other kind is offered to every slot, matching `validateOverride`'s own rule) or
+Clear, each with a confirm step inside the same sheet `setMode` already uses for the
+ladder -- no browser dialog anywhere, and the confirm text is escaped exactly once, by
+the sheet that shows it, never twice. `POST /api/lineup {action, date, slot, override}`
+is the one door; a refusal comes back in the owner's own words, as a toast, never
+re-decided on the client.
+
+`tests/lineup.mjs` covers every finding above by name: a swap that falls back to the
+duplicate window or another slot's own pick, a cross-day swap conflict at set time, a
+claim-held slot refusing a set, a failed read never emptying a day's other overrides, a
+non-light card swapping into every slot the real shelf has (run against
+`reels/index.json` itself), and an undo that refuses once the slot has moved on.
+
 ## What remains (masterplan sections 9, 11, 12)
 
 - The record as the Distribution Manager wants it: publish time per network, permalink on

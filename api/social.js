@@ -50,8 +50,9 @@
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
-import { planDay, buildSlot, dueNow, slotExtras, chooseReel, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
+import { planDay, buildSlot, dueNow, slotExtras, chooseReel, reelHalf, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
 import { biasFor as expBiasFor } from "./_experiments.js";
+import { overrideFor, getOverride, chooseReelWithOverride, otherPicksFor, buildDayContext } from "./_lineup.js";
 import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
@@ -2245,19 +2246,20 @@ async function findDuplicate(reelId, ch, date) {
 
    Store down, or anything thrown: an empty set, and every caller behaves
    precisely as it did before this existed. */
-export async function recentlyPosted(date) {
-  /* A Map and not a Set, keyed by reel id, holding the LAST date some channel
-     had it. A Map answers has() and size exactly as a Set does, so nothing
-     that only asks whether a reel has gone out needs to change. What the value
-     buys is the case where a kind has been used up: the picker can then take
-     the one sent longest ago rather than the first one it happens to step on,
-     which is the difference between the largest possible gap and a random one. */
+/* A Map and not a Set, keyed by reel id, holding the LAST date some channel
+   had it. A Map answers has() and size exactly as a Set does, so nothing
+   that only asks whether a reel has gone out needs to change. What the value
+   buys is the case where a kind has been used up: the picker can then take
+   the one sent longest ago rather than the first one it happens to step on,
+   which is the difference between the largest possible gap and a random one.
+   Shared by both readers below; only whether a KV fault is swallowed or
+   allowed to throw differs between them. */
+async function recentlyPostedCore(date) {
   const out = new Map();
   if (!kvReady()) return out;
   const cutoff = Date.parse(String(date) + "T00:00:00Z") - DUP_WINDOW_DAYS * 86400000;
   if (!isFinite(cutoff)) return out;
-  let raw = [];
-  try { raw = (await kv([["HGETALL", K_POSTED_CH]]))[0] || []; } catch { return out; }
+  const raw = (await kv([["HGETALL", K_POSTED_CH]]))[0] || [];
   const pairs = Array.isArray(raw) ? raw : Object.entries(raw).flat();
   for (let i = 0; i + 1 < pairs.length; i += 2) {
     const field = String(pairs[i]), at = String(pairs[i + 1]);
@@ -2271,6 +2273,21 @@ export async function recentlyPosted(date) {
     if (!had || when > Date.parse(had + "T00:00:00Z")) out.set(id, day);
   }
   return out;
+}
+export async function recentlyPosted(date) {
+  try { return await recentlyPostedCore(date); } catch { return new Map(); }
+}
+/* the write side's own twin, fail CLOSED (2026-09-26 review): a caller
+   about to validate an override -- api/lineup.js's own dayContext, and the
+   Lantern's approve path, both feeding setOverride's duplicate check --
+   must never read a KV fault as "nothing has ever posted", which is the one
+   answer that would let a genuine duplicate straight through the door built
+   to catch it. This throws instead of swallowing, so the write can be
+   refused outright rather than guessed at. The posting path itself keeps
+   calling the safe recentlyPosted above; a fault there must never cost a
+   post, only the chance to dodge a duplicate. */
+export async function recentlyPostedRaw(date) {
+  return recentlyPostedCore(date);
 }
 
 /* ---------------------------------------------------------------------------
@@ -2346,10 +2363,74 @@ async function sendOne(ch, shaped, post, left, flight, opts) {
   return await fn(shaped);
 }
 
+/* ---------------------------------------------------------------------------
+   THE OWNER'S OWN OVERRIDE FOR ONE SLOT, ONE DAY (api/_lineup.js)
+
+   Read fresh on every attempt to compose or send a reel slot, exactly as an
+   experiment's own bias is (api/_experiments.js's biasFor): a KV fault
+   answers "no override", never a failed post. `opts.reel` already means
+   "this call is a retry, pinned to the exact card the record names" (see
+   retryChannel below), and a retry must never be re-routed by an override
+   set or edited afterwards -- so a caller that already carries opts.reel
+   short circuits here before the store is even asked, and an ordinary day
+   with no override at all never pays for the shelf read below.
+
+   A skip is never composed at all: the caller writes the skipped record
+   itself, the same shape a slot with nothing to say already gets, and
+   never calls slotExtras or buildSlot. A swap becomes a pin -- the exact
+   mechanism a retry already trusts to name one card -- but only once this
+   checks the same thing every other view of the day checks first
+   (api/_lineup.js's own chooseReelWithOverride, called here through
+   otherPicksFor's day context): a swap the duplicate guard's own window
+   has since swallowed, or that another slot's own pick has since taken, is
+   never pinned blindly. Before the 2026-09-26 review this trusted the id
+   outright, and slotExtras' `pin && cards.find(...)` would still find the
+   card -- so the guard refused it on every channel at once, and the slot
+   recorded "sent" over having posted nothing. */
+async function reelOverridePlan(date, slotId, host, hijri, opts) {
+  if (!reelHalf(slotId) || opts.reel) return { pin: null, note: null, skip: false };
+  const ov = await overrideFor(date, slotId, opts).catch(() => null);
+  if (!ov) return { pin: null, note: null, skip: false };
+  if (ov.action === "skip") return { pin: null, note: { action: "skip", by: ov.by }, skip: true };
+  if (ov.action !== "swap") return { pin: null, note: null, skip: false };
+  const ctx = await buildDayContext(host, date, {
+    hijri, seen: opts.seen, bias: opts.bias, recentlyPosted, biasFor: expBiasFor
+  });
+  /* every OTHER reel slot of the same day, as a FACT where the day has
+     already decided one (its own record's rec.reel) rather than a pick
+     recomputed against `seen` -- the 2026-09-26 review's first finding.
+     `seen` grows the moment an earlier slot actually posts, and this
+     function runs once per slot as runDue walks the day forward, so an
+     earlier slot's own recomputed pick could drift onto exactly the card a
+     LATER slot's swap had named, and the swap below would refuse itself
+     over that coincidence rather than a real clash. otherPicksFor itself
+     only recomputes a slot with no record yet. */
+  const records = {};
+  for (const s of REEL_SLOTS) if (s !== slotId) records[s] = await readSlot(date, s).catch(() => null);
+  const otherPicks = await otherPicksFor(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, { records });
+  const { override } = await chooseReelWithOverride(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, null, { otherPicks });
+  const shared = { seen: ctx.seen, bias: ctx.bias, hijri: ctx.hijri };
+  if (override && override.fellBack) return { pin: null, note: override, skip: false, ...shared };
+  return { pin: ov.id, note: { action: "swap", id: ov.id, by: ov.by }, skip: false, ...shared };
+}
+/* attached to a slot's record whenever the swap actually applied (the post
+   that went out carries the named id) OR fell back before it was ever
+   pinned (fellBack, above): either way something real happened to the
+   owner's own request and the record should say so. A swap whose id had
+   already left the shelf falls back inside slotExtras itself, with no
+   fellBack mark set here, and that one case alone leaves no override on
+   the record, since chooseReelWithOverride never saw a card to check. */
+function overrideForRecord(reelOv, post) {
+  if (!reelOv || !reelOv.note) return null;
+  if (reelOv.note.action === "skip") return reelOv.note;
+  if (reelOv.note.fellBack) return reelOv.note;
+  return post && post.key === reelOv.pin ? reelOv.note : null;
+}
+
 /* ONE SLOT, ON DEMAND.
    The schedule is a promise about when things go out, not a rule about when
    they MAY. A slot whose hour has passed and whose cron never fired sits there
-   owed, and the owner looking at it should be able to read it and send it —
+   owed, and the owner looking at it should be able to read it and send it,
    not wait a day for a machine that already missed. So composing a slot and
    sending a slot are separable, and neither consults the clock. runDue() is
    just the caller that does consult it. */
@@ -2417,11 +2498,31 @@ export async function sendSlot(host, date, slotId, opts = {}) {
       finished: ran, note: "that slot was already sent; a network was still processing the video" };
   }
 
+  /* the owner's own override for this slot, today (api/_lineup.js): read
+     before anything is composed, so a skip never even reaches slotExtras
+     and a swap arrives as the same pin a retry already trusts -- once it
+     has itself checked the swap still holds (reelOverridePlan's own header
+     above). The day's plan is read here, once, so that check and the
+     compose just below agree on the same hijri date rather than each
+     asking planDay for it separately. */
+  const plan = opts.plan || await planDay(date, opts);
+  const reelOv = await reelOverridePlan(date, slotId, host, plan.hijri || null, opts);
+  if (reelOv.skip) {
+    if (opts.dry) return { ...out, ok: true, dry: true, post: null, override: reelOv.note };
+    const rec = { at: out.at, slot: slotId, state: "skipped", title: "",
+      why: "owner override", override: reelOv.note };
+    await writeSlot(date, slotId, rec);
+    return { ...out, ok: true, state: "skipped", override: reelOv.note,
+      note: "this slot is skipped by an owner override" };
+  }
+
   const began = Date.now();
   /* a caller already on a clock (the healer, inside the hourly run) hands
      its own down, so a slot sent late in a run cannot start a fresh minute */
   const left = typeof opts.left === "function" ? opts.left : () => RUN_BUDGET_MS - (Date.now() - began);
-  const post = await composeSlot(host, date, slotId, opts);
+  const post = await composeSlot(host, date, slotId, { ...opts, plan,
+    reel: opts.reel || reelOv.pin,
+    seen: reelOv.seen || opts.seen, bias: reelOv.bias !== undefined ? reelOv.bias : opts.bias });
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
 
   /* a preview is always allowed to render, including of something already said */
@@ -2494,6 +2595,11 @@ export async function sendSlot(host, date, slotId, opts = {}) {
      buildSlot, lifted from slotExtras' bias check): only present when a
      bias actually applied to this exact reel, never a bare id with no arm */
   if (post.exp) rec.exp = post.exp;
+  /* the owner's own swap, only when the card that actually went out is the
+     one it named (see overrideForRecord above): a stale id that fell back
+     to the ordinary pick leaves no mark, because nothing was overridden */
+  const ovMark = overrideForRecord(reelOv, post);
+  if (ovMark) rec.override = ovMark;
   nameReel(rec, post);
   /* the record is written BEFORE the stories: if the function is cut off
      while a story is being made, the feed post is already on the record and
@@ -3082,6 +3188,11 @@ export async function runDue(host, date, now, opts = {}) {
   for (const slot of due) {
     if (posted >= cap) break;
     let post;
+    /* the owner's own override for this slot, today (api/_lineup.js), read
+       the same fail-open way sendSlot reads it: a skip is never composed,
+       a swap arrives as slotExtras' own pin, and both are ignored on any
+       fault exactly as "no override" would be */
+    let reelOv = { pin: null, note: null, skip: false };
     if (slot.id === "light") {
       const c = await compose(host, date, { polish: D.polish });
       if (!c) { out.ran.push({ slot: "light", skipped: "the library is not reachable" }); continue; }
@@ -3089,7 +3200,19 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image, slot: "light" };
     } else {
-      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, null, seen, bias);
+      reelOv = await reelOverridePlan(date, slot.id, host, plan.hijri || null, { ...opts, seen, bias });
+      if (reelOv.skip) {
+        /* a dry run (a preview of what this run WOULD do) writes nothing at
+           all, the same promise every other branch of this loop keeps --
+           checked before the write, not after (2026-09-26 review fix: this
+           used to record the skip even on a dry run). */
+        if (opts.dry) { out.ran.push({ slot: slot.id, dry: true, override: reelOv.note }); continue; }
+        await writeSlot(date, slot.id, { at: out.at, slot: slot.id, state: "skipped",
+          title: "", why: "owner override", override: reelOv.note });
+        out.ran.push({ slot: slot.id, state: "skipped", override: true });
+        continue;
+      }
+      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, reelOv.pin, seen, bias);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
@@ -3159,6 +3282,8 @@ export async function runDue(host, date, now, opts = {}) {
     const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
     if (post.exp) rec.exp = post.exp;
+    const ovMark = overrideForRecord(reelOv, post);
+    if (ovMark) rec.override = ovMark;
     nameReel(rec, post);
     /* on the record first, then the stories: see sendSlot */
     await writeSlot(date, slot.id, rec);
@@ -3292,7 +3417,7 @@ export default async function handler(req, res) {
      back 401, the Social room rendered empty, and the empty state blamed
      ADMIN_SECRET -- which was set, and had been since the fifth of August.
      One check now, in _owner.js, shared rather than reinvented per route. */
-  /* WHO IS ALLOWED TO DRIVE THIS — AND THE HOLE THAT WAS IN IT.
+  /* WHO IS ALLOWED TO DRIVE THIS, AND THE HOLE THAT WAS IN IT.
      ownerGate accepts two proofs: the console's signed cookie, or the secret in
      a header. A Vercel cron has neither. It arrives as an anonymous GET with a
      signature header and a vercel-cron user agent, and nothing else.
@@ -3300,7 +3425,7 @@ export default async function handler(req, res) {
      So the hourly job that sends the day's posts was answered 401 every hour
      from the moment it shipped, and not one of the four daily slots ever ran.
      The calendar was right, the schedule was right, the posts were composed
-     correctly — and the delivery was locked behind a door built for a person.
+     correctly, and the delivery was locked behind a door built for a person.
 
      api/warm.js already knew how to recognise a cron; this route did not, and
      the two were never compared. Now the cron is admitted for exactly one
@@ -3441,14 +3566,27 @@ export default async function handler(req, res) {
       const now = new Date(), hour = now.getUTCHours();
       const slots = [];
       const shelf = action === "today" ? await readManifest(host) : null;
-      /* the same lean an actual post would use today, read once, so the
-         Today room's own preview never shows a different card than the one
-         the machine will actually send (api/_experiments.js's biasFor; a
-         KV fault answers null, the room simply shows the un-biased pick) */
-      const bias = shelf ? await expBiasFor(date, {}).catch(() => null) : null;
+      /* the same day context every other view builds (api/_lineup.js's own
+         buildDayContext): the shelf just read above, the day's own hijri
+         date, an experiment's own lean (api/_experiments.js's biasFor; a KV
+         fault answers null, the room simply shows the un-biased pick) and
+         the duplicate guard's own recent window -- so the Today room's own
+         preview never shows a different card, or a swap that has quietly
+         fallen back, than the one the machine will actually send. */
+      const dayCtx = shelf ? await buildDayContext(host, date,
+        { cards: shelf.cards, hijri: plan.hijri || null, recentlyPosted, biasFor: expBiasFor }) : null;
+      /* every reel slot's own record, read once, up front: the same FACT
+         otherPicksFor now prefers over a fresh recompute (api/_lineup.js's
+         own header), and also what lets THIS slot's own row show the card
+         that actually went rather than one `chooseReelWithOverride` would
+         step past because that card now sits in `seen` itself -- the
+         2026-09-26 review's second finding (repro: a slot already sent
+         showed a different card here than the one its own record named). */
+      const reelRecords = shelf ? {} : null;
+      if (shelf) for (const rs of REEL_SLOTS) reelRecords[rs] = await readSlot(date, rs).catch(() => null);
       for (const s of SLOTS) {
         if (!plan.slots.includes(s.id)) continue;
-        const rec = await readSlot(date, s.id);
+        const rec = (reelRecords && s.reel) ? reelRecords[s.id] : await readSlot(date, s.id);
         const row = {
           id: s.id, at: s.at,
           /* a record with no state is the owner's own note (a phone share)
@@ -3458,11 +3596,24 @@ export default async function handler(req, res) {
           sentAt: rec ? rec.at : null,
           results: rec ? rec.results : null
         };
-        if (shelf && s.reel) {
-          const c = chooseReel(shelf.cards, date, s.reel, plan.hijri || null, null, bias);
-          const r = c ? rowUrls(c, host) : null;
-          row.reel = r ? { id: r.id, kind: r.kind || "light", hook: r.hook || "", caption: r.caption || "",
-                           cover: r.cover, video: r.video, secs: r.secs != null ? r.secs : null } : null;
+        if (s.reel) {
+          /* every view of the day agrees: the same override the poster
+             itself reads (api/_lineup.js) is shown here, whether or not
+             the shelf was loaded for this action */
+          const ov = await getOverride(date, s.id).catch(() => null);
+          if (ov) row.override = ov;
+          if (shelf) {
+            const otherPicks = await otherPicksFor(dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, { records: reelRecords });
+            const { card: c, override: applied } = await chooseReelWithOverride(
+              dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { otherPicks, rec });
+            /* the override actually applied, fellBack marked when a swap
+               that once held has since fallen back -- the same shape the
+               slot's own record would carry if this hour had already run */
+            if (applied) row.appliedOverride = applied;
+            const r = c ? rowUrls(c, host) : null;
+            row.reel = r ? { id: r.id, kind: r.kind || "light", hook: r.hook || "", caption: r.caption || "",
+                             cover: r.cover, video: r.video, secs: r.secs != null ? r.secs : null } : null;
+          }
         }
         slots.push(row);
       }
@@ -3477,7 +3628,12 @@ export default async function handler(req, res) {
     if (action === "slot") {
       const id = String(q.slot || "");
       if (!SLOT_IDS.includes(id)) return json(res, 400, { ok: false, error: "no such slot" });
-      const post = await composeSlot(host, date, id);
+      const slotPlan = await planDay(date).catch(() => ({ hijri: null }));
+      const reelOv = await reelOverridePlan(date, id, host, slotPlan.hijri || null, {});
+      if (reelOv.skip) return json(res, 200, { ok: true, slot: id, post: null, override: reelOv.note,
+        note: "This slot is skipped by an owner override." });
+      const post = await composeSlot(host, date, id, { plan: slotPlan,
+        reel: reelOv.pin || undefined, seen: reelOv.seen, bias: reelOv.bias });
       if (!post) return json(res, 200, { ok: true, slot: id, post: null,
         note: "Nothing to say for this slot today." });
       const shaped = {};

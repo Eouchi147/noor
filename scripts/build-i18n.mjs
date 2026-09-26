@@ -1,4 +1,4 @@
-// NOOR i18n master pack generator — writes i18n/en.json (source of truth for translators)
+// NOOR i18n master pack generator: writes i18n/en.json (source of truth for translators)
 // Translators copy en.json → {lang}.json and translate values; Arabic ayah text & refs stay untouched.
 import fs from 'node:fs';
 import vm from 'node:vm';

@@ -384,7 +384,7 @@ async function lanternEdit(cands, dateStr) {
     `Six cards are eligible. Choose the ONE that fits today best, and then read it once more ` +
     `against the rules and say whether anything in it looks wrong.\n\n${list}\n\n` +
     `Every card also carries a drawing. Choose which of these suits the one you picked:\n` +
-    MOTIF_NAMES.map(k => `   ${k} — ${MOTIF_FOR[k]}`).join("\n") + `\n\n` +
+    MOTIF_NAMES.map(k => `   ${k}: ${MOTIF_FOR[k]}`).join("\n") + `\n\n` +
     `Reply with JSON only: {"pick":"<the id>","why":"<why it fits today, under 14 words>",` +
     `"doubt":"<a specific factual doubt, or empty string if none>",` +
     `"motif":"<one name from the list above>"}`;

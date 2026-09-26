@@ -36,15 +36,21 @@
 // THE THREE FIXED LIMITS ON ACTING ALONE, exactly the owner's three: refresh
 // the network numbers, teach the duplicate guard from a reconciliation, and
 // reorder or skip a reel within the same day's line-up for a slot not yet
-// sent. The third has no existing, safe, already-honoured mechanism:
-// api/overrides.js is a text patch for site copy, unrelated to which reel a
-// slot sends, and api/_schedule.js's own `pin` argument is an internal
-// repair path the poster uses to correct drift on an ALREADY SENT slot, not
-// an owner-facing door to choose a reel ahead of time. Inventing one here
-// would be building a new, untested write path into the poster under an
-// agent's own steam, which is exactly what "do not invent one" forbids. So
-// only two action types exist (ACTION_TYPES below); anything else, lineup
-// changes above all, is always a proposal, never an autonomous action.
+// sent. The third now HAS a safe, validated, owner-honoured door of its own
+// (api/_lineup.js, built 26 September 2026: a single day's override, checked
+// against the shelf, the duplicate guard's own window and the rest of the
+// day before it is ever written, and read fail-open on the posting path the
+// same way an experiment's own bias is). What has not changed is who may
+// press it without asking: a lineup change is never one of the two things
+// this file lets the agent do on its own, whatever its own daily cap has
+// room for, because it is a choice about what a stranger sees, not a
+// reading of numbers the networks already show. So it stays out of
+// ACTION_TYPES below; a plan step named "lineup-change" is always turned
+// into a proposal, and only api/lantern-agent.js's own approve door -- the
+// owner's own tap, never the planner's -- calls api/_lineup.js at all, and
+// only when the proposal itself names a real date, slot and action (see
+// lineupArgsConcrete below); a vague one is still record-only, exactly as
+// before this door existed.
 //
 // THE DAILY CAP FAILS CLOSED. Counting today's actions is not a courtesy
 // read: it is INCR first (api/lantern-agent.js's ledger.reserve()), which
@@ -94,6 +100,30 @@ export const roleTier = role => ROLE_TIER[role] || "fast";
    proposal, never an autonomous action. */
 export const ACTION_TYPES = ["refresh-insights", "reconcile-teach"];
 export const AUTONOMOUS_DAILY_CAP = 5;
+
+/* the six reel slots a lineup-change may ever name, the same list
+   api/_schedule.js exports as REEL_SLOTS -- named again here rather than
+   imported, so this file's own promise of holding no import of a store or
+   a network stays true of every line in it, not merely most; the two lists
+   are proven to agree by tests/agent.mjs. */
+const LINEUP_SLOTS = ["reelA", "reelB", "reelC", "reelD", "reelE", "reelF"];
+
+/* whether a lineup-change proposal's own args are concrete enough to apply
+   -- a real date, a real reel slot, skip or swap, and for a swap a card id
+   -- never whether they are actually VALID (a stale id, a date past the
+   window, a slot already sent all still refuse, but only once
+   api/_lineup.js's own validateOverride is asked, at approval time; this
+   is only the shape a proposal needs before that door is even worth
+   knocking on). Exported so api/lantern-agent.js's own approve handler
+   asks the identical question rather than a second, looser one. */
+export function lineupArgsConcrete(args) {
+  const a = (args && typeof args === "object") ? args : {};
+  const dateOk = /^\d{4}-\d{2}-\d{2}$/.test(String(a.date || ""));
+  const slotOk = LINEUP_SLOTS.includes(String(a.slot || ""));
+  const actionOk = a.action === "skip" || a.action === "swap";
+  const idOk = a.action !== "swap" || (typeof a.id === "string" && a.id.trim().length > 0);
+  return dateOk && slotOk && actionOk && idOk;
+}
 
 const DASH_RX = new RegExp("[" + String.fromCharCode(0x2014, 0x2013) + "]", "g");
 const nowMs = clock => (typeof clock === "function" ? clock() : Date.now());
@@ -352,6 +382,9 @@ const PLANNER_SYSTEM = "You are the planner inside NOOR's Lantern agent. Read th
   + "Actions the agent may take on its own, at most " + AUTONOMOUS_DAILY_CAP + " a day, each logged and undoable: " + ACTION_TYPES.join(", ") + ". "
   + "Reordering, skipping or choosing a reel for a slot is NOT an available action in this build; if the request needs that, "
   + "end the plan with an action step named \"lineup-change\" so it is offered to the owner as a proposal, never done alone. "
+  + "When you propose a lineup-change, name concrete args whenever the request lets you: "
+  + "{\"date\":\"YYYY-MM-DD\",\"slot\":one of reelA reelB reelC reelD reelE reelF,\"action\":\"skip\"|\"swap\",\"id\":a card id, required for a swap}. "
+  + "A lineup-change with vague or missing args is only ever recorded for the owner to act on by hand, never applied. "
   + "Starting an experiment (an A/B test of verse length or reciter) is likewise NOT an available action; if the request asks to start, "
   + "plan or run one, end the plan with an action step named \"experiment-plan\" so it is offered to the owner as a proposal, never done alone. "
   + "At most " + BUDGETS.maxSteps + " steps. Read tools before subagents; a subagent should usually follow the tool reads it needs.";
@@ -879,8 +912,15 @@ export function buildProposal(type, requested, args, why, reason, evidence) {
   };
 }
 function proposalDescription(requested, args, reason) {
-  if (requested === "lineup-change")
-    return "Reorder or skip a reel in today's line-up. There is no existing, safe, owner-honoured way to do this automatically, so nothing was changed; approving this only records that you asked for it, and the console shows you which slot to open by hand in the Posts room.";
+  if (requested === "lineup-change") {
+    const a = args || {};
+    if (lineupArgsConcrete(a))
+      return (a.action === "skip"
+        ? "Skip " + a.slot + " on " + a.date + "."
+        : "Swap " + a.slot + " on " + a.date + " for " + a.id + ".")
+        + " Approving this applies it at once, through the same checks the console's own Posts room uses.";
+    return "Change a reel in today's line-up. No exact slot, date and (for a swap) card id were given, so nothing can be applied automatically; approving this only records that you asked for it, and the console shows you which slot to open by hand in the Posts room.";
+  }
   if (requested === "experiment-plan")
     return "Start an experiment. There is no existing, safe, owner-honoured way to do this automatically, so nothing was started; approving it only records the request. The test itself still has to be started from the Observatory's own experiment card, by its Plan button, never on its own.";
   if (ACTION_TYPES.includes(requested))
@@ -960,20 +1000,30 @@ export async function runAction(step, ctx) {
   return { kind: "action", entry, result };
 }
 
-/* replays an undo recipe. Only reconcile-teach carries a real, precise
-   revert; every other kind (today, only the read-only refresh) needs none,
-   and says so rather than pretending to reverse a read. An entry already
-   marked undone is refused here too (belt and braces: api/lantern-agent.js
-   also refuses a second undo before ever calling this, from the ledger's
-   own `undone` flag, but this function is pure and callable on its own in
-   a test, so it checks for itself rather than trusting every future
-   caller to remember to). */
+/* replays an undo recipe. reconcile-teach and lineup-change each carry a
+   real, precise revert; every other kind (today, only the read-only
+   refresh) needs none, and says so rather than pretending to reverse a
+   read. An entry already marked undone is refused here too (belt and
+   braces: api/lantern-agent.js also refuses a second undo before ever
+   calling this, from the ledger's own `undone` flag, but this function is
+   pure and callable on its own in a test, so it checks for itself rather
+   than trusting every future caller to remember to). */
 export async function undoAction(entry, tools = {}) {
   if (!entry || !entry.undo) return { ok: false, error: "this entry carries no undo recipe" };
   if (entry.undone) return { ok: false, error: "this action was already undone" };
   if (entry.undo.kind === "noop") return { ok: true, note: entry.undo.note || "nothing to reverse" };
   if (entry.undo.kind === "reconcile-teach-revert") {
     const fn = tools.action_undo_reconcile_teach;
+    if (typeof fn !== "function") return { ok: false, error: "no undo handler is wired for this deployment" };
+    return await fn(entry.undo);
+  }
+  /* the prior override (null when there was none) is put back exactly the
+     way it stood before this approval; api/lantern-agent.js's own
+     action_undo_lineup_change either restores it or clears the slot,
+     through api/_lineup.js's own validated door, never by writing the KV
+     key directly. */
+  if (entry.undo.kind === "lineup-revert") {
+    const fn = tools.action_undo_lineup_change;
     if (typeof fn !== "function") return { ok: false, error: "no undo handler is wired for this deployment" };
     return await fn(entry.undo);
   }

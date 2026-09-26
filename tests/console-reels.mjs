@@ -16,7 +16,7 @@
      with no share sheet (a desk) the file is saved and the caption copied;
      nothing scrolls sideways, no script throws, every button is a thumb's size.
 
-   Run:  python3 /tmp/vercelish.py . 8231 &   node tests/console-reels.mjs
+   Run:  python3 /tmp/vercelish.py 8231 . &   node tests/console-reels.mjs
 */
 import { chromium } from 'playwright';
 const BASE = process.env.NOOR_BASE || 'http://127.0.0.1:8231';

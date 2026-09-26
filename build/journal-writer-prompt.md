@@ -50,7 +50,7 @@ putting a thought on a table and asking for it to be taken apart.
 Every entry follows this shape. It is a French *dissertation* skeleton carried
 inside narrative prose, so the reader feels a story and gets an argument.
 
-**Opening paragraph — one paragraph, containing all five moves, unlabelled:**
+**Opening paragraph, one paragraph, containing all five moves, unlabelled:**
 
 - an *amorce*: a general opening line that walks the reader in
 - the subject stated plainly
@@ -61,7 +61,7 @@ inside narrative prose, so the reader feels a story and gets an argument.
 Do not use headings for these five. They run together as continuous prose in a
 single paragraph. Bold only the problématique.
 
-**Development — two or three parts, each with a `##` heading:**
+**Development, two or three parts, each with a `##` heading:**
 
 - Part I usually concedes what is true in the thought
 - Part II usually finds where it breaks, or where he was wrong
@@ -70,7 +70,7 @@ single paragraph. Bold only the problématique.
 Between parts, one italic sentence of transition on its own line, carrying the
 reader across. Not a summary. A hinge.
 
-**Closing paragraph — one paragraph, three moves, unlabelled:**
+**Closing paragraph, one paragraph, three moves, unlabelled:**
 
 - **Bilan**: what the parts established, briefly
 - **The answer**, in bold, to the question asked at the top

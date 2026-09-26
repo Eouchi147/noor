@@ -678,6 +678,12 @@ function settle(t){WAITING={};var slots=(t&&t.slots)||[];
     var waiting=bad.filter(function(k){return r[k].trial||r[k].waiting});
     if(s.state==="partial"&&bad.length&&waiting.length===bad.length){s.state="sent";s.waiting=waiting}});return t}
 var today=function(f){return cached("today",function(){return get("/api/social?action=today").then(function(r){return settle(r.j)})},f)};
+/* tomorrow's reels, the same shape today() reads, so the Change control can
+   offer the same day-ahead override on a slot that has not opened yet;
+   read only when the Posts room is actually open (drawPosts calls it) */
+var todayDateStr=function(){return new Date().toISOString().slice(0,10)};
+var tomorrowDate=function(){var d=new Date();d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)};
+var tomorrow=function(f){return cached("tomorrow",function(){return get("/api/social?action=today&date="+tomorrowDate()).then(function(r){return settle(r.j)})},f)};
 var visitors=function(f){return cached("visitors",function(){return get("/api/visitors").then(function(r){return r.j})},f)};
 var dialsQ=function(f){return cached("dials",function(){return get("/api/social?action=dials").then(function(r){return r.j})},f)};
 var tokens=function(f){return cached("tokens",function(){return get("/api/social?action=tokens").then(function(r){return r.j})},f)};
@@ -1032,13 +1038,27 @@ function stewardClick(e,el,sw){
 
 /* ================= POSTS ================= */
 var RUNGS=[["off","Off","Nothing is ever sent on a schedule."],["approve","Approve","Every post is written and waits for you."],["auto","Auto","The whole day goes out by itself."]];
+/* the six reel slots' own half of the shelf, mirroring api/_schedule.js's
+   SLOTS table. Only a LIGHT card is ever actually bound to a half by
+   chooseReel; the picker below uses this only to narrow a light card's own
+   candidates, never any other kind (2026-09-26 review fix). */
+var SLOT_HALF={reelA:"morning",reelC:"noon",reelD:"afternoon",reelB:"evening",reelF:"late",reelE:"night"};
+/* the pill a slot's own override earns, read straight off the record
+   api/_lineup.js keeps (the same one the Lantern's lineup tool and the
+   plan/today preview already show, so this can never disagree with them) */
+function overrideBadge(ov){if(!ov)return "";
+  var who=ov.by==="owner"?"you":"the Lantern, approved by you";
+  return ov.action==="skip"
+    ? '<span class="pill bad" title="skipped by '+esc(who)+(ov.note?": "+esc(ov.note):"")+'">skipped</span>'
+    : '<span class="pill wait" title="swapped by '+esc(who)+" for "+esc(ov.id||"")+(ov.note?": "+esc(ov.note):"")+'">swapped</span>'}
 function drawPosts(force){
   var el=$("s-posts");
   if(!el.dataset.built){el.innerHTML='<p class="sec">The ladder</p><div class="card"><div class="sk" style="height:44px"></div></div><p class="sec">Today, hour by hour</p>'+skel(4);el.dataset.built="1"}
-  return Promise.all([today(force),dialsQ(force),tokens(force),reddit(force),reelsQ(force),logQ(force)]).then(function(a){
-    var t=a[0]||{},d=a[1]||{},tk=(a[2]&&a[2].tokens)||{},rd=a[3]||{},re=a[4]||{},lg=a[5]||{};
+  return Promise.all([today(force),dialsQ(force),tokens(force),reddit(force),reelsQ(force),logQ(force),tomorrow(force)]).then(function(a){
+    var t=a[0]||{},d=a[1]||{},tk=(a[2]&&a[2].tokens)||{},rd=a[3]||{},re=a[4]||{},lg=a[5]||{},tw=a[6]||{};
     var mode=(d.dials&&d.dials.mode)||"off";
     var slots=t.slots||[];
+    var TODAY_DATE=t.date||todayDateStr();
     var old=t.legacy;if(old&&old.state==="sent")slots.forEach(function(s){if(s.id==="light"&&(!s.state||s.state==="due"||s.state==="waiting")){s.state="sent";s.legacy=true}});
     var hijri=t.plan&&t.plan.hijri?t.plan.hijri.d+" "+t.plan.hijri.name+" "+t.plan.hijri.y:"";
     /* a network that joined after a post went out (Pinterest, YouTube) is
@@ -1089,16 +1109,35 @@ function drawPosts(force){
         if(INFLIGHT[s.id+"|"+k])return '<button class="chan bad" disabled>'+esc(k)+' …</button>';
         broke.push(k);return '<button class="chan bad" data-retry="'+esc(s.id)+'|'+esc(k)+'" title="'+(x.storyOnly?"send the story again":"send this one again")+'">'+esc(k)+(x.storyOnly?' story':'')+' ↻</button>'+dupBadge}).join("")+more;
       var owed=(s.state==="due"||s.state==="failed")&&!INFLIGHT[s.id];
+      /* a slot with no record yet, of any kind, is the only kind that can
+         still be changed (api/_lineup.js refuses an override the moment a
+         slot record exists, sent or otherwise, so the button only appears
+         when the door is actually open). queued already carries its own
+         record too -- the middle rung's own draft, waiting on Post now --
+         so it is left out here as well, never offered only to be refused
+         (2026-09-26 review fix). */
+      var canChange=isReel&&(s.state==="due"||s.state==="waiting");
       var acts='<button class="btn ghost sm" data-prev="'+esc(s.id)+'">Preview</button>'
         +(INFLIGHT[s.id]?'<button class="btn sm" disabled>Sending…</button>':'')
         +(owed?'<button class="btn sm" data-send="'+esc(s.id)+'">Post now</button>':'')
         +(s.state==="pending"?'<button class="btn sm" data-finish="1">Finish it</button>':'')
         +(broke.length?'<button class="btn sm" data-fix="'+esc(s.id)+'|'+esc(broke[0])+'">Fix it</button><button class="btn ghost sm" data-why="'+esc(s.id)+'|'+esc(broke[0])+'">What\'s wrong?</button>':'')
-        +(s.state==="queued"&&!INFLIGHT[s.id]?'<button class="btn sm" data-send="'+esc(s.id)+'">Post</button>':'');
-      return '<div class="slot" id="slot-'+esc(s.id)+'"><div class="h"><code>'+String(s.at).padStart(2,"0")+':00</code><b>'+esc(s.id)+(s.title?' · <span style="font-weight:500;color:var(--text)">'+esc(s.title)+'</span>':'')+'</b>'+chip(s.state,s.at)+'</div>'
+        +(s.state==="queued"&&!INFLIGHT[s.id]?'<button class="btn sm" data-send="'+esc(s.id)+'">Post</button>':'')
+        +(canChange?'<button class="btn ghost sm" data-change="'+esc(TODAY_DATE)+'|'+esc(s.id)+'">Change</button>':'');
+      return '<div class="slot" id="slot-'+esc(s.id)+'"><div class="h"><code>'+String(s.at).padStart(2,"0")+':00</code><b>'+esc(s.id)+(s.title?' · <span style="font-weight:500;color:var(--text)">'+esc(s.title)+'</span>':'')+'</b>'+chip(s.state,s.at)+overrideBadge(s.override)+'</div>'
         +'<div class="muted small" style="margin-top:2px">'+esc(SLOT_WHAT[s.id]||"")+'</div>'
         +'<div class="b">'+where+'<span class="spacer"></span>'+acts+'</div></div>'});
     var cards=(re&&re.cards)||[];
+    /* tomorrow's reel slots, the same Change control today's rows carry: a
+       day ahead is as far as api/_lineup.js will ever let an override reach
+       (MAX_DAYS_AHEAD), and it is opened only when a slot has no record yet */
+    var TOM_DATE=tw.date||tomorrowDate();
+    var tomRows=(tw.slots||[]).filter(function(s){return /^reel/.test(s.id)}).map(function(s){
+      var canChange=(s.state==="due"||s.state==="waiting");
+      var card=s.reel;
+      return '<div class="slot" id="tom-'+esc(s.id)+'"><div class="h"><code>'+String(s.at).padStart(2,"0")+':00</code><b>'+esc(s.id)+'</b>'+overrideBadge(s.override)+'</div>'
+        +'<div class="muted small" style="margin-top:2px">'+(card?esc(card.hook||card.id||""):(s.override&&s.override.action==="skip"?"this reel will be skipped":"not chosen yet"))+'</div>'
+        +'<div class="b"><span class="spacer"></span>'+(canChange?'<button class="btn ghost sm" data-change="'+esc(TOM_DATE)+'|'+esc(s.id)+'">Change</button>':'')+'</div></div>'}).join("");
     var fbL=tk.fb&&tk.fb.daysLeft!=null?tk.fb.daysLeft:null,igL=tk.ig&&tk.ig.daysLeft!=null?tk.ig.daysLeft:null,life=tk.lifeDays||60;
     var tokbar=function(lab,left){return '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><b style="color:var(--cream)">'+lab+'</b><span class="muted">'+(left==null?"never marked renewed":left+" of "+life+" days left")+'</span></div><div class="bar2"><i class="'+(left!=null&&left<7?"low":"")+'" style="width:'+(left==null?0:Math.max(0,Math.min(100,left/life*100)))+'%"></i></div></div>'};
     var heldR=(rd.held||[]);
@@ -1106,6 +1145,7 @@ function drawPosts(force){
       '<p class="sec">The ladder</p><div class="card"><div class="seg" id="seg">'+RUNGS.map(function(r){return '<button data-mode="'+r[0]+'" class="'+(mode===r[0]?"on":"")+'">'+r[1]+'</button>'}).join("")+'</div><p class="muted small" style="margin:10px 0 0" id="rung-note">'+esc((RUNGS.filter(function(r){return r[0]===mode})[0]||RUNGS[0])[2])+'</p></div>'
       +'<p class="sec">Today, hour by hour</p>'+(hijri?'<p class="muted small" style="margin:-4px 0 10px">'+esc(hijri)+' · Umm al-Qura</p>':'')
       +(Object.keys(WAITING).length?'<p class="muted small" style="margin:-4px 0 12px">'+esc(Object.keys(WAITING).join(", "))+' is waiting on its own review; nothing to do, it resumes by itself.</p>':'')+(rows.join("")||'<div class="empty">The day could not be read.</div>')
+      +'<p class="sec">Tomorrow\'s reels</p><p class="muted small" style="margin:-4px 0 10px">a change made here holds for that one day only</p>'+(tomRows||'<div class="empty">Nothing to change yet.</div>')
       +'<p class="sec">The reels</p><details class="fold" id="reels-fold"><summary>'+cards.length+' rendered<span class="pill">'+["verse","word","name","know","dua","day","light"].map(function(k){var n=cards.filter(function(c){return (c.kind||"light")===k}).length;return n?n+" "+k:""}).filter(Boolean).join(" · ")+'</span></summary><div class="in"><div class="grid" id="reel-grid"></div></div></details>'
       +'<p class="sec">The token clock</p><div class="card">'+tokbar("Facebook",fbL)+tokbar("Instagram",igL)+'<div style="display:flex;gap:8px;margin-top:12px"><button class="btn ghost sm" data-renew="fb">Facebook renewed</button><button class="btn ghost sm" data-renew="ig">Instagram renewed</button></div></div>'
       +'<p class="sec" id="anchor-reddit">Reddit · for your hand</p>'+(heldR.length?'<div class="list">'+heldR.map(function(h,i){return '<div class="row tap" data-red="'+i+'"><div class="ic">'+ICO.reddit+'</div><div class="t"><b>'+esc(h.title||h.slot)+'</b><span>'+esc(h.slot)+' · tap to copy the draft</span></div><div class="chev">'+ICO.chev+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting.</div>')
@@ -1122,6 +1162,7 @@ function drawPosts(force){
       if(b.dataset.fix){var q=b.dataset.fix.split("|");return fixChan(q[0],q[1],b)}
       if(b.dataset.why){var w=b.dataset.why.split("|");return whyChan(w[0],w[1])}
       if(b.dataset.prev)return preview(b.dataset.prev);
+      if(b.dataset.change){var ch=b.dataset.change.split("|");return openChange(ch[0],ch[1],cards)}
       if(b.dataset.renew){b.disabled=true;return post("/api/social",{action:"renewed",which:b.dataset.renew}).then(function(r){var good=r.ok&&r.j.ok!==false;toast(good?"Clock reset.":(r.j.why||r.j.error||"It refused."),!good);bust();drawPosts(true)}).catch(unreachable(b))}
       if(b.dataset.red!=null){var h=heldR[+b.dataset.red]||{};return sheet('<h2>'+esc(h.title||"Reddit draft")+'</h2><p class="sub">'+esc(h.slot||"")+' · copy it, then post it yourself where it belongs.</p><div class="msg">'+esc(h.text||h.body||"")+'</div><div class="acts"><button class="btn" id="cp">Copy the draft</button><button class="btn ghost" id="cl">Close</button></div>')
         ,setTimeout(function(){$("cp").onclick=function(){navigator.clipboard.writeText(h.text||h.body||"").then(function(){toast("Copied.")},function(){toast("Could not copy.",true)})};$("cl").onclick=closeSheet},0)}
@@ -1167,6 +1208,80 @@ function preview(id){sheet('<h2>'+esc(id)+'</h2><p class="sub">'+esc(SLOT_WHAT[i
     $("sheet-in").innerHTML='<h2 style="font-size:18px">'+esc(p.title||id)+'</h2><p class="sub">'+esc(SLOT_WHAT[id]||"")+(j.state?' · '+esc(j.state):'')+'</p>'
       +(p.video?'<video src="'+esc(p.video)+'" poster="'+esc(p.image||"")+'" controls playsinline preload="none" style="width:100%;border-radius:12px;background:#05060f;aspect-ratio:9/16;max-height:50svh"></video>':(p.image?'<img src="'+esc(p.image)+'" alt="" style="width:100%;border-radius:12px;display:block">':''))
       +'<div class="msg small" style="margin-top:12px">'+esc(ig.text||p.body||"")+'</div>'}).catch(unreachable())}
+/* THE CHANGE CONTROL. One reel slot, one day, three doors: skip it, swap it
+   for a named card, or clear whatever override already sits on it. Every
+   refusal (a slot already sent, a swap id already taken, a date past the
+   week api/_lineup.js allows) comes back from the server as it is, in the
+   owner's own words, as a toast -- nothing here re-decides what is allowed.
+   No browser dialog anywhere: the confirm step is a second face of this same
+   sheet, exactly like setMode() above does for the ladder. */
+function openChange(date,slotId,cards){
+  sheet('<h2>Change '+esc(slotId)+'</h2><p class="sub">'+esc(date)+'</p><div class="sk" style="height:60px"></div>');
+  var src=date===todayDateStr()?today:tomorrow;
+  src(false).then(function(day){
+    var s=(day.slots||[]).filter(function(x){return x.id===slotId})[0]||{};
+    var ov=s.override,card=s.reel;
+    var cur=card?esc(card.hook||card.id||""):"no reel chosen yet";
+    $("sheet-in").innerHTML='<h2>Change '+esc(slotId)+'</h2><p class="sub">'+esc(date)+' · '+cur+'</p>'
+      +(ov?'<p class="muted small">currently '+(ov.action==="skip"?"skipped":"swapped for "+esc(ov.id||""))+', by '+esc(ov.by==="owner"?"you":"the Lantern, approved by you")+'</p>':'')
+      +'<div class="acts" style="flex-direction:column;align-items:stretch;gap:8px">'
+      +'<button class="btn" id="ch-skip">Skip this reel</button>'
+      +'<button class="btn" id="ch-swap">Swap for another</button>'
+      +(ov?'<button class="btn ghost" id="ch-clear">Clear the override</button>':'')
+      +'<button class="btn ghost" id="ch-cancel">Never mind</button></div>';
+    $("ch-skip").onclick=function(){confirmChange(date,slotId,{action:"skip"},"Skip "+slotId+" on "+date+"? Nothing will post in that slot, and the retry that watches for missed slots will leave it alone.")};
+    $("ch-swap").onclick=function(){openSwapPicker(date,slotId,cards)};
+    if(ov)$("ch-clear").onclick=function(){confirmChange(date,slotId,null,"Clear the override on "+slotId+" for "+date+"? It goes back to the usual pick.")};
+    $("ch-cancel").onclick=closeSheet;
+  }).catch(function(){$("sheet-in").innerHTML='<h2>Change '+esc(slotId)+'</h2><p class="sub">That could not be read. Close this and try again.</p><div class="acts"><button class="btn ghost" id="ch-cancel">Close</button></div>';setTimeout(function(){$("ch-cancel").onclick=closeSheet},0)});
+}
+/* the swap picker. api/_schedule.js's own chooseReel only ever binds the
+   half to a LIGHT card (`c.slot === half`, for kind light alone -- every
+   other kind goes to any slot regardless of what `.slot` it happens to
+   carry, and the real shelf only ever uses morning and evening besides).
+   Checking the half for every kind here refused a swap on four of six
+   slots for cards that would have played there perfectly well (2026-09-26
+   review fix): the half now only narrows a LIGHT card; everything else on
+   the shelf is offered to every slot, exactly as api/_lineup.js's own
+   validator now checks it. The search box narrows by hook or id. */
+function openSwapPicker(date,slotId,cards){
+  var half=SLOT_HALF[slotId];
+  var pool=(cards||[]).filter(function(c){var k=c.kind||"light";return k!=="light"||!c.slot||c.slot===half});
+  var render=function(q){
+    q=(q||"").toLowerCase();
+    var list=pool.filter(function(c){return !q||(c.hook||"").toLowerCase().indexOf(q)>-1||(c.id||"").toLowerCase().indexOf(q)>-1}).slice(0,20);
+    return list.length?'<div class="list">'+list.map(function(c){return '<div class="row tap" data-pick="'+esc(c.id)+'"><div class="t"><b>'+esc(c.hook||c.id)+'</b><span>'+esc(c.id)+'</span></div></div>'}).join("")+'</div>':'<div class="empty">No reels match.</div>'};
+  $("sheet-in").innerHTML='<h2>Swap '+esc(slotId)+'</h2><p class="sub">'+esc(date)+' · pick a reel</p>'
+    +'<input class="fi full" id="swap-q" placeholder="Search by word or id" aria-label="Search reels" style="margin-bottom:10px">'
+    +'<div id="swap-list">'+render("")+'</div>'
+    +'<div class="acts"><button class="btn ghost" id="ch-back">Back</button></div>';
+  $("swap-q").oninput=function(){$("swap-list").innerHTML=render(this.value)};
+  $("swap-list").onclick=function(e){var row=e.target.closest("[data-pick]");if(!row)return;
+    var id=row.dataset.pick;var c=pool.filter(function(x){return x.id===id})[0]||{};
+    /* the plain, un-escaped question: confirmChange below is the one and
+       only place this is ever put in the page, so it alone escapes it
+       (2026-09-26 review fix: escaping it here too doubled every &, <, >
+       and quote a hook happened to carry) */
+    confirmChange(date,slotId,{action:"swap",id:id},'Swap '+slotId+' on '+date+' for "'+(c.hook||id)+'"?')};
+  $("ch-back").onclick=function(){openChange(date,slotId,cards)};
+}
+/* the confirm step itself, inside the same card: Yes does the one POST
+   api/lineup.js accepts for this (set or clear), and any refusal it sends
+   back is shown exactly as it reads, as a toast, with the sheet left open
+   on nothing more than a re-enabled button. `question` is always plain
+   text handed in by a caller above; this is its one and only escape. */
+function confirmChange(date,slotId,ov,question){
+  $("sheet-in").innerHTML='<h2>Are you sure?</h2><p class="sub">'+esc(question)+'</p><div class="acts"><button class="btn" id="ch-yes">Yes, do it</button><button class="btn ghost" id="ch-no">Cancel</button></div>';
+  $("ch-no").onclick=closeSheet;
+  $("ch-yes").onclick=function(){
+    $("ch-yes").disabled=true;$("ch-yes").textContent="Working…";
+    var body=ov?{action:"set",date:date,slot:slotId,override:ov}:{action:"clear",date:date,slot:slotId};
+    post("/api/lineup",body).then(function(r){
+      var ok=r.ok&&r.j&&r.j.ok!==false;
+      if(!ok){toast((r.j&&r.j.error)||"It refused.",true);$("ch-yes").disabled=false;$("ch-yes").textContent="Yes, do it";return}
+      closeSheet();toast(ov?(ov.action==="skip"?"That reel is skipped for "+date+".":"Swapped."):"Cleared.");bust();drawPosts(true)
+    }).catch(unreachable($("ch-yes"),"Yes, do it"))}
+}
 
 /* ================= READERS ================= */
 /* What strangers watch: the last fortnight's posts read back from the

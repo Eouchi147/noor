@@ -73,8 +73,11 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
   badges no longer clipped, OPERATIONS.md matches the routes and variables, stale tests corrected.
 - Left on purpose: hreflang and language detection (per-language SEO is paused by the owner);
   kids-engine.js cannot be deferred (the games bind to it inline).
-- Found, not yet fixed: chapter 60's summary says "the plea arrives one node late" (an old slip for
-  "too late"); changing the English moves its translation key, so it rides the next content pass.
+- Fixed 26 September: chapter 60's summary said "the plea arrives one node late", an old slip for
+  "too late"; corrected at the source (`scripts/patches/nihaya.mjs`) and carried through by
+  `node scripts/build.mjs` into `node/60.json`, `nodes.js` and `nodes-index.js`, then into
+  `assets/search-index.json` by `scripts/gen-dictionary.py`, the way each of those files is always
+  meant to be produced. No file was hand edited.
 
 ## Shipped 24 September (masterplan step 5, the Content Graph)
 
@@ -90,6 +93,11 @@ to resume; `DECISIONS.md` says what the owner decided; `changes.txt` is the line
   ids (content-003); no id in the site's data was renamed.
 - `tests/content-graph.mjs` (16 checks) fails if the shelves drift from the graph by one link or
   one place in order.
+- Checked 26 September: about 30 of the film edges `derive_reel_sources.py` writes point to a
+  `hero:` or `page:` id rather than the object's own content id. Left as they are on purpose: the
+  package (`api/_package.js`) only ever looks up an object's own content id in
+  `assets/reel-sources.json`, never enumerates the file's keys, so a `hero:`/`page:` key never
+  breaks a lookup. A hero or page package is a future feature, not yet built; the keys wait for it.
 
 ## Shipped 24 September (masterplan step 8, analytics, and the related words)
 

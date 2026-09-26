@@ -5,7 +5,7 @@
    pages nobody actually looked at -- a link the browser prefetched against a
    click that never came, or a prerender that was thrown away.
 
-   Run:  python3 /tmp/vercelish.py . 8231 &   node tests/beaconclient.mjs
+   Run:  python3 /tmp/vercelish.py 8231 . &   node tests/beaconclient.mjs
 */
 import { chromium } from 'playwright';
 const BASE = process.env.NOOR_BASE || 'http://127.0.0.1:8231';

@@ -402,6 +402,68 @@ from the owner's own browser, the console's experiment card ("Plan: shorter vs l
 verses, from ..."), or approving the Lantern's own proposal, which only records the
 request. Nothing plans itself.
 
+### Lineup overrides, `api/_lineup.js` and `api/lineup.js`
+
+A single reel slot, on a single day, can be skipped or swapped by hand, for that one
+day only -- never a standing rule, never a second schedule. The override lives at
+`nsoc:override:<date>`, a hash of `<slot>: {action:"skip"}` or
+`{action:"swap", id:<card id>}`, each carrying `at`, `by` (`"owner"` or
+`"lantern-approved"`) and `note`. Only the six reel slots take one (`reelA`..`reelF`,
+never `light` or `reddit`), and only for today or up to seven days ahead, UTC.
+`validateOverride` (`api/_lineup.js`) refuses a slot that already carries ANY record, or
+whose send is this second in flight (its ten minute claim, `api/social.js`'s own
+`claimSlot`) -- so an override can never reach a slot the day has already decided, or
+is in the middle of deciding; refuses a swap id that is not on the shelf, or (a LIGHT
+card only -- every other kind plays any slot regardless of its own `.slot`, since
+`chooseReel` never binds one) is outside its own half of the day; refuses one that sits
+in the duplicate guard's own recent window, is already the pick for another slot that
+same day, or is already set for a swap on some OTHER day inside that same window (the
+same card, two different days, is a standing conflict the moment both go forward).
+**Reading an override on the posting path fails open, always**: a KV fault, a
+malformed value, an id that has since left the shelf -- every one of these is read as
+"no override", so a fault here can only ever fall back to the ordinary pick, never
+block a post or double one. **Writing one fails closed**: any doubt at all -- including
+a fault reading the day's own existing overrides, or the duplicate guard's own window --
+is a refusal, never a write built from a read that did not actually succeed.
+
+A skip writes the slot's own record the moment that hour's run (or a hand press of
+Post now) actually reaches the slot, `state:"skipped"`, `why:"owner override"`, exactly
+like a slot with nothing to say already gets -- never before, and never on a dry run --
+so the retry healer (`healFailures`, which skips any record with no `results` at all)
+and the daily reconcile never mistake it for a miss. A swap reuses the exact `pin` a
+retry already had (`api/_schedule.js`'s `slotExtras`), but only once the poster itself
+has re-checked the same thing every other view of the day already checks
+(`chooseReelWithOverride`): a swap the duplicate guard's own window has swallowed since
+it was set, or that another slot's own pick has since taken, **falls back to the
+ordinary pick instead of being pinned**, and the slot's own record still carries
+`override:{action:"swap", id, fellBack:true, reason}` so the owner can see what was
+asked for and why it did not hold, rather than a record that looks like an ordinary,
+unremarkable day. A swap that actually held marks `override:{action, id, by}` only once
+the card that went out matches the pin; a swap whose id had simply left the shelf
+falls back with no mark at all, since chooseReelWithOverride never had a card to check
+in the first place. Every view of the day builds its inputs the same way
+(`buildDayContext`, `api/_lineup.js`) and reads the override through the same function
+(`chooseReelWithOverride`): the Today room's preview, the Lantern's `lineup` tool, the
+approve conflict check and the poster itself all agree, always.
+
+`GET /api/lineup?date=` (owner-gated, exactly like `/api/experiments`) answers every
+reel slot's own state, its override if any, and the card it would actually post today,
+override included. `POST {"action":"set", date, slot, override:{action, id?}}` and
+`POST {"action":"clear", date, slot}` are the only two ways to change one, from the
+console's own Posts room (a Change control on each open reel slot, today and
+tomorrow, hidden once a slot carries any record at all -- sent, sending, queued or
+otherwise) or a proposal the owner approves. A **concrete** Lantern proposal --
+`{"date", "slot", "action", "id"}` all named -- is applied at once through this same
+door the moment it is approved. Its undo restores the exact prior entry, byte for byte
+(the same `at`, `by` and `note` it always carried, never a fresh stamp); when there was
+no prior entry, undo clears the slot only if it still carries exactly what this
+approval itself set (compared by `at` and `by`) -- a slot changed again since, by
+another approval or the console's own Change control, refuses the undo rather than
+silently discarding whatever that later decision was. A **vague** proposal (a slot or
+date left to guess at) is still only ever recorded, exactly as every other kind of
+proposal is, since nothing safe exists to apply a request that never said which slot it
+meant.
+
 ---
 
 ## 4. The store, every key
@@ -442,6 +504,7 @@ request. Nothing plans itself.
 | `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
 | `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
 | `nexp:state` | The experiment now running (or none) and its finished history: `{current: {id, start, args}\|null, history: [...]}` | `_experiments.js` |
+| `nsoc:override:<date>` | One day's reel overrides, a hash of `<slot>: {action:"skip"}\|{action:"swap", id}, at, by, note}` | `_lineup.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -479,6 +542,7 @@ stripped from everything public.
 | `/api/observatory` | admin | The Observatory room in one call: the 30-day per-network trend, the weekday by hour matrix, kind and subject folds, posting health per day, site visitors and library coverage, composed from `_insights.js`'s `numbers()`, the stored snapshots and slot records, and the shipped Content Graph files; kept ten minutes, `?fresh=1` goes round it. Reads only, no network call. |
 | `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate, now with a `learn` block (watch time by kind, verse length and reciter) |
 | `/api/experiments` | owner only | The experiment now running, if any, with its reading so far; `POST {action:"plan", id, start, args}` and `POST {action:"stop"}`. See "Experiments" above. |
+| `/api/lineup` | owner only | `GET ?date=`: every reel slot's own state, override and the card it would actually post. `POST {action:"set", date, slot, override:{action, id?}}` and `POST {action:"clear", date, slot}`. See "Lineup overrides" above. |
 | `/api/lantern-models` | admin | Which of Groq, Gemini and OpenRouter are configured, the live free models per tier, today's and the last week's usage against the budgets, the last model that answered each tier, and `?action=probe` (POST): one tiny prompt through each tier, latency and the model that answered |
 | `/api/lantern-agent` | owner only | The Lantern agent (masterplan step, "the Lantern agent"): `POST {message, thread}` streams Server-Sent Events (`start`, `plan`, `step`, `subagent`, `artifact`, `action`, `proposal`, `token`, `done`, `error`) while it plans, reads the house's own read-only tools, hands parts of the work to subagents on the router's free models, and answers with sourced numbers, a chart or a draft. `POST {action:"approve"\|"decline", id}` answers a proposal; `POST {action:"undo", id}` reverses a logged action where a real recipe exists. `GET ?action=ledger` and `?action=proposals` read what it has done and what still waits for a yes. See "The Lantern agent" below and OPERATIONS.md's own runbook for what it may do alone. |
 | `/api/reel` | yes | `?id=<reel id>`: the reel's bytes, streamed from the store as `video/mp4` with ranges, so a phone can share the file and a network that refuses the store's URL has one that answers plainly |
@@ -750,6 +814,11 @@ Order of checks, cheapest first:
    nothing went out.
 6. `Post this now` runs the whole path by hand, including the network calls, and
    prints exactly what came back. Use it before trusting a schedule.
+7. **A reel slot shows "skipped" and no rows at all.** That is not a fault: someone
+   set a lineup override on that slot (the Posts room's own Change control, or an
+   approved Lantern proposal). The slot's own header carries the badge and who set
+   it; Clear the override there to let the day post as usual again. See "Lineup
+   overrides" above.
 
 ### The steward says something needs you
 

@@ -36,14 +36,15 @@ import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import { kv, kvReady } from "./_kv.js";
 import { route as llmRoute, scrub } from "./_llm.js";
-import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS } from "./_agent.js";
+import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS, lineupArgsConcrete } from "./_agent.js";
 import { playbookLookup } from "./_playbook.js";
 import { cached as observatoryCached, readCache as observatoryReadCache, slotLabel } from "./observatory.js";
 import { read as insightsRead, numbers as insightsNumbers, refresh as insightsRefresh, snapshot as insightsSnapshot, kindLabel } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
-import { reconcile as socialReconcile, teachGuard as socialTeachGuard, readSlot, revertTaught } from "./social.js";
+import { reconcile as socialReconcile, teachGuard as socialTeachGuard, readSlot, revertTaught, recentlyPosted, recentlyPostedRaw } from "./social.js";
 import { chooseReel, SLOTS, REEL_SLOTS, SLOT_IDS } from "./_schedule.js";
 import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, evaluate as expEvaluate, biasFromAny as expBiasFromAny } from "./_experiments.js";
+import { chooseReelWithOverride, setOverride, getOverrideRaw, clearOverride, restoreOverride, otherPicksFor, buildDayContext } from "./_lineup.js";
 import * as PAGE from "./page.js";
 import { buildPackage } from "./_package.js";
 import { judge as jevJudge } from "./_jev.js";
@@ -198,9 +199,31 @@ function buildTools(req) {
          one the machine will actually choose */
       let bias = null;
       try { bias = expBiasFromAny(state, d, EXPERIMENTS); } catch { bias = null; }
+      /* the same day context every other view builds (api/_lineup.js's own
+         buildDayContext): the day's own hijri date and the duplicate
+         guard's recent window, so a swap this tool shows as still holding
+         is the one that would actually post, not one the guard would have
+         since refused (2026-09-26 review: this used to hand chooseReel
+         neither, so a stale swap read here as still good). The cross-slot
+         same-day check (otherPicks) is left to the door that actually
+         writes something -- setOverride's own validation and the posting
+         path's own reelOverridePlan -- since paying for it here too would
+         be six slots squared for every one of up to fourteen days this
+         tool may be asked to preview, for a number that is never more than
+         a display. */
+      const dayCtx = await buildDayContext(HOST(), d, { cards, bias, recentlyPosted });
       for (const s of SLOTS.filter(x => x.reel)) {
-        const c = chooseReel(cards, d, s.reel, null, null, bias);
-        out.push({ date: d, slot: s.id, hour: s.at, half: s.reel, card: c ? { id: c.id, kind: c.kind, hook: c.hook } : null });
+        /* a slot the day has already decided (its own record's rec.reel) is
+           a fact, not a pick to preview -- the same rule every other view
+           now applies (api/_lineup.js's own chooseReelWithOverride). Only
+           this one extra read per slot, never the otherPicks squared cost
+           the comment above already declines. */
+        const rec = await readSlot(d, s.id).catch(() => null);
+        const { card: c, override: ov } = await chooseReelWithOverride(dayCtx.cards, d, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { rec });
+        out.push({ date: d, slot: s.id, hour: s.at, half: s.reel,
+          card: c ? { id: c.id, kind: c.kind, hook: c.hook } : null,
+          override: ov ? { action: ov.action, id: ov.id || null, by: ov.by,
+            fellBack: ov.fellBack || undefined, reason: ov.reason || undefined } : null });
       }
     }
     return { data: out, summary: "predicted " + out.length + " reel slots over " + days + " day(s) from " + from + ". This is what the rota would choose today, not a promise: it recomputes at post time." };
@@ -335,6 +358,50 @@ function buildTools(req) {
     };
   };
   tools.action_undo_reconcile_teach = async (undo) => revertTaught(undo && undo.keys);
+
+  /* the exact inverse of an approved lineup-change: put the prior override
+     back, byte for byte -- the same at, by and note it always carried,
+     never a fresh stamp -- or clear the slot (there was none before), and
+     only when the slot still carries exactly what this approval itself set
+     (its own `after`, compared by at and by: the two fields anything else
+     that touched the slot since could not help but change). A slot already
+     sent, or changed again since by another approval or the console's own
+     Change control, refuses rather than guessing which of two decisions the
+     owner actually wants undone (2026-09-26 review: the old version always
+     re-stamped a restored entry and always cleared unconditionally, either
+     of which could silently discard a decision made after this one). */
+  tools.action_undo_lineup_change = async (undo) => {
+    const date = String((undo && undo.date) || ""), slot = String((undo && undo.slot) || "");
+    if (!date || !slot) return { ok: false, error: "nothing to undo: no date or slot on this entry" };
+    const after = undo && undo.after;
+    if (!after)
+      return { ok: false, error: "this entry carries nothing to compare against; undo it in the Posts room" };
+    /* the raw read, not the safe one, for BOTH branches below: a fault here
+       must refuse the undo outright, never answer "nothing there" and mark
+       it undone while the override still stands (2026-09-26 review, third
+       finding -- the clear branch alone used to do this). */
+    let current;
+    try { current = await getOverrideRaw(date, slot); }
+    catch { return { ok: false, error: "the store could not be read, so nothing was undone" }; }
+    if (!current) return { ok: true, cleared: true, note: "there was nothing left to clear" };
+    /* the slot must still hold exactly what THIS approval wrote (its own at
+       and by) before either putting the prior entry back or clearing it --
+       checked here, once, ahead of both branches, so a later console change
+       (a hand-set swap or skip, or a different approval) is never silently
+       overwritten by an undo that has nothing to do with it. Before this
+       review's third finding, the restore branch skipped this check
+       entirely: it trusted `before` and wrote it back regardless of what
+       the slot held by the time the undo ran. */
+    if (current.at !== after.at || current.by !== after.by)
+      return { ok: false, error: "the slot was changed again since; undo it in the Posts room" };
+    const before = undo && undo.before;
+    if (before) {
+      const r = await restoreOverride({ date, slot, entry: before });
+      return r.ok ? { ok: true, restored: before } : { ok: false, error: r.error };
+    }
+    const r = await clearOverride({ date, slot });
+    return r.ok ? { ok: true, cleared: true } : { ok: false, error: r.error };
+  };
 
   /* the one place every tool's own data passes through humanizeIds, so a
      tool added here next gets the same guarantee without anyone having to
@@ -499,10 +566,68 @@ async function handleApprove(res, body) {
   const list = await proposalsList();
   const p = list.find(x => x && x.id === id);
   if (!p) return json(res, 404, { ok: false, error: "no such proposal" });
+
+  /* A LINEUP CHANGE WITH A REAL DATE, SLOT AND ACTION APPLIES AT ONCE, on
+     approval and only on approval -- never autonomously, never against the
+     agent's own daily cap, which exists for the two things it may do
+     without asking (see api/_agent.js's own header). Applied through
+     api/_lineup.js's own validated door, the exact one the console's own
+     Posts room control uses, so an approval can refuse for the same
+     reasons a hand-typed one would (a stale card, a slot already sent, a
+     date past the week ahead). A vague one (no exact slot, date, or a
+     swap with no id) falls through to the generic record-only path below,
+     unchanged. */
+  if (p.requested === "lineup-change" && lineupArgsConcrete(p.args)) {
+    const a = p.args || {};
+    /* the raw reads, not the safe ones: this is the moment the ledger's own
+       `before` is fixed for good, and the moment the duplicate guard's own
+       window decides whether the swap is safe. A fault swallowed as "there
+       was nothing before" or "nothing has ever posted" would let an undo
+       later restore the wrong day, or let a real duplicate straight through
+       the one door meant to catch it (2026-09-26 review fix). */
+    let before, seen;
+    try { before = await getOverrideRaw(a.date, a.slot); }
+    catch { return json(res, 200, { ok: false, error: "the store could not be read, so nothing was applied" }); }
+    try { seen = await recentlyPostedRaw(a.date); }
+    catch { return json(res, 200, { ok: false, error: "the duplicate guard could not be read, so nothing was applied" }); }
+    const cards = await PAGE.manifest();
+    let bias = null;
+    try { const st = await expReadState({}); bias = expBiasFromAny(st, a.date, EXPERIMENTS); } catch { bias = null; }
+    /* the same day context every other view builds (api/_lineup.js's own
+       buildDayContext): cards, bias and seen are already in hand above, so
+       this only ever costs the one thing left, the day's own hijri date. */
+    const ctx = await buildDayContext(HOST(), a.date, { cards, bias, seen });
+    /* the same records-first otherPicks every other writing door now builds
+       (api/_lineup.js's own otherPicksFor): a slot already recorded is a
+       fact, not a pick to recompute against `seen`, so an approval is never
+       refused over another slot's own recomputed pick drifting onto the
+       card being approved (2026-09-26 review, first finding). */
+    const records = {};
+    for (const s of REEL_SLOTS) if (s !== a.slot) records[s] = await readSlot(a.date, s).catch(() => null);
+    const otherPicks = await otherPicksFor(ctx.cards, a.date, a.slot, ctx.hijri, ctx.seen, ctx.bias, { records });
+    const r = await setOverride({ date: a.date, slot: a.slot, action: a.action, id: a.id },
+      { manifest: ctx.cards, seen: ctx.seen, otherPicks, by: "lantern-approved", note: p.why || "" });
+    if (!r.ok) return json(res, 200, { ok: false, error: r.error });
+    const ledger = makeLedger();
+    const entry = {
+      id: ledger.newId(), who: "lantern (owner approved)", what: "lineup-change", args: a, why: p.why || "",
+      before, after: r.override,
+      /* `after` is the exact entry this approval itself wrote (its own at
+         and by): an undo that later finds no prior entry to restore only
+         clears the slot if it still carries exactly this, never a change
+         made since (action_undo_lineup_change, below). */
+      undo: { kind: "lineup-revert", date: a.date, slot: a.slot, before, after: r.override },
+      at: new Date().toISOString(), ok: true
+    };
+    await ledger.record(entry);
+    await proposalsSet(list.filter(x => x.id !== id));
+    return json(res, 200, { ok: true, executed: true, entry });
+  }
+
   /* only a proposal whose own type is one of the safe autonomous actions
-     can be executed by approving it; everything else (a lineup change
-     above all) has no endpoint to run, so approving only records the
-     owner's decision and the console shows what to open by hand */
+     can be executed by approving it; everything else (a vague lineup
+     change above all) has no endpoint to run, so approving only records
+     the owner's decision and the console shows what to open by hand */
   if (ACTION_TYPES.includes(p.type)) {
     const tools = buildTools({ headers: {} });
     const ledger = makeLedger();

@@ -59,7 +59,7 @@
      and therefore 600px of height. The console does not have 600px to give to
      its own navigation.
 
-     So the sections sit on a shallow ARC instead — a tuning dial, which is what
+     So the sections sit on a shallow ARC instead, a tuning dial, which is what
      the word means anyway. The arc is wider than the panel and only the part of
      it inside the panel is lit; sections ride along it, the one in the middle is
      the largest and the ones at the edges fade out. It holds twelve as happily
@@ -111,7 +111,7 @@
         /* The sweep and its caption are one block, centred in the panel.
 
            An earlier version set the panel's height from what it had measured,
-           and then measured that height on the next pass — so every resize made
+           and then measured that height on the next pass, so every resize made
            the band shorter, the sections smaller, and the labels break across
            three lines. The panel's height is the stylesheet's business; this
            only decides where the block sits inside it. */
@@ -180,7 +180,7 @@
   function paintHub() {
     var it = items[focus]; if (!it) return;
     hub.textContent = it.label;
-    host.setAttribute("aria-label", "Console sections — " + it.label);
+    host.setAttribute("aria-label", "Console sections: " + it.label);
   }
   function go(i) {
     var d = i - (((nearest() % N) + N) % N);
@@ -274,7 +274,7 @@
 
   /* The dashboard is hidden until the owner is through the gate, so at load the
      panel has no size and there is nothing to measure. A ResizeObserver should
-     catch the moment it gains one — but it is the only thing that would, and if
+     catch the moment it gains one, but it is the only thing that would, and if
      it does not fire the dial is simply never drawn. A short bounded poll costs
      nothing and removes that single point of failure entirely. */
   var tries = 0;

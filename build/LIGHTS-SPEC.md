@@ -28,14 +28,14 @@ Output ONE valid UTF-8 JSON file at the path you are given:
  "src": "required when lvl is quran, sunnah or debated"}
 ```
 
-- `when` — **only for `kind:"onthisday"`**, and only when the date is genuinely
+- `when`: **only for `kind:"onthisday"`**, and only when the date is genuinely
   known. `y` is required, `m` and `d` optional. **A day you are not sure of is
   omitted, not guessed.** An entry with `y` only still works: it becomes an
   anniversary-year light.
-- `hijri` — optional seasonal anchor, `{"m":9}` for Ramadan, `{"m":12}` for Hajj,
+- `hijri`: optional seasonal anchor, `{"m":9}` for Ramadan, `{"m":12}` for Hajj,
   `{"m":1}` for Muharram, `{"m":3}` for Rabi al-Awwal.
-- `tags` — free, lowercase, 1 to 4. Used to match a light to a season or a room.
-- `lvl` — `editorial` for history and science (our own telling of a known fact);
+- `tags`: free, lowercase, 1 to 4. Used to match a light to a season or a room.
+- `lvl`: `editorial` for history and science (our own telling of a known fact);
   `quran` / `sunnah` / `debated` when the card rests on scripture or a report,
   and then `src` is **required**.
 

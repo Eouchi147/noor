@@ -1,7 +1,7 @@
 /* NOOR · the drawing on a card.
    ------------------------------------------------------------------
    Every post carries its own picture now. The pictures are geometry, drawn by
-   this house, chosen from a list of twelve — and the reason they are chosen
+   this house, chosen from a list of twelve, and the reason they are chosen
    rather than generated is that a model which could emit arbitrary SVG onto a
    card published in the owner's name could emit anything at all: a figure, a
    face, the symbol of another faith, a shape nobody vetted.
@@ -9,7 +9,7 @@
    So this checks the whole surface, which is small enough to check:
 
      · every motif draws, for many seeds, without a stray value
-     · no motif contains a horizontal stroke crossing a vertical one — the same
+     · no motif contains a horizontal stroke crossing a vertical one; the same
        geometric test tests/symbols.mjs runs over the site, applied here to art
        that only exists at run time and therefore never reaches that file
      · a motif the Lantern asks for is only used if it is on the list

@@ -463,7 +463,7 @@ const ARG_STRING_MAX = 80;
    Built round trip through Date.UTC, the same proof api/_calendar.js's own
    date checks lean on -- a month or day JS itself would silently roll over
    (13, or 31 in a 30 day month) is caught because the round trip disagrees. */
-function isRealDate(s) {
+export function isRealDate(s) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ""));
   if (!m) return false;
   const y = +m[1], mo = +m[2], d = +m[3];

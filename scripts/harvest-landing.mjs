@@ -1,6 +1,6 @@
 /* NOOR · the arrival's own corpus.
    The full harvest walks 600 pages and takes minutes. The arrival is three
-   rooms — the front page, /ask and /mizan — and it is the first thing every
+   rooms, the front page, /ask and /mizan, and it is the first thing every
    reader sees, so it gets its own pass that can be run in seconds while a
    translation is being worked on.
 

@@ -81,7 +81,7 @@ outside its box while it is arriving, which the safe area audit catches, so the
 reading column is inset to x 96..926 rather than sitting on the safe edge.
 
 ## The pieces that exist
-* `cine.py` — the moving picture. A dark sky, one screen of star polygon
+* `cine.py`, the moving picture. A dark sky, one screen of star polygon
   geometry far back and out of focus, a defocused rosette in the foreground, a
   drifting star field, dust, a breathing lamp, grain and a vignette, plus a
   per card *subject*: `andromeda` (a faint cloud that blooms), `epicycles`
@@ -92,18 +92,18 @@ reading column is inset to x 96..926 rather than sitting on the safe edge.
   than an illustration competing with the words.
   Everything composites in numpy at 540x960 and is upscaled once: about 45 ms a
   frame, where a per pixel Python loop was five seconds.
-* `make.py` — the driver. `LOOKS` holds palette, {n/k} and subject per card.
+* `make.py`, the driver. `LOOKS` holds palette, {n/k} and subject per card.
   `python3 make.py [names]`, two to three minutes a reel. It refuses to render
   a card whose copy will not fit, and writes `out/noor-<name>-cover.jpg` beside
   the video: Instagram otherwise takes frame zero for the profile grid, which is
   the picture before a single word has arrived.
-* `webreel.py` — the renderer, and the audit that matters now:
+* `webreel.py`, the renderer, and the audit that matters now:
   `python3 webreel.py --audit` measures the alpha of the browser's own type
   layer (with the opening bloom and streak switched off, since they are light
   rather than information) every fifth frame of every card, so a word that
   bleeds while it is animating is caught, not just the resting layout.
   `python3 webreel.py [names]` audits first and renders only if everything fits.
-* `audit.py` — the same proof for the older Pillow type layer. It draws the type layer alone on black,
+* `audit.py`, the same proof for the older Pillow type layer. It draws the type layer alone on black,
   samples every fifth frame of every card, and fails if the bounding box of the
   ink leaves the rectangle. Because it measures pixels rather than the
   arithmetic that produced them, an overrun measure, one line too many, or two
@@ -111,11 +111,11 @@ reading column is inset to x 96..926 rather than sitting on the safe edge.
   writes `out/safe-zones.png`, the finished frames with each platform's
   furniture drawn over them. Run it before every render; `make.py` will not
   save a card that does not fit.
-* `geom.py` — Islamic star-polygon field generator, no external assets, so
+* `geom.py`, Islamic star-polygon field generator, no external assets, so
   nothing has a licence question. `python3 geom.py <seed> <palette> <n> <k> <out.png>`
   palettes: night dusk green sand. Star polygon {n/k}, inner radius
   R*cos(pi*k/n)/cos(pi*(k-1)/n).
-* `light_reel.py` — the type layer. Frames drawn in Pillow over whatever
+* `light_reel.py`, the type layer. Frames drawn in Pillow over whatever
   `cine.Cine` hands back, piped as rawvideo to ffmpeg. `render(cin, out, card,
   secs)`; anything with a `.frame(t)` returning a 1080x1920 picture will do.
   Card shape: {"eyebrow","hook","date","lines":[3 strings]}.
@@ -126,8 +126,8 @@ reading column is inset to x 96..926 rather than sitting on the safe edge.
   four lines, then body size 44..34 until the column fits the safe band
   (TOP_SAFE 300, BOTTOM_SAFE 1620, because Instagram and TikTok paint their own
   furniture over the rest).
-* `render.py` — the older wordless "Signs" format (out/signs-01..03.mp4).
-* `cards/*.json` — the four prototype scripts.
+* `render.py`, the older wordless "Signs" format (out/signs-01..03.mp4).
+* `cards/*.json`, the four prototype scripts.
 
 ## The next step if he approves
 Reel copy should be compressed offline, not at post time: 350 cards in

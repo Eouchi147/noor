@@ -166,7 +166,7 @@ git merge noor-v4
 git push origin main
 ```
 
-## v5 — "Clarity" (owner-requested audit)
+## v5: "Clarity" (owner-requested audit)
 
 Owner flagged sentences that were "not very english... not clear enough" (Khinzab's "personnel file", Dhul-Suwayqatayn's "appointment in its file"). Root cause: a recurring authorial tic of bureaucratic/corporate metaphors (file, ledger, dossier, audit, logistics, inventory, checklist...) plus a handful of garbled or over-compressed sentences.
 
@@ -176,7 +176,7 @@ Owner flagged sentences that were "not very english... not clear enough" (Khinza
 - Vocabulary sweep now returns **zero** hits for the whole metaphor family across all content.
 - i18n/en.json regenerated. All 55 e2e assertions pass.
 
-## v6 — "The Rose of Light" (hero, deeper mizan, Little Codex, Guide)
+## v6: "The Rose of Light" (hero, deeper mizan, Little Codex, Guide)
 
 **Hero rebuilt as a living illuminated composition.** On load, a point of light blooms ("Kun") and a great eightfold sacred-geometry rose draws itself stroke by stroke around the crescent: outer ring, tick ring, two interlocked squares, octagon, eight petal rings, star finials, plus a counter-rotating inner order. Then the whole rose turns imperceptibly (260s/190s), the halo breathes, نور ghost-glows with a light sweep, a conic ray-wheel turns behind it on desktop, and mist drifts over the dunes. All transform/opacity GPU animation; the draw is CSS stroke transitions (no JS animation loop added). Mobile gets its own tuning: 55% faster draw, tighter rose, no ray-wheel, existing DPR-capped canvas. Reduced motion: everything renders in final state.
 
@@ -184,14 +184,14 @@ Owner flagged sentences that were "not very english... not clear enough" (Khinza
 - What Follows You now carries the debt strip: martyr forgiven all but debt (Muslim 1886); the believer's soul attached to his debt until settled (Tirmidhi 1078, hasan).
 - New: Two Capitals, Spent Blind (Bukhari 6412) · Nothing Here Hurts for Free with falling gold leaves (Bukhari 5641; 5660 · Muslim 2571) · Shade on the Day There Is None, the seven shaded as chips (Bukhari 660 · Muslim 1031).
 
-**kids.html — "The Greatest Game" (Little Codex).** Seven tap-through superlative rounds (Fastest, Strongest, Biggest, Sees the Most, Most Giving, Most Loving, Lasts Longest): champions with hand-drawn flat SVGs each beaten by the next, ending every round at an ayah/sahih hadith and one of the Beautiful Names collected as a gem (54:50, 35:41, 2:255, 6:59, 14:34, Bukhari 5999, 57:3). Seven gems form the constellation finale ("Allahu Akbar"). Self-contained 63KB, zero deps, localStorage progress, no human figures anywhere. Linked from nav, mobile pills, and a hero CTA.
+**kids.html: "The Greatest Game" (Little Codex).** Seven tap-through superlative rounds (Fastest, Strongest, Biggest, Sees the Most, Most Giving, Most Loving, Lasts Longest): champions with hand-drawn flat SVGs each beaten by the next, ending every round at an ayah/sahih hadith and one of the Beautiful Names collected as a gem (54:50, 35:41, 2:255, 6:59, 14:34, Bukhari 5999, 57:3). Seven gems form the constellation finale ("Allahu Akbar"). Self-contained 63KB, zero deps, localStorage progress, no human figures anywhere. Linked from nav, mobile pills, and a hero CTA.
 
-**The Guide — a quiet clarifier, not a chatbot to chat with.** A small "؟ Unclear? Ask" pill appears ONLY on 33 sensitive chapters (Iblis's refusal, 4:157, the fitnah of the Companions, every major Sign, Hisab fairness, etc. + Iblis/Qarin/Harut-Marut seals). It opens three curated questions per topic (99 authored answers, all cited, mainstream, no fatwas: rulings are pointed to a scholar) plus free-text matching against the Q&As and a 43-term glossary. Data: noor-guide-data.js · UI: noor-guide.js (self-styling, i18n-ready keys).
+**The Guide: a quiet clarifier, not a chatbot to chat with.** A small "؟ Unclear? Ask" pill appears ONLY on 33 sensitive chapters (Iblis's refusal, 4:157, the fitnah of the Companions, every major Sign, Hisab fairness, etc. + Iblis/Qarin/Harut-Marut seals). It opens three curated questions per topic (99 authored answers, all cited, mainstream, no fatwas: rulings are pointed to a scholar) plus free-text matching against the Q&As and a 43-term glossary. Data: noor-guide-data.js · UI: noor-guide.js (self-styling, i18n-ready keys).
 **Optional live mode:** api/guide.js is a dormant Vercel function. Set `ANTHROPIC_API_KEY` in Vercel → the free-text box silently upgrades to real Claude answers, constrained to the open article, 2-3 sentences, no rulings. Without the key the site is 100% static and the curated layer answers alone. Nothing to configure otherwise.
 
 Tests: suite grown to 68 assertions (rose draw, 9 mizan cards, debt strip, seven chips, kids full round on mobile, guide pill gating on/off, glossary free-text). All pass. i18n/en.json regenerated (165 UI keys).
 
-## v7 — "Ten Wonders" (game pack, hero air)
+## v7: "Ten Wonders" (game pack, hero air)
 
 **Hero decluttered per owner.** The "From the Throne over the water..." subtitle moved out of the hero into the About section (same i18n key). The six stat boxes left the hero entirely: they are now a slim counter band (#codex-count) between the hero and Seven Books: horizontally scrollable chips on mobile, centered on desktop, same count-up. The rose now stands nearly alone: kicker, title, three CTAs.
 
@@ -209,7 +209,7 @@ kids.html gained a "More Wonders" grid (9 accent-ringed cards with ✓ done seal
 
 Tests: suite at 88 assertions, all green (hub cards, per-game smoke: clean load, overflow, dash, back-link).
 
-## v8 — "At-Tibb" (Prophetic Health page)
+## v8: "At-Tibb" (Prophetic Health page)
 
 New page **health.html** ("Health" in every nav): a scrollytelling portrait of the Prophet's ﷺ lived pattern through a health lens. Architecture: 8 sections with a fixed scrollspy dot rail (desktop), scroll-triggered infographics, and the page's signature **sunnah | science duo card** (gold lane: "He ﷺ" with exact citation; sage lane: "The research" with named field/finding, deliberately conservative).
 
@@ -217,7 +217,7 @@ Sections & anchors: 01 The Measure (animated vessel of thirds, Tirmidhi 2380; Bu
 
 Integration: nav links added on index (desktop + mobile pills) and all three hubs; UI_EN keys nav.health/health.*; health.html added to Tailwind content globs, tw.css rebuilt; i18n/en.json regenerated (169 UI keys). Tests: suite at 101 assertions, all green.
 
-## v9 — "Pocket Polish" (mobile UX hardening)
+## v9: "Pocket Polish" (mobile UX hardening)
 
 Owner's iPhone screenshot showed the page zoomed out with the old horizontally-scrolling counter band overflowing the layout. Fixes, all pages:
 - Viewport locked on every page (root + all kids/*): `maximum-scale=1.0, user-scalable=no, viewport-fit=cover`. No more accidental pinch/double-tap zoom and no Safari zoom-out-to-fit. (iOS accessibility zoom still works system-wide, by design.)
@@ -227,14 +227,14 @@ Owner's iPhone screenshot showed the page zoomed out with the old horizontally-s
 - `theme-color` metas everywhere (dark night tint for hero pages) so the browser chrome matches.
 All 101 e2e assertions green (band grid still satisfies the 6-chip and count-up checks).
 
-### v9.1 — nav wrap + scale lock + cache-bust
+### v9.1: nav wrap + scale lock + cache-bust
 
 Owner's second iPhone screenshot: page still auto-shrunk (white right gutter) and mobile nav pills ran off the right edge; counters stacked 1-per-row (stale CSS).
 - Root causes: (1) `minimum-scale` was unset, so iOS could still shrink-to-fit; now `minimum-scale=1.0` locks scale at exactly 1 on every page. (2) The mobile pill nav was a horizontal scroll strip; it is now a centered two-row wrap on all pages (nothing cut, no scroll container, Health pill added to hub strips). (3) vercel.json serves /assets immutable for a year with an unchanged filename, so phones held old tw.css (hence the stacked counters, `grid-cols-3` missing): all `tw.css`/`hub.css` links now carry `?v=9`; bump this query on any future CSS rebuild.
 - `overflow-x: clip` extended to html as well as body. Decorative hero layers that exceed the viewport are all inside `#hero{overflow:hidden}` (verified by element scan; document scrollWidth = 390 at 390).
 All 101 e2e assertions green. Note for the owner: after deploying, close and reopen the tab on the phone once so Safari drops the old cached CSS.
 
-## v10 — "Two Heroes" (the Strong Boy & the Island Girl story games, dedication, sponsor seal, Places mobile fix)
+## v10: "Two Heroes" (the Strong Boy & the Island Girl story games, dedication, sponsor seal, Places mobile fix)
 
 **Two flagship story games** in kids/, highlighted at the top of the Little Codex as gold "Hero Story" cards (sheen animation, character portraits):
 - **The Strong Boy and the Upper Hand** (strong.html, nk-strong): a shy, strong boy, five days before turning six. Each day: a training mini-game (pulse-hold bucket, rhythm lifts, L/R hill run, timing stone, rope swipes) then a choice moment where helping someone spends that strength (kitten, spilled dates, goose+kite, thirsty garden, and the peak: standing beside a laughed-at friend, no mechanics, just courage). Confidence meter physically straightens his posture pose by pose. Finale: light six candles, the وَلِيُّ اللّٰه badge, and exactly 10:62, Bukhari 1429 (the upper hand = the giving hand), Muslim 2664. Resumable by day.
@@ -249,7 +249,7 @@ All 101 e2e assertions green. Note for the owner: after deploying, close and reo
 
 Tests: 105 assertions green (hero cards, counter 12, adam/isla smoke in the games loop).
 
-## v11 — "Arcade Souls" (hero games rebuilt, nav unified)
+## v11: "Arcade Souls" (hero games rebuilt, nav unified)
 
 Owner feedback: swipe broken, art too plain, wanted Clash-Royale-grade compulsion. Both hero games fully rebuilt:
 - **Art:** chunky outlined toy-arcade style (thick #241a3d linework, soft 3D bevels, drop shadows, glare-capped 3D buttons with pressed states). both heroes redrawn as proper chibi characters (big expressive eyes with highlights, blush, kufi/buns, outlined limbs); poses still evolve with confidence.
@@ -261,11 +261,11 @@ Owner feedback: swipe broken, art too plain, wanted Clash-Royale-grade compulsio
 
 All e2e assertions green.
 
-### v11.1 — selection lock + scenic stages
+### v11.1: selection lock + scenic stages
 
 Owner's iPhone screenshot: long-pressing hold buttons triggered iOS text selection (whole card highlighted blue). Fix on every Little Codex page: global user-select none + -webkit-touch-callout none + user-drag none + contextmenu suppressed in both hero games. Visual pass on the Strong Boy game: every training/help stage now renders inside a scenic daylight panel (sky gradient, glowing sun, drifting cloud, ground shadow) so scenes read as places instead of floating clipart.
 
-## v12 — "Guardianship" (paid sponsor system + family anonymity)
+## v12: "Guardianship" (paid sponsor system + family anonymity)
 
 ### Family anonymity (owner request)
 All real family names removed from the site; only the ummah's names remain.
@@ -287,7 +287,7 @@ Design principle: **publishing = the owner's git push.** No dashboard writes to 
 
 **Money flow for the owner:** application lands in your inbox → you vet against the charter → agree the month + rate → walk the Console checklist → replace sponsor.js, push → live in ~1 min. Stripe is optional; invoice/e-transfer works today. To enable card payments: create a monthly Price in Stripe, set the two env vars in Vercel, redeploy.
 
-## v12.1 — "Many Rooms, One House" (per-market Guardians)
+## v12.1: "Many Rooms, One House" (per-market Guardians)
 
 Owner request: several revenues at once, for the same slot, in different markets.
 - **sponsor.js** rebuilt around `NOOR_SPONSORS.markets[]`: ordered market entries, each a full Guardian (name, line, url, dates, placements, halalAttested, approvedBy) plus matchers. **First live match wins.** Matchers, in priority order: exact hostname (noorcodex.ca), browser-language region (en-CA → CA), IANA timezone, catch-all. Detection runs entirely on the reader's device from passive signals; nothing is sent or stored, so the charter's no-tracking promise holds. Per-market live gates unchanged (active && name && halalAttested && inside [start,end)). Exposed: `NOOR_SPONSOR_PICK(host,tz,langs)` (pure resolver), `NOOR_SPONSOR_RENDER(force, marketId)`. Bar and seal carry `data-market`.
@@ -298,7 +298,7 @@ Owner request: several revenues at once, for the same slot, in different markets
 - e2e section [11] rewritten for markets: resolver priority (domain > language region > timezone > catch-all), device fall-through, escaping, attestation/date refusals, per-market console flow, add-market. Full suite green.
 - Domains: owner approved noorcodex.com ($11.25/yr) + noorcodex.ca ($16.99/yr); the session's Vercel token lacks purchase permission (Owner/Billing role required), so purchase happens from the owner's dashboard. IMPORTANT once owned: attach BOTH domains to the Vercel project WITHOUT redirecting .ca → .com, so the .ca hostname reaches readers and the CA market matcher fires on the typed domain.
 
-## v102 — "The Verse, and the Reciter Who Keeps Up"
+## v102: "The Verse, and the Reciter Who Keeps Up"
 
 Three things the owner asked for, and one a reader reported.
 
@@ -345,17 +345,17 @@ node tests/mushaf.mjs                  # player + verse layer  (server on 8433)
 node tests/e2e.mjs                     # whole site            (server on 8123)
 ```
 
-## v105 — "Three Lives" (a room that puts one life beside another)
+## v105: "Three Lives" (a room that puts one life beside another)
 
-Owner request: a section that puts life in perspective, with animated infographics, showing three things — a day with every obligatory and voluntary box ticked, the worst life a human being can live described raw and without censorship while staying respectful, and a balanced life anyone can reach.
+Owner request: a section that puts life in perspective, with animated infographics, showing three things: a day with every obligatory and voluntary box ticked, the worst life a human being can live described raw and without censorship while staying respectful, and a balanced life anyone can reach.
 
-**The sorting is not ours.** Al-Waqi'ah does it by name: *"and you become of three kinds"* (56:7-10) — the foremost, the companions of the right, the companions of the left. Each section is one of the three, so the room is a reading of a surah rather than an invented scheme.
+**The sorting is not ours.** Al-Waqi'ah does it by name: *"and you become of three kinds"* (56:7-10): the foremost, the companions of the right, the companions of the left. Each section is one of the three, so the room is a reading of a surah rather than an invented scheme.
 
-**One — The full ledger.** Twenty five entries, eleven obligatory and fourteen voluntary, every one ticked, every one from the sources. Then, from the sources and not from opinion, three ways a complete ledger still fails: it can be paid out entirely to the people you wronged (*al-muflis*, Muslim 2581); the three most impressive entries in it are the three named in the hadith of the first three thrown into the Fire (Muslim 1905); and some of it was never asked of you — the three who thought his worship too little and were told *whoever turns away from my way is not of me* (Bukhari 5063). The section is deliberately a trap, because it is the life most people aim at.
+**One: The full ledger.** Twenty five entries, eleven obligatory and fourteen voluntary, every one ticked, every one from the sources. Then, from the sources and not from opinion, three ways a complete ledger still fails: it can be paid out entirely to the people you wronged (*al-muflis*, Muslim 2581); the three most impressive entries in it are the three named in the hadith of the first three thrown into the Fire (Muslim 1905); and some of it was never asked of you: the three who thought his worship too little and were told *whoever turns away from my way is not of me* (Bukhari 5063). The section is deliberately a trap, because it is the life most people aim at.
 
-**Two — The worst life.** Written without softening, because a reader in it will recognise a flinch and close the page. The Qur'an locates the worst life away from poverty and pain: *ma'ishatan danka*, a constricted living (20:124). The portrait is a comfortable, likeable, sixty-one-year-old man who has never once run a sentence with himself as its subject — no group named, nothing gratuitous, nothing graphic, and no consolation offered until the sources offer it. Then the three the sources single out by name: the supplication of the oppressed with no veil between it and Allah (Bukhari 1496), severed kinship (Bukhari 5984), the orphan's wealth eaten as fire (4:10). Then the door, which is not optional to include: the man who killed a hundred and was forgiven **on the road, having completed nothing** (Bukhari 3470, Muslim 2766), 39:53, and the death-rattle hadith. A `.care` block follows: if what holds you is addiction, spiralling debt, or having stopped wanting to be here, that is a doctor and a trusted person this week, not a matter of praying harder.
+**Two: The worst life.** Written without softening, because a reader in it will recognise a flinch and close the page. The Qur'an locates the worst life away from poverty and pain: *ma'ishatan danka*, a constricted living (20:124). The portrait is a comfortable, likeable, sixty-one-year-old man who has never once run a sentence with himself as its subject: no group named, nothing gratuitous, nothing graphic, and no consolation offered until the sources offer it. Then the three the sources single out by name: the supplication of the oppressed with no veil between it and Allah (Bukhari 1496), severed kinship (Bukhari 5984), the orphan's wealth eaten as fire (4:10). Then the door, which is not optional to include: the man who killed a hundred and was forgiven **on the road, having completed nothing** (Bukhari 3470, Muslim 2766), 39:53, and the death-rattle hadith. A `.care` block follows: if what holds you is addiction, spiralling debt, or having stopped wanting to be here, that is a doctor and a trusted person this week, not a matter of praying harder.
 
-**Three — The balanced life.** 56:39-40 says the companions of the right are a multitude from the former peoples *and* a multitude from the later ones, while the verses just above thin the foremost to *a few* of the later — the Qur'an makes the distinction openly, and that door was not narrowed. The floor is concrete and stated as a list you could start tonight, built on Salman's three rights confirmed by the Prophet ﷺ (Bukhari 1968), the small consistent deed ranked *above* the large discontinuous one (Bukhari 6464, Muslim 783), and the pass of Al-Balad, which the Qur'an defines and then names its people: *those are the companions of the right* (90:10-18).
+**Three: The balanced life.** 56:39-40 says the companions of the right are a multitude from the former peoples *and* a multitude from the later ones, while the verses just above thin the foremost to *a few* of the later; the Qur'an makes the distinction openly, and that door was not narrowed. The floor is concrete and stated as a list you could start tonight, built on Salman's three rights confirmed by the Prophet ﷺ (Bukhari 1968), the small consistent deed ranked *above* the large discontinuous one (Bukhari 6464, Muslim 783), and the pass of Al-Balad, which the Qur'an defines and then names its people: *those are the companions of the right* (90:10-18).
 
 **Seventeen animated figures** (six at first release, eleven added in the expansion), all authored so the still frame is already the true picture. Six use the shared kit in `assets/anim.css`; the other eleven needed motions the kit does not have, and those live in the room's own stylesheet rather than in the shared one, so no other page carries their weight:
 
@@ -366,7 +366,7 @@ Owner request: a section that puts life in perspective, with animated infographi
 - the three rights, none at full and none at nothing, which is the finding and not a failure of the drawing
 - the small act that does not stop, on the endless track
 
-Added in the expansion: **three roads** leaving one point, the surah's own three kinds drawn; **one act, two intentions, two destinations** (Bukhari 1); **the three of Muslim 1905** side by side, each with what he was told; **an illustration, not a chart** — a man, a screen and two walls that have closed in, which is *ma'ishatan danka* drawn; **the counting that only stops at the graves** (102:1-2); **the supplication rising through seven veils that do not stop it** (Bukhari 1496); **the heart polished clean**, the rust figure run backwards, whose still frame is the clean heart because that is where it ends; **the steep pass of Al-Balad** climbed one named step at a time; **a year drawn two ways**, four weeks lit against fifty two; **the balance settling**, weighed to the mustard seed (21:47); and **the two records**, each man's first sentence quoted (69:19-27).
+Added in the expansion: **three roads** leaving one point, the surah's own three kinds drawn; **one act, two intentions, two destinations** (Bukhari 1); **the three of Muslim 1905** side by side, each with what he was told; **an illustration, not a chart**: a man, a screen and two walls that have closed in, which is *ma'ishatan danka* drawn; **the counting that only stops at the graves** (102:1-2); **the supplication rising through seven veils that do not stop it** (Bukhari 1496); **the heart polished clean**, the rust figure run backwards, whose still frame is the clean heart because that is where it ends; **the steep pass of Al-Balad** climbed one named step at a time; **a year drawn two ways**, four weeks lit against fifty two; **the balance settling**, weighed to the mustard seed (21:47); and **the two records**, each man's first sentence quoted (69:19-27).
 
 A closing section, **"Where the three arrive"**, was added: the scale as an instrument of exactness rather than of threat, why that exactness is the mercy (99:7-8), the two records, and Al-Qari'ah's plain statement of the two outcomes.
 
@@ -376,7 +376,7 @@ A closing section, **"Where the three arrive"**, was added: the scale as an inst
 
 Menu: added under **Live**. `scripts/nav49.py` regenerated across 53 pages; `good-life` now links across to it. **All 121 e2e assertions green, all 42 Mushaf assertions green** after the nav rewrite.
 
-## v108 — "The Lantern's real fault, the console rebuilt, and the manual"
+## v108: "The Lantern's real fault, the console rebuilt, and the manual"
 
 ### The Lantern
 

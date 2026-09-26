@@ -1,4 +1,4 @@
-# NOOR · Codex of Light — the brief
+# NOOR · Codex of Light, the brief
 
 Read this first. It is what the keeper of this library would tell a new pair
 of hands on day one, so that no session starts from a summary. Correct it
@@ -152,12 +152,12 @@ tells him what to drag and what to press. Not before.
 
 ## The map
 
-- `OPERATIONS.md` — how the house runs day to day, the money, the consoles.
-- `tools/reels/README.md` — the reels, end to end.
-- `api/` — the machinery; each file opens with why it exists.
-- `tests/` — one file per promise; run any of them on its own.
+- `OPERATIONS.md`: how the house runs day to day, the money, the consoles.
+- `tools/reels/README.md`: the reels, end to end.
+- `api/`: the machinery; each file opens with why it exists.
+- `tests/`: one file per promise; run any of them on its own.
 - `lights/all.json`, `build/dict-*.json`, `api/_calendar.js`,
-  `assets/menu-index.json` — the sources every generated thing draws from.
+  `assets/menu-index.json`: the sources every generated thing draws from.
 
 ## What is next
 

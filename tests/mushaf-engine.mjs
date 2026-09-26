@@ -12,7 +12,7 @@
        says so, and play resumes from it -- it is never passed over
      · the first tap blesses both players, so later verses need no gesture
 
-   Needs the static server:  python3 /tmp/vercelish.py . 8433
+   Needs the static server:  python3 /tmp/vercelish.py 8433 .
    Then:                     node tests/mushaf-engine.mjs
 */
 import { chromium } from 'playwright';

@@ -42,7 +42,7 @@ console.log('\n=== 2. nothing in the library is undrawable ===');
     if (r.missing.length) bad.push(l.id + ' ' + f + ': ' + r.missing.join(''));
   }
   ok(bad.length === 0, 'every character of all ' + LIB.length + ' cards is in the shipped faces' +
-     (bad.length ? ' (' + bad.slice(0, 3).join('; ') + ' — run scripts/gen-card-fonts.py)' : ''));
+     (bad.length ? ' (' + bad.slice(0, 3).join('; ') + ': run scripts/gen-card-fonts.py)' : ''));
 }
 
 console.log('\n=== 3. the PNG path produces an actual PNG ===');

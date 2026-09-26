@@ -337,7 +337,7 @@ connections:[51,53,48]
 titleEn:"Ad-Dukhan — The Smoke",
 titleAr:"الدخان",
 metric:"“A visible smoke” — 44:10",
-summary:"The sky brings a visible smoke covering the people — and the plea arrives one node late.",
+summary:"The sky brings a visible smoke covering the people — and the plea arrives too late.",
 details:`"Then watch for the Day the sky brings a visible smoke, covering the people — this is a painful punishment. 'Our Lord, remove from us the punishment; indeed, we are believers.'" Surat ad-Dukhan holds the sign in four verses shaped like a dialogue: the sky produces; mankind pleads; and the answer arrives with the coldest question in the Qur'an — "How can there be reminder for them, when a clear Messenger already came to them, and they turned away?"
 
 The Codex records the exegetical file with both of its layers, because the companions themselves held both. Ibn Mas'ud read the smoke as already fulfilled: the famine Quraysh suffered after the Prophet's ﷺ du'a, when a man looked at the sky and saw something like smoke from hunger — and he anchored it to the verse's continuation, "We will remove the punishment a little; you will revert." Others among the companions and the majority of later scholarship held the smoke to be a still-future sign of the Hour — and this is fixed by the hadith of Hudhayfah ibn Asid in Sahih Muslim, where the Prophet ﷺ counts the Ten and names the smoke among them, in the same breath as {{n:48|the Dajjal}} and {{n:51|the sun from the west}}. Both readings can stand: a near fulfillment as a specimen, a far fulfillment as the sign itself — a pattern the Qur'an uses elsewhere, and the Codex flags honestly rather than flattening.

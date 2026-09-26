@@ -6,7 +6,21 @@
    draw, that nothing scrolls sideways, that no script throws, and that each
    button asks the server for exactly what its label says.
 
-   Run:  python3 /tmp/vercelish.py . 8231 &   node tests/console2.mjs
+   Run:  python3 /tmp/vercelish.py 8231 <the repo root> &   node tests/console2.mjs
+
+   Found 26 September 2026: the line above used to read "vercelish.py . 8231",
+   port and root swapped from what the server actually takes (port first,
+   then the folder to serve; see /tmp/vercelish.py itself). That argument
+   order makes the server crash on the int(".") before it ever binds the
+   port, so whoever ran the command literally got either nothing listening
+   on :8231 or, worse, an older vercelish.py left over from a previous
+   session still bound to that port and serving a stale checkout. Either
+   way the browser was talking to the wrong (or no) admin2.html, and the
+   symptom looked exactly like a hang deep in the run: a waitForSelector
+   for a room's own card timing out well after the gate and Today had
+   already drawn correctly from whatever was actually being served. The
+   suite itself was never at fault: a full run against the current file,
+   served correctly, passes end to end in under 2m20s.
 */
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';

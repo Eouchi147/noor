@@ -282,7 +282,23 @@ console.log('\nautonomous actions: the two real ones execute and log an undo rec
   ok(emittedActions === 2, 'every executed action is emitted to the stream, once each: ' + emittedActions);
 
   const r3 = await A.runAction({ kind: 'action', name: 'lineup-change', args: { slot: 'reelD' }, why: 'reorder the afternoon reel' }, { tools: {}, ledger: makeLedger(0), emit });
-  ok(r3.kind === 'proposal' && r3.proposal.description.includes('no existing, safe'), 'a lineup change is never an autonomous action, only a proposal, and says why');
+  ok(r3.kind === 'proposal' && r3.proposal.reason.includes('no safe autonomous mechanism'), 'a lineup change is never an autonomous action, only a proposal, and says why');
+  ok(!A.lineupArgsConcrete({ slot: 'reelD' }) && /No exact slot, date/.test(r3.proposal.description),
+    'vague args (no date, no action) are still record-only, and the description says what is missing: ' + r3.proposal.description);
+
+  /* api/_lineup.js's own door exists now (26 September 2026), so a
+     lineup-change proposal that names a real date, slot and action gets a
+     different description, one that says approving it applies at once --
+     this file itself never applies anything (that is
+     api/lantern-agent.js's own approve door, tested against a real store
+     in tests/lineup.mjs), it only has to describe the proposal honestly. */
+  const concrete = { date: '2026-10-01', slot: 'reelB', action: 'skip' };
+  ok(A.lineupArgsConcrete(concrete), 'a real date, a real reel slot and skip are concrete enough to apply');
+  ok(!A.lineupArgsConcrete({ date: '2026-10-01', slot: 'reelB', action: 'swap' }), 'a swap with no id is not concrete');
+  ok(A.lineupArgsConcrete({ date: '2026-10-01', slot: 'reelB', action: 'swap', id: 'verse-9' }), 'a swap with an id is concrete');
+  const r3c = await A.runAction({ kind: 'action', name: 'lineup-change', args: concrete, why: 'the shelf shows it landed badly' }, { tools: {}, ledger: makeLedger(0), emit });
+  ok(r3c.kind === 'proposal' && /applies it at once/.test(r3c.proposal.description),
+    'a concrete lineup-change proposal says approving it applies at once: ' + r3c.proposal.description);
 
   const r3b = await A.runAction({ kind: 'action', name: 'experiment-plan', args: { id: 'verse-length' }, why: 'the owner asked to start a test' }, { tools: {}, ledger: makeLedger(0), emit });
   ok(r3b.kind === 'proposal' && !A.ACTION_TYPES.includes('experiment-plan'), 'starting an experiment is likewise never an autonomous action: ' + JSON.stringify(A.ACTION_TYPES));
@@ -547,10 +563,20 @@ function pipeline(cmds) {
     return { result: null };
   });
 }
+/* a single switch this file's own undo tests flip to prove the fail-closed
+   promise on the READ side of an undo (2026-09-26 review, second round,
+   MEDIUM finding): only the override's own GET fails, exactly the way a
+   real Upstash outage would answer one bad key (viaRest throws on a
+   non-ok response, api/_kv.js) -- the ledger's own lookup (a different
+   key entirely) still answers normally, so this proves the undo's own
+   read refuses, not some other call failing first and masking it. */
+let FAIL_OVERRIDE_GET = false;
 globalThis.fetch = async (url, opt) => {
   const u = String(url);
   if (u.startsWith('https://kv.lantern-agent.test')) {
     const body = JSON.parse(opt.body);
+    if (FAIL_OVERRIDE_GET && Array.isArray(body) && body.some(c => c[0] === 'GET' && String(c[1]).startsWith('nsoc:override:')))
+      return { ok: false, status: 500, json: async () => ({}) };
     return { ok: true, status: 200, json: async () => pipeline(body) };
   }
   throw new Error('unexpected network call in a test that promises none: ' + u);
@@ -703,6 +729,173 @@ console.log('\nthe proposal door: approve and decline');
   await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'decline', id: 'prop-2' } }, resDecline);
   ok(resDecline.body.ok === true, 'declining a proposal is a plain ok');
   ok((lists.get('nlan:proposals') || []).length === 0, 'a declined proposal is removed from the open list');
+}
+
+console.log('\na CONCRETE lineup-change proposal applies through api/_lineup.js\'s own door, and undo restores it (26 September 2026)');
+{
+  /* a real card off the real shelf (reels/index.json, read locally by
+     api/page.js's own manifest()), so validateOverride's own checks --
+     the card exists, and belongs to reelB's evening half -- are met by
+     something real, not a fixture invented for this test */
+  const today = new Date().toISOString().slice(0, 10);
+  const cardId = 'abdurrahman-ibn-awf-market';
+  const p3 = { id: 'prop-3', type: 'other', requested: 'lineup-change',
+    args: { date: today, slot: 'reelB', action: 'swap', id: cardId },
+    why: 'the owner asked for a calmer evening reel', reason: 'no safe autonomous mechanism exists for this in the current build',
+    description: 'Swap reelB on ' + today + ' for ' + cardId + '.', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p3)]);
+
+  const resApprove = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-3' } }, resApprove);
+  ok(resApprove.body && resApprove.body.ok === true && resApprove.body.executed === true,
+    'a concrete swap is applied, not merely recorded: ' + JSON.stringify(resApprove.body));
+  const stored = JSON.parse(strings.get('nsoc:override:' + today) || '{}');
+  ok(stored.reelB && stored.reelB.action === 'swap' && stored.reelB.id === cardId && stored.reelB.by === 'lantern-approved',
+    'the override itself is written, attributed to the owner\'s own approval: ' + JSON.stringify(stored));
+  ok((lists.get('nlan:proposals') || []).length === 0, 'the applied proposal leaves the open list');
+  const entryId = resApprove.body.entry && resApprove.body.entry.id;
+  ok(entryId && resApprove.body.entry.undo && resApprove.body.entry.undo.kind === 'lineup-revert' && resApprove.body.entry.before === null,
+    'the ledger entry records a lineup-revert undo and the prior override, null since there was none: ' + JSON.stringify(resApprove.body.entry));
+
+  const resUndo = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'undo', id: entryId } }, resUndo);
+  ok(resUndo.body && resUndo.body.ok === true, 'undo answers ok: ' + JSON.stringify(resUndo.body));
+  ok(!strings.has('nsoc:override:' + today) || Object.keys(JSON.parse(strings.get('nsoc:override:' + today) || '{}')).length === 0,
+    'and the override is gone again, restoring the day to how it stood before the approval');
+
+  /* a vague lineup-change, side by side with the concrete one just proven:
+     still record-only, exactly as before this door existed */
+  const p4 = { id: 'prop-4', type: 'other', requested: 'lineup-change', args: { slot: 'reelB' },
+    why: '', reason: 'no safe autonomous mechanism exists for this in the current build', description: 'vague', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p4)]);
+  const resVague = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-4' } }, resVague);
+  ok(resVague.body && resVague.body.ok === true && resVague.body.executed === false,
+    'a vague lineup-change is still record-only: ' + JSON.stringify(resVague.body));
+}
+
+console.log('\nundo restores the exact prior entry, byte for byte -- never a fresh stamp (2026-09-26 review, MEDIUM finding)');
+{
+  const today2 = new Date().toISOString().slice(0, 10);
+  const priorEntry = { action: 'skip', at: '2020-01-01T00:00:00.000Z', by: 'owner', note: 'a much older decision' };
+  strings.set('nsoc:override:' + today2, JSON.stringify({ reelB: priorEntry }));
+
+  const cardId2 = 'abdurrahman-ibn-awf-market';
+  const p5 = { id: 'prop-5', type: 'other', requested: 'lineup-change',
+    args: { date: today2, slot: 'reelB', action: 'swap', id: cardId2 },
+    why: 'a second, different request', reason: 'no safe autonomous mechanism exists for this in the current build',
+    description: 'Swap reelB on ' + today2 + ' for ' + cardId2 + '.', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p5)]);
+
+  const resApprove = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-5' } }, resApprove);
+  ok(resApprove.body && resApprove.body.ok === true && resApprove.body.executed === true,
+    'the second, different swap is applied over the pre-existing skip: ' + JSON.stringify(resApprove.body));
+  ok(resApprove.body.entry.before && resApprove.body.entry.before.action === 'skip' && resApprove.body.entry.before.note === 'a much older decision',
+    'the ledger\'s own before is the exact prior entry, not a guess: ' + JSON.stringify(resApprove.body.entry.before));
+
+  const entryId5 = resApprove.body.entry.id;
+  const resUndo5 = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'undo', id: entryId5 } }, resUndo5);
+  ok(resUndo5.body && resUndo5.body.ok === true, 'undo answers ok: ' + JSON.stringify(resUndo5.body));
+  const restored = JSON.parse(strings.get('nsoc:override:' + today2) || '{}').reelB;
+  ok(restored && restored.at === priorEntry.at && restored.by === priorEntry.by && restored.note === priorEntry.note && restored.action === 'skip',
+    'the restored entry is byte for byte the one that stood before, not a fresh stamp: ' + JSON.stringify(restored));
+
+  strings.delete('nsoc:override:' + today2);
+}
+
+console.log('\nundo refuses when the slot was changed again since the approval it is undoing (2026-09-26 review, MEDIUM finding)');
+{
+  const today3 = new Date().toISOString().slice(0, 10);
+  strings.delete('nsoc:override:' + today3);
+  const cardId3 = 'abdurrahman-ibn-awf-market';
+  const p6 = { id: 'prop-6', type: 'other', requested: 'lineup-change',
+    args: { date: today3, slot: 'reelB', action: 'swap', id: cardId3 },
+    why: 'a third request', reason: 'no safe autonomous mechanism exists for this in the current build',
+    description: 'Swap reelB on ' + today3 + ' for ' + cardId3 + '.', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p6)]);
+  const resApprove = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-6' } }, resApprove);
+  ok(resApprove.body && resApprove.body.ok === true, 'the third swap is applied: ' + JSON.stringify(resApprove.body));
+  const entryId6 = resApprove.body.entry.id;
+
+  /* the owner's own hand, after the approval, through the console's own
+     Change control: a different decision on the very same slot, never
+     seen by the entry this undo is about to be asked to reverse */
+  strings.set('nsoc:override:' + today3, JSON.stringify(
+    { reelB: { action: 'skip', at: new Date(Date.now() + 5000).toISOString(), by: 'owner', note: 'the owner changed their mind by hand' } }));
+
+  const resUndo6 = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'undo', id: entryId6 } }, resUndo6);
+  ok(resUndo6.body && resUndo6.body.ok === false && /changed again since/.test(resUndo6.body.error),
+    'the undo refuses rather than silently discarding the owner\'s own later decision: ' + JSON.stringify(resUndo6.body));
+  const stillThere = JSON.parse(strings.get('nsoc:override:' + today3) || '{}').reelB;
+  ok(stillThere && stillThere.note === 'the owner changed their mind by hand', 'and the owner\'s own later override is left untouched');
+  strings.delete('nsoc:override:' + today3);
+}
+
+console.log('\nundo refuses the RESTORE branch too when the slot was changed again since, never overwriting a later console change with the older entry (2026-09-26 review, second round, MEDIUM finding)');
+{
+  /* before this fix, only the clear branch (no `before`) checked at+by
+     against what this approval itself wrote; the restore branch (a
+     `before` to put back) skipped that check entirely and would clobber
+     whatever the owner had since set by hand with the OLDER entry. */
+  const today4 = new Date().toISOString().slice(0, 10);
+  const priorEntry = { action: 'skip', at: '2020-01-01T00:00:00.000Z', by: 'owner', note: 'an older decision, before the approval' };
+  strings.set('nsoc:override:' + today4, JSON.stringify({ reelB: priorEntry }));
+  const cardId4 = 'abdurrahman-ibn-awf-market';
+  const p7 = { id: 'prop-7', type: 'other', requested: 'lineup-change',
+    args: { date: today4, slot: 'reelB', action: 'swap', id: cardId4 },
+    why: 'a fourth request', reason: 'no safe autonomous mechanism exists for this in the current build',
+    description: 'Swap reelB on ' + today4 + ' for ' + cardId4 + '.', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p7)]);
+  const resApprove = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-7' } }, resApprove);
+  ok(resApprove.body && resApprove.body.ok === true && resApprove.body.entry.before && resApprove.body.entry.before.note === priorEntry.note,
+    'the fourth swap is applied over the older entry: ' + JSON.stringify(resApprove.body && resApprove.body.entry));
+  const entryId7 = resApprove.body.entry.id;
+
+  /* the owner's own hand, after the approval, through the console's own
+     Change control -- a third decision this undo has never seen */
+  const ownersLater = { action: 'skip', at: new Date(Date.now() + 5000).toISOString(), by: 'owner', note: 'the owner changed it again by hand' };
+  strings.set('nsoc:override:' + today4, JSON.stringify({ reelB: ownersLater }));
+
+  const resUndo7 = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'undo', id: entryId7 } }, resUndo7);
+  ok(resUndo7.body && resUndo7.body.ok === false && /changed again since/.test(resUndo7.body.error),
+    'the restore itself refuses, the same message the clear branch already gave: ' + JSON.stringify(resUndo7.body));
+  const stillThere = JSON.parse(strings.get('nsoc:override:' + today4) || '{}').reelB;
+  ok(stillThere && stillThere.note === ownersLater.note, 'and the owner\'s own later override is left exactly as it was, never overwritten by the older entry: ' + JSON.stringify(stillThere));
+  strings.delete('nsoc:override:' + today4);
+}
+
+console.log('\nundo refuses outright on a KV fault, never marks itself undone while the override still stands (2026-09-26 review, second round, MEDIUM finding)');
+{
+  const today5 = new Date().toISOString().slice(0, 10);
+  strings.delete('nsoc:override:' + today5);
+  const cardId5 = 'abdurrahman-ibn-awf-market';
+  const p8 = { id: 'prop-8', type: 'other', requested: 'lineup-change',
+    args: { date: today5, slot: 'reelB', action: 'swap', id: cardId5 },
+    why: 'a fifth request', reason: 'no safe autonomous mechanism exists for this in the current build',
+    description: 'Swap reelB on ' + today5 + ' for ' + cardId5 + '.', at: new Date().toISOString() };
+  lists.set('nlan:proposals', [JSON.stringify(p8)]);
+  const resApprove = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'approve', id: 'prop-8' } }, resApprove);
+  ok(resApprove.body && resApprove.body.ok === true, 'the fifth swap is applied: ' + JSON.stringify(resApprove.body));
+  const entryId8 = resApprove.body.entry.id;
+  const beforeUndo = JSON.parse(strings.get('nsoc:override:' + today5) || '{}').reelB;
+
+  FAIL_OVERRIDE_GET = true;
+  const resUndo8 = fakeRes();
+  await LA.default({ method: 'POST', query: {}, headers: { cookie: cookieFor(process.env.ADMIN_SECRET) }, body: { action: 'undo', id: entryId8 } }, resUndo8);
+  FAIL_OVERRIDE_GET = false;
+  ok(resUndo8.body && resUndo8.body.ok === false && /could not be read/.test(resUndo8.body.error),
+    'the undo refuses outright rather than guessing the slot is empty: ' + JSON.stringify(resUndo8.body));
+  const stillThere = JSON.parse(strings.get('nsoc:override:' + today5) || '{}').reelB;
+  ok(stillThere && stillThere.id === beforeUndo.id && stillThere.at === beforeUndo.at,
+    'and the override this approval wrote is exactly where it was, never cleared on a fault it never actually confirmed: ' + JSON.stringify(stillThere));
+  strings.delete('nsoc:override:' + today5);
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

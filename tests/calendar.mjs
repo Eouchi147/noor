@@ -21,7 +21,7 @@ console.log("\n=== 1. an unreachable calendar says nothing rather than guessing 
   ok(!plan.slots.includes("dawn"), "the dated slot is dropped");
   ok(!plan.slots.includes("lead"), "the countdown is dropped");
   ok(plan.slots.includes("word") && plan.slots.includes("dusk"),
-     "but the undated slots still run — the site keeps talking");
+     "but the undated slots still run, the site keeps talking");
 }
 
 console.log("\n=== 2. a malformed answer is refused, not parsed hopefully ===");
@@ -97,7 +97,7 @@ console.log("\n=== 6. the Lantern may not touch any of it ===");
   const all = [...Object.values(C.FIXED), ...C.RECURRING];
   const loose = all.filter(o => !CITED.has(o.lvl));
   ok(loose.length === 0, "every observance is at a level the polish guard refuses"
-     + (loose.length ? " — loose: " + loose.map(o => o.key).join(",") : ""));
+     + (loose.length ? ", loose: " + loose.map(o => o.key).join(",") : ""));
 }
 
 console.log("\n=== 7. a cron that was down does not empty a backlog into the feed ===");
@@ -188,7 +188,7 @@ console.log("\n=== 12. reddit is a hand-off, not a rate-limited bot ===");
   const cooling = await CH.sendReddit(shaped, { lastRedditAt: new Date(Date.now() - 3 * 86400000).toISOString() });
   ok(cooling.cooling === true && cooling.links.length === 0,
      "inside the cooling period the links are withheld, not just labelled");
-  ok(/11 more day/.test(cooling.err), "and it says how long is left — " + cooling.err);
+  ok(/11 more day/.test(cooling.err), "and it says how long is left: " + cooling.err);
 
   const after = await CH.sendReddit(shaped, { lastRedditAt: new Date(Date.now() - 20 * 86400000).toISOString() });
   ok(after.cooling === false && after.links.length === 3, "past the window the links come back");

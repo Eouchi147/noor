@@ -6,7 +6,7 @@
    send ONE network rather than the slot, and that Post now -- which would post
    it twice -- is not what a half-failed row leads with.
 
-   Run:  python3 /tmp/vercelish.py . 8231 &   node tests/socialrow.mjs
+   Run:  python3 /tmp/vercelish.py 8231 . &   node tests/socialrow.mjs
 */
 import { chromium } from 'playwright';
 const BASE = process.env.NOOR_BASE || 'http://127.0.0.1:8231';

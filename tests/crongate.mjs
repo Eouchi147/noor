@@ -3,7 +3,7 @@
    the secret in a header. A Vercel cron sends neither. So the hourly job that
    delivers the day's posts was answered 401 every hour from the moment it
    shipped, and not one of the four daily slots ever ran. Everything upstream
-   was correct — the calendar, the schedule, the composed posts — and none of it
+   was correct (the calendar, the schedule, the composed posts) and none of it
    left the building.
 
    These tests drive the real handler with real request shapes. */
