@@ -81,5 +81,34 @@ console.log("\n=== the owner still gets in the ordinary way ===");
   ok(r.code !== 401, "the console's signed cookie still works (got " + r.code + ")");
 }
 
+/* the Soul's own tick (api/soul.js, 2 October 2026) keeps the same rule:
+   with CRON_SECRET set, its bearer is the only proof, and it opens the tick
+   alone, never a view and never a POST */
+console.log("\n=== the Soul's tick: the bearer, and only for the tick ===");
+{
+  const soul = (await import("../api/soul.js")).default;
+  const scall = async (req) => { const r = res(); r.send = b => { r.body = b; return r; }; await soul({ method: "GET", headers: {}, query: {}, ...req }, r); return r; };
+  let r = await scall({ query: { action: "tick" }, headers: { authorization: "Bearer " + process.env.CRON_SECRET } });
+  ok(r.code !== 401, "a correct CRON_SECRET bearer is admitted to the soul's tick (got " + r.code + ")");
+  r = await scall({ query: { action: "tick" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code === 401, "the vercel-cron user agent alone is refused while a secret is set (got " + r.code + ")");
+  r = await scall({ query: { action: "tick" }, headers: { "x-vercel-signature": "abc" } });
+  ok(r.code === 401, "so is the signature header alone");
+  r = await scall({ query: { action: "tick" }, headers: { authorization: "Bearer wrong-secret-here" } });
+  ok(r.code === 401, "a wrong bearer is refused");
+  r = await scall({ query: { action: "tick" }, headers: {} });
+  ok(r.code === 401, "an anonymous tick is refused");
+  for (const view of ["today", "audit", "cycle", "scorecard"]) {
+    r = await scall({ query: { view }, headers: { authorization: "Bearer " + process.env.CRON_SECRET } });
+    ok(r.code === 401, "the bearer cannot read view=" + view);
+  }
+  r = await scall({ method: "POST", query: {}, headers: { authorization: "Bearer " + process.env.CRON_SECRET }, body: { action: "run" } });
+  ok(r.code === 401, "the bearer cannot POST (no run, pause or undo)");
+  const saved = process.env.CRON_SECRET; delete process.env.CRON_SECRET;
+  r = await scall({ query: { action: "tick" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code !== 401, "with no secret set, the vercel-cron agent is admitted to the tick");
+  process.env.CRON_SECRET = saved;
+}
+
 console.log("\n" + pass + " passed, " + fail + " failed");
 process.exit(fail ? 1 : 0);

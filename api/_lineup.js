@@ -47,6 +47,13 @@ import { isRealDate, biasFor } from "./_experiments.js";
 import { readManifest } from "./_reels.js";
 
 export const K_OVERRIDE = d => "nsoc:override:" + d;
+/* the three actors an override can carry: the owner by hand, a Lantern
+   proposal the owner approved, and the Soul (SOUL.md, its R2 line-up hands,
+   council approved). The Soul is never written down as the owner: every
+   record, the console and the poster's own slot record say which it was. */
+export const ACTORS = Object.freeze(["owner", "lantern-approved", "soul"]);
+export const actorOf = v => (ACTORS.includes(v) ? v : "owner");
+export const actorLabel = by => (by === "soul" ? "the Soul" : by === "lantern-approved" ? "the Lantern, approved by the owner" : "the owner");
 export const MAX_DAYS_AHEAD = 7;
 
 /* the same key format api/social.js's own K_SLOT writes and reads. Kept
@@ -73,7 +80,7 @@ const DUP_WINDOW_DAYS = Number(process.env.DUP_WINDOW_DAYS) > 0 ? Number(process
 function sanitizeEntry(v) {
   if (!v || typeof v !== "object") return null;
   const at = typeof v.at === "string" ? v.at : "";
-  const by = v.by === "lantern-approved" ? "lantern-approved" : "owner";
+  const by = actorOf(v.by);
   const note = typeof v.note === "string" ? v.note.slice(0, 300) : "";
   if (v.action === "skip") return { action: "skip", at, by, note };
   if (v.action === "swap" && typeof v.id === "string" && v.id.trim())
@@ -313,7 +320,7 @@ export async function setOverride({ date, slot, action, id }, ctx = {}) {
   catch { return { ok: false, error: "the store could not be read, so nothing was set" }; }
   const prior = day[slot] || null;
   const at = ctx.now ? new Date(ctx.now).toISOString() : new Date().toISOString();
-  const by = ctx.by === "lantern-approved" ? "lantern-approved" : "owner";
+  const by = actorOf(ctx.by);
   const note = String(ctx.note || "").slice(0, 300);
   const entry = action === "skip"
     ? { action: "skip", at, by, note }

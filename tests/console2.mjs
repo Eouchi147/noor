@@ -761,8 +761,8 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/redis/i.test(hs) || /store/i.test(hs), 'the store is reported');
   ok(/\$90/.test(hs) && /30 USD/.test(hs), 'giving is shown');
   ok(/Amina/.test(hs) && /15 EUR/.test(hs) && /lit on the wall/.test(hs), 'a guardian is shown by the name they chose, with what they give');
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'lights,legacy,marketing,journal,night,system,controls,observatory,lantern',
-     'the nine rooms are cards on the hub, in order, with the Lantern last');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'soul,lights,legacy,marketing,journal,night,system,controls,observatory,lantern',
+     'the ten rooms are cards on the hub, in order: the Soul first, the Lantern last');
   ok(await pg.evaluate(() => !document.querySelector('#s-house a[href^="/admin#"]')) && !/rest of the house/i.test(hs),
      'and nothing on the hub points back into the old console');
   ok(/421/.test(hs) && /questioned/.test(hs), 'the Lights card carries a live number: the library is counted');

@@ -46,6 +46,10 @@
     },
     "api/reel.js": {
       "maxDuration": 60
+    },
+    "api/soul.js": {
+      "maxDuration": 300,
+      "includeFiles": "{reels/index.json,assets/reel-subjects.json,assets/reel-sources.json,CONTENT_STATUS.md,sitemap.xml}"
     }
   },
   "cleanUrls": true,
@@ -121,9 +125,17 @@
     {
       "path": "/api/social?action=due",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/soul?action=tick",
+      "schedule": "*/15 * * * *"
     }
   ],
   "rewrites": [
+    {
+      "source": "/:key([0-9a-f]{32})\\.txt",
+      "destination": "/api/soul?action=indexnow-key&key=:key"
+    },
     {
       "source": "/journal/:slug",
       "destination": "/api/journal-page?slug=:slug"

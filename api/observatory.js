@@ -325,15 +325,18 @@ async function walkSlots(dates, opts) {
   const byDate = {};
   for (let i = 0; i < wanted.length; i++) {
     const [d] = wanted[i]; const rec = recs[i];
-    const row = (byDate[d] = byDate[d] || { date: d, sent: 0, partial: 0, failed: 0, pending: 0, none: 0, retried: 0, duplicates: 0 });
+    const row = (byDate[d] = byDate[d] || { date: d, sent: 0, partial: 0, failed: 0, pending: 0, none: 0, retried: 0, duplicates: 0, skipped: 0, skippedSoul: 0 });
     if (!rec || !rec.state) { row.none++; continue; }
     if (row[rec.state] != null) row[rec.state]++; else row.none++;
+    /* a skip the Soul set (api/_lineup.js actor "soul") is counted on its
+       own as well, so the soul's health number can never hide its own skips */
+    if (rec.state === "skipped" && rec.override && rec.override.by === "soul") row.skippedSoul++;
     for (const r of Object.values(rec.results || {})) {
       if (r && Number(r.tries) > 1) row.retried++;
       if (r && (r.dupWarn === true || r.already === true)) row.duplicates++;
     }
   }
-  return dates.slice().reverse().map(d => byDate[d] || { date: d, sent: 0, partial: 0, failed: 0, pending: 0, none: 0, retried: 0, duplicates: 0 });
+  return dates.slice().reverse().map(d => byDate[d] || { date: d, sent: 0, partial: 0, failed: 0, pending: 0, none: 0, retried: 0, duplicates: 0, skipped: 0, skippedSoul: 0 });
 }
 
 /* ---------------------------------------------------------------------------

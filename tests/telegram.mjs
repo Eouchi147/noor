@@ -226,5 +226,175 @@ console.log('\na reel, end to end through the channel table');
   ok(!card || !CH.shape(card, 'telegram').video, 'a word card carries no video to it');
 }
 
+/* ===========================================================================
+   The owner's line: a private chat with the same bot, linked once by a code.
+   The store is a tiny in-memory one with its own clock (so a 15 minute
+   expiry can be watched happen), handed in as opts.kv/opts.kvReady the way
+   tests/lineup.mjs hands one to api/_lineup.js.
+=========================================================================== */
+function makeKv() {
+  const strings = new Map();
+  const st = { clock: Date.parse('2026-10-02T09:00:00Z'), broken: false, cmds: [] };
+  const live = k => { const e = strings.get(k); if (!e) return null; if (e.exp && e.exp <= st.clock) { strings.delete(k); return null; } return e; };
+  st.strings = strings;
+  st.kvReady = () => true;
+  st.kv = async cmds => {
+    if (st.broken) throw new Error('kv rest 500');
+    return cmds.map(c => {
+      st.cmds.push(c);
+      const [op, k, ...a] = c;
+      if (op === 'GET') { const e = live(k); return e ? e.v : null; }
+      if (op === 'SET') { const i = a.indexOf('EX'); strings.set(k, { v: String(a[0]), exp: i >= 0 ? st.clock + Number(a[i + 1]) * 1000 : 0 }); return 'OK'; }
+      if (op === 'DEL') { strings.delete(k); return 1; }
+      if (op === 'INCR') { const e = live(k); const n = (e ? Number(e.v) : 0) + 1; strings.set(k, { v: String(n), exp: e ? e.exp : 0 }); return n; }
+      if (op === 'EXPIRE') { const e = live(k); if (e) e.exp = st.clock + Number(a[0]) * 1000; return e ? 1 : 0; }
+      return null;
+    });
+  };
+  return st;
+}
+const OWNER_CHAT = 778899001;
+const pm = (id, text, extra = {}) => ({ update_id: id, message: { message_id: id, text, chat: { id: OWNER_CHAT, type: 'private', first_name: 'Sam', ...extra }, from: { id: OWNER_CHAT, first_name: 'Sam' } } });
+const gm = (id, text, type = 'group') => ({ update_id: id, message: { message_id: id, text, chat: { id: -100555, type, title: 'A group' }, from: { id: 42, first_name: 'Stranger' } } });
+function bot(updates = [], opts = {}) {
+  return telegram({ answer: (method, body) => {
+    if (method === 'getMe') return opts.getMe || reply(200, { ok: true, result: { id: 1, is_bot: true, username: 'noor_codex_bot' } });
+    if (method === 'getUpdates') {
+      if (opts.webhook) return reply(409, { ok: false, error_code: 409, description: "Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first" });
+      return reply(200, { ok: true, result: updates.filter(u => !body.offset || u.update_id >= body.offset) });
+    }
+    if (method === 'sendMessage') {
+      if (opts.send) return opts.send(body);
+      return reply(200, { ok: true, result: { message_id: 9, chat: { id: body.chat_id, type: 'private' } } });
+    }
+    return reply(404, { ok: false, description: 'Not Found' });
+  } });
+}
+const returned = [];
+const keep = r => { returned.push(r); return r; };
+
+console.log('\nthe owner\'s line: the code');
+{
+  const st = makeKv(), B = bot();
+  const o = { kv: st.kv, kvReady: st.kvReady, fetch: B.fetch, now: st.clock };
+  const a = keep(await TG.ownerLinkCode(o));
+  ok(a.ok && /^NOOR-[A-Z0-9]{6}$/.test(a.code), 'a code is NOOR- and six uppercase letters or digits: ' + a.code);
+  ok(a.expiresAt === new Date(st.clock + 15 * 60000).toISOString(), 'it expires in fifteen minutes: ' + a.expiresAt);
+  ok(a.botUsername === 'noor_codex_bot', 'and names the bot to write to');
+  const set = st.cmds.find(c => c[0] === 'SET' && c[1] === TG.K_TG_CODE);
+  ok(set && set.includes('EX') && set[set.indexOf('EX') + 1] === 900, 'the store keeps it with a 900 second expiry');
+  const codes = new Set(Array.from({ length: 200 }, () => TG.makeOwnerCode()));
+  ok(codes.size > 195 && [...codes].every(c => /^NOOR-[A-Z0-9]{6}$/.test(c)), 'two hundred codes are all well formed and nearly all different');
+  const b = keep(await TG.ownerLinkCode(o));
+  ok(B.calls.filter(c => c.method === 'getMe').length === 1, 'the bot name is asked of Telegram once and then kept a day');
+  ok(b.code !== a.code, 'a second press gives a new code, replacing the first');
+  const noMe = makeKv();
+  const c = keep(await TG.ownerLinkCode({ kv: noMe.kv, kvReady: noMe.kvReady, fetch: bot([], { getMe: reply(401, { ok: false, description: 'Unauthorized' }) }).fetch, now: noMe.clock }));
+  ok(c.ok && c.botUsername === null, 'when getMe fails the code still comes, with botUsername null');
+
+  st.clock += 16 * 60000;
+  const late = keep(await TG.ownerLink({ ...o, now: st.clock, fetch: bot([pm(10, b.code)]).fetch }));
+  ok(!late.ok && /expired/.test(late.reason), 'sixteen minutes later the code is gone and Check says so: ' + late.reason);
+}
+
+console.log('\nthe owner\'s line: linking');
+{
+  const st = makeKv();
+  const o = { kv: st.kv, kvReady: st.kvReady, now: st.clock };
+  const { code } = keep(await TG.ownerLinkCode({ ...o, fetch: bot().fetch }));
+
+  const none = keep(await TG.ownerLink({ ...o, fetch: bot([]).fetch }));
+  ok(!none.ok && /not arrived yet/.test(none.reason), 'nothing sent yet is a reason, not a link');
+
+  const wrong = keep(await TG.ownerLink({ ...o, fetch: bot([pm(11, 'NOOR-ZZZZZ9'), pm(12, code.toLowerCase())]).fetch }));
+  ok(!wrong.ok && /not arrived/.test(wrong.reason), 'a wrong code, or the right one in other letters, is ignored');
+
+  const G = bot([gm(13, code), gm(14, 'here: ' + code, 'supergroup'), gm(15, code, 'channel')]);
+  const grp = keep(await TG.ownerLink({ ...o, fetch: G.fetch }));
+  ok(!grp.ok && !G.calls.some(c => c.method === 'sendMessage'), 'the right code from a group, a supergroup or a channel never links');
+  ok((await TG.ownerStatus(o)).linked === false, 'and the house is still not linked');
+  ok(st.strings.get(TG.K_TG_OFFSET) && st.strings.get(TG.K_TG_OFFSET).v === '16', 'the offset moves past every update read: ' + (st.strings.get(TG.K_TG_OFFSET) || {}).v);
+
+  const P = bot([gm(13, code), pm(16, 'my code is ' + code + ' thanks')]);
+  const yes = keep(await TG.ownerLink({ ...o, fetch: P.fetch }));
+  ok(yes.ok && yes.linked && yes.chatTitle === 'Sam', 'the code inside a private message links, naming the first name only: ' + JSON.stringify(yes));
+  const gu = P.calls.find(c => c.method === 'getUpdates');
+  ok(gu && gu.body.offset === 16, 'getUpdates is asked only from the stored offset');
+  const said = P.calls.find(c => c.method === 'sendMessage');
+  ok(said && said.body.chat_id === OWNER_CHAT && said.body.text === 'Linked. NOOR will write to you here only when it needs you, and once a week.', 'the owner is told, in that chat, in the agreed words');
+  ok(!st.strings.has(TG.K_TG_CODE), 'the code is spent');
+  const own = JSON.parse(st.strings.get(TG.K_TG_OWNER).v);
+  ok(own.chat === OWNER_CHAT && !st.strings.get(TG.K_TG_OWNER).exp, 'the chat is kept, with no expiry');
+  const s = keep(await TG.ownerStatus(o));
+  ok(s.linked === true && s.since === new Date(st.clock).toISOString() && Object.keys(s).sort().join() === 'linked,since', 'status says linked and since when, and nothing else');
+  const again = keep(await TG.ownerLink({ ...o, fetch: P.fetch }));
+  ok(!again.ok && /no code/.test(again.reason), 'a second Check with the code spent asks for a new one');
+
+  const st2 = makeKv();
+  const o2 = { kv: st2.kv, kvReady: st2.kvReady, now: st2.clock };
+  await TG.ownerLinkCode({ ...o2, fetch: bot().fetch });
+  const hook = keep(await TG.ownerLink({ ...o2, fetch: bot([], { webhook: true }).fetch }));
+  ok(!hook.ok && hook.reason === 'the bot uses a webhook; linking needs getUpdates', 'a bot with a webhook (409) is named, not guessed at: ' + hook.reason);
+
+  const un = keep(await TG.ownerUnlink(o));
+  ok(un.ok && un.linked === false && (await TG.ownerStatus(o)).linked === false, 'unlink forgets the chat');
+}
+
+console.log('\nthe owner\'s line: messages');
+{
+  const st = makeKv();
+  const o = { kv: st.kv, kvReady: st.kvReady, now: st.clock };
+  const B0 = bot();
+  const nl = keep(await TG.notifyOwner('hello', { ...o, fetch: B0.fetch }));
+  ok(!nl.ok && nl.reason === 'not linked' && B0.calls.length === 0, 'not linked is said, and Telegram is never called');
+
+  st.strings.set(TG.K_TG_OWNER, { v: JSON.stringify({ chat: OWNER_CHAT, name: 'Sam', since: '2026-10-02T09:00:00.000Z' }), exp: 0 });
+  const B = bot();
+  const long = 'The house needs you. '.repeat(400) + '<b>not markup</b> & more';
+  const r1 = keep(await TG.notifyOwner(long, { ...o, fetch: B.fetch }));
+  const m1 = B.calls.find(c => c.method === 'sendMessage');
+  ok(r1.ok && m1 && m1.body.chat_id === OWNER_CHAT, 'a linked owner is written to');
+  ok(m1.body.text.length <= TG.TEXT_MAX && m1.body.text.length > 4000, 'a long message is cut to 4,096: ' + m1.body.text.length);
+  ok(m1.body.parse_mode === undefined && m1.body.disable_web_page_preview === true, 'plain text, no parse mode, no link preview');
+  const B2 = bot();
+  await TG.notifyOwner('a <b>tag</b> & an ampersand', { ...o, fetch: B2.fetch });
+  ok(B2.calls.find(c => c.method === 'sendMessage').body.text === 'a <b>tag</b> & an ampersand', 'and the text goes as written, nothing read as markup');
+
+  for (let i = 0; i < 4; i++) keep(await TG.notifyOwner('message ' + i, { ...o, fetch: B.fetch }));
+  const B7 = bot();
+  const seventh = keep(await TG.notifyOwner('the seventh', { ...o, fetch: B7.fetch }));
+  ok(!seventh.ok && /daily limit/.test(seventh.reason) && B7.calls.length === 0, 'the seventh message of a UTC day is refused and never reaches Telegram: ' + seventh.reason);
+  const next = keep(await TG.notifyOwner('a new day', { ...o, now: st.clock + 86400000, fetch: bot().fetch }));
+  ok(next.ok, 'the next UTC day counts afresh');
+
+  st.broken = true;
+  const Bf = bot();
+  const fault = keep(await TG.notifyOwner('during a store fault', { ...o, fetch: Bf.fetch }));
+  ok(!fault.ok && Bf.calls.length === 0, 'a store fault sends nothing: the limit fails closed: ' + fault.reason);
+  const sf = keep(await TG.ownerStatus(o));
+  ok(sf.linked === false && sf.since === null, 'and status under a fault says not linked rather than throwing');
+  st.broken = false;
+  /* a store that can read the owner but cannot count: fail closed too */
+  const half = { ...o, kv: async cmds => { if (cmds[0][0] === 'INCR') throw new Error('kv rest 500'); return st.kv(cmds); } };
+  const Bh = bot();
+  const h = keep(await TG.notifyOwner('count fault', { ...half, now: st.clock + 2 * 86400000, fetch: Bh.fetch }));
+  ok(!h.ok && /could not count/.test(h.reason) && Bh.calls.length === 0, 'a counter that cannot count sends nothing');
+
+  const blocked = keep(await TG.notifyOwner('x', { ...o, now: st.clock + 3 * 86400000, fetch: bot([], { send: () => reply(403, { ok: false, description: 'Forbidden: bot was blocked by the user ' + OWNER_CHAT + ' https://api.telegram.org/bot' + TOKEN + '/sendMessage' }) }).fetch }));
+  ok(!blocked.ok && /blocked/.test(blocked.reason), 'a bot the owner blocked is said in words: ' + blocked.reason);
+  delete process.env.TG_BOT_TOKEN;
+  const notok = keep(await TG.notifyOwner('x', { ...o, fetch: bot().fetch }));
+  ok(!notok.ok && /TG_BOT_TOKEN/.test(notok.reason), 'without a token nothing is sent');
+  process.env.TG_BOT_TOKEN = TOKEN;
+}
+
+console.log('\nthe owner\'s line keeps its secrets');
+{
+  const all = returned.map(x => JSON.stringify(x)).join('\n');
+  ok(returned.length > 20, 'every answer above was kept to be read: ' + returned.length);
+  ok(!all.includes(TOKEN) && !all.includes('AAHsecret'), 'no answer carries the bot token');
+  ok(!all.includes(String(OWNER_CHAT)), 'no answer carries the owner\'s chat id');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

@@ -535,7 +535,8 @@ export async function stopExperiment(rows, opts = {}) {
   const today = todayStr(opts.now);
   const finalEval = cur ? evaluate(cur, rows || [], today) : null;
   const entry = { ...(finalEval || { id: state.current.id }), start: state.current.start, args: state.current.args,
-                   stoppedAt: opts.now ? new Date(opts.now).toISOString() : new Date().toISOString() };
+                   stoppedAt: opts.now ? new Date(opts.now).toISOString() : new Date().toISOString(),
+                   stoppedBy: opts.by === "soul" ? "soul" : "owner" };
   const next = { current: null, history: [entry, ...(state.history || [])].slice(0, HISTORY_KEEP) };
   const wrote = await writeState(next, opts);
   if (!wrote) return { ok: false, error: "the store could not be written to" };

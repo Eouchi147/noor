@@ -1777,13 +1777,26 @@ export async function teachGuard(network, host, opts = {}) {
    left holding an empty string, since an empty string is not what "nothing
    was ever taught here" looked like before this ran. */
 export async function revertTaught(entries) {
-  const list = Array.isArray(entries) ? entries.filter(e => e && e.reel && e.network) : [];
+  let list = Array.isArray(entries) ? entries.filter(e => e && e.reel && e.network) : [];
   if (!list.length) return { ok: true, reverted: 0 };
   if (!kvReady()) return { ok: false, why: "the store is not configured" };
+  /* an entry that names what it wrote (`wrote`, the Soul's own undo) is put
+     back only while the field still holds exactly that: a field the poster
+     or a later reconcile has since changed is left alone, and counted */
+  let skipped = 0;
+  if (list.some(e => e.wrote != null)) {
+    let now;
+    try { now = await kv(list.map(e => ["HGET", K_POSTED_CH, e.reel + "|" + e.network])); }
+    catch (e) { return { ok: false, why: "the store could not be read, so nothing was reverted" }; }
+    const keep = [];
+    list.forEach((e, i) => { if (e.wrote == null || String(now[i] == null ? "" : now[i]) === String(e.wrote)) keep.push(e); else skipped++; });
+    list = keep;
+    if (!list.length) return { ok: true, reverted: 0, skipped, note: "every field had changed since it was taught, so nothing was put back" };
+  }
   const cmds = list.map(e => e.before
     ? ["HSET", K_POSTED_CH, e.reel + "|" + e.network, e.before]
     : ["HDEL", K_POSTED_CH, e.reel + "|" + e.network]);
-  try { await kv(cmds); return { ok: true, reverted: cmds.length }; }
+  try { await kv(cmds); return { ok: true, reverted: cmds.length, ...(skipped ? { skipped } : {}) }; }
   catch (e) { return { ok: false, why: "the store refused the write: " + String(e && e.message || e).slice(0, 120) }; }
 }
 
@@ -2420,6 +2433,12 @@ async function reelOverridePlan(date, slotId, host, hijri, opts) {
    already left the shelf falls back inside slotExtras itself, with no
    fellBack mark set here, and that one case alone leaves no override on
    the record, since chooseReelWithOverride never saw a card to check. */
+/* who skipped it, in the slot's own record: the owner, the Lantern with
+   the owner's approval, or the Soul (api/_lineup.js ACTORS) */
+export function overrideWhy(note) {
+  const by = note && note.by;
+  return by === "soul" ? "the Soul's override" : by === "lantern-approved" ? "a Lantern override the owner approved" : "owner override";
+}
 function overrideForRecord(reelOv, post) {
   if (!reelOv || !reelOv.note) return null;
   if (reelOv.note.action === "skip") return reelOv.note;
@@ -2510,10 +2529,10 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   if (reelOv.skip) {
     if (opts.dry) return { ...out, ok: true, dry: true, post: null, override: reelOv.note };
     const rec = { at: out.at, slot: slotId, state: "skipped", title: "",
-      why: "owner override", override: reelOv.note };
+      why: overrideWhy(reelOv.note), override: reelOv.note };
     await writeSlot(date, slotId, rec);
     return { ...out, ok: true, state: "skipped", override: reelOv.note,
-      note: "this slot is skipped by an owner override" };
+      note: "this slot is skipped by " + (reelOv.note && reelOv.note.by === "soul" ? "the Soul's override" : "an owner override") };
   }
 
   const began = Date.now();
@@ -3208,7 +3227,7 @@ export async function runDue(host, date, now, opts = {}) {
            used to record the skip even on a dry run). */
         if (opts.dry) { out.ran.push({ slot: slot.id, dry: true, override: reelOv.note }); continue; }
         await writeSlot(date, slot.id, { at: out.at, slot: slot.id, state: "skipped",
-          title: "", why: "owner override", override: reelOv.note });
+          title: "", why: overrideWhy(reelOv.note), override: reelOv.note });
         out.ran.push({ slot: slot.id, state: "skipped", override: true });
         continue;
       }

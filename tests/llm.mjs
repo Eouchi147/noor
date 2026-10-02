@@ -14,6 +14,9 @@
      · per-person data is routed away from Gemini
      · a provider with no key is simply absent, not an error
      · every provider exhausted gives one clear, timed message
+     · the paid "deep" tier: listed, priced under the ceiling and inside
+       the monthly cap or refused; cost recorded; fail closed on a store
+       fault; perPerson never paid; the free tiers still refuse any price
 
    Run:  node tests/llm.mjs
 */
@@ -33,6 +36,8 @@ delete process.env.OPENROUTER_DAILY;
 const LAST = {};
 const GEMINI_EXTRA = [];
 let groqAnswers = null, geminiAnswers = null, orAnswers = null, orModels = null;
+let kvFault = false;
+const OR_CALLS = [];
 
 function orModel(id, price) {
   return { id, context_length: 32000, pricing: price || { prompt: "0", completion: "0", request: "0" },
@@ -48,6 +53,7 @@ globalThis.fetch = async (url, opt) => {
   url = String(url);
   /* the store, spoken over the same REST pipeline as api/_kv.js expects */
   if (url.startsWith("https://kv.test")) {
+    if (kvFault) return { ok: false, status: 500, json: async () => ({}), text: async () => "down" };
     const cmds = JSON.parse(opt.body);
     const out = cmds.map(c => {
       const [verb, key, val] = c;
@@ -100,10 +106,10 @@ globalThis.fetch = async (url, opt) => {
     return { ok: true, status: 200, json: async () => ({ data: orModels }) };
   }
   if (url.includes("openrouter.ai/api/v1/chat/completions")) {
-    const body = JSON.parse(opt.body); LAST.or = body;
+    const body = JSON.parse(opt.body); LAST.or = body; OR_CALLS.push(body.model);
     const a = orAnswers ? orAnswers(body.model) : { ok: true, text: "lit" };
     if (!a.ok) return { ok: false, status: a.status || 500, json: async () => ({ error: { message: a.why || "error" } }), text: async () => a.why || "" };
-    return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: a.text } }], usage: { total_tokens: 20 } }) };
+    return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: a.text } }], usage: a.usage || { total_tokens: 20 } }) };
   }
   throw new Error("unexpected fetch " + url);
 };
@@ -310,6 +316,154 @@ console.log("\n=== 9. every provider down gives one clear, timed message ===");
   for (let i = 0; i < 40; i++) await L.checkAndReserve("openrouter", "deepseek/deepseek-chat-v3:free", day + i * 61000);
   const usedUp = await L.route({ tier: "fast", messages: [{ role: "user", content: "hi" }] });
   ok(usedUp.ok === false && /used up; resets at/.test(usedUp.error), "buckets exhausted names the reset time (" + usedUp.error + ")");
+}
+
+console.log("\n=== 10. the paid deep tier, under the monthly cap ===");
+{
+  STORE.clear();
+  delete process.env.SOUL_MONTHLY_USD;
+  delete process.env.SOUL_DEEP_MODELS;
+  const month = new Date().toISOString().slice(0, 7);
+  const K = "nsoul:spend:" + month;
+  orModels.push(
+    orModel("anthropic/claude-sonnet-5", { prompt: "0.000003", completion: "0.000015", request: "0" }),
+    orModel("openai/gpt-6-luna", { prompt: "0.00001", completion: "0.00003" })      /* over both ceilings */
+    /* google/gemini-3.8-pro deliberately not listed today */
+  );
+  await L.deepPrices(true);
+  const msgs = [{ role: "user", content: "plan today from these totals" }];
+  const sonnetSays = usage => m => m === "anthropic/claude-sonnet-5" ? { ok: true, text: "deep plan", usage } : { ok: true, text: "lit" };
+
+  /* a. paid when listed, priced under the ceiling, and inside the cap */
+  orAnswers = sonnetSays({ prompt_tokens: 100, completion_tokens: 50, total_tokens: 150, cost: 0.00105 });
+  const a = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 800 } });
+  ok(a.ok && a.paid === true && a.model === "anthropic/claude-sonnet-5" && a.content === "deep plan", "deep: the paid name answers when the budget allows (" + a.model + ", paid " + a.paid + ")");
+  ok(a.tier === "deep" && a.costUsd === 0.00105, "deep: the answer carries tier and costUsd (" + a.costUsd + ")");
+  ok(LAST.or.usage && LAST.or.usage.include === true, "deep: OpenRouter is asked for usage accounting");
+  ok(LAST.or.provider && LAST.or.provider.max_price && LAST.or.provider.max_price.prompt === L.DEEP_MAX_PROMPT_PER_MTOK && LAST.or.provider.data_collection === "deny",
+     "deep: OpenRouter is told the price ceiling and that no endpoint may keep the prompt");
+  ok(LAST.or.max_tokens === 800, "deep: the max_tokens the estimate used is the one sent");
+  ok(STORE.get(K) === "1050", "cost recorded from usage.cost, in micro-dollars (" + STORE.get(K) + ")");
+  const r1 = await L.spendReport();
+  ok(r1.month === month && r1.usd === 0.00105 && r1.calls === 1 && r1.capUsd === 10, "spendReport reads the ledger (" + JSON.stringify(r1) + ")");
+
+  /* b. no usage.cost: computed from tokens at the live price */
+  orAnswers = sonnetSays({ prompt_tokens: 1000, completion_tokens: 200, total_tokens: 1200 });
+  const b = await L.route({ tier: "deep", messages: msgs });
+  ok(b.ok && b.paid && b.costUsd === 0.006, "with no usage.cost, the cost is tokens times live price (" + b.costUsd + ")");
+  ok(STORE.get(K) === "7050", "and the ledger adds it (" + STORE.get(K) + ")");
+
+  /* never negative, never NaN: a nonsense cost falls to the tokens */
+  orAnswers = sonnetSays({ prompt_tokens: 0, completion_tokens: 0, cost: -5 });
+  const b2 = await L.route({ tier: "deep", messages: msgs });
+  ok(b2.ok && b2.costUsd === 0 && STORE.get(K) === "7050", "a negative usage.cost is never recorded (" + b2.costUsd + ", ledger " + STORE.get(K) + ")");
+  orAnswers = sonnetSays({ cost: "NaN" });
+  const b3 = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 100 } });
+  ok(b3.ok && Number.isFinite(b3.costUsd) && b3.costUsd > 0 && /^\d+$/.test(STORE.get(K)), "a NaN cost with no tokens is charged the worst case, never NaN (" + b3.costUsd + ", ledger " + STORE.get(K) + ")");
+
+  /* c. refused when not on the live list (the free strong chain answers) */
+  process.env.SOUL_DEEP_MODELS = '["google/gemini-3.8-pro"]';
+  OR_CALLS.length = 0;
+  const c = await L.route({ tier: "deep", messages: msgs });
+  ok(c.ok && c.paid === false && c.costUsd === 0 && c.provider === "gemini", "a name not on the live list is skipped, free strong answers (" + c.provider + ")");
+  ok(c.tried.some(t => t.paid && /not on OpenRouter's live model list/.test(t.err)), "and tried says why");
+  ok(!OR_CALLS.length, "and no paid request was sent");
+  process.env.SOUL_DEEP_MODELS = "openai/gpt-4o, some/new-model";
+  ok(L.deepModels().length === 0, "SOUL_DEEP_MODELS can never add a name the code list lacks");
+  process.env.SOUL_DEEP_MODELS = "openai/gpt-6-luna, anthropic/claude-sonnet-5, openai/gpt-4o";
+  ok(JSON.stringify(L.deepModels()) === '["openai/gpt-6-luna","anthropic/claude-sonnet-5"]', "it narrows to a subset, in its own order (" + L.deepModels().join(", ") + ")");
+
+  /* d. refused over the price ceiling */
+  process.env.SOUL_DEEP_MODELS = "openai/gpt-6-luna";
+  OR_CALLS.length = 0;
+  const d = await L.route({ tier: "deep", messages: msgs });
+  ok(d.ok && d.paid === false && d.tried.some(t => t.model === "openai/gpt-6-luna" && /prompt price .* over the ceiling/.test(t.err)), "a prompt price over the ceiling is refused");
+  orModels.find(m => m.id === "openai/gpt-6-luna").pricing = { prompt: "0.000002", completion: "0.000025" };
+  await L.deepPrices(true);
+  const d2 = await L.route({ tier: "deep", messages: msgs });
+  ok(d2.paid === false && d2.tried.some(t => t.model === "openai/gpt-6-luna" && /completion price .* over the ceiling/.test(t.err)), "a completion price over the ceiling is refused");
+  orModels.find(m => m.id === "openai/gpt-6-luna").pricing = { prompt: "-1", completion: "-1" };
+  await L.deepPrices(true);
+  const d3 = await L.route({ tier: "deep", messages: msgs });
+  ok(d3.paid === false && d3.tried.some(t => /not a fixed number/.test(t.err)), "a variable (-1) price is refused");
+  ok(!OR_CALLS.length, "and no paid request was sent for any of them");
+  delete process.env.SOUL_DEEP_MODELS;
+
+  /* e. the worst case would pass the cap: free strong instead */
+  STORE.set(K, "9999000");
+  OR_CALLS.length = 0;
+  const e = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 1000 } });
+  ok(e.ok && e.paid === false && e.provider === "gemini", "an estimate past the cap falls back to free strong (" + e.provider + ")");
+  ok(e.tried.some(t => /would pass the monthly cap/.test(t.err)), "and tried names the cap (" + (e.tried.find(t => t.paid) || {}).err + ")");
+  ok(!OR_CALLS.includes("anthropic/claude-sonnet-5") && STORE.get(K) === "9999000", "no paid request, ledger unchanged");
+
+  /* f. the env may lower the cap, never raise it */
+  process.env.SOUL_MONTHLY_USD = "50";
+  ok(L.deepCapUsd() === 10 && L.DEEP_CAP_USD_MAX === 10, "SOUL_MONTHLY_USD=50 still caps at 10 (" + L.deepCapUsd() + ")");
+  ok((await L.spendReport()).capUsd === 10, "spendReport shows the real cap");
+  const f = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 1000 } });
+  ok(f.paid === false, "and the near-full month is still refused with the variable at 50");
+  process.env.SOUL_MONTHLY_USD = "1";
+  STORE.set(K, "999000");
+  const f2 = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 1000 } });
+  ok(L.deepCapUsd() === 1 && f2.paid === false, "SOUL_MONTHLY_USD=1 lowers the cap and is enforced");
+  process.env.SOUL_MONTHLY_USD = "0";
+  STORE.set(K, "0");
+  const f3 = await L.route({ tier: "deep", messages: msgs });
+  ok(L.deepCapUsd() === 0 && f3.paid === false, "SOUL_MONTHLY_USD=0 turns paid off entirely");
+  process.env.SOUL_MONTHLY_USD = "lots";
+  ok(L.deepCapUsd() === 10, "a non-number falls back to the code's 10, never more");
+  delete process.env.SOUL_MONTHLY_USD;
+
+  /* g. a store fault refuses paid (fail closed) */
+  kvFault = true;
+  OR_CALLS.length = 0;
+  const g = await L.route({ tier: "deep", messages: msgs });
+  ok(g.ok && g.paid === false && g.provider === "gemini", "a store fault refuses paid, free strong answers (" + g.provider + ")");
+  ok(g.tried.some(t => /ledger could not be read/.test(t.err)) && !OR_CALLS.length, "and says the ledger was unreadable");
+  const gr = await L.spendReport();
+  ok(gr.usd === null && /could not be read/.test(gr.error), "spendReport says unknown, never a guessed 0");
+  kvFault = false;
+
+  /* h. per-person data never reaches a paid name */
+  OR_CALLS.length = 0;
+  groqAnswers = () => ({ ok: true, text: "lit" });
+  const h = await L.route({ tier: "deep", perPerson: true, messages: msgs });
+  ok(h.ok && h.paid === false && !OR_CALLS.includes("anthropic/claude-sonnet-5"), "perPerson: no paid request (" + h.provider + ")");
+  ok(h.tried.some(t => t.paid && /per-person data is never sent to a paid model/.test(t.err)), "perPerson: tried says why");
+  ok(h.tried.some(t => t.provider === "gemini" && /never sent to Gemini/.test(t.err)) && h.provider === "groq", "perPerson: and gemini is still skipped on the free fallback");
+  groqAnswers = null;
+
+  /* i. the free tiers still refuse any priced name, ALLOW_PAID_MODELS or not */
+  process.env.ALLOW_PAID_MODELS = "1";
+  ok((await L.isAllowed("openrouter", "anthropic/claude-sonnet-5")) === false, "isAllowed still refuses a deep name");
+  const ci = await L.chatOnce("openrouter", "anthropic/claude-sonnet-5", msgs);
+  ok(ci.ok === false && ci.blocked === true, "chatOnce still refuses a deep name");
+  for (const tier of ["fast", "strong", "long"]) {
+    const chain = await L.chainFor(tier, { skipGood: true });
+    ok(!chain.some(x => L.DEEP_MODELS.includes(x.model) || x.model === "openai/gpt-4o"), tier + ": no priced name in the chain");
+  }
+  OR_CALLS.length = 0;
+  const si = await L.route({ tier: "strong", messages: msgs });
+  ok(si.ok && si.paid === undefined && !OR_CALLS.some(m => L.DEEP_MODELS.includes(m)), "a strong route never pays (" + si.provider + ")");
+  delete process.env.ALLOW_PAID_MODELS;
+
+  /* j. a timeout is charged the worst case: it may have been billed */
+  STORE.set(K, "0");
+  orAnswers = m => { if (m === "anthropic/claude-sonnet-5") throw Object.assign(new Error("timeout"), { name: "AbortError" }); return { ok: true, text: "lit" }; };
+  const j = await L.route({ tier: "deep", messages: msgs, opts: { max_tokens: 100 } });
+  ok(j.ok && j.paid === false && j.costUsd > 0 && STORE.get(K) === String(Math.round(j.costUsd * 1e6)), "a paid timeout is charged its worst case and falls back (" + j.costUsd + ")");
+
+  /* k. a 402 means no credit: free for the next hour, without asking again */
+  STORE.set(K, "0");
+  orAnswers = m => m === "anthropic/claude-sonnet-5" ? { ok: false, status: 402, why: "Insufficient credits" } : { ok: true, text: "lit" };
+  const k = await L.route({ tier: "deep", messages: msgs });
+  ok(k.ok && k.paid === false && k.costUsd === 0 && STORE.get(K) === "0", "a 402 is not charged and free strong answers");
+  ok(k.tried.some(t => /no credit/.test(t.err)) && !!STORE.get("nsoul:nocredit"), "a 402 is recorded as no credit");
+  OR_CALLS.length = 0;
+  const k2 = await L.route({ tier: "deep", messages: msgs });
+  ok(k2.ok && k2.paid === false && !OR_CALLS.length && k2.tried.some(t => /no credit/.test(t.err)), "the next deep call does not knock again");
+  orAnswers = null;
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");

@@ -1,4 +1,5 @@
-// NOOR · the Lantern's model router: three free providers, never billed.
+// NOOR · the Lantern's model router: three free providers, never billed,
+// plus one paid "deep" tier for the Soul alone, under a hard monthly cap.
 //
 // ---------------------------------------------------------------------------
 // WHY THIS FILE EXISTS
@@ -23,6 +24,18 @@
 // published, checkable "still free" signal for their paid tiers the way
 // OpenRouter's :free suffix and zero pricing give one. A gate nobody can
 // prove is a gate nobody should build.
+//
+// THE ONE EXCEPTION, ADDED 2 OCTOBER 2026 (SOUL.md, the Brain row and §9).
+// route({tier:"deep"}) may pay, and only it: a short code list of strong
+// OpenRouter models (DEEP_MODELS, §8), each checked against OpenRouter's
+// live price before every call and refused above a code price ceiling, each
+// call refused unless its worst case still fits under the month's cap
+// (DEEP_CAP_USD_MAX, 10 USD, which no variable can raise), and the actual
+// cost written to the spend ledger afterwards. Per-person data never takes
+// that door. The fast, strong and long tiers, isAllowed() and chatOnce()
+// are exactly as free-only as they were; the paid call goes through a
+// private sender no other path can reach, and ALLOW_PAID_MODELS still opens
+// nothing here.
 //
 // "FREE" BELONGS TO THE ACCOUNT, NOT THE MODEL. A model named on an
 // allow-list is only actually free if the account whose key answers for it
@@ -176,7 +189,9 @@ export async function isAllowed(provider, model) {
    caller of this file can ask whether it is set without importing the other
    file too. It changes nothing HERE: isAllowed() above and chainFor() below
    never call it, so a paid OpenRouter model is refused through this router
-   exactly as through Groq or Gemini, no exceptions. The variable still has
+   exactly as through Groq or Gemini on every free tier. (The deep tier, §8,
+   pays only through its own code list and cap, and does not read this
+   variable either: setting it neither opens nor widens that door.) The variable still has
    a real effect, but only inside api/_models.js's own, older chain, which
    the legacy callers (assistant.js, guide.js, marketing.js and the rest)
    still use directly. Groq and Gemini have no equivalent variable at all,
@@ -286,8 +301,16 @@ const rlKey = (provider, model, kind, part) => "nllm:rl:" + provider + ":" + mod
 const tokKey = (provider, model, day) => "nllm:tok:" + provider + ":" + model + ":" + day;
 
 /* Checked before every call, and reserved atomically with it: a name that is
-   only found to be over budget AFTER it answered would defeat the point. */
-export async function checkAndReserve(provider, model, now) {
+   only found to be over budget AFTER it answered would defeat the point.
+
+   THE LANTERN'S RESERVE (the 2 October review). A caller named "soul" (the
+   Soul's own free calls, api/_mind.js think) may use at most SOUL_FREE_SHARE
+   of each provider's daily request allowance, counted in its own key beside
+   the shared one, so the Lantern, which answers readers, always keeps at
+   least the other half. Every other caller is the Lantern's, as before. */
+export const SOUL_FREE_SHARE = 0.5;
+const soulKey = (provider, model, day) => "nllm:rl:" + provider + ":" + model + ":soul:" + day;
+export async function checkAndReserve(provider, model, now, caller) {
   const caps = CAPS[provider];
   if (!caps) return { ok: true };
   if (!kvReady()) return { ok: true };
@@ -300,16 +323,23 @@ export async function checkAndReserve(provider, model, now) {
   const dKey = rlKey(provider, model, "d", dayStr(now));
   const wantTok = !!caps.tpd;
   try {
+    const soul = caller === "soul";
+    const sKey = soulKey(provider, model, dayStr(now));
     const cmds = [["GET", mKey], ["GET", dKey]];
     if (wantTok) cmds.push(["GET", tokKey(provider, model, dayStr(now))]);
+    if (soul) cmds.push(["GET", sKey]);
     const r = await kv(cmds);
     const mCount = parseInt(r[0] || "0", 10) || 0;
     const dCount = parseInt(r[1] || "0", 10) || 0;
     const tCount = wantTok ? (parseInt(r[2] || "0", 10) || 0) : 0;
+    const sCount = soul ? (parseInt(r[wantTok ? 3 : 2] || "0", 10) || 0) : 0;
     if (mCount >= caps.rpm) return { ok: false, why: "rpm" };
     if (dCount >= rpd) return { ok: false, why: "rpd" };
     if (wantTok && tCount >= caps.tpd) return { ok: false, why: "tpd" };
-    await kv([["INCR", mKey], ["EXPIRE", mKey, "70"], ["INCR", dKey], ["EXPIRE", dKey, "90000"]]);
+    if (soul && sCount >= Math.floor(rpd * SOUL_FREE_SHARE)) return { ok: false, why: "the soul's share of the day (" + Math.floor(rpd * SOUL_FREE_SHARE) + " of " + rpd + "; the rest is kept for the Lantern)" };
+    const inc = [["INCR", mKey], ["EXPIRE", mKey, "70"], ["INCR", dKey], ["EXPIRE", dKey, "90000"]];
+    if (soul) inc.push(["INCR", sKey], ["EXPIRE", sKey, "90000"]);
+    await kv(inc);
     return { ok: true };
   } catch { return { ok: true }; }
 }
@@ -365,15 +395,28 @@ function resetLabel(now) {
       enforced here too, not only by the caller, so nothing that reaches this
       function can ever bill by accident: a second gate on the one door that
       actually talks to the network.
+
+      The network itself lives in send() below, which is NOT exported. The
+      only two callers are chatOnce() (after the free gate) and §8's
+      deepWalk() (after the paid gate: code list, live price, ceiling, cap).
 --------------------------------------------------------------------------- */
 export async function chatOnce(provider, model, messages, opts = {}) {
-  const key = keyFor(provider);
-  const t0 = Date.now();
-  if (!key) return { ok: false, error: "no key", provider, model };
+  if (!keyFor(provider)) return { ok: false, error: "no key", provider, model };
   if (!PROVIDER_BASE[provider]) return { ok: false, error: "unknown provider", provider, model };
   if (!(await isAllowed(provider, model))) {
     return { ok: false, error: "refused: " + model + " is not on " + provider + "'s free allow-list", provider, model, blocked: true };
   }
+  return await send(provider, model, messages, opts, null);
+}
+
+/* extra.paid is set only by deepWalk(): it asks OpenRouter for usage
+   accounting (usage.cost in USD on the reply) and tells OpenRouter's own
+   router the price ceiling and that no endpoint may keep the prompt. */
+async function send(provider, model, messages, opts, extra) {
+  const key = keyFor(provider);
+  const t0 = Date.now();
+  if (!key) return { ok: false, error: "no key", provider, model };
+  if (!PROVIDER_BASE[provider]) return { ok: false, error: "unknown provider", provider, model };
 
   const scrubbed = [];
   for (const m of (Array.isArray(messages) ? messages : [])) {
@@ -399,6 +442,13 @@ export async function chatOnce(provider, model, messages, opts = {}) {
      the reply, since one free name wrote it straight into the text. */
   if (provider === "groq" && /gpt-oss/.test(model)) body.reasoning_effort = opts.reasoning_effort || "low";
   if (provider === "openrouter") body.reasoning = { exclude: true };
+  if (extra && extra.paid && provider === "openrouter") {
+    body.usage = { include: true };
+    body.provider = {
+      max_price: { prompt: DEEP_MAX_PROMPT_PER_MTOK, completion: DEEP_MAX_COMPLETION_PER_MTOK },
+      data_collection: "deny"
+    };
+  }
 
   const headers = { "content-type": "application/json", Authorization: "Bearer " + key };
   if (provider === "openrouter") {
@@ -425,11 +475,15 @@ export async function chatOnce(provider, model, messages, opts = {}) {
     const content = String(choice.content || "").replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/^[\s\S]*?<\/think>/i, "").trim();
     const tool_calls = choice.tool_calls || null;
     const usage = j.usage || {};
-    if (!content && !tool_calls) return { ok: false, error: "empty", provider, model, ms };
+    /* an empty reply still answered 200, and on a paid name a 200 is billed:
+       the usage goes back with it so the ledger can count it */
+    if (!content && !tool_calls) return { ok: false, error: "empty", status: r.status, usage, provider, model, ms };
     return { ok: true, content, tool_calls, usage, model: j.model || model, provider, ms };
   } catch (e) {
     clearTimeout(timer);
-    return { ok: false, error: e && e.name === "AbortError" ? "timeout" : String(e && e.message || e).slice(0, 120), provider, model, ms: Date.now() - t0 };
+    /* netError: the request may have reached the provider before the
+       line dropped, so a paid caller must assume it was billed */
+    return { ok: false, error: e && e.name === "AbortError" ? "timeout" : String(e && e.message || e).slice(0, 120), netError: true, provider, model, ms: Date.now() - t0 };
   }
 }
 
@@ -614,8 +668,8 @@ async function jsonCapable(provider, model) {
 }
 
 /* ---------------------------------------------------------------------------
-   7. route(task): task.tier ("fast" | "strong" | "long"), task.messages
-      (OpenAI-shaped), task.opts (passed to chatOnce), task.perPerson (true
+   7. route(task): task.tier ("fast" | "strong" | "long" | "deep"),
+      task.messages (OpenAI-shaped), task.opts (passed to chatOnce), task.perPerson (true
       when any message carries per-person rather than aggregate data, which
       routes the whole call away from Gemini's free tier -- see §3's header
       comment: Gemini's free terms allow training on submitted content, so
@@ -631,34 +685,55 @@ async function jsonCapable(provider, model) {
       a message honest enough to put in front of the owner: which names were
       tried, why each one was skipped or failed, and, when every bucket for
       the day is empty, exactly when it resets.
+
+      "deep" (the Soul's strategist and Guardian only) first walks §8's paid
+      names under the monthly cap, then the "strong" free chain exactly as
+      that tier would. Its answer, success or not, also carries paid (true
+      only when a paid name answered) and costUsd (what this call added to
+      the month's ledger, 0 when nothing paid was billed).
 --------------------------------------------------------------------------- */
 export async function route(task = {}) {
-  const tier = ["fast", "strong", "long"].includes(task.tier) ? task.tier : "fast";
+  const deep = task.tier === "deep";
+  const tier = deep ? "deep" : (["fast", "strong", "long"].includes(task.tier) ? task.tier : "fast");
   const messages = Array.isArray(task.messages) ? task.messages : [];
-  if (!messages.length) return { ok: false, error: "no messages", tier };
+  if (!messages.length) return deep ? { ok: false, error: "no messages", tier, paid: false, costUsd: 0 } : { ok: false, error: "no messages", tier };
 
   /* refuse before anything else is attempted: no bucket spent on a message
      that was never going to be sent */
   for (const m of messages) {
     const s = scrub(m && m.content);
-    if (!s.ok) return { ok: false, error: s.reason, blocked: true, tier };
+    if (!s.ok) return deep ? { ok: false, error: s.reason, blocked: true, tier, paid: false, costUsd: 0 } : { ok: false, error: s.reason, blocked: true, tier };
   }
 
   const perPerson = !!task.perPerson || messages.some(m => m && m.perPerson);
   const now = Date.now();
+  const tried = [];
+
+  if (!deep) return await freeWalk(tier, task, messages, perPerson, now, tried, task.caller);
+
+  const paid = await deepWalk(task, messages, perPerson, now, tried);
+  const costUsd = paid.micro / 1e6;
+  if (paid.ok) {
+    return { ok: true, spendRecorded: !paid.spendFailed, content: paid.got.content, tool_calls: paid.got.tool_calls, usage: paid.got.usage,
+             model: paid.got.model, provider: "openrouter", tier, tried, paid: true, costUsd };
+  }
+  const free = await freeWalk("strong", task, messages, perPerson, now, tried, task.caller);
+  return { ...free, tier, paid: false, costUsd, ...(paid.spendFailed ? { spendRecorded: false, paidButUnrecorded: true } : {}) };
+}
+
+async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
   const candidates = await chainFor(tier);
   if (!candidates.length) {
-    return { ok: false, error: "no free model is configured for the \"" + tier + "\" tier (no provider key set, or nothing on its free tier is live today)", tier };
+    return { ok: false, error: "no free model is configured for the \"" + tier + "\" tier (no provider key set, or nothing on its free tier is live today)", tier, tried };
   }
 
-  const tried = [];
   let anyAttempted = false;
   for (const cand of candidates) {
     if (perPerson && cand.provider === "gemini") {
       tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to Gemini's free tier" });
       continue;
     }
-    const gate = await checkAndReserve(cand.provider, cand.model, now);
+    const gate = await checkAndReserve(cand.provider, cand.model, now, caller);
     if (!gate.ok) {
       tried.push({ provider: cand.provider, model: cand.model, err: "rate limit reached for today (" + gate.why + ")" });
       continue;
@@ -684,6 +759,281 @@ export async function route(task = {}) {
     return { ok: false, error: "the free allowance for today is used up; resets at " + resetLabel(now), tier, tried };
   }
   return { ok: false, error: "no free model answered today", tier, tried };
+}
+
+/* ---------------------------------------------------------------------------
+   8. THE DEEP TIER: the one door in this file that may pay.
+      SOUL.md: "Budget: at most 10 US dollars a month on paid models
+      (OpenRouter), enforced in code." Every gate below fails closed: any
+      doubt (no store, an unreadable ledger, an unreadable price list, a
+      price that is not a plain number) means the call goes to the free
+      "strong" chain instead, never that it is paid for blind.
+
+      Gates, in the order route() meets them, for every paid call:
+        1. the name is on DEEP_MODELS (code). SOUL_DEEP_MODELS may narrow
+           that list to a subset; a name it gives that is not on the code
+           list is ignored, so the variable can never add one.
+        2. per-person data never goes to a paid name (only totals reach any
+           model, constitution article 5).
+        3. the store answers: the ledger nsoul:spend:<YYYY-MM> is readable
+           and no 402 "no credit" mark is set (nsoul:nocredit, one hour).
+        4. OpenRouter's live /models lists the name today, with a fixed
+           price under DEEP_MAX_PROMPT_PER_MTOK and
+           DEEP_MAX_COMPLETION_PER_MTOK (USD per million tokens).
+        5. the worst case (prompt length at two characters a token, plus
+           max_tokens all spent, at the live price) plus the month's spend
+           so far stays within deepCapUsd().
+      After the call the actual cost is added (INCRBY, micro-dollars, never
+      negative): OpenRouter's own usage.cost when it reports one, else the
+      reported tokens at the live price, else the worst case. A timeout or a
+      dropped line is charged the worst case too, since the request may have
+      been billed before the line went; an http error is charged nothing.
+
+      The check and the write are two steps, not one atomic reservation:
+      the Soul calls the deep tier one call at a time inside a tick, so the
+      most two overlapping calls could ever pass the cap by is one call's
+      own worst case, a few cents at these ceilings.
+--------------------------------------------------------------------------- */
+export const DEEP_CAP_USD_MAX = 10;
+/* strong reasoning names, best first; every one is re-checked against the
+   live list and price before each call, so a name that is retired or
+   repriced is simply skipped, never trusted from this list alone */
+export const DEEP_MODELS = Object.freeze(["anthropic/claude-sonnet-5", "openai/gpt-6-luna", "google/gemini-3.8-pro"]);
+export const DEEP_MAX_PROMPT_PER_MTOK = 5;       /* USD per million prompt tokens */
+export const DEEP_MAX_COMPLETION_PER_MTOK = 20;  /* USD per million completion tokens */
+const DEEP_MAX_REQUEST_USD = 0.01;               /* a flat per-request fee, if a name carries one */
+const DEEP_TIMEOUT_MS = 60000;                   /* strong reasoning names think before they answer */
+const SPEND_KEEP_S = 70 * 24 * 3600;
+const NOCREDIT_S = 3600;
+const monthStr = now => new Date(now).toISOString().slice(0, 7);
+const K_SPEND = month => "nsoul:spend:" + month;
+const K_SPEND_CALLS = month => "nsoul:spend:" + month + ":calls";
+const K_NOCREDIT = "nsoul:nocredit";
+
+/* min(10, SOUL_MONTHLY_USD). The variable may lower the cap, to 0 if the
+   owner wants no paid calls at all; it can never raise it above
+   DEEP_CAP_USD_MAX. Unset or not a number means the code's own 10. */
+export function deepCapUsd() {
+  const raw = String(process.env.SOUL_MONTHLY_USD == null ? "" : process.env.SOUL_MONTHLY_USD).trim();
+  const n = raw === "" ? NaN : Number(raw);
+  if (!Number.isFinite(n)) return DEEP_CAP_USD_MAX;
+  return Math.min(DEEP_CAP_USD_MAX, Math.max(0, n));
+}
+
+/* DEEP_MODELS, or the subset of it SOUL_DEEP_MODELS names (a JSON array or
+   a comma list), in the order the variable gives. A variable that names
+   nothing on the code list leaves no paid name at all: narrowing to
+   nothing is still narrowing, and a typo never widens anything. */
+export function deepModels() {
+  const raw = String(process.env.SOUL_DEEP_MODELS || "").trim();
+  if (!raw) return DEEP_MODELS.slice();
+  let want = null;
+  try { const j = JSON.parse(raw); if (Array.isArray(j)) want = j; } catch { }
+  if (!want) want = raw.split(",");
+  const out = [];
+  for (const w of want) {
+    const id = String(w == null ? "" : w).trim();
+    if (id && DEEP_MODELS.includes(id) && !out.includes(id)) out.push(id);
+  }
+  return out;
+}
+
+/* OpenRouter's live price for the deep names, from its public /models list,
+   kept six hours in memory. Returns a Map id -> pricing for the deep names
+   that list carries today, or null when the list could not be read and no
+   copy younger than a day is held: null refuses every paid name. */
+const DEEP_PRICE_TTL = 6 * 3600 * 1000;
+const DEEP_PRICE_STALE = 24 * 3600 * 1000;
+let deepPriceCache = { at: 0, prices: null };
+export async function deepPrices(force) {
+  const now = Date.now();
+  /* any list read, even one that carries none of the deep names (an empty
+     map), is kept with its time for six hours: the list is never downloaded
+     again on every call just because it named nothing useful */
+  if (!force && deepPriceCache.prices && now - deepPriceCache.at < DEEP_PRICE_TTL) return deepPriceCache.prices;
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 6000);
+  try {
+    const r = await fetch("https://openrouter.ai/api/v1/models", { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) throw new Error("http " + r.status);
+    const j = await r.json();
+    if (!j || !Array.isArray(j.data)) throw new Error("no data");
+    const prices = new Map();
+    for (const m of j.data) {
+      if (m && m.id && DEEP_MODELS.includes(m.id) && m.pricing && typeof m.pricing === "object") prices.set(m.id, m.pricing);
+    }
+    deepPriceCache = { at: now, prices };
+    return prices;
+  } catch {
+    clearTimeout(t);
+    if (deepPriceCache.prices && now - deepPriceCache.at < DEEP_PRICE_STALE) return deepPriceCache.prices;
+    return null;
+  }
+}
+
+/* A live pricing block (USD per token, as strings) checked against the
+   ceilings. A missing, negative or non-numeric price is refused: OpenRouter
+   writes "-1" for a price that varies, and a variable price cannot be
+   estimated, so it cannot be paid for under a cap. */
+function deepPriceOf(p) {
+  const req = v => (v == null || v === "") ? NaN : Number(v);
+  const opt = v => (v == null || v === "") ? 0 : Number(v);
+  const prompt = req(p.prompt);
+  const completion = Math.max(req(p.completion), opt(p.internal_reasoning));
+  const request = opt(p.request);
+  if (![prompt, completion, request].every(x => Number.isFinite(x) && x >= 0)) {
+    return { ok: false, why: "its live price is not a fixed number" };
+  }
+  const pM = prompt * 1e6, cM = completion * 1e6;
+  if (pM > DEEP_MAX_PROMPT_PER_MTOK) return { ok: false, why: "prompt price " + pM.toFixed(2) + " USD per million tokens is over the ceiling of " + DEEP_MAX_PROMPT_PER_MTOK };
+  if (cM > DEEP_MAX_COMPLETION_PER_MTOK) return { ok: false, why: "completion price " + cM.toFixed(2) + " USD per million tokens is over the ceiling of " + DEEP_MAX_COMPLETION_PER_MTOK };
+  if (request > DEEP_MAX_REQUEST_USD) return { ok: false, why: "a per-request fee of " + request + " USD is over the ceiling of " + DEEP_MAX_REQUEST_USD };
+  return { ok: true, prompt, completion, request };
+}
+
+/* USD to whole micro-dollars, rounded up (after shaving float noise, so
+   0.003 is 3000, not 3001). Anything not a finite, non-negative number is
+   null: the ledger never takes a negative or a NaN. */
+function toMicro(usd) {
+  const n = Number(usd);
+  if (!Number.isFinite(n) || n < 0) return null;
+  return Math.ceil(Math.round(n * 1e9) / 1e3);
+}
+const usdLabel = micro => (micro / 1e6).toFixed(4) + " USD";
+
+function worstCaseMicro(price, messages, maxTokens, tools) {
+  let chars = 0;
+  for (const m of messages) chars += String((m && m.content) == null ? "" : m.content).length + 16;
+  if (tools) { try { chars += JSON.stringify(tools).length; } catch { } }
+  const promptTok = Math.ceil(chars / 2);
+  return toMicro(promptTok * price.prompt + maxTokens * price.completion + price.request) || 0;
+}
+
+function actualMicro(usage, price, fallbackMicro) {
+  const u = usage || {};
+  if (u.cost != null && u.cost !== "") {
+    const c = toMicro(u.cost);
+    if (c != null) return c;
+  }
+  const pt = Number(u.prompt_tokens), ct = Number(u.completion_tokens);
+  if (u.prompt_tokens != null && u.completion_tokens != null && Number.isFinite(pt) && pt >= 0 && Number.isFinite(ct) && ct >= 0) {
+    const c = toMicro(pt * price.prompt + ct * price.completion + price.request);
+    if (c != null) return c;
+  }
+  return fallbackMicro;
+}
+
+/* throws on any store fault or a ledger value that is not a plain count:
+   the caller treats a throw as "refuse paid" */
+async function readLedger(now) {
+  const month = monthStr(now);
+  const r = await kv([["GET", K_SPEND(month)], ["GET", K_SPEND_CALLS(month)], ["GET", K_NOCREDIT]]);
+  if (!Array.isArray(r) || r.length < 3) throw new Error("ledger unreadable");
+  const micro = r[0] == null ? 0 : Number(r[0]);
+  const calls = r[1] == null ? 0 : Number(r[1]);
+  if (!Number.isFinite(micro) || micro < 0 || !Number.isFinite(calls) || calls < 0) throw new Error("ledger corrupt");
+  return { month, micro, calls, nocredit: r[2] ? String(r[2]) : "" };
+}
+
+async function recordSpend(now, micro) {
+  const m = Number.isFinite(micro) && micro > 0 ? Math.ceil(micro) : 0;
+  const month = monthStr(now);
+  await kv([["INCRBY", K_SPEND(month), String(m)], ["EXPIRE", K_SPEND(month), String(SPEND_KEEP_S)],
+            ["INCR", K_SPEND_CALLS(month)], ["EXPIRE", K_SPEND_CALLS(month), String(SPEND_KEEP_S)]]);
+}
+
+/* a 402 from OpenRouter means the account holds no credit: every paid name
+   would answer the same, so the whole deep tier rests on free names for an
+   hour rather than knocking on the same closed door each call. Kept in
+   memory too, for the hour, in case the store write itself fails. */
+let noCreditUntil = 0;
+async function rememberNoCredit(now, why) {
+  noCreditUntil = now + NOCREDIT_S * 1000;
+  try {
+    await kv([["SET", K_NOCREDIT, (new Date(now).toISOString() + " " + String(why || "402")).slice(0, 200)], ["EXPIRE", K_NOCREDIT, String(NOCREDIT_S)]]);
+  } catch { }
+}
+
+/* Walks the paid names. Returns { ok, got, micro } where micro is what this
+   walk added to the ledger (on success, a timeout, or both). Every name it
+   passes over, and why, goes into tried with paid:true. */
+async function deepWalk(task, messages, perPerson, now, tried) {
+  const out = { ok: false, got: null, micro: 0 };
+  const note = (model, err, more) => tried.push({ provider: "openrouter", model, paid: true, err, ...(more || {}) });
+  const models = deepModels();
+  if (!models.length) { note("(deep)", "skipped: SOUL_DEEP_MODELS names no model on the code's deep list, so no paid model is allowed"); return out; }
+  if (perPerson) {
+    for (const m of models) note(m, "skipped: per-person data is never sent to a paid model; only totals reach any model");
+    return out;
+  }
+  if (!providerPresent("openrouter")) { note("(deep)", "skipped: no OpenRouter key, so no paid model"); return out; }
+  if (!kvReady()) { note("(deep)", "skipped: no store to keep the spend ledger, so paid models are refused"); return out; }
+  let ledger;
+  try { ledger = await readLedger(now); }
+  catch { note("(deep)", "skipped: the spend ledger could not be read, so paid models are refused (fail closed)"); return out; }
+  if (ledger.nocredit || now < noCreditUntil) {
+    note("(deep)", "skipped: no credit on the OpenRouter account (402" + (ledger.nocredit ? " at " + ledger.nocredit.slice(0, 20) : "") + "); free models only for the hour");
+    return out;
+  }
+  const prices = await deepPrices(false);
+  if (!prices) { note("(deep)", "skipped: OpenRouter's live model list could not be read, so no price can be checked and paid is refused"); return out; }
+
+  const capMicro = toMicro(deepCapUsd()) || 0;
+  let spent = ledger.micro;
+  const opts = task.opts || {};
+  const maxTokens = Math.max(1, parseInt(opts.max_tokens, 10) || 500);
+  for (const model of models) {
+    const p = prices.get(model);
+    if (!p) { note(model, "skipped: not on OpenRouter's live model list today"); continue; }
+    const price = deepPriceOf(p);
+    if (!price.ok) { note(model, "refused: " + price.why); continue; }
+    const est = worstCaseMicro(price, messages, maxTokens, opts.tools);
+    if (spent + est > capMicro) {
+      note(model, "refused: its worst case of " + usdLabel(est) + " would pass the monthly cap (" + usdLabel(spent) + " of " + usdLabel(capMicro) + " spent in " + ledger.month + ")");
+      continue;
+    }
+    const callOpts = { ...opts, max_tokens: maxTokens, timeout: opts.timeout || DEEP_TIMEOUT_MS };
+    if (task.json && !callOpts.response_format && await jsonCapable("openrouter", model)) {
+      callOpts.response_format = { type: "json_object" };
+    }
+    const got = await send("openrouter", model, messages, callOpts, { paid: true });
+
+    let micro = 0;
+    if (got.ok || got.status === 200) micro = actualMicro(got.usage, price, est);
+    else if (got.netError) micro = est;
+    let ledgerNote = "";
+    if (got.ok || micro > 0) {
+      try { await recordSpend(now, micro); }
+      catch { ledgerNote = " (store fault: this cost was not written to the ledger)"; out.spendFailed = true; }
+      spent += micro;
+      out.micro += micro;
+    }
+    if (got.status === 402) {
+      await rememberNoCredit(now, got.error);
+      note(model, "no credit: OpenRouter answered 402, so the deep tier uses free models for the next hour", { ms: got.ms });
+      return out;
+    }
+    note(model, (got.ok ? "" : got.error) + ledgerNote, { ms: got.ms, costUsd: micro / 1e6 });
+    if (got.ok) { out.ok = true; out.got = got; return out; }
+    if (got.blocked) return out;
+  }
+  return out;
+}
+
+/* The month's paid spend, for the Soul's console. usd is null (with an
+   error) when the ledger cannot be read, never a guessed 0. */
+export async function spendReport(now) {
+  const t = Number.isFinite(now) ? now : Date.now();
+  const month = monthStr(t);
+  const capUsd = deepCapUsd();
+  if (!kvReady()) return { month, usd: 0, capUsd, calls: 0, note: "no store: paid calls are refused, so nothing is spent" };
+  try {
+    const l = await readLedger(t);
+    return { month, usd: l.micro / 1e6, capUsd, calls: l.calls, noCredit: l.nocredit || "" };
+  } catch {
+    return { month, usd: null, capUsd, calls: null, error: "the spend ledger could not be read" };
+  }
 }
 
 export { PROVIDERS, GROQ_ALLOW, GEMINI_ALLOW };

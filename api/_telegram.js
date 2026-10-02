@@ -35,6 +35,8 @@
    API is built, so any error that echoes a URL would echo the token. Nothing
    that leaves this module carries it: every sentence passes through mask().
 --------------------------------------------------------------------------- */
+import { randomInt } from "node:crypto";
+import { kv, kvReady } from "./_kv.js";
 
 const env = k => (process.env[k] || "").trim();
 const API = "https://api.telegram.org";
@@ -238,4 +240,243 @@ export async function send(shaped, opts = {}) {
   const url = messageUrl(chat, m.message_id);
   if (url) out.url = url;
   return out;
+}
+
+/* ===========================================================================
+   THE OWNER'S LINE (the soul's Voice, SOUL.md)
+   ===========================================================================
+   Everything above speaks to the public channel. This speaks to one person:
+   the owner, in a private chat with the same bot, and only when the house
+   needs him (plus the weekly summary). It is a separate line on purpose: the
+   channel's id is an environment variable the owner typed; the owner's chat
+   id is learned once, from a code he sends the bot himself, and kept in the
+   store.
+
+   HOW THE LINK IS MADE. The console asks for a code (ownerLinkCode): "NOOR-"
+   and six letters or digits, kept 15 minutes. The owner sends it to the bot
+   in a private chat and presses Check (ownerLink), which reads the bot's
+   pending messages with getUpdates and takes the chat that sent the code
+   word for word. Only a private chat counts: a group or a channel that
+   happens to carry the code is never linked, because whoever reads a group
+   would then read the house's messages to its owner. The house sets no
+   webhook anywhere (getUpdates is the only way it reads the bot), so linking
+   lives here; if a webhook is ever set on the bot, Telegram answers
+   getUpdates with 409 and the link says so in words rather than failing
+   quietly.
+
+   WHAT IS NEVER SHOWN. The token (mask(), as above) and the owner's chat id:
+   no answer from these functions carries either, and nothing here logs.
+
+   HOW OFTEN. Six messages per UTC day at most, counted in the store before
+   each send. A store that cannot count is a store that cannot promise the
+   limit, so a fault there sends nothing (fail closed): a loop in the mind
+   can never become a stream of messages on the owner's phone.
+--------------------------------------------------------------------------- */
+export const K_TG_CODE = "nsoul:tg:code";
+export const K_TG_OFFSET = "nsoul:tg:offset";
+export const K_TG_OWNER = "nsoul:tg:owner";
+export const K_TG_BOT = "nsoul:tg:bot";
+export const K_TG_SENT = day => "nsoul:tg:sent:" + day;
+export const CODE_TTL_S = 15 * 60;
+export const OWNER_DAILY_MAX = 6;
+const CODE_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const LINKED_REPLY = "Linked. NOOR will write to you here only when it needs you, and once a week.";
+
+const storeOf = (o = {}) => ({ run: o.kv || kv, ready: o.kvReady || kvReady });
+const nowOf = (o = {}) => (o.now != null ? Number(o.now) : Date.now());
+const parseJson = raw => {
+  if (raw == null) return null;
+  if (typeof raw === "object") return raw;
+  try { return JSON.parse(raw); } catch { return null; }
+};
+
+/* one Bot API call to any method, never throwing, the token kept out of
+   every sentence it hands back */
+async function botCall(method, body, o = {}) {
+  const tok = env("TG_BOT_TOKEN");
+  if (!tok) return { ok: false, status: 0, reason: "TG_BOT_TOKEN is not set" };
+  const fetcher = o.fetch || fetch;
+  let r, j = null;
+  try {
+    r = await fetcher(API + "/bot" + tok + "/" + method, {
+      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body || {})
+    });
+    const t = await r.text();
+    try { j = JSON.parse(t); } catch { }
+  } catch (e) {
+    return { ok: false, status: 0, reason: "Telegram did not answer: " + mask(String(e && e.message || e)).slice(0, 120) };
+  }
+  if (!r.ok || !j || !j.ok) {
+    const said = mask(String((j && j.description) || "") || ("http " + r.status));
+    return { ok: false, status: r.status, reason: said };
+  }
+  return { ok: true, status: r.status, result: j.result };
+}
+
+/* the bot's own @name, so the console can say whom to write to. Asked of
+   Telegram at most once a day; a failure is null, never a thrown error. */
+async function botUsername(o = {}) {
+  const s = storeOf(o);
+  try {
+    if (s.ready()) {
+      const r = await s.run([["GET", K_TG_BOT]]);
+      if (r && r[0]) return String(r[0]);
+    }
+  } catch { }
+  const me = await botCall("getMe", {}, o);
+  const name = me.ok && me.result && me.result.username ? String(me.result.username) : null;
+  if (name) {
+    try { if (s.ready()) await s.run([["SET", K_TG_BOT, name, "EX", 86400]]); } catch { }
+  }
+  return name;
+}
+
+export function makeOwnerCode() {
+  let s = "";
+  for (let i = 0; i < 6; i++) s += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
+  return "NOOR-" + s;
+}
+
+/* a fresh one-time code, kept 15 minutes; a new one replaces the old */
+export async function ownerLinkCode(o = {}) {
+  if (!env("TG_BOT_TOKEN")) return { ok: false, reason: "TG_BOT_TOKEN is not set" };
+  const s = storeOf(o);
+  if (!s.ready()) return { ok: false, reason: "no store: the link needs the store to hold the code" };
+  const code = makeOwnerCode();
+  const at = nowOf(o);
+  try {
+    await s.run([["SET", K_TG_CODE, JSON.stringify({ code, at }), "EX", CODE_TTL_S]]);
+  } catch {
+    return { ok: false, reason: "the store did not keep the code; try again" };
+  }
+  return { ok: true, code, expiresAt: new Date(at + CODE_TTL_S * 1000).toISOString(), botUsername: await botUsername(o) };
+}
+
+/* the pending messages since the last look, at most five pages of 100 */
+async function readUpdates(offset, o) {
+  const all = [];
+  let next = offset;
+  for (let page = 0; page < 5; page++) {
+    const body = { timeout: 0, limit: 100, allowed_updates: ["message"] };
+    if (next) body.offset = next;
+    const r = await botCall("getUpdates", body, o);
+    if (!r.ok) return { ok: false, status: r.status, reason: r.reason, offset: next };
+    const list = Array.isArray(r.result) ? r.result : [];
+    for (const u of list) {
+      all.push(u);
+      if (Number.isFinite(u.update_id) && u.update_id + 1 > (next || 0)) next = u.update_id + 1;
+    }
+    if (list.length < 100) break;
+  }
+  return { ok: true, updates: all, offset: next };
+}
+
+/* Check: has the code arrived, from a private chat? */
+export async function ownerLink(o = {}) {
+  if (!env("TG_BOT_TOKEN")) return { ok: false, reason: "TG_BOT_TOKEN is not set" };
+  const s = storeOf(o);
+  if (!s.ready()) return { ok: false, reason: "no store: the link needs the store" };
+  let pending, offset;
+  try {
+    const r = await s.run([["GET", K_TG_CODE], ["GET", K_TG_OFFSET]]);
+    pending = parseJson(r && r[0]);
+    offset = Number(r && r[1]) || 0;
+  } catch {
+    return { ok: false, reason: "the store did not answer; try again" };
+  }
+  const code = pending && typeof pending.code === "string" ? pending.code : "";
+  if (!code) return { ok: false, reason: "no code is waiting, or it expired: press Link Telegram for a new one" };
+
+  const got = await readUpdates(offset, o);
+  if (got.offset && got.offset !== offset) {
+    try { await s.run([["SET", K_TG_OFFSET, String(got.offset)]]); } catch { }
+  }
+  if (!got.ok) {
+    if (got.status === 409) return { ok: false, reason: "the bot uses a webhook; linking needs getUpdates" };
+    if (got.status === 401) return { ok: false, reason: "Telegram does not recognise the bot token (TG_BOT_TOKEN)" };
+    return { ok: false, reason: "Telegram did not give the bot's messages: " + got.reason };
+  }
+
+  let found = null;
+  for (const u of got.updates) {
+    const m = u && u.message;
+    if (!m || !m.chat || m.chat.type !== "private") continue;   /* never a group or a channel */
+    if (typeof m.text !== "string" || !m.text.includes(code)) continue;
+    found = m;
+  }
+  if (!found) return { ok: false, reason: "the code has not arrived yet: send it to the bot in a private chat, then press Check again" };
+
+  const first = found.chat.first_name || (found.from && found.from.first_name) || null;
+  const owner = { chat: found.chat.id, name: first, since: new Date(nowOf(o)).toISOString() };
+  try {
+    await s.run([["SET", K_TG_OWNER, JSON.stringify(owner)], ["DEL", K_TG_CODE]]);
+  } catch {
+    return { ok: false, reason: "the store did not keep the link; press Check again" };
+  }
+  const said = await botCall("sendMessage", { chat_id: owner.chat, text: LINKED_REPLY, disable_web_page_preview: true }, o);
+  const out = { ok: true, linked: true, chatTitle: first };
+  if (!said.ok) out.replied = false;
+  return out;
+}
+
+async function readOwner(s) {
+  const r = await s.run([["GET", K_TG_OWNER]]);
+  const v = parseJson(r && r[0]);
+  return v && v.chat != null ? v : null;
+}
+
+export async function ownerStatus(o = {}) {
+  const s = storeOf(o);
+  if (!s.ready()) return { linked: false, since: null, reason: "no store" };
+  try {
+    const v = await readOwner(s);
+    return { linked: !!v, since: v ? (v.since || null) : null };
+  } catch {
+    return { linked: false, since: null, reason: "the store did not answer" };
+  }
+}
+
+export async function ownerUnlink(o = {}) {
+  const s = storeOf(o);
+  if (!s.ready()) return { ok: false, reason: "no store" };
+  try {
+    await s.run([["DEL", K_TG_OWNER], ["DEL", K_TG_CODE]]);
+  } catch {
+    return { ok: false, reason: "the store did not answer; nothing changed" };
+  }
+  return { ok: true, linked: false };
+}
+
+/* a plain message to the owner: no parse mode (so nothing in it is read as
+   markup), no link preview, cut to Telegram's 4,096, at most six a day */
+export async function notifyOwner(text, o = {}) {
+  if (!env("TG_BOT_TOKEN")) return { ok: false, reason: "TG_BOT_TOKEN is not set" };
+  const body = cut(text, TEXT_MAX);
+  if (!body) return { ok: false, reason: "nothing to say" };
+  const s = storeOf(o);
+  if (!s.ready()) return { ok: false, reason: "no store: not linked" };
+  let owner;
+  try { owner = await readOwner(s); }
+  catch { return { ok: false, reason: "the store did not answer; not sent" }; }
+  if (!owner) return { ok: false, reason: "not linked" };
+
+  const day = new Date(nowOf(o)).toISOString().slice(0, 10);
+  let count;
+  try {
+    const r = await s.run([["INCR", K_TG_SENT(day)], ["EXPIRE", K_TG_SENT(day), 2 * 86400]]);
+    count = Number(r && r[0]);
+  } catch {
+    return { ok: false, reason: "the store could not count today's messages; not sent" };
+  }
+  if (!Number.isFinite(count) || count < 1) return { ok: false, reason: "the store could not count today's messages; not sent" };
+  if (count > OWNER_DAILY_MAX) return { ok: false, reason: "daily limit reached: " + OWNER_DAILY_MAX + " messages to the owner a day" };
+
+  const r = await botCall("sendMessage", { chat_id: owner.chat, text: body, disable_web_page_preview: true }, o);
+  if (r.ok) return { ok: true, reason: null };
+  const idStr = String(owner.chat);
+  let reason = String(r.reason || "").split(idStr).join("<chat>");
+  if (r.status === 403 || /blocked|deactivated|chat not found/i.test(reason))
+    reason = "Telegram refused: the owner has blocked the bot or the chat is gone; link again from the console (" + reason + ")";
+  else if (r.status === 429) reason = "Telegram asked for a pause: " + reason;
+  return { ok: false, reason };
 }

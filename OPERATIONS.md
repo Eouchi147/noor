@@ -74,6 +74,8 @@ of them you must **redeploy** (Deployments → ⋯ → Redeploy) for the change 
 | `GEMINI_API_KEY` | The Lantern's strong provider: free 3.x Flash and Flash-Lite models. Same rule: use a key from an account with **no billing enabled**. | aistudio.google.com/apikey | Same: that provider is absent, no error. |
 | `OPENROUTER_DAILY` | *Optional.* Raises the Lantern's conservative OpenRouter daily budget (default 40) if your account has purchased credits and holds a larger free-request ceiling. | none | The router stays at the cautious default of 40 free OpenRouter requests a day. |
 | `ALLOW_PAID_MODELS` | Set to `1` **only** if you intend to be billed. | none | Paid models are dropped before the request is made. Leave unset. |
+| `SOUL_MONTHLY_USD` | *Optional.* Lowers the Soul's monthly cap on paid models (the deep tier). `0` turns paid off. **Cannot raise it above 10**: the code takes min(10, this). | none | The cap is the code's own 10 USD a month. |
+| `SOUL_DEEP_MODELS` | *Optional.* Narrows the deep tier's paid models to a subset of the code list, as a comma list or a JSON array. A name not on the code list is ignored, so this can never add one. | none | The whole code list (`DEEP_MODELS` in `api/_llm.js`). |
 
 ### Required for the store (strongly recommended)
 
@@ -106,6 +108,8 @@ on every cold start. The library itself is unaffected.
 | `ASK_PUBLIC`, `GUIDE_PUBLIC` | none | Open the ask and guide endpoints to the public |
 | `ANTHROPIC_API_KEY` | none | Unused on the current path. Safe to leave unset. |
 | `CHROMIUM_PATH` | built in | Overrides where the test suites look for the browser. |
+| `PSI_API_KEY` | none | A Google API key for PageSpeed Insights. The Soul's weekly page speed reading (four pages) needs none at that volume; set one only if PSI starts answering 429. |
+| `AI_GATEWAY_API_KEY` | none | Reaches Jev (the free judge) through Vercel's AI Gateway. Not needed on Vercel: the deployment's own OIDC token is used. The Soul's sentinel and the Lantern's gate both read it first when it is set. |
 
 ### The social machine, all optional
 
@@ -188,6 +192,8 @@ This is the part that broke, so it is documented in full.
 **Nothing bills unless you deliberately turn billing on.** Anything not on
 OpenRouter's own free list is dropped *before* the request is made, including
 whatever `OPENROUTER_MODEL` is set to, unless `ALLOW_PAID_MODELS=1`.
+The one exception is the Soul's deep tier, which may spend up to 10 USD a month
+from credit you add yourself; see "The deep tier" below.
 
 ### The three layers, in order
 
@@ -212,6 +218,39 @@ retired model names, waiting nine seconds each, and returning nothing.
 
 **Rule: never call `modelChain()` on a request path. Always `await liveChain()`.**
 `tests/api-audit.mjs` fails the build if anything does.
+
+### The deep tier: the Soul's one paid door, `api/_llm.js` §8
+
+Every Lantern tier (fast, strong, long) is free only and stays that way. The Soul
+alone (its strategist and the Guardian) may ask for `tier: "deep"`, which tries a
+short code list of strong paid OpenRouter models first and falls back to the free
+"strong" chain whenever any gate says no:
+
+1. The model is on `DEEP_MODELS` in code (`SOUL_DEEP_MODELS` may only narrow it).
+2. The request carries no per-person data. Per-person work is never paid; only
+   totals reach any model.
+3. The store answers, the month's ledger `nsoul:spend:<YYYY-MM>` is readable, and no
+   "no credit" mark is set. **A store fault refuses paid**, it never guesses.
+4. OpenRouter's live model list carries the model today, at a fixed price no higher
+   than 5 USD per million prompt tokens and 20 USD per million completion tokens.
+5. The worst case of this call (its prompt and its whole `max_tokens` at the live
+   price) plus the month's spend so far fits under the cap.
+
+**The cap** is 10 USD a calendar month (UTC), `DEEP_CAP_USD_MAX` in code.
+`SOUL_MONTHLY_USD` can lower it, never raise it. After each paid call the actual cost
+is added to the ledger in micro-dollars: OpenRouter's own reported cost, else the
+reported tokens at the live price, else the worst case. A paid call that times out is
+charged its worst case, since it may have been billed. `spendReport()` gives the
+month, the dollars, the cap and the number of paid calls; the console shows it.
+
+**The owner must add credit to the OpenRouter account** (openrouter.ai, Credits) for
+paid calls to work at all. Without credit nothing breaks and nothing is billed: the
+deep tier quietly answers from the free models. When OpenRouter answers 402, that is
+recorded as "no credit" (`nsoul:nocredit`) and the deep tier uses free models for one
+hour before trying a paid model again. Every deep answer says `paid: true|false` and
+`costUsd`, and its `tried` list says why each paid model was passed over.
+
+`ALLOW_PAID_MODELS` has no effect on any of this, in either direction.
 
 ### The nightly refresh
 
@@ -504,7 +543,41 @@ meant.
 | `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
 | `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
 | `nexp:state` | The experiment now running (or none) and its finished history: `{current: {id, start, args}\|null, history: [...]}` | `_experiments.js` |
+| `nsoul:spend:<YYYY-MM>` | The month's paid model spend in micro-dollars (INCRBY after every paid call), kept 70 days | `_llm.js` |
+| `nsoul:spend:<YYYY-MM>:calls` | How many paid calls that month were charged | `_llm.js` |
+| `nsoul:nocredit` | Set for one hour after OpenRouter answers 402: the deep tier uses free models only | `_llm.js` |
 | `nsoc:override:<date>` | One day's reel overrides, a hash of `<slot>: {action:"skip"}\|{action:"swap", id}, at, by, note}` | `_lineup.js` |
+| `nsoul:tg:code` | The one-time code waiting to link the owner's Telegram `{code, at}`, kept 15 minutes | `_telegram.js` |
+| `nsoul:tg:offset` | The next Telegram update to read, so Check never rereads old messages | `_telegram.js` |
+| `nsoul:tg:owner` | The owner's private chat with the bot `{chat, name, since}`, no expiry; never shown by any route | `_telegram.js` |
+| `nsoul:tg:bot` | The bot's @username, kept a day | `_telegram.js` |
+| `nsoul:tg:sent:<date>` | Messages sent to the owner that UTC day; six is the ceiling | `_telegram.js` |
+| `nsoul:inst:<name>` | The last good reading of a Soul instrument (`search`, `speed`, `youtube`, `radar`, `coverage`), kept 400 days | `_instruments.js` |
+| `nsoul:inst:<name>:try` | The last attempt `{ok, why, date, week}`: decides whether the instrument is due (weekly; coverage daily; a failed one again the next day) | `_instruments.js` |
+| `nsoul:inst:<name>:hist` | The last 26 readings, totals only | `_instruments.js` |
+| `nsoul:effects` | The effects ledger: each R2 action measured 7 days on, newest first, 200 kept | `_instruments.js` |
+| `nsoul:drift` | Each goal's run of behind cycles `{streak, lastDate, status}` | `_instruments.js` |
+| `nsoul:anomalies` | The days' anomaly flags `[{date, flags}]`, 90 days | `_instruments.js` |
+| `nsoul:scorecard:<YYYY-Www>` | One weekly scorecard, kept 400 days; `nsoul:scorecards` lists the weeks | `_instruments.js` |
+| `nsoul:benchmarks` | The owner's YouTube benchmark channels `{ids, at}`, at most 10 | `_instruments.js` (door POST `benchmarks`) |
+| `nsoul:yt:units:<date>` | YouTube quota units the Soul spent that day; 250 is its ceiling | `_instruments.js` |
+| `nsoul:radar:<YYYY-Www>` | The week's topic radar searches as they are read, two a day | `_instruments.js` |
+| `nsoul:indexnow:key` | The IndexNow key `{key, at, verified}`, made once; served at `/<key>.txt` | `_instruments.js` |
+| `nsoul:indexnow:seen` | Each sitemap URL and the lastmod last offered to IndexNow | `_instruments.js` |
+| `nsoul:indexnow:log` | What each offer sent `{date, submitted, status}`, 60 kept | `_instruments.js` |
+| `nsoul:count:indexnow:<date>` | URLs offered to IndexNow that day; 100 is the ceiling | `_instruments.js` |
+| `nsoul:once:gsc` | Set the day the owner was told Google Search Console needs his sign in, so he is told once | `_mind.js` |
+| `nsoul:goals:ver` | The goals' version: every write to `nsoul:goals` is a compare and set on it, so an owner edit is never lost to a concurrent write | `_soul.js` |
+| `nsoul:goalstate` | What the cycle measures for each goal `{history, baseline, target, status, value, date}`; the goals themselves are never edited by the cycle, and met is recomputed daily | `_mind.js` |
+| `nsoul:goals:archive` | The soul's own retired goals (it keeps at most 8 active), out of every prompt | `_soul.js` |
+| `nsoul:audit:head` | The audit chain's count and newest hash `{count, head, at}`, written with every entry; the weekly Telegram summary carries the head | `_soul.js` |
+| `nsoul:action:<id>` | One soul action, kept 400 days; `nsoul:actions` lists the ids, so an update is by id | `_soul.js` |
+| `nsoul:tg:told` | A hash of each needsYou item already sent and the day it was sent; an item is sent again only after 7 days | `_mind.js` |
+| `nsoul:cycle:daily` | The date of the last scheduled (05:00) cycle; an owner's Run never sets it | `_mind.js` |
+| `nsoul:deepoff:<date>` | Set when a paid call's cost could not be written: no deep call for the rest of that day | `_mind.js` |
+| `nsoul:count:soul-lineup-date:<date>`, `nsoul:count:soul-skip-date:<date>` | The soul's line-up changes (2 at most) and skips (1 at most) for one target date | `_hands.js` |
+| `nsoul:canary:<hash>` | The canary answers already had for one set of proposed lessons, so an evaluation cut short resumes, kept 7 days | `_evolve.js` |
+| `nllm:rl:<provider>:<model>:soul:<date>` | The soul's own free calls that day; it stops at half of the provider's daily allowance, so the Lantern keeps the rest | `_llm.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -851,6 +924,88 @@ fifteen minutes. Two things in that funnel are honestly missing rather than
 estimated, and it says so in `notes`: **clicks are attributed by month**, not by
 day, because that is the grain `api/beacon.js` keeps, and **a returning reader
 is not counted at all**, because the beacon is cookieless by design.
+
+### Linking the owner's Telegram
+
+The house has two Telegram lines. The public channel (`TG_CHAT_ID`) gets the
+posts. The owner's line is a private chat with the same bot (`TG_BOT_TOKEN`),
+used only when the house needs you, plus the weekly summary. It is linked once:
+
+1. Open the console and press **Link Telegram**. It shows a code like
+   `NOOR-7KQ2XD` and the bot's @name. The code lasts 15 minutes.
+2. In Telegram, open a **private** chat with that bot (press Start if it is
+   new) and send the code. A code sent in a group or a channel is ignored on
+   purpose, so nobody else ever reads what the house writes to you.
+3. Back in the console, press **Check**. The bot answers you in that chat:
+   "Linked. NOOR will write to you here only when it needs you, and once a
+   week." The console then shows linked, and since when.
+
+If Check says the code expired, press Link Telegram again for a new one. If it
+says "the bot uses a webhook; linking needs getUpdates", someone set a webhook
+on the bot outside this house (the house sets none): remove it with the Bot
+API's `deleteWebhook` and Check again. **Unlink** forgets the chat; link again
+the same way. At most six messages a day reach you, counted in the store, and
+if the store cannot count, nothing is sent. The chat id and the token are never
+shown in the console or in any answer. Code: `ownerLinkCode`, `ownerLink`,
+`notifyOwner`, `ownerStatus`, `ownerUnlink` in `api/_telegram.js`.
+
+### The Soul's instruments (what each card in the Soul room means)
+
+The Soul room's **Instruments** section has eight cards, each from its own
+owner-only view of `/api/soul` (SOUL.md section 11). Each says in words when it
+has nothing yet and why; none can stop a cycle.
+
+- **Week**: Monday's scorecard for the week before. The selector shows earlier
+  weeks. The same summary reaches Telegram inside the weekly message.
+- **Trajectories**: each goal's line (gold the readings, blue dashes the fitted
+  line to the due date, green dashes the target). "drifting" means seven or more
+  behind cycles in a row; the soul then must answer it in its plan every day,
+  and tells you on the 7th day and weekly after.
+- **What worked**: each public action, seven days on, against the same weekday
+  of the weeks before. "unclear" is the honest answer when the change is inside
+  the usual week to week noise.
+- **Search readiness**: 25 sitemap pages a week, seven checks each. The
+  IndexNow line says whether the key file is served (`/<key>.txt`, through the
+  rewrite in `vercel.json`), how many changed pages wait and how many of the
+  day's 100 went. A 403 from IndexNow means the key file was not served when it
+  checked: open `https://noorcodex.com/<key>.txt` (the key is in the store
+  under `nsoul:indexnow:key`); it must show the key and nothing else.
+- **Google Search Console** is not read: it needs your own OAuth consent. The
+  soul says so once in needsYou. When you want it, add the site as a property at
+  search.google.com/search-console and ask Claude to wire it in a working
+  session.
+- **Page speed**: PageSpeed Insights, mobile, weekly: home, /quran, a Light, a
+  dictionary word. A 429 means set `PSI_API_KEY`.
+- **YouTube position**: the channel's totals and your benchmark channels. Add
+  up to ten channel ids (UC followed by 22 characters; on a channel page,
+  View Source and search for `channelId`) under "Benchmark channels" and press
+  Save. "no YouTube credentials" means `YT_CLIENT_ID`, `YT_CLIENT_SECRET` and
+  `YT_REFRESH_TOKEN` are not set. The soul spends at most 250 quota units a day,
+  so the poster's uploads always have theirs.
+- **Topic radar**: eight YouTube searches a week, two a day, mapped to the
+  shelves. Titles are public data and only ever read as signals.
+- **Coverage**: days of reels left per kind at the rota's pace. Under 30 days
+  is red: more of that kind need rendering.
+
+**What the soul may do to the line-up** (since the review of 2 October 2026):
+it signs as "the Soul" (never as you), it never touches a slot you set or a
+Lantern proposal you approved, it changes only today and tomorrow, at most one
+skip and two changes for any one day. A skip counts against posting health
+like any slot that did not go out. Its Undo works only while the slot still
+holds its own entry. A Run you press is an extra cycle; the 05:00 one still
+runs. If a cycle is already running, the room says so. Only the Soul's own
+skips count against posting health; yours do not.
+
+The YouTube position and the topic radar are read by the first quarter hour
+tick after 09:00 UTC (YouTube's quota day turns at midnight Pacific), not by
+the 05:00 cycle; their cards update late morning UTC. Proposed lessons are
+tested by the canaries, which may take two ticks; each answer is kept, so
+nothing is paid for twice. If a weekly cycle fails, you still get its summary.
+
+The sentinel (Jev, free, through the AI Gateway) reads every public intent
+first, every message the soul sends you and every proposed lesson. When it is
+unreachable the cycle record says "sentinel unavailable" and nothing is
+blocked. A message it held back is named in the chronicle's highlights.
 
 ### The night shift flagged something
 

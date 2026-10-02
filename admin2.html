@@ -553,6 +553,145 @@ table.dt tr:last-child td{border-bottom:0}
 .lant-models .m i{width:7px;height:7px;border-radius:50%;background:var(--faint)}
 .lant-models .m.on i{background:var(--good)}
 @media(prefers-reduced-motion:reduce){.lant-step .ic{transition:none}}
+
+/* ---- The Soul: the house's own mind, read at a glance and then in depth.
+   No new colour and no chart library: the gold line the Observatory already
+   draws, the good/bad/wait triad every chip here wears, and one more use of
+   the bad tone for the column that asks the owner for something, because
+   that column is the one he must not miss. Every chart is drawn at the pixel
+   width of its own box (measured, then drawn), so a label is never stretched
+   the way a fixed viewBox stretches it on a wide desk. */
+.rooms .card.soulc{grid-column:1/-1;min-height:96px;border-color:var(--gold-dim)}
+.pill.gold{color:var(--gold);border-color:var(--gold-dim)}
+.soul-hd .lab{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim)}
+.soul-hd .ms{font-family:var(--f-disp);font-size:18px;line-height:1.5;color:var(--cream);margin:6px 0 0;font-weight:500}
+.soul-hd .st{display:flex;gap:8px 12px;align-items:center;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.soul-hd .st .pill{font-size:11px;padding:4px 11px}
+.soul-confirm{background:var(--panel2);border:1px solid var(--gold-dim);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:13.5px;color:var(--text)}
+.soul-confirm .acts{margin-top:10px}
+.soul-ns .hero .n{font-size:48px}
+.soul-ns .hero .n.none{font-size:24px;color:var(--muted);padding-bottom:6px}
+.soul-ns .vh{margin:14px 0 6px}
+.soul-ch{width:100%;position:relative;overflow:hidden}
+.soul-ch svg{display:block;width:100%}
+.soul-ch .gl{stroke:var(--line);stroke-width:1}
+.soul-ch .ax{fill:var(--faint);font-family:var(--f-mono);font-size:10px}
+.soul-ch .hx{cursor:crosshair}
+.soul-ch .hx .gd{opacity:0}
+.soul-ch .hx:hover .gd{opacity:1}
+.soul-sm{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px 16px}
+.soul-sm .trendp b{display:flex;align-items:baseline;gap:6px}
+.soul-sm .trendp b .lv{margin-left:auto;font-family:var(--f-mono);font-size:11px;color:var(--gold);font-weight:500;white-space:nowrap}
+.soul-sm .trendp svg{height:auto}
+.soul-sm .why{font-size:11.5px;color:var(--faint);margin:2px 0 0;line-height:1.45}
+.soul-goal{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 8px}
+.soul-goal .h{display:flex;gap:6px 8px;align-items:flex-start;flex-wrap:wrap}
+.soul-goal .h b{flex:1 1 220px;min-width:0;color:var(--cream);font-weight:600;font-size:14.5px;line-height:1.4;overflow-wrap:anywhere}
+.soul-goal .tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.soul-goal .bar2{height:8px;border-radius:4px;margin:10px 0 6px}
+.soul-goal .bar2 i.met{background:var(--good)}
+.soul-goal .nums{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--f-mono);font-size:11px;color:var(--text)}
+.soul-goal .nums em{font-style:normal;color:var(--faint)}
+.soul-goal .ed{margin-top:10px}
+.soul-goal .frm label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 4px}
+.soul-lc{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;margin:0 0 10px}
+.soul-lc .w{font-size:13px;color:var(--muted);flex:1 1 auto}
+.soul-cols{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.soul-cols{grid-template-columns:repeat(3,1fr)}}
+.soul-col{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.soul-col h4{margin:0 0 10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:8px}
+.soul-col h4 .n{margin-left:auto;font-family:var(--f-mono);color:var(--faint);letter-spacing:0}
+.soul-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.soul-col li{font-size:13.5px;line-height:1.5;color:var(--text);padding-left:16px;position:relative;overflow-wrap:anywhere}
+.soul-col li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.soul-col.done li::before{background:var(--good)}
+.soul-col.next li::before{background:var(--gold)}
+.soul-col.you{border-color:rgba(240,138,138,.5);background:rgba(240,138,138,.07)}
+.soul-col.you h4{color:var(--bad)}
+.soul-col.you li{color:var(--cream);font-weight:500}
+.soul-col.you li::before{background:var(--bad)}
+.soul-col .empty{padding:0}
+@media(max-width:639px){.soul-col.you{order:-1}}
+.soul-up .tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.soul-int,.soul-drop{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.soul-drop{border-color:rgba(240,138,138,.4)}
+.soul-drop .h{display:flex;gap:6px 8px;align-items:center;flex-wrap:wrap}
+.soul-drop .h b{flex:1 1 160px;min-width:0;color:var(--cream);font-weight:600;font-size:14.5px;overflow-wrap:anywhere}
+.soul-drop li{overflow-wrap:anywhere}
+.soul-int .h{display:flex;gap:6px 8px;align-items:center;flex-wrap:wrap}
+.soul-int .h b{flex:1 1 160px;min-width:0;color:var(--cream);font-weight:600;font-size:14.5px;overflow-wrap:anywhere}
+.soul-int .kv{margin-top:10px}
+.soul-cn{display:grid;gap:0;margin-top:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.soul-cn .v{padding:9px 12px;border-top:1px solid var(--line);font-size:12.5px;min-width:0}
+.soul-cn .v:first-child{border-top:0}
+.soul-cn .v .who{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.soul-cn .v .who b{color:var(--text);font-weight:600}
+.soul-cn .v .who span{color:var(--faint);font-size:11.5px}
+.soul-cn .v ul{margin:5px 0 0;padding-left:18px;color:var(--muted);overflow-wrap:anywhere}
+.soul-cn .v li{margin:2px 0}
+.soul-res{margin-top:12px;display:flex;gap:8px 10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--text);overflow-wrap:anywhere}
+.soul-res .tx{flex:1 1 180px;min-width:0}
+.soul-meter .top{display:flex;align-items:baseline;gap:8px 12px;flex-wrap:wrap}
+.soul-meter .top .v{font-family:var(--f-disp);font-size:28px;font-weight:600;color:var(--cream);line-height:1.1;font-variant-numeric:tabular-nums}
+.soul-meter .top .of{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.soul-meter .top .pct{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--gold)}
+.soul-meter .bar2{height:10px;border-radius:5px;margin:10px 0 6px}
+.soul-meter+.soul-meter{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.soul-code{font-family:var(--f-mono);font-size:26px;letter-spacing:.18em;color:var(--gold);background:var(--ink);border:1px dashed var(--gold-dim);border-radius:10px;padding:12px 14px;text-align:center;margin:12px 0;user-select:all;overflow-wrap:anywhere}
+.soul-steps{margin:0;padding-left:20px;font-size:13.5px;line-height:1.6;color:var(--text)}
+.soul-steps li{margin:2px 0}
+.soul-au .e{display:flex;gap:4px 10px;flex-wrap:wrap;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);font-size:13px;min-width:0}
+.soul-au .e:first-child{border-top:0}
+.soul-au .e .sm{flex:1 1 220px;min-width:0;color:var(--text);overflow-wrap:anywhere}
+.soul-au .e .wh{font-family:var(--f-mono);font-size:10.5px;color:var(--faint);white-space:nowrap}
+.soul-up .h{display:flex;gap:6px 8px;align-items:flex-start;flex-wrap:wrap}
+.soul-up .h b{flex:1 1 200px;min-width:0;color:var(--cream);font-weight:600;font-size:14.5px;overflow-wrap:anywhere}
+.soul-up .ctl{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.soul-up .ctl label{font-size:12px;color:var(--faint)}
+select.soul-sel{font:inherit;font-size:16px;min-height:38px;padding:0 34px 0 12px;border-radius:9px;border:1px solid var(--line2);color:var(--text);
+  background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2394A2C0' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  -webkit-appearance:none;appearance:none;max-width:100%}
+@media(min-width:900px){select.soul-sel{font-size:13.5px;min-height:34px}}
+select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.soul-lesson{padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.5;overflow-wrap:anywhere}
+.soul-lesson:first-child{border-top:0}
+.soul-lesson .y{display:block;color:var(--faint);font-size:12px;margin-top:2px}
+.soul-err b{color:var(--bad)}
+#s-soul .vtb{overflow-x:auto;max-height:420px;overflow-y:auto}
+/* the instruments (SOUL.md section 11): eight cards, one column on a phone */
+.soul-ig{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media(min-width:900px){.soul-ig{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.soul-ig .wide{grid-column:1/-1}
+.soul-ic{min-width:0}
+.soul-ih{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;margin:0 0 10px}
+.soul-ih b{color:var(--cream);font-size:15px;font-weight:600;flex:1 1 auto;min-width:0}
+.soul-ih .vs{width:100%;font-size:11.5px;color:var(--faint);line-height:1.45}
+.soul-ih select.soul-sel{max-width:100%}
+.soul-big{font-size:40px!important}
+.soul-rows{display:flex;flex-direction:column}
+.soul-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;align-items:center;min-width:0}
+.soul-row:first-child{border-top:0}
+.soul-row .l{min-width:0;overflow-wrap:anywhere;color:var(--text)}
+.soul-row .r{font-family:var(--f-mono);font-size:12px;color:var(--gold);white-space:nowrap;text-align:right;display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.soul-row .r.bad{color:var(--bad)}
+.soul-row .r i{font-style:normal;font-size:11px;color:var(--faint)}.soul-row .r i.up{color:var(--good)}.soul-row .r i.dn{color:var(--bad)}
+.soul-row .s{grid-column:1/-1;font-size:11.5px;color:var(--faint);overflow-wrap:anywhere;line-height:1.5}
+.soul-row .bar2{grid-column:1/-1;margin:2px 0 0}
+.soul-row .bar2 i.mid{background:var(--blue)}
+.soul-row.mine .l{color:var(--cream);font-weight:600}
+.soul-b4{display:inline-block;vertical-align:middle;flex:0 0 auto}
+.soul-chips{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+.soul-wk{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 24px}
+@media(min-width:900px){.soul-wk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.soul-tjs{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media(min-width:900px){.soul-tjs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.soul-tj{border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.soul-tj .h{display:flex;gap:6px 8px;align-items:center;flex-wrap:wrap;margin:0 0 6px}
+.soul-tj .h b{flex:1 1 180px;min-width:0;color:var(--text);font-weight:600;font-size:13.5px;overflow-wrap:anywhere}
+.soul-tj .nums{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--f-mono);font-size:11px;color:var(--text);margin-top:4px}
+.soul-tj .nums em{font-style:normal;color:var(--faint)}
+.soul-why{color:var(--wait);margin:8px 0 0;overflow-wrap:anywhere}
+.soul-eff .pill{justify-self:end}
 </style>
 </head>
 <body>
@@ -597,6 +736,7 @@ table.dt tr:last-child td{border-bottom:0}
     <section class="surf" id="s-controls"></section>
     <section class="surf" id="s-observatory"></section>
     <section class="surf" id="s-lantern"></section>
+    <section class="surf" id="s-soul"></section>
   </main>
 
   <nav class="bar" aria-label="Surfaces">
@@ -738,13 +878,13 @@ var CUR="today";
    House and remembered in the hash, so a reload lands in the room the owner
    was standing in. Nothing here counts the surfaces: the bar's columns are
    counted from the buttons that are in it. */
-var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,observatory:1,lantern:1};
+var ROOM={lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,observatory:1,lantern:1,soul:1};
 var NAMES={reels:"Today's reels",today:"Today",posts:"Posts",readers:"Readers",house:"House",flow:"Flow",
   lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",controls:"Controls",
-  observatory:"Observatory",lantern:"The Lantern"};
+  observatory:"Observatory",lantern:"The Lantern",soul:"The Soul"};
 var LOAD={reels:drawReels,today:drawToday,posts:drawPosts,readers:drawReaders,house:drawHouse,flow:drawFlow,
   lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
-  controls:drawControls,observatory:drawObservatory,lantern:drawLantern};
+  controls:drawControls,observatory:drawObservatory,lantern:drawLantern,soul:drawSoul};
 var LOADED={};
 function show(s,force){
   if(!NAMES[s]||!$("s-"+s))s="today";
@@ -1047,7 +1187,7 @@ var SLOT_HALF={reelA:"morning",reelC:"noon",reelD:"afternoon",reelB:"evening",re
    api/_lineup.js keeps (the same one the Lantern's lineup tool and the
    plan/today preview already show, so this can never disagree with them) */
 function overrideBadge(ov){if(!ov)return "";
-  var who=ov.by==="owner"?"you":"the Lantern, approved by you";
+  var who=ov.by==="soul"?"the Soul":ov.by==="lantern-approved"?"the Lantern, approved by you":"you";
   return ov.action==="skip"
     ? '<span class="pill bad" title="skipped by '+esc(who)+(ov.note?": "+esc(ov.note):"")+'">skipped</span>'
     : '<span class="pill wait" title="swapped by '+esc(who)+" for "+esc(ov.id||"")+(ov.note?": "+esc(ov.note):"")+'">swapped</span>'}
@@ -1223,7 +1363,7 @@ function openChange(date,slotId,cards){
     var ov=s.override,card=s.reel;
     var cur=card?esc(card.hook||card.id||""):"no reel chosen yet";
     $("sheet-in").innerHTML='<h2>Change '+esc(slotId)+'</h2><p class="sub">'+esc(date)+' · '+cur+'</p>'
-      +(ov?'<p class="muted small">currently '+(ov.action==="skip"?"skipped":"swapped for "+esc(ov.id||""))+', by '+esc(ov.by==="owner"?"you":"the Lantern, approved by you")+'</p>':'')
+      +(ov?'<p class="muted small">currently '+(ov.action==="skip"?"skipped":"swapped for "+esc(ov.id||""))+', by '+esc(ov.by==="soul"?"the Soul":ov.by==="lantern-approved"?"the Lantern, approved by you":"you")+'</p>':'')
       +'<div class="acts" style="flex-direction:column;align-items:stretch;gap:8px">'
       +'<button class="btn" id="ch-skip">Skip this reel</button>'
       +'<button class="btn" id="ch-swap">Swap for another</button>'
@@ -1441,8 +1581,8 @@ function drawHouse(force){
   if(!el.dataset.built){el.innerHTML='<p class="sec">Health</p>'+skel(3);el.dataset.built="1"}
   /* the hub carries one live number for every room, so the house reads at a
      glance; a read that will not answer marks its own card and no other */
-  return Promise.all([house(force),dialsQ(force),soft(lightsQ(force)),soft(nightQ(force)),soft(journalQ(force)),soft(held(force)),soft(settingsQ(force))]).then(function(a){
-    var h=a[0]||{},d=(a[1]&&a[1].dials)||{},li=a[2],ni=a[3],jo=a[4],hq=a[5],st=a[6];
+  return Promise.all([house(force),dialsQ(force),soft(lightsQ(force)),soft(nightQ(force)),soft(journalQ(force)),soft(held(force)),soft(settingsQ(force)),soft(soulTodayQ(force))]).then(function(a){
+    var h=a[0]||{},d=(a[1]&&a[1].dials)||{},li=a[2],ni=a[3],jo=a[4],hq=a[5],st=a[6],so=a[7];
     var lit=!!h.lanternConfigured,lnModel=h.lanternModel||"";
     var g=h.gifts||{};var gu=h.guardians||[];
     /* hrow escapes its own title and its own sentence, so a caller hands it
@@ -1467,9 +1607,10 @@ function drawHouse(force){
       system:[keysSet+" of 3","keys set · the ladder is "+(d.mode||"off")],
       controls:sd?[setHere+" of "+sd.length,"dials set here · the rest are default"]:["·","the dials could not be read"],
       observatory:["30 d","every network, the site and the shelf, side by side"],
-      lantern:["5 a day","plans, reads the house's own numbers, and asks before it acts"]
+      lantern:["5 a day","plans, reads the house's own numbers, and asks before it acts"],
+      soul:soulHubStat(so)
     };
-    var rooms=[["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["observatory","Observatory","The whole ecosystem, at a glance"],["lantern","The Lantern","Ask it to plan, and it will, judged by its own sources"]];
+    var rooms=[["soul","The Soul","The house's own mind: what it did, what it plans, what it needs from you"],["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["observatory","Observatory","The whole ecosystem, at a glance"],["lantern","The Lantern","Ask it to plan, and it will, judged by its own sources"]];
     el.innerHTML=
       '<p class="sec">Health</p><div class="list">'
       +hrow(!!h.store,"The store",h.store?"On · "+(h.storeKind||""):"Off, nothing is remembered")
@@ -1480,7 +1621,7 @@ function drawHouse(force){
       +((g.recent||[]).length?'<div class="list" style="margin-top:8px">'+g.recent.slice(0,6).map(function(x){return '<div class="row"><div class="t"><b>'+esc(x.email||"A gift")+'</b><span>'+esc(x.when||"")+'</span></div><div class="r" style="color:var(--cream);font-weight:600">'+(x.amount!=null?esc(x.amount)+" "+esc(x.currency||""):"")+'</div></div>'}).join("")+'</div>':'')
       +(gu.length?'<p class="sec">Guardians</p><div class="list">'+gu.slice(0,8).map(function(x){return '<div class="row"><div class="t"><b>'+esc(x.gname||x.name||x.email||"a guardian")+'</b><span>'+esc(x.status||"")+(x.market&&x.market!=="?"?' · '+esc(x.market):'')+(x.renews?' · renews '+esc(x.renews):'')+(x.endsAfterWeek?' · ending':'')+(x.approved?' · lit on the wall':'')+'</span></div><div class="r" style="color:var(--cream);font-weight:600">'+(x.amount!=null?esc(x.amount)+' '+esc(x.currency||'')+'<span class="muted small" style="font-weight:400">/'+esc(x.cadence||'month')+'</span>':'')+'</div></div>'}).join("")+'</div>':'')
       +'<p class="sec">The rooms</p><div class="rooms">'+rooms.map(function(r){var s=stat[r[0]]||["·",""];
-        return '<button class="card tap" data-room="'+r[0]+'"><b>'+esc(r[1])+'</b><span class="w">'+esc(r[2])+'</span><div class="v">'+esc(s[0])+'</div><span class="w">'+esc(s[1])+'</span></button>'}).join("")+'</div>'
+        return '<button class="card tap'+(r[0]==="soul"?" soulc":"")+'" data-room="'+r[0]+'"><b>'+esc(r[1])+'</b><span class="w">'+esc(r[2])+'</span><div class="v">'+esc(s[0])+'</div><span class="w">'+esc(s[1])+'</span></button>'}).join("")+'</div>'
       +'<p class="muted small" style="margin:18px 0 0">Every room of the house is here now. <a href="#" id="logout">Sign out</a>.</p>';
     $("logout").onclick=function(e){e.preventDefault();post("/api/admin-auth",{logout:true}).then(function(){location.reload()}).catch(unreachable())};
     el.onclick=function(e){var c=e.target.closest("[data-room]");if(c)show(c.dataset.room)};
@@ -2476,6 +2617,823 @@ function lantSend(){
       }
       return pump();
     }).catch(function(){finish("Could not reach the house.")});
+}
+
+/* ===========================================================================
+   THE SOUL
+
+   The house's own mind (SOUL.md), read from one owner-gated route,
+   /api/soul: view=today for the glance (the mission, pause, the north star,
+   the goals, the last cycle, the month's spend), and view=metrics,
+   chronicle, cycle, evolution and audit for the depth. Every number on this
+   surface is one the route sent; a figure it did not send is drawn as "·"
+   or said in words, never guessed. Each read fails on its own: a section
+   whose read failed says so in its own card and the rest still draw.
+
+   Nothing here acts without the owner's hand. Pause and Resume ask once,
+   inside the card (never a browser dialog); Undo, a goal's edit, an
+   upgrade's status and the Telegram link are each one POST carrying exactly
+   the body SOUL.md section 10 names.
+
+   THE CHARTS are the Observatory's own gold line with its own tooltip
+   (obsWireTip, data-tip "label | value"), drawn at the measured pixel width
+   of the box they sit in rather than into a fixed viewBox stretched to fit,
+   so a label is never squeezed or widened and a dot stays round at any
+   width; a resize draws them again. Each chart card keeps the Observatory's
+   Table twin, so every value is reachable without a mouse.
+   =========================================================================== */
+var SOUL={days:90,charts:{},confirm:"",tg:null,editing:"",data:null,cycle:"",wired:false,rt:0};
+var SOUL_MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function soulGet(view,extra){return get("/api/soul?view="+view+(extra||""))}
+var soulTodayQ=function(f){return cached("soul:today",function(){return soulGet("today")},f)};
+var soulMetricsQ=function(d,f){return cached("soul:metrics:"+d,function(){return soulGet("metrics","&days="+d)},f)};
+var soulChronQ=function(f){return cached("soul:chron",function(){return soulGet("chronicle","&limit=30")},f)};
+var soulEvoQ=function(f){return cached("soul:evo",function(){return soulGet("evolution")},f)};
+var soulAuditQ=function(f){return cached("soul:audit",function(){return soulGet("audit","&limit=50")},f)};
+/* a read that could not reach the house at all is told apart from one the
+   house answered with a refusal, because the two mean different things */
+function soulRead(p){return p.then(function(r){return r},function(){return {ok:false,status:0,j:null,net:true}})}
+function soulOk(r){return !!(r&&r.ok&&r.j&&r.j.ok!==false)}
+function soulPostOk(r){return !!(r&&r.ok&&r.j&&r.j.ok!==false)}
+function soulErrText(r){
+  if(!r||r.net)return "Could not reach the house.";
+  if(r.locked)return "The key has expired.";
+  var e=String((r.j&&r.j.error)||"");
+  if(r.status===503||/store|redis|upstash|\bkv\b/i.test(e))return "The store is unreachable.";
+  if(r.status===404)return "The soul is not on this deployment yet.";
+  return "The soul could not be read.";
+}
+function soulErrCard(r,what){
+  var e=String((r&&r.j&&r.j.error)||"");
+  var said=e&&!/store|redis|upstash/i.test(e)?" The house said: "+e+".":"";
+  return '<div class="card soul-err"><b>'+esc(soulErrText(r))+'</b><p class="muted small" style="margin:6px 0 0">'+esc((what||"Press refresh at the top to ask again.")+said)+'</p></div>';
+}
+/* ---- reading a number the way the house sends it ----
+   A snapshot keeps a missing source as null with the reason beside it, and
+   a value may arrive bare (1204) or wrapped ({value:1204}); both are read,
+   anything else is "not recorded", never a zero. */
+function sNum(x){if(typeof x==="number"&&isFinite(x))return x;if(x&&typeof x==="object"&&typeof x.value==="number"&&isFinite(x.value))return x.value;return null}
+function sPath(o,path){var ps=Array.isArray(path)?path:[path];
+  for(var k=0;k<ps.length;k++){var cur=o,parts=ps[k].split(".");for(var i=0;i<parts.length&&cur!=null;i++)cur=cur[parts[i]];if(cur!==undefined)return cur}
+  return undefined}
+function sReason(o,path){var x=sPath(o,path);if(x&&typeof x==="object"&&x.reason)return String(x.reason);
+  var ps=Array.isArray(path)?path:[path],m=o&&(o.missing||o.reasons);
+  if(m&&typeof m==="object")for(var k=0;k<ps.length;k++)if(m[ps[k]])return String(m[ps[k]]);
+  return ""}
+function sKind(metric){var m=String(metric||"").toLowerCase();if(/spend|usd|cost|dollar/.test(m))return "usd";if(/share|health|pct|percent|rate|ratio|watched/.test(m))return "pct";return "n"}
+/* a share kept as a fraction (0.42) and one kept as a percent (42) are both
+   drawn as 42%; which one a series is, is read from the whole series */
+function sScale(kind,vals){if(kind!=="pct")return 1;return vals.every(function(v){return v==null||Math.abs(v)<=1})?100:1}
+function sFmt(kind,v,scale){if(v==null)return "·";if(kind==="usd")return "$"+Number(v).toFixed(2);
+  if(kind==="pct"){var p=v*(scale||1);return (Math.abs(p)<10?Math.round(p*10)/10:Math.round(p))+"%"}return fnum(Math.round(v))}
+function sShort(kind,v,scale){if(kind!=="n")return sFmt(kind,v,scale);var a=Math.abs(v);
+  if(a>=1e6)return (Math.round(v/1e5)/10)+"M";if(a>=1e4)return Math.round(v/1e3)+"k";if(a>=1e3)return (Math.round(v/100)/10)+"k";return String(Math.round(v))}
+function sDay(d){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(d||""));return m?(+m[3])+" "+SOUL_MON[+m[2]-1]:String(d||"")}
+function sDayY(d){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(d||""));return m?(+m[3])+" "+SOUL_MON[+m[2]-1]+" "+m[1]:String(d||"")}
+function sMonth(m){var x=/^(\d{4})-(\d{2})/.exec(String(m||""));return x?SOUL_MON[+x[2]-1]+" "+x[1]:"this month"}
+function sWhen(iso){var t=Date.parse(iso);if(!isFinite(t))return "";var d=new Date(t);
+  return d.getUTCDate()+" "+SOUL_MON[d.getUTCMonth()]+", "+String(d.getUTCHours()).padStart(2,"0")+":"+String(d.getUTCMinutes()).padStart(2,"0")+" UTC"}
+function sItem(x){if(x==null)return "";if(typeof x==="string")return x;if(typeof x!=="object")return String(x);return String(x.text||x.summary||x.title||x.what||x.action||"")}
+function sWords(s){return String(s==null?"":s).replace(/[._:-]+/g," ").trim()}
+
+/* ---- state, as one chip: paused wins, then anything that needs him ---- */
+function soulState(t){
+  if(t.paused)return {k:"paused",label:"Paused",cls:"wait"};
+  var ny=((t.lastCycle&&t.lastCycle.needsYou)||[]).filter(function(x){return sItem(x)});
+  if(ny.length)return {k:"needs",label:"Needs you",cls:"bad"};
+  return {k:"running",label:"Running",cls:"good"};
+}
+function soulHubStat(r){
+  if(!soulOk(r))return ["·","the soul could not be read"];
+  var t=r.j,st=soulState(t),v=sNum(t.northStar&&t.northStar.value);
+  return [v==null?"·":fnum(v),"people reached this week · "+st.label.toLowerCase()];
+}
+var SOUL_CYC={done:["good","finished"],finished:["good","finished"],complete:["good","finished"],ok:["good","finished"],running:["wait","running"],open:["wait","running"],failed:["bad","failed"],paused:["wait","paused"]};
+function soulCycChip(s){var c=SOUL_CYC[String(s||"").toLowerCase()];return '<span class="pill '+(c?c[0]:"")+'">'+esc(c?c[1]:sWords(s||"no status"))+'</span>'}
+var SOUL_GOAL={"on-track":"good",on_track:"good",met:"good",achieved:"good",done:"good",ahead:"good",behind:"bad","at-risk":"bad",at_risk:"bad",missed:"bad",failed:"bad",stalled:"wait",active:"blue",open:"blue","new":"blue"};
+function soulGoalChip(s){var k=String(s||"").toLowerCase();return '<span class="pill '+(SOUL_GOAL[k]||"")+'">'+esc(sWords(k||"no status"))+'</span>'}
+
+/* ---- 1. the header strip ---- */
+function soulActsHtml(t){
+  if(SOUL.confirm==="pause")return '<div class="soul-confirm" id="soul-confirm">Pause the soul? No cycle and no action runs until you resume. Posting itself goes on as scheduled.'
+    +'<div class="acts"><button class="btn sm" data-soul="pause-yes">Yes, pause</button><button class="btn ghost sm" data-soul="confirm-no">Never mind</button></div></div>';
+  if(SOUL.confirm==="resume")return '<div class="soul-confirm" id="soul-confirm">Resume the soul? Its cycles start again on their schedule, within the daily caps.'
+    +'<div class="acts"><button class="btn sm" data-soul="resume-yes">Yes, resume</button><button class="btn ghost sm" data-soul="confirm-no">Never mind</button></div></div>';
+  return '<div class="acts">'+(t.paused?'<button class="btn" data-soul="resume-ask">Resume</button>':'<button class="btn ghost" data-soul="pause-ask">Pause</button>')
+    +'<button class="btn'+(t.paused?' ghost':'')+'" data-soul="run"'+(t.paused?' disabled':'')+'>Run a cycle now</button></div>'
+    +(t.paused?'<p class="faint small" style="margin:8px 0 0">While it is paused nothing runs, not even a cycle you start by hand.</p>':'');
+}
+function soulHead(t){
+  var st=soulState(t),lc=t.lastCycle,c=t.counts||{},a=sNum(c.actionsToday),cap=sNum(c.capToday);
+  return '<div class="card soul-hd"><div class="lab">The mission</div><p class="ms">'+esc(t.mission||"The mission was not sent.")+'</p>'
+    +'<div class="st"><span class="pill '+st.cls+'" id="soul-state">'+st.label+'</span>'
+    +(lc&&lc.at?'<span>last cycle '+esc(ago(lc.at))+'</span>':'<span>no cycle yet</span>')
+    +(cap!=null?'<span>'+(a==null?"·":esc(fnum(a)))+' of '+esc(fnum(cap))+' public actions today</span>':'')+'</div>'
+    +'<div id="soul-acts">'+soulActsHtml(t)+'</div></div>';
+}
+
+/* ---- the charts: measured, then drawn ---- */
+function soulChart(key,sp){SOUL.charts[key]=sp;return '<div class="soul-ch" data-ch="'+esc(key)+'"></div>'}
+function soulPaint(){
+  var root=$("s-soul");if(!root)return;
+  [].forEach.call(root.querySelectorAll(".soul-ch[data-ch]"),function(el){
+    var sp=SOUL.charts[el.dataset.ch];if(!sp)return;
+    var w=Math.round(el.getBoundingClientRect().width)||0;
+    if(w<60)return;                       /* hidden behind its Table twin: drawn when it comes back */
+    if(el.dataset.w===String(w)&&el.firstChild)return;
+    el.dataset.w=String(w);el.innerHTML=sp.type==="traj"?soulTrajSvg(sp,w):soulSvg(sp,w);
+  });
+}
+function soulSvg(sp,W){
+  var vals=sp.vals||[],dates=sp.dates||[],n=vals.length,H=sp.h||72,big=!!sp.big,kind=sp.kind||"n",scale=sScale(kind,vals);
+  var pts=[];vals.forEach(function(v,i){if(typeof v==="number"&&isFinite(v))pts.push({i:i,v:v,d:dates[i]})});
+  if(!pts.length)return '<p class="faint small" style="margin:6px 0 0">'+esc(sp.none||"Not recorded yet.")+'</p>';
+  if(pts.length===1)return '<p class="small" style="margin:6px 0 0"><span class="faint">'+esc(sDay(pts[0].d))+': </span>'+esc(sFmt(kind,pts[0].v,scale))+'<span class="faint"> · one day so far; a line needs two.</span></p>';
+  var vs=pts.map(function(p){return p.v}),mn=Math.min(0,Math.min.apply(null,vs)),mx=Math.max.apply(null,vs);
+  if(mx<=mn)mx=mn+1;
+  if(big)mx=mn+(mx-mn)*1.08;
+  var ticks=big?[0,1,2,3].map(function(k){return mn+(mx-mn)*k/3}):[];
+  var labs=ticks.map(function(v){return sShort(kind,v,scale)});
+  var pl=big?Math.max(30,Math.max.apply(null,labs.map(function(s){return s.length}))*6.4+12):4,pr=big?10:6,pt=big?10:6,pb=big?24:6;
+  var X=function(i){return pl+(n>1?i/(n-1):0)*(W-pl-pr)},Y=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb)};
+  var g='';
+  if(big){
+    ticks.forEach(function(v,k){var y=Y(v).toFixed(1);g+='<line class="gl" x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'"/><text class="ax" x="'+(pl-6)+'" y="'+(+y+3.5)+'" text-anchor="end">'+esc(labs[k])+'</text>'});
+    var marks=[[0,"start"],[n-1,"end"]];if(W>=420)marks.push([Math.round((n-1)/2),"middle"]);
+    marks.forEach(function(m){if(dates[m[0]])g+='<text class="ax" x="'+X(m[0]).toFixed(1)+'" y="'+(H-6)+'" text-anchor="'+m[1]+'">'+esc(sDay(dates[m[0]]))+'</text>'});
+  } else g='<line class="gl" x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(mn).toFixed(1)+'" y2="'+Y(mn).toFixed(1)+'"/>';
+  /* a day with no reading breaks the line rather than being drawn as a zero */
+  var segs=[],cur=null;
+  for(var i=0;i<n;i++){var v=vals[i];if(typeof v==="number"&&isFinite(v)){if(!cur){cur=[];segs.push(cur)}cur.push({i:i,v:v})}else cur=null}
+  var line="",area="",lone="";
+  segs.forEach(function(sg){
+    var d=sg.map(function(p,k){return (k?"L":"M")+X(p.i).toFixed(1)+","+Y(p.v).toFixed(1)}).join(" ");
+    if(sg.length===1){lone+='<circle cx="'+X(sg[0].i).toFixed(1)+'" cy="'+Y(sg[0].v).toFixed(1)+'" r="2" fill="var(--gold)"/>';return}
+    line+=d+" ";area+=d+" L"+X(sg[sg.length-1].i).toFixed(1)+","+Y(mn).toFixed(1)+" L"+X(sg[0].i).toFixed(1)+","+Y(mn).toFixed(1)+" Z ";
+  });
+  var last=pts[pts.length-1],step=(W-pl-pr)/Math.max(1,n-1);
+  var hits=pts.map(function(p){var x=X(p.i),y=Y(p.v);
+    return '<g class="hx" data-tip="'+esc(sDayY(p.d)+" | "+sFmt(kind,p.v,scale)+(sp.unit?" "+sp.unit:""))+'"><rect x="'+(x-step/2).toFixed(1)+'" y="0" width="'+Math.max(2,step).toFixed(1)+'" height="'+H+'" fill="transparent"/>'
+      +'<line class="gd" x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+pt+'" y2="'+(H-pb)+'" stroke="var(--line2)" stroke-width="1"/>'
+      +'<circle class="gd" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4.5" fill="var(--gold)" stroke="var(--panel)" stroke-width="2"/></g>'}).join("");
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="'+esc((sp.aria||"")+", latest "+sFmt(kind,last.v,scale)+" on "+sDayY(last.d))+'">'+g
+    +(area?'<path d="'+area+'" fill="var(--gold)" opacity=".13"/>':'')+(line?'<path d="'+line+'" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>':'')+lone
+    +'<circle cx="'+X(last.i).toFixed(1)+'" cy="'+Y(last.v).toFixed(1)+'" r="4" fill="var(--gold)" stroke="var(--panel)" stroke-width="2"/>'+hits+'</svg>';
+}
+
+/* ---- 2. the north star ---- */
+function soulNsSeries(m90,t){
+  var s=soulOk(m90)&&Array.isArray(m90.j.series)?m90.j.series:[];
+  var rows=s.filter(function(x){return x&&x.date}).map(function(x){var v=sNum(x.northStar);if(v==null)v=sNum(sPath(x,["reach.total","reach.sum","reach.northStar"]));return {date:x.date,v:v}});
+  if(!rows.some(function(r){return r.v!=null})){var ns=(t.northStar&&t.northStar.series)||[];rows=ns.filter(function(x){return x&&x.date}).map(function(x){return {date:x.date,v:sNum(x.value)}})}
+  rows.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+  return rows;
+}
+function soulNorth(t,m90){
+  var ns=t.northStar||{},v=sNum(ns.value),wa=sNum(ns.weekAgo),d;
+  if(v!=null&&wa!=null&&wa>0){var p=(v-wa)/wa*100,r=Math.round(Math.abs(p)*10)/10;
+    d='<div class="d '+(p>0?"up":p<0?"dn":"")+'" id="soul-ns-delta">'+(p>0?"↑ "+r+"%":p<0?"↓ "+r+"%":"level")+' on a week ago ('+esc(fnum(wa))+')</div>'}
+  else if(v!=null&&wa===0)d='<div class="d" id="soul-ns-delta">from nothing a week ago</div>';
+  else d='<div class="d faint" id="soul-ns-delta">no figure for a week ago yet</div>';
+  var rows=soulNsSeries(m90,t);
+  var chart=soulChart("ns",{vals:rows.map(function(r){return r.v}),dates:rows.map(function(r){return r.date}),kind:"n",h:200,big:true,unit:"people reached",
+    aria:"People reached in the 7 days ending each day, the last 90 days",none:"No day has been measured yet, so there is no line to draw."});
+  var table=rows.length?dt(["Date","People reached, 7 days"],rows.slice().reverse().map(function(r){return [r.date,r.v==null?"·":fnum(r.v)]})):"";
+  return '<div class="card viz soul-ns" id="soul-nsc"><div class="hero"><div class="n'+(v==null?' none':'')+'" id="soul-ns-value">'+(v==null?"No reading yet":esc(fnum(v)))+'</div><div class="l">people reached<br>this week</div>'+d+'</div>'
+    +'<div class="vh"><span class="vs" style="width:auto;order:0;flex:1;min-width:160px">Every network\'s 7 day reach, added up, for each of the last 90 days</span>'+(table?'<button class="btn ghost sm tv" data-tv="soul-nsc" aria-pressed="false">Table</button>':'')+'</div>'
+    +'<div class="vzc">'+chart+'</div><div class="vtb" hidden>'+table+'</div></div>';
+}
+
+/* ---- 3. the goals ---- */
+function soulGoalCur(g){var c=sNum(g.current);if(c==null)c=sNum(g.value);
+  if(c==null&&Array.isArray(g.history)&&g.history.length){var h=g.history[g.history.length-1];c=sNum(h);if(c==null&&h)c=sNum(h.v)}
+  return c}
+function soulGoal(g){
+  var kind=sKind(g.metric),base=sNum(g.baseline),tgt=sNum(g.target),cur=soulGoalCur(g),scale=sScale(kind,[base,tgt,cur]);
+  var mine=g.owner==="owner",f=function(v){return sFmt(kind,v,scale)};
+  var prog=null;
+  if(base!=null&&tgt!=null&&cur!=null)prog=tgt!==base?Math.max(0,Math.min(1,(cur-base)/(tgt-base))):(cur>=tgt?1:0);
+  var tj=g.trajectory&&typeof g.trajectory==="object"?g.trajectory:null;
+  var head='<div class="h"><b>'+esc(g.outcome||sWords(g.id)||"A goal")+'</b><div class="tags"><span class="pill '+(mine?"gold":"blue")+'">'+(mine?"yours":"the soul's")+'</span>'+soulGoalChip(g.status)
+    +(tj&&tj.status&&tj.status!==String(g.status||"")?'<span class="pill '+(SOUL_TRAJ[tj.status]||["",""])[0]+'" data-traj="'+esc(tj.status)+'">'+esc((SOUL_TRAJ[tj.status]||["",sWords(tj.status)])[1])+'</span>':'')
+    +(mine&&SOUL.editing!==g.id?'<button class="btn ghost sm" data-soul-edit="'+esc(g.id)+'">Edit</button>':'')+'</div></div>';
+  var bar='<div class="bar2" role="img" aria-label="'+esc(prog==null?"no progress reading yet":Math.round(prog*100)+" percent of the way from the baseline to the target")+'"><i class="'+(prog!=null&&prog>=1?"met":"")+'" style="width:'+(prog==null?0:Math.round(prog*100))+'%"></i></div>'
+    +'<div class="nums"><span><em>from </em>'+esc(f(base))+'</span><span><em>now </em>'+esc(f(cur))+'</span><span><em>target </em>'+esc(f(tgt))+'</span>'
+    +(g.due?'<span><em>by </em>'+esc(sDayY(g.due))+'</span>':'')+(prog!=null?'<span><em>progress </em>'+Math.round(prog*100)+'%</span>':'')
+    +(tj&&tj.projected!=null?'<span><em>heading for </em>'+esc(f(tj.projected))+'</span>':'')+(tj&&tj.eta?'<span><em>there on </em>'+esc(sDayY(tj.eta))+'</span>':'')+'</div>';
+  var form='';
+  if(mine&&SOUL.editing===g.id){
+    form='<div class="ed frm two">'
+      +'<div class="full"><label for="sg-o">The outcome</label><input class="fi" id="sg-o" value="'+esc(g.outcome||"")+'"/></div>'
+      +'<div><label for="sg-t">Target'+(kind==="pct"?", in percent":kind==="usd"?", in US dollars":"")+'</label><input class="fi" id="sg-t" inputmode="decimal" value="'+(tgt==null?"":esc(String(Math.round(tgt*scale*1000)/1000)))+'"/></div>'
+      +'<div><label for="sg-d">Due</label><input class="fi" id="sg-d" type="date" value="'+esc(String(g.due||"").slice(0,10))+'"/></div>'
+      +'<p class="faint small full" style="margin:0">Measured by <code>'+esc(g.metric||"its metric")+'</code>, from a baseline of '+esc(f(base))+'. The soul can never change this goal; only you can, from here.</p>'
+      +'<div class="acts full" style="margin-top:0"><button class="btn sm" data-soul-save="'+esc(g.id)+'">Save</button><button class="btn ghost sm" data-soul-cancel="1">Cancel</button></div></div>';
+  }
+  return '<div class="soul-goal" id="soul-goal-'+esc(g.id)+'">'+head+bar+form+'</div>';
+}
+function soulGoals(t){
+  var gs=(t.goals||[]).filter(Boolean).slice().sort(function(a,b){return (a.owner==="owner"?0:1)-(b.owner==="owner"?0:1)});
+  if(!gs.length)return '<div class="card"><div class="empty" style="padding:0">No goal is set yet. The first cycle seeds them from its first snapshot.</div></div>';
+  return gs.map(soulGoal).join("");
+}
+
+/* ---- 4. today, from the last cycle ---- */
+function soulTodayHtml(t){
+  var lc=t.lastCycle;
+  if(!lc)return '<div class="card"><div class="empty" style="padding:0">No cycle has run yet. Press Run a cycle now to start the first.</div></div>';
+  var col=function(cls,title,items,none){items=(items||[]).map(sItem).filter(Boolean);
+    return '<div class="soul-col '+(cls==="you"&&!items.length?"quiet":cls)+'"><h4>'+title+'<span class="n">'+items.length+'</span></h4>'
+      +(items.length?'<ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>':'<div class="empty">'+none+'</div>')+'</div>'};
+  return '<div class="soul-lc"><span class="w">From the cycle of '+esc(sWhen(lc.at)||"an unknown hour")+'</span>'+soulCycChip(lc.status)
+    +(lc.id?'<button class="btn ghost sm" data-soul-cycle="'+esc(lc.id)+'">Open the cycle</button>':'')+'</div>'
+    +'<div class="soul-cols">'+col("done","Done",lc.done,"Nothing was done.")+col("next","Next",lc.next,"Nothing is planned.")+col("you","Needs you",lc.needsYou,"Nothing needs you.")+'</div>';
+}
+
+/* ---- the cycle in full, in a sheet ---- */
+var SOUL_ROLES=[["guardian","Guardian","the constitution and the faith; holds a veto"],["auditor","Auditor","every number against the evidence"],["skeptic","Skeptic","the best use of today, or nothing"]];
+function soulVerdicts(it){
+  var cn=it.council||it.verdicts||it.review||null,by={};
+  /* the door's own shape (api/_council.js convene): {approved, verdicts:
+     {guardian, auditor, skeptic}, sentinel, at}; a step that ran without
+     review carries {approved:true, skipped:true} and no verdicts at all */
+  if(cn&&typeof cn==="object"&&!Array.isArray(cn)&&(cn.verdicts||cn.skipped===true||cn.sentinel)){
+    var vv=cn.verdicts&&typeof cn.verdicts==="object"?cn.verdicts:{};
+    Object.keys(vv).forEach(function(k){by[k.toLowerCase()]=vv[k]});return by}
+  if(Array.isArray(cn))cn.forEach(function(v){if(v&&(v.role||v.who))by[String(v.role||v.who).toLowerCase()]=v});
+  else if(cn&&typeof cn==="object")Object.keys(cn).forEach(function(k){by[k.toLowerCase()]=cn[k]});
+  return by;
+}
+function soulUndoable(it){
+  var res=it.result||{},en=res.entry&&typeof res.entry==="object"?res.entry:null;
+  if(res.undone||it.undone||res.ok===false)return "";
+  /* the door keeps a ran step's undo as res.entry.undo, the recipe's kind */
+  var u=res.undo!=null?res.undo:(en&&en.undo!=null?en.undo:it.undo);
+  var can=u===true||(typeof u==="string"&&u!=="noop"&&u!=="")||(u&&typeof u==="object"&&u.kind!=="noop")||res.canUndo===true||it.canUndo===true;
+  return can?String(res.id||res.actionId||(en&&en.id)||it.actionId||it.id||""):"";
+}
+var SOUL_SEN=["sentinel","Sentinel","Jev, four quick risk questions before the three; free"];
+function soulSentinelRow(sn){
+  if(!sn)return "";
+  var vote=sn.vote==="reject"?"reject":sn.vote==="pass"?"pass":"";
+  var reasons=(Array.isArray(sn.reasons)?sn.reasons:[]).map(sItem).filter(Boolean);
+  return '<div class="v" data-sentinel="1"><div class="who"><b>'+SOUL_SEN[1]+'</b><span class="pill '+(vote==="reject"?"bad":vote==="pass"?"good":"wait")+'">'+(vote==="reject"?"rejects":vote==="pass"?"passes it on":"unavailable")+'</span><span>'+SOUL_SEN[2]+'</span></div>'
+    +(reasons.length?'<ul>'+reasons.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>':'')+'</div>';
+}
+function soulIntentHtml(it){
+  var res=it.result||{},by=soulVerdicts(it),tier=it.tier!=null?String(it.tier):"",cn=it.council&&typeof it.council==="object"&&!Array.isArray(it.council)?it.council:null;
+  var skipped=!!(cn&&cn.skipped===true),sn=cn&&cn.sentinel?cn.sentinel:null,senNo=!!(sn&&sn.vote==="reject");
+  var reviewed=!skipped&&(Object.keys(by).length>0||/R2/i.test(tier)||!!sn);
+  var ap=it.approved!=null?it.approved:(cn&&!skipped&&typeof cn.approved==="boolean"?cn.approved:null);
+  var dec=String(it.decision||(ap===true?"approved":ap===false?"rejected":"")).toLowerCase();
+  var council=reviewed?'<div class="soul-cn">'+soulSentinelRow(sn)+(senNo?'<div class="v"><div class="who"><b>The three reviewers</b><span class="pill">not asked</span></div><ul><li>'+esc(typeof cn.skipped==="string"?cn.skipped:"The sentinel judged it too risky, so the Guardian, the Auditor and the Skeptic were not asked.")+'</li></ul></div>':SOUL_ROLES.map(function(r){var v=by[r[0]]||null,vote=v&&v.vote?String(v.vote).toLowerCase():"";
+      var reasons=v?(v.reasons!=null?v.reasons:(v.reason!=null?v.reason:[])):[];if(!Array.isArray(reasons))reasons=[reasons];reasons=reasons.map(sItem).filter(Boolean);
+      return '<div class="v"><div class="who"><b>'+r[1]+'</b><span class="pill '+(vote==="approve"?"good":vote==="reject"?"bad":"")+'">'+(vote==="approve"?"approves":vote==="reject"?"rejects":"did not answer")+'</span><span>'+r[2]+'</span></div>'
+        +(reasons.length?'<ul>'+reasons.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>':(v?'':'<ul><li>No answer counts as a rejection.</li></ul>'))+'</div>'}).join(""))+'</div>'
+    :'<p class="faint small" style="margin:10px 0 0">No council review: '+(tier?esc(tier)+" ":"")+'steps only read, or write to the soul\'s own memory, and run freely, audited.</p>';
+  var undoId=soulUndoable(it),en=res.entry&&typeof res.entry==="object"?res.entry:null;
+  var rtext=sItem(res)||String(res.error||"")||(en&&res.ok===true?"Done: "+sWords(en.hand||it.action||"the step")+(en.id?" ("+en.id+")":"")+".":"")
+    ||(res.ok===true?"Done.":res.ok===false?"It did not run.":(dec==="rejected"?(senNo?"The sentinel rejected it, so it never ran.":"The council did not approve it, so it never ran."):""));
+  var rpill=res.undone||it.undone?["","undone"]:res.ok===true?["good","ran"]:res.ok===false?["bad","failed"]:dec==="rejected"?["","not run"]:["wait","no result yet"];
+  var ev=it.evidence;var evText=ev==null?"":Array.isArray(ev)?ev.map(sItem).filter(Boolean).join("; "):(sItem(ev)||(typeof ev==="object"?JSON.stringify(ev):String(ev)));
+  return '<div class="soul-int"><div class="h"><b>'+esc(it.title||sWords(it.action)||"An intent")+'</b>'+(tier?'<span class="pill">'+esc(tier)+'</span>':'')
+      +(dec?'<span class="pill '+(dec==="approved"?"good":dec==="rejected"?"bad":"")+'">'+esc(sWords(dec))+'</span>':'')+'</div>'
+    +'<div class="kv">'+(it.why?'<b>Why</b><span>'+esc(it.why)+'</span>':'')+(it.expectedEffect?'<b>Expected</b><span>'+esc(it.expectedEffect)+'</span>':'')
+      +(it.metric?'<b>Measured by</b><span><code>'+esc(it.metric)+'</code></span>':'')+(evText?'<b>Evidence</b><span>'+esc(evText)+'</span>':'')+'</div>'
+    +council
+    +'<div class="soul-res"><span class="pill '+rpill[0]+'">'+rpill[1]+'</span><span class="tx">'+esc(rtext)+'</span>'+(undoId?'<button class="btn ghost sm" data-soul-undo="'+esc(undoId)+'">Undo</button>':'')+'</div></div>';
+}
+function soulCycleHtml(c){
+  c=c||{};var ints=c.intents||(c.plan&&c.plan.intents)||[];
+  var bits=[c.kind?sWords(c.kind)+" cycle":"",c.stage?"stage: "+sWords(c.stage):""].filter(Boolean);
+  return '<h2>The cycle of '+esc(sWhen(c.at||c.startedAt)||"an unknown hour")+'</h2><p class="sub">'+esc(bits.join(" · "))+(bits.length?' ':'')+soulCycChip(c.status)+'</p>'
+    +(c.failedReason||c.error||c.reason?'<p class="small" id="soul-cyc-failed" style="color:var(--bad);margin:0 0 12px">'+esc((c.failedReason?"This cycle failed: ":"")+(c.failedReason||c.error||c.reason))+'</p>':'')
+    +(ints.length?ints.map(soulIntentHtml).join(""):'<div class="empty">This cycle planned nothing; on some days doing nothing is the right answer.</div>')
+    +((c.dropped||[]).length?'<div class="soul-drop" id="soul-cyc-dropped"><div class="h"><b>Refused or dropped before any review</b><span class="pill bad">'+esc(String(c.dropped.length))+'</span></div>'
+      +'<ul class="soul-steps" style="margin-top:8px">'+c.dropped.map(function(d){return '<li>'+esc(sItem(d))+'</li>'}).join("")+'</ul></div>':'')
+    +'<div class="acts"><button class="btn ghost" id="cl">Close</button></div>';
+}
+function soulOpenCycle(id){
+  SOUL.cycle=id;
+  sheet('<h2>The cycle</h2><p class="sub">Reading it from the house.</p><div class="sk" style="height:90px"></div>');
+  return soulRead(soulGet("cycle","&id="+encodeURIComponent(id))).then(function(r){
+    if(SOUL.cycle!==id)return;
+    $("sheet-in").innerHTML=soulOk(r)?soulCycleHtml(r.j.cycle||r.j)
+      :'<h2>The cycle</h2>'+soulErrCard(r,"The cycle could not be read.")+'<div class="acts"><button class="btn ghost" id="cl">Close</button></div>';
+  });
+}
+function soulUndo(b){
+  var id=b.dataset.soulUndo,was=b.textContent;if(!id)return;
+  b.disabled=true;b.textContent="Undoing…";
+  post("/api/soul",{action:"undo",id:id}).then(function(r){
+    if(r.locked)return;
+    if(!soulPostOk(r)){b.disabled=false;b.textContent=was;return toast((r.j&&r.j.error)||"It could not be undone.",true)}
+    toast("Undone.");
+    if(SOUL.cycle)soulOpenCycle(SOUL.cycle);
+    drawSoul(true);
+  }).catch(unreachable(b,was));
+}
+
+/* ---- 5. how the numbers move: small multiples, one line each ---- */
+var SOUL_GROUPS=[
+  {id:"reach",title:"Reach, network by network",sub:"Each network's own 7 day reach (views where a network gives only views), one panel each, one axis each",
+    panels:[["Instagram","reach.instagram","n","reached"],["YouTube","reach.youtube","n","views"],["Facebook","reach.facebook","n","reached"],["Threads","reach.threads","n","views"],["Telegram","reach.telegram","n","reached"]]},
+  {id:"site",title:"The site",sub:"Visitors over 7 days, and where the arrivals came from",
+    panels:[["Visitors, 7 days",["site.visitors7","site.visitors"],"n","visitors"],["From search",["site.arrivals.search"],"n","arrivals"],["From social",["site.arrivals.social"],"n","arrivals"],["Direct",["site.arrivals.direct"],"n","arrivals"],["Other",["site.arrivals.other"],"n","arrivals"]]},
+  {id:"work",title:"Attention, output and spend",sub:"How much of a reel is watched, how much of the schedule went out, what the paid models cost this month",
+    panels:[["Watched share",["attention.watchedMedian","attention.watchedShare","attention.watched","attention.medianWatched"],"pct","watched"],["Posting health",["output.health","output.postingHealth"],"pct","of the due posts sent"],["Spend this month",["spend.usd","spend.monthUsd","spend"],"usd","spent"]]}
+];
+function soulMetrics(mw){
+  var seg='<div class="seg" style="margin:0 0 12px" role="group" aria-label="How many days">'+[30,90,365].map(function(d){return '<button data-soul-days="'+d+'" class="'+(SOUL.days===d?"on":"")+'" aria-pressed="'+(SOUL.days===d)+'">'+d+' days</button>'}).join("")+'</div>';
+  if(!mw)return seg+'<div class="card"><div class="sk" style="height:120px"></div></div>';
+  if(!soulOk(mw))return seg+soulErrCard(mw,"The metrics could not be read; the rest of this room is unaffected.");
+  var series=(mw.j.series||[]).filter(function(s){return s&&s.date}).slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+  if(!series.length)return seg+'<div class="card"><div class="empty" style="padding:0">No snapshot has been taken yet. The first is taken when the first cycle reads the house.</div></div>';
+  var dates=series.map(function(s){return s.date});
+  return seg+SOUL_GROUPS.map(function(g){
+    var pd=g.panels.map(function(p){var vals=series.map(function(s){return sNum(sPath(s,p[1]))});return {p:p,vals:vals,scale:sScale(p[2],vals)}});
+    var body='<div class="soul-sm">'+pd.map(function(x,i){
+      var lastI=-1;for(var k=x.vals.length-1;k>=0;k--)if(x.vals[k]!=null){lastI=k;break}
+      var why="";if(lastI<0)for(var j=series.length-1;j>=0&&!why;j--)why=sReason(series[j],x.p[1]);
+      return '<div class="trendp"><b>'+esc(x.p[0])+(lastI>=0?'<span class="lv">'+esc(sFmt(x.p[2],x.vals[lastI],x.scale))+'</span>':'')+'</b>'
+        +(lastI>=0?soulChart("m-"+g.id+"-"+i,{vals:x.vals,dates:dates,kind:x.p[2],h:72,unit:x.p[3],aria:x.p[0]})
+          :'<p class="faint small" style="margin:4px 0 0">Not recorded yet.</p>'+(why?'<p class="why">'+esc(why)+'</p>':''))+'</div>';
+    }).join("")+'</div>';
+    var table=dt(["Date"].concat(g.panels.map(function(p){return p[0]})),series.map(function(s,i){return [s.date].concat(pd.map(function(x){return sFmt(x.p[2],x.vals[i],x.scale)}))}).reverse());
+    return vizCard("soul-v-"+g.id,g.title,g.sub,body,table);
+  }).join("");
+}
+function soulSetDays(d){
+  if(SOUL.days===d)return;
+  SOUL.days=d;var box=$("soul-metrics");if(!box)return;
+  box.innerHTML=soulMetrics(null);
+  soulRead(soulMetricsQ(d)).then(function(r){if(SOUL.days!==d)return;if(SOUL.data)SOUL.data.mw=r;box.innerHTML=soulMetrics(r);soulPaint()});
+}
+
+/* ---- 6. the chronicle ---- */
+function soulChron(ch){
+  if(!soulOk(ch))return soulErrCard(ch,"The chronicle could not be read; the rest of this room is unaffected.");
+  var items=(ch.j.items||[]).filter(Boolean).slice().sort(function(a,b){return String(b.at||"").localeCompare(String(a.at||""))});
+  if(!items.length)return '<div class="card"><div class="empty" style="padding:0">No cycle has run yet, so the chronicle is empty.</div></div>';
+  var list=function(a){return '<ul class="soul-steps">'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'};
+  var clean=function(a){return (a||[]).map(sItem).filter(Boolean)};
+  return items.map(function(it,i){
+    var ny=clean(it.needsYou),dn=clean(it.done),nx=clean(it.next),hl=clean(it.highlights);
+    var cid=typeof it.cycle==="string"?it.cycle:(it.cycle&&it.cycle.id)||"";
+    return '<details class="fold soul-chi"'+(i===0?' open':'')+'><summary><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(sWhen(it.at)||"A cycle")+'</span>'
+      +(ny.length?'<span class="pill bad">needs you</span>':'<span class="pill">'+dn.length+' done</span>')+'</summary><div class="in">'
+      +(hl.length?'<div class="notesc">'+hl.map(function(x){return '<p>'+esc(x)+'</p>'}).join("")+'</div>':'')
+      +(dn.length?'<p class="sec" style="margin:10px 0 6px">Done</p>'+list(dn):'')
+      +(nx.length?'<p class="sec" style="margin:10px 0 6px">Next</p>'+list(nx):'')
+      +(ny.length?'<p class="sec" style="margin:10px 0 6px;color:var(--bad)">Needs you</p>'+list(ny):'')
+      +(!hl.length&&!dn.length&&!nx.length&&!ny.length?'<p class="faint small" style="margin:0">This cycle left nothing to report.</p>':'')
+      +(cid?'<div class="acts"><button class="btn ghost sm" data-soul-cycle="'+esc(cid)+'">Open the cycle</button></div>':'')
+      +'</div></details>';
+  }).join("");
+}
+
+/* ---- 7. evolution: the playbook, the lessons on trial, the upgrades ---- */
+var SOUL_UP=["proposed","accepted","building","shipped","declined"];
+function soulEvo(ev){
+  if(!soulOk(ev))return soulErrCard(ev,"The playbook and the upgrades could not be read; the rest of this room is unaffected.");
+  var pb=ev.j.playbook||{},ls=(pb.lessons||[]).filter(Boolean),pr=(ev.j.proposals||[]).filter(Boolean),up=(ev.j.upgrades||[]).filter(Boolean);
+  var book='<details class="fold"'+(ls.length<=6?' open':'')+' id="soul-book"><summary>The playbook'+(pb.version!=null?', version '+esc(pb.version):'')+'<span class="pill">'+ls.length+' lesson'+(ls.length===1?'':'s')+'</span></summary><div class="in">'
+    +(ls.length?ls.map(function(l){var y=[l.why||"",l.at?"since "+sDayY(l.at):""].filter(Boolean).join(" · ");return '<div class="soul-lesson">'+esc(sItem(l))+(y?'<span class="y">'+esc(y)+'</span>':'')+'</div>'}).join("")
+      :'<p class="faint small" style="margin:0">The playbook has no lessons yet. The weekly cycle proposes them, and a lesson joins only when every canary passes with it.</p>')
+    +'</div></details>';
+  var props=pr.length?pr.map(function(p){
+    var e=p.eval||p.evals||p.evalResult||null,passed=e?sNum(e.passed):null,total=e?sNum(e.total):null;
+    var okv=e&&e.ok!=null?!!e.ok:(passed!=null&&total!=null?passed===total:null);
+    var chipE=okv==null?'<span class="pill wait">not tested yet</span>'
+      :'<span class="pill '+(okv?"good":"bad")+'">'+(passed!=null&&total!=null?passed+" of "+total+" canaries passed":(okv?"every canary passed":"a canary failed"))+'</span>';
+    var fails=e&&(e.failures||e.failed);fails=Array.isArray(fails)?fails:[];
+    var what=sItem(p.lesson)||sItem(p)||"A lesson";
+    return '<div class="card soul-up"><div class="h"><b>'+esc(what)+'</b><div class="tags">'+(p.kind||p.change?'<span class="pill blue">'+esc(sWords(p.kind||p.change))+'</span>':'')
+      +(p.status?'<span class="pill">'+esc(sWords(p.status))+'</span>':'')+chipE+'</div></div>'
+      +((p.why||(p.lesson&&p.lesson.why))?'<p class="muted small" style="margin:8px 0 0">'+esc(p.why||p.lesson.why)+'</p>':'')
+      +(fails.length?'<ul class="soul-steps" style="margin-top:8px;color:var(--bad)">'+fails.map(function(x){return '<li>'+esc(typeof x==="string"?x:[x.case||x.name||x.id||"",x.reason||""].filter(Boolean).join(": "))+'</li>'}).join("")+'</ul>':'')
+      +'</div>';
+  }).join(""):'<div class="card"><div class="empty" style="padding:0">No lesson is waiting for its test.</div></div>';
+  var ups=up.length?up.map(function(u){
+    var st=String(u.status||"proposed").toLowerCase(),opts=SOUL_UP.indexOf(st)<0?SOUL_UP.concat([st]):SOUL_UP,id=String(u.id||"");
+    var pri=u.priority!=null?String(u.priority):"";
+    return '<div class="card soul-up" id="soul-up-'+esc(id)+'"><div class="h"><b>'+esc(u.title||sWords(id)||"An upgrade")+'</b><div class="tags">'
+      +(pri?'<span class="pill '+({high:"bad","1":"bad",medium:"wait","2":"wait"}[pri.toLowerCase()]||"")+'">priority '+esc(pri)+'</span>':'')
+      +'<span class="pill '+({shipped:"good",building:"wait",accepted:"blue"}[st]||"")+'">'+esc(st)+'</span></div></div>'
+      +(u.why?'<p class="small" style="margin:8px 0 0">'+esc(u.why)+'</p>':'')
+      +((u.expectedEffect||u.metric)?'<div class="kv" style="margin-top:8px">'+(u.expectedEffect?'<b>Expected</b><span>'+esc(u.expectedEffect)+'</span>':'')+(u.metric?'<b>Measured by</b><span><code>'+esc(u.metric)+'</code></span>':'')+'</div>':'')
+      +(u.spec?'<details class="fold" style="margin:10px 0 0;background:var(--panel2)"><summary>The spec</summary><div class="in"><div class="msg small">'+esc(typeof u.spec==="string"?u.spec:JSON.stringify(u.spec,null,2))+'</div></div></details>':'')
+      +'<div class="ctl"><label for="soul-us-'+esc(id)+'">Status</label><select class="soul-sel" id="soul-us-'+esc(id)+'" data-soul-up="'+esc(id)+'" data-was="'+esc(st)+'">'
+      +opts.map(function(s){return '<option value="'+esc(s)+'"'+(s===st?' selected':'')+'>'+esc(s)+'</option>'}).join("")+'</select>'
+      +(u.at?'<span class="faint small">proposed '+esc(sDayY(u.at))+'</span>':'')+'</div></div>';
+  }).join(""):'<div class="card"><div class="empty" style="padding:0">No upgrade has been proposed yet. The weekly cycle writes them, and Claude builds the ones you accept.</div></div>';
+  return book+'<p class="sec" style="margin-top:18px">Lessons waiting for their test</p>'+props+'<p class="sec" style="margin-top:18px">Upgrades the soul proposes</p>'+ups;
+}
+
+/* ---- 8. the budget ---- */
+function soulBudget(t){
+  var sp=t.spend||{},usd=sNum(sp.usd),cap=sNum(sp.capUsd),c=t.counts||{},a=sNum(c.actionsToday),ac=sNum(c.capToday);
+  var meter=function(id,label,v,of,fmt,note){var p=(v!=null&&of)?Math.min(1,v/of):null;
+    return '<div class="soul-meter" id="'+id+'"><div class="faint" style="text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;font-weight:600">'+esc(label)+'</div>'
+      +'<div class="top"><span class="v">'+(v==null?"·":esc(fmt(v)))+'</span><span class="of">of '+(of==null?"·":esc(fmt(of)))+'</span>'+(p!=null?'<span class="pct">'+Math.round(p*100)+'%</span>':'')+'</div>'
+      +'<div class="bar2" role="img" aria-label="'+esc(p==null?"not measured":Math.round(p*100)+" percent used")+'"><i class="'+(p!=null&&p>=0.9?"low":"")+'" style="width:'+(p==null?0:Math.max(p>0?1:0,Math.round(p*100)))+'%"></i></div>'
+      +(note?'<div class="faint small">'+esc(note)+'</div>':'')+'</div>'};
+  return '<div class="card">'
+    +meter("soul-spend","Paid models, "+sMonth(sp.month),usd,cap,function(v){return "$"+Number(v).toFixed(2)},usd!=null&&cap!=null?"$"+Math.max(0,cap-usd).toFixed(2)+" left. A paid call that would pass the cap is refused in code; free models do the routine work.":"")
+    +meter("soul-acts-today","Public actions today",a,ac,function(v){return fnum(v)},ac!=null?"Each one approved by the council before it runs.":"")
+    +'</div>';
+}
+
+/* ---- 9. the voice: Telegram, linked once by a code ---- */
+function soulVoice(t){
+  var tg=t.telegram||t.voice||{},linked=tg.linked===true||tg.status==="linked";if(!tg.at&&tg.since)tg={linked:tg.linked,at:tg.since};
+  var head='<div style="display:flex;gap:12px;align-items:flex-start"><div class="ic" style="width:34px;height:34px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:'+(linked?"var(--good)":"var(--faint)")+'"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(linked?'<path d="M5 12l4 4L19 7"/>':'<circle cx="12" cy="12" r="7"/>')+'</svg></div>'
+    +'<div style="flex:1;min-width:0"><div style="color:var(--cream);font-weight:600" id="soul-tg-state">Telegram '+(linked?"is linked":"is not linked")+'</div>'
+    +'<div class="muted small" style="margin-top:3px">'+(linked?"The soul writes to you there only when it needs you, and once a week with a summary."+(tg.at?" Linked "+esc(sDayY(tg.at))+".":"")
+      :"Link it once and the soul can reach you when it needs you, and send a summary once a week. Everything else stays here.")+'</div></div></div>';
+  var body;
+  if(SOUL.tg&&SOUL.tg.code){
+    body='<div class="soul-code" id="soul-tg-code">'+esc(SOUL.tg.code)+'</div>'
+      +'<ol class="soul-steps"><li>Open '+(SOUL.tg.bot?'<b>'+esc(SOUL.tg.bot)+'</b>, the NOOR bot,':'the NOOR bot')+' in Telegram.</li><li>Send it this code, exactly as shown.</li><li>Come back here and press Check.</li></ol>'
+      +(SOUL.tg.until?'<p class="faint small" style="margin:8px 0 0">The code works until '+esc(sWhen(SOUL.tg.until)||SOUL.tg.until)+'.</p>':'')
+      +(SOUL.tg.note?'<p class="small" style="margin:10px 0 0;color:var(--wait)" id="soul-tg-note">'+esc(SOUL.tg.note)+'</p>':'')
+      +'<div class="acts"><button class="btn" data-soul="tg-link">Check</button><button class="btn ghost" data-soul="tg-cancel">Cancel</button></div>';
+  } else body='<div class="acts"><button class="btn'+(linked?' ghost':'')+'" data-soul="tg-code">'+(linked?"Link again":"Link Telegram")+'</button>'+(linked?'<button class="btn" data-soul="tg-test">Send a test</button>':'')+'</div>';
+  return '<div class="card">'+head+body+'</div>';
+}
+
+/* ---- 10. the audit ---- */
+function soulAudit(au){
+  if(!soulOk(au))return soulErrCard(au,"The audit could not be read; the rest of this room is unaffected.");
+  var items=(au.j.items||[]).filter(Boolean).slice().sort(function(a,b){return String(b.at||"").localeCompare(String(a.at||""))}).slice(0,50),ok=au.j.chainOk;
+  var chip=ok===true?'<span class="pill good" id="soul-chain">chain intact</span>':ok===false?'<span class="pill bad" id="soul-chain">chain broken</span>':'<span class="pill wait" id="soul-chain">chain not checked</span>';
+  return '<details class="fold" id="soul-audit-fold"'+(ok===false?' open':'')+'><summary>'+(items.length?'The last '+items.length+' entr'+(items.length===1?'y':'ies'):'The record')+chip+'</summary><div class="in">'
+    +(ok===false?'<p class="small" style="color:var(--bad);margin:0 0 8px">'+esc(au.j.why?"The record does not match its own head: "+au.j.why+".":"An entry does not match the hash of the one before it, so the record may have been changed outside the soul.")+'</p>':'')
+    +(items.length?'<div class="soul-au">'+items.map(function(e){return '<div class="e"><span class="pill">'+esc(sWords(e.kind||"entry"))+'</span><span class="sm">'+esc(e.summary||"")+'</span><span class="wh">'+esc([e.actor||"",sWhen(e.at)].filter(Boolean).join(" · "))+'</span></div>'}).join("")+'</div>'
+      :'<p class="faint small" style="margin:0">Nothing has been recorded yet.</p>')
+    +'</div></details>';
+}
+
+/* ---- 11. the instruments (SOUL.md section 11) ----
+   Eight cards, each from its own owner-gated view, each failing on its own:
+   the Week (Monday's scorecard, earlier weeks selectable), the goals'
+   trajectories, what worked (the effects ledger), search readiness with the
+   IndexNow queue, page speed, the YouTube position, the topic radar and the
+   shelf's coverage. A reading the house has not taken yet is said in words,
+   never drawn as a zero. */
+var SOUL_TRAJ={"on-track":["good","on track"],behind:["bad","behind"],met:["good","met"],"no-data":["","no data yet"]};
+var SOUL_VERD={helped:"good",hurt:"bad",unclear:""};
+var soulInstQ=function(v,extra,f){return cached("soul:inst:"+v+(extra||""),function(){return soulGet(v,extra||"")},f)};
+function soulIH(title,sub,right){return '<div class="soul-ih"><b>'+esc(title)+'</b>'+(right||'')+(sub?'<span class="vs">'+esc(sub)+'</span>':'')+'</div>'}
+function soulIEmpty(t){return '<div class="empty" style="padding:0">'+esc(t)+'</div>'}
+function soulTryNote(lt){return lt&&lt.ok===false&&lt.why?'<p class="small soul-why">The last try, '+esc(sDayY(lt.date))+', did not read: '+esc(lt.why)+'</p>':''}
+function soulPathOf(u){var m=/^https?:\/\/[^/]+(\/.*)?$/.exec(String(u||""));return m?(m[1]||"/"):String(u||"")}
+function soulSign(v,kind,scale){if(v==null)return "·";var s=sFmt(kind,Math.abs(v),scale);return (v>0?"+":v<0?"-":"")+s}
+/* four small bars, one a week, at their own pixel size (never stretched) */
+function soulBars4(vals){
+  var vs=(vals||[]).map(function(v){return typeof v==="number"&&isFinite(v)?v:null}),W=56,H=18,bw=10,gap=5;
+  var nums=vs.filter(function(v){return v!=null});if(!nums.length)return '';
+  var mx=Math.max.apply(null,nums.map(Math.abs))||1;
+  return '<svg class="soul-b4" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="the last four weeks">'+vs.map(function(v,i){
+    var h=v==null?0:Math.max(1.5,Math.abs(v)/mx*(H-2));return '<rect x="'+(i*(bw+gap)+1)+'" y="'+(H-h).toFixed(1)+'" width="'+bw+'" height="'+h.toFixed(1)+'" rx="1.5" fill="'+(i===vs.length-1?"var(--gold)":"var(--gold-dim)")+'"'+(v==null?' opacity=".3"':'')+'/>'}).join("")+'</svg>';
+}
+function soulWeekLabel(w,c){var m=/^(\d{4})-W(\d{2})$/.exec(String(w||""));if(!m)return String(w||"");
+  return "Week "+(+m[2])+", "+m[1]+(c&&c.week===w&&c.from?" ("+sDay(c.from)+" to "+sDayY(c.to)+")":"")}
+
+/* the Week: Monday's scorecard */
+function soulWeek(r){
+  if(!soulOk(r))return '<div class="card soul-ic wide" id="soul-i-week">'+soulIH("Week","")+soulErrCard(r,"The scorecard could not be read; the rest of this room is unaffected.")+'</div>';
+  var j=r.j,c=j.scorecard,weeks=(j.weeks||[]).filter(Boolean);
+  var sel=weeks.length?'<select class="soul-sel" id="soul-week-sel" data-soul-week="1" aria-label="Which week">'+weeks.map(function(w){return '<option value="'+esc(w)+'"'+(w===j.week?' selected':'')+'>'+esc(soulWeekLabel(w))+'</option>'}).join("")+'</select>':'';
+  var head=soulIH("Week",c?soulWeekLabel(c.week,c)+", built "+sDayY(c.builtOn||c.builtAt):"Monday's scorecard for the week before",sel);
+  if(!c)return '<div class="card soul-ic wide" id="soul-i-week">'+head+soulIEmpty(weeks.length?"No scorecard is kept for that week.":"No scorecard yet. The first is built by Monday's cycle, for the week before it.")+'</div>';
+  var ns=c.northStar||{},v=sNum(ns.value);
+  var hero='<div class="hero" style="margin:0 0 6px"><div class="n soul-big" id="soul-week-ns">'+(v==null?"·":esc(fnum(v)))+'</div><div class="l">people reached<br>that week</div>'
+    +'<div class="d '+(ns.deltaPct>0?"up":ns.deltaPct<0?"dn":"")+'">'+(ns.deltaPct!=null?(ns.deltaPct>0?"↑ ":ns.deltaPct<0?"↓ ":"")+Math.abs(ns.deltaPct)+'% on the week before':'no figure for the week before')+'</div>'+soulBars4(ns.trend4w)+'</div>';
+  var mrows=(c.metrics||[]).map(function(m){var kind=sKind(m.path),sc=sScale(kind,(m.trend4w||[]).concat([m.value]));
+    return '<div class="soul-row"><span class="l">'+esc(m.label||sWords(m.path))+'</span><span class="r">'+esc(sFmt(kind,sNum(m.value),sc))
+      +' <i class="'+(m.delta>0?"up":m.delta<0?"dn":"")+'">'+esc(m.delta==null?"":soulSign(m.delta,kind,sc))+'</i> '+soulBars4(m.trend4w)+'</span></div>'}).join("");
+  var gl=(c.goals||[]).map(function(g){var t=SOUL_TRAJ[g.status]||["",sWords(g.status)];return '<span class="pill '+t[0]+'" title="'+esc(g.outcome||"")+'">'+esc(g.id+" "+t[1])+'</span>'}).join("");
+  var ef=c.effects||{},ac=c.actions||{};
+  var posts=function(list,none){list=(list||[]).filter(Boolean);return list.length?'<ol class="soul-steps">'+list.map(function(p){return '<li>'+esc(p.title||p.kind||"a post")+' <span class="faint">· '+esc(fnum(p.reach))+' reached</span></li>'}).join("")+'</ol>':'<p class="faint small" style="margin:0">'+none+'</p>'};
+  var an=(c.anomalies||[]);
+  var bits=[];
+  if(c.search&&c.search.score!=null)bits.push("search readiness "+c.search.score+" of 100");
+  if(c.speed&&c.speed.score!=null)bits.push("page speed "+c.speed.score+" of 100");
+  if(c.youtube&&c.youtube.subscribers!=null)bits.push(fnum(c.youtube.subscribers)+" YouTube subscribers");
+  if(c.coverage&&c.coverage.low&&c.coverage.low.length)bits.push("under 30 days of reels: "+c.coverage.low.join(", "));
+  var sp=c.spend||{};
+  return '<div class="card soul-ic wide" id="soul-i-week">'+head+hero
+    +'<div class="soul-wk"><div><p class="sec" style="margin:8px 0 4px">The numbers, against the week before</p><div class="soul-rows" id="soul-week-metrics">'+mrows+'</div></div>'
+    +'<div><p class="sec" style="margin:8px 0 6px">Goals</p><div class="soul-chips">'+(gl||'<span class="faint small">No goal yet.</span>')+'</div>'
+    +'<p class="sec" style="margin:12px 0 6px">What the soul did</p><p class="small" style="margin:0" id="soul-week-acts">'+esc((ac.count||0)+" public action"+(ac.count===1?"":"s")+(ef.total?"; measured: "+ef.helped+" helped, "+ef.hurt+" hurt, "+ef.unclear+" unclear":"; none measured yet"))+'</p>'
+    +'<p class="sec" style="margin:12px 0 6px">Reached most</p>'+posts(c.posts&&c.posts.top,"No post carried a reach reading.")
+    +'<p class="sec" style="margin:12px 0 6px">Reached least</p>'+posts(c.posts&&c.posts.bottom,"Too few posts to name the weakest.")
+    +'<p class="sec" style="margin:12px 0 6px">Anomalies</p>'+(an.length?'<ul class="soul-steps">'+an.slice(0,6).map(function(a){return '<li><span class="pill '+(a.severity==="severe"?"bad":"wait")+'">'+esc(a.kind||"anomaly")+'</span> '+esc(a.sentence||"")+'</li>'}).join("")+'</ul>':'<p class="faint small" style="margin:0">None that week.</p>')
+    +'<p class="sec" style="margin:12px 0 6px">Instruments and spend</p><p class="small" style="margin:0">'+esc((bits.length?bits.join(" · ")+" · ":"")+(sp.usd!=null?"$"+Number(sp.usd).toFixed(2)+(sp.capUsd!=null?" of $"+Number(sp.capUsd).toFixed(2):"")+" on paid models":"spend not read"))+'</p>'
+    +(c.radar&&c.radar.signals&&c.radar.signals.length?'<p class="faint small" style="margin:6px 0 0">'+esc(c.radar.signals[0])+'</p>':'')
+    +'</div></div></div>';
+}
+
+/* the goals' trajectories: the readings, the fitted line carried to the due
+   date, and the target, drawn at the box's own width */
+function soulFit(series){
+  var p=(series||[]).filter(function(x){return x&&typeof x.value==="number"}),n=p.length;if(n<2)return null;
+  var d0=Date.parse(p[0].date+"T00:00:00Z")/864e5,xs=p.map(function(x){return Date.parse(x.date+"T00:00:00Z")/864e5-d0}),ys=p.map(function(x){return x.value});
+  var mx=xs.reduce(function(a,b){return a+b},0)/n,my=ys.reduce(function(a,b){return a+b},0)/n,sxx=0,sxy=0;
+  for(var i=0;i<n;i++){sxx+=(xs[i]-mx)*(xs[i]-mx);sxy+=(xs[i]-mx)*(ys[i]-my)}
+  var b=sxx>0?sxy/sxx:0;return {d0:d0,a:my-b*mx,b:b};
+}
+function soulTrajSvg(sp,W){
+  var ser=(sp.series||[]).filter(function(x){return x&&typeof x.value==="number"}),H=sp.h||120,kind=sp.kind||"n";
+  if(!ser.length)return '<p class="faint small" style="margin:6px 0 0">No reading yet, so there is no line to draw.</p>';
+  var fit=soulFit(ser),t0=Date.parse(ser[0].date+"T00:00:00Z")/864e5,tl=Date.parse(ser[ser.length-1].date+"T00:00:00Z")/864e5;
+  var tEnd=Math.max(tl,sp.due?Date.parse(sp.due+"T00:00:00Z")/864e5:tl);if(!isFinite(tEnd))tEnd=tl;if(tEnd<=t0)tEnd=t0+1;
+  var vals=ser.map(function(x){return x.value});if(typeof sp.target==="number")vals.push(sp.target);
+  if(fit)vals.push(fit.a+fit.b*(tEnd-fit.d0));
+  var scale=sScale(kind,vals),mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);if(mx<=mn){mx=mn+1}var pad=(mx-mn)*.08;mn-=pad;mx+=pad;
+  var pl=6,pr=6,pt=8,pb=18,X=function(t){return pl+(t-t0)/(tEnd-t0)*(W-pl-pr)},Y=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb)};
+  var g='<line class="gl" x1="'+pl+'" x2="'+(W-pr)+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'"/>';
+  if(typeof sp.target==="number")g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(sp.target).toFixed(1)+'" y2="'+Y(sp.target).toFixed(1)+'" stroke="var(--good)" stroke-dasharray="4 4" opacity=".7"/><text class="ax" x="'+(W-pr)+'" y="'+(Y(sp.target)-4).toFixed(1)+'" text-anchor="end">target '+esc(sFmt(kind,sp.target,scale))+'</text>';
+  if(fit)g+='<line x1="'+X(t0).toFixed(1)+'" y1="'+Y(fit.a+fit.b*(t0-fit.d0)).toFixed(1)+'" x2="'+X(tEnd).toFixed(1)+'" y2="'+Y(fit.a+fit.b*(tEnd-fit.d0)).toFixed(1)+'" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  var line=ser.map(function(x,i){var t=Date.parse(x.date+"T00:00:00Z")/864e5;return (i?"L":"M")+X(t).toFixed(1)+","+Y(x.value).toFixed(1)}).join(" ");
+  g+='<path d="'+line+'" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round"/>';
+  ser.forEach(function(x){var t=Date.parse(x.date+"T00:00:00Z")/864e5;g+='<circle cx="'+X(t).toFixed(1)+'" cy="'+Y(x.value).toFixed(1)+'" r="2" fill="var(--gold)"/>'});
+  g+='<text class="ax" x="'+pl+'" y="'+(H-4)+'">'+esc(sDay(ser[0].date))+'</text><text class="ax" x="'+(W-pr)+'" y="'+(H-4)+'" text-anchor="end">'+esc(sp.due?"due "+sDay(sp.due):sDay(ser[ser.length-1].date))+'</text>';
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="'+esc((sp.aria||"the goal")+": "+ser.length+" daily readings, the fitted line carried to the due date, and the target")+'">'+g+'</svg>';
+}
+function soulTraj(r){
+  var head=soulIH("Trajectories","Each goal's least squares line over its last 28 daily readings, carried to its due date; gold is the readings, blue dashes the line, green dashes the target");
+  if(!soulOk(r))return '<div class="card soul-ic wide" id="soul-i-traj">'+head+soulErrCard(r,"The trajectories could not be read; the rest of this room is unaffected.")+'</div>';
+  var items=(r.j.items||[]).filter(Boolean);
+  if(!items.length)return '<div class="card soul-ic wide" id="soul-i-traj">'+head+soulIEmpty("No goal is set yet, so there is no trajectory to draw.")+'</div>';
+  return '<div class="card soul-ic wide" id="soul-i-traj">'+head+'<div class="soul-tjs">'+items.map(function(t){
+    var kind=sKind(t.metric),vals=(t.series||[]).map(function(x){return x.value}).concat([t.target,t.projected]),sc=sScale(kind,vals),f=function(v){return typeof v==="number"?sFmt(kind,v,sc):"·"};
+    var st=SOUL_TRAJ[t.status]||["",sWords(t.status||"no data")];
+    return '<div class="soul-tj" id="soul-tj-'+esc(t.id)+'"><div class="h"><b>'+esc(t.outcome||t.id)+'</b><span class="pill '+st[0]+'">'+esc(st[1])+'</span>'+(t.drift?'<span class="pill bad">drifting '+esc(t.behindStreak)+' days</span>':'')+'</div>'
+      +soulChart("traj-"+t.id,{type:"traj",series:t.series||[],target:typeof t.target==="number"?t.target:null,due:t.due,kind:kind,h:120,aria:t.outcome||t.id})
+      +'<div class="nums"><span><em>now </em>'+esc(f(t.value))+'</span><span><em>target </em>'+esc(typeof t.target==="number"?f(t.target):(t.target==null?"·":String(t.target)))+'</span>'
+      +(t.projected!=null?'<span><em>on '+esc(sDay(t.due))+' </em>'+esc(f(t.projected))+'</span>':'')+(t.eta?'<span><em>there on </em>'+esc(sDayY(t.eta))+'</span>':'')
+      +(t.slopePerDay!=null?'<span><em>a day </em>'+esc(soulSign(t.slopePerDay,kind,sc))+'</span>':'')+'</div>'
+      +'<p class="faint small" style="margin:4px 0 0">'+esc((t.confidence?"Confidence "+t.confidence+": ":"")+(t.note||""))+'</p></div>'}).join("")+'</div></div>';
+}
+
+/* what worked: the effects ledger */
+function soulEffects(r){
+  var head=soulIH("What worked","Each public action's named metric seven days on, against the same weekday of the weeks before");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-eff">'+head+soulErrCard(r,"The effects could not be read.")+'</div>';
+  var j=r.j,items=(j.items||[]).filter(Boolean),s=j.summary||{};
+  var chips='<div class="soul-chips"><span class="pill good">'+esc((s.helped||0)+" helped")+'</span><span class="pill bad">'+esc((s.hurt||0)+" hurt")+'</span><span class="pill">'+esc((s.unclear||0)+" unclear")+'</span>'+(j.pending!=null?'<span class="pill wait">'+esc(j.pending+" waiting")+'</span>':'')+'</div>';
+  if(!items.length)return '<div class="card soul-ic" id="soul-i-eff">'+head+chips+soulIEmpty("No public action is seven days old yet, so nothing has been measured."+(j.pending?" "+j.pending+" waiting for their seventh day.":""))+'</div>';
+  return '<div class="card soul-ic" id="soul-i-eff">'+head+chips+'<div class="soul-rows">'+items.slice(0,12).map(function(e){var kind=sKind(e.metric),sc=sScale(kind,[e.before,e.after]);
+    return '<div class="soul-row soul-eff"><span class="l">'+esc(sWords(e.action))+' <span class="faint">on '+esc(sDayY(e.date))+'</span></span><span class="pill '+(SOUL_VERD[e.verdict]||"")+'">'+esc(e.verdict||"unclear")+'</span>'
+      +'<span class="s"><code>'+esc(e.metric||"")+'</code> '+esc(sFmt(kind,sNum(e.before),sc))+' to '+esc(sFmt(kind,sNum(e.after),sc))+' ('+esc(soulSign(e.delta,kind,sc))+(e.baselineDelta!=null?', usually '+esc(soulSign(e.baselineDelta,kind,sc)):', no baseline')+')</span></div>'}).join("")+'</div></div>';
+}
+
+/* search readiness and the IndexNow queue */
+var SOUL_CHECK={status:"status 200",title:"a title",description:"a meta description",canonical:"its own canonical",structured:"structured data",words:"100 words or more",indexable:"indexable",unreachable:"reachable"};
+function soulSearch(r){
+  var head=soulIH("Search readiness","25 sitemap pages a week, read from the live site; seven checks a page");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-search">'+head+soulErrCard(r,"The search audit could not be read.")+'</div>';
+  var j=r.j,a=j.audit,ix=j.indexnow||{};
+  var ixh='<div class="soul-ix" id="soul-ix"><p class="sec" style="margin:14px 0 6px">IndexNow</p><p class="small" style="margin:0">'
+    +esc(!ix.keySet?"No key yet: the daily cycle makes one, and offers changed pages once it is served.":(ix.verified?"The key file is served (checked "+sDayY(ix.verified)+").":"The key is made; the site does not serve it yet, so nothing is offered."))+'</p>'
+    +'<div class="soul-chips"><span class="pill">'+esc((ix.submittedToday||0)+" of "+(ix.perDay||100)+" offered today")+'</span><span class="pill '+(ix.pending?"wait":"good")+'">'+esc(ix.pending==null?"queue not read":ix.pending+" changed pages waiting")+'</span>'
+    +(ix.last&&ix.last.date?'<span class="pill">'+esc("last: "+ix.last.submitted+" on "+sDay(ix.last.date))+'</span>':'')+'</div></div>';
+  if(!a)return '<div class="card soul-ic" id="soul-i-search">'+head+soulIEmpty("Not audited yet: the first cycle of each week reads 25 pages.")+soulTryNote(j.lastTry)+ixh+'</div>';
+  var counts=a.counts||{},n=a.sampled||0;
+  var bars=Object.keys(SOUL_CHECK).filter(function(k){return counts[k]!=null&&(k!=="unreachable"||counts[k])}).map(function(k){var bad=counts[k]||0,p=n?(n-bad)/n:0;
+    return '<div class="soul-row"><span class="l">'+esc(SOUL_CHECK[k])+'</span><span class="r">'+esc((n-bad)+" of "+n)+'</span><div class="bar2"><i class="'+(p<0.8?"low":"")+'" style="width:'+Math.round(p*100)+'%"></i></div></div>'}).join("");
+  var fl=(a.failures||[]).slice(0,10);
+  return '<div class="card soul-ic" id="soul-i-search">'+head
+    +'<div class="hero" style="margin:0 0 8px"><div class="n soul-big" id="soul-search-score">'+esc(a.score)+'</div><div class="l">of 100<br>'+esc(soulWeekLabel(a.week))+'</div><div class="d faint">'+esc(a.passed+" of "+n+" pages clean, "+(a.sitemapUrls||"·")+" in the sitemap")+'</div></div>'
+    +'<div class="soul-rows">'+bars+'</div>'
+    +(fl.length?'<details class="fold" style="margin:10px 0 0;background:var(--panel2)"><summary>What failed<span class="pill bad">'+esc(String((a.failures||[]).length))+'</span></summary><div class="in"><div class="soul-rows">'+fl.map(function(x){return '<div class="soul-row"><span class="l"><code>'+esc(soulPathOf(x.url))+'</code></span><span class="s">'+esc((x.fails||[]).join(", "))+'</span></div>'}).join("")+'</div></div></details>':'')
+    +soulTryNote(j.lastTry)+ixh+'</div>';
+}
+
+/* page speed */
+function soulSpeed(r){
+  var head=soulIH("Page speed","Google PageSpeed Insights, mobile, once a week");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-speed">'+head+soulErrCard(r,"Page speed could not be read.")+'</div>';
+  var sp=r.j.speed;
+  if(!sp)return '<div class="card soul-ic" id="soul-i-speed">'+head+soulIEmpty("Not measured yet: the first cycle of each week asks PageSpeed Insights about four pages.")+soulTryNote(r.j.lastTry)+'</div>';
+  var NAME={home:"Home",quran:"The Qur'an",light:"A Light",word:"A dictionary word"};
+  return '<div class="card soul-ic" id="soul-i-speed">'+head
+    +'<div class="hero" style="margin:0 0 8px"><div class="n soul-big" id="soul-speed-score">'+(sp.score==null?"·":esc(sp.score))+'</div><div class="l">median score<br>'+esc(soulWeekLabel(sp.week))+'</div></div>'
+    +'<div class="soul-rows">'+(sp.pages||[]).map(function(p){
+      if(!p.ok)return '<div class="soul-row"><span class="l">'+esc(NAME[p.name]||p.name)+'</span><span class="r">·</span><span class="s">'+esc(p.why||"no reading")+'</span></div>';
+      var c=p.score>=90?"":p.score>=50?"mid":"low";
+      return '<div class="soul-row"><span class="l">'+esc(NAME[p.name]||p.name)+' <code class="faint">'+esc(soulPathOf(p.url))+'</code></span><span class="r">'+esc(p.score)+'</span><div class="bar2"><i class="'+c+'" style="width:'+Math.max(1,p.score)+'%"></i></div>'
+        +'<span class="s">LCP '+esc(p.lcpMs==null?"·":(Math.round(p.lcpMs/100)/10)+" s")+' · CLS '+esc(p.cls==null?"·":String(p.cls))+(p.inpMs!=null?' · INP '+esc(p.inpMs+" ms"):' · INP not in the field data')+'</span></div>'}).join("")+'</div>'
+    +soulTryNote(r.j.lastTry)+'</div>';
+}
+
+/* the YouTube position, and the owner's benchmark list */
+function soulYoutube(r){
+  var head=soulIH("YouTube position","The channel's public totals, and the benchmark channels you name");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-yt">'+head+soulErrCard(r,"The YouTube position could not be read.")+'</div>';
+  var y=r.j.youtube,ids=(r.j.benchmarks||[]).filter(Boolean);
+  var edit='<details class="fold" style="margin:12px 0 0;background:var(--panel2)" id="soul-bm"'+(SOUL.bmOpen?' open':'')+'><summary>Benchmark channels<span class="pill">'+ids.length+' of 10</span></summary><div class="in">'
+    +'<label class="faint small" for="soul-bm-ids" style="display:block;margin:0 0 6px">Channel ids (UC followed by 22 characters), one a line or separated by commas; at most ten.</label>'
+    +'<textarea class="fi" id="soul-bm-ids" rows="3" spellcheck="false" style="width:100%;font-family:var(--f-mono);font-size:13px">'+esc(ids.join("\n"))+'</textarea>'
+    +'<div class="acts"><button class="btn sm" data-soul-bm="save">Save the list</button></div></div></details>';
+  if(!y)return '<div class="card soul-ic" id="soul-i-yt">'+head+soulIEmpty("Not read yet: the first cycle of each week reads it (1 unit of YouTube's quota).")+soulTryNote(r.j.lastTry)+edit+'</div>';
+  var h=y.house||{},bm=(y.benchmarks||[]).filter(Boolean),mx=Math.max.apply(null,[h.subscribers||0].concat(bm.map(function(b){return b.subscribers||0})))||1;
+  var row=function(name,x,mine){return '<div class="soul-row'+(mine?' mine':'')+'"><span class="l">'+esc(name)+'</span><span class="r">'+esc(x.subscribers==null?"hidden":fnum(x.subscribers))+'</span><div class="bar2"><i class="'+(mine?"":"mid")+'" style="width:'+(x.subscribers==null?0:Math.max(1,Math.round(x.subscribers/mx*100)))+'%"></i></div>'
+    +'<span class="s">'+esc((x.views==null?"·":fnum(x.views))+" views · "+(x.videos==null?"·":fnum(x.videos))+" videos")+'</span></div>'};
+  return '<div class="card soul-ic" id="soul-i-yt">'+head
+    +'<div class="hero" style="margin:0 0 8px"><div class="n soul-big" id="soul-yt-subs">'+esc(h.subscribers==null?"hidden":fnum(h.subscribers))+'</div><div class="l">subscribers<br>'+esc(soulWeekLabel(y.week))+'</div></div>'
+    +'<div class="soul-rows">'+row("The house",h,true)+bm.map(function(b){return row(b.title||b.id,b,false)}).join("")+'</div>'
+    +(y.note?'<p class="faint small" style="margin:8px 0 0">'+esc(y.note)+'</p>':'')+soulTryNote(r.j.lastTry)+edit+'</div>';
+}
+
+/* the topic radar */
+function soulRadar(r){
+  var head=soulIH("Topic radar","What people searched on YouTube in the last 30 days, top five videos each; two searches a day, eight a week");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-radar">'+head+soulErrCard(r,"The radar could not be read.")+'</div>';
+  var rd=r.j.radar,pg=r.j.progress||{};
+  var prog=pg.of?'<p class="faint small" style="margin:0 0 8px" id="soul-radar-prog">'+esc((pg.done==null?"·":pg.done)+" of "+pg.of+" searches read this week")+'</p>':'';
+  if(!rd)return '<div class="card soul-ic" id="soul-i-radar">'+head+prog+soulIEmpty("No week has been read in full yet.")+soulTryNote(r.j.lastTry)+'</div>';
+  var ris=(rd.rising||[]).filter(Boolean),mx=Math.max.apply(null,ris.map(function(x){return x.views||0}))||1;
+  return '<div class="card soul-ic" id="soul-i-radar">'+head+prog+'<div class="soul-rows">'+ris.map(function(x){var top=(x.videos||[])[0];
+    return '<div class="soul-row"><span class="l">'+esc(x.query)+'</span><span class="r">'+esc(fnum(x.views||0))+'</span><div class="bar2"><i style="width:'+Math.max(1,Math.round((x.views||0)/mx*100))+'%"></i></div>'
+      +'<span class="s">'+(x.kinds&&x.kinds.length?x.kinds.map(function(k){return '<span class="pill blue">'+esc(k)+'</span>'}).join(" ")+' ':'<span class="faint">no shelf matches</span> ')+(top&&top.title?esc("top: "+top.title):"")+'</span></div>'}).join("")+'</div>'
+    +'<p class="faint small" style="margin:8px 0 0">'+esc(soulWeekLabel(rd.week))+'. Titles are public data, shown as they came; the soul reads them as signals, never as instructions.</p></div>';
+}
+
+/* the shelf's coverage */
+function soulCoverage(r){
+  var head=soulIH("Coverage","Cards of each kind on the shelf, how many have gone out, and the days the rest last at the rota's pace");
+  if(!soulOk(r))return '<div class="card soul-ic" id="soul-i-cov">'+head+soulErrCard(r,"The coverage could not be read.")+'</div>';
+  var c=r.j.coverage,min=r.j.minDays||30;
+  if(!c||!c.kinds)return '<div class="card soul-ic" id="soul-i-cov">'+head+soulIEmpty("The shelf could not be read"+(c&&c.why?": "+c.why:"")+".")+'</div>';
+  return '<div class="card soul-ic" id="soul-i-cov">'+head
+    +(c.low&&c.low.length?'<p class="small" style="margin:0 0 8px;color:var(--bad)" id="soul-cov-low">Under '+esc(min)+' days left: '+esc(c.low.join(", "))+'</p>':'<p class="small" style="margin:0 0 8px;color:var(--good)" id="soul-cov-low">Every shelf on the rota has '+esc(min)+' days or more.</p>')
+    +'<div class="soul-rows">'+c.kinds.map(function(k){var p=k.cards?k.remaining/k.cards:0;
+      return '<div class="soul-row" data-kind="'+esc(k.kind)+'"><span class="l">'+esc(k.kind)+'</span><span class="r'+(k.low?' bad':'')+'">'+esc(k.runwayDays==null?"dated":k.runwayDays+" days")+'</span><div class="bar2"><i class="'+(k.low?"low":"")+'" style="width:'+Math.round(p*100)+'%"></i></div>'
+        +'<span class="s">'+esc(k.remaining+" of "+k.cards+" not yet posted"+(k.perWeek?", "+k.perWeek+" a week":"")+(k.note?"; "+k.note:""))+'</span></div>'}).join("")+'</div>'
+    +(c.stale?'<p class="faint small" style="margin:8px 0 0">The last reading, '+esc(sDayY(c.date))+'; today\'s could not be taken.</p>':'')+'</div>';
+}
+function soulInstHtml(d){
+  return '<div class="soul-ig">'+soulWeek(d.scorecard)+soulTraj(d.trajectories)+soulEffects(d.effects)+soulSearch(d.search)
+    +soulSpeed(d.speed)+soulYoutube(d.youtube)+soulRadar(d.radar)+soulCoverage(d.coverage)+'</div>';
+}
+function soulSetWeek(w){
+  var box=$("soul-i-week");if(!box)return;
+  soulRead(soulInstQ("scorecard","&week="+encodeURIComponent(w),true)).then(function(r){
+    if(SOUL.inst)SOUL.inst.scorecard=r;var b=$("soul-i-week");if(b)b.outerHTML=soulWeek(r)});
+}
+function soulSaveBench(b){
+  var raw=(($("soul-bm-ids")||{}).value||"").split(/[\s,]+/).map(function(x){return x.trim()}).filter(Boolean);
+  var was=b.textContent;b.disabled=true;b.textContent="Saving…";SOUL.bmOpen=true;
+  post("/api/soul",{action:"benchmarks",ids:raw}).then(function(r){
+    if(r.locked)return;
+    b.disabled=false;b.textContent=was;
+    if(!soulPostOk(r))return toast((r.j&&(r.j.error||r.j.reason))||"It refused.",true);
+    toast("Saved. The benchmarks are read with next week's position.");
+    soulRead(soulInstQ("youtube","",true)).then(function(y){if(SOUL.inst)SOUL.inst.youtube=y;var box=$("soul-i-yt");if(box)box.outerHTML=soulYoutube(y)});
+  }).catch(unreachable(b,was));
+}
+
+/* ---- the actions ---- */
+function soulData(){return (SOUL.data&&soulOk(SOUL.data.today))?SOUL.data.today.j:null}
+function soulDrawActs(){var t=soulData(),el=$("soul-acts");if(t&&el)el.innerHTML=soulActsHtml(t)}
+function soulDrawGoals(){var t=soulData(),el=$("soul-goals");if(t&&el)el.innerHTML=soulGoals(t)}
+function soulDrawVoice(){var t=soulData(),el=$("soul-voice");if(t&&el)el.innerHTML=soulVoice(t)}
+function soulPause(kind,b){
+  var was=b.textContent;b.disabled=true;b.textContent=kind==="pause"?"Pausing…":"Resuming…";
+  post("/api/soul",{action:kind}).then(function(r){
+    if(r.locked)return;
+    if(!soulPostOk(r)){b.disabled=false;b.textContent=was;return toast((r.j&&r.j.error)||"It refused.",true)}
+    SOUL.confirm="";toast(kind==="pause"?"Paused. Nothing runs until you resume.":"Resumed.");drawSoul(true);
+  }).catch(unreachable(b,was));
+}
+function soulRun(b){
+  var was=b.textContent;b.disabled=true;b.textContent="Starting…";
+  post("/api/soul",{action:"run"}).then(function(r){
+    if(r.locked)return;
+    if(!soulPostOk(r)){b.disabled=false;b.textContent=was;return toast((r.j&&r.j.error)||"It refused.",true)}
+    if(r.j.busy){b.disabled=false;b.textContent=was;toast(r.j.message||"A cycle is already running.");return drawSoul(true)}
+    toast("A cycle has started. Its report lands here when it is done.");drawSoul(true);
+  }).catch(unreachable(b,was));
+}
+function soulSaveGoal(b){
+  var t=soulData();if(!t)return;
+  var g=(t.goals||[]).filter(function(x){return x&&x.id===b.dataset.soulSave})[0];if(!g||g.owner!=="owner")return;
+  var kind=sKind(g.metric),scale=sScale(kind,[sNum(g.baseline),sNum(g.target),soulGoalCur(g)]);
+  var o=($("sg-o").value||"").trim(),tv=($("sg-t").value||"").trim().replace(/[,\s%$]/g,""),dd=($("sg-d").value||"").trim();
+  if(!o)return toast("Say what the goal is for.",true);
+  var tn=parseFloat(tv);if(!isFinite(tn)||!/^-?\d*\.?\d+$/.test(tv))return toast("The target must be a number.",true);
+  if(dd&&!/^\d{4}-\d{2}-\d{2}$/.test(dd))return toast("The due date must be a date.",true);
+  var goal={};Object.keys(g).forEach(function(k){if(k!=="history")goal[k]=g[k]});
+  goal.owner="owner";goal.outcome=o;goal.target=Math.round(tn/scale*1e6)/1e6;if(dd)goal.due=dd;
+  var was=b.textContent;b.disabled=true;b.textContent="Saving…";
+  post("/api/soul",{action:"goal",goal:goal}).then(function(r){
+    if(r.locked)return;
+    if(!soulPostOk(r)){b.disabled=false;b.textContent=was;return toast((r.j&&r.j.error)||"It refused.",true)}
+    SOUL.editing="";toast("Saved.");drawSoul(true);
+  }).catch(unreachable(b,was));
+}
+function soulUpgrade(s){
+  var id=s.dataset.soulUp,st=s.value,was=s.dataset.was||"";
+  if(st===was)return;
+  s.disabled=true;
+  post("/api/soul",{action:"upgrade",id:id,status:st}).then(function(r){
+    s.disabled=false;
+    if(r.locked)return;
+    if(!soulPostOk(r)){s.value=was;return toast((r.j&&r.j.error)||"It refused.",true)}
+    s.dataset.was=st;toast("Marked "+st+".");
+    soulRead(soulEvoQ(true)).then(function(ev){if(SOUL.data)SOUL.data.evo=ev;var box=$("soul-evo");if(box)box.innerHTML=soulEvo(ev)});
+  }).catch(function(){s.disabled=false;s.value=was;toast("Could not reach the house.",true)});
+}
+function soulTgCode(b){
+  var was=b.textContent;b.disabled=true;b.textContent="Making a code…";
+  post("/api/soul",{action:"tg-code"}).then(function(r){
+    if(r.locked)return;
+    if(!soulPostOk(r)||!r.j.code){b.disabled=false;b.textContent=was;return toast((r.j&&(r.j.error||r.j.reason))||"The house could not make a code.",true)}
+    var bn=r.j.bot||r.j.botName||r.j.botUsername||"";if(bn&&bn.charAt(0)!=="@")bn="@"+bn;
+    SOUL.tg={code:String(r.j.code),bot:bn,until:r.j.expiresAt||r.j.expires||"",note:""};soulDrawVoice();
+  }).catch(unreachable(b,was));
+}
+function soulTgLink(b){
+  var was=b.textContent;b.disabled=true;b.textContent="Checking…";
+  post("/api/soul",{action:"tg-link"}).then(function(r){
+    if(r.locked)return;
+    if(soulPostOk(r)&&r.j.linked!==false){SOUL.tg=null;toast("Linked. The soul can reach you on Telegram now.");return drawSoul(true)}
+    if(SOUL.tg)SOUL.tg.note=(r.j&&(r.j.error||r.j.reason))||"The bot has not seen the code yet. Send it, wait a few seconds, and press Check again.";
+    soulDrawVoice();
+  }).catch(unreachable(b,was));
+}
+function soulTgTest(b){
+  var was=b.textContent;b.disabled=true;b.textContent="Sending…";
+  post("/api/soul",{action:"tg-test"}).then(function(r){
+    b.disabled=false;b.textContent=was;
+    if(r.locked)return;
+    if(!soulPostOk(r))return toast((r.j&&(r.j.error||r.j.reason))||"The test did not go.",true);
+    toast("Sent. Look in Telegram.");
+  }).catch(unreachable(b,was));
+}
+function soulWire(el){
+  el.addEventListener("click",function(e){
+    var t=e.target;if(!t||!t.closest)return;
+    var tv=t.closest("[data-tv]");
+    if(tv){var card=$(tv.dataset.tv);if(!card)return;
+      var showT=card.querySelector(".vtb").hidden;
+      card.querySelector(".vzc").hidden=showT;card.querySelector(".vtb").hidden=!showT;
+      tv.textContent=showT?"Chart":"Table";tv.setAttribute("aria-pressed",showT?"true":"false");
+      if(!showT)soulPaint();return}
+    var dy=t.closest("[data-soul-days]");if(dy)return soulSetDays(+dy.dataset.soulDays);
+    var cy=t.closest("[data-soul-cycle]");if(cy)return soulOpenCycle(cy.dataset.soulCycle);
+    var ed=t.closest("[data-soul-edit]");if(ed){SOUL.editing=ed.dataset.soulEdit;soulDrawGoals();var f=$("sg-o");if(f)f.focus();return}
+    if(t.closest("[data-soul-cancel]")){SOUL.editing="";return soulDrawGoals()}
+    var sv=t.closest("[data-soul-save]");if(sv)return soulSaveGoal(sv);
+    var bm=t.closest("[data-soul-bm]");if(bm)return soulSaveBench(bm);
+    var b=t.closest("[data-soul]");if(!b||b.disabled)return;
+    var a=b.dataset.soul;
+    if(a==="pause-ask"||a==="resume-ask"){SOUL.confirm=a.split("-")[0];soulDrawActs();var y=document.querySelector("#soul-confirm .btn");if(y)y.focus();return}
+    if(a==="confirm-no"){SOUL.confirm="";return soulDrawActs()}
+    if(a==="pause-yes"||a==="resume-yes")return soulPause(a.split("-")[0],b);
+    if(a==="run")return soulRun(b);
+    if(a==="tg-code")return soulTgCode(b);
+    if(a==="tg-link")return soulTgLink(b);
+    if(a==="tg-test")return soulTgTest(b);
+    if(a==="tg-cancel"){SOUL.tg=null;return soulDrawVoice()}
+  });
+  el.addEventListener("change",function(e){var s=e.target&&e.target.closest&&e.target.closest("select[data-soul-up]");if(s)return soulUpgrade(s);
+    var wk=e.target&&e.target.closest&&e.target.closest("select[data-soul-week]");if(wk)soulSetWeek(wk.value)});
+  $("sheet-in").addEventListener("click",function(e){var b=e.target&&e.target.closest&&e.target.closest("[data-soul-undo]");if(b)soulUndo(b)});
+  window.addEventListener("resize",function(){clearTimeout(SOUL.rt);SOUL.rt=setTimeout(function(){if(CUR==="soul")soulPaint()},120)});
+}
+function drawSoul(force){
+  var el=$("s-soul");
+  obsWireTip();
+  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The Soul</p><div class="card"><div class="sk" style="width:80%;height:20px"></div><div class="sk" style="width:45%;margin-top:12px"></div></div>'+skel(3);el.dataset.built="1"}
+  if(!SOUL.wired){SOUL.wired=true;soulWire(el)}
+  var d=SOUL.days;
+  var IV=["scorecard","trajectories","effects","search","speed","youtube","radar","coverage"];
+  return Promise.all([soulRead(soulTodayQ(force)),soulRead(soulMetricsQ(90,force)),d===90?null:soulRead(soulMetricsQ(d,force)),
+    soulRead(soulChronQ(force)),soulRead(soulEvoQ(force)),soulRead(soulAuditQ(force))].concat(IV.map(function(v){return soulRead(soulInstQ(v,"",force))}))).then(function(a){
+    SOUL.data={today:a[0],m90:a[1],mw:a[2]||a[1],chron:a[3],evo:a[4],audit:a[5]};
+    SOUL.inst={};IV.forEach(function(v,i){SOUL.inst[v]=a[6+i]});
+    SOUL.charts={};
+    if(a[0]&&a[0].locked)return;
+    if(!soulOk(a[0])){el.innerHTML=BACK+'<p class="sec">The Soul</p>'+soulErrCard(a[0]);return}
+    var t=a[0].j;
+    el.innerHTML=BACK+'<p class="sec">The Soul</p>'
+      +'<div id="soul-head">'+soulHead(t)+'</div>'
+      +'<p class="sec">The north star</p><div id="soul-ns">'+soulNorth(t,a[1])+'</div>'
+      +'<p class="sec">Goals</p><div id="soul-goals">'+soulGoals(t)+'</div>'
+      +'<p class="sec">Today, from the last cycle</p><div id="soul-today">'+soulTodayHtml(t)+'</div>'
+      +'<p class="sec">Instruments</p><div id="soul-inst">'+soulInstHtml(SOUL.inst)+'</div>'
+      +'<p class="sec">How the numbers move</p><div id="soul-metrics">'+soulMetrics(SOUL.data.mw)+'</div>'
+      +'<p class="sec">The chronicle</p><div id="soul-chron">'+soulChron(a[3])+'</div>'
+      +'<p class="sec">Evolution</p><div id="soul-evo">'+soulEvo(a[4])+'</div>'
+      +'<p class="sec">Budget</p><div id="soul-budget">'+soulBudget(t)+'</div>'
+      +'<p class="sec">Voice</p><div id="soul-voice">'+soulVoice(t)+'</div>'
+      +'<p class="sec">Audit</p><div id="soul-audit">'+soulAudit(a[5])+'</div>';
+    soulPaint();
+  });
 }
 
 /* ===========================================================================

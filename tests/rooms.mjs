@@ -884,7 +884,10 @@ console.log("\n=== the deployment ===");
      ships only what is listed */
   ok(inc.includes("verse/*.json"), "and the verse notes, so the verse rooms can show what each verse says");
   ok(["prophets-data.js", "characters.js", "places.js", "allah.html"].every(f => v.functions["api/sitemap.js"].includeFiles.includes(f)), "and api/sitemap.js includes what it lists");
-  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons && v.crons.length === 2 && v.headers.length === 6, "what was in vercel.json is still there");
+  /* the two original crons are named rather than counted: the Soul's own
+     tick (2 October 2026) is a third, and "still there" means these two */
+  ok(v.functions["api/card.js"] && v.functions["api/social.js"] && v.crons
+     && ["/api/warm", "/api/social?action=due"].every(p => v.crons.some(c => c.path === p)) && v.headers.length === 6, "what was in vercel.json is still there");
   ok(/max-age=300/.test(cc("/reels/(.*)\\.json")), "the reels manifests and every reel's own sidecar are kept five minutes and revalidated in the background");
   /* The scripts and stylesheets under /assets were immutable for a year while
      the pages asked for them at a hand-written ?v= that nobody moved, so an

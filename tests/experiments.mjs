@@ -415,8 +415,13 @@ console.log('planning: refusals');
 
 console.log('planning and stopping a real one');
 {
+  /* tomorrow in UTC, computed rather than written down: this block once
+     planned for a fixed "2026-10-02" as its future date, and on that very
+     day the test stopped being planned and started running, so the GET
+     check below failed for the calendar's sake alone (2 October 2026) */
+  const TOMORROW = new Date(Date.parse(new Date().toISOString().slice(0, 10) + 'T00:00:00Z') + 86400000).toISOString().slice(0, 10);
   const r1 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: '2026-10-02' } }, r1);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: TOMORROW } }, r1);
   ok(r1.body.ok === true && r1.body.state.current.id === 'verse-length', 'verse-length is planned: ' + JSON.stringify(r1.body.state.current));
 
   const r2 = fakeRes();
@@ -450,7 +455,7 @@ console.log('planning and stopping a real one');
      recompute of a freshly planned test with no posts yet would answer
      "Planned to start ...", never this sentence. */
   const fabricated = { at: new Date().toISOString(), experiment: {
-    id: 'verse-length', start: '2026-10-02', question: 'q', kind: 'verse', day: 5, days: 28,
+    id: 'verse-length', start: TOMORROW, question: 'q', kind: 'verse', day: 5, days: 28,
     status: 'running', arms: [], verdict: null, sentence: 'this reading came from the shared Observatory cache, not a fresh collect' } };
   STORE.set('nsoc:observatory:v1', JSON.stringify(fabricated));
   const rGetCached = fakeRes();

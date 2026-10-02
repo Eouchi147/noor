@@ -278,6 +278,18 @@ const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
 const HALVES = ["morning", "noon", "afternoon", "evening", "late", "night"];
 const REEL_EPOCH = Date.UTC(2026, 8, 6);          /* Sunday 6 September 2026 */
 
+/* how many reel slots a week each kind is given by the rota, so the Soul's
+   coverage map (api/_instruments.js) can say how many days each shelf lasts.
+   A shelf with no short walks the afternoon's stand in row, exactly as
+   reelStep does; "day" is dated (one Hijri date each) and is not on the rota,
+   so it never appears here. Read only: nothing here changes what posts. */
+export function rotaPerWeek(noShorts) {
+  const out = {};
+  const row = h => (h === "afternoon" && noShorts) ? ROTA.afternoonUntilShorts : (ROTA[h] || []);
+  for (const h of HALVES) for (const k of row(h)) out[k] = (out[k] || 0) + 1;
+  return out;
+}
+
 export function reelStep(kind, dateStr, half, noShorts) {
   const t = Date.parse(String(dateStr) + "T00:00:00Z");
   if (!isFinite(t)) return 0;
