@@ -1,20 +1,20 @@
 {
  "_meta": {
   "written": "2026-09-03",
-  "n": 1565,
+  "n": 1487,
   "source": "lights/all.json",
   "brief": "BRIEF.md",
   "kinds": {
-   "light": 79,
-   "know": 225,
-   "word": 523,
+   "light": 74,
+   "know": 213,
+   "word": 504,
    "day": 21,
-   "verse": 600,
+   "verse": 558,
    "name": 99,
    "dua": 18
   },
   "built": "plan_build.py from the library; light.json and know.json are written by hand",
-  "retired": 0
+  "retired": 78
  },
  "cards": {
   "al-sufi-andromeda-964": {
@@ -128,29 +128,6 @@
     "k": 4,
     "cue": 0,
     "seed": 934,
-    "secs": 21
-   },
-   "kind": "light"
-  },
-  "tusi-couple": {
-   "slot": "morning",
-   "eyebrow": "Astronomy",
-   "hook": "Two rolling circles turn a circle into a straight line",
-   "key": "a straight line",
-   "date": "Nasir al-Din al-Tusi · 1247",
-   "lines": [
-    "Ptolemy's models needed the equant, a point about which a planet swept equal angles though it was not the centre.",
-    "In 1247 Nasir al-Din al-Tusi rolled a small circle inside a circle of twice its diameter, tracing a straight line.",
-    "Circular motions alone can therefore produce oscillation, and the construction is called the Tusi couple."
-   ],
-   "caption": "The equant predicted well and it broke the rule that motion in the heavens is uniform and circular, so astronomers had complained about it for centuries. Al-Tusi's answer removed the need for it. The same construction appears, drawn the same way and with no attribution, in Copernicus's book of 1543, and how it got there is a standing question.\n\nRead the whole thing free at noorcodex.com/light/tusi-couple\n\n#NoorCodexOfLight #Islam #IslamicHistory #Astronomy #Mathematics #Geometry #History #HistoryOfScience #MedievalHistory",
-   "look": {
-    "scene": "epicycles",
-    "pal": "night",
-    "n": 12,
-    "k": 5,
-    "cue": 1,
-    "seed": 576,
     "secs": 21
    },
    "kind": "light"
@@ -404,29 +381,6 @@
     "k": 4,
     "cue": 1,
     "seed": 555,
-    "secs": 21
-   },
-   "kind": "light"
-  },
-  "zakat-is-growth": {
-   "slot": "evening",
-   "eyebrow": "Charity",
-   "hook": "The word for alms means growth, not deduction",
-   "key": "growth, not deduction",
-   "date": "Root z k w, growth and purity",
-   "lines": [
-    "Zakat is the obligatory portion of accumulated wealth handed over each year.",
-    "Its root z k w means to grow and to increase, and also to be pure, and the noun is used of a plant that thrives.",
-    "So the term for taking a fortieth out of savings is a word about the pile getting larger."
-   ],
-   "caption": "Arabic takes purity and increase from the same three letters because a thing cleaned of what spoils it grows better. The Qur'an uses the same verb of the self in the chapter of the sun: he has succeeded who causes it to grow, and he has failed who buries it. One verb covers a bank balance and a person.\n\nRead the whole thing free at noorcodex.com/light/zakat-is-growth\n\n#NoorCodexOfLight #Islam #Zakat #Charity #Arabic #Language #Quran #IslamicHistory",
-   "look": {
-    "scene": "ripples",
-    "pal": "green",
-    "n": 8,
-    "k": 3,
-    "cue": 1,
-    "seed": 478,
     "secs": 21
    },
    "kind": "light"
@@ -755,30 +709,6 @@
    "slot": "morning",
    "kind": "light"
   },
-  "asma-two-belts": {
-   "src": "asma-two-belts",
-   "eyebrow": "Companions",
-   "hook": "She tore her belt in two and gained a name",
-   "key": "gained a name",
-   "date": "Asma bint Abi Bakr · Makkah, 622",
-   "lines": [
-    "When the Prophet ﷺ and Abu Bakr hid in the cave of Thawr in 622, Abu Bakr's daughter Asma carried food out to them.",
-    "With nothing to tie the bundle, she cut her waist belt in two, one half for the food and the other for the waterskin.",
-    "From that she was called Dhat al-Nitaqayn, the woman of the two belts."
-   ],
-   "caption": "Asma was pregnant during the migration and gave birth at Quba on arrival. Seventy years later, blind and about a hundred years old, she is reported to have told her son Abdullah ibn al-Zubayr, besieged in Makkah and asking whether to surrender, that a sheep does not suffer from being skinned once it has been slaughtered. She died in 73 AH, 692 CE.\n\nRead the whole thing free at noorcodex.com/light/asma-two-belts\n\n#NoorCodexOfLight #Islam #IslamicHistory #Hijra #Companions #WomenInHistory #Makkah #Seerah #History",
-   "look": {
-    "pal": "dusk",
-    "seed": 869,
-    "n": 12,
-    "k": 5,
-    "scene": "ripples",
-    "secs": 21,
-    "cue": 1
-   },
-   "slot": "morning",
-   "kind": "light"
-  },
   "umm-sulaym-dowry": {
    "src": "umm-sulaym-dowry",
    "eyebrow": "Companions",
@@ -989,30 +919,6 @@
     "n": 8,
     "k": 3,
     "scene": "ripples",
-    "secs": 21,
-    "cue": 1
-   },
-   "slot": "evening",
-   "kind": "light"
-  },
-  "julaybib-counted": {
-   "src": "julaybib-counted",
-   "eyebrow": "Companions",
-   "hook": "He asked after one man and found him among the dead",
-   "key": "among the dead",
-   "date": "Julaybib · Madinah",
-   "lines": [
-    "Julaybib was a poor man of unknown lineage in Madinah, short, thought unattractive, with no family to speak for him.",
-    "After a battle the companions named their dead, and the Prophet ﷺ said that he had lost Julaybib.",
-    "He found him beside seven men Julaybib had killed, carried the body himself and said: he is of me and I am of him."
-   ],
-   "caption": "The Prophet ﷺ had arranged his marriage himself, going to a man of the Ansar to ask for his daughter and receiving a refusal until the girl herself agreed to it. Nobody else had counted him. Abu Barza al-Aslami transmitted the report.\n\nRead the whole thing free at noorcodex.com/light/julaybib-counted\n\n#NoorCodexOfLight #Islam #IslamicHistory #Madinah #Companions #Sunnah #Belonging #Seerah #History",
-   "look": {
-    "pal": "night",
-    "seed": 718,
-    "n": 8,
-    "k": 3,
-    "scene": "pages",
     "secs": 21,
     "cue": 1
    },
@@ -1517,30 +1423,6 @@
     "n": 12,
     "k": 5,
     "scene": "epicycles",
-    "secs": 21,
-    "cue": 1
-   },
-   "slot": "morning",
-   "kind": "light"
-  },
-  "cave-of-thawr-hijra": {
-   "src": "cave-of-thawr-hijra",
-   "eyebrow": "Makkah",
-   "hook": "The cave in the Qur'an held two men for three nights",
-   "key": "for three nights",
-   "date": "Jabal Thawr, Makkah · 622 CE",
-   "lines": [
-    "Jabal Thawr rises south of Makkah, higher and harder to climb than Jabal al-Nour.",
-    "In 622 the Prophet ﷺ and Abu Bakr hid in a cave near its summit for three nights while Quraysh combed the roads north.",
-    "The Qur'an describes the second of two when they were in the cave, and one said to his companion not to grieve."
-   ],
-   "caption": "Only then did they set out for Yathrib by a coastal route. The familiar detail of a spider's web and nesting doves across the entrance comes from later biographical literature, not from the Qur'an, and hadith scholars have long noted that its chains are weak.\n\nRead the whole thing free at noorcodex.com/light/cave-of-thawr-hijra\n\n#NoorCodexOfLight #Islam #IslamicHistory #Makkah #Hijra #Quran #Seerah #History",
-   "look": {
-    "pal": "dusk",
-    "seed": 231,
-    "n": 16,
-    "k": 7,
-    "scene": "moon",
     "secs": 21,
     "cue": 1
    },
@@ -2235,28 +2117,6 @@
     "cue": 0
    }
   },
-  "know-sanaa": {
-   "src": "sanaa-attic-1972",
-   "eyebrow": "Did you know?",
-   "hook": "A mosque roof in Yemen hid the Qur'an's earliest pages",
-   "key": "earliest pages",
-   "date": "Great Mosque of Sana'a, Yemen · 1972",
-   "lines": [
-    "Workers repairing the roof in 1972 found the space above the ceiling packed with old parchment: some of the earliest manuscripts known."
-   ],
-   "caption": "The material was swept into sacks and left on a staircase. A conservation project ran from 1980 to 1989, with the conservator Ursula Dreibholz sorting and flattening fragments, and recovered tens of thousands of pieces from what had served as the mosque's store for worn out copies of scripture, which are set aside rather than destroyed. Kept safe by being walled up and forgotten.\n\nThe whole story, free, at noorcodex.com/light/sanaa-attic-1972\n\n#DidYouKnow #Islam #Quran #History #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "sand",
-    "seed": 132,
-    "n": 10,
-    "k": 4,
-    "scene": "arcade",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-birmingham": {
    "src": "birmingham-leaves-paris-codex",
    "eyebrow": "Did you know?",
@@ -2719,28 +2579,6 @@
     "cue": 0
    }
   },
-  "know-gibraltar": {
-   "src": "tariq-gibraltar-711",
-   "eyebrow": "Did you know?",
-   "hook": "Gibraltar is a rock named after a Berber commander",
-   "key": "a Berber commander",
-   "date": "Jabal Tariq · 711 CE",
-   "lines": [
-    "Tariq ibn Ziyad landed there in 711; Jabal Tariq, the mountain of Tariq, is what Spanish and then English wore down into Gibraltar."
-   ],
-   "caption": "He crossed the strait from North Africa in Umayyad service and landed at the great rock at its northern end. Within a few years most of the Iberian peninsula was under Muslim rule, and it would remain so in part for nearly eight hundred years. Millions of people say the name of a seventh century North African officer every time they mention the strait, the rock, or the airport on the isthmus below it.\n\nThe whole story, free, at noorcodex.com/light/tariq-gibraltar-711\n\n#DidYouKnow #Islam #IslamicHistory #AlAndalus #Etymology #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "night",
-    "seed": 34,
-    "n": 8,
-    "k": 3,
-    "scene": "rosette",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-round-city": {
    "src": "baghdad-round-city-762",
    "eyebrow": "Did you know?",
@@ -2822,28 +2660,6 @@
    "look": {
     "pal": "green",
     "seed": 314,
-    "n": 8,
-    "k": 3,
-    "scene": "rosette",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-nilometer": {
-   "src": "nilometer-rawda-861",
-   "eyebrow": "Did you know?",
-   "hook": "A marble column in Cairo set the year's tax rate",
-   "key": "the year's tax rate",
-   "date": "Rawda Island, Cairo · 861 CE",
-   "lines": [
-    "Each summer the Nile rose, and the height it reached on that column, marked off in cubits, decided whether the year's taxes could be levied."
-   ],
-   "caption": "Too low meant famine, too high meant destroyed villages. Officials read the mark and criers announced the number in the streets. The nilometer was rebuilt in 861 under the caliph al-Mutawakkil, with the astronomer Ahmad ibn Muhammad al-Farghani named as its designer, and it still stands with its Kufic inscriptions intact, one of the oldest Islamic structures in Egypt.\n\nThe whole story, free, at noorcodex.com/light/nilometer-rawda-861\n\n#DidYouKnow #Islam #IslamicHistory #Cairo #Engineering #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "dusk",
-    "seed": 746,
     "n": 8,
     "k": 3,
     "scene": "rosette",
@@ -3023,28 +2839,6 @@
     "n": 8,
     "k": 3,
     "scene": "ripples",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-manzikert": {
-   "src": "manzikert-1071",
-   "eyebrow": "Did you know?",
-   "hook": "One August day in 1071 opened Anatolia to Turkish settlement",
-   "key": "Turkish settlement",
-   "date": "Alp Arslan · Manzikert, 26 August 1071",
-   "lines": [
-    "Alp Arslan captured the Byzantine emperor Romanos IV Diogenes; the consequences were not military so much as demographic."
-   ],
-   "caption": "Alp Arslan had been trying to avoid the battle and had offered terms. The emperor, by most accounts, was treated courteously and released for a ransom that was never fully paid. Byzantine control of the Anatolian interior collapsed into civil war, Turkoman groups moved in over the following decades, and a region that had been Greek speaking for well over a thousand years slowly became the Turkish speaking country it is today.\n\nThe whole story, free, at noorcodex.com/light/manzikert-1071\n\n#DidYouKnow #Islam #IslamicHistory #History #Turkey #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "morning",
-   "look": {
-    "pal": "dusk",
-    "seed": 653,
-    "n": 12,
-    "k": 5,
-    "scene": "rosette",
     "secs": 13,
     "cue": 0
    }
@@ -3309,28 +3103,6 @@
     "n": 16,
     "k": 7,
     "scene": "ripples",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-kilwa": {
-   "src": "ibn-battuta-kilwa-1331",
-   "eyebrow": "Did you know?",
-   "hook": "Kilwa was one of the finest towns Ibn Battuta had seen",
-   "key": "finest towns",
-   "date": "Kilwa Kisiwani, Tanzania · 1331 CE",
-   "lines": [
-    "The island exported gold from the Zimbabwe plateau through Sofala and imported Chinese porcelain, glass and cloth."
-   ],
-   "caption": "In 1331 Ibn Battuta sailed down the East African coast to Kilwa and wrote that it was one of the most substantially built towns he had seen. Its ruler built the Husuni Kubwa palace, with an octagonal bathing pool cut into the cliff, and a great mosque roofed with coral stone domes; the ruins of both stand today. The Swahili language and the stone towns of the coast grew out of centuries of Africans, Arabs, Persians and Indians trading in the same ports.\n\nThe whole story, free, at noorcodex.com/light/ibn-battuta-kilwa-1331\n\n#DidYouKnow #Islam #IslamicHistory #Africa #SwahiliCoast #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "night",
-    "seed": 50,
-    "n": 8,
-    "k": 3,
-    "scene": "moon",
     "secs": 13,
     "cue": 0
    }
@@ -3661,28 +3433,6 @@
     "n": 8,
     "k": 3,
     "scene": "rosette",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-iqbal-persian": {
-   "src": "iqbal-born-1877",
-   "eyebrow": "Did you know?",
-   "hook": "A poet in Sialkot wrote in Persian to reach further",
-   "key": "to reach further",
-   "date": "Muhammad Iqbal · born 9 November 1877",
-   "lines": [
-    "Persian was still read from Istanbul to Delhi, and he wanted the wider audience rather than Urdu alone."
-   ],
-   "caption": "Iqbal studied philosophy at Cambridge and took a doctorate at Munich, then practised law in Lahore while writing the poetry he is known for. His theme was self hood, khudi: that a person and a community come alive by taking responsibility rather than waiting. In 1930 he argued for a separate Muslim political unit in northwest India. He died in 1938, nine years before Pakistan existed.\n\nThe whole story, free, at noorcodex.com/light/iqbal-born-1877\n\n#DidYouKnow #Islam #Poetry #IslamicHistory #Pakistan #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "night",
-    "seed": 500,
-    "n": 8,
-    "k": 3,
-    "scene": "ripples",
     "secs": 13,
     "cue": 0
    }
@@ -4083,28 +3833,6 @@
     "cue": 0
    }
   },
-  "know-thabit": {
-   "src": "thabit-ibn-qurra-sabian",
-   "eyebrow": "Did you know?",
-   "hook": "The caliph's best mathematician was not a Muslim",
-   "key": "not a Muslim",
-   "date": "Thabit ibn Qurra · Harran to Baghdad, d. 901",
-   "lines": [
-    "Thabit ibn Qurra was a Sabian from Harran who kept his religion, wrote in Syriac for his own people and in Arabic for the court."
-   ],
-   "caption": "He was working as a money changer when one of the Banu Musa brothers noticed him and brought him to Baghdad. He revised the Arabic Euclid, translated Archimedes and Apollonius, found the area under a parabola by a method close to integration, and gave the first general rule for producing amicable numbers, pairs in which each is the sum of the other's divisors. His son and grandsons were scientists too.\n\nThe whole story, free, at noorcodex.com/light/thabit-ibn-qurra-sabian\n\n#DidYouKnow #Islam #Mathematics #IslamicHistory #Baghdad #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "morning",
-   "look": {
-    "pal": "night",
-    "seed": 221,
-    "n": 12,
-    "k": 5,
-    "scene": "moon",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-algebra-in-words": {
    "src": "abu-kamil-algebra-in-words",
    "eyebrow": "Did you know?",
@@ -4277,28 +4005,6 @@
     "n": 8,
     "k": 3,
     "scene": "moon",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-astrolabe-maker": {
-   "src": "al-ijliyya-astrolabe-maker",
-   "eyebrow": "Did you know?",
-   "hook": "One line in one book records a woman who made astrolabes",
-   "key": "made astrolabes",
-   "date": "Ibn al-Nadim's catalogue · Baghdad, c. 987",
-   "lines": [
-    "The daughter of al-Ijli is listed among the astrolabe makers at the court of Sayf al-Dawla in Aleppo, and that is the whole record."
-   ],
-   "caption": "Ibn al-Nadim gives no first name, no instrument by her is known to survive, and nothing further about her life has been found. Modern accounts often call her Mariam, which is a later addition rather than anything the source says. What the single line does establish is that a woman making precision instruments in tenth century Aleppo was worth listing without comment, alongside the men. An asteroid is named al-Ijliya after her.\n\nThe whole story, free, at noorcodex.com/light/al-ijliyya-astrolabe-maker\n\n#DidYouKnow #Islam #Astronomy #WomenInHistory #IslamicHistory #NoorCodexOfLight",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "sand",
-    "seed": 660,
-    "n": 8,
-    "k": 3,
-    "scene": "epicycles",
     "secs": 13,
     "cue": 0
    }
@@ -5271,28 +4977,6 @@
     "cue": 0
    }
   },
-  "know-pause-marks": {
-   "src": "sajawandi-pause-marks",
-   "eyebrow": "Did you know?",
-   "hook": "The small letters above the line show where to stop",
-   "key": "where to stop",
-   "date": "Al-Sajawandi · died c. 1165 CE",
-   "lines": [
-    "There is a compulsory stop, a permitted stop, a place where stopping is forbidden, and a pair where a reader stops at one, not both."
-   ],
-   "caption": "Open a printed Qur'an and small letters float above the text: a mim, a jim, a lam with an alif, a cluster of three dots that appears twice. They are not part of the revealed text. They are pause marks, worked out so that a reciter taking a breath does not break the sense, and the system in widest use is credited to Muhammad ibn Tayfur al-Sajawandi. A reader who ignores them can turn a clause into a sentence that says something else.\n\nThe whole story, free, at noorcodex.com/light/sajawandi-pause-marks\n\n#DidYouKnow #Islam #NoorCodexOfLight #Quran #Recitation #Arabic",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "sand",
-    "seed": 648,
-    "n": 10,
-    "k": 4,
-    "scene": "arcade",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-ijaza": {
    "src": "ijaza-and-the-chain",
    "eyebrow": "Did you know?",
@@ -5403,28 +5087,6 @@
     "cue": 0
    }
   },
-  "know-ramadan-review": {
-   "src": "jibril-ramadan-review",
-   "eyebrow": "Did you know?",
-   "hook": "Ramadan was when the text was checked against its source",
-   "key": "checked against its source",
-   "date": "Ibn Abbas · sixth hadith of Sahih al-Bukhari",
-   "lines": [
-    "Ibn Abbas said Jibril met the Prophet ﷺ every night of the month and went through the Qur'an with him."
-   ],
-   "caption": "Ibn Abbas said the Prophet ﷺ was the most generous of people, and most generous of all in Ramadan. The report sits at the very front of Sahih al-Bukhari. It is the origin of the tarawih habit of reciting a portion each night until the whole book is finished, and of mudarasa, in which two people take turns reciting to one another and correcting. The annual review is why Ramadan is a month of recitation and not only a month of hunger.\n\nThe whole story, free, at noorcodex.com/light/jibril-ramadan-review\n\n#DidYouKnow #Islam #NoorCodexOfLight #Ramadan #Quran #Hadith",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "dusk",
-    "seed": 560,
-    "n": 10,
-    "k": 4,
-    "scene": "epicycles",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-four-times": {
    "src": "quran-made-easy-four-times",
    "eyebrow": "Did you know?",
@@ -5509,28 +5171,6 @@
     "n": 10,
     "k": 4,
     "scene": "arcade",
-    "secs": 13,
-    "cue": 0
-   }
-  },
-  "know-i-am-near": {
-   "src": "i-am-near-inside-the-fasting-rules",
-   "eyebrow": "Did you know?",
-   "hook": "A verse about nearness sits inside the rules on fasting",
-   "key": "inside the rules",
-   "date": "Surah al-Baqarah, verse 186",
-   "lines": [
-    "Between rules about food and rules about the first light the register changes completely: I am near, I answer the call of the caller."
-   ],
-   "caption": "Surah al-Baqarah gives the law of Ramadan in a short run of verses: who must fast, who is excused, what to do when ill or travelling, when the fast begins and when it ends. At verse 186 the sentence reads: when My servants ask you about Me, I am near. There is no intermediary in it and no instruction to go through anyone, and unlike most answers in the Qur'an it does not begin with the command to say.\n\nThe whole story, free, at noorcodex.com/light/i-am-near-inside-the-fasting-rules\n\n#DidYouKnow #Islam #NoorCodexOfLight #Quran #Ramadan #Dua",
-   "kind": "know",
-   "slot": "morning",
-   "look": {
-    "pal": "night",
-    "seed": 581,
-    "n": 12,
-    "k": 5,
-    "scene": "rosette",
     "secs": 13,
     "cue": 0
    }
@@ -6327,28 +5967,6 @@
     "cue": 0
    }
   },
-  "know-small-deeds": {
-   "src": "small-and-constant-deeds",
-   "eyebrow": "Did you know?",
-   "hook": "The deeds Allah loves most are the small repeated ones",
-   "key": "small repeated ones",
-   "date": "Aisha · Madinah",
-   "lines": [
-    "Aisha reported that the acts most beloved to Allah are those done consistently, even if they are few, and that his practice was steady."
-   ],
-   "caption": "When the Prophet ﷺ took on a devotion he kept it. The household reports show the same shape: a fixed number of units of prayer at night, a fixed set of words in the morning, a fast on the same two days most weeks. It is a standard that penalises the intense week followed by nothing, and rewards the two minutes a day that survive a bad month.\n\nThe whole story, free, at noorcodex.com/light/small-and-constant-deeds\n\n#DidYouKnow #Islam #NoorCodexOfLight #Hadith #Discipline #Sunnah",
-   "kind": "know",
-   "slot": "evening",
-   "look": {
-    "pal": "green",
-    "seed": 416,
-    "n": 8,
-    "k": 3,
-    "scene": "rosette",
-    "secs": 13,
-    "cue": 0
-   }
-  },
   "know-bedouin-mosque": {
    "src": "bedouin-in-the-mosque",
    "eyebrow": "Did you know?",
@@ -7118,25 +6736,6 @@
     "secs": 14
    }
   },
-  "word-haya": {
-   "kind": "word",
-   "src": "haya",
-   "slot": "evening",
-   "eyebrow": "The word · the heart",
-   "ar": "الحَيَاء",
-   "term": "Haya'",
-   "short": "A modesty that makes a person shrink from what is ugly, before Allah and before people.",
-   "long": "The Prophet peace be upon him said modesty is a branch of faith, in Bukhari and Muslim, and that modesty brings nothing but good, in Muslim.",
-   "caption": "Haya' (الحَيَاء). A modesty that makes a person shrink from what is ugly, before Allah and before people. The Prophet peace be upon him said modesty is a branch of faith, in Bukhari and Muslim, and that modesty brings nothing but good, in Muslim.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/haya\n\n#TheWord #Islam #Arabic #Haya #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 710,
-    "n": 10,
-    "k": 4,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-adab": {
    "kind": "word",
    "src": "adab",
@@ -7209,25 +6808,6 @@
     "seed": 237,
     "n": 16,
     "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-zuhd": {
-   "kind": "word",
-   "src": "zuhd",
-   "slot": "morning",
-   "eyebrow": "The word · the heart",
-   "ar": "الزُّهْد",
-   "term": "Zuhd",
-   "short": "Holding the world loosely: having a thing in your hand without letting it into your heart.",
-   "long": "",
-   "caption": "Zuhd (الزُّهْد). Holding the world loosely: having a thing in your hand without letting it into your heart.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/zuhd\n\n#TheWord #Islam #Arabic #Zuhd #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 992,
-    "n": 10,
-    "k": 4,
     "scene": "mandala",
     "secs": 14
    }
@@ -7399,25 +6979,6 @@
     "seed": 313,
     "n": 16,
     "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-husn-al-zann": {
-   "kind": "word",
-   "src": "husn-al-zann",
-   "slot": "morning",
-   "eyebrow": "The word · the heart",
-   "ar": "حُسْنُ الظَّنّ",
-   "term": "Husn al-Zann",
-   "short": "Thinking well of people: reading an ambiguous act in the best way it can honestly be read.",
-   "long": "The Qur'an tells believers to avoid much suspicion, and forbids spying and backbiting in the same verse (Qur'an 49:12).",
-   "caption": "Husn al-Zann (حُسْنُ الظَّنّ). Thinking well of people: reading an ambiguous act in the best way it can honestly be read. The Qur'an tells believers to avoid much suspicion, and forbids spying and backbiting in the same verse (Qur'an 49:12).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/husn-al-zann\n\n#TheWord #Islam #Arabic #HusnalZann #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 311,
-    "n": 12,
-    "k": 5,
     "scene": "mandala",
     "secs": 14
    }
@@ -8391,25 +7952,6 @@
     "secs": 14
    }
   },
-  "word-qiyas": {
-   "kind": "word",
-   "src": "qiyas",
-   "slot": "morning",
-   "eyebrow": "The word · law",
-   "ar": "قِياس",
-   "term": "Qiyas",
-   "short": "Analogy: extending a known ruling to a new case that shares the same underlying reason.",
-   "long": "The classic example is extending the prohibition of wine to every intoxicant, because the reason behind the ruling is intoxication rather than grapes.",
-   "caption": "Qiyas (قِياس). Analogy: extending a known ruling to a new case that shares the same underlying reason. The classic example is extending the prohibition of wine to every intoxicant, because the reason behind the ruling is intoxication rather than grapes.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/qiyas\n\n#TheWord #Islam #Arabic #Qiyas #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 453,
-    "n": 16,
-    "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-ijtihad": {
    "kind": "word",
    "src": "ijtihad",
@@ -8463,25 +8005,6 @@
     "seed": 901,
     "n": 12,
     "k": 5,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-rukhsah": {
-   "kind": "word",
-   "src": "rukhsah",
-   "slot": "morning",
-   "eyebrow": "The word · law",
-   "ar": "رُخْصة",
-   "term": "Rukhsah",
-   "short": "A concession: permission to do the easier thing when a recognised excuse applies.",
-   "long": "Shortening prayer while travelling, breaking the fast when ill, and wiping over socks are all rukhsah.",
-   "caption": "Rukhsah (رُخْصة). A concession: permission to do the easier thing when a recognised excuse applies. Shortening prayer while travelling, breaking the fast when ill, and wiping over socks are all rukhsah.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/rukhsah\n\n#TheWord #Islam #Arabic #Rukhsah #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 327,
-    "n": 16,
-    "k": 7,
     "scene": "mandala",
     "secs": 14
    }
@@ -8672,25 +8195,6 @@
     "seed": 116,
     "n": 10,
     "k": 4,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-nubuwwah": {
-   "kind": "word",
-   "src": "nubuwwah",
-   "slot": "evening",
-   "eyebrow": "The word · belief",
-   "ar": "النُّبُوَّة",
-   "term": "Nubuwwah",
-   "short": "Prophethood: Allah choosing certain men to receive revelation and deliver it, ending with Muhammad, peace be upon him.",
-   "long": "The Qur'an names many prophets and says every nation was sent a warner.",
-   "caption": "Nubuwwah (النُّبُوَّة). Prophethood: Allah choosing certain men to receive revelation and deliver it, ending with Muhammad, peace be upon him. The Qur'an names many prophets and says every nation was sent a warner.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/nubuwwah\n\n#TheWord #Islam #Arabic #Nubuwwah #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 580,
-    "n": 8,
-    "k": 3,
     "scene": "mandala",
     "secs": 14
    }
@@ -8919,25 +8423,6 @@
     "seed": 212,
     "n": 10,
     "k": 4,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-aqidah": {
-   "kind": "word",
-   "src": "aqidah",
-   "slot": "morning",
-   "eyebrow": "The word · belief",
-   "ar": "العَقِيدَة",
-   "term": "Aqidah",
-   "short": "The set of things a Muslim holds to be true, as opposed to the things a Muslim does.",
-   "long": "The root means to tie a knot, so aqidah is what the heart is tied to and does not untie.",
-   "caption": "Aqidah (العَقِيدَة). The set of things a Muslim holds to be true, as opposed to the things a Muslim does. The root means to tie a knot, so aqidah is what the heart is tied to and does not untie.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/aqidah\n\n#TheWord #Islam #Arabic #Aqidah #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 306,
-    "n": 8,
-    "k": 3,
     "scene": "mandala",
     "secs": 14
    }
@@ -10329,25 +9814,6 @@
     "secs": 14
    }
   },
-  "word-istihsan": {
-   "kind": "word",
-   "src": "istihsan",
-   "slot": "morning",
-   "eyebrow": "The word · law",
-   "ar": "اِسْتِحْسان",
-   "term": "Istihsan",
-   "short": "Juristic preference: setting aside a strict analogy for a stronger reason of fairness or need.",
-   "long": "",
-   "caption": "Istihsan (اِسْتِحْسان). Juristic preference: setting aside a strict analogy for a stronger reason of fairness or need.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/istihsan\n\n#TheWord #Islam #Arabic #Istihsan #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 944,
-    "n": 10,
-    "k": 4,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-istishab": {
    "kind": "word",
    "src": "istishab",
@@ -11032,25 +10498,6 @@
     "secs": 14
    }
   },
-  "word-waqf-endowment": {
-   "kind": "word",
-   "src": "waqf-endowment",
-   "slot": "evening",
-   "eyebrow": "The word · law",
-   "ar": "وَقْف",
-   "term": "Waqf (endowment)",
-   "short": "A permanent charitable endowment: property held forever so that its income keeps serving a purpose.",
-   "long": "",
-   "caption": "Waqf (endowment) (وَقْف). A permanent charitable endowment: property held forever so that its income keeps serving a purpose.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/waqf-endowment\n\n#TheWord #Islam #Arabic #Waqfendowment #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 741,
-    "n": 16,
-    "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-wasiyyah": {
    "kind": "word",
    "src": "wasiyyah",
@@ -11446,25 +10893,6 @@
     "seed": 250,
     "n": 8,
     "k": 3,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-illah": {
-   "kind": "word",
-   "src": "illah",
-   "slot": "evening",
-   "eyebrow": "The word · the hadith",
-   "ar": "العِلَّة",
-   "term": "Illah",
-   "short": "A hidden flaw in a hadith that looks sound on the surface, found only by expert comparison.",
-   "long": "A hadith carrying one is called mu'allal.",
-   "caption": "Illah (العِلَّة). A hidden flaw in a hadith that looks sound on the surface, found only by expert comparison. A hadith carrying one is called mu'allal.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/illah\n\n#TheWord #Islam #Arabic #Illah #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 809,
-    "n": 12,
-    "k": 5,
     "scene": "mandala",
     "secs": 14
    }
@@ -12020,25 +11448,6 @@
     "secs": 14
    }
   },
-  "word-mutabaah": {
-   "kind": "word",
-   "src": "mutabaah",
-   "slot": "evening",
-   "eyebrow": "The word · the hadith",
-   "ar": "المُتَابَعَة",
-   "term": "Mutaba'ah",
-   "short": "A second chain supporting the first through the same Companion, showing a narrator was not alone.",
-   "long": "",
-   "caption": "Mutaba'ah (المُتَابَعَة). A second chain supporting the first through the same Companion, showing a narrator was not alone.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/mutabaah\n\n#TheWord #Islam #Arabic #Mutabaah #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 897,
-    "n": 12,
-    "k": 5,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-mutawatir": {
    "kind": "word",
    "src": "mutawatir",
@@ -12244,25 +11653,6 @@
     "seed": 21,
     "n": 12,
     "k": 5,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-sahihayn": {
-   "kind": "word",
-   "src": "sahihayn",
-   "slot": "evening",
-   "eyebrow": "The word · the hadith",
-   "ar": "الصَّحِيحَان",
-   "term": "Sahihayn",
-   "short": "The two Sahihs, of al-Bukhari and Muslim, the most rigorously screened collections in Sunni Islam.",
-   "long": "",
-   "caption": "Sahihayn (الصَّحِيحَان). The two Sahihs, of al-Bukhari and Muslim, the most rigorously screened collections in Sunni Islam.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/sahihayn\n\n#TheWord #Islam #Arabic #Sahihayn #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 822,
-    "n": 10,
-    "k": 4,
     "scene": "mandala",
     "secs": 14
    }
@@ -13422,25 +12812,6 @@
     "seed": 601,
     "n": 16,
     "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-ahruf-sabah": {
-   "kind": "word",
-   "src": "ahruf-sabah",
-   "slot": "evening",
-   "eyebrow": "The word · the Qur'an",
-   "ar": "الأَحْرُفُ السَّبْعَة",
-   "term": "Al-Ahruf as-Sab'ah",
-   "short": "The seven modes in which the Qur'an was revealed, an ease for the community; what a mode is stays disputed.",
-   "long": "The Prophet said the Qur'an was sent down in seven ahruf, and the report appears in the most reliable collections.",
-   "caption": "Al-Ahruf as-Sab'ah (الأَحْرُفُ السَّبْعَة). The seven modes in which the Qur'an was revealed, an ease for the community; what a mode is stays disputed. The Prophet said the Qur'an was sent down in seven ahruf, and the report appears in the most reliable collections.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/ahruf-sabah\n\n#TheWord #Islam #Arabic #AlAhrufasSabah #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 381,
-    "n": 12,
-    "k": 5,
     "scene": "mandala",
     "secs": 14
    }
@@ -14870,25 +14241,6 @@
     "secs": 14
    }
   },
-  "word-bayat-al-aqabah": {
-   "kind": "word",
-   "src": "bayat-al-aqabah",
-   "slot": "evening",
-   "eyebrow": "The word · history",
-   "ar": "بَيْعَةُ العَقَبَة",
-   "term": "Bay'at al-Aqabah",
-   "short": "Two secret pledges by men of Madinah that opened the way for the Hijrah.",
-   "long": "They were made at a mountain pass near Mina during the pilgrimage season.",
-   "caption": "Bay'at al-Aqabah (بَيْعَةُ العَقَبَة). Two secret pledges by men of Madinah that opened the way for the Hijrah. They were made at a mountain pass near Mina during the pilgrimage season.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/bayat-al-aqabah\n\n#TheWord #Islam #Arabic #BayatalAqabah #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 672,
-    "n": 8,
-    "k": 3,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-bilal": {
    "kind": "word",
    "src": "bilal",
@@ -15455,25 +14807,6 @@
     "seed": 169,
     "n": 12,
     "k": 5,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-khilafah": {
-   "kind": "word",
-   "src": "khilafah",
-   "slot": "morning",
-   "eyebrow": "The word · history",
-   "ar": "الخِلَافَة",
-   "term": "Khilafah",
-   "short": "Succession to the Prophet in governing the community, not in prophethood, which ended with him.",
-   "long": "The word means to come after someone and stand where they stood.",
-   "caption": "Khilafah (الخِلَافَة). Succession to the Prophet in governing the community, not in prophethood, which ended with him. The word means to come after someone and stand where they stood.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/khilafah\n\n#TheWord #Islam #Arabic #Khilafah #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 374,
-    "n": 10,
-    "k": 4,
     "scene": "mandala",
     "secs": 14
    }
@@ -16276,25 +15609,6 @@
     "secs": 14
    }
   },
-  "word-maqam": {
-   "kind": "word",
-   "src": "maqam",
-   "slot": "evening",
-   "eyebrow": "The word · the heart",
-   "ar": "المَقَام",
-   "term": "Maqam",
-   "short": "A station on the spiritual path, in the vocabulary used mainly by Sufi writers.",
-   "long": "",
-   "caption": "Maqam (المَقَام). A station on the spiritual path, in the vocabulary used mainly by Sufi writers.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/maqam\n\n#TheWord #Islam #Arabic #Maqam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 308,
-    "n": 10,
-    "k": 4,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-mass-al-jinn": {
    "kind": "word",
    "src": "mass-al-jinn",
@@ -16329,25 +15643,6 @@
     "seed": 262,
     "n": 8,
     "k": 3,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-mujahadah": {
-   "kind": "word",
-   "src": "mujahadah",
-   "slot": "morning",
-   "eyebrow": "The word · the heart",
-   "ar": "المُجَاهَدَة",
-   "term": "Mujahadah",
-   "short": "The struggle against your own self: making yourself do the right thing when you do not want to.",
-   "long": "The Qur'an promises guidance to those who strive for His sake (Qur'an 29:69).",
-   "caption": "Mujahadah (المُجَاهَدَة). The struggle against your own self: making yourself do the right thing when you do not want to. The Qur'an promises guidance to those who strive for His sake (Qur'an 29:69).\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/mujahadah\n\n#TheWord #Islam #Arabic #Mujahadah #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 123,
-    "n": 12,
-    "k": 5,
     "scene": "mandala",
     "secs": 14
    }
@@ -16561,25 +15856,6 @@
     "secs": 14
    }
   },
-  "word-suhbah": {
-   "kind": "word",
-   "src": "suhbah",
-   "slot": "morning",
-   "eyebrow": "The word · the heart",
-   "ar": "الصُّحْبَة",
-   "term": "Suhbah",
-   "short": "Companionship: the people you sit with, treated in the sources as a cause of what you become.",
-   "long": "",
-   "caption": "Suhbah (الصُّحْبَة). Companionship: the people you sit with, treated in the sources as a cause of what you become.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/suhbah\n\n#TheWord #Islam #Arabic #Suhbah #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 227,
-    "n": 16,
-    "k": 7,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
   "word-tabarruk": {
    "kind": "word",
    "src": "tabarruk",
@@ -16650,25 +15926,6 @@
    "look": {
     "pal": "sand",
     "seed": 487,
-    "n": 12,
-    "k": 5,
-    "scene": "mandala",
-    "secs": 14
-   }
-  },
-  "word-tasbih": {
-   "kind": "word",
-   "src": "tasbih",
-   "slot": "evening",
-   "eyebrow": "The word · the heart",
-   "ar": "التَّسْبِيح",
-   "term": "Tasbih",
-   "short": "Declaring Allah free of every imperfection, most often in the words subhan Allah.",
-   "long": "",
-   "caption": "Tasbih (التَّسْبِيح). Declaring Allah free of every imperfection, most often in the words subhan Allah.\n\nEvery word explained, free, with no ads and no account: noorcodex.com/dictionary/tasbih\n\n#TheWord #Islam #Arabic #Tasbih #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 219,
     "n": 12,
     "k": 5,
     "scene": "mandala",
@@ -17326,21 +16583,6 @@
     "secs": 13
    }
   },
-  "verse-94-5-6": {
-   "kind": "verse",
-   "verse": "94:5-6",
-   "ordinal": 0,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/94-5-6\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 650,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
   "verse-2-152": {
    "kind": "verse",
    "verse": "2:152",
@@ -17441,21 +16683,6 @@
    "look": {
     "pal": "sand",
     "seed": 604,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-65-2-3": {
-   "kind": "verse",
-   "verse": "65:2-3",
-   "ordinal": 8,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/65-2-3\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 694,
     "n": 8,
     "k": 3,
     "scene": "halo"
@@ -17818,21 +17045,6 @@
     "seed": 794,
     "n": 10,
     "k": 4,
-    "scene": "halo"
-   }
-  },
-  "verse-11-114": {
-   "kind": "verse",
-   "verse": "11:114",
-   "ordinal": 33,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/11-114\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 318,
-    "n": 8,
-    "k": 3,
     "scene": "halo"
    }
   },
@@ -18271,21 +17483,6 @@
     "scene": "halo"
    }
   },
-  "verse-59-22-24": {
-   "kind": "verse",
-   "verse": "59:22-24",
-   "ordinal": 63,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/59-22-24\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 189,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-2-2": {
    "kind": "verse",
    "verse": "2:2",
@@ -18331,21 +17528,6 @@
     "scene": "halo"
    }
   },
-  "verse-2-183": {
-   "kind": "verse",
-   "verse": "2:183",
-   "ordinal": 67,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/2-183\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 660,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
   "verse-2-201": {
    "kind": "verse",
    "verse": "2:201",
@@ -18376,21 +17558,6 @@
     "scene": "halo"
    }
   },
-  "verse-2-222": {
-   "kind": "verse",
-   "verse": "2:222",
-   "ordinal": 70,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/2-222\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 313,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-2-257": {
    "kind": "verse",
    "verse": "2:257",
@@ -18418,21 +17585,6 @@
     "seed": 228,
     "n": 8,
     "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-2-155-156": {
-   "kind": "verse",
-   "verse": "2:155-156",
-   "ordinal": 73,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/2-155-156\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 421,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -18551,21 +17703,6 @@
    "look": {
     "pal": "night",
     "seed": 260,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-4-58": {
-   "kind": "verse",
-   "verse": "4:58",
-   "ordinal": 82,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/4-58\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 800,
     "n": 8,
     "k": 3,
     "scene": "halo"
@@ -18916,21 +18053,6 @@
     "scene": "halo"
    }
   },
-  "verse-18-46": {
-   "kind": "verse",
-   "verse": "18:46",
-   "ordinal": 106,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/18-46\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 373,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-18-109": {
    "kind": "verse",
    "verse": "18:109",
@@ -19006,21 +18128,6 @@
     "scene": "halo"
    }
   },
-  "verse-23-1-4": {
-   "kind": "verse",
-   "verse": "23:1-4",
-   "ordinal": 112,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/23-1-4\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 318,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-23-115": {
    "kind": "verse",
    "verse": "23:115",
@@ -19093,21 +18200,6 @@
     "seed": 995,
     "n": 12,
     "k": 5,
-    "scene": "halo"
-   }
-  },
-  "verse-30-22": {
-   "kind": "verse",
-   "verse": "30:22",
-   "ordinal": 118,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/30-22\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 506,
-    "n": 10,
-    "k": 4,
     "scene": "halo"
    }
   },
@@ -19348,21 +18440,6 @@
     "seed": 195,
     "n": 16,
     "k": 7,
-    "scene": "halo"
-   }
-  },
-  "verse-55-1-4": {
-   "kind": "verse",
-   "verse": "55:1-4",
-   "ordinal": 135,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/55-1-4\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 601,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -19771,21 +18848,6 @@
     "scene": "halo"
    }
   },
-  "verse-3-135": {
-   "kind": "verse",
-   "verse": "3:135",
-   "ordinal": 163,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/3-135\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 785,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-3-150": {
    "kind": "verse",
    "verse": "3:150",
@@ -19831,21 +18893,6 @@
     "scene": "halo"
    }
   },
-  "verse-4-110": {
-   "kind": "verse",
-   "verse": "4:110",
-   "ordinal": 167,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/4-110\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 769,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-4-124": {
    "kind": "verse",
    "verse": "4:124",
@@ -19856,36 +18903,6 @@
    "look": {
     "pal": "night",
     "seed": 749,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
-  "verse-5-100": {
-   "kind": "verse",
-   "verse": "5:100",
-   "ordinal": 169,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/5-100\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 18,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-6-17": {
-   "kind": "verse",
-   "verse": "6:17",
-   "ordinal": 170,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/6-17\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 757,
     "n": 12,
     "k": 5,
     "scene": "halo"
@@ -20206,21 +19223,6 @@
     "scene": "halo"
    }
   },
-  "verse-14-24-25": {
-   "kind": "verse",
-   "verse": "14:24-25",
-   "ordinal": 192,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/14-24-25\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 445,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-14-39": {
    "kind": "verse",
    "verse": "14:39",
@@ -20461,36 +19463,6 @@
     "scene": "halo"
    }
   },
-  "verse-20-8": {
-   "kind": "verse",
-   "verse": "20:8",
-   "ordinal": 209,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/20-8\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 784,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-20-14": {
-   "kind": "verse",
-   "verse": "20:14",
-   "ordinal": 210,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/20-14\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 109,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-20-55": {
    "kind": "verse",
    "verse": "20:55",
@@ -20641,21 +19613,6 @@
     "scene": "halo"
    }
   },
-  "verse-23-97-98": {
-   "kind": "verse",
-   "verse": "23:97-98",
-   "ordinal": 221,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/23-97-98\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 143,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-23-118": {
    "kind": "verse",
    "verse": "23:118",
@@ -20758,21 +19715,6 @@
     "seed": 593,
     "n": 16,
     "k": 7,
-    "scene": "halo"
-   }
-  },
-  "verse-27-19": {
-   "kind": "verse",
-   "verse": "27:19",
-   "ordinal": 229,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/27-19\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 981,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -20996,21 +19938,6 @@
    "look": {
     "pal": "night",
     "seed": 107,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
-  "verse-31-27": {
-   "kind": "verse",
-   "verse": "31:27",
-   "ordinal": 245,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/31-27\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 209,
     "n": 12,
     "k": 5,
     "scene": "halo"
@@ -21493,21 +20420,6 @@
     "seed": 430,
     "n": 10,
     "k": 4,
-    "scene": "halo"
-   }
-  },
-  "verse-67-15": {
-   "kind": "verse",
-   "verse": "67:15",
-   "ordinal": 278,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/67-15\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 616,
-    "n": 8,
-    "k": 3,
     "scene": "halo"
    }
   },
@@ -22306,21 +21218,6 @@
     "scene": "halo"
    }
   },
-  "verse-7-204": {
-   "kind": "verse",
-   "verse": "7:204",
-   "ordinal": 332,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/7-204\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 434,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
   "verse-8-29": {
    "kind": "verse",
    "verse": "8:29",
@@ -22831,21 +21728,6 @@
     "scene": "halo"
    }
   },
-  "verse-16-68": {
-   "kind": "verse",
-   "verse": "16:68",
-   "ordinal": 367,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/16-68\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 267,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-16-79": {
    "kind": "verse",
    "verse": "16:79",
@@ -22933,21 +21815,6 @@
     "seed": 510,
     "n": 8,
     "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-17-110": {
-   "kind": "verse",
-   "verse": "17:110",
-   "ordinal": 374,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/17-110\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 603,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -23083,21 +21950,6 @@
     "seed": 462,
     "n": 10,
     "k": 4,
-    "scene": "halo"
-   }
-  },
-  "verse-19-36": {
-   "kind": "verse",
-   "verse": "19:36",
-   "ordinal": 384,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/19-36\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 605,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -23491,21 +22343,6 @@
     "scene": "halo"
    }
   },
-  "verse-25-54": {
-   "kind": "verse",
-   "verse": "25:54",
-   "ordinal": 411,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/25-54\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 228,
-    "n": 8,
-    "k": 3,
-    "scene": "halo"
-   }
-  },
   "verse-25-61": {
    "kind": "verse",
    "verse": "25:61",
@@ -23866,21 +22703,6 @@
     "scene": "halo"
    }
   },
-  "verse-29-62": {
-   "kind": "verse",
-   "verse": "29:62",
-   "ordinal": 436,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/29-62\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 993,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-29-64": {
    "kind": "verse",
    "verse": "29:64",
@@ -24046,21 +22868,6 @@
     "scene": "halo"
    }
   },
-  "verse-32-16-17": {
-   "kind": "verse",
-   "verse": "32:16-17",
-   "ordinal": 448,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/32-16-17\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 66,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-32-19": {
    "kind": "verse",
    "verse": "32:19",
@@ -24088,21 +22895,6 @@
     "seed": 470,
     "n": 10,
     "k": 4,
-    "scene": "halo"
-   }
-  },
-  "verse-33-44": {
-   "kind": "verse",
-   "verse": "33:44",
-   "ordinal": 451,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/33-44\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 725,
-    "n": 16,
-    "k": 7,
     "scene": "halo"
    }
   },
@@ -24271,21 +23063,6 @@
     "scene": "halo"
    }
   },
-  "verse-36-38": {
-   "kind": "verse",
-   "verse": "36:38",
-   "ordinal": 463,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/36-38\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 612,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-36-39-40": {
    "kind": "verse",
    "verse": "36:39-40",
@@ -24328,21 +23105,6 @@
     "seed": 218,
     "n": 10,
     "k": 4,
-    "scene": "halo"
-   }
-  },
-  "verse-37-4-5": {
-   "kind": "verse",
-   "verse": "37:4-5",
-   "ordinal": 467,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/37-4-5\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 696,
-    "n": 8,
-    "k": 3,
     "scene": "halo"
    }
   },
@@ -24661,21 +23423,6 @@
     "scene": "halo"
    }
   },
-  "verse-42-11": {
-   "kind": "verse",
-   "verse": "42:11",
-   "ordinal": 489,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/42-11\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "dusk",
-    "seed": 46,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-42-29": {
    "kind": "verse",
    "verse": "42:29",
@@ -24916,21 +23663,6 @@
     "scene": "halo"
    }
   },
-  "verse-47-36": {
-   "kind": "verse",
-   "verse": "47:36",
-   "ordinal": 506,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/47-36\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "sand",
-    "seed": 619,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-49-6": {
    "kind": "verse",
    "verse": "49:6",
@@ -25168,21 +23900,6 @@
     "seed": 818,
     "n": 8,
     "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-55-5-6": {
-   "kind": "verse",
-   "verse": "55:5-6",
-   "ordinal": 523,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/55-5-6\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 13,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -25606,21 +24323,6 @@
     "scene": "halo"
    }
   },
-  "verse-70-23-25": {
-   "kind": "verse",
-   "verse": "70:23-25",
-   "ordinal": 552,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/70-23-25\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 92,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-70-32-35": {
    "kind": "verse",
    "verse": "70:32-35",
@@ -25921,21 +24623,6 @@
     "scene": "halo"
    }
   },
-  "verse-79-27-29": {
-   "kind": "verse",
-   "verse": "79:27-29",
-   "ordinal": 573,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/79-27-29\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 231,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
   "verse-79-30-33": {
    "kind": "verse",
    "verse": "79:30-33",
@@ -25993,21 +24680,6 @@
     "seed": 873,
     "n": 16,
     "k": 7,
-    "scene": "halo"
-   }
-  },
-  "verse-14-52": {
-   "kind": "verse",
-   "verse": "14:52",
-   "ordinal": 578,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/14-52\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 933,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -26101,21 +24773,6 @@
     "scene": "halo"
    }
   },
-  "verse-86-1-4": {
-   "kind": "verse",
-   "verse": "86:1-4",
-   "ordinal": 585,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/86-1-4\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "night",
-    "seed": 436,
-    "n": 10,
-    "k": 4,
-    "scene": "halo"
-   }
-  },
   "verse-87-1-4": {
    "kind": "verse",
    "verse": "87:1-4",
@@ -26156,21 +24813,6 @@
    "look": {
     "pal": "green",
     "seed": 883,
-    "n": 12,
-    "k": 5,
-    "scene": "halo"
-   }
-  },
-  "verse-89-1-4": {
-   "kind": "verse",
-   "verse": "89:1-4",
-   "ordinal": 589,
-   "slot": "evening",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/89-1-4\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 449,
     "n": 12,
     "k": 5,
     "scene": "halo"
@@ -26263,21 +24905,6 @@
     "seed": 98,
     "n": 8,
     "k": 3,
-    "scene": "halo"
-   }
-  },
-  "verse-98-7": {
-   "kind": "verse",
-   "verse": "98:7",
-   "ordinal": 596,
-   "slot": "morning",
-   "eyebrow": "One verse",
-   "caption": "{ref}\n\n{meaning}\n\nRecited by {reciter}. Read the whole verse with its meaning, hear it recited, and open its surah, free: noorcodex.com/verse/98-7\n\n#OneVerse #Quran #Islam #NoorCodexOfLight",
-   "look": {
-    "pal": "green",
-    "seed": 621,
-    "n": 12,
-    "k": 5,
     "scene": "halo"
    }
   },
@@ -26657,8 +25284,8 @@
    "ar": "الْعَلِيم",
    "translit": "Al-'Alim",
    "meaning": "The All-Knowing",
-   "line": "His is not acquired, never absent, and includes what has not happened and what would have happened had you chosen otherwise.",
-   "caption": "Al-'Alim (الْعَلِيم). The All-Knowing. His is not acquired, never absent, and includes what has not happened and what would have happened had you chosen otherwise.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Ours is assembled: gathered by senses, stored, retrieved, and always in the past tense.",
+   "caption": "Al-'Alim (الْعَلِيم). The All-Knowing. Ours is assembled: gathered by senses, stored, retrieved, and always in the past tense.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 345,
@@ -26729,8 +25356,8 @@
    "ar": "الرَّافِع",
    "translit": "Ar-Rafi'",
    "meaning": "The Exalter",
-   "line": "The historical record keeps embarrassing the rankings: the ones remembered were shepherds, orphans, freed slaves, a man who could not read.",
-   "caption": "Ar-Rafi' (الرَّافِع). The Exalter. The historical record keeps embarrassing the rankings: the ones remembered were shepherds, orphans, freed slaves, a man who could not read.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The Qur'an says He raises in degrees those who believe and those given knowledge, and that the noblest among you is the most mindful: not the wealthiest, not the most followed.",
+   "caption": "Ar-Rafi' (الرَّافِع). The Exalter. The Qur'an says He raises in degrees those who believe and those given knowledge, and that the noblest among you is the most mindful: not the wealthiest, not the most followed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "green",
     "seed": 446,
@@ -26747,8 +25374,8 @@
    "ar": "الْمُعِزّ",
    "translit": "Al-Mu'izz",
    "meaning": "The Giver of Honour",
-   "line": "The Qur'an's example is deliberately hard: the Prophet's community spent years despised in Makkah, and the honour arrived without the despising being removed first.",
-   "caption": "Al-Mu'izz (الْمُعِزّ). The Giver of Honour. The Qur'an's example is deliberately hard: the Prophet's community spent years despised in Makkah, and the honour arrived without the despising being removed first.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Not popular, not comfortable: honoured, given real weight.",
+   "caption": "Al-Mu'izz (الْمُعِزّ). The Giver of Honour. Not popular, not comfortable: honoured, given real weight.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 147,
@@ -26819,8 +25446,8 @@
    "ar": "الْحَكَم",
    "translit": "Al-Hakam",
    "meaning": "The Judge, whose ruling is final",
-   "line": "Every human verdict is provisional, appealable, sometimes bought.",
-   "caption": "Al-Hakam (الْحَكَم). The Judge, whose ruling is final. Every human verdict is provisional, appealable, sometimes bought.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The root's oldest sense is restraint, the bridle that stops a horse from bolting, and that is what a judgement does: it stops the case running.",
+   "caption": "Al-Hakam (الْحَكَم). The Judge, whose ruling is final. The root's oldest sense is restraint, the bridle that stops a horse from bolting, and that is what a judgement does: it stops the case running.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 879,
@@ -27161,8 +25788,8 @@
    "ar": "الْوَدُود",
    "translit": "Al-Wadud",
    "meaning": "The Most Loving",
-   "line": "The Qur'an says He is Al-Ghafur, Al-Wadud, in that order, in a surah about believers being burned alive for their faith: forgiving, and affectionate.",
-   "caption": "Al-Wadud (الْوَدُود). The Most Loving. The Qur'an says He is Al-Ghafur, Al-Wadud, in that order, in a surah about believers being burned alive for their faith: forgiving, and affectionate.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Arabic has several words for love and this is the warm one: affection that is expressed, not merely felt.",
+   "caption": "Al-Wadud (الْوَدُود). The Most Loving. Arabic has several words for love and this is the warm one: affection that is expressed, not merely felt.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 687,
@@ -27172,7 +25799,7 @@
     "secs": 20
    }
   },
-  "name-al-majid": {
+  "name-al-majeed": {
    "kind": "name",
    "src": "al-majeed",
    "slot": "evening",
@@ -27183,7 +25810,7 @@
    "caption": "Al-Majeed (الْمَجِيد). The Most Glorious. Majd is glory that combines two things: honour so complete it cannot be added to, and generosity so wide it cannot be exhausted.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
-    "seed": 507,
+    "seed": 391,
     "n": 12,
     "k": 5,
     "scene": "name",
@@ -27251,8 +25878,8 @@
    "ar": "الْوَكِيل",
    "translit": "Al-Wakil",
    "meaning": "The Trustee, to whom affairs are handed",
-   "line": "Tawakkul, the state the Book keeps commanding, is not passivity: you appoint the agent and then you do your part without carrying what is not yours.",
-   "caption": "Al-Wakil (الْوَكِيل). The Trustee, to whom affairs are handed. Tawakkul, the state the Book keeps commanding, is not passivity: you appoint the agent and then you do your part without carrying what is not yours.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "A wakil in Arabic law is someone you appoint to handle a matter you cannot handle: with real authority, not advice.",
+   "caption": "Al-Wakil (الْوَكِيل). The Trustee, to whom affairs are handed. A wakil in Arabic law is someone you appoint to handle a matter you cannot handle: with real authority, not advice.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "dusk",
     "seed": 552,
@@ -27305,8 +25932,8 @@
    "ar": "الْوَلِيّ",
    "translit": "Al-Waliyy",
    "meaning": "The Protecting Friend",
-   "line": "It is the word for the guardian at a marriage, for the ally in a treaty, for the near friend.",
-   "caption": "Al-Waliyy (الْوَلِيّ). The Protecting Friend. It is the word for the guardian at a marriage, for the ally in a treaty, for the near friend.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The root means nearness: the one standing next to you, close enough to act.",
+   "caption": "Al-Waliyy (الْوَلِيّ). The Protecting Friend. The root means nearness: the one standing next to you, close enough to act.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "dusk",
     "seed": 725,
@@ -27377,8 +26004,8 @@
    "ar": "الْمُعِيد",
    "translit": "Al-Mu'id",
    "meaning": "The Restorer, who begins it again",
-   "line": "This is the Qur'an's standing argument for the resurrection, made from ordinary observation rather than from mystery: you have already seen Him do the difficult version of this.",
-   "caption": "Al-Mu'id (الْمُعِيد). The Restorer, who begins it again. This is the Qur'an's standing argument for the resurrection, made from ordinary observation rather than from mystery: you have already seen Him do the difficult version of this.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "He begins, then He repeats it, and the repetition is easier, the Book says, though both are equal to Him.",
+   "caption": "Al-Mu'id (الْمُعِيد). The Restorer, who begins it again. He begins, then He repeats it, and the repetition is easier, the Book says, though both are equal to Him.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 879,
@@ -27431,8 +26058,8 @@
    "ar": "الْحَيّ",
    "translit": "Al-Hayy",
    "meaning": "The Ever-Living",
-   "line": "Everything else that lives is borrowing, and the loan is called back.",
-   "caption": "Al-Hayy (الْحَيّ). The Ever-Living. Everything else that lives is borrowing, and the loan is called back.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "He is alive: not granted life, not sustained in it, not able to lose it.",
+   "caption": "Al-Hayy (الْحَيّ). The Ever-Living. He is alive: not granted life, not sustained in it, not able to lose it.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 444,
@@ -27478,7 +26105,7 @@
     "secs": 20
    }
   },
-  "name-al-majid-65": {
+  "name-al-maajid": {
    "kind": "name",
    "src": "al-maajid",
    "slot": "morning",
@@ -27488,10 +26115,10 @@
    "line": "Two Names from one root sit in this list, and the pair is a good example of why the enumeration should be read carefully rather than as a list of ninety-nine separate facts.",
    "caption": "Al-Maajid (الْمَاجِد). The Noble. Two Names from one root sit in this list, and the pair is a good example of why the enumeration should be read carefully rather than as a list of ninety-nine separate facts.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
-    "pal": "sand",
-    "seed": 32,
-    "n": 8,
-    "k": 3,
+    "pal": "dusk",
+    "seed": 295,
+    "n": 12,
+    "k": 5,
     "scene": "name",
     "secs": 20
    }
@@ -27575,8 +26202,8 @@
    "ar": "الْمُقْتَدِر",
    "translit": "Al-Muqtadir",
    "meaning": "The Determiner, who brings power to bear",
-   "line": "The Book almost never lets a Name of might stand without showing where it lands.",
-   "caption": "Al-Muqtadir (الْمُقْتَدِر). The Determiner, who brings power to bear. The Book almost never lets a Name of might stand without showing where it lands.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Where Qadir is the ability, Muqtadir is the ability exercised: power that has arrived.",
+   "caption": "Al-Muqtadir (الْمُقْتَدِر). The Determiner, who brings power to bear. Where Qadir is the ability, Muqtadir is the ability exercised: power that has arrived.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 337,
@@ -27611,8 +26238,8 @@
    "ar": "الْمُؤَخِّر",
    "translit": "Al-Mu'akhkhir",
    "meaning": "The Delayer, who holds back",
-   "line": "Every delay you have been given is this Name at work, including the ones you took for a sign that nothing was being noticed.",
-   "caption": "Al-Mu'akhkhir (الْمُؤَخِّر). The Delayer, who holds back. Every delay you have been given is this Name at work, including the ones you took for a sign that nothing was being noticed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The verse is severe and merciful in the same breath: if He took people to task for their wrongdoing, He would not leave a single creature on the earth, but He defers them to an appointed term.",
+   "caption": "Al-Mu'akhkhir (الْمُؤَخِّر). The Delayer, who holds back. The verse is severe and merciful in the same breath: if He took people to task for their wrongdoing, He would not leave a single creature on the earth, but He defers them to an appointed term.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 477,
@@ -27701,8 +26328,8 @@
    "ar": "الْوَالِي",
    "translit": "Al-Wali",
    "meaning": "The Governor of all that happens",
-   "line": "The verse says of a people whose ruin has been decided that they have, besides Him, no wali at all.",
-   "caption": "Al-Wali (الْوَالِي). The Governor of all that happens. The verse says of a people whose ruin has been decided that they have, besides Him, no wali at all.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Wali in this form is the one who has charge of an affair and runs it: the governor, the one whose decision actually moves things.",
+   "caption": "Al-Wali (الْوَالِي). The Governor of all that happens. Wali in this form is the one who has charge of an affair and runs it: the governor, the one whose decision actually moves things.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "dusk",
     "seed": 123,
@@ -27737,8 +26364,8 @@
    "ar": "الْبَرّ",
    "translit": "Al-Barr",
    "meaning": "The Source of Goodness",
-   "line": "The verse where the Name appears is spoken by people already safe, remembering what they used to do: we used to call upon Him; indeed it is He who is the Beneficent, the Merciful.",
-   "caption": "Al-Barr (الْبَرّ). The Source of Goodness. The verse where the Name appears is spoken by people already safe, remembering what they used to do: we used to call upon Him; indeed it is He who is the Beneficent, the Merciful.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Birr is the Qur'an's word for goodness that is done, not felt: the goodness owed to parents, the righteousness the Book defines by a list of actions rather than a state of mind.",
+   "caption": "Al-Barr (الْبَرّ). The Source of Goodness. Birr is the Qur'an's word for goodness that is done, not felt: the goodness owed to parents, the righteousness the Book defines by a list of actions rather than a state of mind.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 642,
@@ -27791,8 +26418,8 @@
    "ar": "الْعَفُوّ",
    "translit": "Al-'Afuww",
    "meaning": "The Pardoner, who erases the trace",
-   "line": "It is the word in the supplication reported to have been taught to 'A'ishah for the Night of Decree, asking the One who loves to efface, to efface.",
-   "caption": "Al-'Afuww (الْعَفُوّ). The Pardoner, who erases the trace. It is the word in the supplication reported to have been taught to 'A'ishah for the Night of Decree, asking the One who loves to efface, to efface.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "This is the further of the two: not concealment but effacement, so that nothing remains to be concealed.",
+   "caption": "Al-'Afuww (الْعَفُوّ). The Pardoner, who erases the trace. This is the further of the two: not concealment but effacement, so that nothing remains to be concealed.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 575,
@@ -27827,8 +26454,8 @@
    "ar": "مَالِكُ الْمُلْك",
    "translit": "Malik al-Mulk",
    "meaning": "Owner of all sovereignty",
-   "line": "The taking is inside the good, and the sentence does not flinch from saying so.",
-   "caption": "Malik al-Mulk (مَالِكُ الْمُلْك). Owner of all sovereignty. The taking is inside the good, and the sentence does not flinch from saying so.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Four verbs follow in pairs, give and take, honour and humble, and the prayer ends with in Your hand is all good.",
+   "caption": "Malik al-Mulk (مَالِكُ الْمُلْك). Owner of all sovereignty. Four verbs follow in pairs, give and take, honour and humble, and the prayer ends with in Your hand is all good.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 118,
@@ -27863,8 +26490,8 @@
    "ar": "الْمُقْسِط",
    "translit": "Al-Muqsit",
    "meaning": "The Equitable",
-   "line": "",
-   "caption": "Al-Muqsit (الْمُقْسِط). The Equitable.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Qist is the fair portion: the word used for balancing scales and for giving each party what is due.",
+   "caption": "Al-Muqsit (الْمُقْسِط). The Equitable. Qist is the fair portion: the word used for balancing scales and for giving each party what is due.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "sand",
     "seed": 622,
@@ -27917,8 +26544,8 @@
    "ar": "الْمُغْنِي",
    "translit": "Al-Mughni",
    "meaning": "The Enricher",
-   "line": "The Book's teaching on this is consistent: richness is not in the quantity of possessions.",
-   "caption": "Al-Mughni (الْمُغْنِي). The Enricher. The Book's teaching on this is consistent: richness is not in the quantity of possessions.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The verse is two words in Arabic and includes both halves: He gives wealth and He gives contentment with it, which are separate gifts and rarely arrive together.",
+   "caption": "Al-Mughni (الْمُغْنِي). The Enricher. The verse is two words in Arabic and includes both halves: He gives wealth and He gives contentment with it, which are separate gifts and rarely arrive together.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 559,
@@ -27989,8 +26616,8 @@
    "ar": "النُّور",
    "translit": "An-Nur",
    "meaning": "The Light",
-   "line": "The Book chose a parable where an argument would have been possible, which is itself the teaching.",
-   "caption": "An-Nur (النُّور). The Light. The Book chose a parable where an argument would have been possible, which is itself the teaching.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "Then the verse does not explain; it gives an image, a niche, a lamp, glass like a brilliant star, oil from a blessed tree that would almost glow untouched by fire, light upon light.",
+   "caption": "An-Nur (النُّور). The Light. Then the verse does not explain; it gives an image, a niche, a lamp, glass like a brilliant star, oil from a blessed tree that would almost glow untouched by fire, light upon light.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 324,
@@ -28025,8 +26652,8 @@
    "ar": "الْبَدِيع",
    "translit": "Al-Badi'",
    "meaning": "The Incomparable Originator",
-   "line": "The Qur'an says it of the heavens and the earth, and then adds the mechanism, which is not a mechanism: when He decrees a matter, He says to it Be, and it is.",
-   "caption": "Al-Badi' (الْبَدِيع). The Incomparable Originator. The Qur'an says it of the heavens and the earth, and then adds the mechanism, which is not a mechanism: when He decrees a matter, He says to it Be, and it is.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
+   "line": "The word means invention in the strict sense: not assembling what exists, but bringing about what had no precedent.",
+   "caption": "Al-Badi' (الْبَدِيع). The Incomparable Originator. The word means invention in the strict sense: not assembling what exists, but bringing about what had no precedent.\n\nEvery one of the Names, with its root, its verse and what it asks of a person, free at noorcodex.com/allah\n\n#NamesOfAllah #Islam #Allah #Arabic #Tawhid #NoorCodexOfLight",
    "look": {
     "pal": "night",
     "seed": 196,
