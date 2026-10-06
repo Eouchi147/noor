@@ -45,6 +45,9 @@ import { kv, kvReady } from "./_kv.js";
 import { REEL_SLOTS, reelHalf, chooseReel, planDay } from "./_schedule.js";
 import { isRealDate, biasFor } from "./_experiments.js";
 import { readManifest } from "./_reels.js";
+/* the day's rota leans (api/_levers.js, the rota-lean lever): read the same
+   fail-open way as an experiment's bias, and handed to chooseReel with it */
+import { leanFor } from "./_levers.js";
 
 export const K_OVERRIDE = d => "nsoc:override:" + d;
 /* the three actors an override can carry: the owner by hand, a Lantern
@@ -97,7 +100,9 @@ function sanitizeDay(v) {
   return out;
 }
 
-async function readOverridesRaw(date, ctx = {}) {
+/* exported for the one other writer that must refuse rather than guess:
+   api/_levers.js's rota-lean, checking a lean against the day's own swaps */
+export async function readOverridesRaw(date, ctx = {}) {
   const store = ctx.kv || kv, ready = ctx.kvReady || kvReady;
   if (!ready()) return {};
   const r = await store([["GET", K_OVERRIDE(date)]]);
@@ -398,8 +403,13 @@ export async function chooseReelWithOverride(cards, date, slot, hijri, seen, bia
      falls through to the ordinary pick below. */
   if (ctx.rec && ctx.rec.reel) {
     const card = (cards || []).find(c => c && c.id === ctx.rec.reel) || null;
-    return { card: card || { id: ctx.rec.reel, kind: ctx.rec.kind || "light", hook: "" },
+    const fact = { card: card || { id: ctx.rec.reel, kind: ctx.rec.kind || "light", hook: "" },
       override: ctx.rec.override || null };
+    /* the rota lean the record itself says it went out under, a fact like
+       the rest of it (api/_levers.js); a record with none carries none */
+    const rl = ctx.rec.lean;
+    if (rl && typeof rl === "object" && rl.id && rl.kind) fact.lean = { id: String(rl.id), kind: String(rl.kind) };
+    return fact;
   }
   let ov = null;
   try { ov = await overrideFor(date, slot, ctx); } catch { ov = null; }
@@ -423,7 +433,7 @@ export async function chooseReelWithOverride(cards, date, slot, hijri, seen, bia
       if (!inSeen && !inOther) return { card, override: ov };
       const fellBack = { ...ov, fellBack: true,
         reason: inSeen ? "the duplicate guard's own window" : "already chosen for another slot today" };
-      return { card: chooseReel(cards, date, reelHalf(slot) || slot, hijri, seen, bias, report), override: fellBack };
+      return await leanedPick(cards, date, slot, hijri, seen, bias, report, ctx, fellBack);
     }
     /* the id has left the shelf entirely: the existing fail-open path
        below, no override mark at all, since nothing was actually held */
@@ -433,7 +443,25 @@ export async function chooseReelWithOverride(cards, date, slot, hijri, seen, bia
      reelHalf maps a slot id to. A caller that already has only the half in
      hand (an older SLOTS row) has no slot id to look an override up by in
      the first place, so this function always takes the id. */
-  return { card: chooseReel(cards, date, reelHalf(slot) || slot, hijri, seen, bias, report), override: null };
+  return await leanedPick(cards, date, slot, hijri, seen, bias, report, ctx, null);
+}
+
+/* the ordinary pick, under the day's rota leans (api/_levers.js): only ever
+   reached once no skip and no holding swap has decided the slot, so an
+   owner's or the Lantern's own override always wins over a lean on its own
+   slot. `ctx.leans` is the day's map when the caller already read it (every
+   view built from buildDayContext below); a caller that never heard of a
+   lean leaves it undefined and the store is asked here, fail open, so every
+   view of the day agrees whether or not it was threaded. `lean` comes back
+   only when the lean actually decided the pick. */
+async function leanedPick(cards, date, slot, hijri, seen, bias, report, ctx, override) {
+  let leans = ctx.leans;
+  if (leans === undefined) { try { leans = await leanFor(date, ctx); } catch { leans = null; } }
+  const rep = report || {};
+  const card = chooseReel(cards, date, reelHalf(slot) || slot, hijri, seen, bias, rep, leans || null);
+  const out = { card, override };
+  if (rep.lean) out.lean = rep.lean;
+  return out;
 }
 
 /* what every OTHER reel slot of the same date would show, overrides and
@@ -458,10 +486,14 @@ export async function chooseReelWithOverride(cards, date, slot, hijri, seen, bia
    same recompute for every slot, exactly the old behaviour. */
 export async function otherPicksFor(cards, date, excludeSlot, hijri, seen, bias, ctx = {}) {
   const out = {};
+  /* the day's rota leans, read once for every slot below rather than once
+     a slot, when the caller has not handed them in already (fail open) */
+  let leans = ctx.leans;
+  if (leans === undefined) { try { leans = await leanFor(date, ctx); } catch { leans = null; } }
   for (const s of REEL_SLOTS) {
     if (s === excludeSlot) continue;
     const rec = ctx.records ? ctx.records[s] : undefined;
-    const { card } = await chooseReelWithOverride(cards, date, s, hijri, seen, bias, null, { ...ctx, rec });
+    const { card } = await chooseReelWithOverride(cards, date, s, hijri, seen, bias, null, { ...ctx, rec, leans: leans || null });
     if (card) out[s] = card.id;
   }
   return out;
@@ -507,5 +539,14 @@ export async function buildDayContext(host, date, ctx = {}) {
       try { seen = await ctx.recentlyPosted(date); } catch { seen = new Map(); }
     }
   }
-  return { cards, hijri, bias, seen };
+  /* the day's rota leans (api/_levers.js), the fifth piece every view of
+     the day shares, read the same fail-open way as the bias above: a
+     caller that has them hands them in (`ctx.leans`), one that has its own
+     reader hands that (`ctx.leanFor`), anyone else gets the store's own,
+     and any fault at all is an empty map, which is "no lean" */
+  let leans = ctx.leans;
+  if (leans === undefined) {
+    try { leans = await (ctx.leanFor || leanFor)(date, ctx); } catch { leans = {}; }
+  }
+  return { cards, hijri, bias, seen, leans: leans || {} };
 }

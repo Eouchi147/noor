@@ -1,5 +1,12 @@
 // NOOR · the Soul's door: the console's view of it, and the cron's tick.
 // ---------------------------------------------------------------------------
+// GET  /api/soul?view=home             the owner's Home (LANTERN.md section
+//   2, 3 October 2026): the brief, his decisions, Done, Next, what is
+//   coming, the goals, the ideas, today, the voice and the spend, each part
+//   failing soft on its own (null, with its reason in `missing`).
+// POST {action:"decide", id, option} | {action:"do-now", id} |
+//      {action:"skip", id} | {action:"idea", id, choice}: the Home's buttons,
+//   each answering {ok, message} in plain words, never a throw.
 // GET  /api/soul?view=today            the morning at a glance: paused, the
 //   mission, the north star and its series, the goals, the last cycle, the
 //   month's spend and today's public actions against the cap.
@@ -34,12 +41,14 @@ import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import {
   MISSION, K, CAP_LIMITS, store, parse, isPaused, setPaused, readGoals, setOwnerGoal, chronicleRead,
-  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList
+  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList, sayLantern
 } from "./_soul.js";
 import * as I from "./_instruments.js";
 import { undoAction } from "./_hands.js";
 import { tick, readCycle } from "./_mind.js";
 import { readPlaybook, listProposals, listUpgrades, setUpgradeStatus } from "./_evolve.js";
+import { homeView, doNow, skipNext, ideaChoice } from "./_home.js";
+import { decide, closeByRef } from "./_decisions.js";
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -167,11 +176,12 @@ export default async function handler(req, res) {
   if (!gate.ok && !(isTick && cronAdmitted(req))) return json(res, gate.code, { ok: false, error: gate.reason });
 
   try {
-    if (!storeReady()) return json(res, 200, { ok: false, error: "no store is configured, so the soul has nowhere to live" });
+    if (!storeReady()) return json(res, 200, { ok: false, error: "no store is configured, so the Lantern has nowhere to live", message: "No store is configured, so the Lantern has nowhere to live." });
 
     if (req.method === "GET") {
       if (isTick) return json(res, 200, await tick({ by: gate.ok ? "owner" : "cron" }));
       const view = String(q.view || "today");
+      if (view === "home") return json(res, 200, await homeView());
       if (view === "today") return json(res, 200, await viewToday());
       if (view === "chronicle") return json(res, 200, { ok: true, items: await chronicleRead(int(q.limit, 20, 1, 400)) });
       if (view === "metrics") {
@@ -222,24 +232,35 @@ export default async function handler(req, res) {
     if (typeof body === "string") { try { body = JSON.parse(body); } catch { body = {}; } }
     const action = String(body.action || "");
 
-    if (action === "pause") return json(res, 200, await setPaused(true, "owner"));
-    if (action === "resume") return json(res, 200, await setPaused(false, "owner"));
+    if (action === "pause") return json(res, 200, { ...(await setPaused(true, "owner")), message: "Paused. The Lantern takes no action until you resume it; posting itself goes on." });
+    if (action === "resume") return json(res, 200, { ...(await setPaused(false, "owner")), message: "Resumed. The Lantern is working again." });
     if (action === "run") {
       const r = await tick({ force: true, by: "owner" });
       /* a tick that found a cycle already in hand says so in plain words */
-      if (r && (r.busy || r.fresh === false)) return json(res, 200, { ...r, busy: true, message: "A cycle is already running." });
-      return json(res, 200, r);
+      /* 3 October 2026: a busy run is not a failure; the Home says so plainly */
+      if (r && (r.busy || r.fresh === false)) return json(res, 200, { ...r, ok: true, busy: true, message: "The Lantern is already thinking." });
+      if (r && r.error) return json(res, 200, { ...r, error: sayLantern(r.error), message: sayLantern(r.error) });
+      return json(res, 200, { ...r, message: r && r.status === "done" ? "The Lantern thought again: a cycle ran now, and the Home shows what it did." : "A cycle started now; it goes on at the next tick." });
     }
     if (action === "undo") {
       const r = await undoAction(String(body.id || ""), "owner");
-      return json(res, r.code === 404 ? 404 : 200, r);
+      return json(res, r.code === 404 ? 404 : 200, { ...r, ...(r.error ? { error: sayLantern(r.error) } : {}),
+        message: r.ok ? "Undone." + (r.note ? " " + sayLantern(r.note) : "") : "Not undone: " + sayLantern(r.error || "it refused") + "." });
     }
+    /* the Home's buttons (LANTERN.md section 2): each answers {ok, message}
+       in plain words, and never throws */
+    if (action === "decide") return json(res, 200, await decide(String(body.id || ""), String(body.option || "")));
+    if (action === "do-now") return json(res, 200, await doNow(String(body.id || "")));
+    if (action === "skip") return json(res, 200, await skipNext(String(body.id || "")));
+    if (action === "idea") return json(res, 200, await ideaChoice(String(body.id || ""), String(body.choice || "")));
     if (action === "goal") {
       const r = await setOwnerGoal(body.goal);
       return json(res, r.ok ? 200 : 400, r);
     }
     if (action === "upgrade") {
       const r = await setUpgradeStatus(String(body.id || ""), String(body.status || ""), "owner");
+      /* moved in the engine room: its "Build this?" card on the Home closes */
+      if (r.ok && r.upgrade && r.upgrade.status !== "proposed") { try { await closeByRef("upgrade", r.upgrade.id, r.upgrade.status === "declined" ? "declined" : "yes"); } catch { } }
       return json(res, r.ok ? 200 : 400, r);
     }
     if (action === "benchmarks") {
@@ -248,9 +269,10 @@ export default async function handler(req, res) {
     }
     if (action === "tg-code") return json(res, 200, await telegramCall("ownerLinkCode"));
     if (action === "tg-link") return json(res, 200, await telegramCall("ownerLink"));
-    if (action === "tg-test") return json(res, 200, await telegramCall("notifyOwner", "NOOR Soul: a test message from the console, " + dayOf() + ". If you can read this, the link works."));
-    return json(res, 400, { ok: false, error: "unknown action" });
+    if (action === "tg-test") return json(res, 200, await telegramCall("notifyOwner", "NOOR Lantern: a test message from the console, " + dayOf() + ". If you can read this, the link works."));
+    return json(res, 400, { ok: false, error: "unknown action", message: "That is not something the Lantern knows how to do." });
   } catch (e) {
-    return json(res, 200, { ok: false, error: String(e && e.message || e).slice(0, 200) });
+    const said = sayLantern(String(e && e.message || e).slice(0, 200));
+    return json(res, 200, { ok: false, error: said, message: "That could not be done: " + said });
   }
 }

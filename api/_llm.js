@@ -336,7 +336,7 @@ export async function checkAndReserve(provider, model, now, caller) {
     if (mCount >= caps.rpm) return { ok: false, why: "rpm" };
     if (dCount >= rpd) return { ok: false, why: "rpd" };
     if (wantTok && tCount >= caps.tpd) return { ok: false, why: "tpd" };
-    if (soul && sCount >= Math.floor(rpd * SOUL_FREE_SHARE)) return { ok: false, why: "the soul's share of the day (" + Math.floor(rpd * SOUL_FREE_SHARE) + " of " + rpd + "; the rest is kept for the Lantern)" };
+    if (soul && sCount >= Math.floor(rpd * SOUL_FREE_SHARE)) return { ok: false, why: "the daily cycle's share of the day (" + Math.floor(rpd * SOUL_FREE_SHARE) + " of " + rpd + "; the rest is kept for the Lantern's conversation and the readers)" };
     const inc = [["INCR", mKey], ["EXPIRE", mKey, "70"], ["INCR", dKey], ["EXPIRE", dKey, "90000"]];
     if (soul) inc.push(["INCR", sKey], ["EXPIRE", sKey, "90000"]);
     await kv(inc);

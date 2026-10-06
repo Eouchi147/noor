@@ -74,7 +74,11 @@ const MODEL_CALL_MARGIN_MS = 12000;
    with the one named exception below */
 export const TOOL_NAMES = [
   "observatory", "insights", "numbers", "visitors", "reconcileRead", "package",
-  "graph", "shelf", "lineup", "slots", "recentChanges", "siteSearch", "playbook", "jev", "experiment"
+  "graph", "shelf", "lineup", "slots", "recentChanges", "siteSearch", "playbook", "jev", "experiment",
+  /* the Lantern's own state (3 October 2026, LANTERN.md section 5): the
+     Home's brief, decisions, Done, Next, goals and ideas, compact, totals
+     only, so an answer here knows what the cycle did this morning */
+  "lantern"
 ];
 /* "jev" is the one tool that is not deterministic and not free: api/_jev.js
    judges a piece of text with a model call of its own, over the house's
@@ -282,6 +286,10 @@ function keywordTools(q) {
   if (/\bpackage\b|\bdraft\b/.test(q)) add("package", {}, "the question asks for a package or a draft");
   if (/line.?up|next week/.test(q)) { add("lineup", {}, "the question is about the line-up"); add("shelf", {}, "and what the shelf holds to fill it"); }
   if (/\btests?\b|experiment|a\/b|which works better/.test(q)) add("experiment", {}, "the question asks about a test");
+  /* a question about the Lantern itself: what it did, what it plans, the
+     goals, the brief, what needs the owner */
+  if (/\blantern\b|\bgoals?\b|\bbrief\b|\bdecisions?\b|this morning|\bcycle\b|what (did|have) you|what will you|what are you doing|\bon track\b|\bqueued?\b|\bideas?\b/.test(q))
+    add("lantern", {}, "the question is about the Lantern's own work: its brief, goals, decisions and plans");
   return out;
 }
 
@@ -389,8 +397,19 @@ const PLANNER_SYSTEM = "You are the planner inside NOOR's Lantern agent. Read th
   + "plan or run one, end the plan with an action step named \"experiment-plan\" so it is offered to the owner as a proposal, never done alone. "
   + "At most " + BUDGETS.maxSteps + " steps. Read tools before subagents; a subagent should usually follow the tool reads it needs.";
 
-function planPrompt(message, threadContext) {
+/* the Lantern's hands, when the caller hands them in (3 October 2026,
+   LANTERN.md section 5): an order the owner gives here that names one of
+   them becomes an intent through the hands, judged by the council, inside
+   the caps, recorded in the one ledger. Without them the planner knows
+   only the two autonomous actions and the proposals, as before. */
+function handsPrompt(handsText) {
+  return "HANDS THE LANTERN CAN RUN WHEN THE OWNER ORDERS IT IN SO MANY WORDS (each is judged by the council of three, kept inside the daily caps and recorded in the one ledger; "
+    + "use an action step with the hand's exact name and concrete args only when the owner's message asks for that very change, and never on your own initiative; "
+    + "this takes precedence over the lineup-change proposal for an explicit order):\n" + String(handsText).slice(0, 3000);
+}
+function planPrompt(message, threadContext, handsText) {
   const msgs = [{ role: "system", content: PLANNER_SYSTEM }];
+  if (handsText) msgs.push({ role: "system", content: handsPrompt(handsText) });
   if (threadContext) msgs.push({ role: "system", content: "Earlier in this conversation: " + threadContext });
   msgs.push({ role: "user", content: String(message || "").slice(0, 2000) });
   return msgs;
@@ -949,9 +968,30 @@ function undoRecipeFor(name) {
    the owner sees real, grounded evidence beside the ask, never a bare
    claim with nothing behind it. */
 export async function runAction(step, ctx) {
-  const { tools = {}, ledger, emit = () => {}, toolOutputs = [] } = ctx;
+  const { tools = {}, ledger, emit = () => {}, toolOutputs = [], hands = null, outcomes = null, timeLeftMs = null } = ctx;
   const name = String(step.name || "");
   const evidence = toolOutputs.map(t => t && t.summary).filter(Boolean).join(" ").slice(0, 400);
+  const said = s => { if (Array.isArray(outcomes) && s) outcomes.push(String(s).replace(DASH_RX, ", ")); };
+
+  /* AN ORDER THAT NAMES ONE OF THE LANTERN'S HANDS (3 October 2026,
+     LANTERN.md section 5): an intent through the injected hands, judged by
+     the council, kept inside the caps, recorded in the one ledger. Never a
+     proposal and never this file's own cap: the hands keep their own. The
+     answer then says what was done, or why it was refused. */
+  if (!ACTION_TYPES.includes(name) && hands && typeof hands.has === "function" && hands.has(name)) {
+    let r;
+    try { r = await hands.run({ action: name, args: step.args || {}, why: step.why || "" }, { toolOutputs, timeLeftMs }); }
+    catch (e) { r = { ok: false, error: "the hand itself failed: " + String(e && e.message || e).slice(0, 200) }; }
+    said(r && r.said ? r.said : (r && r.ok ? "Done: " + name + "." : "Not done: " + ((r && r.error) || "it was refused") + "."));
+    if (r && r.ok) {
+      const entry = { id: String(r.actionId || ""), who: "lantern", what: name, hand: name, args: step.args || {}, why: step.why || "",
+        before: null, undo: r.undo || null, at: new Date().toISOString(), ok: true, unified: true };
+      await emit("action", entry);
+      return { kind: "action", entry, result: r };
+    }
+    await emit("step", { phase: "refused", action: name, said: r && r.said ? r.said : (r && r.error) || "refused" });
+    return { kind: "refused", result: r };
+  }
 
   if (!ACTION_TYPES.includes(name)) {
     const p = buildProposal("other", name, step.args, step.why, "no safe autonomous mechanism exists for this in the current build", evidence);
@@ -981,21 +1021,30 @@ export async function runAction(step, ctx) {
     if (ledger.release) await ledger.release();
     return { kind: "error", error: "no handler wired for action " + name };
   }
+  /* the handler is handed the step's own reason and this run's evidence so
+     far (the Lantern's council reads both, 3 October 2026); an older
+     handler simply ignores the second argument */
   let result;
-  try { result = await fn(step.args || {}); }
+  try { result = await fn(step.args || {}, { why: step.why || "", toolOutputs, timeLeftMs }); }
   catch (e) {
     if (ledger.release) await ledger.release();
     return { kind: "error", error: "the action itself failed: " + String(e && e.message || e).slice(0, 200) };
   }
   if (!result || result.ok === false) { if (ledger.release) await ledger.release(); }
+  /* an action the Lantern's hands ran is already in the one ledger, under
+     the id they gave it: the entry carries that id, so its Undo reaches
+     the same record, and the caller's own ledger is told it is kept there */
+  const unified = !!(result && result.actionId);
   const entry = {
-    id: (ledger && ledger.newId) ? ledger.newId() : ("a-" + Date.now()),
+    id: unified ? String(result.actionId) : (ledger && ledger.newId) ? ledger.newId() : ("a-" + Date.now()),
     who: "lantern", what: name, args: step.args || {}, why: step.why || "",
     before: result && result.before != null ? result.before : null,
     undo: (result && result.undo) || undoRecipeFor(name),
-    at: new Date().toISOString(), ok: !!(result && result.ok)
+    at: new Date().toISOString(), ok: !!(result && result.ok),
+    ...(unified ? { unified: true } : {})
   };
   if (ledger && ledger.record) await ledger.record(entry);
+  said(result && result.said ? result.said : null);
   await emit("action", entry);
   return { kind: "action", entry, result };
 }
@@ -1219,8 +1268,10 @@ export function parseSynthesis(raw) {
 --------------------------------------------------------------------------- */
 export async function runAgent(input) {
   const {
-    message, thread = [], tools = {}, route, emit = () => {}, clock, ledger = null, scrub = null
+    message, thread = [], tools = {}, route, emit = () => {}, clock, ledger = null, scrub = null, hands = null
   } = input;
+  /* what the Lantern's hands did on the owner's order, said in the answer */
+  const outcomes = [];
 
   const startedAt = nowMs(clock);
   const timeLeftMs = () => BUDGETS.maxWallMs - (nowMs(clock) - startedAt);
@@ -1241,7 +1292,7 @@ export async function runAgent(input) {
   /* ---- PLAN ---- */
   let plan = null;
   if (route && timeLeftMs() > MODEL_CALL_MARGIN_MS) {
-    const planCall = await route({ tier: "fast", json: true, messages: planPrompt(message, threadContext), opts: { max_tokens: 600, timeout: callTimeoutMs() } });
+    const planCall = await route({ tier: "fast", json: true, messages: planPrompt(message, threadContext, hands && hands.text), opts: { max_tokens: 600, timeout: callTimeoutMs() } });
     modelCalls++;
     if (planCall && planCall.ok) plan = parsePlan(planCall.content);
   }
@@ -1282,9 +1333,10 @@ export async function runAgent(input) {
        became the proposal while the checked answer said the opposite. A
        step that can only ever be a proposal now waits for the checked
        answer and carries that answer, never the plan's own guess. */
-    if (step.kind === "action" && !ACTION_TYPES.includes(String(step.name || ""))) { deferred.push(step); continue; }
+    const orderedHand = step.kind === "action" && hands && typeof hands.has === "function" && hands.has(String(step.name || ""));
+    if (step.kind === "action" && !ACTION_TYPES.includes(String(step.name || "")) && !orderedHand) { deferred.push(step); continue; }
     if (step.kind === "action") {
-      const r = await runAction(step, { tools, ledger, emit, toolOutputs });
+      const r = await runAction(step, { tools, ledger, emit, toolOutputs, hands, outcomes, timeLeftMs });
       if (r.kind === "error") notCompleted.push(step.name + " (" + r.error + ")");
       continue;
     }
@@ -1367,9 +1419,13 @@ export async function runAgent(input) {
      that owns the connection (api/lantern-agent.js) emits "done" once,
      after it has also streamed the answer and the artifacts this function
      hands back below, the answer FIRST so a bad artifact can never cost
-     the owner the answer itself. */
+     the owner the answer itself. What the hands did on the owner's order
+     is said after the checked answer, in the house's own words: it is the
+     ledger's fact, not a model's claim, so the critic has nothing to judge
+     in it. */
+  const finalAnswer = outcomes.length ? [checked.text, outcomes.join(" ")].filter(Boolean).join(" ") : checked.text;
   return {
-    answer: checked.text, artifacts: cleanArtifacts, notCompleted,
+    answer: finalAnswer, artifacts: cleanArtifacts, notCompleted, outcomes,
     plan: steps.map(s => ({ kind: s.kind, name: s.name, why: s.why })),
     modelCalls, toolCalls: toolOutputs.length,
     exhausted: timeLeftMs() <= 0 || modelCalls >= BUDGETS.maxModelCalls || steps.length >= BUDGETS.maxSteps

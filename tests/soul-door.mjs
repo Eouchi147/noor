@@ -20,6 +20,7 @@ import path from 'node:path';
 import {
   S, L, resetStore, SOUL, MIND, INST, door, AUTH, ROUTER, DEPS, OBS, setDay, today, addDays, worldOn, jevOn
 } from './_soul-harness.mjs';
+import { stripeStub } from './_stripe-stub.mjs';
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
@@ -48,15 +49,30 @@ DEPS.observatory = async () => {
 };
 S.set('nexp:state', JSON.stringify({ current: { id: 'verse-length', start: addDays(START, -3), args: {} }, history: [] }));
 ROUTER.guardian = 'approve'; ROUTER.skeptic = 'approve';
+/* 3 October 2026 (LANTERN.md): the plan also dates one intent for tomorrow,
+   so the queue (the Home's Next) holds something each morning, and the
+   weekly reflection writes ideas to grow beside its upgrade */
 ROUTER.plan = JSON.stringify({ intents: [
   { action: 'insights-refresh', args: {}, why: 'The numbers the plan reads are a day old.', expectedEffect: 'fresh numbers behind tomorrow\'s plan', metric: 'northStar' },
   { action: 'note', args: { text: 'Verse reels lead the week.' }, why: 'worth remembering', metric: '' },
-  { action: 'trajectories', args: {}, why: 'where the goals are heading' }
+  { action: 'trajectories', args: {}, why: 'where the goals are heading' },
+  { action: 'note', args: { text: 'Look at the verse reels again tomorrow.' }, why: 'a second look, a day on', metric: 'northStar', when: 'tomorrow' }
 ] });
 ROUTER.reflect = JSON.stringify({ lessons: [{ text: 'Short verse reels hold people longer than long ones.', why: 'the learn block' }], goals: [],
-  upgrades: [{ title: 'Read Telegram reach', why: 'Telegram has no reading in any snapshot', spec: 'Add a reader for the channel view counts.', metric: 'northStar', expectedEffect: 'a fuller north star', priority: 'medium' }] });
+  upgrades: [{ title: 'Read Telegram reach', why: 'Telegram has no reading in any snapshot', spec: 'Add a reader for the channel view counts.', metric: 'northStar', expectedEffect: 'a fuller north star', priority: 'medium' }],
+  ideas: [{ title: 'A weekly verse series on Fridays', why: 'Verse reels lead the week.', impact: 'more people reached on Fridays', who: 'lantern', metric: 'northStar',
+    intents: [{ action: 'note', args: { text: 'Plan the Friday verse series.' }, why: 'the owner said go', metric: 'northStar' }] },
+    { title: 'Ask a scholar to review the verse captions', why: 'Captions carry the verses to new readers.', impact: 'trust in every caption', who: 'you', steps: ['Choose a scholar', 'Send the captions'] }] });
 ROUTER.guardian = 'smart';
+/* 3 October 2026 (LANTERN.md section 9): Stripe stood in, read only; two
+   gifts a day, monthly givers growing, the month's running costs recorded */
+const GIVING = await import('../api/_giving.js');
+const STRIPE = stripeStub();
+GIVING.setGivingSeams({ key: 'sk_test_door', fetchImpl: STRIPE.F });
+L.set('nb:given', [JSON.stringify({ id: '00000000000001-aaaaaa', kind: 'upkeep', amountMinor: 4000, currency: 'usd', date: '2026-10-01', at: '2026-10-01T09:00:00.000Z' })]);
 for (let d = START; d <= END; d = addDays(d, 1)) {
+  STRIPE.gift(d, 1000); STRIPE.gift(d, 2500);
+  STRIPE.givers(6 + Math.floor(dayN / 3));
   setDay(d, '05:20');
   const t = await MIND.tick({});
   if (t.status !== 'done') console.log('  note: the cycle of ' + d + ' ended ' + t.status + ' ' + (t.error || ''));
@@ -69,6 +85,7 @@ ok(S.has(SOUL.K.scorecard('2026-W41')) && S.has(SOUL.K.scorecard('2026-W40')), '
 /* ---------------------------------------------------------------- every view */
 const ptr = JSON.parse(S.get(SOUL.K.cycleCurrent));
 const VIEWS = {
+  home: { view: 'home' },
   today: { view: 'today' }, metrics: { view: 'metrics', days: '90' }, chronicle: { view: 'chronicle', limit: '30' },
   cycle: { view: 'cycle', id: ptr.id }, audit: { view: 'audit', limit: '50' }, evolution: { view: 'evolution' },
   trajectories: { view: 'trajectories' }, effects: { view: 'effects' }, scorecard: { view: 'scorecard' },
@@ -103,6 +120,26 @@ function has(obj, p) {
   return walk(obj, 0);
 }
 const READS = {
+  /* the Home's contract, LANTERN.md section 2, field by field */
+  home: ['ok', 'now', 'name', 'paused', 'status',
+    'brief.date', 'brief.text', 'brief.numbers[].key', 'brief.numbers[].label', 'brief.numbers[].value', 'brief.numbers[].unit', 'brief.numbers[].delta', 'brief.numbers[].deltaUnit', 'brief.at', 'brief.cycle',
+    'decisions[].id', 'decisions[].kind', 'decisions[].title', 'decisions[].why', 'decisions[].goal', 'decisions[].impact',
+    'decisions[].options[].id', 'decisions[].options[].label', 'decisions[].options[].style', 'decisions[].options[].confirm', 'decisions[].link', 'decisions[].steps', 'decisions[].at', 'decisions[].expires',
+    'done[].id', 'done[].at', 'done[].title', 'done[].detail', 'done[].goal', 'done[].by', 'done[].ok', 'done[].undo', 'done[].actionId',
+    'next[].id', 'next[].title', 'next[].why', 'next[].goal', 'next[].when', 'next[].hand', 'next[].tier', 'next[].status', 'next[].reason', 'next[].canDoNow', 'next[].canSkip',
+    'coming[].date', 'coming[].title',
+    'goals[].id', 'goals[].owner', 'goals[].outcome', 'goals[].metric', 'goals[].unit', 'goals[].baseline', 'goals[].current', 'goals[].target', 'goals[].due',
+    'goals[].status', 'goals[].projected', 'goals[].eta', 'goals[].note', 'goals[].focus',
+    'ideas[].id', 'ideas[].title', 'ideas[].why', 'ideas[].impact', 'ideas[].who', 'ideas[].status', 'ideas[].at',
+    'today.posts.sent', 'today.posts.due', 'today.posts.failed', 'today.fixed', 'today.reach7.value', 'today.reach7.delta',
+    'voice.telegram.linked', 'spend.usd', 'spend.capUsd',
+    /* and the second round's additions, LANTERN.md section 10 (today.slots and decisions[].draft are the mission's) */
+    'brief.numbers[].series', 'goals[].history',
+    'giving.configured', 'giving.currency', 'giving.month', 'giving.monthly.givers', 'giving.monthly.delta7',
+    'giving.gifts30.count', 'giving.gifts30.gross', 'giving.gifts30.net', 'giving.thisMonth.count', 'giving.thisMonth.gross', 'giving.thisMonth.net',
+    'giving.lastMonth.count', 'giving.lastMonth.gross', 'giving.lastMonth.net', 'giving.upkeep.month', 'giving.upkeep.cover', 'giving.zakat.outstanding',
+    'giving.series[].date', 'giving.series[].monthly', 'giving.series[].net30', 'giving.line.id', 'giving.line.label', 'giving.line.since', 'giving.note',
+    'giving.did', 'giving.at', 'giving.partial'],
   today: ['ok', 'paused', 'mission', 'northStar.value', 'northStar.weekAgo', 'northStar.series[].date', 'northStar.series[].value',
     'goals[].id', 'goals[].owner', 'goals[].outcome', 'goals[].metric', 'goals[].baseline', 'goals[].target', 'goals[].due', 'goals[].status', 'goals[].history',
     'goals[].trajectory.status', 'goals[].trajectory.projected', 'goals[].trajectory.eta',
@@ -166,6 +203,31 @@ console.log('\nthe shapes that matter to the room');
     'IndexNow: the key is served, and the sitemap\'s ' + site + ' pages went at most 100 a day (' + log.map(x => x.submitted).reverse().join(', ') + ')');
   ok((J.chronicle.items[0].highlights || []).some(h => /visitors/.test(h)), 'the last morning\'s visitors spike is in the chronicle');
   ok(J.today.telegram && J.today.telegram.linked === false, 'the today view says whether Telegram is linked');
+
+  /* the Home (LANTERN.md section 2): its enums, and the brief of the last morning */
+  const h = J.home;
+  ok(h.name === 'the Lantern' && ['working', 'paused', 'needs-you'].includes(h.status) && h.missing && !Object.keys(h.missing).length, 'home: the Lantern, a status, and no part missing: ' + h.status + (Object.keys(h.missing).length ? ' ' + JSON.stringify(h.missing) : ''));
+  ok(h.brief.date === END && h.brief.numbers.map(n => n.key).join() === 'reach,visitors,watched' && !/soul/i.test(h.brief.text), 'home: the last morning\'s brief, its three numbers, in the Lantern\'s name');
+  ok(h.decisions.every(d => ['approve', 'choose', 'you', 'build'].includes(d.kind) && d.options.every(o => ['primary', 'plain', 'danger'].includes(o.style))), 'home: every decision\'s kind and every option\'s style are the contract\'s');
+  ok(h.decisions.some(d => d.kind === 'build') && h.decisions.some(d => d.kind === 'you'), 'home: the upgrade is a build card, the needs are you cards');
+  ok(h.done.every(d => ['lantern', 'owner', 'machine'].includes(d.by)) && h.done.some(d => d.by === 'lantern'), 'home: Done names who did each thing');
+  ok(h.next.every(n => ['planned', 'blocked'].includes(n.status) && (['today', 'tomorrow', 'this week'].includes(n.when) || /^\d{4}-\d{2}-\d{2}$/.test(n.when))), 'home: Next says when and how each step stands');
+  ok(h.ideas.every(i => ['lantern', 'build', 'you'].includes(i.who) && ['new', 'go', 'later', 'never'].includes(i.status)), 'home: the ideas say who acts and where they stand');
+  /* 3 October 2026 (LANTERN.md section 10): the gifts, the series, the histories */
+  const g = h.giving;
+  ok(g && g.configured === true && g.currency === 'usd' && g.monthly.givers === 13 && g.monthly.delta7 === 3 && g.gifts30.count === 44 && g.gifts30.gross === 770,
+    'home: the gifts as totals, in dollars: ' + g.monthly.givers + ' monthly givers (' + g.monthly.delta7 + ' in 7 days), ' + g.gifts30.count + ' gifts in 30 days, ' + g.gifts30.gross + ' gross');
+  ok(g.thisMonth.count === 24 && g.upkeep.month === 40 && typeof g.upkeep.cover === 'number' && g.upkeep.cover > 1 && g.series.length === 22 && g.series[0].date === START && g.line.id === 'everyday',
+    'home: this month, its recorded costs covered ' + g.upkeep.cover + ' times, 22 daily readings, the everyday line');
+  ok(!/@|A Giver|May Allah accept/.test(JSON.stringify(g)) && STRIPE.state.writes.length === 0 && STRIPE.state.calls.every(c => c.method === 'GET'),
+    'home: no name, email or du\'a leaves Stripe\'s answer, and Stripe was only ever read (' + STRIPE.state.calls.length + ' GETs)');
+  ok(h.brief.numbers.every(n => n.series.length === 14 && n.series.filter(v => v != null).length === 14) && h.goals.every(x => Array.isArray(x.history) && x.history.length <= 56),
+    'home: every brief number carries 14 days, every goal its history');
+  const sus = h.goals.find(x => x.metric === 'giving.monthly');
+  ok(sus && sus.id === 'g-sustain' && sus.owner === 'owner' && sus.unit === 'givers' && sus.baseline === 6 && sus.target === 16 && sus.current === 13,
+    'home: the sustain goal, found by its metric: ' + (sus && sus.outcome));
+  const tg = h.goals.find(x => x.id === 'g-test');
+  ok(tg && tg.unit === 'days' && typeof tg.current === 'number' && typeof tg.target === 'number' && tg.current > 0 && tg.current <= tg.target, 'home: the test goal in days run of the days planned: ' + (tg && tg.current) + ' of ' + (tg && tg.target));
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

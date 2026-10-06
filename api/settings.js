@@ -15,12 +15,15 @@
 //   · nothing secret lives here. Keys, salts and tokens stay in env, where
 //     they cannot be read back out over HTTP by anyone at all.
 //
-// GET  /api/settings            · the public subset, for the site itself
+// GET  /api/settings            · the public subset, for the site itself, and
+//                                 what the Lantern chose for it: {s, lantern:
+//                                 {line, note, door}} (api/_public.js)
 // GET  /api/settings?all=1      · everything, with defaults and sources (owner)
 // POST /api/settings {k:v,...}  · save (owner). null removes a key.
 
 import crypto from "crypto";
 import { kv, kvReady } from "./_kv.js";
+import { publicPicks } from "./_public.js";
 
 const KEY = "nb:settings";
 
@@ -228,8 +231,14 @@ export default async function handler(req, res) {
       /* the public site sees only the dials that change what a reader sees */
       const pub = {};
       for (const [k, d] of Object.entries(DIALS)) if (d.pub) pub[k] = now[k];
+      /* what the Lantern chose for the public (api/_public.js, 3 October
+         2026): the support line's wording (its season applied here), the
+         note on the giving page and the door of the week. A store that
+         cannot be read leaves it null, and the page goes on as before. */
+      let lantern = null;
+      try { lantern = await publicPicks(); } catch { lantern = null; }
       res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=120");
-      return res.status(200).json({ s: pub });
+      return res.status(200).json({ s: pub, lantern });
     }
     if (!owner) return res.status(401).json({ error: "locked" });
     const saved = (await readStore()) || {};

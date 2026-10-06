@@ -28,6 +28,21 @@
 // both already have a safe, existing, owner-honoured door (api/insights.js's
 // refresh/snapshot actions, api/social.js's teachGuard), so this file calls
 // those doors exactly as the console's own buttons do, never a new one.
+//
+// ONE ENTITY (3 October 2026, LANTERN.md section 5). The conversation is the
+// Lantern's own voice now, not a second agent beside it:
+//   its two autonomous actions run through the Lantern's hands
+//     (api/_hands.js runHand: insights-refresh and reconcile-teach), judged
+//     by the council first, and land in the one action ledger and audit;
+//   an order the owner gives here that names a registered hand (a line-up
+//     skip, a rota lean once that lever exists) becomes an intent through the
+//     same hands, council and caps, and the answer says what was done or why
+//     it was refused;
+//   its proposals become the owner's decisions (api/_decisions.js); the
+//     approve and decline doors below still answer, by deciding them;
+//   it reads the Lantern's own state through its "lantern" tool;
+//   GET ?action=ledger reads the one ledger (and the older entries this file
+//     kept before), so the console's older room keeps working.
 // ---------------------------------------------------------------------------
 
 import fs from "node:fs";
@@ -36,15 +51,20 @@ import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import { kv, kvReady } from "./_kv.js";
 import { route as llmRoute, scrub } from "./_llm.js";
-import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS, lineupArgsConcrete } from "./_agent.js";
+import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS, compactToolOutputs } from "./_agent.js";
+import { HANDS, tierOf, redLineCheck, runHand, undoAction as undoHand } from "./_hands.js";
+import { convene } from "./_council.js";
+import { actionsList, sayLantern, setRequest } from "./_soul.js";
+import { lanternState, intentTitle, actionTitle } from "./_home.js";
+import * as DEC from "./_decisions.js";
 import { playbookLookup } from "./_playbook.js";
 import { cached as observatoryCached, readCache as observatoryReadCache, slotLabel } from "./observatory.js";
-import { read as insightsRead, numbers as insightsNumbers, refresh as insightsRefresh, snapshot as insightsSnapshot, kindLabel } from "./_insights.js";
+import { read as insightsRead, numbers as insightsNumbers, kindLabel } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
-import { reconcile as socialReconcile, teachGuard as socialTeachGuard, readSlot, revertTaught, recentlyPosted, recentlyPostedRaw } from "./social.js";
-import { chooseReel, SLOTS, REEL_SLOTS, SLOT_IDS } from "./_schedule.js";
+import { reconcile as socialReconcile, readSlot, revertTaught, recentlyPosted } from "./social.js";
+import { chooseReel, SLOTS, SLOT_IDS } from "./_schedule.js";
 import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, evaluate as expEvaluate, biasFromAny as expBiasFromAny } from "./_experiments.js";
-import { chooseReelWithOverride, setOverride, getOverrideRaw, clearOverride, restoreOverride, otherPicksFor, buildDayContext } from "./_lineup.js";
+import { chooseReelWithOverride, getOverrideRaw, clearOverride, restoreOverride, buildDayContext } from "./_lineup.js";
 import * as PAGE from "./page.js";
 import { buildPackage } from "./_package.js";
 import { judge as jevJudge } from "./_jev.js";
@@ -92,6 +112,69 @@ function humanizeIds(value) {
     if (SLOT_ID_SET.has(value)) return slotLabel(value);
   }
   return value;
+}
+
+/* ---------------------------------------------------------------------------
+   THE LANTERN'S HANDS, FROM THE CONVERSATION (3 October 2026, LANTERN.md
+   section 5). One intent through the one door: the red lines first (no
+   model is asked about what is forbidden), then, for a public act, the
+   council of three over this run's own evidence, then api/_hands.js
+   runHand, which keeps pause, the caps and the audit and records the act in
+   the one ledger as the Lantern's (actor "lantern").
+--------------------------------------------------------------------------- */
+export const COUNCIL_MS = 45000;
+const DASHES = new RegExp("[" + String.fromCharCode(0x2014, 0x2013) + "]", "g");
+const plain = s => sayLantern(String(s == null ? "" : s).replace(DASHES, ", ").replace(/\s+/g, " ").trim());
+function councilSaid(c) {
+  if (!c) return "the council did not answer";
+  if (c.timedOut) return "the council did not answer in time";
+  if (c.sentinel && c.sentinel.vote === "reject") return "the sentinel said no (" + (c.sentinel.reasons || []).join("; ") + ")";
+  const no = Object.values(c.verdicts || {}).filter(v => v && v.vote === "reject");
+  return no.length ? "the council said no (" + no.map(v => v.role + ": " + ((v.reasons || [])[0] || "no reason given")).join("; ") + ")" : "the council said no";
+}
+/* what the council reads for an act asked for here: this run's own tool
+   data, compact and totals only, the same shape the synthesis step is
+   handed */
+function conversationEvidence(toolOutputs) {
+  const compact = compactToolOutputs((toolOutputs || []).slice(0, 8), "");
+  return { source: "the owner's conversation with the Lantern in the console", tools: compact.map(c => ({ name: c.name, data: String(c.json || "").slice(0, 1500) })) };
+}
+export async function lanternAct(intent, ctx = {}) {
+  const i = intent && typeof intent === "object" ? intent : {};
+  const it = { action: String(i.action || ""), args: i.args && typeof i.args === "object" && !Array.isArray(i.args) ? i.args : {},
+    why: String(i.why || "").slice(0, 600) || "the owner asked for it in the conversation", expectedEffect: String(i.expectedEffect || "").slice(0, 300), metric: String(i.metric || "").slice(0, 60) };
+  if (!Object.prototype.hasOwnProperty.call(HANDS, it.action)) return { ok: false, refused: "unknown", error: "no such hand: " + it.action.slice(0, 60) };
+  let approval = null, council = null;
+  if (redLineCheck(it).ok && tierOf(it.action) === "R2") {
+    const left = typeof ctx.timeLeftMs === "function" ? ctx.timeLeftMs() : COUNCIL_MS + 15000;
+    const ms = Math.max(3000, Math.min(COUNCIL_MS, left - 15000));
+    let t;
+    council = await Promise.race([
+      convene(it, conversationEvidence(ctx.toolOutputs)).catch(e => ({ approved: false, verdicts: {}, error: String(e && e.message || e).slice(0, 160) })),
+      new Promise(res => { t = setTimeout(() => res({ approved: false, verdicts: {}, timedOut: true }), ms); })
+    ]).finally(() => clearTimeout(t));
+    if (!council || !council.approved) return { ok: false, refused: "council", council, error: councilSaid(council) };
+    approval = council;
+  }
+  /* a red line goes straight to runHand, which refuses it and audits the
+     refusal; an R1 hand runs without review, as in the cycle */
+  const r = await runHand(it, { actor: "lantern", approval });
+  return { ok: !!r.ok, actionId: r.id || null, undo: (r.entry && r.entry.undo) || null, entry: r.entry || null, refused: r.refused || null, error: r.ok ? null : r.error, council };
+}
+/* the hands the planner may name on the owner's order: every registered
+   hand but the reads, which are its tools */
+export function handsFor() {
+  const names = Object.keys(HANDS).filter(n => tierOf(n) && tierOf(n) !== "R0");
+  const lower = s => String(s || "").charAt(0).toLowerCase() + String(s || "").slice(1);
+  return {
+    has: name => names.includes(String(name || "")),
+    text: names.map(n => n + " " + HANDS[n].args + ": " + HANDS[n].describe).join("\n"),
+    run: async (intent, ctx) => {
+      const r = await lanternAct(intent, ctx || {});
+      const title = lower(intentTitle(intent));
+      return { ...r, said: plain(r.ok ? (r.council ? "Done, with the council's approval: " : "Done: ") + title + "." : "Not done (" + title + "): " + (r.error || "it was refused") + ".") };
+    }
+  };
 }
 
 /* ---------------------------------------------------------------------------
@@ -219,11 +302,14 @@ function buildTools(req) {
            this one extra read per slot, never the otherPicks squared cost
            the comment above already declines. */
         const rec = await readSlot(d, s.id).catch(() => null);
-        const { card: c, override: ov } = await chooseReelWithOverride(dayCtx.cards, d, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { rec });
+        /* and the day's rota leans (api/_levers.js), from the same day
+           context, so a leaned slot shows the card the poster will pick */
+        const { card: c, override: ov, lean: ln } = await chooseReelWithOverride(dayCtx.cards, d, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { rec, leans: dayCtx.leans });
         out.push({ date: d, slot: s.id, hour: s.at, half: s.reel,
           card: c ? { id: c.id, kind: c.kind, hook: c.hook } : null,
           override: ov ? { action: ov.action, id: ov.id || null, by: ov.by,
-            fellBack: ov.fellBack || undefined, reason: ov.reason || undefined } : null });
+            fellBack: ov.fellBack || undefined, reason: ov.reason || undefined } : null,
+          ...(ln ? { lean: { id: ln.id, kind: ln.kind } } : {}) });
       }
     }
     return { data: out, summary: "predicted " + out.length + " reel slots over " + days + " day(s) from " + from + ". This is what the rota would choose today, not a promise: it recomputes at post time." };
@@ -339,23 +425,28 @@ function buildTools(req) {
     return { data: r, summary: "Jev: " + r.gate + (r.reasons && r.reasons.length ? " (" + r.reasons.join("; ") + ")" : "") + ".", modelCall: true };
   };
 
-  /* the two autonomous actions, wired to the exact doors the console's own
-     buttons already use -- never a new write path */
-  tools.action_refresh_insights = async () => {
-    const manifest = await PAGE.manifest();
-    const ref = await insightsRefresh(14, { manifest });
-    const snap = await insightsSnapshot({ manifest, force: true, days: 14 });
-    return { ok: !!(ref.ok || snap.ok), refresh: ref, snapshot: snap };
+  /* the Lantern's own state, read the way the Home reads it (api/_home.js
+     lanternState): the brief, the decisions, Done, Next, the goals with
+     their trajectories, the ideas, what its actions did, the playbook */
+  tools.lantern = async () => {
+    const s = await lanternState();
+    const count = (n, one, many) => n === 1 ? "1 " + one : n + " " + many;
+    return { data: s, summary: "the Lantern is " + (s.status === "needs-you" ? "waiting on " + count((s.decisions || []).length, "decision", "decisions") + " of yours" : s.status)
+      + ", " + ((s.next || []).length ? count(s.next.length, "step", "steps") + " next" : "nothing next") + (s.brief ? ", the brief of " + s.brief.date : ", no brief yet") + "." };
   };
-  tools.action_reconcile_teach = async (args) => {
+
+  /* the two autonomous actions (3 October 2026): through the Lantern's
+     hands (insights-refresh, reconcile-teach), judged by the council, in the
+     one ledger; the hands call the same doors the console's buttons use */
+  tools.action_refresh_insights = async (args, ctx) => {
+    const r = await lanternAct({ action: "insights-refresh", args: {}, why: (ctx && ctx.why) || "the owner asked in the conversation for the networks' numbers to be read again" }, ctx || {});
+    return { ok: r.ok, actionId: r.actionId, undo: r.undo, error: r.error ? plain(r.error) : null, refused: r.refused };
+  };
+  tools.action_reconcile_teach = async (args, ctx) => {
     const network = String((args && args.network) || "").trim();
     if (!network) return { ok: false, error: "which network?" };
-    const r = await socialTeachGuard(network, HOST(), { date: args && args.date, days: args && args.days });
-    if (!r.ok) return { ok: false, error: r.why || "could not teach the guard" };
-    return {
-      ok: true, network, written: r.written, known: r.known, taught: r.taught,
-      undo: { kind: "reconcile-teach-revert", keys: (r.taught || []).map(t => ({ reel: t.reel, network, before: t.before || null })) }
-    };
+    const r = await lanternAct({ action: "reconcile-teach", args: { network }, why: (ctx && ctx.why) || "the owner asked in the conversation for the duplicate guard to learn what " + network + " holds" }, ctx || {});
+    return { ok: r.ok, actionId: r.actionId, undo: r.undo, error: r.error ? plain(r.error) : null, refused: r.refused };
   };
   tools.action_undo_reconcile_teach = async (undo) => revertTaught(undo && undo.keys);
 
@@ -418,7 +509,7 @@ function buildTools(req) {
   return tools;
 }
 
-export { humanizeIds };
+export { humanizeIds, buildTools };
 
 /* ---------------------------------------------------------------------------
    THE LEDGER. One list, newest first, and a per-day counter that resets by
@@ -462,10 +553,28 @@ function makeLedger() {
       try { await kv([["DECR", K_COUNT(dayStr())]]); } catch { }
     },
     record: async (entry) => {
-      if (!kvReady()) return;
+      /* an act the Lantern's hands ran is already in the one ledger
+         (nsoul:action:<id>); it is never written twice */
+      if (!kvReady() || (entry && entry.unified)) return;
       try { await kv([["LPUSH", K_ACTIONS, JSON.stringify(entry)], ["LTRIM", K_ACTIONS, "0", String(ACTIONS_KEEP - 1)]]); } catch { }
     }
   };
+}
+/* THE ONE LEDGER, as this room has always read its own (3 October 2026):
+   every act of the Lantern's hands (the daily cycle's, the conversation's,
+   the owner's own buttons), newest first, in the shape the console's older
+   room draws: who, what, args, why, before, undo, at, ok, undone */
+const LEGACY_WHAT = { "insights-refresh": "refresh-insights", "reconcile-teach": "reconcile-teach", "lineup-skip": "lineup-change", "lineup-swap": "lineup-change" };
+function legacyShape(e) {
+  const u = e.undo || {};
+  const who = e.approval && e.approval.owner ? "lantern (owner approved)" : e.actor === "soul" ? "lantern (daily cycle)" : "lantern";
+  return { id: e.id, who, what: LEGACY_WHAT[e.hand] || e.hand, hand: e.hand, title: actionTitle(e), args: e.args || {}, why: plain(e.why || ""),
+    before: u.kind === "lineup-revert" ? (u.before || null) : null, ...(u.kind === "lineup-revert" ? { after: u.after || null } : {}),
+    undo: e.undo || null, at: e.at, ok: !!e.ok, ...(e.error ? { error: plain(e.error) } : {}), undone: !!e.undone, ...(e.undoneAt ? { undoneAt: e.undoneAt } : {}), unified: true };
+}
+async function unifiedLedger(n) {
+  if (!kvReady()) return [];
+  try { return (await actionsList(n)).filter(e => e && e.id && e.tier !== "R0").map(legacyShape); } catch { return []; }
 }
 async function ledgerList(n) {
   if (!kvReady()) return [];
@@ -561,110 +670,69 @@ async function readBody(req) {
 /* ---------------------------------------------------------------------------
    APPROVE / DECLINE / UNDO
 --------------------------------------------------------------------------- */
+/* THE PROPOSAL IS A DECISION (3 October 2026, LANTERN.md section 3). This
+   door still answers the console's older Approve button, by deciding the
+   proposal's own card on the owner's Home: made now from the proposal when
+   the conversation that made it ran before decisions existed. Yes runs the
+   hand with his approval (api/_hands.js runHand: the red lines, pause, the
+   caps and the audit all still apply, and the act is in the one ledger); a
+   vague proposal's Yes is recorded, as it always was. */
+async function proposalDecision(p) {
+  const key = "proposal:" + String(p.id || "");
+  let found = null;
+  try { found = await DEC.findByKey(key); } catch { found = null; }
+  if (found) return found;
+  const up = await DEC.upsert(DEC.fromProposal(p));
+  if (!up || !up.ok) return { error: (up && (up.error || up.suppressed)) || "the decision could not be made" };
+  return { open: true, decision: { id: up.id } };
+}
 async function handleApprove(res, body) {
   const id = String(body.id || "");
   const list = await proposalsList();
   const p = list.find(x => x && x.id === id);
   if (!p) return json(res, 404, { ok: false, error: "no such proposal" });
-
-  /* A LINEUP CHANGE WITH A REAL DATE, SLOT AND ACTION APPLIES AT ONCE, on
-     approval and only on approval -- never autonomously, never against the
-     agent's own daily cap, which exists for the two things it may do
-     without asking (see api/_agent.js's own header). Applied through
-     api/_lineup.js's own validated door, the exact one the console's own
-     Posts room control uses, so an approval can refuse for the same
-     reasons a hand-typed one would (a stale card, a slot already sent, a
-     date past the week ahead). A vague one (no exact slot, date, or a
-     swap with no id) falls through to the generic record-only path below,
-     unchanged. */
-  if (p.requested === "lineup-change" && lineupArgsConcrete(p.args)) {
-    const a = p.args || {};
-    /* the raw reads, not the safe ones: this is the moment the ledger's own
-       `before` is fixed for good, and the moment the duplicate guard's own
-       window decides whether the swap is safe. A fault swallowed as "there
-       was nothing before" or "nothing has ever posted" would let an undo
-       later restore the wrong day, or let a real duplicate straight through
-       the one door meant to catch it (2026-09-26 review fix). */
-    let before, seen;
-    try { before = await getOverrideRaw(a.date, a.slot); }
-    catch { return json(res, 200, { ok: false, error: "the store could not be read, so nothing was applied" }); }
-    try { seen = await recentlyPostedRaw(a.date); }
-    catch { return json(res, 200, { ok: false, error: "the duplicate guard could not be read, so nothing was applied" }); }
-    const cards = await PAGE.manifest();
-    let bias = null;
-    try { const st = await expReadState({}); bias = expBiasFromAny(st, a.date, EXPERIMENTS); } catch { bias = null; }
-    /* the same day context every other view builds (api/_lineup.js's own
-       buildDayContext): cards, bias and seen are already in hand above, so
-       this only ever costs the one thing left, the day's own hijri date. */
-    const ctx = await buildDayContext(HOST(), a.date, { cards, bias, seen });
-    /* the same records-first otherPicks every other writing door now builds
-       (api/_lineup.js's own otherPicksFor): a slot already recorded is a
-       fact, not a pick to recompute against `seen`, so an approval is never
-       refused over another slot's own recomputed pick drifting onto the
-       card being approved (2026-09-26 review, first finding). */
-    const records = {};
-    for (const s of REEL_SLOTS) if (s !== a.slot) records[s] = await readSlot(a.date, s).catch(() => null);
-    const otherPicks = await otherPicksFor(ctx.cards, a.date, a.slot, ctx.hijri, ctx.seen, ctx.bias, { records });
-    const r = await setOverride({ date: a.date, slot: a.slot, action: a.action, id: a.id },
-      { manifest: ctx.cards, seen: ctx.seen, otherPicks, by: "lantern-approved", note: p.why || "" });
-    if (!r.ok) return json(res, 200, { ok: false, error: r.error });
-    const ledger = makeLedger();
-    const entry = {
-      id: ledger.newId(), who: "lantern (owner approved)", what: "lineup-change", args: a, why: p.why || "",
-      before, after: r.override,
-      /* `after` is the exact entry this approval itself wrote (its own at
-         and by): an undo that later finds no prior entry to restore only
-         clears the slot if it still carries exactly this, never a change
-         made since (action_undo_lineup_change, below). */
-      undo: { kind: "lineup-revert", date: a.date, slot: a.slot, before, after: r.override },
-      at: new Date().toISOString(), ok: true
-    };
-    await ledger.record(entry);
+  const found = await proposalDecision(p);
+  if (found.error) return json(res, 200, { ok: false, error: plain(found.error), message: "Not done: " + plain(found.error) + "." });
+  if (!found.open) {
     await proposalsSet(list.filter(x => x.id !== id));
-    return json(res, 200, { ok: true, executed: true, entry });
+    return json(res, 200, { ok: false, error: "this proposal was already answered on the Home (" + found.decision.status + ")", message: "That was already answered on the Home." });
   }
-
-  /* only a proposal whose own type is one of the safe autonomous actions
-     can be executed by approving it; everything else (a vague lineup
-     change above all) has no endpoint to run, so approving only records
-     the owner's decision and the console shows what to open by hand */
-  if (ACTION_TYPES.includes(p.type)) {
-    const tools = buildTools({ headers: {} });
-    const ledger = makeLedger();
-    /* the same atomic reserve-then-act the autonomous path uses
-       (api/_agent.js's runAction): approving a proposal is another door
-       onto the same daily cap, and it fails closed the same way. */
-    const reserved = await ledger.reserve();
-    if (!reserved.ok || reserved.count == null || reserved.count > AUTONOMOUS_DAILY_CAP) {
-      if (reserved.ok) await ledger.release();
-      return json(res, 200, { ok: false, error: reserved.ok
-        ? "the daily limit of " + AUTONOMOUS_DAILY_CAP + " autonomous actions has already been reached today; try again tomorrow"
-        : "the daily action ledger could not be read right now, so nothing runs on its own until it can be" });
-    }
-    const fn = tools["action_" + p.type.replace(/-/g, "_")];
-    if (typeof fn !== "function") { await ledger.release(); return json(res, 200, { ok: false, error: "no handler wired for " + p.type }); }
-    let result;
-    try { result = await fn(p.args || {}); }
-    catch (e) { await ledger.release(); return json(res, 200, { ok: false, error: String(e && e.message || e).slice(0, 200) }); }
-    if (!result || result.ok === false) await ledger.release();
-    const entry = { id: ledger.newId(), who: "lantern (owner approved)", what: p.type, args: p.args || {}, why: p.why || "",
-      before: result && result.before != null ? result.before : null, undo: result && result.undo, at: new Date().toISOString(), ok: !!(result && result.ok) };
-    await ledger.record(entry);
+  const r = await DEC.decide(found.decision.id, "yes", { actor: "owner" });
+  if (r.ok && r.executed === true) {
+    const e = r.entry || {};
+    const u = e.undo || {};
+    const entry = { id: e.id || r.actionId, who: "lantern (owner approved)", what: p.requested === "lineup-change" ? "lineup-change" : (p.type || e.hand), hand: e.hand,
+      args: p.args || e.args || {}, why: p.why || e.why || "", before: u.kind === "lineup-revert" ? (u.before || null) : null,
+      ...(u.kind === "lineup-revert" ? { after: u.after || null } : {}), undo: e.undo || null, at: e.at || new Date().toISOString(), ok: true, unified: true };
     await proposalsSet(list.filter(x => x.id !== id));
-    return json(res, 200, { ok: true, executed: true, entry });
+    return json(res, 200, { ok: true, executed: true, entry, decision: found.decision.id, message: r.message });
   }
-  await proposalsSet(list.map(x => x.id === id ? { ...x, decision: "approved", decidedAt: new Date().toISOString() } : x));
-  return json(res, 200, { ok: true, executed: false, note: "recorded. " + (p.description || "") });
+  if (r.ok) {
+    await proposalsSet(list.map(x => x.id === id ? { ...x, decision: "approved", decidedAt: new Date().toISOString() } : x));
+    return json(res, 200, { ok: true, executed: false, note: "recorded. " + (p.description || ""), decision: found.decision.id, message: r.message });
+  }
+  return json(res, 200, { ok: false, error: plain(String(r.message || "it refused").replace(/^Not done: /, "").replace(/\. The card stays open\.$/, "")), message: r.message, decision: found.decision.id });
 }
 async function handleDecline(res, body) {
   const id = String(body.id || "");
   const list = await proposalsList();
   if (!list.some(x => x && x.id === id)) return json(res, 404, { ok: false, error: "no such proposal" });
+  /* its card on the Home, when it has one, is answered No */
+  try { const f = await DEC.findByKey("proposal:" + id); if (f && f.open) await DEC.decide(f.decision.id, "no", { actor: "owner" }); } catch { }
   await proposalsSet(list.filter(x => x.id !== id));
-  return json(res, 200, { ok: true, declined: id });
+  return json(res, 200, { ok: true, declined: id, message: "Declined." });
 }
 async function handleUndo(res, body) {
   const id = String(body.id || "");
+  /* the one ledger first (3 October 2026): an act of the Lantern's hands is
+     undone by its own hand's exact recipe (api/_hands.js undoAction), which
+     refuses a second undo and a slot changed since */
+  let mine = null;
+  if (kvReady()) { try { mine = (await actionsList()).find(x => x && x.id === id) || null; } catch { mine = null; } }
+  if (mine) {
+    const r = await undoHand(id, "owner");
+    return json(res, 200, { ...r, ok: !!r.ok, ...(r.error ? { error: plain(r.error) } : {}), ...(r.note ? { note: plain(r.note) } : {}) });
+  }
   const list = await ledgerList(ACTIONS_KEEP);
   const entry = list.find(x => x && x.id === id);
   if (!entry) return json(res, 404, { ok: false, error: "no such logged action" });
@@ -691,6 +759,9 @@ async function handleAsk(req, res, body) {
   sseStart(res);
   sseWrite(res, "start", { thread: threadId, budgets: BUDGETS });
 
+  /* the request, so the council's sentinel (Jev, through Vercel's AI
+     Gateway) can find this deployment's OIDC token */
+  setRequest(req);
   const tools = buildTools(req);
   const ledger = makeLedger();
 
@@ -707,6 +778,9 @@ async function handleAsk(req, res, body) {
     if (type === "proposal") {
       const withId = { id: crypto.randomBytes(6).toString("hex"), at: new Date().toISOString(), ...data };
       await proposalsAppend(withId);
+      /* and a card on the owner's Home (3 October 2026): the proposal is
+         one of his decisions now, answered there or by Approve here */
+      try { const d = await DEC.upsert(DEC.fromProposal(withId)); if (d && d.ok) withId.decision = d.id; } catch { }
       sseWrite(res, type, withId);
       return;
     }
@@ -715,7 +789,7 @@ async function handleAsk(req, res, body) {
 
   let out;
   try {
-    out = await runAgent({ message, thread: prior, tools, route: llmRoute, emit, scrub, ledger });
+    out = await runAgent({ message, thread: prior, tools, route: llmRoute, emit, scrub, ledger, hands: handsFor() });
   } catch (e) {
     sseWrite(res, "error", { error: String(e && e.message || e).slice(0, 300) });
     try { res.end(); } catch { }
@@ -748,7 +822,10 @@ export default async function handler(req, res) {
     const action = String((req.query || {}).action || "");
     if (action === "ledger") {
       const ledger = makeLedger();
-      const [items, countToday] = await Promise.all([ledgerList(30), ledger.countToday()]);
+      /* the one ledger (3 October 2026) and what this room kept before it,
+         newest first, in the shape the console has always drawn */
+      const [mine, older, countToday] = await Promise.all([unifiedLedger(30), ledgerList(30), ledger.countToday()]);
+      const items = mine.concat(older).sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 30);
       /* countToday() answers null when the store could not be read (see
          makeLedger's own header): shown here as 0 for a plain display,
          since the console's own room already says plainly when the store

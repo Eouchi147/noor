@@ -8,7 +8,9 @@
      a retry may never send to a network that already took the post.
 
    Everything else in this file exists to keep that true through the states a
-   half-failed slot can actually be in. It also holds the asymmetry that made
+   half-failed slot can actually be in, and through two retries of the same
+   network that meet in the same minute (6 October 2026: the second is
+   refused while the first holds its claim). It also holds the asymmetry that made
    the failure look like an Instagram fault: Instagram REQUIRES an image and
    Facebook does not, so a card Meta cannot fetch takes out one network and
    leaves the other looking healthy.
@@ -47,16 +49,23 @@ const CTX = {
 let sent = [];           /* every network call the senders actually made */
 let cardOk = true;       /* whether the card image answers */
 let igReply = null;      /* what Instagram says when asked to make a container */
+let kvDown = false;      /* the store refusing every request */
 
 function net() {
   globalThis.fetch = async (url, opt) => {
     const u = String(url);
     if (u.startsWith('https://kv.test')) {
+      if (kvDown) return { ok: false, status: 503, json: async () => ({ error: 'down' }) };
       const cmds = JSON.parse(opt.body);
       return { ok: true, json: async () => cmds.map(c => {
         const [v, k, val] = c;
         if (v === 'GET') return { result: STORE.has(k) ? STORE.get(k) : null };
-        if (v === 'SET') { STORE.set(k, val); return { result: 'OK' }; }
+        /* SET ... NX writes only a key that is not there, as Redis does */
+        if (v === 'SET') {
+          if (c.slice(3).some(x => String(x).toUpperCase() === 'NX') && STORE.has(k)) return { result: null };
+          STORE.set(k, val); return { result: 'OK' };
+        }
+        if (v === 'DEL') return { result: c.slice(1).filter(x => STORE.delete(x)).length };
         return { result: null };
       }) };
     }
@@ -130,6 +139,52 @@ console.log('\nwhen it fails again');
   ok(ig.code === 190 && ig.sub === 463, "Meta's numeric code is kept, not just its sentence");
   ok(/Invalid OAuth/.test(ig.error), 'and its own words are kept verbatim');
   ok(got().results.facebook.ok === true, 'the network that worked is still recorded as working');
+}
+
+/* ------------------------------------- one retry of one network at a time */
+/* review of 6 October 2026 (CRITICAL): the hourly healer, the console's
+   Retry and the Lantern's fix-posting lever can reach the same network of
+   the same slot in the same minute; each read the record before the other
+   wrote it, and the network got the post twice */
+console.log('\none retry of one network at a time');
+{
+  net(); put(HALF()); sent = [];
+  const CLAIM = 'nsoc:retry:' + DATE + '#word|instagram';
+  /* Instagram slow to answer the first retry, held open until released */
+  let release;
+  const gate = new Promise(r => { release = r; });
+  igReply = async () => { await gate; return { ok: true, json: async () => ({ id: 'CONT' }), text: async () => '' }; };
+  const first = SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', CTX);
+  await new Promise(r => setTimeout(r, 30));
+  ok(STORE.has(CLAIM), 'a retry claims its network of its slot (nsoc:retry:<date>#<slot>|<channel>) before anything is sent');
+  const second = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', { ...CTX, byHand: true });
+  ok(second.ok === false && second.busy === true && /being retried for that slot right now/.test(second.error),
+     'a second retry of the same network while the first runs is refused, and says why: ' + second.error);
+  const other = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'facebook', CTX);
+  ok(other.busy !== true && other.already === true, 'a claim on one network never holds another: Facebook is answered on its own (it already has the post)');
+  release();
+  const r1 = await first;
+  igReply = null;
+  ok(r1.ok === true && sent.filter(x => x === 'ig-container').length === 1 && sent.filter(x => x === 'ig-publish').length === 1,
+     'Instagram was asked once, and took the post');
+  ok(!STORE.has(CLAIM), 'the claim is let go when the retry ends');
+  const third = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', CTX);
+  ok(third.ok === false && third.already === true && sent.filter(x => x === 'ig-container').length === 1, 'and the next retry finds the record whole and sends nothing');
+
+  /* a retry that fails midway still lets its claim go */
+  put(HALF());
+  const boom = { ...CTX };
+  Object.defineProperty(boom, 'dials', { enumerable: true, get() { throw new Error('a fault midway through the retry'); } });
+  let threw = false;
+  try { await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', boom); } catch { threw = true; }
+  ok(threw && !STORE.has(CLAIM), 'a retry that throws midway still lets its claim go, so the next hour can try again');
+
+  /* a store that cannot be asked: nothing is retried blind */
+  put(HALF()); sent = []; kvDown = true;
+  const blind = await SOC.retryChannel('noorcodex.com', DATE, 'word', 'instagram', CTX);
+  kvDown = false;
+  ok(blind.ok === false && blind.busy !== true && /could not be claimed/.test(blind.error) && sent.length === 0,
+     'with the store refusing, the claim cannot be taken and the network is not asked: ' + blind.error);
 }
 
 /* ---------------------------------------------------------- what it refuses */

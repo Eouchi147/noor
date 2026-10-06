@@ -495,7 +495,8 @@ export async function searchAudit(date) {
   const urls = sampleUrls(entries, week, AUDIT_SAMPLE);
   const pages = await pool(urls, 5, async url => {
     try {
-      const r = await fetchT(url, { headers: { "user-agent": "NOOR-Soul/1.0 (+https://" + SITE_HOST() + ")", accept: "text/html" } }, 8000);
+      /* the house's mind by its one name (3 October 2026) */
+      const r = await fetchT(url, { headers: { "user-agent": "NOOR-Lantern/1.0 (+https://" + SITE_HOST() + ")", accept: "text/html" } }, 8000);
       const hdr = {};
       try { if (r.headers && typeof r.headers.get === "function") hdr["x-robots-tag"] = r.headers.get("x-robots-tag") || ""; } catch { }
       const html = r.status === 200 ? await r.text() : "";
@@ -735,7 +736,7 @@ export async function setBenchmarks(ids) {
 export async function youtubePosition(date) {
   const a = await ytAuth();
   if (!a.ok) return a;
-  if (!(await ytReserve(1, date))) return { ok: false, why: "the soul's YouTube quota for today is spent" };
+  if (!(await ytReserve(1, date))) return { ok: false, why: "the Lantern's YouTube quota for today is spent" };
   const mine = parseChannels(await ytGet("/channels?part=statistics&mine=true", a.token))[0];
   if (!mine) return { ok: false, why: "YouTube lists no channel for the house's token" };
   const ids = await readBenchmarks();
@@ -744,7 +745,7 @@ export async function youtubePosition(date) {
     if (await ytReserve(1, date)) {
       try { benchmarks = parseChannels(await ytGet("/channels?part=snippet,statistics&id=" + ids.map(encodeURIComponent).join(","), a.token)); }
       catch (e) { note = str(e && e.message || e, 160); }
-    } else note = "the soul's YouTube quota for today is spent; the benchmarks wait for next week";
+    } else note = "the Lantern's YouTube quota for today is spent; the benchmarks wait for next week";
   } else note = "no benchmark channels are set yet; add up to ten from the console";
   return { ok: true, at: nowIso(), date, week: isoWeek(date), house: { subscribers: mine.subscribers, views: mine.views, videos: mine.videos, hiddenSubscribers: mine.hiddenSubscribers },
     benchmarks, note, units: ids.length ? 2 : 1 };
@@ -794,7 +795,7 @@ export async function radarStep(date) {
   const after = new Date(Date.parse(date + "T00:00:00Z") - 30 * 86400000).toISOString();
   let ran = 0, note = null;
   for (const q of left.slice(0, RADAR_PER_DAY - todayCount)) {
-    if (!(await ytReserve(RADAR_UNITS, date))) { note = "the soul's YouTube quota for today is spent; the radar goes on tomorrow"; break; }
+    if (!(await ytReserve(RADAR_UNITS, date))) { note = "the Lantern's YouTube quota for today is spent; the radar goes on tomorrow"; break; }
     try {
       const s = await ytGet("/search?part=snippet&type=video&order=viewCount&maxResults=5&publishedAfter=" + encodeURIComponent(after) + "&q=" + encodeURIComponent(q), a.token);
       const items = (s.items || []).map(it => ({ id: it.id && it.id.videoId, title: it.snippet && it.snippet.title })).filter(x => x.id);

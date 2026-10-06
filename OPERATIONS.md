@@ -385,6 +385,18 @@ the Posts room. Every proposal needs the owner's own one-tap yes; approving one 
 maps to an existing safe endpoint runs it and logs it, approving anything else only
 records the decision.
 
+**Since 3 October 2026 the agent is the Lantern's own voice** (LANTERN.md section 5).
+Its two autonomous actions run through the Lantern's hands (`api/_hands.js` runHand),
+judged by the council of three first and recorded in the one action ledger; they still
+count against its own five a day, and the hands' daily caps bind as well. An order that
+names one of the Lantern's hands ("skip tomorrow's 8 o'clock reel") becomes an intent
+through the same hands, council and caps, and the answer says what was done or why it
+was refused. Every proposal is also a card in Home's **Your decisions**: its Yes runs
+the hand with the owner's approval, and the room's own Approve and Decline still answer
+by deciding that card. The agent reads the Lantern's state (the brief, the goals, the
+decisions, Done and Next) through its `lantern` tool, and `GET ?action=ledger` reads the
+one ledger together with the entries it kept before.
+
 ### Experiments, `api/_experiments.js` and `api/experiments.js`
 
 A test is a real A/B split over the verse shelf, never a guess dressed as one: the
@@ -540,6 +552,8 @@ meant.
 | `nl:shift` | What the last night shift actually did, and what it cost | `_nightshift.js` |
 | `nsoc:ins:<net>:<id>` | What one post did, as the network last answered it | `_insights.js` |
 | `nsoc:slot:<date>#<slot>` | One slot's record: per network `{ ok, id, error }`; a card since 9 September 2026 carries `{ story, ok, storyOnly }` per Meta network (stories only, `social.cardsFeed` off); `results.phone` is what the owner shared by hand from the console's Reels room, a note and never a network | `social.js` |
+| `nsoc:claim:<date>#<slot>` | The hourly run's claim on one slot it is about to send (SET NX, ten minutes): a second run in the same minute leaves the slot alone. The owner's Post now neither takes nor reads it (see "The day's post did not go out", item 9) | `social.js` |
+| `nsoc:retry:<date>#<slot>\|<channel>` | One network's retry of one slot, held while it runs (SET NX, five minutes, deleted when it ends): the hourly healer, the console's Retry and the Lantern's fix-posting lever never ask one network twice at once; the second is refused with "being retried right now" (6 October 2026) | `social.js` |
 | `nsoc:steward` | The steward's findings, kept ten minutes | `_steward.js` |
 | `nsoc:flow:<days>` | The funnel for one window, kept fifteen minutes | `_flow.js` |
 | `nexp:state` | The experiment now running (or none) and its finished history: `{current: {id, start, args}\|null, history: [...]}` | `_experiments.js` |
@@ -547,6 +561,9 @@ meant.
 | `nsoul:spend:<YYYY-MM>:calls` | How many paid calls that month were charged | `_llm.js` |
 | `nsoul:nocredit` | Set for one hour after OpenRouter answers 402: the deep tier uses free models only | `_llm.js` |
 | `nsoc:override:<date>` | One day's reel overrides, a hash of `<slot>: {action:"skip"}\|{action:"swap", id}, at, by, note}` | `_lineup.js` |
+| `nsoc:rota:leans` | The rota leans, a small list `[{id, slot, kind, from, to, by, at, note}]`: one reel slot carries a named kind for 1 to 7 days (the Lantern's rota-lean lever). Read fail open on the posting path and every view; ended ones kept 62 days for the insights reconstruction, then pruned on the next write | `_levers.js` |
+| `nsoc:rota:leans:ver` | The leans' version: every write to `nsoc:rota:leans` is a compare and set on it | `_levers.js` |
+| `nsoul:count:rota:<date>`, `nsoul:count:fix:<date>` | That day's rota leans (1 at most) and posting repairs (6 at most, fix-posting, which never spends the R2 total), counted before each runs | `_soul.js` |
 | `nsoul:tg:code` | The one-time code waiting to link the owner's Telegram `{code, at}`, kept 15 minutes | `_telegram.js` |
 | `nsoul:tg:offset` | The next Telegram update to read, so Check never rereads old messages | `_telegram.js` |
 | `nsoul:tg:owner` | The owner's private chat with the bot `{chat, name, since}`, no expiry; never shown by any route | `_telegram.js` |
@@ -578,6 +595,29 @@ meant.
 | `nsoul:count:soul-lineup-date:<date>`, `nsoul:count:soul-skip-date:<date>` | The soul's line-up changes (2 at most) and skips (1 at most) for one target date | `_hands.js` |
 | `nsoul:canary:<hash>` | The canary answers already had for one set of proposed lessons, so an evaluation cut short resumes, kept 7 days | `_evolve.js` |
 | `nllm:rl:<provider>:<model>:soul:<date>` | The soul's own free calls that day; it stops at half of the provider's daily allowance, so the Lantern keeps the rest | `_llm.js` |
+| `nsoul:decisions` | The owner's open decisions on Home, 12 at most, one JSON list written only by a compare and set on `nsoul:decisions:ver` (LANTERN.md section 3) | `_decisions.js` |
+| `nsoul:decisions:ver` | The decisions' version, so a cycle raising its needs and a button pressed at the same moment never lose each other | `_decisions.js` |
+| `nsoul:decisions:archive` | Decided, resolved, expired and overflowed cards, newest first, 200 kept, read back 30 days | `_decisions.js` |
+| `nsoul:decisions:no` | Each card key the owner said No to and the day it is forgotten (30 days); a No'd need is not raised again until then. Written by a compare and set on `nsoul:decisions:no:ver` (6 October 2026), so two No answers at once are both kept | `_decisions.js` |
+| `nsoul:once:decide:<id>` | The claim on one decision's hand, 10 minutes, so two taps never run it twice | `_decisions.js` |
+| `nsoul:brief:<date>` | The morning brief `{date, text, numbers, at, cycle, by, why, model, facts}`, written at each daily cycle's report, kept 60 days | `_home.js` |
+| `nsoul:brief:last` | The date of the latest brief, so Home shows it with its date before the next cycle, kept 60 days | `_home.js` |
+| `nsoul:queue` | Next: the plan's intents dated for later `{id, intent, when, due, expires, approval, takenBy}`, 10 untaken at most, let go after 7 days; written only by a compare and set on `nsoul:queue:ver` | `_home.js`, `_mind.js` |
+| `nsoul:queue:ver` | The queue's version | `_home.js` |
+| `nsoul:once:next:<id>` | No longer written (6 October 2026): Do it now and Skip claim a queued step in `nsoul:queue` itself (`takenBy: "owner:..."`, by the queue's compare and set, only while no cycle has it), and give it back when it did not run | `_home.js` |
+| `nsoul:skips` | What the owner skipped on Next `{key, hand, args, title, until}`, 7 days each: told to the planner and enforced in code | `_home.js` |
+| `nsoul:ownerrun:<cycle>:<n>` | The owner's Do it now or Skip on one step of a cycle `{by, ok, actionId, undo, error}` or `{skipped}`, kept 120 days; the cycle reads it instead of running the step | `_home.js`, `_mind.js` |
+| `nsoul:ideas` | Ideas to grow `{id, key, title, why, impact, who, status, ...}`, 5 open at most, decided ones kept 30 days; written only by a compare and set on `nsoul:ideas:ver` | `_home.js` |
+| `nsoul:ideas:ver` | The ideas' version | `_home.js` |
+| `nsoul:ideas:never` | Ideas the owner said Never to, by their title's words, 60 kept; told to the planner and the weekly reflection, never written again | `_home.js` |
+| `nsoul:directives` | A Lantern idea the owner said Go to that had no concrete steps: handed once to the next plan, 14 days, 30 kept | `_home.js` |
+| `nsoul:giving` | The gifts as totals (3 October 2026, "The Lantern and giving" in §8): `{configured, ok, currency, month, monthly:{givers}, gifts30, thisMonth, lastMonth, upkeep:{month, cover}, lastMonthCover, zakat:{outstanding}, partial, at, lastOkAt, lastTry, failingSince}`, amounts in major units, read from Stripe at most every 6 hours, kept 120 days. Never a name, an email, a du'a or a single gift | `_giving.js` |
+| `nsoul:pub:line` | The support line's chosen wording `{id, since, until, at, by}`; absent means the everyday line | `_giving.js` (support-line); read by `_public.js` |
+| `nsoul:pub:note` | The note on /donate `{text, at, facts, by}`, shown 14 days | `_giving.js` (giving-note); read by `_public.js` |
+| `nsoul:pub:door` | The door of the week `{path, title, desc, since, until}` | the feature-door lever; only read by `_public.js` |
+| `nsoul:count:support:<date>`, `nsoul:count:note:<date>` | That day's support line change and giving note (1 each at most), counted before each runs | `_soul.js` |
+| `nsoul:once:goal:g-sustain`, `nsoul:once:seed:<seed>` | Set once the sustain goal or a seeded idea (case-for-support, print-shop, documentary) was offered, so neither is offered again | `_giving.js` |
+| `nsoul:once:zakat:<YYYY-MM>` | No longer written (6 October 2026): the month's zakat card is now raised while it waits and this month's card is open or was pushed out by the cap, and never again once he answered it, read from the decisions themselves | `_giving.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -601,7 +641,7 @@ stripped from everything public.
 | `/api/dedications` | internal | Gates du'as left at checkout through the model |
 | `/api/donate` | yes | Starts a Stripe checkout for a gift |
 | `/api/ledger` | admin | Reads Stripe charges, computes the waterfall |
-| `/api/settings` | admin | Reads and writes `nb:settings`: every dial |
+| `/api/settings` | admin | Reads and writes `nb:settings`: every dial. Its public GET answers `{s, lantern}`: the public dials and what the Lantern chose for the pages (the support line, the giving note, the door of the week; "The Lantern and giving" in §8) |
 | `/api/overrides` | admin | Content overrides |
 | `/api/admin-auth` | none | Unlocks the console, sets the signed cookie |
 | `/api/admin-data` | admin | The console's data, plus `?probe=lantern`, `?probe=lights` and `?probe=night` |
@@ -892,6 +932,48 @@ Order of checks, cheapest first:
    approved Lantern proposal). The slot's own header carries the badge and who set
    it; Clear the override there to let the day post as usual again. See "Lineup
    overrides" above.
+8. **The Lantern may already have repaired it.** Its fix-posting lever retries a
+   network that refused a slot, or finishes a reel still processing, today
+   only, at most six a day, through the same calls as the Steward's buttons and
+   never with force. It never sends a slot (6 October 2026): a slot whose hour
+   passed with nothing recorded goes out with the next hourly run, one a run and
+   the newest first, or by your own Post now. A retry holds
+   `nsoc:retry:<date>#<slot>|<channel>` while it runs, so the lever, the hourly
+   healer and your Retry button can never ask the same network twice at once;
+   the one that finds it held says "being retried right now" and asks nothing.
+   Each repair is in Home's Done list with what happened network by network; it
+   has no Undo, because a post is never deleted.
+9. **Known: Post now and the hourly run can still meet.** Post now (the Posts
+   room, the Steward's send-slot) neither takes nor reads the hourly run's slot
+   claim (`nsoc:claim:<date>#<slot>`); it refuses only a slot whose record already
+   says sent, half sent or processing, and the run writes that record after its
+   networks answer. So pressing Post now on an owed slot in the minutes the hourly
+   run is sending the same slot (the top of the hour, a few minutes either side)
+   can send it twice. Until that is closed in code, press Post now on an owed
+   slot only after the hour's run has finished (its row in What has gone out),
+   or wait for the next hour, which sends it on its own.
+
+### A slot shows a lean
+
+A reel slot that carries a different kind from its usual rota for a few days (a
+Name in the 14:00 slot on a day that is normally a short, say) is under a **rota
+lean**: the Lantern's rota-lean lever, set for 1 to 7 days, one a day at most, never
+more than two at once, never more than four of the six reel slots one kind on a day.
+Where it shows: the plan and today rows carry `lean` (the lean stored for that slot
+that day), and a today row also `appliedLean` (it decided this card); the sent slot's own record
+`nsoc:slot:<date>#<slot>` carries `lean: {id, kind}`; the Lantern's line-up tool says
+`lean` on the row; Home's Done list has the rota-lean action with its reason. To end
+it, press **Undo** on that action in Done: the lean is taken away and the slot follows
+the rota again from its next post (what already went out stays as it went). An
+**override wins** over a lean on its own slot: Skip or Swap in the Posts room as
+usual. If a lean seems to do nothing, that is by design on a day the rota already
+gives that kind, on a This day reel's own morning, or for a kind with no card that
+fits the slot's half; and if the store cannot be read at all, every lean is ignored
+and the day posts on the rota (never the other way round). The list itself is
+`nsoc:rota:leans`; read it, never edit it by hand: the rules are checked only when the
+lever sets a lean, and on reading only what cannot be trusted at all is ignored (an
+entry with a missing or impossible field is read as no lean and dropped on the next
+lever write; a date with three leans, or a slot with two, is read as no lean there).
 
 ### The steward says something needs you
 
@@ -924,6 +1006,15 @@ fifteen minutes. Two things in that funnel are honestly missing rather than
 estimated, and it says so in `notes`: **clicks are attributed by month**, not by
 day, because that is the grain `api/beacon.js` keeps, and **a returning reader
 is not counted at all**, because the beacon is cookieless by design.
+
+**Since 3 October 2026 the Lantern reads the Steward too** (LANTERN.md section 5).
+Each daily cycle folds in the same deterministic findings (never the paragraph, never
+Stripe), with the inbox's new count and the journal replies waiting, as evidence for
+its plan and its council. The findings only the owner can act on (new messages, journal
+replies, a Meta or Threads token near its end, insights refused) become cards in Home's
+**Your decisions**, each with Open and its steps; a card closes itself once the need is
+gone (the inbox read, the token renewed), and stays when the reading itself failed.
+`/api/house?action=steward` still answers exactly as above.
 
 ### Linking the owner's Telegram
 
@@ -1041,6 +1132,91 @@ keep the old copy.
   deliberate and it is tested.
 - Nothing writes to Stripe from the console. Reading only.
 
+### The Lantern and giving
+
+Added 3 October 2026 (LANTERN.md section 9, SOUL.md section 13, Article 11). The
+Lantern helps keep the house alive without ever pushing: it reads the gifts, keeps
+the way to give working, chooses one of a few fixed wordings for the support line and
+writes a short note of facts on the giving page. The code is `api/_giving.js` (the
+reading, the two hands, the goal, the door's cards, the seeds) and `api/_public.js`
+(the fixed wordings and the public read).
+
+**What it reads.** Stripe, **read only**: `GET /v1/charges` through the ledger's own
+`computeLedger` (all time, and the last 30 days) and `GET /v1/subscriptions?status=active`,
+counting those marked `noor_donation`. Also `nb:given` (what the ledger records as given,
+for the running costs, kind upkeep), the daily snapshot (for the note's facts) and the
+Hijri date the poster caches (`nhij:<date>`). It keeps **totals only** in
+`nsoul:giving`: monthly givers, gifts in the last 30 days (count, gross, net), this month
+and the last, this month's recorded costs and the share the month's net covers, the
+zakat waiting. Never a name, an email, a du'a or a single gift; only these totals reach a
+model, and the zakat amount appears only in the steps of the owner's own card. The reading runs at most every
+6 hours (the cycle's sense stage, and insights-refresh), and at once when a new calendar
+month begins, on its own clock; the Home reads the record, never Stripe.
+
+**An amount reaches a model only as a total of three gifts or more** (6 October 2026,
+after the review of money): with one or two gifts, a "total" is those gifts' own amounts,
+so every path to a model (the planner's and the council's evidence, the conversation's
+state, the daily snapshot that the effects and the brief read) carries the count and
+null for the money and for the share of the costs it covers. The owner's own Home card
+shows them as they are.
+
+**Stripe stays read only.** Every call is a GET; nothing in the house creates, refunds,
+cancels or changes anything in Stripe, and the Lantern never opens accounts, accepts
+terms, sets prices or touches the payments (the red lines). `tests/giving.mjs` proves
+no call but a GET is ever made.
+
+**What it may change, and nothing else.**
+
+- `support-line` (R2, once a day at most, and at most one change in 7 days): the band's
+  wording, chosen by id from the five in `api/_public.js` (everyday, ramadan, last-ten,
+  dhul-hijjah, thanks). A seasonal wording only in its season by the Hijri date, and the
+  public read falls back to the everyday line on its own when the season ends; thanks
+  only in the month after a month whose gifts covered the recorded costs. Where the band
+  appears does not change. Stored in `nsoul:pub:line`.
+- `giving-note` (R2, once a day at most, and at most one in 7 days): the block "What
+  your gifts kept alive this week" on /donate, from a template and the week's facts only
+  (how many times the posts were seen, readers, posts and reels sent, free with no ads
+  and no trackers, 2.5 percent set aside as zakat). Never an amount, a number of givers
+  or a name. Stored in `nsoul:pub:note`, shown 14 days.
+- Both are R2: they go to the council (or the owner's own approval) and run inside the
+  daily caps, audited, each with its exact undo. Pause stops them like everything else.
+- It also adds, once, the owner's goal g-sustain (monthly givers, metric
+  `giving.monthly`), never over a goal he has, and raises his cards: "Keep this goal, or
+  Change it"; the gift door not set up (`giving-setup`); Stripe refusing the reading for a
+  day (`giving-stripe`); once a month, zakat waiting to be given (`zakat:<YYYY-MM>`, the
+  amount in its steps, linking to the ledger at `/admin#giving`). And three ideas, seeded
+  once: a case for support, a shop of printed art, the first documentary funded by named
+  Guardians.
+
+**How to undo.**
+
+- A line or a note: Undo on the action in the console (Home's Done list, or the engine
+  room). It puts back the previous wording or note, and does nothing if
+  either was changed again since. By hand: delete `nsoul:pub:line` (the everyday line
+  returns) or `nsoul:pub:note` (the block disappears).
+- Stop it all: Pause in the console; the line and note stay as they are and nothing
+  changes until Resume.
+- The goal: edit or remove g-sustain from the goals like any goal of yours; it is never
+  added again (`nsoul:once:goal:g-sustain`).
+- A seeded idea: Later or Never on Home; Never is final.
+
+**When something looks wrong.**
+
+- Home shows giving as missing with "not configured": `STRIPE_SECRET_KEY` is not set on
+  this deployment. Add it in Vercel and redeploy; the next cycle reads the gifts.
+- "Stripe refused the reading": the key was rolled or restricted. The card appears after
+  24 hours of refusals; the last good totals stay on Home meanwhile.
+- The band shows the everyday line in Ramadan: the Hijri date was not cached for today,
+  or the chosen wording's date passed. It is fail safe by design.
+- The public read is `GET /api/settings` (`lantern: {line, note, door}`, cached 30
+  seconds at the edge); `lantern: null` means the store could not be read and the pages
+  carry on with the everyday line and no note.
+- The thanks wording was refused on the first of the month: it is set only on a reading
+  of this month made today, after a month whose gifts covered the recorded costs. A
+  Stripe that refuses the reading holds it back until a good reading is made.
+- The planner's evidence shows a count with no amount: fewer than three gifts in that
+  window; amounts reach a model only as a total of three or more (above).
+
 ---
 
 ## 9. How a change reaches the live site
@@ -1115,3 +1291,105 @@ documents its own outage, then `scripts/room.py`.
 The project's standard is written down in one line in `assets/anim.css` and it governs
 everything else: **motion is evidence, not decoration, and the still frame must be the
 honest one.**
+
+---
+
+## The Lantern's mission powers
+
+A runbook for LANTERN.md section 8 (3 October 2026, second round): the Lantern's hands
+beyond the reels, in `api/_mission.js` and `api/_door.js`, merged into the one registry
+(`api/_hands.js`) the way the posting levers are. Every one keeps the house's rules: the
+red lines in code, the council for a public act, the caps, the audit, an Undo where an
+undo can exist. `tests/mission.mjs` holds all of it.
+
+### A letter waits for you on Home
+
+The Lantern drafts letters for **you** to send, from your own account, because messaging
+people stays a red line for it. A card on **Your decisions** reads "A letter to the imam
+of a local mosque" (always a role or a public institution, never a person), with the
+letter itself (`draft: {title, text}`) and three steps. **Read it, change anything you
+wish, copy it, send it yourself**, then press **Sent**: the letter is marked sent with the
+reach of that morning, and seven days later the reflect stage of the daily cycle writes
+what followed into the effects ledger (`nsoul:effects`, action `draft`), where the
+planner's "what worked" reads it. **Later** hides the card three days (it still counts as
+waiting); **No** closes it and it is not raised again. **Undo** on "Wrote a letter" in
+Done withdraws a letter you have not sent; a letter marked sent stays sent (Undo on
+"Marked a letter as sent" only stops it being measured, before it is).
+
+Limits: three letters a day, counted by the hand itself (`nsoul:count:drafts:<date>`; a
+draft is R1, so it never spends the six public actions), and three waiting at once. The
+Lantern cannot press Sent: only Sent on that letter's own card marks it.
+
+**Why a letter was not written** (Done, or the cycle's record, says which): `to` named a
+person, an address or a handle; the letter carried an email address, a phone number, an
+IP address, a key or a Journal marker; it linked outside noorcodex.com; a number in it is
+not one the evidence carries (the library's own map: 114 surahs, the 99 Names, 25
+prophets, 71 chapters, 350 Lights, 523 words; the schedule; the year; the house's own
+totals of its latest morning); it claimed an endorsement or a partnership, or promised a
+payment or a post of someone else's; it named someone from the house's own records (a
+full name from the inbox or the Journal's comments, read inside the hand and never
+kept); or the records could not be read at all (it never guesses). The red-line guard
+reads the hand's own fields and the reason (kind, to, purpose, why), never the letter's
+body, which is addressed to someone by design.
+
+Where it is kept: `nsoul:drafts` (20 kept, 60 days, written by a compare and set on
+`nsoul:drafts:ver`), each `{id, kind, to, purpose, title, text, goal, at, by, status:
+open|sent|withdrawn|unsent, decision, sentAt, before, effect}`; its card is the decision
+keyed `draft:<id>`.
+
+### The door of the week
+
+One room of the library put forward for seven days, **on `/today`** (a row above the
+rooms, "The door of the week" beside the room's own line) and **on the arrival** (a row
+above the library's rooms). Always the room's own title and line from the library's map
+(noor-fx.js `MAP`, copied in `api/_door.js` and held equal by the tests), never words a
+model wrote; never the gift door, never the console, never Today, the journal,
+corrections or the terms. The Lantern chooses it through the council (R2, one a day, and
+one of the six public actions), by the season, the topic radar and the rooms readers stay
+in. **Undo** on "Put ... forward as the door of the week" in Done puts back the door
+before it (or none); an older choice cannot be undone over a newer one.
+
+The record is `nsoul:pub:door` `{id, path, title, desc, since, until, at, by, why}`:
+`since` is the day it was chosen, and `until` (since plus 7) is the first day it no
+longer shows. The public read is `publicDoor()` / `readPublicDoor()` in `api/_door.js`,
+which answers `{path, title, desc}` in the map's own words, or null.
+
+If it does not show: on `/today` and on the arrival alike, the row is drawn in the
+browser by `assets/noor-dials.js` from the settings answer's `lantern.door`
+(`{ s, lantern: { line, note, door } }`, cached 30 seconds at the edge), into an empty
+`[data-noor-door]` box the page holds (`data-noor-door="row"` on `/today`): no
+`lantern.door` in that answer, no row. So a new door, or an Undo, shows within about
+half a minute on both. Until 6 October 2026 `/today` read the door into its own HTML,
+which the edge keeps until midnight UTC, so a door lagged by up to a day there and an
+undone one stayed until midnight; the page itself never carries the door now. A dated
+`/today?date=` holds no box at all. A closed journal is never put forward.
+
+### A build card for the search fixes
+
+The weekly search audit (Engine room, instruments) reads 25 pages a week. Its failing
+pages on the four basics a build can mend (no meta description, no canonical or one
+pointing elsewhere, too few words, noindex) become **one** "Build this?" card, keyed
+`search-fixes`, the pages in its steps (five, then "and N more") and all of them in the
+upgrade's spec. **Build it** accepts the upgrade into Claude's build queue. The card is
+raised at each daily cycle's report and comes back only when the list changes; a list
+emptied closes it; No holds it away for 30 days. An unbuilt upgrade for an older list is
+withdrawn when the list changes.
+
+### The day across the horizon
+
+`today.slots` in the Home is every posting slot of today with its state (sent, partial,
+failed, due, later, skipped), its networks (sent of asked) and the lean that shaped it;
+SOCIAL_ENGINE.md has the reading. A slot that stays **due** after its hour is "The day's
+post did not go out" above. `today.slots: null` with `missing.slots` means the slot
+records could not be read; the rest of the Home still stands.
+
+### The whole field, for the planner
+
+Each morning the strategist is told every power it has and the goal each serves
+(`fieldText` in `api/_mission.js`, naming only the hands registered): posting, the
+numbers, search, the site (the door), borrowing audiences (letters), sustaining the house
+(the giving hands, once registered) and its own memory. Every intent names its goal
+(`goal`, kept on the cycle's record; one the plan named wrongly is the goal kept on its
+metric). The caps are unchanged: at most 5 intents a day, 6 public actions, 1 door, 3
+letters. The plan's data carries only totals of these powers (letters waiting, the door's
+path and end, whether the search card waits), never a letter's words.

@@ -2,9 +2,10 @@
 // ---------------------------------------------------------------------------
 // GET  /api/lineup?date=YYYY-MM-DD   every reel slot of that day: what the
 //   rota would post (after any running experiment and any override already
-//   set), the slot's own record state, and the override itself if there is
-//   one. The same reading api/social.js's own plan/today preview and the
-//   Lantern's lineup tool give, so a console, a script and the model agree.
+//   set), the slot's own record state, the override itself if there is
+//   one, and the rota lean on the slot (lean, appliedLean). The same reading
+//   api/social.js's own plan/today preview and the Lantern's lineup tool
+//   give, so a console, a script and the model agree.
 // POST /api/lineup {action:"set", date, slot, override:{action:"skip"}}
 // POST /api/lineup {action:"set", date, slot, override:{action:"swap", id}}
 // POST /api/lineup {action:"clear", date, slot}
@@ -60,12 +61,19 @@ export default async function handler(req, res) {
       const slots = [];
       for (const slot of REEL_SLOTS) {
         const rec = records[slot];
-        const otherPicks = await otherPicksFor(ctx.cards, date, slot, ctx.hijri, ctx.seen, ctx.bias, { records });
-        const { card, override } = await chooseReelWithOverride(ctx.cards, date, slot, ctx.hijri, ctx.seen, ctx.bias, null, { otherPicks, rec });
+        const otherPicks = await otherPicksFor(ctx.cards, date, slot, ctx.hijri, ctx.seen, ctx.bias, { records, leans: ctx.leans });
+        const { card, override, lean } = await chooseReelWithOverride(ctx.cards, date, slot, ctx.hijri, ctx.seen, ctx.bias, null, { otherPicks, rec, leans: ctx.leans });
         slots.push({
           slot, locked: !!rec, state: rec ? rec.state : null,
           override: overrides[slot] || null,
           appliedOverride: override,
+          /* the rota lean (api/_levers.js), shown the way the override is:
+             `lean` is the one stored for this slot that day, `appliedLean`
+             the one that actually decided the card (null when an override
+             won or the rota already gives that kind; for a slot already
+             recorded, the record's own mark), so Posts can show one */
+          lean: (ctx.leans && ctx.leans[slot]) || null,
+          appliedLean: lean || null,
           card: card ? { id: card.id, kind: card.kind || "light", hook: card.hook || "", slot: card.slot || "" } : null
         });
       }

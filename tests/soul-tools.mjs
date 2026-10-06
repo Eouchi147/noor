@@ -127,7 +127,7 @@ console.log('\nthe sentinel reads every text to the owner and every lesson');
   const bad = props.find(p => /Bukhari/.test(p.lesson.text)), good = props.find(p => /20 seconds/.test(p.lesson.text));
   ok(bad.status === 'refused' && /sentinel/.test(bad.evals.failed[0]) && /hadith/.test(bad.evals.failed[0]), 'a lesson citing a hadith number is refused by the sentinel: ' + bad.evals.failed[0]);
   ok(good.status === 'applied', 'the clean one goes on to the canaries and is applied');
-  ok(ROUTER.calls.filter(c => c.role === 'guardian' && c.tier === 'strong').length === 7, 'the canaries ran once, for the clean lesson only (7 Guardian answers)');
+  ok(ROUTER.calls.filter(c => c.role === 'guardian' && c.tier === 'strong').length === 12, 'the canaries ran once, for the clean lesson only (12 Guardian answers)');
   ok(ev.results.length === 2, 'both are reported');
   ROUTER.guardian = 'approve';
   jevOff();
@@ -197,7 +197,8 @@ console.log('\nthe drift alarm');
   const note = rec.intents.find(i => i.drift === 'g-reach');
   ok(note && note.action === 'note' && note.status === 'done', 'a plan that named nothing for it still answers it: a note in the soul\'s memory');
   const chron = await SOUL.chronicleRead(1);
-  ok(chron[0].needsYou.some(n => /g-reach/.test(n) && /7 daily cycles/.test(n)), 'and the owner hears of it once, in needsYou');
+  /* 3 October 2026: by the goal's own outcome, never its id */
+  ok(chron[0].needsYou.some(n => /"Double the north star"/.test(n) && !/g-reach/.test(n) && /7 daily cycles/.test(n)), 'and the owner hears of it once, in needsYou, by its outcome');
 }
 
 /* ===========================================================================

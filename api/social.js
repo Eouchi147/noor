@@ -53,6 +53,9 @@ import { kv, kvReady } from "./_kv.js";
 import { planDay, buildSlot, dueNow, slotExtras, chooseReel, reelHalf, SLOT_IDS, SLOTS, REEL_SLOTS } from "./_schedule.js";
 import { biasFor as expBiasFor } from "./_experiments.js";
 import { overrideFor, getOverride, chooseReelWithOverride, otherPicksFor, buildDayContext } from "./_lineup.js";
+/* the day's rota leans (the rota-lean lever), read fail open exactly like
+   the experiment's bias above: any fault is "no lean", never a lost post */
+import { leanFor } from "./_levers.js";
 import { readManifest, rowUrls } from "./_reels.js";
 import * as CH from "./_channels.js";
 import * as TH from "./_threads.js";
@@ -1439,6 +1442,8 @@ export async function runDaily(host, date, opts = {}) {
 =========================================================================== */
 const K_SLOT = (d, s) => "nsoc:slot:" + d + "#" + s;
 const K_CLAIM = (d, s) => "nsoc:claim:" + d + "#" + s;
+/* one network's retry of one slot, held while it runs (retryChannel below) */
+const K_RETRY = (d, s, ch) => "nsoc:retry:" + d + "#" + s + "|" + ch;
 /* true when this run may send the slot: the claim was free and is now ours.
    Without a store there is nothing to claim against, and the machine already
    refuses to send without one (storeOk), so the answer there is yes. */
@@ -2407,7 +2412,7 @@ async function reelOverridePlan(date, slotId, host, hijri, opts) {
   if (ov.action === "skip") return { pin: null, note: { action: "skip", by: ov.by }, skip: true };
   if (ov.action !== "swap") return { pin: null, note: null, skip: false };
   const ctx = await buildDayContext(host, date, {
-    hijri, seen: opts.seen, bias: opts.bias, recentlyPosted, biasFor: expBiasFor
+    hijri, seen: opts.seen, bias: opts.bias, recentlyPosted, biasFor: expBiasFor, leans: opts.leans
   });
   /* every OTHER reel slot of the same day, as a FACT where the day has
      already decided one (its own record's rec.reel) rather than a pick
@@ -2420,9 +2425,9 @@ async function reelOverridePlan(date, slotId, host, hijri, opts) {
      only recomputes a slot with no record yet. */
   const records = {};
   for (const s of REEL_SLOTS) if (s !== slotId) records[s] = await readSlot(date, s).catch(() => null);
-  const otherPicks = await otherPicksFor(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, { records });
-  const { override } = await chooseReelWithOverride(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, null, { otherPicks });
-  const shared = { seen: ctx.seen, bias: ctx.bias, hijri: ctx.hijri };
+  const otherPicks = await otherPicksFor(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, { records, leans: ctx.leans });
+  const { override } = await chooseReelWithOverride(ctx.cards, date, slotId, ctx.hijri, ctx.seen, ctx.bias, null, { otherPicks, leans: ctx.leans });
+  const shared = { seen: ctx.seen, bias: ctx.bias, hijri: ctx.hijri, leans: ctx.leans };
   if (override && override.fellBack) return { pin: null, note: override, skip: false, ...shared };
   return { pin: ov.id, note: { action: "swap", id: ov.id, by: ov.by }, skip: false, ...shared };
 }
@@ -2480,7 +2485,12 @@ export async function composeSlot(host, date, slotId, opts = {}) {
      reel itself, or a pinned repair), the same short circuit seen above. */
   const bias = (opts.extras || opts.reel) ? null
     : (opts.bias !== undefined ? opts.bias : await expBiasFor(date, opts).catch(() => null));
-  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null, seen, bias);
+  /* the day's rota leans (api/_levers.js), the same short circuit: a
+     pinned repair never reaches the picker, and a card slot has no reel to
+     lean, so neither pays for the read; a fault is "no lean" */
+  const leans = (opts.extras || opts.reel || !reelHalf(slotId)) ? null
+    : (opts.leans !== undefined ? opts.leans : await leanFor(date, opts).catch(() => ({})));
+  const extras = opts.extras || await slotExtras(base, date, index, slotId, plan.hijri, opts.reel || null, seen, bias, leans);
   return buildSlot(slotId, {
     date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
     words: index && index.words, path: index && index.path,
@@ -2541,7 +2551,8 @@ export async function sendSlot(host, date, slotId, opts = {}) {
   const left = typeof opts.left === "function" ? opts.left : () => RUN_BUDGET_MS - (Date.now() - began);
   const post = await composeSlot(host, date, slotId, { ...opts, plan,
     reel: opts.reel || reelOv.pin,
-    seen: reelOv.seen || opts.seen, bias: reelOv.bias !== undefined ? reelOv.bias : opts.bias });
+    seen: reelOv.seen || opts.seen, bias: reelOv.bias !== undefined ? reelOv.bias : opts.bias,
+    leans: reelOv.leans !== undefined ? reelOv.leans : opts.leans });
   if (!post) return { ...out, ok: false, error: "nothing to say for that slot" };
 
   /* a preview is always allowed to render, including of something already said */
@@ -2614,6 +2625,9 @@ export async function sendSlot(host, date, slotId, opts = {}) {
      buildSlot, lifted from slotExtras' bias check): only present when a
      bias actually applied to this exact reel, never a bare id with no arm */
   if (post.exp) rec.exp = post.exp;
+  /* the rota lean this reel was chosen under (api/_levers.js), only when
+     the lean itself decided the kind: {id, kind}, nothing else */
+  if (post.lean) rec.lean = post.lean;
   /* the owner's own swap, only when the card that actually went out is the
      one it named (see overrideForRecord above): a stale id that fell back
      to the ordinary pick leaves no mark, because nothing was overridden */
@@ -2654,6 +2668,25 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   if (!(CH.configured[ch] && CH.configured[ch]()))
     return { ...out, ok: false, error: ch + " is not configured, so there is nothing to retry with" };
 
+  /* ONE RETRY OF ONE NETWORK OF ONE SLOT AT A TIME (6 October 2026 review,
+     CRITICAL). The hourly healer, the console's Retry and the Lantern's
+     fix-posting lever can all reach this the same minute; each read the
+     record before the other wrote it, the duplicate guard's hash is only
+     written after an upload, and Facebook took the reel twice. So the
+     retry is claimed (five minutes, SET NX) before the record is even
+     read, a second one is refused while the first holds it, and the claim
+     is let go when this one ends, whatever way it ends. A store that
+     cannot be asked refuses: nothing is retried blind. */
+  let claimed = false;
+  if (kvReady()) {
+    try { claimed = (await kv([["SET", K_RETRY(date, slotId, ch), out.at, "NX", "EX", "300"]]))[0] === "OK"; }
+    catch { return { ...out, ok: false, error: "the retry could not be claimed in the store, so " + ch + " was not asked again" }; }
+    if (!claimed) return { ...out, ok: false, busy: true, error: ch + " is being retried for that slot right now, so it was not asked again" };
+  }
+  try { return await retryClaimed(host, date, slotId, ch, opts, out); }
+  finally { if (claimed) { try { await kv([["DEL", K_RETRY(date, slotId, ch)]]); } catch { /* it expires on its own */ } } }
+}
+async function retryClaimed(host, date, slotId, ch, opts, out) {
   const rec = await readSlot(date, slotId);
   const had = rec && rec.results && rec.results[ch];
   if (had && had.ok && !opts.force)
@@ -2715,7 +2748,19 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   }
 
   let r;
-  try { r = asStory ? await sendStoryOnly(ch, { ...post, date }) : await sendOne(ch, shaped, { ...post, date }, undefined, undefined, opts); }
+  /* A caller on its own clock (the Lantern's fix-posting lever, which its
+     cycle holds to a minute) hands it down as opts.left, and the network
+     then goes on the same per-network clock the hourly run uses
+     (sendWithin): one that does not answer in the room left is recorded
+     late (a Facebook upload with its id, pending), never left with the old
+     result standing while a send may have landed, and its own answer is
+     still written when it comes (lateArrival). No clock: exactly as before. */
+  const onClock = typeof opts.left === "function";
+  try {
+    r = asStory ? await sendStoryOnly(ch, { ...post, date })
+      : onClock ? await sendWithin(ch, shaped, { ...post, date }, opts.left, undefined, x => lateArrival(date, slotId, ch, x), opts)
+      : await sendOne(ch, shaped, { ...post, date }, undefined, undefined, opts);
+  }
   catch (e) { const m = String(e && e.message || e).slice(0, 160); r = { ok: false, error: m, err: m }; }
 
   /* every attempt is stamped on the result, so the healer can be bounded and
@@ -2738,6 +2783,9 @@ export async function retryChannel(host, date, slotId, ch, opts = {}) {
   /* the reel's name stays on the record through a retry, so the slot the
      healer mends lands on the ledger like one that went out clean */
   nameReel(next, post, rec);
+  /* and so does the rota lean it went out under (api/_levers.js): a retry
+     is pinned to the same reel, so the record's own fact still holds */
+  if (rec && rec.lean) next.lean = rec.lean;
   await writeSlot(date, slotId, next);
   return { ...out, ok: !!r.ok, state: next.state, result: r, results };
 }
@@ -3136,6 +3184,25 @@ const RUN_BUDGET_MS = Number(process.env.RUN_BUDGET_MS || 280000);
    a wait, a publish -- so one is never STARTED without room to finish it */
 const HEAL_RESERVE_MS = Number(process.env.HEAL_RESERVE_MS || 22000);
 
+/* SETTLED, IN THE HOURLY RUN'S OWN SENSE: a slot record that runDue will not
+   compose and send again. Named and exported (unchanged in what it says);
+   the Lantern's fix-posting lever asked it before it sent an owed slot,
+   until the review of 6 October 2026 took sending away from the lever.
+   "partial" is settled as far as COMPOSING goes: the slot has been said,
+   and running it again would post a second time everywhere it landed. The
+   channel that refused is healed one channel at a time, by healFailures.
+   "failed" is settled the same way since 15 September 2026: every network
+   refused, and the healer mends them one at a time with its counters and
+   backoff; composing and sending the whole slot again every hour erased
+   those counters and asked every network again at once, which is how an
+   account looks automated. A slot with no results at all (a run that died
+   before writing) is not settled. */
+export function slotSettled(r) {
+  return !!(r && (r.state === "sent" || r.state === "skipped" ||
+            r.state === "queued" || r.state === "pending" || r.state === "partial" ||
+            (r.state === "failed" && r.results && Object.keys(r.results).length)));
+}
+
 export async function runDue(host, date, now, opts = {}) {
   const began = Date.now();
   const left = () => RUN_BUDGET_MS - (Date.now() - began);
@@ -3164,19 +3231,7 @@ export async function runDue(host, date, now, opts = {}) {
   for (const id of plan.slots) {
     const r = await readSlot(date, id);
     if (r) before.set(id, r);
-    /* "partial" is settled as far as COMPOSING goes: the slot has been said,
-       and running it again would post a second time everywhere it landed. The
-       channel that refused is healed one channel at a time, by healFailures. */
-    /* "failed" is settled the same way since 15 September 2026: every
-       network refused, and the healer mends them one at a time with its
-       counters and backoff; composing and sending the whole slot again
-       every hour erased those counters and asked every network again at
-       once, which is how an account looks automated. A slot with no
-       results at all (a run that died before writing) is not settled. */
-    if (r && (r.state === "sent" || r.state === "skipped" ||
-              r.state === "queued" || r.state === "pending" || r.state === "partial" ||
-              (r.state === "failed" && r.results && Object.keys(r.results).length)))
-      sent.push(id);
+    if (slotSettled(r)) sent.push(id);
   }
 
   const due = dueNow(plan.slots, now || new Date(), sent, { all: true });
@@ -3204,6 +3259,9 @@ export async function runDue(host, date, now, opts = {}) {
      failed post, and every slot this run sends agrees on which arm today
      is, the same as they already agree on `seen`. */
   const bias = opts.bias !== undefined ? opts.bias : await expBiasFor(date, opts).catch(() => null);
+  /* and the day's rota leans (api/_levers.js), read once for the run the
+     same way: a fault is "no lean", and every slot of the run agrees */
+  const leans = opts.leans !== undefined ? opts.leans : await leanFor(date, opts).catch(() => ({}));
   for (const slot of due) {
     if (posted >= cap) break;
     let post;
@@ -3219,7 +3277,7 @@ export async function runDue(host, date, now, opts = {}) {
         oneLine: c.light.title, body: c.caption, todo: [], basis: "", note: "",
         tags: [], link: c.link, image: c.image, slot: "light" };
     } else {
-      reelOv = await reelOverridePlan(date, slot.id, host, plan.hijri || null, { ...opts, seen, bias });
+      reelOv = await reelOverridePlan(date, slot.id, host, plan.hijri || null, { ...opts, seen, bias, leans });
       if (reelOv.skip) {
         /* a dry run (a preview of what this run WOULD do) writes nothing at
            all, the same promise every other branch of this loop keeps --
@@ -3231,7 +3289,7 @@ export async function runDue(host, date, now, opts = {}) {
         out.ran.push({ slot: slot.id, state: "skipped", override: true });
         continue;
       }
-      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, reelOv.pin, seen, bias);
+      const extras = await slotExtras(base, date, idx, slot.id, plan.hijri, reelOv.pin, seen, bias, leans);
       post = buildSlot(slot.id, {
         date, hijri: plan.hijri, day: plan.day, leads: plan.leads,
         words: idx && idx.words, path: idx && idx.path,
@@ -3301,6 +3359,7 @@ export async function runDue(host, date, now, opts = {}) {
     const rec = { at: out.at, slot: slot.id, state: slotState(results),
       title: post.title, lvl: post.lvl, results };
     if (post.exp) rec.exp = post.exp;
+    if (post.lean) rec.lean = post.lean;
     const ovMark = overrideForRecord(reelOv, post);
     if (ovMark) rec.override = ovMark;
     nameReel(rec, post);
@@ -3594,6 +3653,11 @@ export default async function handler(req, res) {
          fallen back, than the one the machine will actually send. */
       const dayCtx = shelf ? await buildDayContext(host, date,
         { cards: shelf.cards, hijri: plan.hijri || null, recentlyPosted, biasFor: expBiasFor }) : null;
+      /* the day's rota leans (api/_levers.js), the same map the poster
+         reads: in the day context when the shelf was read, read on their
+         own (fail open) for the plain plan, so both rooms can say which
+         slot leans, as they say which slot carries an override */
+      const dayLeans = dayCtx ? dayCtx.leans : await leanFor(date).catch(() => ({}));
       /* every reel slot's own record, read once, up front: the same FACT
          otherPicksFor now prefers over a fresh recompute (api/_lineup.js's
          own header), and also what lets THIS slot's own row show the card
@@ -3621,14 +3685,20 @@ export default async function handler(req, res) {
              the shelf was loaded for this action */
           const ov = await getOverride(date, s.id).catch(() => null);
           if (ov) row.override = ov;
+          /* the lean stored for this slot today, shown like the override */
+          if (dayLeans && dayLeans[s.id]) row.lean = dayLeans[s.id];
           if (shelf) {
-            const otherPicks = await otherPicksFor(dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, { records: reelRecords });
-            const { card: c, override: applied } = await chooseReelWithOverride(
-              dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { otherPicks, rec });
+            const otherPicks = await otherPicksFor(dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, { records: reelRecords, leans: dayCtx.leans });
+            const { card: c, override: applied, lean: leaned } = await chooseReelWithOverride(
+              dayCtx.cards, date, s.id, dayCtx.hijri, dayCtx.seen, dayCtx.bias, null, { otherPicks, rec, leans: dayCtx.leans });
             /* the override actually applied, fellBack marked when a swap
                that once held has since fallen back -- the same shape the
                slot's own record would carry if this hour had already run */
             if (applied) row.appliedOverride = applied;
+            /* and the lean that actually decided this card's kind: absent
+               when an override won, when the rota already gives that kind,
+               or when the record shows the slot went without one */
+            if (leaned) row.appliedLean = leaned;
             const r = c ? rowUrls(c, host) : null;
             row.reel = r ? { id: r.id, kind: r.kind || "light", hook: r.hook || "", caption: r.caption || "",
                              cover: r.cover, video: r.video, secs: r.secs != null ? r.secs : null } : null;
@@ -3652,7 +3722,7 @@ export default async function handler(req, res) {
       if (reelOv.skip) return json(res, 200, { ok: true, slot: id, post: null, override: reelOv.note,
         note: "This slot is skipped by an owner override." });
       const post = await composeSlot(host, date, id, { plan: slotPlan,
-        reel: reelOv.pin || undefined, seen: reelOv.seen, bias: reelOv.bias });
+        reel: reelOv.pin || undefined, seen: reelOv.seen, bias: reelOv.bias, leans: reelOv.leans });
       if (!post) return json(res, 200, { ok: true, slot: id, post: null,
         note: "Nothing to say for this slot today." });
       const shaped = {};

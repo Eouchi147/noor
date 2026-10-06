@@ -571,6 +571,14 @@ function pipeline(cmds) {
    key entirely) still answers normally, so this proves the undo's own
    read refuses, not some other call failing first and masking it. */
 let FAIL_OVERRIDE_GET = false;
+/* 3 October 2026 (LANTERN.md sections 3 and 4): an approved proposal is now
+   one of the owner's decisions, and its Yes runs the Lantern's own hand
+   with his approval, so it spends the day's caps like every public act
+   (three line-up changes a day, six public acts). The cases below each
+   stand for a day of their own, five approvals in all, so the day's cap
+   counters are cleared before each; that the cap still binds an owner's
+   approval is proven in tests/lantern-home.mjs. */
+function freshDayOfCaps() { for (const k of [...strings.keys()]) if (k.startsWith('nsoul:count:')) strings.delete(k); }
 globalThis.fetch = async (url, opt) => {
   const u = String(url);
   if (u.startsWith('https://kv.lantern-agent.test')) {
@@ -737,6 +745,7 @@ console.log('\na CONCRETE lineup-change proposal applies through api/_lineup.js\
      api/page.js's own manifest()), so validateOverride's own checks --
      the card exists, and belongs to reelB's evening half -- are met by
      something real, not a fixture invented for this test */
+  freshDayOfCaps();
   const today = new Date().toISOString().slice(0, 10);
   const cardId = 'abdurrahman-ibn-awf-market';
   const p3 = { id: 'prop-3', type: 'other', requested: 'lineup-change',
@@ -776,6 +785,7 @@ console.log('\na CONCRETE lineup-change proposal applies through api/_lineup.js\
 
 console.log('\nundo restores the exact prior entry, byte for byte -- never a fresh stamp (2026-09-26 review, MEDIUM finding)');
 {
+  freshDayOfCaps();
   const today2 = new Date().toISOString().slice(0, 10);
   const priorEntry = { action: 'skip', at: '2020-01-01T00:00:00.000Z', by: 'owner', note: 'a much older decision' };
   strings.set('nsoc:override:' + today2, JSON.stringify({ reelB: priorEntry }));
@@ -807,6 +817,7 @@ console.log('\nundo restores the exact prior entry, byte for byte -- never a fre
 
 console.log('\nundo refuses when the slot was changed again since the approval it is undoing (2026-09-26 review, MEDIUM finding)');
 {
+  freshDayOfCaps();
   const today3 = new Date().toISOString().slice(0, 10);
   strings.delete('nsoc:override:' + today3);
   const cardId3 = 'abdurrahman-ibn-awf-market';
@@ -841,6 +852,7 @@ console.log('\nundo refuses the RESTORE branch too when the slot was changed aga
      against what this approval itself wrote; the restore branch (a
      `before` to put back) skipped that check entirely and would clobber
      whatever the owner had since set by hand with the OLDER entry. */
+  freshDayOfCaps();
   const today4 = new Date().toISOString().slice(0, 10);
   const priorEntry = { action: 'skip', at: '2020-01-01T00:00:00.000Z', by: 'owner', note: 'an older decision, before the approval' };
   strings.set('nsoc:override:' + today4, JSON.stringify({ reelB: priorEntry }));
@@ -872,6 +884,7 @@ console.log('\nundo refuses the RESTORE branch too when the slot was changed aga
 
 console.log('\nundo refuses outright on a KV fault, never marks itself undone while the override still stands (2026-09-26 review, second round, MEDIUM finding)');
 {
+  freshDayOfCaps();
   const today5 = new Date().toISOString().slice(0, 10);
   strings.delete('nsoc:override:' + today5);
   const cardId5 = 'abdurrahman-ibn-awf-market';

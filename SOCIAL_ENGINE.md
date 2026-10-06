@@ -373,6 +373,176 @@ claim-held slot refusing a set, a failed read never emptying a day's other overr
 non-light card swapping into every slot the real shelf has (run against
 `reels/index.json` itself), and an undo that refuses once the slot has moved on.
 
+## The Lantern's two levers on the poster (3 October 2026, LANTERN.md section 6)
+
+Both live in `api/_levers.js` and join the hands registry (`api/_hands.js`) under the same
+rules as every other hand: the red lines first, then the council for an R2 hand (or the
+owner's own approval), the caps counted before the run, the audit before and after.
+
+**rota-lean** (R2, cap `rota`, one a day, and the R2 total). For one reel slot (`reelA` to
+`reelF`), for 1 to 7 days starting today or tomorrow (UTC), the slot's kind becomes a named
+kind: verse, word, name, know, light, short or dua (never `day`: a This day reel keeps to
+its own Hijri date). It is stored as a small list, `nsoc:rota:leans`, each entry
+`{id, slot, kind, from, to, by, at, note}` with `from` and `to` both covered days. The
+rules, every one refused in plain words: a reel slot; a kind the rota walks; 1 to 7 days;
+starting today or tomorrow; at most two leans covering any one date; never one slot under
+two leans at once; never more than four of the six reel slots one kind on any day it
+covers, counted with the real rota for each date (`rotaKindFor`, the afternoon's stand in
+row when the shelf has no film); at least 30 cards of that kind that fit the slot's half
+outside the duplicate guard's window; a lean that would change nothing on any of its days
+(the rota already gives that kind there) is refused; and a lean whose own pick on a
+covered day would be the very card an owner's swap names on another slot that day is
+refused, so a lean set after a swap can never make that swap fall back. The write is a
+compare and set on `nsoc:rota:leans:ver`, and any read that fails refuses the write. The
+undo removes exactly that lean, and only while it is unchanged since (same id, slot,
+kind, days, author and stamp); a lean already gone answers that there is nothing left to
+take away; a lean that has already ended is kept, as the record of its days. Ended leans
+stay 62 days, so the insights reconstruction can still read the days they covered, and
+are pruned on the next write.
+
+**Reading a lean fails open, everywhere a day is planned.** `leanFor(date)` answers the
+day's map `{reelA..reelF: {id, kind}}`, and any fault (a store error, a value that will not
+parse, an entry that breaks a rule, three leans on one date, two on one slot) answers an
+empty map, which is "no lean": the day runs on the rota exactly as before. The map is
+threaded exactly like the experiment's bias: `runDue` reads it once a run, `composeSlot`
+and `sendSlot` read it (or take it from the override plan), `buildDayContext` carries it
+as the fifth piece every view shares, `chooseReelWithOverride` and `otherPicksFor` take it
+in `ctx.leans` (and read it themselves, fail open, for a caller that never heard of one),
+the plan and today previews, the Lantern's `lineup` tool, the planner's `lineupPreview`
+and `_insights.js`'s reconstruction (`matchedCard`, with `leansOnRecord`: the stored map
+for the record's date, with the record's own slot taken from the record's own mark) all
+pass it down, so every view of a day shows the card the poster will send.
+
+**What a lean does to the pick, and nothing more.** It is applied inside `chooseReel`'s
+kind decision (an 8th argument): the slot's kind for that date becomes the lean's kind,
+then the experiment's arm, the duplicate guard's window and the walk all work exactly as
+they do for any kind. An owner's or the Lantern's own skip or swap on the slot is decided
+before the picker is ever asked, so an override always wins on its own slot (a swap that
+has fallen back hands the slot back to the schedule, which is then the lean). A lean
+toward the kind the rota already gives that day, or toward a kind with no card that fits
+the half, changes nothing and claims nothing; a This day reel still takes the morning of
+its own date. A leaned slot walks the same permutation as its kind (the same salt) but
+from a cell half a lap ahead of where that kind's own walk stands that morning, offset by
+the half and the weekday, and steps past anything the window holds and anything another
+slot of the same date shows of that kind (the rota's own slots, and an earlier slot
+leaned toward the same kind): taking the next cell of the kind's own walk would land on
+the card the kind's next rota slot is about to show. A day's card keeps its own walk by
+the day and the half. Slots without a lean never move: `tests/levers.mjs` holds every
+pick of every view, with no lean set, to the code as it stood before leans (a fingerprint
+over 400 days and every half, and a side by side against the original modules on the real
+shelf). A reel the lean decided carries `lean: {id, kind}` on its slot record (`rec.lean`,
+kept through a retry), the plan and today rows say `lean` (stored), a today row also
+`appliedLean` (decided this card), and the Lantern's tool and `lineupPreview` carry `lean`
+on a leaned row.
+
+The numbers read the lean the same way (review of 6 October 2026). The daily stats
+snapshot (`api/_insights.js` `snapshot()`, `nsoc:stats:<date>#<slot>`) stores a reel's
+kind from its slot record first (`rec.kind`, the sent card's own, then `rec.lean.kind`;
+`ownKind`), and only for a record carrying neither re-runs the picker with the day's
+leans as that record saw them (`leansOnRecord`, the leans read once for the walk, fail
+open); it keeps the record's `lean` mark beside the kind. Before, it re-ran the picker
+with no leans, so a leaned reel whose card had left the shelf was stored, and then
+counted by `numbers()` and the Observatory, as the rota's kind. The Observatory's own
+30-day walk reads the leans once as well, for the card it rebuilds for a record's kind
+and subject.
+
+**fix-posting** (R2, cap `fix`, six a day, its own cap only: it never spends the R2
+total). It repairs what the schedule already sent today (UTC) and nothing else, through
+exactly the functions the Steward's own buttons call: `retry` is `retryChannel(host, date,
+slot, channel, {force:false, byHand:true})` (the retry-channel button), `finish` is
+`finishPendingReels(date)` (finish-reels). What it accepts, checked in the lever before
+either is called: today only; the ladder readable and not `off` (the schedule owes
+nothing then); a slot record read FAIL CLOSED (social.js's own `readSlot` answers null on a
+fault, which would make a network look unasked); `retry` only on a slot that reads
+`failed` or `partial`, and only on a network that refused it (never one that has it, is
+still processing, was never asked or waits on its review), only when a retry can mend it
+(`healable`: never a token or a permission, which are the owner's), and never when the
+duplicate guard's own hash already shows that reel on that network inside its window;
+`finish` only on a reel slot that reads `pending`. The duplicate guard decides underneath
+as always, and nothing is ever forced. The result names what happened network by network.
+A post is never deleted, so its undo is a refusal that says so.
+
+**It never sends a slot** (review of 6 October 2026). It once had a `send` for a slot
+whose hour had passed with nothing recorded, and the review found three ways that went
+wrong: the owner's Post now (`sendSlot`) never reads the hourly run's slot claim, so the
+lever and the owner acting on the same "owed" finding both sent it; the catch-up rule
+(`dueNow`, one owed slot a run, the newest first, never a backlog emptied into a feed at
+once) did not hold for a hand that could send any owed slot; and a reel's networks and
+stories do not fit the lever's 50 second clock (a slow network left no room for the story,
+which is never retried). So `what: "send"` (or `send-slot`) is refused with a plain message,
+the lever holds no `sendSlot` and no slot claim at all, and a slot owed and not yet sent is
+the hourly run's, on its own full clock, or the owner's Post now. The owner's Post now
+against the hourly run is the one race left (OPERATIONS.md, "The day's post did not go
+out", item 9).
+
+**One retry of one network at a time.** `retryChannel` takes
+`nsoc:retry:<date>#<slot>|<channel>` (SET NX, five minutes) before it even reads the slot's
+record, refuses a second retry of the same network of the same slot while it is held
+(`busy: true`, "being retried for that slot right now"), and deletes it when it ends,
+whatever way it ends. The hourly healer, the console's Retry and the lever all go through
+it, and each used to read the record before the other wrote it (the duplicate guard's hash
+is written only after an upload), which is how Facebook took one reel twice. A store that
+cannot be asked refuses rather than retrying blind; with no store configured at all
+nothing is claimed, the way the hourly run's own slot claim behaves.
+
+**The lever's own clock.** It retries from inside the Lantern's own function, whose cycle
+holds every hand to a minute (`api/_mind.js` `HAND_STEP_MS`), not from the poster's five
+minutes. So `retry` hands the poster a clock that ends at 50 seconds (`FIX_RUN_MS`, as
+`opts.left`, the same way the healer hands its own down): the network then goes on the
+poster's per-network clock (`sendWithin`), one with no room left is recorded late (a
+Facebook upload with its id, pending, for the finisher), and the slot's record is always
+written inside the minute. `retryChannel` takes `opts.left` and only then uses
+`sendWithin` with `lateArrival` exactly as the hourly run does. No other caller passes it,
+so with no clock `retryChannel` is exactly as before.
+
+## The day across the horizon, and the lean on Posts (3 October 2026, LANTERN.md section 10)
+
+**`today.slots` on the owner's Home** (`api/_dayline.js` `daySlots`, wired into the
+`today` part of `GET /api/soul?view=home`). Every posting slot of today, in time order:
+`{slot, time, label, kind, state, networks: {sent, total}, lean}`.
+
+- **Which slots.** The day's plan (`planDay`) read with a fetch that refuses, so the Hijri
+  date comes from the store's own cache of it or not at all: a day whose date was never
+  verified shows no dawn card and no coming-up card, exactly as the poster would post it.
+  A slot that has a record is shown whatever the plan says (the dawn card that went).
+- **`time`** is the slot's hour, `"HH:MM"` in UTC. **`state`** is the record's own
+  `sent`, `partial`, `failed` or `skipped` (the owner's or the Lantern's skip, or nothing
+  to say); a record still processing at a network (`pending`) is `partial` once one
+  network has it and `due` before; one waiting for the owner's approval on the approve
+  rung (`queued`) is `due`; a reel slot a skip override already holds is `skipped`
+  before it runs; with no record, `due` once its hour has come and `later` before it.
+- **`networks`** counts the networks the record shows were asked, the same reading
+  `slotState` makes: Reddit (a draft for a human hand), the owner's phone share, a network
+  that is not configured (`skipped`) and one still on its review (`trial`, `waiting`) are
+  not counted; `sent` is how many of them have it. `{0, 0}` before the slot runs.
+- **`kind`** is the reel's kind for a reel slot (verse, word, know, day, light, name, dua,
+  short): the record's own once it went, else the card every other view of the day shows
+  (`buildDayContext`, `chooseReelWithOverride` over the shelf on disk, with the other
+  slots' picks only when the day holds a swap, the one case they change anything); null
+  when the shelf cannot be read. It is `"card"` for the five card slots.
+- **`label`** says it once, in the house's own words (the singulars of `_insights.js`
+  `KIND_LABEL`): "a verse reel", "a silent film", "the day's card", "the chapter card";
+  a reel whose kind cannot be read is "the evening reel". Through `sayLantern`.
+- **`lean`** is the kind a rota lean gave the slot: the record's own mark once it went,
+  the lean that decides its card before (`appliedLean`); null when no lean shaped it.
+- **Reads, and faults.** One `MGET` of every slot key (`nsoc:slot:<date>#<slot>`), the
+  shelf from the deployment's own disk, the duplicate guard's window, the day's bias and
+  leans from the store: never a network, never a model, on its own five second clock
+  inside the `today` part's six. A store fault on the records is `today.slots: null` with
+  its reason in `missing.slots`; the rest of `today` still answers. A fault anywhere in
+  the pick costs only the kinds.
+
+**The lean on Posts.** `GET /api/lineup?date=` rows carry, beside `override` and
+`appliedOverride`, `lean` (the lean stored for that slot that day, `{id, kind}`, or null)
+and `appliedLean` (the lean that actually decided the card; for a slot already recorded,
+the record's own mark; null when an override won or the rota already gives that kind),
+the same pair the today rows of `/api/social?action=today` carry.
+
+**Not a post.** The Lantern's other new powers (LANTERN.md section 8) touch nothing on
+this machine: a letter it drafts is sent by the owner from his own account, and the door
+of the week is a row on `/today` and the arrival. Neither adds a slot, a send or a
+network call.
+
 ## What remains (masterplan sections 9, 11, 12)
 
 - The record as the Distribution Manager wants it: publish time per network, permalink on

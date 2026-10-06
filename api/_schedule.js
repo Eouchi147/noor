@@ -262,6 +262,25 @@ const ROTA = {
    rendered yet (a shelf mid-render, a kind not yet made) */
 const FALLBACK = ["verse", "word", "name", "know", "light", "dua"];
 
+/* THE KINDS A LEAN MAY ASK FOR (api/_levers.js, the rota-lean lever): every
+   kind the rota itself walks. "day" is not one of them: a This day reel
+   belongs to its own Hijri date and to no other, so nothing may lean a slot
+   toward it. */
+export const LEAN_KINDS = Object.freeze(["verse", "word", "name", "know", "light", "short", "dua"]);
+
+/* what the rota itself gives one half on one date: the weekday's row, with
+   the afternoon's stand in on a shelf that has no short. chooseReel opens
+   with exactly this, and the lean's own rules (at most four of the six reel
+   slots one kind on any day) count with it, so the two can never disagree
+   about what a day holds. */
+export function rotaKindFor(half, dateStr, noShorts) {
+  const dow = new Date(String(dateStr) + "T12:00:00Z").getUTCDay();
+  const d = isFinite(dow) ? dow : 0;
+  let want = (ROTA[half] || ROTA.morning)[d];
+  if (want === "short" && noShorts) want = ROTA.afternoonUntilShorts[d];
+  return want;
+}
+
 /* ---------------------------------------------------------------------------
    the walk, counted by slot and not by day
 
@@ -365,24 +384,33 @@ function pickStep(list, step, salt, seen) {
   return oldest || first;
 }
 
-export function chooseReel(cards, dateStr, half, hijri, seen, bias, report) {
+export function chooseReel(cards, dateStr, half, hijri, seen, bias, report, leans) {
   const all = (cards || []).filter(c => c && c.id);
   /* ids already sent to some channel inside the duplicate guard's window; a
      Set, an array, or nothing at all, which is the same as nothing */
   const avoid = seen && typeof seen.has === "function"
     ? seen : new Set(Array.isArray(seen) ? seen : []);
   const kindOf = c => c.kind || "light";
-  const dow = new Date(String(dateStr) + "T12:00:00Z").getUTCDay();
   if (half === "morning" && hijri && hijri.m && hijri.d) {
     const today = all.filter(c => kindOf(c) === "day" && Number(c.hm) === Number(hijri.m) && Number(c.hd) === Number(hijri.d));
     /* a named day outranks the month it opens: Ashura's month is not the news */
     today.sort((a, b) => (String(a.id).startsWith("month-") ? 1 : 0) - (String(b.id).startsWith("month-") ? 1 : 0));
     if (today.length) return today[0];
   }
-  let want = (ROTA[half] || ROTA.morning)[isFinite(dow) ? dow : 0];
   const noShorts = !all.some(c => kindOf(c) === "short");
-  if (want === "short" && noShorts)
-    want = ROTA.afternoonUntilShorts[isFinite(dow) ? dow : 0];
+  let want = rotaKindFor(half, dateStr, noShorts);
+  /* A LEAN (api/_levers.js, the rota-lean lever), the 8th argument: the
+     day's own map {reelA..reelF: {id, kind}} as api/_levers.js's leanFor
+     reads it, or nothing. The slot's kind for this date becomes the lean's
+     kind, and that is ALL a lean does: the experiment's arm, the duplicate
+     guard's window and the walk below all keep working on that kind, and
+     an owner's or the Lantern's own skip or swap on the slot is decided
+     before this is ever asked (api/_lineup.js's chooseReelWithOverride, and
+     the poster's own pin). No map, an empty one, a malformed entry, a kind
+     the rota already gives this half that day, or a kind with nothing on
+     the shelf that fits this half: exactly the old pick, untouched. */
+  const lean = appliedLean(all, half, want, leans);
+  if (lean) want = lean.kind;
   const order = [want, ...FALLBACK.filter(k => k !== want)];
   for (const kind of order) {
     /* the old manifests carried no kind and no other kind than light; a card
@@ -415,6 +443,16 @@ export function chooseReel(cards, dateStr, half, hijri, seen, bias, report) {
            still match by chance was being tagged as the arm's own pick). */
         if (fresh >= 8) { pool = arm; if (report) report.usedArm = true; }
       }
+      /* the leaned kind (above): the slot record says so (`report.lean`,
+         out only, the same way usedArm is), the day's card keeps its own
+         walk by the day and the half, and every other kind takes the lean's
+         own cell of its walk (leanPick below), never one of the cells the
+         rota's own slots of that kind step on */
+      if (lean && kind === want) {
+        if (report) report.lean = { id: lean.id, kind: lean.kind };
+        return leanPick(pool, kind, dateStr, half, noShorts, avoid,
+          sameDayTaken(cards, dateStr, half, hijri, seen, bias, leans, kind, noShorts));
+      }
       /* the kind the rota asked for walks by slot count; a stand-in kind (the
          shelf mid-render) and the day's card, which has one slot a half a
          week and cannot meet itself, walk by the day as before */
@@ -429,6 +467,99 @@ export function chooseReel(cards, dateStr, half, hijri, seen, bias, report) {
   const any = all.filter(c => kindOf(c) === "light");
   if (any.length) return pick(any, dateStr, "reel:" + half, avoid);
   return null;
+}
+
+/* ---------------------------------------------------------------------------
+   THE LEAN, INSIDE THE KIND DECISION (api/_levers.js, the rota-lean lever)
+
+   One reel slot, for one to seven days, carries a named kind instead of the
+   rota's. The three functions below run only when a lean actually applies:
+   a day with no lean never reaches any of them, so its picks are exactly
+   what they were before leans existed (tests/levers.mjs holds that against
+   the code as it stood, over 400 days and every half).
+
+   WHERE A LEANED SLOT STEPS. The rota's own slots of a kind walk one
+   permutation of the shelf, a slot at a time (reelStep). A leaned slot is
+   one more slot of that kind the rota never planned, so it must not take
+   one of those cells: taking the next one (reelStep of the leaned half)
+   would land on the very card the kind's next rota slot is about to show,
+   and every slot after it would have to step aside for the rest of the
+   year. So it walks the SAME permutation (the same salt, so the same stride
+   and offset, the same walk the duplicate guard has been watching) from a
+   cell half a lap ahead of where the kind's own walk stands that morning,
+   which the rota's own slots will not reach for months, plus a small
+   offset fixed by the half and the weekday so that two leaned slots never
+   share a cell. Then it steps past anything the duplicate guard's window
+   holds and anything another slot of the same date already shows.
+--------------------------------------------------------------------------- */
+const SLOT_OF_HALF = Object.freeze(Object.fromEntries(SLOTS.filter(s => s.reel).map(s => [s.reel, s.id])));
+
+/* the lean that changes this half on this date, or null: the day's own
+   entry for this half's slot, carrying an id and a kind a lean may name,
+   a kind the rota does not already give the half that day, and at least
+   one card on the shelf that fits the half (a day's card keeps to its own
+   half, exactly as the walk's own filter keeps it) */
+function appliedLean(all, half, rotaWant, leans) {
+  if (!leans || typeof leans !== "object") return null;
+  const slotId = SLOT_OF_HALF[half];
+  if (!slotId || !Object.prototype.hasOwnProperty.call(leans, slotId)) return null;
+  const e = leans[slotId];
+  if (!e || typeof e !== "object" || typeof e.id !== "string" || !e.id) return null;
+  if (typeof e.kind !== "string" || !LEAN_KINDS.includes(e.kind) || e.kind === rotaWant) return null;
+  const fits = all.some(c => (c.kind || "light") === e.kind && (!c.slot || c.slot === half || e.kind !== "light"));
+  return fits ? { id: e.id.slice(0, 80), kind: e.kind } : null;
+}
+
+/* what every OTHER reel slot of the same date shows of this kind: each slot
+   the rota keeps (a lean never moves those, so theirs is the plain pick)
+   and a slot leaned toward the same kind EARLIER in the day. The later of
+   two leaned slots steps past the earlier, never the reverse, so this always
+   ends. */
+function sameDayTaken(cards, dateStr, half, hijri, seen, bias, leans, kind, noShorts) {
+  const taken = new Set();
+  const all = (cards || []).filter(c => c && c.id);
+  const mine = HALVES.indexOf(half);
+  HALVES.forEach((h, i) => {
+    if (h === half) return;
+    const other = appliedLean(all, h, rotaKindFor(h, dateStr, noShorts), leans);
+    if (other && (other.kind !== kind || i > mine)) return;
+    const c = chooseReel(cards, dateStr, h, hijri, seen, bias, null, other ? leans : null);
+    if (c && (c.kind || "light") === kind) taken.add(c.id);
+  });
+  return taken;
+}
+
+/* the leaned slot's own cell of its kind's walk (see the header above),
+   then the first card on from it that neither the duplicate guard's window
+   nor another slot of the day holds; failing that, the one sent longest ago
+   that no other slot of the day shows, as pickStep does. The day's card
+   keeps the walk it has always had, by the day and the half (pick): with
+   nothing else of the day to step past, the very card pick would give. */
+function leanPick(pool, kind, dateStr, half, noShorts, avoid, taken) {
+  if (!pool || !pool.length) return null;
+  const n = pool.length;
+  if (n === 1) return pool[0];
+  const salt = kind === "light" ? "reel:" + half : "reel:" + kind;
+  let stride = (hash32(salt + "|stride") % (n - 1)) + 1;
+  while (gcd(stride, n) !== 1) stride = (stride % (n - 1)) + 1;
+  const off = hash32(salt + "|offset") % n;
+  const at = s => pool[(((s * stride + off) % n) + n) % n];
+  const dow = new Date(String(dateStr) + "T12:00:00Z").getUTCDay();
+  let step = kind === "light"
+    ? Math.floor(Date.parse(String(dateStr) + "T00:00:00Z") / 86400000)
+    : reelStep(kind, dateStr, "morning", noShorts) + Math.floor(n / 2)
+      + 7 * Math.max(0, HALVES.indexOf(half)) + (isFinite(dow) ? dow : 0);
+  if (!isFinite(step)) step = 0;
+  let oldest = null, oldestAt = Infinity;
+  for (let i = 0; i < n; i++) {
+    const c = at(step + i);
+    if (!c || taken.has(c.id)) continue;
+    if (!avoid.has(c.id)) return c;
+    const t = typeof avoid.get === "function" ? Date.parse(String(avoid.get(c.id)) + "T00:00:00Z") : NaN;
+    const when = isFinite(t) ? t : 0;
+    if (when < oldestAt) { oldestAt = when; oldest = c; }
+  }
+  return oldest || at(step);
 }
 
 /* ---------------------------------------------------------------------------
@@ -495,6 +626,10 @@ function buildSlotInner(slot, ctx) {
        (api/_experiments.js's own biasFrom), carried through so
        api/social.js's own writeSlot can put {id, arm} on the slot record */
     if (r.exp) out.exp = r.exp;
+    /* the rota lean this reel was chosen under (slotExtras below, from
+       chooseReel's own report.lean): only when the lean actually decided
+       the kind, so the slot record says {id, kind} and nothing more */
+    if (r.lean) out.lean = { id: r.lean.id, kind: r.lean.kind };
     /* A SILENT SHORT CARRIES MORE THAN A CAPTION. shapeRaw's short branch
        (api/_channels.js) reads p.story, p.title, p.hook, p.payoff, p.tags,
        p.wide, p.src and p.room; none of those existed on the post this
@@ -677,7 +812,7 @@ function buildSlotInner(slot, ctx) {
    the machine used to send, which is worse than the full one and better than
    none.
 --------------------------------------------------------------------------- */
-export async function slotExtras(base, date, index, slot, hijri, pin, seen, bias) {
+export async function slotExtras(base, date, index, slot, hijri, pin, seen, bias, leans) {
   const out = { node: null, entry: null, reel: null };
   const grab = async u => {
     try { const r = await fetch(u); return r && r.ok ? await r.json() : null; } catch { return null; }
@@ -697,7 +832,7 @@ export async function slotExtras(base, date, index, slot, hijri, pin, seen, bias
        and a repair never carries exp -- honest, since a pinned repair is
        not the arm's own pool being walked, whatever it happens to match. */
     const report = {};
-    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null, seen, bias || null, report);
+    const c = (pin && cards.find(x => x && x.id === pin)) || chooseReel(cards, date, half, hijri || null, seen, bias || null, report, leans || null);
     /* the row carries the video's own URL once the shelf is on the Blob
        store; an older manifest has none, and the file is on the site */
     const isUrl = v => typeof v === "string" && /^https:\/\//.test(v);
@@ -716,6 +851,11 @@ export async function slotExtras(base, date, index, slot, hijri, pin, seen, bias
        onto the slot record -- {id, arm}, nothing else. */
     if (out.reel && report.usedArm && bias)
       out.reel.exp = { id: bias.id, arm: bias.arm };
+    /* the same for a rota lean (api/_levers.js): marked only when the lean
+       itself decided this card's kind; a pin never reaches the picker, so
+       a repair or a swap never carries one */
+    if (out.reel && report.lean)
+      out.reel.lean = { id: report.lean.id, kind: report.lean.kind };
     return out;
   }
   if (!slot || slot === "dusk") {

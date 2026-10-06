@@ -2,9 +2,18 @@
    ------------------------------------------------------------------
    admin2.html is one file that talks to the same endpoints as the old
    console. This opens it at a phone's width and at a desk's, feeds every
-   endpoint a day that actually happened, and checks that the four surfaces
+   endpoint a day that actually happened, and checks that the surfaces
    draw, that nothing scrolls sideways, that no script throws, and that each
    button asks the server for exactly what its label says.
+
+   3 October 2026 (LANTERN.md): the console opens on Home now, and its bar
+   holds Home, Ask, Posts, Numbers and More. Home itself, the decisions, the
+   old hashes and the one voice are proved by tests/console-home.mjs; this
+   suite follows every other room to its new door: the line-up under Posts,
+   the Observatory and the readers' numbers under Numbers, the inbox and
+   Flow as rooms behind More (the House of before), the conversation under
+   Ask. The Steward card and the old Today surface are gone, and so are the
+   checks that were about them.
 
    Run:  python3 /tmp/vercelish.py 8231 <the repo root> &   node tests/console2.mjs
 
@@ -78,6 +87,11 @@ const HOUSE = { store: true, storeKind: 'redis', lanternConfigured: true, lanter
               { market: 'ID', status: 'trialing', amount: 6, cadence: 'week', currency: 'USD', email: 'h@x.y', name: 'B', started: '2026-09-01', renews: '2026-09-14', endsAfterWeek: false, approved: false, gname: '', gurl: '', gline: '', subscription: 'sub_ID2' }],
   gifts: { total30d: 90, count30d: 3, monthly: 60, recent: [{ amount: 30, currency: 'USD', when: '2026-09-01', email: 'a@b.c' }] } };
 const LANTERN = { ok: true, answered: 'x/inkling:free', reply: 'lit', tried: [{ model: 'x/inkling:free', ms: 900, err: '' }], ms: 950 };
+/* Home (LANTERN.md section 2), on a quiet day: the first surface since 3
+   October 2026. Its own suite is tests/console-home.mjs. */
+const HOME = () => ({ ok: true, now: new Date().toISOString(), name: 'the Lantern', paused: false, status: 'working', brief: null,
+  decisions: [], done: [], next: [], coming: [], goals: [], ideas: [], today: { posts: { sent: 3, due: 3, failed: 0 }, fixed: 0, reach7: { value: null, delta: null } },
+  voice: { telegram: { linked: false } }, spend: { usd: 0, capUsd: 10 } });
 /* ---- the Lantern agent (api/lantern-agent.js, api/lantern-models.js): a
    stubbed SSE run carrying the same event shapes and artifact specs the
    real route sends, so the console's own thinking stream, chart, table
@@ -311,9 +325,9 @@ const settingsSave = b => {
    sentence stands on; stages that name their source and are unread rather
    than nought; edges that carry a rate only where two grains agree. */
 const readAt = () => new Date(Date.now() - 4 * 60000).toISOString();
-/* The steward of the ordinary day. Not one of its findings names a slot that
-   Waiting for you also carries, so the two lists do not overlap here; the
-   dedupe has a scenario of its own further down. */
+/* The steward of the ordinary day. The console no longer draws it (its
+   findings reach the owner through the Lantern's brief and decisions on Home,
+   LANTERN.md section 5); the route still answers, so the stub still does. */
 const STEWARD = () => ({
   ok: true, enabled: true, store: 'redis', cached: false, at: readAt(), date: '2026-09-07',
   say: 'The Instagram token has 6 days left and Telegram has taken nothing in 7 days, and both want a hand before the evening slot.',
@@ -348,23 +362,6 @@ const STEWARD = () => ({
       action: null, evidence: { storeOk: true } }
   ],
   read: { mode: 'auto', slots: 8, windowDays: 7, media: 70, trouble: [] }
-});
-/* The steward of a day that speaks for two of the slots Waiting for you also
-   carries, and whose Lantern was dark so the paragraph is the template. */
-const STEWARD_SLOTS = () => ({
-  ok: true, enabled: true, cached: false, at: readAt(), date: '2026-09-07',
-  say: '2 things need you today, beginning with 1 of today\'s posts have no record.',
-  lantern: false, refused: 'no OpenRouter key on this deployment', counts: { act: 1, watch: 1, good: 0 },
-  findings: [
-    { id: 'slots-unrecorded', level: 'act', title: '1 of today\'s posts have no record',
-      say: 'The 08:00 slot has no record at all, its hour has passed, and the ladder is on "auto". The last line in the log was written 2026-09-07T12:01:00Z.',
-      action: { label: 'Send the 08:00 slot now', kind: 'post', body: { action: 'send-slot', slot: 'reelA' }, route: '/api/social?date=2026-09-07' },
-      evidence: { owed: 1, slots: ['reelA'], hours: ['08:00'], mode: 'auto' } },
-    { id: 'reddit-drafts', level: 'watch', title: '1 Reddit draft is waiting for you',
-      say: 'The machine wrote 1 Reddit post today and sent it nowhere: Reddit is drafts only, always.',
-      action: { label: 'Open the Reddit drafts', kind: 'open', href: '/admin2#posts' },
-      evidence: { drafts: 1, slots: ['word'] } }
-  ]
 });
 const FLOW = days => ({
   ok: true, enabled: true, store: 'redis', cached: false, days, at: readAt(),
@@ -465,6 +462,7 @@ async function open_(w, h, posted, errors, opts = {}) {
       posted.push({ url: u.replace(BASE, ''), method: 'GET', body: {} });
       return r.fulfill(J(opts.settings ? opts.settings() : SETTINGS()));
     }
+    if (u.includes('/api/soul') && u.includes('view=home')) return r.fulfill(J(HOME()));
     if (u.includes('/api/lantern-models')) return r.fulfill(J(LANT_MODELS));
     if (u.includes('/api/lantern-agent')) {
       if (u.includes('action=ledger')) return r.fulfill(J(LANT_LEDGER));
@@ -515,7 +513,7 @@ async function open_(w, h, posted, errors, opts = {}) {
   await pg.goto(BASE + '/admin2.html' + (opts.hash || ''), { waitUntil: 'domcontentloaded' });
   await pg.waitForSelector('#app.on, #app:not([hidden])', { timeout: 15000 });
   await pg.waitForSelector(opts.hash ? '.surf.on .card, .surf.on .row, .surf.on .dial'
-                                     : '#s-today .card, #s-today .row, #s-today .strip', { timeout: 15000 });
+                                     : '#s-home .hcalm, #s-home .hfail', { timeout: 15000 });
   await pg.waitForTimeout(400);
   return pg;
 }
@@ -526,73 +524,17 @@ const surfaceOn = pg => pg.evaluate(() => (document.querySelector('.surf.on') ||
 for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]]) {
   const posted = [], errors = [];
   const pg = await open_(w, h, posted, errors);
-  console.log('\n' + label + ' · the gate and Today');
+  console.log('\n' + label + ' · the gate and Home');
   ok(await pg.evaluate(() => document.getElementById('gate').hidden || getComputedStyle(document.getElementById('gate')).display === 'none'),
      'the probe unlocked the console without a password prompt');
   ok(await pg.evaluate(() => { try { return localStorage.getItem('noor_nocount') === '1'; } catch { return false; } }),
      'this browser is marked as not-a-reader for the traffic count');
-  ok((await surfaceOn(pg)) === 's-today', 'Today is the first surface');
-  const today = await pg.evaluate(() => document.getElementById('s-today').innerText);
-  ok(/Rabi al-Awwal/.test(today), 'the Hijri date is named');
-  ok(/dawn/.test(today) && /dusk/.test(today) && (today.match(/\d\d:00/g) || []).length >= 7, 'every slot of the day is on the strip');
-  ok(/reelA is owed/.test(today) && /light is half sent/.test(today), 'what needs a hand is listed first');
-  ok(!/word is half sent/.test(today), 'a slot whose only unanswered network is waiting on its own review is not called half sent');
-  ok(!/dusk is owed/.test(today), 'a slot whose hour has not come is not called owed');
+  ok((await surfaceOn(pg)) === 's-home', 'Home is the first surface');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('nav.bar button')].map(b => b.dataset.s).join(',')) === 'home,ask,posts,numbers,more', 'the bar holds Home, Ask, Posts, Numbers and More');
+  ok(/Nothing needs you\. The Lantern has it\./.test(await pg.evaluate(() => document.getElementById('s-home').innerText)), 'a quiet day on Home says nothing needs him');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(await pg.evaluate(() => getComputedStyle(document.getElementById('sheet')).visibility === 'hidden'), 'the closed sheet is out of the way of screen readers and the tab key');
-  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-today.png', fullPage: true });
-
-  console.log(label + ' · the steward, at the top of Today');
-  const stw = await pg.evaluate(() => {
-    const c = document.querySelector('#s-today .stw');
-    if (!c) return null;
-    return {
-      first: document.querySelector('#s-today > *').className,
-      label: c.querySelector('.lab').textContent,
-      read: (c.querySelector('.rd') || {}).textContent || '',
-      say: (c.querySelector('p.say') || {}).textContent || '',
-      levels: [...c.querySelectorAll('.fnd > .f')].map(f => f.className.replace('f ', '')),
-      titles: [...c.querySelectorAll('.fnd > .f b')].map(b => b.textContent),
-      fold: (c.querySelector('.fnd details.q summary') || {}).textContent || '',
-      foldOpen: !!(c.querySelector('.fnd details.q') || {}).open,
-      foldRows: c.querySelectorAll('.fnd details.q .f').length,
-      posts: [...c.querySelectorAll('[data-sact]')].map(b => b.textContent),
-      opens: [...c.querySelectorAll('[data-sopen]')].map(a => ({ t: a.textContent, href: a.getAttribute('href'), tgt: a.getAttribute('target'), rel: a.getAttribute('rel') })),
-      noBtnOnGood: !c.querySelector('.fnd details.q [data-sact], .fnd details.q [data-sopen]')
-    };
-  });
-  ok(stw && /^stw/.test(stw.first), 'the steward is the first thing on Today, above everything else');
-  ok(stw.label === 'The Lantern', 'a small mono label says whose paragraph this is: ' + stw.label);
-  ok(/^read \d+ min ago$/.test(stw.read), 'with when it was read: ' + JSON.stringify(stw.read));
-  ok(/Instagram token has 6 days left/.test(stw.say) && /Telegram has taken nothing/.test(stw.say), 'and the paragraph the server sent, whole');
-  ok(stw.levels.join(',') === 'act,act,watch,watch', 'the findings that need a person are act first, then watch: ' + stw.levels.join(','));
-  ok(/^4 things are as they should be$/.test(stw.fold.trim()), 'and the good ones are folded into one quiet line: ' + JSON.stringify(stw.fold.trim()));
-  ok(!stw.foldOpen && stw.foldRows === 4, 'closed to begin with, and it holds all four');
-  ok(stw.noBtnOnGood, 'nothing that is as it should be carries a button');
-  ok(stw.posts.join('|') === 'I have just renewed it|Send the last slot to Telegram', 'each action is a button with the label the server wrote: ' + stw.posts.join('|'));
-  ok(stw.opens.length === 1 && stw.opens[0].tgt === '_blank' && stw.opens[0].rel === 'noopener' && stw.opens[0].href === '/api/threads?action=status',
-     'an open action is a link into a new tab, at the href the server gave: ' + JSON.stringify(stw.opens[0]));
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-today .stw .f')].every(f => !!f.querySelector('b') && !!f.querySelector('span.sy'))),
-     'every finding shows its title and its sentence');
-  await pg.click('#s-today .fnd details.q summary');
-  await pg.waitForTimeout(200);
-  ok(await pg.evaluate(() => document.querySelector('#s-today .fnd details.q').open && /Readers today: 31/.test(document.getElementById('s-today').innerText)),
-     'and the quiet line expands to show them');
-
-  posted.length = 0;
-  await pg.click('#s-today [data-sact="1"]');
-  await pg.waitForTimeout(700);
-  const acted = posted.filter(x => !x.method && /^\/api\/social/.test(x.url));
-  ok(acted.length === 1 && acted[0].url === '/api/social'
-     && JSON.stringify(acted[0].body) === JSON.stringify({ action: 'retry-channel', date: '2026-09-06', slot: 'dusk', where: 'telegram' }),
-     'the action posts exactly the route and the body the server sent, and nothing else: ' + JSON.stringify(acted));
-  ok(posted.some(x => x.method === 'GET' && /action=steward/.test(x.url) && /fresh=1/.test(x.url)), 'and the house is read again afterwards');
-  posted.length = 0;
-  await pg.waitForSelector('#s-today #stw-again', { timeout: 10000 });
-  await pg.click('#stw-again');
-  await pg.waitForTimeout(600);
-  ok(posted.some(x => x.method === 'GET' && /\/api\/house\?action=steward&fresh=1/.test(x.url)), 'Read again asks for the answer past its ten minutes, with fresh=1');
-  ok(await noSideScroll(pg), 'the steward does not widen the page');
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-home.png', fullPage: true });
 
   console.log(label + ' · Posts');
   await pg.click('nav.bar [data-s="posts"]');
@@ -682,27 +624,28 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(posted.some(x => x.url.startsWith('/api/settings') && x.body['social.mode'] === 'approve'), 'confirming posts {"social.mode":"approve"} to /api/settings');
   ok(await noSideScroll(pg), 'the sheet did not widen the page');
 
-  console.log(label + ' · Readers');
-  await pg.click('nav.bar [data-s="readers"]');
-  await pg.waitForSelector('#s-readers .card', { timeout: 15000 });
+  /* the readers' numbers live on the Numbers surface's Readers tab now; the
+     inbox and the replies waiting are a room of their own behind More */
+  console.log(label + ' · Readers, on the Numbers surface');
+  await pg.click('nav.bar [data-s="numbers"]');
+  await pg.click('#s-numbers .tabs [data-tab="readers"]');
+  await pg.waitForSelector('#s-readnum .card', { timeout: 15000 });
   await pg.waitForTimeout(300);
-  const r = await pg.evaluate(() => document.getElementById('s-readers').innerText);
+  const r = await pg.evaluate(() => document.getElementById('s-readnum').innerText);
   ok(/31/.test(r) && /85/.test(r), 'today and the 30 days are counted');
   ok(/filtered from/.test(r), 'the day the count became honest is marked');
   ok(/not counted/.test(r), 'and this browser is shown as not counted');
   ok(/88/.test(r) && /crawlers/.test(r), 'the turned-away total is explained');
-  ok(/thank you for the library/.test(r), 'the inbox lists what arrived');
-  ok(/A reply that waits/.test(r) && /flagged: link/.test(r), 'a held reply shows with why it was held');
   /* what strangers watch */
-  const rAll = await pg.evaluate(() => document.getElementById('s-readers').textContent);   /* the folds too */
+  const rAll = await pg.evaluate(() => document.getElementById('s-readnum').textContent);   /* the folds too */
   ok(/what strangers watch/i.test(r) && /62 of 70 read/.test(r) && /8 to read again/.test(r), 'the fortnight\'s read is summed up: read, of how many, how many are stale');
   ok(/verse reels/.test(r) && /word cards/.test(r) && /word reels/.test(r), 'every kind is a bar');
-  const kb = await pg.evaluate(() => [...document.querySelectorAll('#s-readers details[open] .bars .b')].map(b => ({ n: b.querySelector('.n').textContent, w: b.querySelector('.t i').dataset.w, v: b.querySelector('.v').textContent })));
+  const kb = await pg.evaluate(() => [...document.querySelectorAll('#s-readnum details[open] .bars .b')].map(b => ({ n: b.querySelector('.n').textContent, w: b.querySelector('.t i').dataset.w, v: b.querySelector('.v').textContent })));
   ok(kb.length === 3 && /verse reels/.test(kb[0].n) && kb[0].w === '100' && kb[0].v === '2,400' && kb[2].w === '13', 'the kind bars are median reach against the best, with the count: ' + JSON.stringify(kb));
   ok(/08:00 UTC/.test(rAll) && /21:00 UTC/.test(rAll), 'the hours are rows, in a fold');
   ok(/Verse reels reach 8× the median of word reels/.test(r) && /21:00 slot reaches least/.test(r), 'the sentences the numbers support are printed');
   ok(/One verse about light/.test(rAll) && /A Short/.test(rAll) && /views/.test(rAll), 'the top ten lists the posts, a Short by its views');
-  ok(await pg.evaluate(() => !!document.querySelector('#s-readers a[href="https://youtube.com/shorts/y1"]')), 'with a link where the network gives one');
+  ok(await pg.evaluate(() => !!document.querySelector('#s-readnum a[href="https://youtube.com/shorts/y1"]')), 'with a link where the network gives one');
   ok(!/needs a permission/.test(r), 'no permission is asked for when none is missing');
   /* Threads, folded the same way Instagram and Facebook are */
   ok(/Threads/.test(rAll), 'Threads takes its own row in "by network"');
@@ -729,6 +672,18 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(rf.length === 2 && rf.every(x => x.body.action === 'refresh' && x.body.days === 14), 'Read again posts refresh, and again while the answer is partial, then stops: ' + rf.length);
   ok(await pg.evaluate(() => /Read again/.test(document.getElementById('ins-read').textContent) && !document.getElementById('ins-read').disabled), 'and the button comes back');
   ok(await pg.evaluate(() => /Read 70/.test(document.getElementById('toast').textContent)), 'the owner is told how many were read');
+  ok(await noSideScroll(pg), 'nothing scrolls sideways');
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-readers.png', fullPage: true });
+
+  console.log(label + " · the readers' inbox, a room behind More");
+  await pg.click('nav.bar [data-s="more"]');
+  await pg.waitForSelector('#s-more [data-room="readers"]', { timeout: 15000 });
+  await pg.click('#s-more [data-room="readers"]');
+  await pg.waitForSelector('#s-readers.on .row', { timeout: 15000 });
+  await pg.waitForTimeout(300);
+  const ib = await pg.evaluate(() => document.getElementById('s-readers').innerText);
+  ok(/thank you for the library/.test(ib), 'the inbox lists what arrived');
+  ok(/A reply that waits/.test(ib) && /flagged: link/.test(ib), 'a held reply shows with why it was held');
   await pg.click('[data-held="0"]');
   await pg.waitForTimeout(400);
   const held = await pg.evaluate(() => ({ open: document.getElementById('sheet').classList.contains('on'), text: document.getElementById('sheet-in').innerText }));
@@ -745,13 +700,13 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(posted.some(x => x.url.startsWith('/api/journal') && x.body.action === 'comment-state' && x.body.id === 'e1' && x.body.cid === 'c9' && x.body.state === 'approve'),
      'Release posts comment-state approve with the entry and the comment');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
-  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-readers.png', fullPage: true });
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-inbox.png', fullPage: true });
 
-  console.log(label + ' · House');
-  await pg.click('nav.bar [data-s="house"]');
-  await pg.waitForSelector('#s-house .row', { timeout: 15000 });
+  console.log(label + ' · More (the House of before)');
+  await pg.click('nav.bar [data-s="more"]');
+  await pg.waitForSelector('#s-more .row', { timeout: 15000 });
   await pg.waitForTimeout(600);
-  const hs = await pg.evaluate(() => document.getElementById('s-house').innerText);
+  const hs = await pg.evaluate(() => document.getElementById('s-more').innerText);
   ok(/first in line: inkling/.test(hs), 'the Lantern row comes from the cheap probe-free read, naming the model first in line');
   await pg.click('#lantern-test');
   await pg.waitForTimeout(700);
@@ -761,9 +716,9 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/redis/i.test(hs) || /store/i.test(hs), 'the store is reported');
   ok(/\$90/.test(hs) && /30 USD/.test(hs), 'giving is shown');
   ok(/Amina/.test(hs) && /15 EUR/.test(hs) && /lit on the wall/.test(hs), 'a guardian is shown by the name they chose, with what they give');
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-house [data-room]')].map(b => b.dataset.room).join(',')) === 'soul,lights,legacy,marketing,journal,night,system,controls,observatory,lantern',
-     'the ten rooms are cards on the hub, in order: the Soul first, the Lantern last');
-  ok(await pg.evaluate(() => !document.querySelector('#s-house a[href^="/admin#"]')) && !/rest of the house/i.test(hs),
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).join(',')) === 'engine,lights,legacy,marketing,journal,night,system,controls,flow,readers',
+     'the ten rooms are cards on the hub, in order: the engine room first, the readers\' inbox last');
+  ok(await pg.evaluate(() => !document.querySelector('#s-more a[href^="/admin#"]')) && !/rest of the house/i.test(hs),
      'and nothing on the hub points back into the old console');
   ok(/421/.test(hs) && /questioned/.test(hs), 'the Lights card carries a live number: the library is counted');
   ok(/2\s*entries/.test(hs) && /1 waiting/.test(hs), 'the Journal card counts the entries and what waits');
@@ -771,14 +726,14 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(/2 of 3/.test(hs), 'the System card counts the keys that are set, and this house has no Stripe key');
   ok(/3 of 8/.test(hs) && /dials set here/.test(hs), 'the Controls card counts the dials that are set here against every dial there is');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
-  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-house.png', fullPage: true });
+  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-more.png', fullPage: true });
 
-  console.log(label + ' · Flow');
+  console.log(label + ' · Flow, a room behind More');
   posted.length = 0;
-  await pg.click('nav.bar [data-s="flow"]');
+  await pg.click('#s-more [data-room="flow"]');
   await pg.waitForSelector('#s-flow svg.flow', { timeout: 15000 });
   await pg.waitForTimeout(400);
-  ok((await surfaceOn(pg)) === 's-flow', 'the bar moves to Flow');
+  ok((await surfaceOn(pg)) === 's-flow', 'Flow opens from More');
   ok(await pg.evaluate(() => location.hash) === '#flow', 'and the hash follows it to #flow');
   ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'Flow', 'the top bar names it');
   ok(posted.some(x => x.method === 'GET' && /\/api\/house\?action=flow&days=14/.test(x.url)), 'it draws GET /api/house?action=flow with the fortnight');
@@ -885,18 +840,18 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   console.log(label + ' · the eight rooms open, route and draw');
   const ROOMS = [['lights', 'Lights'], ['legacy', 'Legacy'], ['marketing', 'Marketing'],
                  ['journal', 'Journal desk'], ['night', 'Night shift'], ['system', 'System'],
-                 ['controls', 'Controls'], ['observatory', 'Observatory']];
+                 ['controls', 'Controls'], ['readers', "Readers' inbox"]];
   for (const [id, name] of ROOMS) {
-    await pg.click('nav.bar [data-s="house"]');
-    await pg.waitForSelector('#s-house [data-room="' + id + '"]', { timeout: 15000 });
-    await pg.click('#s-house [data-room="' + id + '"]');
+    await pg.click('nav.bar [data-s="more"]');
+    await pg.waitForSelector('#s-more [data-room="' + id + '"]', { timeout: 15000 });
+    await pg.click('#s-more [data-room="' + id + '"]');
     await pg.waitForSelector('#s-' + id + '.on .card, #s-' + id + '.on .row, #s-' + id + '.on .dial', { timeout: 15000 });
     await pg.waitForTimeout(250);
-    ok((await surfaceOn(pg)) === 's-' + id, name + ' opens from House');
+    ok((await surfaceOn(pg)) === 's-' + id, name + ' opens from More');
     ok(await pg.evaluate(() => location.hash) === '#' + id, 'the hash follows it to #' + id);
     ok(await pg.evaluate(() => document.getElementById('title').textContent) === name, 'the top bar names it: ' + name);
-    ok(await pg.evaluate(() => !!document.querySelector('.surf.on .back')), 'and a way back to House sits at the top of it');
-    ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="house"]').classList.contains('on')), 'the bar still lights House, the door it is behind');
+    ok(await pg.evaluate(() => !!document.querySelector('.surf.on .back') && document.querySelector('.surf.on .back').textContent === 'More'), 'and a way back to More sits at the top of it');
+    ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="more"]').classList.contains('on')), 'the bar still lights More, the door it is behind');
     ok(await noSideScroll(pg), name + ' does not scroll sideways');
     await pg.screenshot({ path: 'tests/shots/console2-' + w + '-' + id + '.png', fullPage: true });
     /* a reload must land in the same room */
@@ -906,14 +861,13 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
     ok((await surfaceOn(pg)) === 's-' + id, 'a reload lands back in ' + name);
     await pg.click('.surf.on .back');
     await pg.waitForTimeout(200);
-    ok((await surfaceOn(pg)) === 's-house', 'and the back affordance returns to House');
+    ok((await surfaceOn(pg)) === 's-more', 'and the back affordance returns to More');
   }
 
-  console.log(label + ' · the Observatory: every chart has a table twin, a tooltip, and nothing overflows');
-  await pg.click('nav.bar [data-s="house"]');
-  await pg.waitForSelector('#s-house [data-room="observatory"]', { timeout: 15000 });
-  await pg.click('#s-house [data-room="observatory"]');
-  await pg.waitForSelector('#s-observatory.on .viz', { timeout: 15000 });
+  console.log(label + ' · the Observatory, on the Numbers surface: every chart has a table twin, a tooltip, and nothing overflows');
+  await pg.click('nav.bar [data-s="numbers"]');
+  await pg.click('#s-numbers .tabs [data-tab="overview"]');
+  await pg.waitForSelector('#s-numbers.on #s-observatory .viz', { timeout: 15000 });
   await pg.waitForTimeout(300);
   const vizCount = await pg.evaluate(() => document.querySelectorAll('#s-observatory .viz').length);
   ok(vizCount >= 6, 'at least six charts are on the room: ' + vizCount);
@@ -948,16 +902,15 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   await pg.screenshot({ path: 'tests/shots/console2-' + w + '-observatory-full.png', fullPage: true });
   ok(errors.length === 0, 'no console error and no failed request while the Observatory drew: ' + errors.slice(0, 3).join(' | '));
 
-  console.log(label + ' · the Lantern: it plans, thinks aloud, draws a chart with a table twin, offers a proposal, and keeps a ledger');
-  await pg.click('nav.bar [data-s="house"]');
-  await pg.waitForSelector('#s-house [data-room="lantern"]', { timeout: 15000 });
-  await pg.click('#s-house [data-room="lantern"]');
-  await pg.waitForSelector('#s-lantern.on .lant-in', { timeout: 15000 });
+  console.log(label + ' · Ask: it plans, thinks aloud, draws a chart with a table twin, offers a proposal, and keeps a ledger');
+  await pg.click('nav.bar [data-s="ask"]');
+  await pg.waitForSelector('#s-ask.on .lant-in', { timeout: 15000 });
   await pg.waitForTimeout(250);
-  ok(await pg.evaluate(() => location.hash) === '#lantern', 'the hash follows it to #lantern');
-  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'The Lantern', 'the top bar names it: The Lantern');
-  ok(await pg.evaluate(() => !!document.querySelector('#s-lantern.on .back')), 'and a way back to House sits at the top of it');
-  const starterCount = await pg.evaluate(() => document.querySelectorAll('#s-lantern [data-lant-start]').length);
+  ok(await pg.evaluate(() => location.hash) === '#ask', 'the hash follows it to #ask');
+  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'Ask the Lantern', 'the top bar names it: Ask the Lantern');
+  ok(await pg.evaluate(() => /Proposals now wait on Home as decisions/.test(document.getElementById('lant-home').textContent) && !document.getElementById('lant-proposals')),
+     'its proposals panel is one line now, pointing to Home');
+  const starterCount = await pg.evaluate(() => document.querySelectorAll('#s-ask [data-lant-start]').length);
   ok(starterCount === 4, 'the four starter prompts are offered: ' + starterCount);
   ok(await noSideScroll(pg), 'the Lantern does not scroll sideways before a word is asked, at ' + w + 'px');
 
@@ -965,20 +918,20 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
      answer is held back 350ms on purpose, the same device console2.mjs
      already uses for a slow package, so the open state is caught for real
      rather than guessed at) */
-  await pg.click('#s-lantern [data-lant-start]');
+  await pg.click('#s-ask [data-lant-start]');
   await pg.waitForTimeout(80);
-  ok(await pg.evaluate(() => { const d = document.querySelector('#s-lantern .lant-think'); return d && d.open; }),
+  ok(await pg.evaluate(() => { const d = document.querySelector('#s-ask .lant-think'); return d && d.open; }),
      'the thinking stream opens the moment a question is sent');
   ok(await pg.evaluate(() => document.getElementById('lant-send').disabled), 'the Ask button is held down while a run is in flight');
 
-  await pg.waitForSelector('#s-lantern .lant-artifacts .lant-proposal', { timeout: 15000 });
+  await pg.waitForSelector('#s-ask .lant-artifacts .lant-proposal', { timeout: 15000 });
   await pg.waitForTimeout(150);
-  ok(await pg.evaluate(() => { const d = document.querySelector('#s-lantern .lant-think'); return d && !d.open; }),
+  ok(await pg.evaluate(() => { const d = document.querySelector('#s-ask .lant-think'); return d && !d.open; }),
      'and folds again once the run is done');
   ok(await pg.evaluate(() => !document.getElementById('lant-send').disabled), 'the Ask button is free again');
-  const thinkSteps = await pg.evaluate(() => document.querySelectorAll('#s-lantern .lant-think .lant-step').length);
+  const thinkSteps = await pg.evaluate(() => document.querySelectorAll('#s-ask .lant-think .lant-step').length);
   ok(thinkSteps >= 2, 'the folded panel still holds what it did: ' + thinkSteps + ' step(s) (a tool and a subagent)');
-  const thread = await pg.evaluate(() => document.querySelector('#s-lantern .lant-msg.assistant') ? document.querySelector('#s-lantern .lant-msg.assistant').textContent : '');
+  const thread = await pg.evaluate(() => document.querySelector('#s-ask .lant-msg.assistant') ? document.querySelector('#s-ask .lant-msg.assistant').textContent : '');
   ok(/14,000|14000/.test(thread), 'the answer in the thread carries a real number, not a placeholder');
   ok(await pg.evaluate(() => { const a = document.querySelector('#lant-thread .lant-msg.assistant'); return !!a && a.getAttribute('aria-live') === 'polite'; }),
      'the answer sits in its own aria-live region for a screen reader');
@@ -988,30 +941,30 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
 
   /* the chart and its table twin: the same obsBars/vizCard the Observatory
      draws, reused rather than a second chart engine */
-  const chartToggle = await pg.evaluate(() => { const c = document.querySelector('#s-lantern .lant-artifacts .viz'); return c ? !!c.querySelector('[data-tv]') : false; });
+  const chartToggle = await pg.evaluate(() => { const c = document.querySelector('#s-ask .lant-artifacts .viz'); return c ? !!c.querySelector('[data-tv]') : false; });
   ok(chartToggle, 'the chart artifact carries its own table toggle');
-  const chartId = await pg.evaluate(() => document.querySelector('#s-lantern .lant-artifacts .viz').id);
+  const chartId = await pg.evaluate(() => document.querySelector('#s-ask .lant-artifacts .viz').id);
   await pg.click('#' + chartId + ' [data-tv]');
   const chartFlipped = await pg.evaluate(id => {
     const card = document.getElementById(id);
     return { tableShown: !card.querySelector('.vtb').hidden, chartHidden: card.querySelector('.vzc').hidden, hasTable: !!card.querySelector('table.dt') };
   }, chartId);
   ok(chartFlipped.tableShown && chartFlipped.chartHidden && chartFlipped.hasTable, 'pressing the toggle swaps the Lantern\'s own chart for a real table');
-  const lantVizCount = await pg.evaluate(() => document.querySelectorAll('#s-lantern .lant-artifacts .viz').length);
+  const lantVizCount = await pg.evaluate(() => document.querySelectorAll('#s-ask .lant-artifacts .viz').length);
   ok(lantVizCount >= 2, 'the standalone table artifact drew as its own card too: ' + lantVizCount + ' cards');
 
   /* the proposal: reordering a reel has no safe door, so it only ever
      offers Approve/Decline, never runs on its own */
-  ok(await pg.evaluate(() => !!document.querySelector('#s-lantern .lant-proposal')), 'a proposal is drawn with its own reasoning');
-  const propText = await pg.evaluate(() => document.querySelector('#s-lantern .lant-proposal').textContent);
+  ok(await pg.evaluate(() => !!document.querySelector('#s-ask .lant-proposal')), 'a proposal is drawn with its own reasoning');
+  const propText = await pg.evaluate(() => document.querySelector('#s-ask .lant-proposal').textContent);
   ok(/no existing, safe, owner-honoured way/.test(propText), 'and it says plainly why nothing was changed on its own');
   ok(/Why:/.test(propText) && /reelB is thinner than reelA/.test(propText), 'the planner\'s own Why is shown on the proposal');
   ok(/Evidence:/.test(propText) && /reelA reach 4100/.test(propText), 'and this run\'s own Evidence is shown separately from Why');
-  await pg.click('#s-lantern .lant-proposal [data-lant-approve]');
+  await pg.click('#s-ask .lant-proposal [data-lant-approve]');
   await pg.waitForTimeout(150);
   const approvePost = posted.find(p => p.url.includes('/api/lantern-agent') && p.body && p.body.action === 'approve');
   ok(!!approvePost && approvePost.body.id === 'prop-lineup-1', 'approving a proposal posts exactly the approve action and its id');
-  ok(await pg.evaluate(() => !document.querySelector('#s-lantern .lant-proposal')), 'and the card leaves the page once answered');
+  ok(await pg.evaluate(() => !document.querySelector('#s-ask .lant-proposal')), 'and the card leaves the page once answered');
   ok(await pg.evaluate(() => /Recorded/.test(document.getElementById('toast').textContent)), 'the toast says a decision was recorded, not that an action ran, since no safe door exists for it');
 
   /* the ledger: what the Lantern already did on its own today, with an
@@ -1038,9 +991,9 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
 
   console.log(label + ' · what each room says');
   const roomText = async id => {
-    await pg.click('nav.bar [data-s="house"]');
-    await pg.waitForSelector('#s-house [data-room="' + id + '"]', { timeout: 15000 });
-    await pg.click('#s-house [data-room="' + id + '"]');
+    await pg.click('nav.bar [data-s="more"]');
+    await pg.waitForSelector('#s-more [data-room="' + id + '"]', { timeout: 15000 });
+    await pg.click('#s-more [data-room="' + id + '"]');
     await pg.waitForSelector('#s-' + id + '.on .card, #s-' + id + '.on .dial', { timeout: 15000 });
     await pg.waitForTimeout(250);
     return pg.evaluate(i => document.getElementById('s-' + i).innerText, id);
@@ -1399,7 +1352,7 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(posted.every(x => x.method === 'GET'), 'without asking the house to undo anything');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   await pg.screenshot({ path: 'tests/shots/console2-' + w + '-controls.png', fullPage: true });
-  await pg.click('nav.bar [data-s="house"]');
+  await pg.click('nav.bar [data-s="more"]');
   await pg.waitForTimeout(300);
 
   console.log(label + ' · the bar and the rail');
@@ -1428,8 +1381,8 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok((await surfaceOn(pg)) === 's-controls', 'a console opened at #controls lands in the dials');
   ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'Controls', 'and the top bar names the room');
   ok(await pg.evaluate(() => document.querySelectorAll('#s-controls .dial').length) === 8, 'every dial the house has is drawn');
-  ok(await pg.evaluate(() => !!document.querySelector('#s-controls .back')), 'with a way back to House at the top of it');
-  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="house"]').classList.contains('on')), 'and the bar lights House, the door it is behind');
+  ok(await pg.evaluate(() => !!document.querySelector('#s-controls .back')), 'with a way back to More at the top of it');
+  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="more"]').classList.contains('on')), 'and the bar lights More, the door it is behind');
   ok(await pg.evaluate(() => !!document.getElementById('ctl-bar').hidden), 'nothing is unsaved, so no bar is in the way');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
@@ -1475,42 +1428,6 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   ok(await pg.evaluate(() => document.querySelectorAll('#s-controls .dial').length) === 8, 'and still shows every dial and what it holds');
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
-  await pg.close();
-}
-
-/* ---------------------------------------------------------------------------
-   THE STEWARD AND THE OLD LIST DO NOT SAY THE SAME THING TWICE
---------------------------------------------------------------------------- */
-for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]]) {
-  console.log('\n' + label + ' · the steward speaks for a slot, so Waiting for you drops that line');
-  const posted = [], errors = [];
-  const pg = await open_(w, h, posted, errors, { steward: STEWARD_SLOTS });
-  const t = await pg.evaluate(() => document.getElementById('s-today').innerText);
-  const waits = await pg.evaluate(() => [...document.querySelectorAll('#s-today .row[data-go]')].map(r => r.querySelector('b').textContent));
-  ok(await pg.evaluate(() => (document.querySelector('#s-today .stw .lab') || {}).textContent) === 'From the record',
-     'with the Lantern dark the label says the paragraph came from the record instead');
-  ok(/2 things need you today/.test(t), 'and the paragraph the house templated for itself still reads');
-  ok(!waits.some(x => /^reelA is owed$/.test(x)), 'the slot the steward carries is gone from Waiting for you: ' + JSON.stringify(waits));
-  ok(waits.some(x => /^light is half sent$/.test(x)), 'the slot it does not carry is still there');
-  ok(!waits.some(x => /Reddit draft/.test(x)), 'and the Reddit drafts, which the steward also carries, are said once');
-  ok(waits.some(x => /new message/.test(x)) && waits.some(x => /waiting to be read/.test(x)), 'everything the steward is silent about stays');
-  /* the paragraph the house templates for itself opens with the first act's
-     own title, so the count is taken over the lists rather than over the whole
-     surface: what must not happen twice is the finding being LISTED twice */
-  const listed = await pg.evaluate(() =>
-    [...document.querySelectorAll('#s-today .stw .fnd .f b, #s-today .row[data-go] b')].map(b => b.textContent).join('\n'));
-  ok((listed.match(/1 of today's posts have no record/g) || []).length === 1, 'the finding itself is listed exactly once');
-  posted.length = 0;
-  await pg.click('#s-today [data-sact="0"]');
-  await pg.waitForTimeout(700);
-  const sent = posted.filter(x => !x.method && /^\/api\/social/.test(x.url));
-  ok(sent.length === 1 && sent[0].url === '/api/social?date=2026-09-07'
-     && JSON.stringify(sent[0].body) === JSON.stringify({ action: 'send-slot', slot: 'reelA' }),
-     'a route the server wrote with a query on it is posted to exactly as given: ' + JSON.stringify(sent));
-  ok(await pg.evaluate(() => /done|Sent/.test(document.getElementById('toast').textContent)), 'and the owner is told in one sentence');
-  ok(await noSideScroll(pg), 'nothing scrolls sideways');
-  ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
-  await pg.screenshot({ path: 'tests/shots/console2-' + w + '-steward-dedupe.png', fullPage: true });
   await pg.close();
 }
 
@@ -1562,72 +1479,13 @@ console.log('\nwhen the house has no store to read itself from');
   const NOSTORE = () => ({ ok: false, enabled: false, store: 'none', action: 'steward',
     error: 'no store is configured, so there is nothing to read the house from' });
   const pg = await open_(390, 844, posted, errors, { steward: NOSTORE, flow: NOSTORE });
-  const t = await pg.evaluate(() => document.getElementById('s-today').innerText);
-  ok(/no store is configured/.test(t), 'the steward says in one plain sentence why it has nothing to say');
-  ok(!(await pg.evaluate(() => !!document.querySelector('#s-today .stw .f'))), 'and invents no finding to fill the space');
-  ok(/reelA is owed/.test(t) && /light is half sent/.test(t), 'with the steward silent, Waiting for you drops nothing');
-  await pg.click('nav.bar [data-s="flow"]');
+  await pg.evaluate(() => window.NOOR_CONSOLE.show('flow', true));
   await pg.waitForSelector('#s-flow.on .card', { timeout: 15000 });
   await pg.waitForTimeout(300);
   const f = await pg.evaluate(() => document.getElementById('s-flow').innerText);
-  ok(/The flow could not be read/.test(f) && /no store is configured/.test(f), 'and the map says the same, rather than drawing an empty funnel');
+  ok(/The flow could not be read/.test(f) && /no store is configured/.test(f), 'the map says in one plain sentence why, rather than drawing an empty funnel');
   ok(await pg.evaluate(() => !document.querySelector('#s-flow svg.flow')), 'nothing is drawn at all');
   ok(await pg.evaluate(() => !!document.getElementById('flow-seg')), 'but the days control stays, so it can be asked again');
-  ok(await noSideScroll(pg), 'nothing scrolls sideways');
-  ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
-  await pg.close();
-}
-
-/* ---------------------------------------------------------------------------
-   AN ACTION THE CONSOLE DOES NOT RECOGNISE DRAWS NO BUTTON
-
-   A finding is JSON arriving over a route: the room posted to whatever route it
-   named and rendered whatever href it carried, and one wrong answer was a
-   javascript: URL under the owner's thumb or a POST at a door in somebody
-   else's house. Both shapes are checked now before either is drawn.
---------------------------------------------------------------------------- */
-console.log('\nan action the console cannot make sense of');
-{
-  const posted = [], errors = [];
-  const BAD = () => ({
-    ok: true, enabled: true, store: 'redis', cached: false, at: readAt(), date: '2026-09-07',
-    say: 'Two of the actions in this answer are not shapes this room knows.',
-    lantern: false, refused: '', counts: { act: 2, watch: 1, good: 0 },
-    findings: [
-      { id: 'bad-href', level: 'act', title: 'A door that is not an address',
-        say: 'The action on this finding carries a script where an address should be.',
-        action: { label: 'Open it', kind: 'open', href: 'javascript:alert(1)' },
-        evidence: { shape: 'href' } },
-      { id: 'bad-route', level: 'act', title: 'A route in another house',
-        say: 'The action on this finding posts to a host that is not this one.',
-        action: { label: 'Send it away', kind: 'post', route: 'https://evil.example.com/api/social', body: { action: 'mode', mode: 'auto' } },
-        evidence: { shape: 'route' } },
-      { id: 'mode', level: 'watch', title: 'The schedule is off',
-        say: 'Nothing goes out on a schedule: the ladder is on "off", which is the shipped state.',
-        action: { label: 'Move it up to approve', kind: 'post', route: '/api/social', body: { action: 'mode', mode: 'approve' } },
-        evidence: { mode: 'off' } }
-    ]
-  });
-  const pg = await open_(390, 844, posted, errors, { steward: BAD });
-  const seen = await pg.evaluate(() => ({
-    hrefs: [...document.querySelectorAll('#s-today .stw a')].map(a => a.getAttribute('href')),
-    opens: document.querySelectorAll('#s-today .stw [data-sopen]').length,
-    posts: [...document.querySelectorAll('#s-today .stw [data-sact]')].map(b => b.textContent),
-    rows: document.querySelectorAll('#s-today .stw .fnd > .f').length,
-    text: document.getElementById('s-today').innerText
-  }));
-  ok(seen.hrefs.every(h => !/^javascript:/i.test(h)), 'a javascript: href never reaches the page: ' + JSON.stringify(seen.hrefs));
-  ok(seen.opens === 0, 'and no link is drawn for it at all');
-  ok(seen.posts.join('|') === 'Move it up to approve',
-     'a route pointing at another house draws no button, and the one action this room knows still does: ' + JSON.stringify(seen.posts));
-  ok(seen.rows === 3, 'all three findings are still shown: a refused action hides the action, never the finding');
-  ok((seen.text.match(/an action the console did not recognise/g) || []).length === 2,
-     'and each one says where its button would have been, rather than going quiet');
-  posted.length = 0;
-  await pg.click('#s-today [data-sact="2"]');
-  await pg.waitForTimeout(700);
-  ok(posted.some(x => x.url === '/api/social' && x.body && x.body.action === 'mode'), 'the one good action still works');
-  ok(!posted.some(x => /evil\.example\.com/.test(x.url)), 'and nothing was posted to the other house: ' + JSON.stringify(posted.map(x => x.url)));
   ok(await noSideScroll(pg), 'nothing scrolls sideways');
   ok(errors.length === 0, 'no script threw: ' + (errors[0] || 'clean'));
   await pg.close();
@@ -1647,11 +1505,11 @@ console.log('\nan ampersand in a value is written once, not twice');
   const AMP = () => Object.assign({}, HOUSE, { stripeConfigured: true,
     storeKind: 'Upstash & Vercel KV', moneyMode: 'gifts & guardians' });
   const pg = await open_(390, 844, posted, errors, { house: AMP });
-  await pg.click('nav.bar [data-s="house"]');
-  await pg.waitForSelector('#s-house .list .row', { timeout: 15000 });
+  await pg.click('nav.bar [data-s="more"]');
+  await pg.waitForSelector('#s-more .list .row', { timeout: 15000 });
   await pg.waitForTimeout(400);
-  const h = await pg.evaluate(() => document.getElementById('s-house').innerText);
-  ok(/On · Upstash & Vercel KV/.test(h), 'the House health row shows the ampersand itself');
+  const h = await pg.evaluate(() => document.getElementById('s-more').innerText);
+  ok(/On · Upstash & Vercel KV/.test(h), 'the health row on More shows the ampersand itself');
   ok(!/&amp;/.test(h), 'and never the escape of it: ' + JSON.stringify((h.match(/.{0,26}&amp;.{0,14}/) || [''])[0]));
   ok(/Configured · gifts & guardians mode/.test(h), 'the same for the mode the money is in');
   await pg.evaluate(() => window.NOOR_CONSOLE.show('system', true));
@@ -1696,10 +1554,9 @@ console.log('\nthe day after a card went through the old path');
 {
   const posted = [], errors = [];
   const pg = await open_(390, 844, posted, errors, { legacy: true });
-  const t = await pg.evaluate(() => document.getElementById('s-today').innerText);
-  ok(!/light is owed/.test(t), 'a card sent through the old day path is not called owed');
   await pg.click('nav.bar [data-s="posts"]');
   await pg.waitForSelector('#s-posts .slot', { timeout: 15000 });
+  ok(/light[^]{0,80}\bsent\b/.test(await pg.evaluate(() => document.getElementById('slot-light').innerText)), 'a card sent through the old day path reads sent on the line-up');
   const send = await pg.evaluate(() => [...document.querySelectorAll('[data-send]')].map(b => b.getAttribute('data-send')));
   ok(!send.includes('light'), 'and Post now is not offered for it, so it cannot go out twice');
   ok(errors.length === 0, 'no script threw');
@@ -1710,14 +1567,15 @@ console.log('\nwhen the Instagram token cannot read insights');
 {
   const posted = [], errors = [];
   const pg = await open_(390, 844, posted, errors);
-  await pg.click('nav.bar [data-s="readers"]');
+  await pg.click('nav.bar [data-s="numbers"]');
+  await pg.click('#s-numbers .tabs [data-tab="readers"]');
   await pg.waitForSelector('#ins-read', { timeout: 15000 });
   await pg.route('**/api/insights', r => r.request().method() === 'POST'
     ? r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, fetched: 0, partial: false, needs: 'instagram_manage_insights', say: 'The Instagram token can post but cannot read what a post did: it was made without instagram_manage_insights. Generate a new token with that permission added and paste it into Vercel as IG_TOKEN, then redeploy and press Read again.' }) })
     : r.continue());
   await pg.click('#ins-read');
   await pg.waitForTimeout(900);
-  const t = await pg.evaluate(() => document.getElementById('s-readers').innerText);
+  const t = await pg.evaluate(() => document.getElementById('s-readnum').innerText);
   ok(/needs a permission/.test(t) && /instagram_manage_insights/.test(t) && /IG_TOKEN/.test(t), 'the missing permission is named where the numbers would be, with what to paste and where');
   ok(await pg.evaluate(() => !document.getElementById('ins-read').disabled), 'and Read again is offered for after the token is replaced');
   ok(errors.length === 0, 'no script threw');
@@ -1729,7 +1587,7 @@ console.log('\nwhen the key expires under an open console');
   const posted = [], errors = [];
   const pg = await open_(390, 844, posted, errors);
   await pg.evaluate(() => { window.__LOCK = true; });
-  await pg.route('**/api/social?action=today', r => r.fulfill({ status: 401, contentType: 'application/json', body: '{"error":"locked"}' }));
+  await pg.route('**/api/soul?view=home', r => r.fulfill({ status: 401, contentType: 'application/json', body: '{"error":"locked"}' }));
   await pg.click('#refresh');
   await pg.waitForTimeout(700);
   ok(await pg.evaluate(() => !document.getElementById('gate').hidden && getComputedStyle(document.getElementById('app')).display === 'none'), 'a 401 brings the gate back instead of printing guesses as facts');

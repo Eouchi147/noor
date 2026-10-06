@@ -26,9 +26,25 @@
      sentence the house carries every day. */
   var DIALS = null;                 /* filled by /api/settings, may never arrive */
 
+  /* THE LINE'S WORDINGS (3 October 2026, LANTERN.md section 9). The Lantern
+     chooses one of these by id, and only these: each is written here and in
+     api/_public.js, word for word, and tests/giving.mjs keeps the two lists
+     equal. The settings answer names the id with its season already applied
+     on the server ({lantern: {line}}); anything else, or no answer at all,
+     is the everyday line. The places the band appears do not change. */
+  var LINES = {
+    "everyday": "This library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    "ramadan": "Ramadan Mubarak · this library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    "last-ten": "The last ten nights of Ramadan · this library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    "dhul-hijjah": "The first ten days of Dhul Hijjah · this library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    "thanks": "Thank you · last month the gifts of readers covered this library's running costs · free for everyone, forever · no ads, no trackers"
+  };
+  var LINE = "everyday";
+  function lineText() { return Object.prototype.hasOwnProperty.call(LINES, LINE) ? LINES[LINE] : LINES.everyday; }
+
   var MISSION = {
     mark: "✦",
-    text: "This library is free for everyone, forever · no ads, no trackers · it runs on the gifts of its readers",
+    text: LINES.everyday,             /* the band shows the chosen wording, lineText() */
     href: "/donate",
     cta: "Keep it lit →",
     /* The band paints itself with inline styles, which no stylesheet can
@@ -54,10 +70,12 @@
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) {
           if (!j || !j.s) return;
-          var before = JSON.stringify(DIALS);
+          var before = JSON.stringify(DIALS), lineBefore = LINE;
           DIALS = j.s;
+          var id = j.lantern && typeof j.lantern.line === "string" ? j.lantern.line : "everyday";
+          LINE = Object.prototype.hasOwnProperty.call(LINES, id) ? id : "everyday";
           notice(DIALS["notice.text"]);
-          if (JSON.stringify(DIALS) !== before) remount();
+          if (JSON.stringify(DIALS) !== before || LINE !== lineBefore) remount();
         }).catch(function () {});
     } catch (e) {}
   }
@@ -108,7 +126,7 @@
       'align-items:center;gap:.55rem;font-size:.79rem;line-height:1.6;color:' + M.tone +
       ';font-family:Inter,system-ui,sans-serif;flex-wrap:wrap">' +
       '<span aria-hidden="true" style="color:rgba(201,162,39,.9);font-size:inherit">' + M.mark + "</span>" +
-      "<span class=\"nsp-t\" style=\"flex:1 1 16rem;min-width:0\">" + M.text + "</span>" +
+      "<span class=\"nsp-t\" style=\"flex:1 1 16rem;min-width:0\">" + lineText() + "</span>" +
       '<a href="' + M.href + '" style="margin-inline-start:auto;flex:none;color:var(--gold-hi,#8a6d13);font-weight:700;text-decoration:none;white-space:nowrap">' +
       M.cta + "</a></div>";
     hdr.parentNode.insertBefore(d, hdr.nextSibling);

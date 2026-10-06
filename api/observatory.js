@@ -43,6 +43,7 @@ import {
 } from "./_insights.js";
 import { computeVisitors } from "./visitors.js";
 import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, evaluate as expEvaluate } from "./_experiments.js";
+import { readLeans, leansOnRecord } from "./_levers.js";   /* the rota leans, for the walk below (review of 6 October 2026) */
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -204,6 +205,11 @@ async function walkStats(dates, manifest, opts) {
   for (const d of dates) for (const s of SLOT_IDS) wanted.push([d, s]);
   const keys = wanted.map(([d, s]) => K_STATS(d, s));
   const recs = await cacheRead(keys, opts);
+  /* the rota leans, read once for the walk (review of 6 October 2026), so
+     a leaned reel whose card has left the shelf is rebuilt as the poster
+     leaned it; readLeans never throws, and a fault is no lean */
+  let leanList = [];
+  try { leanList = await readLeans(opts); } catch { leanList = []; }
 
   const byDateNet = {};                    /* date -> net -> {posts,views,reach,engSum,engBase} */
   const cell = {};                         /* "wd:hh" -> {igReach:[], ytViews:[]} */
@@ -220,7 +226,9 @@ async function walkStats(dates, manifest, opts) {
        shelf could not be read the day snapshot() wrote it) is asked of
        THIS call's own manifest before either fold trusts it, the same
        review that fixed numbers() (2026-09-24) */
-    const card = matchedCard(rec, manifest);
+    let leans = null;
+    try { leans = leansOnRecord(leanList, { ...rec, date: d, slot: wanted[i][1] }); } catch { leans = null; }
+    const card = matchedCard({ ...rec, date: d, slot: wanted[i][1] }, manifest, null, leans);
     const kind = reclassifyKind(rec, manifest, card);
     for (const net of Object.keys(rec.stats)) {
       if (net === "youtubeWide") continue;             /* folded into youtube below, same as numbers() */

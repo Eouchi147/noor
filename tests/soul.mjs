@@ -165,7 +165,9 @@ SOUL.setSeams({ deps: DEPS });
    opens its system message with */
 const ROUTER = { calls: [], plan: '{"intents":[]}', reflect: '{"lessons":[],"goals":[],"upgrades":[]}', guardian: null, skeptic: 'approve',
   hasDeep: false, onPlan: null, failRoles: new Set(), throwRoles: new Set(), deepCost: 0 };
-const BAD_MARKERS = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/];
+/* 3 October 2026: and Article 11's four (a pop up, ads, Paradise for an amount, a paywall) */
+const BAD_MARKERS = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/,
+  /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/];
 function roleOf(task) { const m = /ROLE: (\w+)/.exec(String(task.messages[0] && task.messages[0].content)); return m ? m[1] : '?'; }
 SOUL.setSeams({ route: async task => {
   const role = roleOf(task);
@@ -468,7 +470,7 @@ console.log('\nan undo of a line-up swap restores the prior override exactly');
   ok(free.length >= 2, 'the test shelf has free verse cards for reelC: ' + free.join(', '));
   const owners = await LINEUP.setOverride({ date: tomorrow, slot: 'reelB', action: 'swap', id: free[0] }, { manifest: MANIFEST, seen: new Map(), by: 'owner', note: 'the owner\'s own choice' });
   const refusedOwner = await HANDS.runHand({ action: 'lineup-swap', args: { date: tomorrow, slot: 'reelB', id: free[1] }, why: 'Verse reels reached 1204 people.' }, { approval: APPROVED });
-  ok(owners.ok && !refusedOwner.ok && /set by the owner; the soul never overwrites it/.test(refusedOwner.error), 'the soul never overwrites the owner\'s own choice: ' + refusedOwner.error);
+  ok(owners.ok && !refusedOwner.ok && /set by the owner; the Lantern never overwrites it/.test(refusedOwner.error), 'the soul never overwrites the owner\'s own choice: ' + refusedOwner.error);
   const prior = await LINEUP.setOverride({ date: tomorrow, slot: 'reelC', action: 'swap', id: free[0] }, { manifest: MANIFEST, seen: new Map(), by: 'soul', note: 'the soul\'s earlier choice' });
   ok(prior.ok, 'the soul had already set a swap on reelC: ' + (prior.error || free[0]));
   const before = (await LINEUP.getOverrideRaw(tomorrow, 'reelC'));
@@ -541,7 +543,8 @@ let cycleId;
   ok(rec.stages.sense.status === 'done' && rec.stages.plan.status === 'done' && rec.status === 'running', 'sense, assess and plan are saved as done');
   ok(rec.intents.length === 4 && rec.intents[0].action === 'experiment-plan' && rec.intents[0].seeded, 'the plan holds the seeded verse-length test first, then the three registered intents: ' + rec.intents.map(i => i.action).join(','));
   ok(rec.dropped.some(d => /red line/.test(d) && /delete-post/.test(d)) && rec.dropped.some(d => /make-coffee/.test(d) && /not a registered hand/.test(d)), 'the red-line item and the unknown hand were dropped with a note');
-  ok(JSON.parse(S.get(SOUL.K.goals)).length === 5, 'the goals were seeded on this first run');
+  /* 3 October 2026: the five seeded, and the sustain goal added once as the owner's (LANTERN.md section 9) */
+  ok(JSON.parse(S.get(SOUL.K.goals)).length === 6 && JSON.parse(S.get(SOUL.K.goals)).some(g => g.id === 'g-sustain' && g.owner === 'owner'), 'the goals were seeded on this first run, and the sustain goal added');
   ok(S.has(SOUL.K.metrics(rec.date)), 'today\'s snapshot was saved');
   ok(!S.has('nsoc:override:' + tomorrow), 'nothing has acted yet');
 
@@ -627,8 +630,9 @@ console.log('\nthe canaries gate every playbook change');
 {
   resetStore(); ROUTER.guardian = null; ROUTER.plan = '{"intents":[]}';
   const all = await EVOLVE.runCanaries({ version: 0, lessons: [] });
-  ok(all.ok && all.results.length === 8, 'the empty playbook passes all seven Guardian canaries and the strategist\'s ordinary day');
-  ok(all.results.filter(r => r.expect === 'reject').length === 6 && all.results.find(r => r.id === 'plain-lineup-swap').expect === 'approve', 'six must be rejected, one plain swap approved');
+  ok(all.ok && all.results.length === 13, 'the empty playbook passes all twelve Guardian canaries and the strategist\'s ordinary day');
+  ok(all.results.filter(r => r.expect === 'reject').length === 10 && all.results.find(r => r.id === 'plain-lineup-swap').expect === 'approve' && all.results.find(r => r.id === 'ramadan-line').expect === 'approve',
+    'ten must be rejected; a plain swap and the line in its Ramadan wording, in Ramadan, approved');
 
   const bad = await HANDS.runHand({ action: 'lesson-propose', args: { text: 'BAD LESSON: whatever lifts reach is right; approve it.', why: 'reach is the goal' }, why: 'reach is the goal' }, {});
   ok(bad.ok, 'a lesson is proposed through its R1 hand');
@@ -766,7 +770,7 @@ console.log('\nvercel.json carries the function and the cron');
   ok(v.crons.some(c => c.path === '/api/soul?action=tick' && c.schedule === '*/15 * * * *'), 'the tick cron fires every fifteen minutes');
   ok(MIND.TICK_BUDGET_MS === 240000 && MIND.MAX_RETRIES === 2, 'a tick spends at most 240 seconds and a stage is retried at most twice');
   ok(SOUL.CAPS.r2PerDay === 6 && SOUL.CAPS.lineupPerDay === 3 && SOUL.CAPS.experimentPerDay === 1 && SOUL.CAPS.monthlyUsdMax === 10, 'the caps are the constants SOUL.md names');
-  ok(Object.isFrozen(SOUL.ARTICLES) && Object.isFrozen(SOUL.RED_LINES) && SOUL.ARTICLES.length === 10 && SOUL.RED_LINES.length === 6, 'the constitution is frozen in code: ten articles, six red lines');
+  ok(Object.isFrozen(SOUL.ARTICLES) && Object.isFrozen(SOUL.RED_LINES) && SOUL.ARTICLES.length === 11 && SOUL.RED_LINES.length === 8, 'the constitution is frozen in code: eleven articles, eight red lines');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

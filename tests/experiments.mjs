@@ -341,6 +341,19 @@ function cookieFor(secret) {
 }
 const AUTH = { cookie: cookieFor(process.env.ADMIN_SECRET) };
 
+/* the start dates this part plans with are counted from the real clock,
+   never written down: a fixed "future" date becomes a past one the day the
+   calendar passes it, and every check that has to get past planExperiment's
+   own "start must be today or later" then fails for the calendar's sake
+   alone (3 October 2026: "2026-10-02" had passed, and six checks here went
+   red with nothing broken). FUTURE is a month ahead, so no run that
+   straddles midnight can catch it up; LATER is further still, for the
+   second plan refused below. The refusals themselves are unchanged: each
+   still has to clear the date check and fail on its own rule. */
+const TODAY_UTC = new Date().toISOString().slice(0, 10);
+const daysAhead = n => new Date(Date.parse(TODAY_UTC + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
+const FUTURE = daysAhead(30), LATER = daysAhead(60);
+
 console.log('the gate');
 {
   const saved = process.env.ADMIN_SECRET;
@@ -371,7 +384,7 @@ console.log('GET with nothing planned');
 console.log('planning: refusals');
 {
   const r1 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'no-such-test', start: '2026-10-02' } }, r1);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'no-such-test', start: FUTURE } }, r1);
   ok(r1.body.ok === false, 'an unknown id is refused: ' + r1.body.error);
 
   const r2 = fakeRes();
@@ -379,17 +392,17 @@ console.log('planning: refusals');
   ok(r2.body.ok === false, 'a start that is not YYYY-MM-DD is refused: ' + r2.body.error);
 
   const r3 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: '2026-10-02', args: { a: 'Ahmad al-Ajmi' } } }, r3);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: FUTURE, args: { a: 'Ahmad al-Ajmi' } } }, r3);
   ok(r3.body.ok === false, 'reciter-pair with only one reciter named is refused: ' + r3.body.error);
 
   const r4 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: '2026-10-02', args: { a: 'Ahmad al-Ajmi', b: 'Nobody Reciting At All' } } }, r4);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: FUTURE, args: { a: 'Ahmad al-Ajmi', b: 'Nobody Reciting At All' } } }, r4);
   ok(r4.body.ok === false && /fewer than 20/.test(r4.body.error), 'a reciter with under 20 reels on the real shelf is refused: ' + r4.body.error);
 
   /* an id the registry object's own prototype happens to answer to, never
      resolved through a bracket read */
   const r5 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'constructor', start: '2026-10-02' } }, r5);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'constructor', start: FUTURE } }, r5);
   ok(r5.body.ok === false && /no such experiment/.test(r5.body.error), '"constructor" is refused as an unknown id, never resolved off the prototype: ' + r5.body.error);
 
   /* a shape that matches YYYY-MM-DD but names no real day */
@@ -404,12 +417,12 @@ console.log('planning: refusals');
 
   /* an argument key the registry never documented for this test */
   const r8 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: '2026-10-02', args: { extra: 'x' } } }, r8);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: FUTURE, args: { extra: 'x' } } }, r8);
   ok(r8.body.ok === false && /unknown argument/.test(r8.body.error), 'an argument verse-length never documented is refused: ' + r8.body.error);
 
   /* a string argument well past a short, sane length */
   const r9 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: '2026-10-02', args: { a: 'Ahmad al-Ajmi'.repeat(10), b: 'Hani ar-Rifai' } } }, r9);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: FUTURE, args: { a: 'Ahmad al-Ajmi'.repeat(10), b: 'Hani ar-Rifai' } } }, r9);
   ok(r9.body.ok === false && /short/.test(r9.body.error), 'an overlong reciter name is refused before the shelf is even asked: ' + r9.body.error);
 }
 
@@ -425,7 +438,7 @@ console.log('planning and stopping a real one');
   ok(r1.body.ok === true && r1.body.state.current.id === 'verse-length', 'verse-length is planned: ' + JSON.stringify(r1.body.state.current));
 
   const r2 = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: '2026-11-01' } }, r2);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: LATER } }, r2);
   ok(r2.body.ok === false && /already/.test(r2.body.error), 'a second test cannot be planned while one is current: ' + r2.body.error);
 
   const rGet = fakeRes();
@@ -490,7 +503,7 @@ console.log('planning and stopping a real one');
 console.log('a reciter reciter-pair plans cleanly with two real reciters');
 {
   const r = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: '2026-10-02', args: { a: 'Ahmad al-Ajmi', b: 'Hani ar-Rifai' } } }, r);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'reciter-pair', start: FUTURE, args: { a: 'Ahmad al-Ajmi', b: 'Hani ar-Rifai' } } }, r);
   ok(r.body.ok === true, 'two reciters each with at least 20 verse reels: planned: ' + (r.body.error || 'ok'));
   const rStop = fakeRes();
   await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'stop' } }, rStop);
@@ -528,7 +541,7 @@ console.log('a KV read fault must never wipe the store: a real history is refuse
 
   failNexpGet = true;
   const rPlan = fakeRes();
-  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: '2026-10-02' } }, rPlan);
+  await EP.default({ method: 'POST', query: {}, headers: AUTH, body: { action: 'plan', id: 'verse-length', start: FUTURE } }, rPlan);
   ok(rPlan.body.ok === false && /could not be read/.test(rPlan.body.error), 'a KV fault while planning refuses rather than guessing the store empty: ' + rPlan.body.error);
 
   const rStop = fakeRes();

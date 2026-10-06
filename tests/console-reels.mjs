@@ -5,7 +5,9 @@
    big Share. Every endpoint is fed a day that could happen, /api/reel is
    fed a small file, and the phone's share sheet is stood in for. Held:
 
-     the room is the first button in the bar and draws five cards;
+     the reels are the Share by hand tab of Posts (since 3 October 2026,
+       LANTERN.md: the bar holds Home, Ask, Posts, Numbers and More), the
+       old #reels still opens them, and the tab draws five cards;
      Copy puts the caption on the clipboard;
      Share fetches /api/reel?id=, hands the sheet a File named <id>.mp4 of
        type video/mp4 with the caption as text, and then tells the house
@@ -92,9 +94,9 @@ for (const [label, w, h] of [['phone 390', 390, 844], ['desk 1280', 1280, 900]])
   const posted = [], errors = [], fetched = [];
   const pg = await open_(w, h, posted, errors, fetched);
   console.log('\n' + label + ' · the room');
-  ok(await pg.evaluate(() => document.querySelector('nav.bar button').dataset.s === 'reels'), 'Reels is the first button in the bar');
-  ok(await pg.evaluate(() => document.getElementById('title').textContent) === "Today's reels", 'and the room is titled Today\'s reels');
-  ok(await pg.evaluate(() => (document.querySelector('.surf.on') || {}).id) === 's-reels', 'the hash opens it');
+  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="posts"]').classList.contains('on') && document.querySelector('#s-posts .tabs [data-tab="share"]').classList.contains('on')), 'the reels are the Share by hand tab of Posts, and the bar lights Posts');
+  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'Posts', 'the surface is titled Posts');
+  ok(await pg.evaluate(() => (document.querySelector('.surf.on') || {}).id === 's-posts' && !document.getElementById('s-reels').hidden && location.hash === '#posts'), 'the old #reels hash opens it, and becomes #posts');
   const cards = await pg.evaluate(() => [...document.querySelectorAll('#s-reels .rl')].map(c => ({ slot: c.dataset.slot, hook: c.querySelector('.tx b').textContent, img: !!c.querySelector('.cv img'), share: c.querySelector('.share').textContent, hint: c.querySelector('.hint').textContent, hand: (c.querySelector('.hand') || {}).textContent || '' })));
   ok(cards.length === 5 && cards.map(c => c.slot).join() === 'reelA,reelC,reelD,reelB,reelE', 'five cards, the reel slots in clock order: ' + cards.map(c => c.slot).join(' '));
   ok(cards.every(c => c.img && c.hook && c.share === 'Share'), 'each with its cover, its hook and a Share button');

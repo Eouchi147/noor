@@ -65,7 +65,8 @@ console.log('\n1. the soul signs as the soul, and leaves the owner\'s slots alon
   ok(LINEUP.ACTORS.join() === 'owner,lantern-approved,soul' && LINEUP.actorLabel('soul') === 'the Soul', 'api/_lineup.js knows three actors');
   ok(SOCIAL.overrideWhy({ by: 'soul' }) === "the Soul's override" && SOCIAL.overrideWhy({ by: 'owner' }) === 'owner override', 'the poster\'s slot record says the Soul skipped it, not the owner');
   const html = fs.readFileSync(new URL('../admin2.html', import.meta.url), 'utf8');
-  ok(/ov\.by==="soul"\?"the Soul"/.test(html), 'and the console\'s Posts room says "the Soul"');
+  /* 3 October 2026 (LANTERN.md): one entity, the Lantern; the owner reads no "Soul" */
+  ok(/\/\^\(soul\|lantern\)\$\/\.test\(b\)\?"the Lantern"/.test(html), 'and the console\'s Posts room says the Lantern set it');
   for (const by of ['owner', 'lantern-approved']) {
     await LINEUP.setOverride({ date: D1, slot: 'reelC', action: 'skip' }, { manifest: MANIFEST, seen: new Map(), by, note: 'his own' });
     const x = await HANDS.runHand({ action: 'lineup-swap', args: { date: D1, slot: 'reelC', id: free[1] }, why: 'Verse reels reached 1204 people.' }, { approval: APPROVED });
@@ -377,7 +378,8 @@ console.log('\n11. the owner\'s early Run is an extra cycle');
   ok((await MIND.tick({})).due === false, 'once');
   S.set(SOUL.K.tickLock, 'someone');
   const busy = await door({ method: 'POST', headers: AUTH, body: { action: 'run' } });
-  ok(busy.body.busy === true && busy.body.message === 'A cycle is already running.', 'a Run while a tick holds the lock says so: ' + busy.body.message);
+  /* 3 October 2026: an answer, not a failure, in the Lantern's own words */
+  ok(busy.statusCode === 200 && busy.body.ok === true && busy.body.busy === true && busy.body.message === 'The Lantern is already thinking.', 'a Run while a tick holds the lock says so: ' + busy.body.message);
   const html = fs.readFileSync(new URL('../admin2.html', import.meta.url), 'utf8');
   ok(/if\(r\.j\.busy\)/.test(html) && /A cycle is already running\./.test(html), 'and the room shows it');
 }
@@ -427,7 +429,8 @@ console.log('\nR1. a tick ends on time: the canaries resume, a hung hand is let 
   const a = await EVOLVE.runCanaries(cand, { progressKey: 'nsoul:canary:test', until: CLOCK.t + 100000 });
   ok(a.incomplete && a.results.length === 3 && strong === 3, 'out of time after three canaries: it stops and says the verdict is not in (' + strong + ' asked)');
   const b = await EVOLVE.runCanaries(cand, { progressKey: 'nsoul:canary:test' });
-  ok(b.ok && b.results.length === 8 && strong === 7, 'the next run asks only the four it had not, then the strategist: 7 Guardian answers in all, none twice');
+  /* 3 October 2026: twelve Guardian canaries now (Article 11's five joined the seven) */
+  ok(b.ok && b.results.length === 13 && strong === 12, 'the next run asks only the nine it had not, then the strategist: 12 Guardian answers in all, none twice');
 
   /* through a weekly cycle: the reflection's canaries resume on the next tick */
   resetStore(); strong = 0;
@@ -439,9 +442,11 @@ console.log('\nR1. a tick ends on time: the canaries resume, a hung hand is let 
   const r1 = await MIND.readCycle(t1.id);
   ok(t1.timeUp && r1.stage === 'reflect' && r1.reflect.weekly.canaryResumes === 1 && !r1.reflect.weekly.evaluated, 'the canaries ran out of the tick and the cycle stopped at reflect, to resume (' + strong + ' answers so far)');
   const sofar = strong;
-  setDay(monday, '05:40');
-  const t2 = await MIND.tick({});
-  ok(t2.status === 'done' && strong === 7 && sofar < 7, 'the next tick finished them: 7 Guardian answers across both ticks, none repeated');
+  /* twelve canaries at a minute each take more than one more tick: the
+     cycle resumes tick after tick until they are all answered */
+  let t2 = null, more = 0;
+  for (const at of ['05:40', '06:00', '06:20', '06:40']) { if (t2 && t2.status === 'done') break; setDay(monday, at); t2 = await MIND.tick({}); more++; }
+  ok(t2.status === 'done' && strong === 12 && sofar < 12, 'the later ticks finished them: 12 Guardian answers across ' + (more + 1) + ' ticks, none repeated');
   ok((await EVOLVE.readPlaybook()).version === 1, 'and the lesson was applied');
   SOUL.setSeams({ route: SR });
   ROUTER.reflect = '{"lessons":[],"goals":[],"upgrades":[]}'; ROUTER.guardian = 'approve';

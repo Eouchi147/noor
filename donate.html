@@ -176,6 +176,13 @@ body{background:var(--parchment);color:var(--ink);font-family:Inter,system-ui,sa
 </div>
 
 <div style="margin-top:1.6rem">
+<!-- THE WEEK'S NOTE (3 October 2026, LANTERN.md section 9): what the gifts
+     kept alive, written by the Lantern from the week's facts alone and never
+     an amount, a number of givers or a name; shown only when there is one -->
+<div class="costs" id="lantern-note" hidden>
+<p class="costs-h">What your gifts kept alive this week</p>
+<div class="imp"><span class="s">✦</span><span id="lantern-note-text"></span></div>
+</div>
 <div class="costs">
 <p class="costs-h">What it actually costs to keep this open</p>
 <div class="costrow"><span>The servers and the delivery network</span><span class="cs">every month</span></div>
@@ -303,6 +310,11 @@ document.addEventListener("DOMContentLoaded",function(){
        $("custom-range").textContent="Anything from "+fmt(minLocal)+" to "+fmt(maxLocal); }catch(e){}
   $("monthly").addEventListener("change",label);
   $("custom").addEventListener("input",label);
+  /* the week's note, when the Lantern has written one: text only, never markup */
+  fetch("/api/settings").then(function(r){return r.ok?r.json():null}).then(function(j){
+    var n=j&&j.lantern&&j.lantern.note; if(!n||!n.text)return;
+    $("lantern-note-text").textContent=String(n.text); $("lantern-note").hidden=false;
+  }).catch(function(){});
   /* lights already lit: rotating, AI-gated dedications */
   fetch("/api/dedications").then(function(r){return r.ok?r.json():null}).then(function(j){
     var items=(j&&j.items)||[]; if(!items.length)return;

@@ -176,6 +176,24 @@ console.log('\nkind at read time: a stored "reel:reel" is asked of the shelf aga
   ok(!JSON.stringify(out.kindDaily).includes('"reel:reel"'), 'kindDaily\'s own keys are reclassified the same way, not left as the raw id');
 }
 
+console.log('\na leaned reel whose card has left the shelf is rebuilt as the poster leaned it, never as the rota\'s kind (review of 6 October 2026)');
+{
+  store.clear(); hashes.clear();
+  const SC = await import('../api/_schedule.js');
+  /* a reel the rota-lean lever leaned that day: the record carries its lean
+     mark, its title is no longer on the shelf, and the kind was stored as
+     the catch-all, so the walk has to rebuild the card by re-running the
+     picker, with the day's leans as this record saw them */
+  const d = dates[1];
+  const rota = SC.rotaKindFor('afternoon', d, false);
+  const leanKind = rota === 'name' ? 'dua' : 'name';
+  store.set(INS.K_STATS(d, 'reelD'), JSON.stringify({ date: d, slot: 'reelD', hour: 14, kind: 'reel:reel', reel: true, title: 'a card that has since retired', at: NOW,
+    lean: { id: 'lean-o', kind: leanKind }, stats: { instagram: { views: 90, reach: 80, likes: 1, comments: 0, shares: 0, saves: 0, at: NOW } } }));
+  const out = await OBS.compose({ now: NOW });
+  ok(out.kindTotals.some(k => k.kind === 'reel:' + leanKind && k.n === 1) && !out.kindTotals.some(k => k.kind === 'reel:' + rota),
+    'kindTotals counts it under the lean\'s kind (' + leanKind + '), not the rota\'s (' + rota + '): ' + JSON.stringify(out.kindTotals.map(k => k.kind)));
+}
+
 console.log('\nevery figure labels its own window: the 30-day breakdowns never let a model mistake them for the 7-day summary (2026-09-24, "106 posts" this week, when it was really a month\'s own count)');
 {
   store.clear(); hashes.clear();

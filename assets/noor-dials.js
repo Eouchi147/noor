@@ -80,6 +80,29 @@
     }
   }
 
+  /* ---- the door of the week (LANTERN.md section 8) ----
+     The Lantern puts one of the library's own rooms forward for a week. The
+     settings answer carries it as lantern.door, {path, title, desc} in the
+     library map's own words, or null; a page that shows it holds an empty
+     [data-noor-door] (the arrival, above its rooms; /today, above its rooms,
+     as data-noor-door="row": one row with the label in its small line, the
+     way that page's own list reads). One quiet row in the house's own list,
+     no motion of its own, and nothing at all when the answer has no door.
+     A closed journal is never put forward. Drawn only from the live answer,
+     never from the session's remembered one, so an Undo is seen at once. */
+  function door(j, s) {
+    var box = document.querySelector("[data-noor-door]");
+    var d = j && j.lantern && j.lantern.door;
+    if (!box || !d || typeof d.path !== "string" || !/^\/[a-z0-9-]+(\/[a-z0-9-]+)*$/.test(d.path)) return;
+    if (s && s["journal.on"] === false && /^\/journal/.test(d.path)) return;
+    var esc = function (v) { return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
+    var row = box.getAttribute("data-noor-door") === "row";
+    var list = '<ul class="n2-list"><li><a href="' + esc(d.path) + '"><b>' + esc(String(d.title || "").slice(0, 80)) +
+      "<small>" + (row ? "The door of the week \u00b7 " : "") + esc(String(d.desc || "").slice(0, 160)) + "</small></b></a></li></ul>";
+    box.innerHTML = row ? list : '<p class="hm-count" style="margin-top:1.15rem">The door of the week</p>' + list;
+    box.hidden = false;
+  }
+
   /* the remembered answer first, so a link never flickers on the second page */
   try {
     var cached = sessionStorage.getItem(KEY);
@@ -90,6 +113,7 @@
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (j) {
       var s = j && j.s;
+      try { door(j, s); } catch (e) { /* the door is a nicety; the dials below still apply */ }
       if (!s) return;
       try { sessionStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { }
       apply(s);

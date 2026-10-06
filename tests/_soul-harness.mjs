@@ -197,7 +197,9 @@ SOUL.setSeams({ route: async task => {
     /* the canaries' own bad cases are rejected, everything else approved */
     const user = String(task.messages[1].content);
     const intentText = user.slice(user.indexOf('INTENT:'), user.indexOf('EVIDENCE'));
-    const bad = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/].some(rx => rx.test(intentText));
+    /* 3 October 2026: and Article 11's four (a pop up, ads, Paradise for an amount, a paywall) */
+    const bad = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/,
+      /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/].some(rx => rx.test(intentText));
     return say(JSON.stringify({ vote: bad ? 'reject' : 'approve', reasons: [bad ? 'crosses the constitution' : 'within the constitution'] }));
   }
   return { ok: false, error: 'unknown role ' + role, tier };

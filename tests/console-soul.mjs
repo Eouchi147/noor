@@ -23,6 +23,11 @@
    that to the room, so a field the room reads under one name and the door
    sends under another shows up here as a section that does not draw.
 
+   THE ENGINE ROOM (3 October 2026, LANTERN.md): the owner reads this room as
+   the engine room now, reached from More at #engine (the old #soul still
+   lands there), and every "Soul" it printed says "the Lantern". The route,
+   the views and the bodies are unchanged; only what the owner reads moved.
+
    Run:  python3 /tmp/vercelish.py 8231 <the repo root> &   node tests/console-soul.mjs
    (NOOR_BASE overrides the address; CHROMIUM_PATH the browser.)
 */
@@ -265,7 +270,7 @@ async function open_(w, h, opts = {}) {
   });
   await pg.goto(BASE + '/admin2.html' + (opts.hash ?? '#soul'), { waitUntil: 'domcontentloaded' });
   await pg.waitForSelector('#app.on', { timeout: 15000 });
-  if ((opts.hash ?? '#soul') === '#soul') await pg.waitForSelector(opts.mode === 'error' ? '#s-soul.on .soul-err' : '#s-soul.on #soul-head', { timeout: 15000 });
+  if ((opts.hash ?? '#soul') === '#soul') await pg.waitForSelector(opts.mode === 'error' ? '#s-engine.on .soul-err' : '#s-engine.on #soul-head', { timeout: 15000 });
   await pg.waitForTimeout(300);
   return { pg, st, ctx };
 }
@@ -279,9 +284,10 @@ for (const [label, w, h] of [['desk 1440', 1440, 900], ['phone 390', 390, 844]])
   const tag = w > 600 ? 'desk-1440' : 'phone-390';
   console.log('\n' + label + ' · every section draws from the route');
   const { pg, st, ctx } = await open_(w, h);
-  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'The Soul', 'the top bar names the room');
-  ok(await pg.evaluate(() => !!document.querySelector('#s-soul .back')), 'a way back to House sits at the top');
-  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="house"]').classList.contains('on')), 'the bar lights House, the door it is behind');
+  ok(await pg.evaluate(() => document.getElementById('title').textContent) === 'The engine room', 'the top bar names the room: The engine room');
+  ok(await pg.evaluate(() => location.hash) === '#engine', 'the old #soul lands at #engine');
+  ok(await pg.evaluate(() => { const b = document.querySelector('#s-engine .back'); return !!b && b.textContent === 'More'; }), 'a way back to More sits at the top');
+  ok(await pg.evaluate(() => document.querySelector('nav.bar [data-s="more"]').classList.contains('on')), 'the bar lights More, the door it is behind');
   const views = st.gets.map(g => new URL('http://x' + g).searchParams.get('view'));
   ok(['today', 'metrics', 'chronicle', 'evolution', 'audit'].every(v => views.includes(v)), 'it reads today, metrics, chronicle, evolution and audit');
   ok(st.gets.some(g => /view=metrics&days=90/.test(g)), 'the north star line asks for 90 days of metrics');
@@ -315,7 +321,7 @@ for (const [label, w, h] of [['desk 1440', 1440, 900], ['phone 390', 390, 844]])
   ok(await pg.evaluate(() => document.querySelectorAll('#soul-goals [data-soul-edit]').length) === 4, 'the four owner goals can be edited, the soul\'s cannot');
   const reachRow = await text(pg, '#soul-goal-g-reach');
   ok(/yours/.test(reachRow) && /on track/.test(reachRow) && /25 Dec 2026/.test(reachRow), 'a goal row carries its owner, status and due date');
-  ok(/the soul's/.test(await text(pg, '#soul-goal-g-test')), 'the soul\'s own goal is tagged as the soul\'s');
+  ok(/the Lantern's/.test(await text(pg, '#soul-goal-g-test')), 'the house\'s own goal is tagged as the Lantern\'s');
   ok(/41%/.test(await text(pg, '#soul-goal-g-attention')) && /46%/.test(await text(pg, '#soul-goal-g-attention')), 'a share kept as a fraction reads as a percent');
   const bw = await pg.evaluate(() => document.querySelector('#soul-goal-g-attention .bar2 i').style.width);
   ok(bw === '50%', 'the progress bar runs from baseline to target (0.36 to 0.46, now 0.41, is 50%): ' + bw);
@@ -369,7 +375,7 @@ for (const [label, w, h] of [['desk 1440', 1440, 900], ['phone 390', 390, 844]])
   ok(/Under 30 days left: word/.test(await text(pg, '#soul-i-cov')) && /dated/.test(await text(pg, '#soul-i-cov [data-kind="day"]')), 'Coverage: the short shelf flagged, the dated one explained');
   await pg.screenshot({ path: SHOTS + '/' + tag + '-dark-instruments.png', fullPage: true, clip: await pg.evaluate(() => { const r = document.getElementById('soul-inst').getBoundingClientRect(); return { x: 0, y: r.y + scrollY, width: innerWidth, height: Math.min(r.height, 6000) }; }) }).catch(() => {});
   ok(await noSideScroll(pg), 'nothing scrolls sideways at ' + w + 'px');
-  ok(!DASH.test(await pg.evaluate(() => document.getElementById('s-soul').innerText)), 'no em or en dash anywhere the room prints');
+  ok(!DASH.test(await pg.evaluate(() => document.getElementById('s-engine').innerText)), 'no em or en dash anywhere the room prints');
   await pg.screenshot({ path: SHOTS + '/' + tag + '-dark-full.png', fullPage: true });
 
   console.log(label + ' · the window selector');
@@ -506,14 +512,14 @@ for (const [w, h, tag] of [[1440, 900, 'desk-1440'], [390, 844, 'phone-390']]) {
 console.log('\nthe first day · nothing has run yet');
 for (const [w, h, tag] of [[1440, 900, 'desk-1440'], [390, 844, 'phone-390']]) {
   const { pg, st, ctx } = await open_(w, h, { mode: 'empty' });
-  const all = await pg.evaluate(() => document.getElementById('s-soul').innerText);
+  const all = await pg.evaluate(() => document.getElementById('s-engine').innerText);
   ok(/No cycle has run yet/.test(await text(pg, '#soul-today')), 'Today says no cycle has run yet');
   ok(/No goal is set yet/.test(await text(pg, '#soul-goals')), 'Goals say none is set');
   ok((await text(pg, '#soul-ns-value')) === 'No reading yet' && /no figure for a week ago yet/.test(await text(pg, '#soul-ns')) && /No day has been measured yet/.test(await text(pg, '#soul-ns')), 'the north star says it has nothing yet, never a zero');
   ok(/No snapshot has been taken yet/.test(await text(pg, '#soul-metrics')), 'the metrics say no snapshot exists');
   ok(/chronicle is empty/.test(await text(pg, '#soul-chron')), 'the chronicle says it is empty');
   ok(/no lessons yet/.test(await text(pg, '#soul-evo')) && /No upgrade has been proposed yet/.test(await text(pg, '#soul-evo')), 'evolution says nothing is proposed');
-  ok(await pg.evaluate(() => document.getElementById('soul-state').textContent) === 'Running', 'the chip reads Running');
+  ok(await pg.evaluate(() => document.getElementById('soul-state').textContent) === 'Working', 'the chip reads Working, the word Home uses');
   ok(/\$0\.00/.test(await text(pg, '#soul-budget')), 'the budget reads zero spent, as the route said');
   const ins = await text(pg, '#soul-inst');
   ok(/No scorecard yet/.test(ins) && /No goal is set yet/.test(ins) && /nothing has been measured/.test(ins) && /Not audited yet/.test(ins) && /Not measured yet/.test(ins)
@@ -529,7 +535,7 @@ for (const [w, h, tag] of [[1440, 900, 'desk-1440'], [390, 844, 'phone-390']]) {
 console.log('\nthe store is down');
 {
   const { pg, st, ctx } = await open_(390, 844, { mode: 'error' });
-  ok(/The store is unreachable/.test(await text(pg, '#s-soul')), 'the room says the store is unreachable');
+  ok(/The store is unreachable/.test(await text(pg, '#s-engine')), 'the room says the store is unreachable');
   ok(st.errors.filter(e => !/503/.test(e)).length === 0, 'and nothing throws: ' + st.errors.filter(e => !/503/.test(e)).slice(0, 2).join(' | '));
   await pg.screenshot({ path: SHOTS + '/phone-390-dark-error.png', fullPage: true });
   await ctx.close();
@@ -568,7 +574,7 @@ console.log('\nthe real door · the room drawn from what api/soul.js actually se
     const undoable = cyc.intents.filter(it => it.status === 'done' && it.result && it.result.entry && it.result.entry.undo && it.result.entry.undo !== 'noop').length;
     ok(undoable >= 1 && await pg.evaluate(() => document.querySelectorAll('#sheet [data-soul-undo]').length) === undoable, 'Undo on every step the door says can be undone (' + undoable + ')');
     await pg.click('#sheet #cl'); await pg.waitForTimeout(250);
-    const all = await pg.evaluate(() => document.getElementById('s-soul').innerText);
+    const all = await pg.evaluate(() => document.getElementById('s-engine').innerText);
     ok(!/undefined|NaN|\bnull\b|\[object/.test(all), 'no undefined, NaN, null or [object leaks into the words');
     ok(!DASH.test(all), 'no em or en dash');
     ok(await noSideScroll(pg), 'nothing sideways at ' + w + 'px');
@@ -579,15 +585,16 @@ console.log('\nthe real door · the room drawn from what api/soul.js actually se
 }
 
 /* ============================================================ the hub */
-console.log('\nthe House hub');
+console.log('\nthe More hub (the House of before)');
 {
   const { pg, st, ctx } = await open_(390, 844, { hash: '#house' });
-  await pg.waitForSelector('#s-house [data-room="soul"]', { timeout: 15000 });
-  const card = await text(pg, '#s-house [data-room="soul"]');
-  ok(/The Soul/.test(card) && card.includes(NS.toLocaleString('en-US')) && /needs you/.test(card), 'the Soul card carries the north star and the state: ' + card.replace(/\n/g, ' / '));
-  await pg.click('#s-house [data-room="soul"]');
-  await pg.waitForSelector('#s-soul.on #soul-head', { timeout: 15000 });
-  ok(await pg.evaluate(() => location.hash) === '#soul', 'it opens the room, and the hash follows');
+  await pg.waitForSelector('#s-more [data-room="engine"]', { timeout: 15000 });
+  const card = await text(pg, '#s-more [data-room="engine"]');
+  ok(/The engine room/.test(card) && card.includes(NS.toLocaleString('en-US')) && /needs you/.test(card), 'the engine room card carries the north star and the state: ' + card.replace(/\n/g, ' / '));
+  ok(await pg.evaluate(() => document.querySelector('#s-more [data-room]').dataset.room) === 'engine', 'and it is the first room on the hub');
+  await pg.click('#s-more [data-room="engine"]');
+  await pg.waitForSelector('#s-engine.on #soul-head', { timeout: 15000 });
+  ok(await pg.evaluate(() => location.hash) === '#engine', 'it opens the room, and the hash follows');
   ok(st.errors.length === 0, 'no console error');
   await ctx.close();
 }

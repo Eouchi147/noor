@@ -103,6 +103,7 @@ import { readSlot, igToken, graphBase, pageToken, igConfigured, fbConfigured } f
 import * as YT from "./_youtube.js";
 import * as TH from "./_threads.js";
 import { EXPERIMENTS, biasFromAny, readState as readExpState } from "./_experiments.js";
+import { readLeans, leansOnRecord } from "./_levers.js";
 
 /* the experiment state, read once and never let a store fault reach a
    reader: collect() and read() both lean on this so every record in one
@@ -267,7 +268,11 @@ export async function shelfManifest(opts = {}) {
    same way or it reconstructs the WRONG card for those days. A caller that
    never heard of an experiment passes nothing and gets exactly the old
    behaviour. */
-export function matchedCard(rec, manifest, bias) {
+/* `leans` is the same for a rota lean (api/_levers.js): the day's map
+   {reelA..reelF: {id, kind}} the picker leaned on, so a re-run of the
+   picker for a leaned day rebuilds the leaned card and not the rota's.
+   A caller that passes none gets exactly the old behaviour. */
+export function matchedCard(rec, manifest, bias, leans) {
   const slot = rec && rec.slot;
   if (!REEL_SLOTS.includes(slot)) return null;
   const cards = (manifest && Array.isArray(manifest.cards)) ? manifest.cards : [];
@@ -277,16 +282,33 @@ export function matchedCard(rec, manifest, bias) {
     if (hit) return hit;
   }
   if (cards.length && rec.date) {
-    const c = chooseReel(cards, rec.date, halfOf(slot), null, null, bias || null);
+    const c = chooseReel(cards, rec.date, halfOf(slot), null, null, bias || null, undefined, leans || null);
     if (c) return c;
   }
   return null;
 }
-export function kindOf(rec, manifest, bias) {
+export function kindOf(rec, manifest, bias, leans) {
   const slot = rec && rec.slot;
   if (!REEL_SLOTS.includes(slot)) return "card:" + slot;
-  const c = matchedCard(rec, manifest, bias);
+  const c = matchedCard(rec, manifest, bias, leans);
   return c ? "reel:" + (c.kind || "light") : "reel:reel";
+}
+
+/* THE KIND A SLOT RECORD ITSELF SAYS (review of 6 October 2026). The poster
+   writes the sent card's own kind on a reel slot's record (social.js
+   nameReel) and, when a rota lean decided it, the lean's {id, kind}; that is
+   the day's fact, and a re-run of the picker is only a reconstruction of it
+   (one that, without the day's leans, answers the rota's kind once the card
+   has left the shelf). So the record's own kind wins, then its lean's; a
+   record carrying neither (one written before either existed) answers null
+   and is rebuilt by kindOf, with the day's leans as the poster saw them. */
+const REEL_KINDS = new Set(Object.keys(KIND_LABEL).filter(k => k.startsWith("reel:") && k !== "reel:reel").map(k => k.slice(5)));
+export function ownKind(rec) {
+  if (!rec || !REEL_SLOTS.includes(rec.slot)) return null;
+  const k = String(rec.kind || "").replace(/^reel:/, "");
+  if (REEL_KINDS.has(k)) return "reel:" + k;
+  const l = rec.lean && typeof rec.lean === "object" ? String(rec.lean.kind || "") : "";
+  return REEL_KINDS.has(l) ? "reel:" + l : null;
 }
 
 /* KIND AT READ TIME (2026-09-24 review). A stored record's own kind was
@@ -397,6 +419,10 @@ export async function collect(days, opts = {}) {
      history exactly as it did before an experiment ever existed, bias null
      everywhere, rather than failing the read. */
   const expState = opts.expState !== undefined ? opts.expState : await readExpStateSafe(opts);
+  /* the rota leans (api/_levers.js), read once for the window the same way:
+     readLeans never throws (a fault is an empty list), and an ended lean is
+     kept in the store for longer than this window reaches back */
+  const leanList = opts.leans !== undefined ? opts.leans : await readLeans(opts);
   const dates = datesBack(Math.max(1, Math.min(60, Number(days) || 14)), opts.now);
   const wanted = [];
   for (const d of dates) for (const s of SLOT_IDS) wanted.push([d, s]);
@@ -417,8 +443,10 @@ export async function collect(days, opts = {}) {
        other record in the same window its own kind and card */
     let bias = null;
     try { bias = expState ? biasFromAny(expState, r.date, EXPERIMENTS) : null; } catch { bias = null; }
-    const card = matchedCard(r, manifest, bias);
-    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, manifest, bias);
+    let leans = null;
+    try { leans = leansOnRecord(leanList, r); } catch { leans = null; }
+    const card = matchedCard(r, manifest, bias, leans);
+    const kind = card ? "reel:" + (card.kind || "light") : kindOf(r, manifest, bias, leans);
     const media = {};
     for (const net of ["instagram", "facebook", "youtube", "threads"]) {
       const x = r.results[net];
@@ -1067,6 +1095,10 @@ export async function snapshot(opts = {}) {
     got.forEach(r => recs.push(r));
   }
   const prior = await cacheRead(wanted.map(([d, s]) => K_STATS(d, s)), opts);
+  /* the rota leans, read once for the walk the way collect() reads them
+     (review of 6 October 2026); readLeans never throws, a fault is no lean */
+  let leanList = [];
+  try { leanList = opts.leans !== undefined ? opts.leans : await readLeans(opts); } catch { leanList = []; }
   for (let n = 0; n < wanted.length; n++) {
     if (Date.now() - t0 > budget) { out.partial = true; break; }
     const [d, s] = wanted[n];
@@ -1107,9 +1139,18 @@ export async function snapshot(opts = {}) {
     /* date and slot forced from the walk's own loop, not trusted from the
        record: the same defensiveness collect() keeps above, for a record
        whatever shape an older write left it in */
-    const kind = kindOf({ ...rec, date: d, slot: s }, manifest);
+    /* the record's own kind first, then the picker re-run with the day's
+       leans as this record saw them (review of 6 October 2026: a leaned
+       reel whose card had left the shelf was stored as the rota's kind) */
+    const full = { ...rec, date: d, slot: s };
+    let leans = null;
+    try { leans = leansOnRecord(leanList, full); } catch { leans = null; }
+    const kind = ownKind(full) || kindOf(full, manifest, null, leans);
     const record = { date: d, slot: s, hour: hourOf(s), kind, reel: REEL_SLOTS.includes(s),
                       title: String(rec.title || ""), at: atIso, stats };
+    /* and the lean mark itself, so a later read that has to rebuild the card
+       (observatory.js's subject fold) leans the same way after the lean is pruned */
+    if (leans && leans[s]) record.lean = leans[s];
     try {
       const store = opts.kv || kv;
       if ((opts.kvReady || kvReady)()) {

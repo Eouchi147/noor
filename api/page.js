@@ -1121,6 +1121,15 @@ async function todayPage(dateRaw, host) {
   const shift = k => { const d = new Date(date + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + k); return isoDate(d); };
   const prev = age < 30 ? ["/today?date=" + shift(-1), longDate(shift(-1)), "The day before"] : null;
   const next = age > 0 ? [(age === 1 ? "/today" : "/today?date=" + shift(1)), longDate(shift(1)), "The day after"] : null;
+  /* mission: the door of the week (LANTERN.md section 8), on today's own page
+     only, one quiet row above the rooms, never on a dated day's record. Drawn
+     in the browser, exactly like the arrival's (review of 6 October 2026):
+     this page is kept at the edge until midnight, so a door read into its
+     HTML lagged a new door by up to a day and outlived its Undo. The empty
+     box is filled by assets/noor-dials.js from the settings answer
+     (api/_public.js, lantern.door, kept 30 seconds at the edge), and stays
+     hidden when that answer has no door. */
+  const doorRow = isToday ? `<div data-noor-door="row" hidden></div>\n` : "";
   const body = `<section class="n2-idea n2-in">
 <p class="n2-eyebrow">${isToday ? "Today's light" : "The light of the day"} <small>· ${esc(shortDate(date))}</small></p>
 ${card ? `<h1 class="n2-h1">${keyPhrase(card.title)}</h1>
@@ -1151,7 +1160,7 @@ ${(node.lessons || []).length ? `<p class="n2-dim">${esc(node.lessons[0])}</p>` 
 <p class="n2-eyebrow">The library</p>
 <h2 class="n2-h2">The whole library, <span class="n2-g">free</span></h2>
 <p class="n2-dim">No ads, no account, no tracking. Every room on the phone, under the thumb.</p>
-${ROOMS()}
+${doorRow}${ROOMS()}
 ${walk(prev, next)}
 </section>`;
   /* Audit seo-026: a dated day (not /today itself) shows the same Light as
@@ -1165,6 +1174,8 @@ ${walk(prev, next)}
     active: "/today", crumbs: [["Today", "/today"]],
     ld: [{ "@context": "https://schema.org", "@type": "WebPage", name: "Today's light", url: SITE + url, datePublished: date,
       description: card ? clip(card.story, 200) : undefined, inLanguage: "en" }],
+    /* the dials script draws the door (and applies the public dials) */
+    tail: isToday ? `<script src="/assets/noor-dials.js?v=112" defer></script>` : "",
     body }), cache };
 }
 

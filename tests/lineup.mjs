@@ -147,10 +147,23 @@ console.log('\na swap that has since gone stale falls back to the ordinary pick,
 
   /* a DIFFERENT way the same swap can go stale: another slot's own pick,
      today, has already taken the card (checked through ctx.otherPicks,
-     the same shape setOverride's own conflict check already uses) */
+     the same shape setOverride's own conflict check already uses).
+     The swap here names whichever evening card the ordinary pick does NOT
+     land on today. With nothing seen, the fallback IS the ordinary pick,
+     a hash of the date, and on a day it lands on the swap's own card a
+     fallback and a swap trusted blindly look exactly alike: this check
+     failed for the calendar's sake alone on 3 October 2026, with nothing
+     broken. Naming the other card keeps the two apart on every date. */
+  const plainStore = makeKv();
+  const ordinary = (await L.chooseReelWithOverride(MANIFEST, today, 'reelB', null, null, null, null,
+    { kv: plainStore.kv, kvReady: plainStore.kvReady })).card;
+  const named = ordinary && ordinary.id === 'card-evening-2' ? 'card-evening-1' : 'card-evening-2';
+  const otherStore = makeKv();
+  await otherStore.kv([['SET', 'nsoc:override:' + today, JSON.stringify({ reelB: { action: 'swap', id: named, at: today, by: 'owner', note: '' } })]]);
   const fellBackOther = await L.chooseReelWithOverride(MANIFEST, today, 'reelB', null, null, null, null,
-    { ...ctxBase, otherPicks: { reelD: 'card-evening-2' } });
-  ok(fellBackOther.card && fellBackOther.card.id !== 'card-evening-2', 'nor when another slot has already been given the same card today: ' + JSON.stringify(fellBackOther.card));
+    { kv: otherStore.kv, kvReady: otherStore.kvReady, otherPicks: { reelD: named } });
+  ok(fellBackOther.card && fellBackOther.card.id !== named, 'nor when another slot has already been given the same card today: ' + named + ' vs ' + JSON.stringify(fellBackOther.card));
+  ok(fellBackOther.card && ordinary && fellBackOther.card.id === ordinary.id, 'and what it falls back to is exactly the ordinary pick: ' + JSON.stringify(ordinary));
   ok(fellBackOther.override && fellBackOther.override.fellBack === true && /already chosen for another slot/.test(fellBackOther.override.reason),
     'and the reason names what actually happened: ' + JSON.stringify(fellBackOther.override));
 
