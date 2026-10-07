@@ -122,7 +122,7 @@ class FakeImap {
     return { meta: {}, content: Readable.from([Buffer.from(String(part) === '1' ? m.body : 'BINARY ATTACHMENT BYTES', 'utf8')]) };
   }
   async messageFlagsAdd(range, flags, o = {}) { const m = msgOf(range); if (!m) return false; for (const f of flags) (o.useLabels ? m.labels : m.flags).add(f); return true; }
-  async messageFlagsRemove(range, flags, o = {}) { const m = msgOf(range); if (!m) return false; for (const f of flags) { if (o.useLabels) { m.labels.delete(f); if (f === '\\Inbox') m.archived = true; } else m.flags.delete(f); } return true; }
+  async messageFlagsRemove(range, flags, o = {}) { const m = msgOf(range); if (!m) return false; if (o.useLabels && BOX.failArchive) throw new Error('X-GM-LABELS refused'); for (const f of flags) { if (o.useLabels) { m.labels.delete(f); if (f === '\\Inbox') m.archived = true; } else m.flags.delete(f); } return true; }
   async mailboxCreate(name) { BOX.created.push(name); return { path: name }; }
   async logout() { BOX.logouts++; }
 }
@@ -1278,6 +1278,14 @@ console.log('\n12d. round six: seen or done means gone, the buttons, letters set
   await tick();
   ok(JSON.parse(S.get('nsoul:mail:thread:' + tid)).action === 'filed' && !(await DEC.readOpen()).some(d => d.key === 'mail:t:' + tid) && old.archived === true && old.labels.has('Lantern/Filed') && !old.flags.has('\\Flagged'),
     'the Google alert he was harassed with: its card closed, filed under Lantern/Filed, out of his inbox');
+
+  /* i2. Gmail refusing to archive never stops a message being sorted */
+  BOX.failArchive = true;
+  const nl = mail({ from: 'news@digest.example.com', subject: 'Weekly digest', text: 'Our news.', headers: ['List-Id: <digest.example.com>', 'List-Unsubscribe: <https://digest.example.com/u>'] });
+  const tk = await tick();
+  BOX.failArchive = false;
+  ok(tk.ok && nl.labels.has('Lantern/Filed') && nl.flags.has('\\Seen') && !nl.archived && !(await DEC.readOpen()).some(d => /could not read/i.test(d.why || '')),
+    'an archive Gmail refuses: still filed and read, never handed over as unreadable');
 
   /* j. the one-time start */
   const h0 = keep(await HOME.homeView());

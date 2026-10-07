@@ -871,8 +871,10 @@ export function mailbox(client) {
       /* round six: out of his inbox, unstarred (archived in Gmail: its Inbox
          label taken off, every other label kept); last, since an archived
          message leaves the INBOX folder this lock holds */
-      if (op.unflag) await client.messageFlagsRemove(u, ["\\Flagged"], { uid: true });
-      if (op.archive) await client.messageFlagsRemove(u, ["\\Inbox"], { uid: true, useLabels: true });
+      /* a nicety, never a fault: a message whose star or Inbox label could
+         not be taken off is still sorted, labelled and read */
+      if (op.unflag) { try { await client.messageFlagsRemove(u, ["\\Flagged"], { uid: true }); } catch { } }
+      if (op.archive) { try { await client.messageFlagsRemove(u, ["\\Inbox"], { uid: true, useLabels: true }); } catch { } }
     },
     async ensureLabels() {
       for (const name of Object.values(LABELS)) { try { await client.mailboxCreate(name); } catch { /* it exists */ } }
