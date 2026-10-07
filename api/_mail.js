@@ -458,7 +458,8 @@ async function logOut(row) {
   try { await store([["LPUSH", MK.outLog, JSON.stringify(row)], ["LTRIM", MK.outLog, "0", "299"]]); } catch { }
 }
 const lightRow = r => ({ id: r.id, at: r.at, kind: r.kind, toName: r.isPlace ? r.toName : (r.kind === "reply" ? "a reader" : r.toName), subject: r.subject,
-  status: r.status, reason: r.reason || null, placeId: r.placeId || null, threadId: r.threadId || null, messageId: r.messageId || null });
+  status: r.status, reason: r.reason || null, placeId: r.placeId || null, threadId: r.threadId || null, messageId: r.messageId || null,
+  ...(r.sentAt ? { sentAt: r.sentAt } : {}) });   /* round eight: when it went, for the Mail room's Sent */
 
 /* {ok, status: "sent"|"waiting-owner"|"refused"|"held", reason?, id, messageId?};
    never throws: a store that cannot be read holds the letter */
@@ -1773,6 +1774,69 @@ export async function homeMail() {
     last: (r[2] || []).map(s => parse(s, null)).filter(Boolean).map(x => ({ at: x.at, title: sayLantern(str(x.title, 200)) }))
   };
 }
+/* ROUND EIGHT (7 October 2026). The owner: "when I go into the mail room I
+   was expecting to be able to have an overview of the mail situation and be
+   able to action what we've just talked about clearly". The letters to
+   places as one picture, each with what he may do there:
+     waiting: the letters waiting for his Send (the first ten's cards), the
+       whole email each, decided by the card's own Send or Not this one;
+     held: the day's letters the plan held back (the sentinel or the
+       council), with Do it anyway and Skip, as on Home's Next; planning,
+       whether a plan is running now, and writing, how many it is writing;
+     scheduled: the letters set for their place's own working hours;
+     sent: the last letters that went;
+     repliesWaiting: replies to readers waiting for his Send (in the Inbox).
+   Never a throw: a part that cannot be read is left out, and says why. */
+export const LETTERS_SHOWN = Object.freeze({ scheduled: 30, sent: 20, log: 200 });
+async function lettersView() {
+  const out = { waiting: [], repliesWaiting: 0, held: [], planning: false, writing: 0, scheduled: [], sent: [], missing: {} };
+  try {
+    const DEC = await import("./_decisions.js");
+    const today = dayOf();
+    for (const d of (await DEC.readOpen()) || []) {
+      if (!d || d.kind !== "approve" || !d.letter || typeof d.letter !== "object" || !/^mail:/.test(String(d.key || ""))) continue;
+      /* a card past its date is gone from Home too, so it is not shown as waiting */
+      if (/^\d{4}-\d{2}-\d{2}$/.test(String(d.expires || "")) && String(d.expires) < today) continue;
+      const l = d.letter;
+      if (String(l.kind || "") === "reply") { out.repliesWaiting++; continue; }
+      out.waiting.push({ card: String(d.id), kind: l.kind === "followup" ? "followup" : "outreach", toName: str(l.toName, 160), to: str(l.to, 254), subject: str(l.subject, 240),
+        text: String(l.text == null ? "" : l.text).slice(0, 8000), why: sayLantern(str(d.why, 500)), at: d.at || null,
+        later: !!(d.snoozedUntil && String(d.snoozedUntil) > today) });   /* he pressed Later on Home: it still waits here */
+    }
+    out.waiting.sort((a, b) => String(a.at || "").localeCompare(String(b.at || "")));
+  } catch (e) { out.missing.waiting = str(e && e.message || e, 160); }
+  try {
+    const H = await import("./_home.js");
+    const h = await H.heldLetters();
+    out.held = Array.isArray(h.held) ? h.held : [];
+    out.planning = !!h.planning;
+    out.writing = Number(h.writing) || 0;
+  } catch (e) { out.missing.held = str(e && e.message || e, 160); }
+  try {
+    const ids = (((await store([["ZRANGEBYSCORE", MK.sched, "-inf", "+inf", "LIMIT", "0", String(LETTERS_SHOWN.scheduled)]]))[0]) || []).map(String);
+    if (ids.length) {
+      const got = (await store([["MGET", ...ids.map(id => MK.out(id))]]))[0] || [];
+      ids.forEach((id, i) => {
+        const r = parse(got[i], null);
+        if (!r || r.status !== "scheduled") return;
+        out.scheduled.push({ id, kind: r.kind, toName: str(r.toName, 160), subject: str(r.subject, 240), sendAt: r.sendAt || null });
+      });
+    }
+  } catch (e) { out.missing.scheduled = str(e && e.message || e, 160); }
+  try {
+    const rows = (((await store([["LRANGE", MK.outLog, "0", String(LETTERS_SHOWN.log - 1)]]))[0]) || []).map(s => parse(s, null)).filter(Boolean);
+    const seen = new Set();
+    for (const r of rows) {
+      if (!r.id || seen.has(r.id)) continue;
+      seen.add(r.id);
+      if (r.status !== "sent" || (r.kind !== "outreach" && r.kind !== "followup")) continue;
+      out.sent.push({ id: r.id, kind: r.kind, toName: str(r.toName, 160), subject: str(r.subject, 240), at: r.sentAt || r.at || null });
+      if (out.sent.length >= LETTERS_SHOWN.sent) break;
+    }
+  } catch (e) { out.missing.sent = str(e && e.message || e, 160); }
+  if (!Object.keys(out.missing).length) delete out.missing;
+  return out;
+}
 /* GET /api/soul?view=mail */
 export async function mailView() {
   const missing = {};
@@ -1798,7 +1862,10 @@ export async function mailView() {
   } catch (e) { missing.places = str(e && e.message || e, 160); }
   let pausedUntil = null;
   try { pausedUntil = await sendPausedUntil(); } catch { pausedUntil = null; }
-  return { ok: true, mail: { configured: ready.configured, on: ready.on, reason: ready.reason, caps, firstTen, today, pausedUntil }, threads, places, counts, pace, dnc, missing };
+  /* round eight: the letters to places, as one picture with his buttons */
+  let letters = null;
+  try { letters = await lettersView(); } catch (e) { missing.letters = str(e && e.message || e, 160); }
+  return { ok: true, mail: { configured: ready.configured, on: ready.on, reason: ready.reason, caps, firstTen, today, pausedUntil }, threads, places, counts, pace, dnc, letters, missing };
 }
 /* POST {action:"mail-switch", on} */
 export async function mailSwitch(on) {

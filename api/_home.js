@@ -744,6 +744,33 @@ function nextFromQueue(q, goals, today) {
     reason: sayLantern((q.due <= today ? "waits for the next cycle" : "waits for the cycle of " + dayWord(q.due, today)) + (q.approval ? "; you already approved it" : "; the council reviews it again that morning")),
     canDoNow: !!HANDS[it.action], canSkip: true };
 }
+/* ROUND EIGHT (7 October 2026). The owner: "when I go into the mail room I
+   was expecting to be able to have an overview of the mail situation and be
+   able to action what we've just talked about clearly". The day's letters
+   to places that the plan held back (the sentinel or the council said no,
+   or the cycle stopped before them), as the Mail room shows them, each with
+   the same id Next carries, so Do it anyway (do-now) and Skip work from
+   there exactly as from Home; how many are being written right now; and
+   whether a plan is running. */
+const LETTER_HANDS = new Set(["outreach-send", "outreach-followup"]);
+export async function heldLetters() {
+  const today = dayOf();
+  const { rec } = await latestCycle();
+  if (!rec) return { planning: false, cycle: null, held: [], writing: 0 };
+  const planning = rec.status === "running";
+  if (!(rec.date === today || planning)) return { planning, cycle: rec.id, held: [], writing: 0 };
+  const marks = await ownerMarks(rec).catch(() => ({}));
+  const held = [];
+  let writing = 0;
+  for (const it of rec.intents || []) {
+    if (!it || !LETTER_HANDS.has(it.action)) continue;
+    const x = nextFromIntent(rec, it, marks[it.n], [], today);
+    if (!x) continue;
+    if (x.status === "blocked") held.push({ id: x.id, title: x.title, why: x.why, reason: x.reason, hand: x.hand, canDoNow: !!x.canDoNow, canSkip: !!x.canSkip });
+    else if (x.status === "planned") writing++;
+  }
+  return { planning, cycle: rec.id, held, writing };
+}
 const parseIntentId = id => { const m = /^i:(.+):(\d+)$/.exec(String(id || "")); return m ? { cycle: m[1], n: Number(m[2]) } : null; };
 const intentOf = it => ({ action: it.action, args: it.args || {}, why: it.why || "", expectedEffect: it.expectedEffect || "", metric: it.metric || "", evidence: it.evidence || {} });
 

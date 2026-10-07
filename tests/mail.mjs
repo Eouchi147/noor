@@ -634,8 +634,9 @@ let INBOX = {};
   const done = h.done.filter(d => d.link);
   ok(done.length === 7 && done.every(d => /^https:\/\/mail\.google\.com\/mail\/u\/0\/#search\/rfc822msgid:/.test(d.link.href) && d.undo === false), 'seven Done items, each with its link in Gmail and no Undo');
   const v = keep((await door({ query: { view: 'mail' }, headers: AUTH })).body);
-  ok(v.ok && keys(v) === 'counts,dnc,mail,missing,ok,pace,places,threads' && keys(v.mail) === 'caps,configured,firstTen,on,pausedUntil,reason,today' && v.mail.reason === null && v.mail.pausedUntil === null,
-    'GET ?view=mail: {ok, mail, threads, places, counts, pace, dnc, missing}');
+  ok(v.ok && keys(v) === 'counts,dnc,letters,mail,missing,ok,pace,places,threads' && keys(v.mail) === 'caps,configured,firstTen,on,pausedUntil,reason,today' && v.mail.reason === null && v.mail.pausedUntil === null,
+    'GET ?view=mail: {ok, mail, threads, places, counts, pace, dnc, letters (round eight), missing}');
+  ok(keys(v.letters).split(',').filter(k => k !== 'missing').join(',') === 'held,planning,repliesWaiting,scheduled,sent,waiting,writing', 'and the letters: waiting, repliesWaiting, held, planning, writing, scheduled, sent: ' + keys(v.letters));
   ok(v.mail.caps.reply.used === 7 && v.mail.caps.reply.max === 30 && v.mail.caps.total.max === 90 && v.mail.caps.outreach.max === 50 && v.mail.caps.followup.max === 50, 'with the ceilings and what is used (round six)');
   /* round five: and what the judge read (judged {by, p}, or null), for the console's Mail room */
   ok(v.threads.length === 16 && v.threads.every(t => keys(t) === 'action,at,card,doneAt,doneBy,draft,from,fromName,gmail,id,judged,kind,needsYou,ops,reply,seenAt,subject,summary' && ['answered', 'for-you', 'filed', 'waiting', 'done'].includes(t.action)),
@@ -1317,6 +1318,80 @@ console.log('\n12d. round six: seen or done means gone, the buttons, letters set
   OUTREACH.outreachCounts = savedCounts;
   const st3 = await MAIL.outreachStartState();
   ok(st3.available === false && st3.usedAt, 'once the outreach has a letter, it stays spent for good');
+}
+
+console.log('\n12e. round eight: the letters as one picture, for the Mail room (LANTERN.md 14.7)');
+{
+  const keepS = new Map(S), keepL = new Map([...L].map(([k, v]) => [k, [...v]])), keepH = new Map([...H].map(([k, v]) => [k, new Map(v)])), keepZ = new Map([...Z].map(([k, v]) => [k, new Map(v)]));
+  const keepT = CLOCK.t;
+  resetStore(); setDay(D0, '09:00');
+  const T = today();
+  const card = (id, kind, why) => DEC.upsert({ kind: 'approve', key: 'mail:' + id, stamp: '1', sticky: true, source: 'mail', title: 'Send this letter to Place ' + id + '?', why: why || 'One of the first 10 emails the Lantern writes.',
+    letter: { to: id + '@place.example', toName: 'Place ' + id, subject: 'Subject ' + id, text: 'Assalamu alaykum,\n\nText ' + id + '.\n\nWith peace,\nNOOR Codex of Light', kind },
+    options: [DEC.opt.choice('send', 'Send', { type: 'done' }, 'primary'), DEC.opt.later()], link: null, steps: [], expires: addDays(T, 14) });
+  const c1 = await card('out-a', 'outreach'); CLOCK.t += 60000;
+  const c2 = await card('out-b', 'followup'); CLOCK.t += 60000;
+  const c3 = await card('out-c', 'reply'); CLOCK.t += 60000;
+  const c4 = await card('out-d', 'outreach'); CLOCK.t += 60000;
+  const c5 = await card('out-e', 'outreach');
+  ok([c1, c2, c3, c4, c5].every(c => c && c.ok !== false && c.id), 'five letter cards stand open');
+  /* one he put off on Home (Later), one past its date */
+  const list = JSON.parse(S.get('nsoul:decisions'));
+  list.find(d => d.key === 'mail:out-d').snoozedUntil = addDays(T, 3);
+  list.find(d => d.key === 'mail:out-e').expires = addDays(T, -1);
+  S.set('nsoul:decisions', JSON.stringify(list));
+  /* today's plan: one letter the sentinel held, one the cycle wrote, one post it held */
+  S.set('nsoul:cycle:c-l8', JSON.stringify({ id: 'c-l8', date: T, status: 'done', intents: [
+    { n: 1, action: 'outreach-send', tier: 'R2', status: 'rejected', args: { placeId: 'p1' }, why: 'Its weekend school is new.', council: { sentinel: { vote: 'reject', reasons: ['it rests on too little data (0.55)'] } } },
+    { n: 2, action: 'outreach-send', tier: 'R2', status: 'done', args: {}, why: 'x' },
+    { n: 3, action: 'post-reel', tier: 'R1', status: 'rejected', args: {}, why: 'x', council: { sentinel: { vote: 'reject', reasons: ['not letters'] } } }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-l8', date: T }));
+  /* set for later, and the log of what went */
+  const later = { id: 'm-later', kind: 'outreach', isPlace: true, toName: 'Place later', subject: 'Later subject', status: 'scheduled', sendAt: T + 'T15:00:00.000Z', to: 'later@place.example', text: 'x' };
+  S.set(MAIL.MK.out('m-later'), JSON.stringify(later));
+  S.set(MAIL.MK.out('m-gone'), JSON.stringify({ ...later, id: 'm-gone', status: 'sent' }));
+  Z.set(MAIL.MK.sched, new Map([['m-later', Date.parse(later.sendAt)], ['m-gone', Date.parse(later.sendAt) + 1]]));
+  const row = (id, kind, status, at, extra = {}) => JSON.stringify({ id, at, kind, toName: 'Place ' + id, subject: 'S ' + id, status, ...extra });
+  L.set(MAIL.MK.outLog, [row('m1', 'outreach', 'sent', T + 'T08:00:00.000Z', { sentAt: T + 'T08:01:00.000Z' }), row('m2', 'reply', 'sent', T + 'T07:00:00.000Z'),
+    row('m3', 'outreach', 'refused', T + 'T06:00:00.000Z'), row('m1', 'outreach', 'waiting-owner', T + 'T05:00:00.000Z'), row('m4', 'followup', 'sent', addDays(T, -1) + 'T10:00:00.000Z')]);
+  const v = await MAIL.mailView();
+  const Lt = v.letters;
+  ok(Lt && Array.isArray(Lt.waiting) && !('letters' in (v.missing || {})) && !Lt.missing, 'the mail view carries the letters, whole, nothing missing');
+  ok(Lt.waiting.map(x => x.toName).join(',') === 'Place out-a,Place out-b,Place out-d', 'waiting: the letters on his Send, oldest first; a reply and a card past its date are not among them: ' + Lt.waiting.map(x => x.toName).join(','));
+  const w0 = Lt.waiting[0];
+  ok(w0.card === c1.id && w0.kind === 'outreach' && w0.to === 'out-a@place.example' && w0.subject === 'Subject out-a' && w0.text === 'Assalamu alaykum,\n\nText out-a.\n\nWith peace,\nNOOR Codex of Light' && w0.later === false,
+    'each with its card, its kind, the address, the subject and the whole text, its line breaks kept');
+  ok(Lt.waiting[1].kind === 'followup' && Lt.waiting[2].later === true, 'a follow-up says so, and one he put off on Home says Later and still waits here');
+  ok(Lt.repliesWaiting === 1, 'a reply on his Send is counted for the inbox, not listed here');
+  ok(Lt.held.length === 1 && Lt.held[0].id === 'i:c-l8:1' && /^the sentinel said no: it rests on too little data/.test(Lt.held[0].reason) && Lt.held[0].canDoNow === true && Lt.held[0].canSkip === true && Lt.held[0].hand === 'outreach-send' && Lt.held[0].title,
+    'held: only today\'s letter the checks held, with the id Home\'s Next carries and why: ' + JSON.stringify(Lt.held[0] || null));
+  ok(Lt.planning === false && Lt.writing === 0, 'no plan running');
+  ok(Lt.scheduled.length === 1 && Lt.scheduled[0].id === 'm-later' && Lt.scheduled[0].sendAt === later.sendAt && Lt.scheduled[0].toName === 'Place later', 'set for later: the letter waiting for its hour, not one that already went');
+  ok(Lt.sent.map(x => x.id + ':' + x.kind).join(',') === 'm1:outreach,m4:followup' && Lt.sent[0].at === T + 'T08:01:00.000Z', 'sent: letters to places, newest first, each once, at the minute it went (never a reply, never a refusal): ' + Lt.sent.map(x => x.id).join(','));
+  ok(!JSON.stringify(Lt.sent).includes('@') && !JSON.stringify(Lt.scheduled).includes('@'), 'and no address in what was sent or set for later');
+  /* the owner's Skip from the Mail room takes it off */
+  const sk = keep(await HOME.skipNext('i:c-l8:1'));
+  ok(sk.ok && (await MAIL.mailView()).letters.held.length === 0, 'Skip from the room takes the held letter off, exactly as from Home');
+  /* a plan running now: how many it is writing */
+  S.set('nsoul:cycle:c-l9', JSON.stringify({ id: 'c-l9', date: T, status: 'running', intents: [
+    { n: 1, action: 'outreach-send', tier: 'R2', status: 'planned', args: {} }, { n: 2, action: 'outreach-followup', tier: 'R2', status: 'approved', args: {} }, { n: 3, action: 'post-reel', tier: 'R1', status: 'planned', args: {} }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-l9', date: T }));
+  const pl = (await MAIL.mailView()).letters;
+  ok(pl.planning === true && pl.writing === 2 && pl.held.length === 0, 'while a plan runs: planning, and the 2 letters it is writing');
+  /* yesterday's plan holds nothing today */
+  S.set('nsoul:cycle:c-old', JSON.stringify({ id: 'c-old', date: addDays(T, -1), status: 'done', intents: [{ n: 1, action: 'outreach-send', tier: 'R2', status: 'rejected', args: {} }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-old', date: addDays(T, -1) }));
+  ok((await MAIL.mailView()).letters.held.length === 0, 'yesterday\'s held letters are not shown as today\'s');
+  /* a store that fails on one part: that part says why, the rest stands */
+  FAULT.cmds = new Set(['ZRANGEBYSCORE']);
+  const f = await MAIL.mailView();
+  FAULT.cmds = null;
+  ok(f.letters && f.letters.missing && f.letters.missing.scheduled && f.letters.waiting.length === 3 && f.letters.sent.length === 2, 'a part that cannot be read is named in missing, and the rest stands');
+  ok(MAIL.LETTERS_SHOWN.sent === 20 && MAIL.LETTERS_SHOWN.scheduled === 30, 'what the room shows at most: 20 sent, 30 set for later');
+  DUMPS.push(JSON.stringify([...S]));
+  resetStore();
+  for (const [k, x] of keepS) S.set(k, x); for (const [k, x] of keepL) L.set(k, x); for (const [k, x] of keepH) H.set(k, x); for (const [k, x] of keepZ) Z.set(k, x);
+  CLOCK.t = keepT;
 }
 
 console.log('\n13. nothing real was reached, and the password is nowhere');

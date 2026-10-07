@@ -826,6 +826,10 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .msw .mten{margin-top:12px}
 #s-mail .tabs{margin:16px 0 14px}
 #s-mail .seg button{padding:10px 4px}
+/* round eight: four tabs on one line; a long name wraps inside its own tab */
+.seg.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+#s-mail .seg.four button{padding:6px 2px;gap:5px;line-height:1.2;text-align:center}
+@media(max-width:420px){#s-mail .seg.four button{font-size:12px}#s-mail .seg.four .tn{min-width:18px;padding:0 4px}}
 .mfil{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
 /* on a phone a row of filters is one line that slides under the thumb, its far edge fading */
 @media(max-width:599px){.mfil.slide{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:24px;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
@@ -876,6 +880,37 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .mpc .mpcw{margin:6px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted);overflow-wrap:anywhere;display:flex;gap:7px;align-items:flex-start}
 .mpc .mpcw.warn{color:var(--wait)}
 .mpc .mpcw svg{width:14px;height:14px;margin-top:2px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* round eight: what needs him, above the tabs, each with its one button */
+.mneed{display:flex;flex-direction:column;gap:8px;margin:0}
+#mail-needs:not(:empty)+#mail-top>.msw{margin-top:16px}
+.mnd{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.mnd.hot{border-color:rgba(233,200,106,.45);background:linear-gradient(180deg,rgba(233,200,106,.07),rgba(233,200,106,0) 70px),var(--panel)}
+.mnd .ic,.mlh .ic{width:34px;height:34px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--gold)}
+.mnd .ic svg,.mlh .ic svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mnd.calm .ic{color:var(--good)}
+.mnd .t{flex:1 1 180px;min-width:0}
+.mnd .t b{display:block;color:var(--cream);font-weight:600;font-size:14.5px;line-height:1.35}
+.mnd .t span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45;margin-top:2px}
+.mnd .btn,.mnd .pill{flex:0 0 auto}
+@media(max-width:599px){.mnd .btn{flex:1 1 100%}}
+/* round eight: the letters to places, from waiting to sent */
+.mlint{margin:0 0 12px;font-size:13.5px;line-height:1.55;color:var(--text)}
+.mlint b{color:var(--cream);font-weight:600}
+.mstrip.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+#s-mail .hsec{margin:22px 0 10px}
+#s-mail .hsec:first-of-type{margin-top:16px}
+.mlh{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.mlh .mdt{display:flex;align-items:flex-start;gap:12px}
+.mlh .mdt .t{flex:1;min-width:0}
+.mlh .mdt .t b{display:block;color:var(--cream);font-weight:600;font-size:14.5px;line-height:1.35;overflow-wrap:anywhere}
+.mlh .mdt .t span{display:block;color:var(--wait);font-size:12.5px;line-height:1.45;margin-top:3px;overflow-wrap:anywhere}
+.mlh .acts{margin-top:10px}
+.mlh .hcf{margin-top:10px}
+.mlnote{margin:14px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mlnote .btn{flex:0 0 auto}
+.mlwait{display:flex;gap:10px;align-items:center;background:var(--panel2);border:1px dashed var(--line2);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--text)}
+.mlwait i{display:block;width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto}
+.msh .mpos{margin:2px 0 0;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
 /* a place's row: its letter set for later, or an address that bounced */
 #s-mail .row .t>span.mrw{white-space:normal;color:var(--blue);font-size:12px;margin-top:1px}
 #s-mail .row .t>span.mrw.bad{color:var(--wait)}
@@ -3840,7 +3875,12 @@ function drawReaders(force){
    Only https links are drawn, opened with no referrer. Every word is the
    house's or its correspondents' own, escaped; what was written to someone
    is shown exactly as it went. */
-var MAIL={tab:"inbox",fa:"all",fs:"all",fc:"all",cf:null,r:null,
+var MAIL={tab:null,fa:"all",fs:"all",fc:"all",cf:null,r:null,
+  /* round eight: the letters to places. lopen, the card of the letter open
+     in the sheet; lcf, the question open (send, no, or a held letter's
+     "any"); lbusy, a post on its way; lfail, the house's refusal; pollT,
+     the timer that reads the room again while a plan runs */
+  lopen:null,lcf:null,lbusy:null,lfail:null,planBusy:false,pollT:null,
   /* round six: the inbox that moves. fn, the chip open (Needs you first);
      seen, the threads whose "seen" went this visit; open, the thread in the
      sheet; tcf, the question open in it; busy, an op on its way; drafts, a
@@ -3872,7 +3912,8 @@ function mWhen(at){var d=hParse(at),n=d?hDaysFrom(d):null;return d?(n===0?hClock
 function mObjs(v){return Array.isArray(v)?v.filter(function(x){return x&&typeof x==="object"}):null}
 function drawMail(force){
   var el=$("s-mail");MAIL.cf=null;
-  if(!el.dataset.built){el.innerHTML=BACK+'<div id="mail-top"><div class="msw"><div class="sk" style="height:44px;margin-top:10px"></div></div></div><div id="mail-tabs"></div><div id="mail-pane" role="tabpanel">'+skel(3)+'</div>';el.dataset.built="1";wireMail(el)}
+  /* round eight: what needs him first, then the switch and the day, then the tabs */
+  if(!el.dataset.built){el.innerHTML=BACK+'<div id="mail-needs"></div><div id="mail-top"><div class="msw"><div class="sk" style="height:44px;margin-top:10px"></div></div></div><div id="mail-tabs"></div><div id="mail-pane" role="tabpanel">'+skel(3)+'</div>';el.dataset.built="1";wireMail(el)}
   return mailQ(force).then(function(r){if(r&&r.locked)return;MAIL.r=r;mailPaint()});
 }
 function mailData(){var r=MAIL.r;return r&&r.ok&&r.j&&typeof r.j==="object"&&r.j.ok!==false?r.j:null}
@@ -3881,15 +3922,20 @@ function mailPaint(){
   if(!d){var r=MAIL.r||{},e=String((r.j&&(r.j.error||r.j.message))||"");
     var head=r.net?"Could not reach the house.":(r.status===404||/unknown view|no such view/i.test(e))?"The mail cannot be read from this deployment yet.":"The mail could not be read just now.";
     $("mail-top").innerHTML='<div class="hfail" style="margin-top:12px"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>'+esc(head)+'</b><span>'+esc(r.net?"Nothing is lost. Try again in a moment.":hReason(e))+'</span><div class="acts"><button type="button" class="btn ghost" data-mretry="1">Try again</button></div></div></div>';
-    $("mail-tabs").innerHTML="";$("mail-pane").innerHTML="";return}
+    $("mail-needs").innerHTML="";$("mail-tabs").innerHTML="";$("mail-pane").innerHTML="";return}
+  /* round eight: a house that sends its letters opens the room on them; an
+     older one, on the inbox as before */
+  if(!MAIL.tab||(MAIL.tab==="letters"&&!mLetters(d)))MAIL.tab=mLetters(d)?"letters":"inbox";
   $("mail-top").innerHTML=mailTopHtml(d);
+  $("mail-needs").innerHTML=mailNeedsHtml(d);
   $("mail-tabs").innerHTML=mailTabsHtml(d);
   mailPanePaint(d);
+  mPlanWatch();
 }
 function mailPanePaint(d){
   var p=$("mail-pane");if(!p)return;d=d||mailData();if(!d)return;
   p.setAttribute("aria-labelledby","mail-tab-"+MAIL.tab);
-  p.innerHTML=MAIL.tab==="places"?mailPlacesHtml(d):MAIL.tab==="dnc"?mailDncHtml(d):mailInboxHtml(d);
+  p.innerHTML=MAIL.tab==="letters"?mailLettersHtml(d):MAIL.tab==="places"?mailPlacesHtml(d):MAIL.tab==="dnc"?mailDncHtml(d):mailInboxHtml(d);
 }
 /* the switch, the caps, the first ten and today */
 function mailTopHtml(d){
@@ -3931,10 +3977,188 @@ function mailPaceHtml(p,caps){
     +'<div class="mcaps">'+(rp!=null?'Replies to people who wrote first: at most <b>'+esc(fnum(rp))+' a day</b>. ':'')+'One no is final.</div>';
 }
 function mailTabsHtml(d){
-  var th=mObjs(d.threads),pl=mObjs(d.places),dn=mObjs(d.dnc);
-  return '<div class="seg tabs" role="tablist" aria-label="The mail">'+[["inbox","Inbox",th],["places","Places",pl],["dnc","Do not contact",dn]].map(function(t){var on=MAIL.tab===t[0];
-    return '<button type="button" role="tab" id="mail-tab-'+t[0]+'" aria-controls="mail-pane" aria-selected="'+(on?"true":"false")+'" class="'+(on?"on":"")+'" data-mtab="'+t[0]+'">'+esc(t[1])+'<span class="tn">'+(t[2]?t[2].length:"")+'</span></button>'}).join("")+'</div>';
+  var th=mObjs(d.threads),pl=mObjs(d.places),dn=mObjs(d.dnc),L=mLetters(d);
+  /* round eight: Letters first, its number what waits on him there */
+  var tabs=(L?[["letters","Letters",{length:L.waiting.length+L.held.length}]]:[]).concat([["inbox","Inbox",th],["places","Places",pl],["dnc","Do not contact",dn]]);
+  return '<div class="seg tabs'+(tabs.length===4?' four':'')+'" role="tablist" aria-label="The mail">'+tabs.map(function(t){var on=MAIL.tab===t[0];
+    return '<button type="button" role="tab" id="mail-tab-'+t[0]+'" aria-controls="mail-pane" aria-selected="'+(on?"true":"false")+'" class="'+(on?"on":"")+'" data-mtab="'+t[0]+'">'+esc(t[1])+'<span class="tn">'+(t[2]&&t[2].length?t[2].length:"")+'</span></button>'}).join("")+'</div>';
 }
+/* ROUND EIGHT: THE LETTERS, as one picture with his buttons (GET ?view=mail
+   `letters`, LANTERN.md 14.7). waiting, the letters on his Send (each a
+   card: Send and Not this one post the card's own decide); held, the day's
+   letters the checks held back (Write it anyway posts do-now, Skip posts
+   skip, Plan again posts run); scheduled, set for their place's working
+   hours; sent, the last that went. A house with no `letters` part shows the
+   room exactly as before. */
+var M_LKIND={outreach:"A first letter",followup:"A follow-up"};
+var M_LSENT=20,M_POLL_MS=20000,M_POLL_MAX=15;
+function mLetters(d){var L=d&&d.letters;if(!L||typeof L!=="object"||Array.isArray(L))return null;
+  var ms=L.missing&&typeof L.missing==="object"&&!Array.isArray(L.missing)?L.missing:{};
+  return {waiting:(mObjs(L.waiting)||[]).filter(function(x){return x.card!=null&&String(x.text==null?"":x.text).trim()}),
+    held:(mObjs(L.held)||[]).filter(function(x){return x.id!=null}),scheduled:mObjs(L.scheduled)||[],sent:mObjs(L.sent)||[],
+    repliesWaiting:Math.max(0,hNum(L.repliesWaiting)||0),planning:L.planning===true,writing:Math.max(0,hNum(L.writing)||0),missing:ms};
+}
+function mPlural(n,one,many){return fnum(n)+" "+(n===1?one:many)}
+/* a time to come, short enough for a pill: 14:00 UTC, tomorrow 09:30, Thu 9 Oct 09:30 */
+function mAtShort(at){var d=hParse(at);if(!d)return "";var n=hDaysFrom(d);return n===0?hClock(d)+" UTC":n===1?"tomorrow "+hClock(d):hShort(d)+" "+hClock(d)}
+function mNeedRow(cls,ic,b,s,right,id){return '<div class="mnd'+(cls?" "+cls:"")+'"'+(id?' id="'+id+'"':'')+'><div class="ic">'+ICO[ic]+'</div><div class="t"><b>'+esc(b)+'</b><span>'+esc(s)+'</span></div>'+(right||"")+'</div>'}
+/* what the planning row says while a plan runs */
+function mPlanWords(L,ten){
+  var after=ten.sent<ten.of?"each appears here for your Send as it is written.":"each goes in its place's working hours.";
+  return L.writing?"It is writing "+mPlural(L.writing,"letter","letters")+" now: "+after:"New letters appear here as it writes them.";
+}
+/* above the room: what needs him, each with its one button; calm when nothing does */
+function mailNeedsHtml(d){
+  var m=d.mail&&typeof d.mail==="object"?d.mail:{},L=mLetters(d);
+  if(m.configured===false||!L)return "";
+  var ten=hMailTen(m),th=mObjs(d.threads)||[],need=mMoves(th)?th.filter(function(t){return t.needsYou===true}).length:0;
+  var w=L.waiting.length,h=L.held.length,rp=L.repliesWaiting,rows=[];
+  if(w)rows.push(mNeedRow("hot","mail",mPlural(w,"letter waits","letters wait")+" for your Send",
+    (ten.sent<ten.of?"Your first ten: "+ten.sent+" of "+ten.of+" sent. ":"")+"Read each one whole, then Send or Not this one.",
+    '<button type="button" class="btn" data-mlw="0">'+(w===1?"Read it":"Read them")+'</button>',"mail-need-letters"));
+  if(L.planning)rows.push(mNeedRow("","lamp","The Lantern is planning now",mPlanWords(L,ten),'<span class="pill gold">planning</span>',"mail-need-plan"));
+  else if(h)rows.push(mNeedRow("","warn",mPlural(h,"letter","letters")+" held back",
+    "The checks stopped "+(h===1?"it before it was":"them before they were")+" written. Plan again brings "+(h===1?"it":"them")+" back, or choose one by one in Letters.",
+    '<button type="button" class="btn ghost gold" data-mplan="1">Plan again</button>',"mail-need-held"));
+  if(need)rows.push(mNeedRow("","person",mPlural(need,"message needs you","messages need you"),
+    "In the inbox: what the Lantern could not settle on its own"+(rp?", and "+(rp===1?"a reply that waits":fnum(rp)+" replies that wait")+" for your Send":"")+".",
+    '<button type="button" class="btn ghost" data-mgo="inbox">Open the inbox</button>',"mail-need-inbox"));
+  else if(rp)rows.push(mNeedRow("","person",mPlural(rp,"reply waits","replies wait")+" for your Send","Answers to people who wrote to the house, in the inbox.",
+    '<button type="button" class="btn ghost" data-mgo="inbox">Open the inbox</button>',"mail-need-inbox"));
+  if(!rows.length)rows.push(mNeedRow("calm","ok","Nothing needs you right now",
+    m.on===false?"Mail is off, so nothing is written or sent. Turn it on below when you are ready."
+      :ten.sent<ten.of?"The next letters come with the next plan, at 05:00 UTC, and wait here for your Send."
+      :"The Lantern writes and sends on its own, each letter in its place's working hours.","","mail-need-calm"));
+  return hHead("What needs you")+'<div class="mneed" id="mail-needs-in">'+rows.join("")+'</div>';
+}
+/* the Letters tab: how it works in one line, the path from found to replied,
+   then waiting, held back, set for later and sent */
+function mailLettersHtml(d){
+  var L=mLetters(d);if(!L)return mailFail("The letters could not be read just now.",hWhy(d,"letters"));
+  var m=d.mail&&typeof d.mail==="object"?d.mail:{},ten=hMailTen(m),p=d.pace&&typeof d.pace==="object"?d.pace:{},k=d.counts&&typeof d.counts==="object"?d.counts:{};
+  var per=hNum(p.letters),ms=L.missing,n=function(v){v=hNum(v);return v==null?"·":fnum(v)};
+  var row=function(x,ic,pill,cls){return '<div class="row"><div class="ic">'+ICO[ic]+'</div><div class="t"><b>'+esc(String(x.toName||"").trim()||"A place")+'</b><span>'+esc([M_LKIND[x.kind]||"A letter",String(x.subject||"").trim()].filter(Boolean).join(" · "))+'</span></div><div class="r"><span class="pill '+cls+'">'+esc(pill)+'</span></div></div>'};
+  var out='<p class="mlint" id="mail-lint">'+(ten.sent<ten.of
+    ?'Each of your <b>first '+esc(String(ten.of))+' letters</b> waits here for your Send. After the tenth, the Lantern sends on its own'+(per?', '+esc(fnum(per))+' a day':'')+', each letter in its place\'s working hours.'
+    :'<b>The Lantern sends on its own now</b>'+(per?', '+esc(fnum(per))+' letters a day':'')+', each in its place\'s working hours.')+'</p>'
+    +'<div class="mstrip four" id="mail-lpath" role="list" aria-label="From found to replied">'+[[k.places,"found"],[p.ready,"ready"],[k.contacted,"written to"],[k.replied,"replied"]].map(function(x){
+      return '<div class="mn" role="listitem"><b>'+n(x[0])+'</b><span>'+esc(x[1])+'</span></div>'}).join("")+'</div>';
+  /* waiting for his Send */
+  var w=L.waiting;
+  out+=hHead("Waiting for your Send",ms.waiting?null:w.length,w.length>0);
+  if(ms.waiting)out+=mailFail("The letters waiting for you could not be read just now.",ms.waiting);
+  else if(!w.length)out+='<div class="empty" id="mail-wempty">'+esc(ten.sent>=ten.of?"Nothing waits for you: the Lantern sends on its own now."
+    :L.planning?"Nothing yet: the Lantern is planning, and its letters appear here as it writes them."
+    :"Nothing waits for your Send. The next letters come with the next plan, at 05:00 UTC.")+'</div>';
+  else out+='<div class="list" id="mail-waiting">'+w.map(function(x,i){
+    return '<button type="button" class="row tap" data-mlw="'+i+'"><div class="ic">'+ICO.mail+'</div><div class="t"><b>'+esc(String(x.toName||"").trim()||String(x.to||"").trim()||"A place")+'</b><span>'+esc([M_LKIND[x.kind]||"A letter",String(x.subject||"").trim()].filter(Boolean).join(" · ")+(x.later?" · you said later":""))+'</span></div>'
+      +'<div class="r"><span class="pill wait">for your Send</span></div></button>'}).join("")+'</div>';
+  if(L.repliesWaiting)out+='<p class="mlnote" id="mail-lreplies"><span>'+esc((L.repliesWaiting===1?"A reply to someone who wrote to the house waits":fnum(L.repliesWaiting)+" replies to people who wrote to the house wait")+" for your Send, in the inbox.")+'</span><button type="button" class="btn ghost" data-mgo="inbox">Open the inbox</button></p>';
+  /* held back: only when there is something to say */
+  if(L.planning||L.held.length||ms.held){
+    out+=hHead("Held back",ms.held||L.planning?null:L.held.length,false,ms.held||L.planning?'':'<button type="button" class="btn ghost gold" data-mplan="1">Plan again</button>');
+    if(ms.held)out+=mailFail("The letters held back could not be read just now.",ms.held);
+    else if(L.planning)out+='<div class="mlwait" id="mail-planning" role="status"><i aria-hidden="true"></i><span>'+esc("The Lantern is planning now. "+mPlanWords(L,ten))+'</span></div>';
+    else out+='<div class="list" id="mail-held">'+L.held.map(function(x,i){return mHeldHtml(x,i,ten)}).join("")+'</div>';
+  }
+  /* set for later: only when some are */
+  if(L.scheduled.length||ms.scheduled){
+    out+=hHead("Set for later",ms.scheduled?null:L.scheduled.length);
+    out+=ms.scheduled?mailFail("The letters set for later could not be read just now.",ms.scheduled)
+      :'<div class="list" id="mail-later">'+L.scheduled.map(function(x){return row(x,"cal",mAtShort(x.sendAt)||"soon","blue")}).join("")+'</div>';
+  }
+  /* sent: the last that went, newest first */
+  out+=hHead("Sent",ms.sent?null:(L.sent.length>=M_LSENT?M_LSENT+"+":L.sent.length));
+  if(ms.sent)out+=mailFail("The letters sent could not be read just now.",ms.sent);
+  else if(!L.sent.length)out+='<div class="empty" id="mail-sempty">Nothing has gone yet. Each letter appears here once it is sent.</div>';
+  else out+='<div class="list" id="mail-sent">'+L.sent.map(function(x){return row(x,"ok",(mWhen(x.at)?"sent "+mWhen(x.at):"sent"),"good")}).join("")+'</div>';
+  return out;
+}
+/* a held letter: why it was held, Write it anyway (asking first) and Skip */
+function mHeldHtml(x,i,ten){
+  var on=MAIL.cf&&MAIL.cf.k==="any"&&MAIL.cf.id===String(x.id),acts=[];
+  if(x.canDoNow===true)acts.push('<button type="button" class="btn ghost gold" data-mlany="'+i+'">Write it anyway</button>');
+  if(x.canSkip===true)acts.push('<button type="button" class="btn ghost" data-mlskip="'+i+'">Skip</button>');
+  return '<div class="mlh" data-mlh="'+i+'"><div class="mdt"><div class="ic">'+ICO.warn+'</div><div class="t"><b>'+hs(x.title||"A letter")+'</b><span>'+hs(x.reason||"The checks held it back.")+'</span></div></div>'
+    +(on?hConfirm(ten.sent<ten.of?"Write it now, with your approval in place of the checks? The red lines and the daily caps still hold, and the letter waits here for your Send."
+        :"Write and send it now, with your approval in place of the checks? The red lines and the daily caps still hold.","Yes, write it","mlanyyes","mlanyno","")
+      :(acts.length?'<div class="acts">'+acts.join("")+'</div>':''))+'</div>';
+}
+/* one letter in the sheet: where it stands in the line, the whole email as
+   it will go, then Send and Not this one, each asking first */
+function mailLetterHtml(x,i,n){
+  var cf=MAIL.lcf&&MAIL.lcf.card===String(x.card)?MAIL.lcf.k:null,off=MAIL.lbusy?' disabled':'',who=String(x.toName||"").trim()||String(x.to||"").trim()||"this place";
+  var body='<div class="msh" id="mail-lsheet">'
+    +(n>1?'<p class="mpos" id="mail-lpos">Letter '+(i+1)+' of '+n+' waiting</p>':'')
+    +'<h2>'+esc((x.kind==="followup"?"Send this follow-up to ":"Send this letter to ")+who+"?")+'</h2>'
+    +(String(x.why||"").trim()?'<p class="sub">'+hs(x.why)+'</p>':'')
+    +hLetterHtml({to:String(x.to||""),toName:String(x.toName||""),subject:String(x.subject||""),text:String(x.text),kind:x.kind,from:""}).replace('class="ltr"','class="ltr" id="mail-letter"');
+  if(MAIL.lfail)body+='<p class="mfail" role="alert" id="mail-lfail" tabindex="-1">'+esc(MAIL.lfail)+'</p>';
+  if(cf==="send")body+=hConfirm("Send it to "+who+" now, from salam@noorcodex.com? An email cannot be taken back.","Yes, send it","mlsendyes","mlsendno","");
+  else if(cf==="no")body+=hConfirm("Not this one? This email will not be sent, and the Lantern keeps it as something you did not want.","Yes, not this one","mlnoyes","mlnono","danger");
+  return body+'<div class="acts">'+(cf?'':'<button type="button" class="btn" data-mlsend="1"'+off+'>Send</button><button type="button" class="btn ghost" data-mlno="1"'+off+'>Not this one</button>')
+    +'<button class="btn ghost" id="cl">Close</button></div></div>';
+}
+function mailLetterSheet(i){var L=mLetters(mailData()),x=L&&L.waiting[i];if(!x)return;
+  MAIL.lopen=String(x.card);MAIL.lcf=null;MAIL.lfail=null;MAIL.open=null;sheet(mailLetterHtml(x,i,L.waiting.length),true)}
+/* the letter open in the sheet, while the sheet still shows it */
+function mLetterOpen(){
+  if(MAIL.lopen==null||!$("sheet").classList.contains("on")||!$("sheet-in").querySelector("#mail-lsheet"))return null;
+  var L=mLetters(mailData()),w=L?L.waiting:[];
+  for(var i=0;i<w.length;i++)if(String(w[i].card)===MAIL.lopen)return {x:w[i],i:i,n:w.length};
+  return null;
+}
+function mLetterRepaint(focusSel){
+  var o=mLetterOpen();if(!o)return false;
+  var s=$("sheet"),y=s.scrollTop;$("sheet-in").innerHTML=mailLetterHtml(o.x,o.i,o.n);s.scrollTop=y;
+  var f=focusSel&&$("sheet-in").querySelector(focusSel);if(f)try{f.focus({preventScroll:false})}catch(e){f.focus()}
+  return true;
+}
+/* Send or Not this one: the card's own decide; then the next letter opens,
+   or the sheet closes when none waits */
+function mLetterDecide(o,option,b){
+  if(!o||MAIL.lbusy)return;var card=String(o.x.card);
+  MAIL.lbusy=option;MAIL.lfail=null;if(b){b.disabled=true;b.textContent="Working…"}
+  return post("/api/soul",{action:"decide",id:o.x.card,option:option}).then(function(r){
+    MAIL.lbusy=null;if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false){MAIL.lfail=lw(j.message||j.error)||"It refused.";MAIL.lcf=null;if(!mLetterRepaint("#mail-lfail")){MAIL.lfail=null;toast(lw(j.message||j.error)||"It refused.",true)}return}
+    MAIL.lcf=null;MAIL.lopen=null;
+    toast(lw(String(j.message||"").trim())||(option==="send"?"Sent.":"Not sent."));
+    var still=$("sheet").classList.contains("on")&&!!$("sheet-in").querySelector("#mail-lsheet");
+    return mRefresh().then(function(){
+      var L=mLetters(mailData()),w=L?L.waiting:[],next=-1;
+      for(var i=0;i<w.length;i++)if(String(w[i].card)!==card){next=i;break}
+      if(still&&next>=0&&$("sheet").classList.contains("on"))mailLetterSheet(next);
+      else if(still&&$("sheet-in").querySelector("#mail-lsheet"))closeSheet();
+    });
+  },function(){MAIL.lbusy=null;MAIL.lfail="Could not reach the house.";if(!mLetterRepaint("#mail-lfail")){MAIL.lfail=null;toast("Could not reach the house.",true)}});
+}
+/* Plan again: the Home's own Think again, said for the letters; the room
+   reads itself again while the plan runs */
+function mPlan(b){
+  if(MAIL.planBusy)return;MAIL.planBusy=true;
+  var was=b?b.innerHTML:"";if(b){b.disabled=true;b.textContent="Working…"}
+  return post("/api/soul",{action:"run"}).then(function(r){
+    MAIL.planBusy=false;if(r.locked)return;var j=r.j||{},busy=r.ok&&j.busy===true;
+    if(!busy&&(!r.ok||j.ok===false)){if(b&&b.isConnected){b.disabled=false;b.innerHTML=was}toast(lw(j.message||j.error)||"It refused.",true);return}
+    toast(busy?"The Lantern is already planning. The letters appear here as it writes them.":"The Lantern is planning again. The letters appear here as it writes them.");
+    MAIL.cf=null;MAIL.polls=0;Object.keys(C).forEach(function(k){if(/^soul:/.test(k))delete C[k]});LOADED.engine=false;
+    return mRefresh();
+  },function(){MAIL.planBusy=false;if(b&&b.isConnected){b.disabled=false;b.innerHTML=was}toast("Could not reach the house.",true)});
+}
+/* while a plan runs the room reads itself again every 20 seconds, for at
+   most five minutes, and only while it is open */
+function mPlanWatch(){
+  var L=mLetters(mailData());
+  if(!L||!L.planning){MAIL.polls=0;if(MAIL.pollT){clearTimeout(MAIL.pollT);MAIL.pollT=null}return}
+  if(MAIL.pollT||(MAIL.polls||0)>=M_POLL_MAX)return;
+  MAIL.pollT=setTimeout(function(){MAIL.pollT=null;
+    if(!$("s-mail").classList.contains("on"))return;
+    if(document.hidden)return void mPlanWatch();
+    MAIL.polls=(MAIL.polls||0)+1;mRefresh()},mPollMs());
+}
+/* the console's public handle may shorten the wait (its tests do) */
+function mPollMs(){var v=window.NOOR_CONSOLE&&+window.NOOR_CONSOLE.pollMs;return v>0?v:M_POLL_MS}
 function mailFail(what,why){return '<div class="hfail"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>'+esc(what)+'</b><span>'+esc(hReason(why))+'</span></div></div>'}
 function mailChips(attr,cur,list){
   return list.map(function(c){var on=cur===c[0];return '<button type="button" data-'+attr+'="'+esc(c[0])+'" aria-pressed="'+(on?"true":"false")+'" class="'+(on?"on":"")+'">'+esc(c[1])+(c[2]!=null?'<span class="n">'+c[2]+'</span>':'')+'</button>'}).join("");
@@ -4214,6 +4438,20 @@ function wireMail(el){
     if((a=t.closest("[data-mswno]"))){MAIL.cf=null;$("mail-top").innerHTML=mailTopHtml(d);var s=el.querySelector("[data-msw]");if(s)try{s.focus({preventScroll:true})}catch(x){}return}
     if((a=t.closest("[data-mswyes]")))return void mailPost({action:"mail-switch",on:false},a,"Mail is off. Reading goes on.");
     if((a=t.closest("[data-mtab]"))){if(MAIL.tab===a.dataset.mtab)return;MAIL.tab=a.dataset.mtab;MAIL.cf=MAIL.cf&&MAIL.cf.k==="off"?MAIL.cf:null;$("mail-tabs").innerHTML=mailTabsHtml(d);mailPanePaint(d);return}
+    /* round eight: the letters. A row's button opens its tab (the inbox on
+       what needs him), and the tab comes into view */
+    if((a=t.closest("[data-mgo]"))){var go=a.dataset.mgo;if(go!=="letters"&&go!=="inbox")return;if(go==="letters"&&!mLetters(d))return;
+      MAIL.tab=go;if(go==="inbox")MAIL.fn="needs";MAIL.cf=MAIL.cf&&MAIL.cf.k==="off"?MAIL.cf:null;$("mail-tabs").innerHTML=mailTabsHtml(d);mailPanePaint(d);
+      var tb=$("mail-tab-"+go);if(tb){try{tb.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(x){}try{tb.focus({preventScroll:true})}catch(x){}}return}
+    if((a=t.closest("[data-mplan]")))return void mPlan(a);
+    if((a=t.closest("[data-mlw]"))){var L0=mLetters(d);if(L0&&L0.waiting[+a.dataset.mlw])mailLetterSheet(+a.dataset.mlw);return}
+    if((a=t.closest("[data-mlany]"))){var L1=mLetters(d),h1=L1&&L1.held[+a.dataset.mlany];if(!h1)return;MAIL.cf={k:"any",id:String(h1.id)};mailPanePaint(d);
+      var yh=el.querySelector("[data-mlanyyes]");if(yh)try{yh.focus({preventScroll:true})}catch(x){}return}
+    if((a=t.closest("[data-mlanyno]"))){var bk=a.closest("[data-mlh]"),bi=bk?bk.dataset.mlh:null;MAIL.cf=null;mailPanePaint(d);
+      var ab=bi!=null&&el.querySelector('[data-mlany="'+bi+'"]');if(ab)try{ab.focus({preventScroll:true})}catch(x){}return}
+    if((a=t.closest("[data-mlanyyes]"))){var cfa=MAIL.cf,L2=mLetters(d),h2=cfa&&cfa.k==="any"&&L2&&L2.held.filter(function(x){return String(x.id)===cfa.id})[0];
+      if(h2)mailPost({action:"do-now",id:h2.id},a,"Started. The letter is being written.");return}
+    if((a=t.closest("[data-mlskip]"))){var L3=mLetters(d),h3=L3&&L3.held[+a.dataset.mlskip];if(h3)mailPost({action:"skip",id:h3.id},a,"Skipped.");return}
     if((a=t.closest("[data-mfa]"))){MAIL.fa=a.dataset.mfa;return mailPanePaint(d)}
     if((a=t.closest("[data-mfn]"))){MAIL.fn=a.dataset.mfn;return mailPanePaint(d)}
     if((a=t.closest("[data-mfs]"))){MAIL.fs=a.dataset.mfs;return mailPanePaint(d)}
@@ -4234,6 +4472,17 @@ function wireMail(el){
     if(b.hasAttribute("data-mdont")){MAIL.tcf="dontsend";MAIL.fail=null;return void mailThreadRepaint(t,"[data-mdsyes]")}
     if(b.hasAttribute("data-mdsno")){MAIL.tcf=null;return void mailThreadRepaint(t,"[data-mdont]")}
     if(b.hasAttribute("data-mdsyes"))return void mDecide(t,"no",b);
+  });
+  /* round eight: the letter sheet's own buttons; Send and Not this one each ask first */
+  $("sheet-in").addEventListener("click",function(e){
+    var b=e.target&&e.target.closest&&e.target.closest("[data-mlsend],[data-mlno],[data-mlsendyes],[data-mlsendno],[data-mlnoyes],[data-mlnono]");if(!b||b.disabled)return;
+    var o=mLetterOpen();if(!o)return;
+    if(b.hasAttribute("data-mlsend")){MAIL.lcf={k:"send",card:String(o.x.card)};MAIL.lfail=null;return void mLetterRepaint("[data-mlsendyes]")}
+    if(b.hasAttribute("data-mlno")){MAIL.lcf={k:"no",card:String(o.x.card)};MAIL.lfail=null;return void mLetterRepaint("[data-mlnoyes]")}
+    if(b.hasAttribute("data-mlsendno")){MAIL.lcf=null;return void mLetterRepaint("[data-mlsend]")}
+    if(b.hasAttribute("data-mlnono")){MAIL.lcf=null;return void mLetterRepaint("[data-mlno]")}
+    if(b.hasAttribute("data-mlsendyes"))return void mLetterDecide(o,"send",b);
+    if(b.hasAttribute("data-mlnoyes"))return void mLetterDecide(o,"no",b);
   });
   el.addEventListener("change",function(e){var s=e.target&&e.target.closest&&e.target.closest("[data-mfc]");if(!s)return;MAIL.fc=s.value||"all";mailPanePaint();var n=el.querySelector("[data-mfc]");if(n)try{n.focus({preventScroll:true})}catch(x){}});
   el.addEventListener("submit",function(e){var f=e.target&&e.target.closest&&e.target.closest("[data-mdadd]");if(!f)return;e.preventDefault();

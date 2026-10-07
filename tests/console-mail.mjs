@@ -166,6 +166,29 @@ async function open_(w, h, opts = {}) {
           }
           return r.fulfill(J({ ok: false, message: 'That is not something the inbox knows how to do.' }));
         }
+        /* round eight: a letter in the Mail room is decided on its own card;
+           a held letter is written anyway (do-now) or skipped; Plan again runs */
+        const LT = st.mailv.letters;
+        if (b.action === 'decide' && LT && (LT.waiting || []).some(x => x.card === b.id)) {
+          if (st.refuseLetter) return r.fulfill(J({ ok: false, message: 'Mail is off, so nothing was sent.' }));
+          const x = LT.waiting.find(y => y.card === b.id);
+          LT.waiting = LT.waiting.filter(y => y.card !== b.id);
+          if (b.option === 'send') { LT.sent = [{ id: 'out-' + b.id, kind: x.kind, toName: x.toName, subject: x.subject, at: iso(Date.now()) }, ...LT.sent]; st.mailv.mail.firstTen.sent++; }
+          return r.fulfill(J({ ok: true, message: b.option === 'send' ? 'Sent to ' + x.toName + ', from salam@noorcodex.com.' : 'Not sent. The Lantern keeps what you did not want as a lesson.' }));
+        }
+        if ((b.action === 'do-now' || b.action === 'skip') && LT && (LT.held || []).some(x => x.id === b.id)) {
+          const x = LT.held.find(y => y.id === b.id);
+          LT.held = LT.held.filter(y => y.id !== b.id);
+          if (b.action === 'skip') return r.fulfill(J({ ok: true, message: 'Skipped. It is not planned again for 7 days.' }));
+          LT.waiting = [...LT.waiting, { card: 'd-now-' + b.id, kind: 'outreach', toName: 'Brisbane Islamic Centre', to: 'office@bic.example', subject: 'A free library for your classes',
+            text: 'Assalamu alaykum,\n\nA free library for your classes.\n\nWith peace,\nNOOR Codex of Light', why: 'Written with your approval.', at: iso(Date.now()), later: false }];
+          return r.fulfill(J({ ok: true, message: 'Done: ' + x.title + '.' }));
+        }
+        if (b.action === 'run') {
+          if (st.runBusy) return r.fulfill(J({ ok: true, busy: true, message: 'The Lantern is already thinking.' }));
+          if (LT) { LT.held = []; LT.planning = true; LT.writing = 3; }
+          return r.fulfill(J({ ok: true, status: 'running', message: 'A cycle started now; it goes on at the next tick.' }));
+        }
         /* a reply waiting for his Send: its card is decided as any letter's */
         if (b.action === 'decide' && /^mail:out-/.test(String(b.id))) {
           const t = (st.mailv.threads || []).find(x => x.card && x.card.id === b.id);
@@ -191,6 +214,7 @@ async function open_(w, h, opts = {}) {
       if (view === 'home') { st.homeGets++; return r.fulfill(J({ ...st.home, now: iso(Date.now()) })); }
       if (view === 'mail') {
         st.mailGets++;
+        if (st.onMailGet) st.onMailGet(st);
         if (st.mailMode === 'net') return r.abort('connectionfailed');
         return r.fulfill(J(st.mailv));
       }
@@ -910,6 +934,219 @@ console.log('\n390x844 · the room\'s pace, a letter set for later, an address t
   await openMail(o.pg);
   ok(await o.pg.evaluate(() => document.querySelector('#mail-pace .mpct').textContent) === '20 letters a day today · week 2 of the warm-up', 'a sentence that does not name the week: the week is said beside the number');
   ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+}
+
+/* ============================================================ round eight: the letters, as one picture with his buttons */
+/* GET ?view=mail `letters` (LANTERN.md 14.7): waiting (the cards on his
+   Send), repliesWaiting, held (the day's letters the checks held back, with
+   the ids Home's Next carries), planning, writing, scheduled, sent, missing */
+const LTRS = (o = {}) => ({
+  waiting: [
+    { card: 'd-lt-1', kind: 'outreach', toName: 'Masjid Al Huda', to: 'info@alhuda.example', subject: 'A free library for your weekend school',
+      text: 'Assalamu alaykum,\n\nWe are NOOR Codex of Light, a free library of the Quran, the Names and the Prophets.\n\nYour weekend school teaches 80 children; our printables are free for your classes.\n\nWith peace,\nNOOR Codex of Light',
+      why: 'One of the first 10 emails the Lantern writes, each waiting for your Send (1 of 10 sent so far). Its weekend school teaches 80 children.', at: iso(NOW - 3 * H), later: false },
+    { card: 'd-lt-2', kind: 'followup', toName: 'Leeds Islamic Society', to: 'contact@leedsisoc.example', subject: 'Re: The library for your study circles',
+      text: 'Assalamu alaykum,\n\nA short note after our letter of last week.\n\nWith peace,\nNOOR Codex of Light', why: 'It has not answered in 8 days; one follow-up, then never again.', at: iso(NOW - 2 * H), later: true },
+    { card: 'd-lt-3', kind: 'outreach', toName: XSS, to: 'x' + XSS + '@example.org', subject: BOLD, text: 'Line ' + BOLD + '\n' + XSS, why: XSS, at: iso(NOW - 1 * H), later: false }],
+  repliesWaiting: 1,
+  held: [
+    { id: 'i:c-7:3', title: 'Write to the Brisbane Islamic Centre', why: 'Its weekend school is new.', reason: 'the sentinel said no: it rests on too little data (0.55)', hand: 'outreach-send', canDoNow: true, canSkip: true },
+    { id: 'i:c-7:4', title: 'Write to ' + XSS, why: '', reason: BOLD, hand: 'outreach-send', canDoNow: true, canSkip: true }],
+  planning: false, writing: 0,
+  scheduled: [{ id: 'out-s1', kind: 'outreach', toName: 'Hamilton Weekend School', subject: 'Free printables for your classes', sendAt: iso(NOW + 2 * H) }],
+  sent: [{ id: 'out-1', kind: 'outreach', toName: 'Al Noor Islamic Centre', subject: 'Free printables for your weekend school', at: iso(NOW - 26 * H) }],
+  ...o });
+const LTR_ADDRS = ['info@alhuda.example', 'contact@leedsisoc.example', 'office@bic.example'];
+const MAILV_L = (o = {}) => { const v = MAILV({ pace: PACE_R(), letters: LTRS(), ...o }); v.mail.firstTen = { sent: 1, of: 10 }; return v; };
+const needRows = pg => pg.evaluate(() => [...document.querySelectorAll('#mail-needs .mnd')].map(r => [r.id, r.className.replace('mnd', '').trim(), r.querySelector('.t b').textContent, r.querySelector('.t span').textContent,
+  [...r.querySelectorAll('.btn,.pill')].map(b => b.textContent).join('+')].join(' / ')));
+const heads = pg => pg.evaluate(() => [...document.querySelectorAll('#mail-pane .hsec')].map(h => h.querySelector('h2').textContent + (h.querySelector('.cnt') ? ' ' + h.querySelector('.cnt').textContent : '')).join(' | '));
+const lsheet = pg => pg.evaluate(() => { const s = document.getElementById('mail-lsheet'); if (!s || !document.getElementById('sheet').classList.contains('on')) return null;
+  return { pos: (s.querySelector('#mail-lpos') || {}).textContent || '', h: s.querySelector('h2').textContent, sub: (s.querySelector('.sub') || {}).textContent || '',
+    to: s.querySelector('#mail-letter .lh .lv').textContent, subj: s.querySelector('#mail-letter .lv.sj').textContent, text: s.querySelector('#mail-letter .lt').textContent,
+    acts: [...s.querySelectorAll('.acts > .btn')].map(b => b.textContent + ':' + (b.className.includes('danger') ? 'danger' : b.className.includes('ghost') ? 'ghost' : 'primary')).join(','),
+    q: (s.querySelector('.hcf p') || {}).textContent || '', fail: (s.querySelector('#mail-lfail') || {}).textContent || '', focus: document.activeElement && (document.activeElement.textContent || '') }; });
+for (const [w, h] of [[390, 844], [1440, 900]]) {
+  const tag = w + 'x' + h;
+  console.log('\n' + tag + ' · the Mail room opens on the letters: what needs him first, then each letter with its buttons');
+  const { pg, st, ctx } = await open_(w, h, { mailv: () => MAILV_L({ threads: MOVES() }) });
+  await openMail(pg);
+  const tabs = await pg.evaluate(() => [...document.querySelectorAll('#mail-tabs [data-mtab]')].map(b => b.dataset.mtab + ':' + b.textContent + ':' + b.getAttribute('aria-selected')).join(' | '));
+  ok(tabs === 'letters:Letters5:true | inbox:Inbox6:false | places:Places8:false | dnc:Do not contact2:false', 'Letters is the first tab and opens first, its number what waits on him there (3 waiting, 2 held): ' + tabs);
+  ok(await pg.evaluate(() => { const n = document.getElementById('mail-needs'), t = document.getElementById('mail-top'); return !!(n.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING) && n.querySelector('.hsec h2').textContent === 'What needs you'; }),
+    '"What needs you" stands at the top of the room, above the switch');
+  const nr = await needRows(pg);
+  ok(nr[0] === 'mail-need-letters / hot / 3 letters wait for your Send / Your first ten: 1 of 10 sent. Read each one whole, then Send or Not this one. / Read them', 'first, the letters on his Send, with one button: ' + nr[0]);
+  ok(nr[1] === 'mail-need-held /  / 2 letters held back / The checks stopped them before they were written. Plan again brings them back, or choose one by one in Letters. / Plan again', 'then the letters held back, with Plan again: ' + nr[1]);
+  ok(nr[2] === 'mail-need-inbox /  / 3 messages need you / In the inbox: what the Lantern could not settle on its own, and a reply that waits for your Send. / Open the inbox', 'then what needs him in the inbox: ' + nr[2]);
+  ok(nr.length === 3, 'and nothing else: ' + nr.length + ' rows');
+  ok(await tc(pg, '#mail-lint') === 'Each of your first 10 letters waits here for your Send. After the tenth, the Lantern sends on its own, 20 a day, each letter in its place\'s working hours.', 'the Letters tab says how it works, in one line: ' + await tc(pg, '#mail-lint'));
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#mail-lpath .mn')].map(m => m.querySelector('b').textContent + ' ' + m.querySelector('span').textContent).join(' | ')) === '132 found | 12 ready | 24 written to | 3 replied', 'the path from found to replied');
+  ok(await heads(pg) === 'Waiting for your Send 3 | Held back 2 | Set for later 1 | Sent 1', 'four parts, each with its number: ' + await heads(pg));
+  const wr = await pg.evaluate(() => [...document.querySelectorAll('#mail-waiting [data-mlw]')].map(r => r.querySelector('.t b').textContent + ' / ' + r.querySelector('.t span').textContent + ' / ' + r.querySelector('.pill').textContent));
+  ok(wr[0] === 'Masjid Al Huda / A first letter · A free library for your weekend school / for your Send' && wr[1] === 'Leeds Islamic Society / A follow-up · Re: The library for your study circles · you said later / for your Send', 'each waiting letter: who, what kind, its subject, and a Later he pressed on Home: ' + wr.slice(0, 2).join(' | '));
+  ok(wr[2] === XSS + ' / A first letter · ' + BOLD + ' / for your Send' && await pg.evaluate(() => !document.querySelector('#s-mail img, #s-mail #mail-waiting b b') && !window.__xss), 'markup in a letter\'s fields is shown as text');
+  ok(await tc(pg, '#mail-lreplies span') === 'A reply to someone who wrote to the house waits for your Send, in the inbox.' && await pg.evaluate(() => !!document.querySelector('#mail-lreplies [data-mgo="inbox"]')), 'a reply waiting in the inbox is said, with its door');
+  const hr = await pg.evaluate(() => [...document.querySelectorAll('#mail-held [data-mlh]')].map(r => r.querySelector('.t b').textContent + ' / ' + r.querySelector('.t span').textContent + ' / ' + [...r.querySelectorAll('.btn')].map(b => b.textContent).join('+')));
+  ok(hr[0] === 'Write to the Brisbane Islamic Centre / the sentinel said no: it rests on too little data (0.55) / Write it anyway+Skip' && hr[1] === 'Write to ' + XSS + ' / ' + BOLD + ' / Write it anyway+Skip', 'each held letter: what, why it was held, Write it anyway and Skip: ' + hr[0]);
+  ok(await pg.evaluate(() => !!document.querySelector('#mail-pane .hsec [data-mplan]')), 'Plan again also stands beside "Held back"');
+  const lr = await pg.evaluate(() => [...document.querySelectorAll('#mail-later .row')].map(r => r.querySelector('.t b').textContent + ' / ' + r.querySelector('.pill').textContent));
+  ok(lr.length === 1 && /^Hamilton Weekend School \/ (\d\d:\d\d UTC|tomorrow \d\d:\d\d)$/.test(lr[0]), 'a letter set for later, with its hour: ' + lr[0]);
+  const sr = await pg.evaluate(() => [...document.querySelectorAll('#mail-sent .row')].map(r => r.querySelector('.t b').textContent + ' / ' + r.querySelector('.t span').textContent + ' / ' + r.querySelector('.pill').className + ':' + r.querySelector('.pill').textContent));
+  ok(sr.length === 1 && sr[0] === 'Al Noor Islamic Centre / A first letter · Free printables for your weekend school / pill good:sent yesterday', 'and what was sent: ' + sr[0]);
+  let sh = await shortTaps(pg, '#s-mail');
+  ok(sh.length === 0 && await noSideScroll(pg), 'every control in the room 44 px or more, nothing sideways at ' + w + ' px: ' + sh.join(', '));
+  ok(!SOUL.test(await allWords(pg, '#s-mail')) && !DASH.test(await text(pg, '#s-mail')), 'no "soul" and no dash');
+  await pg.screenshot({ path: SHOTS + '/room-letters-' + tag + '.png', fullPage: true });
+
+  /* Read them: the first letter, whole, in the sheet */
+  await pg.click('#mail-need-letters [data-mlw]'); await pg.waitForTimeout(350);
+  let s = await lsheet(pg);
+  ok(s && s.pos === 'Letter 1 of 3 waiting' && s.h === 'Send this letter to Masjid Al Huda?' && /^One of the first 10 emails/.test(s.sub), 'Read them opens the first letter, where it stands in the line: ' + (s && s.pos + ' / ' + s.h));
+  ok(s.to === 'Masjid Al Huda info@alhuda.example' && s.subj === 'A free library for your weekend school' && s.text === LTRS().waiting[0].text, 'the whole email, exactly as it will go, its line breaks kept');
+  ok(s.acts === 'Send:primary,Not this one:ghost,Close:ghost', 'Send, Not this one, Close: ' + s.acts);
+  ok(st.posted.length === 0, 'opening a letter posts nothing');
+  sh = await shortTaps(pg, '#sheet-in');
+  ok(sh.length === 0 && await noSideScroll(pg), 'the sheet: every control 44 px or more: ' + sh.join(', '));
+  await pg.screenshot({ path: SHOTS + '/room-letter-sheet-' + tag + '.png' });
+  await pg.click('#sheet-in [data-mlsend]'); await pg.waitForTimeout(200);
+  s = await lsheet(pg);
+  ok(s.q === 'Send it to Masjid Al Huda now, from salam@noorcodex.com? An email cannot be taken back.' && s.focus === 'Yes, send it' && st.posted.length === 0, 'Send asks first, naming who and from where, its yes under the finger, nothing posted: ' + s.q);
+  await pg.screenshot({ path: SHOTS + '/room-letter-confirm-' + tag + '.png' });
+  await pg.click('#sheet-in [data-mlsendno]'); await pg.waitForTimeout(150);
+  s = await lsheet(pg);
+  ok(!s.q && s.focus === 'Send' && st.posted.length === 0, 'Never mind puts the buttons back, Send under the finger');
+  await pg.click('#sheet-in [data-mlsend]'); await pg.waitForTimeout(150);
+  let g0 = st.mailGets, n0 = st.posted.length;
+  await pg.click('#sheet-in [data-mlsendyes]'); await until(() => st.posted.length > n0); await until(() => st.mailGets > g0); await pg.waitForTimeout(500);
+  ok(posts(st, n0).join(',') === '{"action":"decide","id":"d-lt-1","option":"send"}', 'Yes posts exactly the card\'s own decide: ' + posts(st, n0).join(','));
+  ok(await toastSays(pg) === 'Sent to Masjid Al Huda, from salam@noorcodex.com.', 'the house\'s own words come back: ' + await toastSays(pg));
+  s = await lsheet(pg);
+  ok(s && s.pos === 'Letter 1 of 2 waiting' && s.h === 'Send this follow-up to Leeds Islamic Society?', 'and the next letter opens on its own: ' + (s && s.pos + ' / ' + s.h));
+  ok(await pg.evaluate(() => document.querySelector('#mail-tabs [data-mtab="letters"] .tn').textContent) === '4' && (await needRows(pg))[0].includes('2 letters wait for your Send / Your first ten: 2 of 10 sent.'), 'the room behind it is read again: 2 waiting, 2 of 10 sent');
+  ok(await pg.evaluate(() => document.querySelectorAll('#mail-sent .row').length) === 2, 'and the letter now stands in Sent');
+  /* Not this one: asks, then the next */
+  await pg.click('#sheet-in [data-mlno]'); await pg.waitForTimeout(150);
+  s = await lsheet(pg);
+  ok(s.q === 'Not this one? This email will not be sent, and the Lantern keeps it as something you did not want.' && s.focus === 'Yes, not this one' && await pg.evaluate(() => document.querySelector('#sheet-in [data-mlnoyes]').className.includes('danger')), 'Not this one asks first, its yes marked: ' + s.q);
+  n0 = st.posted.length; g0 = st.mailGets;
+  await pg.click('#sheet-in [data-mlnoyes]'); await until(() => st.posted.length > n0); await until(() => st.mailGets > g0); await pg.waitForTimeout(500);
+  ok(posts(st, n0).join(',') === '{"action":"decide","id":"d-lt-2","option":"no"}' && await toastSays(pg) === 'Not sent. The Lantern keeps what you did not want as a lesson.', 'Yes posts the card\'s no, and the house says so');
+  s = await lsheet(pg);
+  ok(s && s.pos === '' && s.h === 'Send this letter to ' + XSS + '?' && s.text === 'Line ' + BOLD + '\n' + XSS && await pg.evaluate(() => !document.querySelector('#sheet-in img') && !window.__xss), 'the last letter opens, alone now, its markup shown as text');
+  await closeSheet(pg);
+  ok(!(await pg.evaluate(() => document.getElementById('sheet').classList.contains('on'))), 'Close closes it');
+  /* a refusal keeps the letter open, with the house's words */
+  st.refuseLetter = true;
+  await pg.click('#mail-waiting [data-mlw="0"]'); await pg.waitForTimeout(300);
+  await pg.click('#sheet-in [data-mlsend]'); await pg.waitForTimeout(150);
+  n0 = st.posted.length; g0 = st.mailGets;
+  await pg.click('#sheet-in [data-mlsendyes]'); await until(() => st.posted.length > n0); await pg.waitForTimeout(400);
+  s = await lsheet(pg);
+  ok(s && s.fail === 'Mail is off, so nothing was sent.' && s.acts === 'Send:primary,Not this one:ghost,Close:ghost' && st.mailGets === g0 && await pg.evaluate(() => document.getElementById('mail-lfail').getAttribute('role') === 'alert'),
+    'a refusal stays in the sheet, in the house\'s words, Send ready again, nothing read again: ' + (s && s.fail));
+  st.refuseLetter = false;
+  await closeSheet(pg);
+
+  /* a held letter: Write it anyway asks first; Skip goes at once */
+  await pg.click('#mail-held [data-mlany="0"]'); await pg.waitForTimeout(150);
+  const hq = await pg.evaluate(() => ({ q: (document.querySelector('#mail-held [data-mlh="0"] .hcf p') || {}).textContent, quote: !!document.querySelector('#mail-held [data-mlh="0"] .hcf q'), f: document.activeElement.textContent }));
+  ok(hq.q === 'Write it now, with your approval in place of the checks? The red lines and the daily caps still hold, and the letter waits here for your Send.' && hq.f === 'Yes, write it' && st.posted.length === n0 + 1, 'Write it anyway asks first, in the row: ' + hq.q);
+  await pg.click('#mail-held [data-mlanyno]'); await pg.waitForTimeout(150);
+  ok(await pg.evaluate(() => !document.querySelector('#mail-held .hcf') && document.activeElement.textContent === 'Write it anyway'), 'Never mind puts it back, under the finger');
+  await pg.click('#mail-held [data-mlany="0"]'); await pg.waitForTimeout(150);
+  n0 = st.posted.length; g0 = st.mailGets;
+  await pg.click('#mail-held [data-mlanyyes]'); await until(() => st.posted.length > n0); await until(() => st.mailGets > g0); await pg.waitForTimeout(450);
+  ok(posts(st, n0).join(',') === '{"action":"do-now","id":"i:c-7:3"}' && await toastSays(pg) === 'Done: Write to the Brisbane Islamic Centre.', 'Yes posts the step\'s do-now, the id Home\'s Next carries: ' + posts(st, n0).join(','));
+  ok(await heads(pg) === 'Waiting for your Send 2 | Held back 1 | Set for later 1 | Sent 2' && await pg.evaluate(() => [...document.querySelectorAll('#mail-waiting .t b')].map(b => b.textContent).pop()) === 'Brisbane Islamic Centre',
+    'the letter it wrote now waits for his Send: ' + await heads(pg));
+  n0 = st.posted.length;
+  await pg.click('#mail-held [data-mlskip="0"]'); await until(() => st.posted.length > n0); await pg.waitForTimeout(450);
+  ok(posts(st, n0).join(',') === '{"action":"skip","id":"i:c-7:4"}' && await toastSays(pg) === 'Skipped. It is not planned again for 7 days.', 'Skip posts the step\'s skip at once');
+  ok(await heads(pg) === 'Waiting for your Send 2 | Set for later 1 | Sent 2' && !(await needRows(pg)).some(x => /held back/.test(x)), 'nothing held now: the part and its row are gone');
+
+  /* Open the inbox: the inbox, on what needs him */
+  await pg.click('#mail-need-inbox [data-mgo="inbox"]'); await pg.waitForTimeout(300);
+  ok(await pg.evaluate(() => document.querySelector('#mail-tabs [data-mtab="inbox"]').getAttribute('aria-selected') === 'true' && document.activeElement && document.activeElement.id === 'mail-tab-inbox') && await chipsOf(pg) === 'needs:Needs you3:true | done:Done3:false | all:All6:false',
+    'Open the inbox opens it on Needs you: ' + await chipsOf(pg));
+  await pickTab(pg, 'letters');
+  ok(st.errors.length === 0 && st.dialogs === 0, 'no console error, no dialog: ' + st.errors.slice(0, 3).join(' | '));
+  ok(!st.urls.some(u => [...LTR_ADDRS, ...MOVE_ADDRS].some(a => u.includes(a) || u.includes(encodeURIComponent(a)))), 'no address ever reached a URL');
+  await ctx.close();
+}
+
+console.log('\n390x844 · Plan again: the plan runs, the room reads itself again until the letters arrive, and stops when he leaves');
+{
+  const o = await open_(390, 844, { mailv: () => MAILV_L() });
+  await o.pg.evaluate(() => { window.NOOR_CONSOLE.pollMs = 300; });
+  await openMail(o.pg);
+  let n0 = o.st.posted.length;
+  await o.pg.click('#mail-need-held [data-mplan]'); await until(() => o.st.posted.length > n0); await o.pg.waitForTimeout(500);
+  ok(posts(o.st, n0).join(',') === '{"action":"run"}' && await toastSays(o.pg) === 'The Lantern is planning again. The letters appear here as it writes them.', 'Plan again posts the run, and says what comes: ' + await toastSays(o.pg));
+  let nr = await needRows(o.pg);
+  ok(nr.some(x => x === 'mail-need-plan /  / The Lantern is planning now / It is writing 3 letters now: each appears here for your Send as it is written. / planning'), 'the room says a plan runs, and how many it writes: ' + nr.join(' | '));
+  ok(await tc(o.pg, '#mail-planning span') === 'The Lantern is planning now. It is writing 3 letters now: each appears here for your Send as it is written.' && await o.pg.evaluate(() => !document.querySelector('#mail-pane [data-mplan]')), 'in place of the held letters, the plan running, with no second Plan again');
+  await o.pg.screenshot({ path: SHOTS + '/room-planning-390x844.png' });
+  /* the plan ends at the second read: three new letters wait */
+  let reads = 0;
+  o.st.onMailGet = st => { if (++reads >= 2 && st.mailv.letters.planning) { st.mailv.letters.planning = false; st.mailv.letters.writing = 0;
+    st.mailv.letters.waiting = [...st.mailv.letters.waiting, ...[1, 2, 3].map(i => ({ card: 'd-new-' + i, kind: 'outreach', toName: 'A new place ' + i, to: 'n' + i + '@new.example', subject: 'A free library', text: 'Assalamu alaykum,\n\nNew.\n\nNOOR', why: '', at: iso(Date.now()), later: false }))]; } };
+  const ok2 = await until(() => reads >= 2, 6000); await o.pg.waitForTimeout(400);
+  ok(ok2 && await o.pg.evaluate(() => document.querySelectorAll('#mail-waiting [data-mlw]').length) === 6 && !(await needRows(o.pg)).some(x => /planning/.test(x)), 'the room reads itself again while it plans, and the new letters arrive without a tap');
+  const g1 = o.st.mailGets; await o.pg.waitForTimeout(1000);
+  ok(o.st.mailGets === g1, 'once the plan is done it stops reading');
+  await o.ctx.close();
+}
+{
+  const o = await open_(390, 844, { mailv: () => MAILV_L({ letters: LTRS({ planning: true, writing: 0, held: [] }) }) });
+  await o.pg.evaluate(() => { window.NOOR_CONSOLE.pollMs = 250; });
+  await openMail(o.pg);
+  ok((await needRows(o.pg)).some(x => x.includes('The Lantern is planning now / New letters appear here as it writes them. / planning')), 'a plan already running when he arrives is said too');
+  await until(() => o.st.mailGets >= 3, 4000);
+  await o.pg.click('nav.bar [data-s="home"]'); await o.pg.waitForTimeout(400);
+  const g1 = o.st.mailGets; await o.pg.waitForTimeout(1200);
+  ok(o.st.mailGets <= g1 + 1, 'and once he leaves the room it stops reading: ' + (o.st.mailGets - g1));
+  await o.ctx.close();
+}
+{
+  const o = await open_(390, 844, { mailv: () => MAILV_L() });
+  o.st.runBusy = true;
+  await openMail(o.pg);
+  const n0 = o.st.posted.length;
+  await o.pg.click('#mail-pane .hsec [data-mplan]'); await until(() => o.st.posted.length > n0); await o.pg.waitForTimeout(400);
+  ok(await toastSays(o.pg) === 'The Lantern is already planning. The letters appear here as it writes them.', 'a plan already in hand is not a refusal: ' + await toastSays(o.pg));
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+}
+
+console.log('\n390x844 · the calm after the first ten, a part that cannot be read, an older house');
+{
+  let o = await open_(390, 844, { mailv: () => { const v = MAILV_L({ letters: LTRS({ waiting: [], held: [], scheduled: [], repliesWaiting: 0 }) }); v.mail.firstTen = { sent: 10, of: 10 }; return v; } });
+  await openMail(o.pg);
+  ok((await needRows(o.pg)).join(' | ') === 'mail-need-calm / calm / Nothing needs you right now / The Lantern writes and sends on its own, each letter in its place\'s working hours. / ', 'after the first ten, nothing needs him, calmly: ' + (await needRows(o.pg)).join(' | '));
+  ok(await tc(o.pg, '#mail-lint') === 'The Lantern sends on its own now, 20 letters a day, each in its place\'s working hours.' && await tc(o.pg, '#mail-wempty') === 'Nothing waits for you: the Lantern sends on its own now.', 'the Letters tab says it sends on its own');
+  ok(await heads(o.pg) === 'Waiting for your Send 0 | Sent 1' && await o.pg.evaluate(() => document.querySelector('#mail-tabs [data-mtab="letters"]').getAttribute('aria-selected') === 'true' && document.querySelector('#mail-tabs [data-mtab="letters"] .tn').textContent === ''), 'only what has something to say, the tab with no number: ' + await heads(o.pg));
+  await o.pg.screenshot({ path: SHOTS + '/room-letters-calm-390x844.png', fullPage: true });
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV_L({ letters: LTRS({ waiting: [], held: [], scheduled: [], repliesWaiting: 0 }) }) });
+  await openMail(o.pg);
+  ok((await needRows(o.pg)).join(' | ') === 'mail-need-calm / calm / Nothing needs you right now / The next letters come with the next plan, at 05:00 UTC, and wait here for your Send. / ', 'during the first ten, the calm says when the next letters come');
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => { const v = MAILV_L({ letters: LTRS({ waiting: [], held: [], repliesWaiting: 0 }) }); v.mail.on = false; return v; } });
+  await openMail(o.pg);
+  ok((await needRows(o.pg))[0] === 'mail-need-calm / calm / Nothing needs you right now / Mail is off, so nothing is written or sent. Turn it on below when you are ready. / ', 'with mail off, the calm says so');
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV_L({ letters: LTRS({ missing: { held: 'the store timed out', sent: 'redis did not answer' } }) }) });
+  await openMail(o.pg);
+  const f = await o.pg.evaluate(() => [...document.querySelectorAll('#mail-pane .hfail b')].map(b => b.textContent).join(' | '));
+  ok(f === 'The letters held back could not be read just now. | The letters sent could not be read just now.' && await heads(o.pg) === 'Waiting for your Send 3 | Held back | Set for later 1 | Sent', 'a part that cannot be read says so in its place, and the rest stands: ' + f);
+  ok(!/timed out|redis/i.test(await text(o.pg, '#s-mail')), 'never in the store\'s own words');
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV({ letters: null, missing: { letters: 'the store timed out' } }) });
+  await openMail(o.pg);
+  ok(await o.pg.evaluate(() => document.getElementById('mail-needs').innerHTML === '' && document.querySelector('#mail-tabs [data-mtab]').dataset.mtab === 'inbox'), 'a house with no letters part: the room exactly as before, on the inbox');
+  ok(o.st.errors.length === 0, 'no console error: ' + o.st.errors.slice(0, 3).join(' | '));
   await o.ctx.close();
 }
 
