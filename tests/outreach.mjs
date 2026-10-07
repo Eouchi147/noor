@@ -213,7 +213,7 @@ const OSM = {
 const OVERPASS = [];
 onNet(O.OVERPASS_URL, async (u, init) => {
   const q = decodeURIComponent(String(init.body || '').replace(/^data=/, ''));
-  const cc = (/ISO3166-1"="([A-Z]{2})"/.exec(q) || [])[1];
+  const cc = (/ISO3166-1"="([A-Z]{2})"/.exec(q) || [])[1] || (/ISO3166-2"~"\^(US)-/.exec(q) || [])[1];
   OVERPASS.push({ cc, q, method: init.method, ua: init.headers && init.headers['user-agent'] });
   return resp(200, OSM[cc] || { elements: [] });
 });
@@ -243,8 +243,8 @@ console.log('\n1. research: an address only from what the place itself published
   const r = await research();
   ok(r.ok && r.tier === 'R1', 'research is R1: it runs freely, audited: ' + (r.error || r.entry.result.note));
   ok(OVERPASS.length === 1 && OVERPASS[0].cc === 'GB' && OVERPASS[0].method === 'POST' && /amenity"="place_of_worship"\]\["religion"="muslim"/.test(OVERPASS[0].q)
-    && /\["website"\]/.test(OVERPASS[0].q) && /\["contact:email"\]/.test(OVERPASS[0].q) && /out tags center/.test(OVERPASS[0].q) && /NOORCodexBot/.test(OVERPASS[0].ua || ''),
-    'OpenStreetMap is asked through Overpass for one country at a time, places of worship with religion=muslim that carry a website or an email tag, with the house\'s own agent');
+    && /\["website"\]/.test(OVERPASS[0].q) && /\["contact:website"\]/.test(OVERPASS[0].q) && !/\["email"\]/.test(OVERPASS[0].q) && /\[timeout:60\]/.test(OVERPASS[0].q) && /out tags center/.test(OVERPASS[0].q) && /NOORCodexBot/.test(OVERPASS[0].ua || ''),
+    'OpenStreetMap is asked through Overpass for one country at a time, places of worship with religion=muslim that carry a website of their own (round seven: the server given a minute), with the house\'s own agent');
   const places = await placesNow();
   const names = places.map(p => p.name).sort();
   ok(names.join() === 'Al Noor Masjid,Green Lane Mosque,Quiet Street Islamic Centre', 'three of the nine kept: ' + names.join(', '));
@@ -372,7 +372,7 @@ console.log('\n2. fetched politely');
   const home = await F.page('https://alnoor.example.org.uk/', 'https://alnoor.example.org.uk/');
   const contact = await F.page('https://alnoor.example.org.uk/contact-us', 'https://alnoor.example.org.uk/');
   ok(home.ok && contact.ok && F.calls.length === 3 && F.calls.filter(u => /robots\.txt$/.test(u)).length === 1, 'robots.txt is read once for the site, then its home and contact pages: ' + F.calls.length + ' requests');
-  ok(SLEEPS.length === 2 && SLEEPS.every(ms => ms >= 900 && ms <= 1000), 'every request after the first waits for its second: ' + SLEEPS.join(', '));
+  ok(SLEEPS.length === 2 && SLEEPS.every(ms => ms >= 900 && ms <= 2000), 'every request to the site after the first waits for its own second (round seven: each host its own turn): ' + SLEEPS.join(', '));
   ok(NET.calls.every(c => c.headers && /NOORCodexBot\/1\.0 \(\+https:\/\/noorcodex\.com/.test(c.headers['user-agent'] || '')), 'every request says who it is, with the house\'s own agent');
   O.LIMITS.gapMs = 0;
   /* a page that does not answer in its 6 seconds (shortened here to 60 ms) */
@@ -410,10 +410,10 @@ console.log('\n3. the sources in turn; a web search only within its budget');
   delete process.env.OPENROUTER_API_KEY;
   const orCalls = () => NET.calls.filter(c => /openrouter\.ai/.test(c.url));
   NET.calls.length = 0;
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 5 }));
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 6 }));
   const noKey = await research();
-  ok(noKey.ok && orCalls().length === 0 && noKey.entry.result.notes.some(n => /no web search: no OpenRouter key/.test(n)) && OVERPASS[OVERPASS.length - 1].cc === 'IE',
-    'with no OpenRouter key there is no web search at all, and the walk goes on to the next country');
+  ok(noKey.ok && orCalls().length === 0 && noKey.entry.result.notes.some(n => /no web search: no OpenRouter key/.test(n)) && OVERPASS[OVERPASS.length - 1].cc === 'US' && /ISO3166-2"~"\^US-\(FL\|/.test(OVERPASS[OVERPASS.length - 1].q),
+    'with no OpenRouter key there is no web search at all, and the walk goes on to the next source (round seven: the United States region by region)');
   process.env.OPENROUTER_API_KEY = 'or-test-key';
   const month = new Date(Date.parse(D0)).toISOString().slice(0, 7);
   let models = 0;
@@ -542,7 +542,7 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   const words = text.split(/\s+/).filter(Boolean).length;
   ok(words < 180 && /^Assalamu alaykum,/.test(text) && text.includes('https://noorcodex.com/school') && /With salaam,\nNOOR Codex of Light\nhttps:\/\/noorcodex\.com\n\nIf you would rather not hear from us, a short reply of "no thanks" is enough/.test(text) && !DASH.test(text),
     'under 180 words (' + words + '), its free offer\'s own link, signed NOOR Codex of Light, ending with the plain way to say no thanks');
-  ok(q.msg.subject === 'Free lessons and printables for your weekend school', 'its subject is the offer\'s, in code: ' + q.msg.subject);
+  ok(q.msg.subject === 'For Al Noor Masjid: free lessons and printables for your weekend school', 'its subject is the offer\'s, in code, and names the place (round seven): ' + q.msg.subject);
   const prompt = WRITER.calls[0];
   ok(prompt && prompt.tier === 'mail' && /ROLE: outreach-writer/.test(prompt.messages[0].content) && /Use ONLY the FACTS/.test(prompt.messages[0].content)
     && /never ask them to share, post or follow anything/.test(prompt.messages[0].content) && /never ask for a meeting or a call/.test(prompt.messages[0].content),
@@ -679,7 +679,7 @@ console.log('\n7. outreach-followup: once, 7 days on, never after an answer');
   const n0 = MAIL.queued.length;
   const r = await fu(alnoor);
   const q = MAIL.queued[n0];
-  ok(r.ok && q && q.msg.kind === 'followup' && q.msg.placeId === alnoor.id && q.msg.inReplyTo === '<mail-1@noorcodex.com>' && /^Re: Free lessons and printables/.test(q.msg.subject),
+  ok(r.ok && q && q.msg.kind === 'followup' && q.msg.placeId === alnoor.id && q.msg.inReplyTo === '<mail-1@noorcodex.com>' && /^Re: For Al Noor Masjid: free lessons and printables/.test(q.msg.subject),
     'a week on: one follow-up through queueOutgoing, threaded under the first letter');
   ok(/A short note after our letter of 7 October about a free library for your weekend school/.test(q.msg.text) && /no thanks/.test(q.msg.text) && q.msg.text.split(/\s+/).length < 120 && !DASH.test(q.msg.text),
     'written in code, short, with nothing to invent: ' + q.msg.text.split('\n')[2].slice(0, 90));
@@ -775,7 +775,7 @@ console.log('\n10. the caps (round six: 75 new places a day, the day\'s pace, te
   }
   const savedUS = OSM.US;
   OSM.US = { elements: many };
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 3 }));
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 4 }));
   const r = await research();
   ok(r.ok && r.entry.result.added === 75 && (await placesNow()).length === 75 && S.get(K.count('places', D0)) === '75', 'at most 75 new places a day: ' + r.entry.result.added);
   const r2 = await research();
@@ -871,7 +871,7 @@ console.log('\n12. a whole daily cycle');
 {
   resetStore(); mailReset(); setDay(D0, '09:00');
   await research();
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 1 }));
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 2 }));
   await research();
   setDay(addDays(D0, 1), '05:20');
   putSnap(snapFor(addDays(D0, 1)));
@@ -1261,6 +1261,58 @@ console.log('\n19. round six: the pace step offers up to the day\'s pace; the go
   const m3 = await O.ensureOutreachGoal({ contacted: 0 });
   const g3 = (await SOUL.readGoals()).find(x => x.id === 'g-outreach');
   ok(m3.ok && !m3.moved && g3.target === 80 && g3.outcome === 'At least 80 places, my own number.', 'a target he set himself is never touched');
+}
+
+console.log('\n12b. round seven: an efficient search, a mirror when the map is busy, a subject that names the place');
+{
+  /* a. sites read several at once: twelve candidates, each its own host, in one run */
+  resetStore(); mailReset(); setDay(addDays(D0, 3), '09:00');
+  const twelve = [];
+  for (let i = 1; i <= 12; i++) {
+    const host = 'par-' + i + '.example.org';
+    plain(host, 'Masjid Par ' + i, 'Leeds', ['Our weekend school teaches the Quran to young people.', 'The masjid is open daily for prayers and learning.', 'Families from across the city learn together here.'], 'info@' + host);
+    twelve.push({ type: 'node', id: 7000 + i, tags: { name: 'Masjid Par ' + i, website: 'https://' + host + '/', 'addr:city': 'Leeds' } });
+  }
+  const savedGB = OSM.GB;
+  OSM.GB = { elements: twelve };
+  O.LIMITS.gapMs = 1000; SLEEPS.length = 0;
+  const r = await research();
+  O.LIMITS.gapMs = 0;
+  OSM.GB = savedGB;
+  ok(r.ok && r.entry.result.added === 12 && r.entry.result.checked === 12, 'twelve sites read in one run, several at once: ' + r.entry.result.note);
+  ok(O.RESEARCH_CONCURRENCY >= 4 && SLEEPS.every(ms => ms <= 2000), 'each host keeps its own second; no host waits on another (' + O.RESEARCH_CONCURRENCY + ' at once)');
+
+  /* b. the map busy: the next mirror answers */
+  resetStore(); mailReset();
+  const MIRROR = [];
+  onNet(O.OVERPASS_URLS[0], async () => { MIRROR.push('main'); return resp(429, '<?xml version="1.0"?><osm><remark>rate_limited</remark></osm>'); });
+  onNet(O.OVERPASS_URLS[1], async (u, init) => { MIRROR.push('second'); return resp(200, OSM.CA); });
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 2 }));
+  const m = await research();
+  ok(MIRROR.join() === 'main,second' && m.ok && (await placesNow()).some(p => p.name === 'Toronto Muslim Youth Centre'), 'the main map server busy (429): the next mirror is asked, and its list is used: ' + MIRROR.join());
+  const cur = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(cur.ov === 2, 'and the next search begins at the mirror after it');
+  MIRROR.length = 0;
+  onNet(O.OVERPASS_URLS[1], async () => { MIRROR.push('second'); return resp(504, 'busy'); });
+  onNet(O.OVERPASS_URLS[2], async () => { MIRROR.push('third'); return resp(504, 'busy'); });
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 1, ov: 0 }));
+  const none = await research();
+  ok(none.ok && MIRROR.join() === 'main,second,third' && /OpenStreetMap \(GB\) did not answer/.test(none.entry.result.note) && /429/.test(none.entry.result.note),
+    'every mirror busy: the run says so in its own words: ' + none.entry.result.note);
+  onNet(O.OVERPASS_URLS[0], async (u, init) => { const q = decodeURIComponent(String(init.body || '').replace(/^data=/, '')); const cc = (/ISO3166-1"="([A-Z]{2})"/.exec(q) || [])[1] || (/ISO3166-2"~"\^(US)-/.exec(q) || [])[1]; OVERPASS.push({ cc, q, method: init.method, ua: init.headers && init.headers['user-agent'] }); return resp(200, OSM[cc] || { elements: [] }); });
+
+  /* c. the seed, as rows */
+  const sc = O.seedCandidate(['Wimbledon Mosque', 'https://wimbledonmosque.org', 'London', 'GB', 'n26756585']);
+  ok(sc && sc.name === 'Wimbledon Mosque' && sc.website === 'https://wimbledonmosque.org/' && sc.country === 'GB' && sc.source === 'osm' && sc.evidence === 'https://www.openstreetmap.org/node/26756585' && sc.email === null,
+    'a seed row becomes a candidate the site check reads exactly as a live one: ' + JSON.stringify(sc));
+  ok(O.seedCandidate(['A Place', 'https://far.example.com', '', 'FR', 'n1']) === null && O.seedCandidate(['', 'https://x.example.org', '', 'GB', 'n1']) === null, 'never a seed row outside the region or with no name');
+
+  /* d. the subject names the place, briefly */
+  const o = O.OFFERS['weekend-school'];
+  ok(O.letterSubject({ name: 'Al Noor Masjid' }, o) === 'For Al Noor Masjid: free lessons and printables for your weekend school', 'the subject names the place');
+  const long = O.letterSubject({ name: 'The Very Long Name Islamic Educational and Cultural Centre of Greater Manchester' }, o);
+  ok(long.startsWith('For The Very Long Name Islamic Educational and') && long.length < 110 && !/\s:/.test(long), 'a long name is cut at a word: ' + long);
+  ok(O.letterSubject({ name: '' }, o) === o.subject, 'and with no name, the offer\'s own subject');
 }
 
 console.log('\n13. the house\'s words');

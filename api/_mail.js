@@ -1602,7 +1602,25 @@ export async function outreachStartState() {
   let used = null;
   try { used = parse((await store([["GET", MK.start]]))[0], null); } catch { used = null; }
   const usedAt = used && used.usedAt && !used.pending ? String(used.usedAt) : null;
-  if (usedAt) return { available: false, usedAt, why: null };
+  if (usedAt) {
+    /* round seven: spent only once the outreach has truly begun (a letter
+       written, waiting or sent); a run that found no place to write to gives
+       the button back after half an hour */
+    let begun = true, over = nowMs() - Date.parse(usedAt) > 30 * 60000;
+    if (!over && used.cycle) {
+      try { const Mi = await import("./_mind.js"); const rec = await Mi.readCycle(String(used.cycle)); over = !!rec && rec.status !== "running"; } catch { over = false; }
+    }
+    if (over) {
+      try {
+        const O0 = await outreachMod();
+        if (O0 && typeof O0.outreachCounts === "function") {
+          const c = (await O0.outreachCounts()) || {}, pc = c.pace || {};
+          begun = (Number(c.contacted) || 0) > 0 || (Number(pc.written) || 0) > 0 || (Number(pc.waiting) || 0) > 0 || (Number(pc.scheduled) || 0) > 0;
+        }
+      } catch { begun = true; }
+    }
+    if (begun) return { available: false, usedAt, why: null };
+  }
   const ready = await mailReady();
   let paused = false;
   try { paused = await isPaused(); } catch { paused = true; }

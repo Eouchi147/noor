@@ -167,6 +167,15 @@ async function mailAfterTick(t0) {
   finally { clearTimeout(timer); }
 }
 
+/* round seven: one line of counts a search, so the house can see its search
+   work (never a place's address: counts, the source and the reason only) */
+function logOutreach(from, r) {
+  try {
+    if (!r || (!r.ran && r.ok !== false)) return;
+    console.log(JSON.stringify({ noor: "outreach", from, ran: !!r.ran, ok: r.ok !== false, added: Number(r.added) || 0, checked: Number(r.checked) || 0,
+      why: String(r.why || r.error || "").replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]").slice(0, 240) }));
+  } catch { }
+}
 /* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */
 export const OUTREACH_TICK_HARD_MS = 60000;
 async function outreachAfterTick(t0) {
@@ -174,8 +183,10 @@ async function outreachAfterTick(t0) {
   try {
     const O = await MAIL.outreachModule();
     if (!O || typeof O.outreachTick !== "function") return { ok: true, ran: false, why: "the outreach tick is not on this deployment" };
-    return await Promise.race([O.outreachTick({ until: t0 + 285000 }),
+    const r = await Promise.race([O.outreachTick({ until: t0 + 285000 }),
       new Promise(res => { timer = setTimeout(() => res({ ok: false, error: "the search for places took longer than " + OUTREACH_TICK_HARD_MS / 1000 + " seconds; it goes on at the next tick" }), OUTREACH_TICK_HARD_MS); })]);
+    logOutreach("tick", r);
+    return r;
   } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
   finally { clearTimeout(timer); }
 }
@@ -191,11 +202,13 @@ async function outreachStart(step) {
   if (!O || typeof O.outreachTick !== "function") return { ok: false, message: "The outreach is not on this deployment yet." };
   if (step === "research") {
     const r = await O.outreachTick({ until: Date.now() + 70000 });
+    logOutreach("start", r);
     let pace = null;
     try { pace = typeof O.outreachCounts === "function" ? ((await O.outreachCounts()) || {}).pace || null : null; } catch { pace = null; }
     const added = Number(r && r.added) || 0, checked = Number(r && r.checked) || 0;
     const message = r && r.ran
-      ? (added ? "Found " + added + " new place" + (added === 1 ? "" : "s") + " (" + checked + " checked)." : "No new place this time (" + checked + " checked).")
+      ? (added ? "Found " + added + " new place" + (added === 1 ? "" : "s") + " (" + checked + " checked)."
+        : r.why ? sayLantern(String(r.why).charAt(0).toUpperCase() + String(r.why).slice(1)).replace(/[.\s]*$/, ".") : "No new place this time (" + checked + " checked).")
       : sayLantern(String((r && (r.why || r.error)) || "No search ran just now."));
     return { ok: !!r && r.ok !== false, ran: !!(r && r.ran), added, checked, ready: pace ? pace.ready : null, foundToday: pace ? pace.found : null, message };
   }
@@ -214,8 +227,16 @@ async function outreachStart(step) {
     await MAIL.markOutreachStart({ cycle: r.id || null });
     const st2 = await MAIL.outreachStartState();
     try { await auditAppend({ kind: "outreach-start", actor: "owner", summary: "the owner started the outreach from Home", data: { cycle: r.id || null } }); } catch { }
-    return { ok: true, started: true, usedAt: st2.usedAt, cycle: { id: r.id || null, stage: r.stage || null, status: r.status || null },
-      message: r.status === "done" ? "The Lantern planned and wrote its first letters; they wait above for your Send." : "The Lantern is planning its first letters now. The first 10 will wait here for your Send." };
+    /* round seven: what the plan truly holds, never a guess */
+    let rec = null;
+    try { rec = r.id ? await readCycle(r.id) : null; } catch { rec = null; }
+    const letters = rec && Array.isArray(rec.intents) ? rec.intents.filter(i => i && i.action === "outreach-send") : [];
+    const written = letters.filter(i => i.status === "done").length;
+    const message = r.status !== "done"
+      ? (letters.length ? "The Lantern planned " + letters.length + " first letter" + (letters.length === 1 ? "" : "s") + "; the council reads each, then they are written. The first 10 wait here for your Send." : "The Lantern is planning now. Its first letters come as soon as places are ready.")
+      : letters.length ? (written ? written + " first letter" + (written === 1 ? " was" : "s were") + " written; they wait above for your Send." : "The Lantern planned " + letters.length + " letters, but none could be written yet; it tries again at its next plan.")
+      : "No place was ready for a first letter yet. The search goes on every 15 minutes, and this button stays until the first letter is written.";
+    return { ok: true, started: true, usedAt: st2.usedAt, cycle: { id: r.id || null, stage: r.stage || null, status: r.status || null }, letters: letters.length, written, message };
   }
   return { ok: false, message: "Say research or plan." };
 }

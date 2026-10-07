@@ -2855,7 +2855,9 @@ function oResearch(){
     if(x.locked||!x.ok||j.ok===false)return oFail("research",oSaid(x,"The search for places did not run."));
     r.rounds++;
     var ad=hNum(j.added),ck=hNum(j.checked),rd=hNum(j.ready),line="";
-    if(ad!=null)line="Found "+(ad===0?"no new place":ad===1?"1 new place":fnum(ad)+" new places")+(ck!=null?" ("+fnum(ck)+" checked)":"")+".";
+    /* round seven: an empty round says why, in the house's own words */
+    if(ad===0&&String(j.message||"").trim())line=lw(String(j.message).trim());
+    else if(ad!=null)line="Found "+(ad===0?"no new place":ad===1?"1 new place":fnum(ad)+" new places")+(ck!=null?" ("+fnum(ck)+" checked)":"")+".";
     if(rd!=null)line+=(line?" ":"")+(rd===0?"None is ready for a first letter yet.":fnum(rd)+" ready for a first letter.");
     oLine("research",line||lw(String(j.message||"").trim())||"The search ran.",ad?"ok":"");
     if(rd!=null&&rd<O_MS.ready&&r.rounds<O_MS.rounds)return oResearch();

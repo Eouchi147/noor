@@ -1305,6 +1305,18 @@ console.log('\n12d. round six: seen or done means gone, the buttons, letters set
   ok(h1.mail.start.available === false && h1.mail.start.usedAt && h1.mail.start.why === null, 'once started, never offered again');
   const twice = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'outreach-start', step: 'research' } })).body);
   ok(twice.ok === false && twice.used === true && /already started/.test(twice.message), 'and the door refuses a second start');
+  /* round seven: a first run that wrote no letter gives the button back once its plan has ended */
+  const savedCounts = OUTREACH.outreachCounts;
+  OUTREACH.outreachCounts = async () => ({ places: 0, contacted: 0, replied: 0, working: 0, pace: { written: 0, waiting: 0, scheduled: 0 } });
+  S.set('nsoul:cycle:c-running', JSON.stringify({ id: 'c-running', status: 'running', intents: [] }));
+  await MAIL.markOutreachStart({ cycle: 'c-running' });
+  ok((await MAIL.outreachStartState()).available === false, 'while its plan still runs, the button stays spent');
+  S.set('nsoul:cycle:c-running', JSON.stringify({ id: 'c-running', status: 'done', intents: [] }));
+  const back = await MAIL.outreachStartState();
+  ok(back.available === true && back.usedAt === null, 'its plan ended with no letter: the button comes back, to be pressed again');
+  OUTREACH.outreachCounts = savedCounts;
+  const st3 = await MAIL.outreachStartState();
+  ok(st3.available === false && st3.usedAt, 'once the outreach has a letter, it stays spent for good');
 }
 
 console.log('\n13. nothing real was reached, and the password is nowhere');

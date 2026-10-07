@@ -158,6 +158,15 @@ export const TICK_MARGIN_MS = 20000;
 /* the clock of one research run and of every page it fetches; a test may
    shorten them (the way api/_mind.js LIMITS is shortened) */
 export const LIMITS = { gapMs: 1000, pageTimeoutMs: 6000, apiTimeoutMs: 25000, researchMs: 45000, pageBytes: 400000, siteMinMs: 12000 };
+/* round seven (7 October 2026, the owner: "I want the place search engine to
+   be extremely efficient"): sites are read several at once, each still one
+   request a second on its own host; a map source may take up to 40 seconds
+   (a country's list took 17 to 21 seconds from a browser on 7 October, past
+   the old 25), and the map has three public mirrors */
+export const RESEARCH_CONCURRENCY = 6;
+export const SOURCE_TIMEOUT_MS = 40000;
+export const OVERPASS_URLS = Object.freeze(["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]);
+export const SEED_TAKE = 150;
 export const USER_AGENT = "NOORCodexBot/1.0 (+https://noorcodex.com; salam@noorcodex.com)";
 export const OUTREACH_BOX_MS = 15000;        /* the sense stage's box for the outreach read */
 
@@ -764,15 +773,22 @@ export function robotsAllows(text, path, agent) {
    Round six: io {fetch, lookup, sleep}, a run's own seams (outreachTick
    takes them from its caller); the rules are the same whatever is handed in */
 export function makeFetcher(io = {}) {
-  let last = 0;
+  /* round seven: one request a second on each host, not across all of them,
+     so several sites are read at once and each is read as politely */
+  const last = new Map();
   const robots = new Map();
   const calls = [];
   const own = io && typeof io === "object" ? io : {};
   const nap = typeof own.sleep === "function" ? own.sleep : sleep;
   async function once(url, timeoutMs, init = {}) {
     const gap = LIMITS.gapMs;
-    if (last && gap > 0) { const wait = last + gap - Date.now(); if (wait > 0) await nap(wait); }
-    last = Date.now();
+    const h = hostOf(url) || "?";
+    /* each host's next slot is taken before the wait, so two readers of one
+       host never go in the same second */
+    const now = Date.now(), at = last.get(h) || 0;
+    const slot = at && gap > 0 ? Math.max(now, at + gap) : now;
+    last.set(h, slot);
+    if (slot > now) await nap(slot - now);
     calls.push(url);
     const ctl = typeof AbortController === "function" ? new AbortController() : null;
     let timer;
@@ -832,11 +848,13 @@ export function makeFetcher(io = {}) {
     try { const x = new URL(url); path = x.pathname + (x.search || ""); } catch { }
     return robotsAllows(rule.text, path, "noorcodexbot") ? { ok: true } : { ok: false, why: "its robots.txt asks us not to read it" };
   }
-  /* an API (Overpass, Wikidata): one request, the same gap, its own clock */
-  async function api(url, init) {
-    const r = await once(url, LIMITS.apiTimeoutMs, init || {});
+  /* an API (Overpass, Wikidata): one request, the same gap, its own clock
+     (round seven: a clock the caller may set, within what the run has left) */
+  async function api(url, init, timeoutMs) {
+    const r = await once(url, Number(timeoutMs) > 0 ? Number(timeoutMs) : LIMITS.apiTimeoutMs, init || {});
     if (!r.ok) throw new Error("answered " + r.status);
-    return r.json();
+    const t = await r.text();
+    try { return JSON.parse(t); } catch { throw new Error("answered with no list (" + String(t || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 80) + ")"); }
   }
   return { page, api, calls };
 }
@@ -1019,13 +1037,23 @@ export async function checkSite(cand, F, timeLeft) {
 export const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 export const WIKIDATA_URL = "https://query.wikidata.org/sparql";
 export const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+/* round seven: only places with a website of their own (a place with an
+   email tag and no site has nothing of its own to write from), the server
+   given a minute, and the United States asked by region, since the whole
+   country at once took longer than any run has */
+export const OSM_REGIONS = Object.freeze({
+  "US-NE": "NY|NJ|PA|CT|MA|RI|VT|NH|ME", "US-SE": "FL|GA|NC|SC|VA|MD|DE|DC|WV", "US-MW": "IL|MI|OH|IN|WI|MN|IA|MO",
+  "US-S": "TX|OK|LA|AR|TN|KY|AL|MS", "US-W": "CA|OR|WA|NV|AZ|UT|CO|NM|ID|MT|WY|AK|HI|ND|SD|NE|KS"
+});
 export function overpassQuery(cc) {
   const sel = "nwr(area.c)[\"amenity\"=\"place_of_worship\"][\"religion\"=\"muslim\"]";
-  return "[out:json][timeout:25];\narea[\"ISO3166-1\"=\"" + cc + "\"][admin_level=2]->.c;\n(\n"
-    + ["website", "contact:website", "email", "contact:email"].map(t => "  " + sel + "[\"" + t + "\"];").join("\n")
+  const area = OSM_REGIONS[cc] ? "area[\"ISO3166-2\"~\"^US-(" + OSM_REGIONS[cc] + ")$\"]->.c;" : "area[\"ISO3166-1\"=\"" + cc + "\"][admin_level=2]->.c;";
+  return "[out:json][timeout:60];\n" + area + "\n(\n"
+    + ["website", "contact:website", "url"].map(t => "  " + sel + "[\"" + t + "\"];").join("\n")
     + "\n);\nout tags center;";
 }
-export function osmCandidates(json, cc) {
+export function osmCandidates(json, cc0) {
+  const cc = String(cc0 || "").split("-")[0];
   const out = [];
   for (const el of (json && Array.isArray(json.elements) ? json.elements : [])) {
     const t = el && el.tags ? el.tags : {};
@@ -1234,29 +1262,71 @@ function jsonObject(raw) {
 --------------------------------------------------------------------------- */
 /* the steps the source walk takes in turn, the countries mixed from the
    start; a web step is passed over when it is not paid for */
-export const SOURCE_CYCLE = Object.freeze(["osm:GB", "osm:CA", "wikidata", "osm:US", "osm:AU", "web", "osm:IE", "osm:NZ", "wikidata", "osm:ZA", "web"]);
+/* round seven: the seed first (places the map listed with a website, read
+   on 7 October 2026 and kept in api/_outreach-seed.js, so the first runs
+   never wait on a busy map server), then the live sources in turn */
+export const SOURCE_CYCLE = Object.freeze(["seed", "osm:GB", "osm:CA", "wikidata", "osm:US-NE", "osm:AU", "web", "osm:US-SE", "osm:IE",
+  "osm:US-MW", "osm:NZ", "wikidata", "osm:US-S", "osm:ZA", "osm:US-W", "web"]);
+let SEED_LIST = null;
+async function seedList() {
+  if (SEED_LIST) return SEED_LIST;
+  try { const m = await import("./_outreach-seed.js"); SEED_LIST = Array.isArray(m.SEED) ? m.SEED : []; } catch { SEED_LIST = []; }
+  return SEED_LIST;
+}
+/* one row of the seed, [name, website, city, country, osm ref], as a candidate */
+export function seedCandidate(row) {
+  if (!Array.isArray(row)) return null;
+  const [name0, web, city, cc, ref] = row;
+  const name = str(name0, 120);
+  const website = siteUrl(String(web || ""));
+  if (!name || !website || !REGION.includes(String(cc || ""))) return null;
+  const m = /^([nwr])(\d+)$/.exec(String(ref || ""));
+  const type = m ? ({ n: "node", w: "way", r: "relation" })[m[1]] : null;
+  return { name, kind: /\b(school|academy|madrasa\w*)\b/i.test(name) ? "school" : "mosque", city: str(city, 80) || null, country: cc,
+    website, email: null, source: "osm", sourceRef: type ? "osm:" + type + "/" + m[2] : null, evidence: type ? "https://www.openstreetmap.org/" + type + "/" + m[2] : website };
+}
 async function readSeen(domain) {
   const raw = (await store([["HGET", OK_KEYS.seen, domain]]))[0];
   const v = parse(raw, null);
   return v && realDate(v.at) && v.at >= addDays(dayOf(), -SEEN_DAYS) ? v : null;
 }
-async function sourceStep(cursor, F, notes) {
+async function sourceStep(cursor, F, notes, left) {
   const n = Number(cursor.n) || 0;
+  const budget = () => Math.max(5000, Math.min(SOURCE_TIMEOUT_MS, (typeof left === "function" ? left() : SOURCE_TIMEOUT_MS + 3000) - 3000));
+  /* the seed first, whatever the turn, until it is used up */
+  const all = await seedList();
+  const at = Math.max(0, Number(cursor.seed) || 0);
+  if (at < all.length) {
+    cursor.seed = at + SEED_TAKE;
+    return { step: "seed", cands: all.slice(at, at + SEED_TAKE).map(seedCandidate).filter(Boolean) };
+  }
   for (let i = 0; i < SOURCE_CYCLE.length; i++) {
     const step = SOURCE_CYCLE[(n + i) % SOURCE_CYCLE.length];
     cursor.n = n + i + 1;
+    if (step === "seed") continue;
     if (step.startsWith("osm:")) {
       const cc = step.slice(4);
-      try {
-        const j = await F.api(OVERPASS_URL, { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json" }, body: "data=" + encodeURIComponent(overpassQuery(cc)) });
-        return { step, cands: osmCandidates(j, cc) };
-      } catch (e) { notes.push("OpenStreetMap (" + cc + ") did not answer: " + str(e && e.message || e, 80)); return { step, cands: [] }; }
+      /* round seven: the mirrors in turn, each within what the run has left */
+      const start = Math.max(0, Number(cursor.ov) || 0);
+      const said = [];
+      for (let k = 0; k < OVERPASS_URLS.length; k++) {
+        if (typeof left === "function" && left() < 8000) break;
+        const url = OVERPASS_URLS[(start + k) % OVERPASS_URLS.length];
+        try {
+          const j = await F.api(url, { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json" }, body: "data=" + encodeURIComponent(overpassQuery(cc)) }, budget());
+          cursor.ov = (start + k + 1) % OVERPASS_URLS.length;
+          return { step, cands: osmCandidates(j, cc) };
+        } catch (e) { said.push(hostOf(url) + ": " + str(e && e.message || e, 60)); }
+      }
+      cursor.ov = (start + 1) % OVERPASS_URLS.length;
+      notes.push("OpenStreetMap (" + cc + ") did not answer: " + str(said.join("; "), 200));
+      return { step, cands: [] };
     }
     if (step === "wikidata") {
       const page = Number(cursor.wd) || 0;
       cursor.wd = page + 1;
       try {
-        const j = await F.api(WIKIDATA_URL + "?format=json&query=" + encodeURIComponent(wikidataQuery(page)), { headers: { accept: "application/sparql-results+json" } });
+        const j = await F.api(WIKIDATA_URL + "?format=json&query=" + encodeURIComponent(wikidataQuery(page)), { headers: { accept: "application/sparql-results+json" } }, budget());
         const cands = wikidataCandidates(j);
         if (!cands.length && page > 1) cursor.wd = 0;   /* the end of the list: from the start again next time */
         return { step, cands };
@@ -1307,9 +1377,9 @@ async function researchRun(args, ctx) {
     const F = makeFetcher(ctx && ctx.io);
     /* round six: a source is asked only while its own clock still fits in
        the run (a short run from the tick may have no room for it) */
-    if (pool.length < POOL_LOW && left() < LIMITS.apiTimeoutMs + 2000) notes.push("no time in this run to ask a source for more places");
+    if (pool.length < POOL_LOW && left() < 12000) notes.push("no time in this run to ask a source for more places");
     else if (pool.length < POOL_LOW) {
-      const s = await sourceStep(cursor, F, notes);
+      const s = await sourceStep(cursor, F, notes, left);
       step = s.step;
       webPaid = s.paidId || null;
       const have = new Set(pool.map(x => hostOf(x.website || "") || lower(x.email)));
@@ -1322,28 +1392,18 @@ async function researchRun(args, ctx) {
     }
     const idx = await readIndex();
     let turn = Number(cursor.turn) || 0;
-    while (pool.length && already + added.length < PLACES_PER_DAY && left() > LIMITS.siteMinMs) {
-      const cand = takeNext(pool, turn++);
-      const host = hostOf(cand.website || "");
-      const key = host || ("osm-" + lower(cand.email));
-      if (host && (await store([["HGET", OK_KEYS.byDomain, host]]))[0]) continue;
-      if (await readSeen(key)) continue;
-      checked++;
-      const res = await checkSite(cand, F, left);
-      if (!res.ok) {
-        rejected[res.why] = (rejected[res.why] || 0) + 1;
-        await store([["HSET", OK_KEYS.seen, key, JSON.stringify({ at: today, why: str(res.why, 120) })]]);
-        continue;
-      }
-      const p = res.place;
-      /* round four: Jev's view of how well the place fits, from its own
-         facts, when it answers; it only adds to the place's order (up to 6) */
-      try {
-        const fit = await J.jevScorePlace(p.facts, { name: p.name, kind: p.kind });
-        if (fit && fit.ok) { p.fit = { score: fit.score, label: fit.label, by: "jev" }; p.score = (Number(p.score) || 0) + Math.round(fit.score * 6); }
-      } catch { /* the order stands as the facts gave it */ }
+    /* round seven: several sites read at once (each one request a second on
+       its own host); what is kept is written one at a time, so two sites
+       that publish the same address never both become places */
+    let inFlight = 0, full = false;
+    const claimed = new Set();
+    let gate = Promise.resolve();
+    const serial = fn => { const run = gate.then(fn, fn); gate = run.then(() => {}, () => {}); return run; };
+    const keep = async p => {
+      if (full || claimed.has(p.email) || claimed.has(p.domain)) { rejected["the same place again"] = (rejected["the same place again"] || 0) + 1; return; }
+      claimed.add(p.email); claimed.add(p.domain);
       const dupe = (await store([["HGET", OK_KEYS.byAddr, p.email], ["HGET", OK_KEYS.byDomain, p.domain]]));
-      if (dupe[0] || dupe[1]) { rejected["the same place again"] = (rejected["the same place again"] || 0) + 1; continue; }
+      if (dupe[0] || dupe[1]) { rejected["the same place again"] = (rejected["the same place again"] || 0) + 1; return; }
       /* never a place whose address already said no */
       let dnc = false;
       try { const M = await mailMod(); if (M && typeof M.isDoNotContact === "function") dnc = !!(await M.isDoNotContact(p.email)); } catch { dnc = false; }
@@ -1351,7 +1411,7 @@ async function researchRun(args, ctx) {
       /* 500 kept (round six: 3000): a place never written to, of the order's last group, gives way */
       if (Object.keys(idx).length >= PLACES_KEEP) {
         const drop = Object.entries(idx).filter(([, e]) => e.s === "new" && !e.c && !e.p).sort((a, b) => (b[1].t - a[1].t) || (a[1].sc - b[1].sc) || a[0].localeCompare(b[0]))[0];
-        if (!drop) { notes.push(PLACES_KEEP + " places are kept and every one is in use; no more are added"); break; }
+        if (!drop) { full = true; notes.push(PLACES_KEEP + " places are kept and every one is in use; no more are added"); return; }
         const old = await readPlace(drop[0]);
         if (old) await dropPlace(old, "made room for a new place");
         delete idx[drop[0]];
@@ -1361,7 +1421,38 @@ async function researchRun(args, ctx) {
       idx[p.id] = indexEntry(p);
       await store([["INCR", COUNT.places(today)], ["EXPIRE", COUNT.places(today), String(3 * 86400)]]);
       added.push({ id: p.id, name: p.name, country: p.country });
-    }
+    };
+    const worker = async () => {
+      while (pool.length && !full && already + added.length + inFlight < PLACES_PER_DAY && left() > LIMITS.siteMinMs) {
+        const cand = takeNext(pool, turn++);
+        const host = hostOf(cand.website || "");
+        const key = host || ("osm-" + lower(cand.email));
+        if (claimed.has("seen:" + key)) continue;
+        claimed.add("seen:" + key);
+        if (host && (await store([["HGET", OK_KEYS.byDomain, host]]))[0]) continue;
+        if (await readSeen(key)) continue;
+        checked++;
+        inFlight++;
+        let res;
+        try { res = await checkSite(cand, F, left); }
+        catch (e) { res = { ok: false, why: "it could not be read (" + str(e && e.message || e, 60) + ")" }; }
+        if (!res.ok) {
+          inFlight--;
+          rejected[res.why] = (rejected[res.why] || 0) + 1;
+          await store([["HSET", OK_KEYS.seen, key, JSON.stringify({ at: today, why: str(res.why, 120) })]]);
+          continue;
+        }
+        const p = res.place;
+        /* round four: Jev's view of how well the place fits, from its own
+           facts, when it answers; it only adds to the place's order (up to 6) */
+        try {
+          const fit = await J.jevScorePlace(p.facts, { name: p.name, kind: p.kind });
+          if (fit && fit.ok) { p.fit = { score: fit.score, label: fit.label, by: "jev" }; p.score = (Number(p.score) || 0) + Math.round(fit.score * 6); }
+        } catch { /* the order stands as the facts gave it */ }
+        try { await serial(() => keep(p)); } finally { inFlight--; }
+      }
+    };
+    await Promise.all(Array.from({ length: RESEARCH_CONCURRENCY }, () => worker()));
     cursor.turn = turn;
     await store([["SET", OK_KEYS.cands, JSON.stringify(pool.slice(0, CANDS_KEEP))], ["SET", OK_KEYS.cursor, JSON.stringify(cursor)]]);
   } catch (e) {
@@ -1369,7 +1460,7 @@ async function researchRun(args, ctx) {
   } finally { await releaseLock(OK_KEYS.lockResearch, token).catch(() => false); }
   if (webPaid) { try { const L = await routerMod(); await L.paidOutcome(webPaid, { helped: webKept > 0, note: webKept ? webKept + " place(s) it found published an address of their own" : "none of what it found was kept this run" }); } catch { } }
   const note = added.length ? "found " + added.length + " new place" + (added.length === 1 ? "" : "s") + " that published an address of their own"
-    : "no new place this time (" + checked + " checked)";
+    : "no new place this time (" + checked + " checked)" + (notes.length ? "; " + str(notes[0], 160) : "");
   return { ok: true, added: added.length, checked, step, rejected, notes: notes.slice(0, 5), note,
     places: added.slice(0, 20), undo: added.length ? { kind: "research-remove", ids: added.map(a => a.id) } : { kind: "noop", note: "nothing was added" } };
 }
@@ -1553,7 +1644,7 @@ async function draftLetter(p, offerKey, why, retry, purpose) {
   const body = tidyBody(j && typeof j.body === "string" ? j.body : "");
   const fail = (out) => ({ ...out, written: true, paidId: r.paidId || null, measured: r.measured || null });
   if (body.length < 60) return fail({ ok: false, error: "the letter came back empty" });
-  const subject = o.subject;
+  const subject = letterSubject(p, o);
   const text = body + "\n\n" + SIGN + "\n\n" + DNC_LINE;
   const c = checkLetter(p, offerKey, subject, text, body);
   if (!c.ok) return fail(c);
@@ -1589,6 +1680,21 @@ export async function writeLetter(p, offerKey, why) {
 /* the follow-up, written in code: nothing to invent */
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const dayWords = iso => { const d = new Date(String(iso).slice(0, 10) + "T12:00:00Z"); return isFinite(d) ? d.getUTCDate() + " " + MONTHS[d.getUTCMonth()] : "last week"; };
+/* round seven (the owner: "Every email the lantern sends needs to be custom
+   to the place it is sending it to"): the body was always written from the
+   place's own pages; the subject now names the place too, so no two letters
+   look alike to the place or to a mail filter */
+const shortName = n => {
+  const s = str(n, 120);
+  if (s.length <= 48) return s;
+  const cut = s.slice(0, 48), at = cut.lastIndexOf(" ");
+  return (at > 20 ? cut.slice(0, at) : cut).replace(/[,;:&\s]+$/, "").trim();
+};
+export function letterSubject(p, o) {
+  const base = String((o && o.subject) || "").trim();
+  const name = shortName(p && p.name);
+  return name && base ? "For " + name + ": " + base.charAt(0).toLowerCase() + base.slice(1) : base;
+}
 export function followupLetter(p) {
   const o = OFFERS[offerFor(p)] || OFFERS.reel;
   const subject = "Re: " + (p.subject || o.subject);

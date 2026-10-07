@@ -359,6 +359,17 @@ console.log('\n390x844 · a refused plan, a Lantern already thinking, and four s
   await o.pg.waitForSelector('#h-orun-fail:not([hidden])', { timeout: 8000 }); await o.pg.waitForTimeout(200);
   ok(bodies(o.st).filter(b => /research/.test(b)).length === 4, 'fewer than 10 ready: the search is asked four times, and no more: ' + bodies(o.st).filter(b => /research/.test(b)).length);
   ok(JSON.stringify(await lines(o.pg, 'research')) === JSON.stringify(Array(4).fill('Found no new place (8 checked). 2 ready for a first letter.')), 'each said plainly');
+  await o.ctx.close();
+  /* round seven: an empty round with the house's own reason says it */
+  o = await open_(390, 844, { clock: true, research: [{ ok: true, added: 0, checked: 0, ready: 0, message: 'No new place this time (0 checked); OpenStreetMap (GB) did not answer.' }], plan: { ok: false, message: 'The plan could not start: mail is off.' } });
+  await o.pg.click('[data-ostart]');
+  await o.pg.waitForSelector('#h-orun-fail:not([hidden])', { timeout: 8000 }); await o.pg.waitForTimeout(200);
+  ok((await lines(o.pg, 'research'))[0] === 'No new place this time (0 checked); OpenStreetMap (GB) did not answer. None is ready for a first letter yet.', 'an empty round says why, in the house\'s words: ' + (await lines(o.pg, 'research'))[0]);
+  await o.ctx.close();
+  o = await open_(390, 844, { clock: true, research: [{ ok: true, added: 0, checked: 8, ready: 2 }], plan: { ok: false, message: 'The plan could not start: mail is off.' } });
+  o.st.tickFail = true;
+  await o.pg.click('[data-ostart]');
+  await o.pg.waitForSelector('#h-orun-fail:not([hidden])', { timeout: 8000 }); await o.pg.waitForTimeout(200);
   ok(await steps(o.pg) === 'research:done plan:fail watch:wait' && await tc(o.pg, '#h-orun-fail p') === 'The plan could not start: mail is off.', 'a plan the house refused: its words, and Try again at the plan');
   o.st.plan = { ok: true, busy: true, message: 'The Lantern is already thinking.', started: false, usedAt: iso(Date.now()) };
   await o.pg.click('[data-oretry]');
