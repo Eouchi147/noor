@@ -172,8 +172,12 @@ async function mailAfterTick(t0) {
 function logOutreach(from, r) {
   try {
     if (!r || (!r.ran && r.ok !== false)) return;
+    const mask = v => String(v || "").replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]");
+    /* round eight: the source this run asked, what it gave, and why sites were set aside */
     console.log(JSON.stringify({ noor: "outreach", from, ran: !!r.ran, ok: r.ok !== false, added: Number(r.added) || 0, checked: Number(r.checked) || 0,
-      why: String(r.why || r.error || "").replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]").slice(0, 240) }));
+      ...(r.source ? { source: String(r.source).slice(0, 20), given: Number(r.given) || 0 } : {}), ...(r.city ? { city: String(r.city).slice(0, 60) } : {}),
+      ...(Array.isArray(r.setAside) && r.setAside.length ? { setAside: r.setAside.slice(0, 3).map(x => mask(x).slice(0, 90)) } : {}),
+      why: mask(r.why || r.error).slice(0, 240) }));
   } catch { }
 }
 /* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */

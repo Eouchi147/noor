@@ -335,3 +335,38 @@ Home's mail card offers Start the outreach once (mail.start {available, usedAt, 
 
 - Jev answers only with bought AI Gateway credit (the free credit does not cover it; 10 dollars bought 7 October 2026, the smallest top-up, kept a year). A 401, 402 or 403 closes the judge for an hour (nsoul:jev:closed), shown in the engine room; meanwhile everything it would judge goes on as before it existed.
 - The gateway's free names are read with their list's zdr and no_training fields; a name none of whose providers keeps nothing is never asked (on 7 October that was all five), counted as `without`. A refusal is recognised in either error shape.
+
+
+## 14. A search for places that works (owner's words, 7 October 2026)
+
+"I need it to work perfectly right now. Every email the lantern sends needs to be custom to the place it is sending it too. I also want the place search engine to be extremely efficient." "Find other ways to search for place and we have to assume that mosques and islamic places would like to be contacted as we have free beneficial content to offer, we want to give, not ask. Find other ways for the lantern to find places, this needs to work, it needs to scrub the internet with relevant current contact info."
+
+### 14.1 Round seven: several sites at once, and letters that name the place
+
+- Research reads 6 sites at once (round eight: 8), each host still one request a second (the slot is taken before the wait). A map source may take 40 seconds; the map has three mirrors.
+- Every subject names its place ("For <name>: ..."), cut at a word; the letter itself is written from the place's own facts only.
+- The start button comes back when the start found nothing to write to (its cycle over, or 30 minutes on, and no letter written, waiting or sent).
+
+### 14.2 The seed (api/_outreach-seed.js)
+
+The public map servers time out when a server asks them, though they answer a browser. So the map's own list of mosques and Islamic centres with a website of their own, read through a browser on 7 October 2026 (OpenStreetMap, ODbL), lives in the code: 635 places at first (GB 332, CA 130, US 128, NZ 25, ZA 15, IE 5), grown the same way. The walk reads it first, 150 rows a step. Its first round at 17:15 UTC read 79 websites and kept 21.
+
+### 14.3 Round eight: the ways it finds places (api/_outreach.js SOURCE_CYCLE)
+
+- The city search, every other step: one question to perplexity/sonar on OpenRouter (about 0.6 cents) for one city of the region (WEB_CITIES, about 240, the countries mixed): its mosques, Islamic centres, Islamic schools and madrasas, and its universities' Muslim student societies, with their own websites. 20 a day at most, inside the web search's own 4 dollars a month and every paid cap. A site the search cited is a candidate; one it did not cite must carry the place's own name on its pages.
+- The Australian charity register (ACNC on data.gov.au, updated weekly): charities whose names say mosque, masjid, Islamic, Muslim, Quran, madrasa or jamia, with a website; a whole pass, then a week's rest. The place takes the name its own site gives itself.
+- Wikidata through QLever (a second or two), the public service as its fallback: the region's mosques, then its Islamic schools, societies and foundations, each with an official website, never a person; a whole pass, then a week's rest.
+- OpenStreetMap through Overpass, for when it answers.
+- A source that fails rests (the map three hours, the others an hour, the city search half an hour), and the same run goes on to the next source while it has room.
+
+### 14.4 More of each site
+
+- Up to two more of its own pages are read (about, classes, madrasa, youth, contact; never a donation page, a login or a file) when the home and contact pages gave no address or fewer than three facts; with no contact link and no address, /contact-us and then /contact.
+- An address behind Cloudflare's guard, in the page's structured data, or written "info [at] masjid [dot] org" is read as a visitor reads it (the owner: the places would like to be contacted). A free mail address still counts only where the place asks to be written to.
+- Its pages must read as a mosque's or an Islamic place's (a lapsed domain sold to someone else is never written to). Two facts of its own are enough.
+- The sites the old rules set aside were read again once, and the seed from its start.
+- 150 new places a day, searching while fewer than 150 are ready. The sending pace (20, 30, 40, 50 a day) is unchanged.
+
+### 14.5 Letters that give
+
+Every letter's one step now says the house asks nothing in return; a reply is only something they may do if it helps them. The writer is told the same. The log line of each run names its source, what it gave and the main reasons sites were set aside.

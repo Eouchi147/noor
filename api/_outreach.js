@@ -1,5 +1,5 @@
-// NOOR · the Lantern's research and outreach: places that teach, and one
-// honest letter each.
+// NOOR · the Lantern's research and outreach: mosques and Islamic places
+// (round eight; first, places that teach), and one honest letter each.
 // ---------------------------------------------------------------------------
 // WHY THIS FILE EXISTS (6 October 2026, LANTERN.md section 11.3)
 //
@@ -91,6 +91,40 @@
 // daily hand and short searches between the cycles (outreachTick, on the
 // same lock and the same polite fetching) while fewer than 100 places are
 // ready. The goal moves, once, from 50 places to 1000 in six weeks.
+//
+// ROUND EIGHT (7 October 2026). The owner: "we have to assume that mosques
+// and islamic places would like to be contacted as we have free beneficial
+// content to offer, we want to give, not ask. Find other ways for the
+// lantern to find places, this needs to work, it needs to scrub the internet
+// with relevant current contact info." The public map servers time out when
+// a server asks them (they answered a browser), so the search no longer
+// leans on them. The ways it finds places now, in turn (SOURCE_CYCLE):
+//   the seed: the map's own list, read through a browser and kept in
+//     api/_outreach-seed.js (and grown the same way);
+//   the web, city by city: one cheap web search (perplexity/sonar on
+//     OpenRouter, about 0.6 cents a search) asks for the mosques, Islamic
+//     centres and schools of one city of the region and their own websites
+//     (WEB_CITIES, about 190 cities); a site it names is still read by the
+//     house itself before anything is kept, and one it did not cite must
+//     carry the place's name on its own pages;
+//   the Australian charity register (ACNC, data.gov.au, updated weekly,
+//     CC BY 3.0 AU): the registered charities whose names say mosque,
+//     Islamic, Muslim, masjid, Quran or madrasa, and their websites;
+//   Wikidata through QLever (qlever.dev, a second or two), the public
+//     query service as its fallback: mosques and Islamic organisations of the
+//     region with an official website (never a person);
+//   OpenStreetMap through Overpass, last, and rested for three hours after
+//     it fails, so a busy map never eats a run again (every source rests
+//     after it fails, SOURCE_REST_MS).
+// Each site gives more: up to two more of its own pages are read (about,
+// classes, madrasa, youth) when the first two gave no address or too few
+// facts; an address published behind Cloudflare's guard, in the page's
+// structured data or written "info [at] ..." is read as a visitor's browser
+// shows it (the owner: they would like to be contacted); its pages must read
+// as a mosque or an Islamic place; two facts are enough to write from. The
+// letters give and ask nothing: the step says so. And the pace of finding:
+// 8 sites at once, 150 new places a day, searching while fewer than 150 are
+// ready. The sending pace (paceToday) is unchanged: deliverability first.
 // ---------------------------------------------------------------------------
 
 import {
@@ -117,7 +151,7 @@ export const OUTREACH_TARGET = 1000;         /* round six: was 50 */
 export const OUTREACH_TARGET_BEFORE = 50;    /* the goal's first target: a goal still carrying it is moved once */
 export const GOAL_DAYS = 42;                 /* six weeks */
 export const PLACES_KEEP = 3000;             /* round six: was 500 */
-export const PLACES_PER_DAY = 75;            /* round six: was 20 */
+export const PLACES_PER_DAY = 150;           /* round six: was 20, then 75; round eight: 150 (finding is cheap; sending keeps its own pace) */
 /* round six: THE PACE. The day's number is paceToday(): the warm-up (RAMP,
    a week each, from the first day the house sent a letter on its own) and
    the brake. LETTERS_MAX is its ceiling; LETTERS_PER_DAY and
@@ -134,10 +168,10 @@ export const FOLLOWUP_DAYS = 7;
 export const WAITING_MAX = 10;               /* letters waiting on the owner's Send at once (api/_mail.js MAX_WAITING); round six: was 5 */
 export const PACE_MIN = 3;                   /* round six: no longer read (the pace is paceToday); kept for any reader */
 export const PACE_AFTER = 2;                 /* round six: no longer read, likewise */
-export const RESEARCH_LOW = 100;             /* fewer places ready than this: a search is wanted (round six: was 20) */
-export const FACTS_MIN = 3, FACTS_MAX = 6;
+export const RESEARCH_LOW = 150;             /* fewer places ready than this: a search is wanted (round six: was 20, then 100; round eight: 150) */
+export const FACTS_MIN = 2, FACTS_MAX = 6;   /* round eight: two facts of its own are enough to write from (was 3) */
 export const LETTER_WORDS_MAX = 180;
-export const WEB_USD_MONTH = 2;              /* the web search's own share of the month's paid budget */
+export const WEB_USD_MONTH = 4;              /* the web search's own share of the month's paid budget (round eight: was 2; a city search costs about 0.6 cents, 20 a day at most) */
 export const HOLD_DAYS = 7;                  /* a place whose letter was refused waits this long */
 export const SEEN_DAYS = 60;                 /* a site that gave nothing is not fetched again for this long */
 export const CANDS_KEEP = 600;               /* round six: was 300 */
@@ -163,10 +197,11 @@ export const LIMITS = { gapMs: 1000, pageTimeoutMs: 6000, apiTimeoutMs: 25000, r
    request a second on its own host; a map source may take up to 40 seconds
    (a country's list took 17 to 21 seconds from a browser on 7 October, past
    the old 25), and the map has three public mirrors */
-export const RESEARCH_CONCURRENCY = 6;
+export const RESEARCH_CONCURRENCY = 8;       /* round eight: was 6 */
 export const SOURCE_TIMEOUT_MS = 40000;
 export const OVERPASS_URLS = Object.freeze(["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]);
 export const SEED_TAKE = 150;
+export const SEEN_V = "8";                   /* round eight: the rules of a site's check changed; what the old ones set aside is read again, once */
 export const USER_AGENT = "NOORCodexBot/1.0 (+https://noorcodex.com; salam@noorcodex.com)";
 export const OUTREACH_BOX_MS = 15000;        /* the sense stage's box for the outreach read */
 
@@ -180,13 +215,16 @@ export const OK_KEYS = Object.freeze({
      (a hash, pruned of the past) and their lock, and the tick's own day */
   rampStart: "nsoul:outreach:ramp:start", brake: "nsoul:outreach:brake",
   went: d => "nsoul:outreach:went:" + d, bounces: d => "nsoul:outreach:bounces:" + d,
-  slots: "nsoul:outreach:slots", lockSlots: "nsoul:outreach:lock:slots", tickDay: d => "nsoul:outreach:tick:" + d
+  slots: "nsoul:outreach:slots", lockSlots: "nsoul:outreach:lock:slots", tickDay: d => "nsoul:outreach:tick:" + d,
+  /* round eight: the day's city searches, and the mark that the sites set
+     aside under the old rules were given back once */
+  cityDay: d => "nsoul:outreach:city:" + d, seenV: "nsoul:outreach:seen:v"
 });
 const COUNT = { places: d => K.count("places", d), letters: d => K.count("letters", d), followups: d => K.count("followups", d) };
 
 /* the seams: the mailbox (api/_mail.js), the sleep between requests and the
    name lookup (node:dns), each stood in by a test; null in production */
-export const outreachSeams = { mail: null, sleep: null, lookup: null, llm: null };
+export const outreachSeams = { mail: null, sleep: null, lookup: null, llm: null, seed: null };   /* round eight: seed, a list a test hands in for api/_outreach-seed.js */
 export function setOutreachSeams(s) { Object.assign(outreachSeams, s || {}); }
 const sleep = ms => (typeof outreachSeams.sleep === "function" ? outreachSeams.sleep(ms) : new Promise(r => setTimeout(r, ms)));
 async function mailMod() {
@@ -869,15 +907,44 @@ export function decodeEntities(s) {
     return Object.prototype.hasOwnProperty.call(ENTITY, e.toLowerCase()) ? ENTITY[e.toLowerCase()] : m;
   });
 }
+/* round eight: an address Cloudflare guards on a page ("email protection")
+   is written in the page as a short code the visitor's browser turns back
+   into the address; the same turn, here */
+export function cfDecode(hex) {
+  const h = String(hex || "").trim();
+  if (!/^[0-9a-f]+$/i.test(h) || h.length < 8 || h.length % 2 || h.length > 400) return null;
+  const key = parseInt(h.slice(0, 2), 16);
+  let out = "";
+  for (let i = 2; i < h.length; i += 2) out += String.fromCharCode(parseInt(h.slice(i, i + 2), 16) ^ key);
+  out = lower(out.trim());
+  return EMAIL_ONE.test(out) ? out : null;
+}
+/* round eight: the addresses a page carries outside its visible text: one
+   Cloudflare guards (data-cfemail, or its email-protection link), and the
+   "email" of its structured data (JSON-LD), each the place's own publication */
+function guardedAddresses(raw) {
+  const out = [];
+  for (const m of raw.matchAll(/data-cfemail\s*=\s*["']([0-9a-fA-F]+)["']/g)) { const a = cfDecode(m[1]); if (a) out.push({ addr: a, how: "guarded" }); }
+  for (const m of raw.matchAll(/\/cdn-cgi\/l\/email-protection#([0-9a-fA-F]+)/g)) { const a = cfDecode(m[1]); if (a) out.push({ addr: a, how: "guarded" }); }
+  for (const m of raw.matchAll(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    for (const e of m[1].matchAll(/"email"\s*:\s*"([^"]{3,160})"/gi)) {
+      const a = lower(decodeEntities(e[1]).replace(/^mailto:/i, "").split("?")[0].trim());
+      if (EMAIL_ONE.test(a)) out.push({ addr: a, how: "structured" });
+    }
+  }
+  return out.slice(0, 20);
+}
 export function readHtml(html) {
   const raw = String(html || "");
+  const extra = guardedAddresses(raw);
   const body = raw.replace(/<!--[\s\S]*?-->/g, " ").replace(/<(script|style|noscript|svg|template|iframe)\b[\s\S]*?<\/\1>/gi, " ");
   const attr = (tag, name) => { const m = new RegExp("\\b" + name + "\\s*=\\s*(\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", "i").exec(tag); return m ? decodeEntities(m[2] != null ? m[2] : m[3] != null ? m[3] : m[4]) : ""; };
   const title = decodeEntities(((/<title[^>]*>([\s\S]*?)<\/title>/i.exec(body) || [])[1] || "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
-  let description = "";
+  let description = "", siteName = "";
   for (const m of body.matchAll(/<meta\b[^>]*>/gi)) {
     const t = m[0], n = lower(attr(t, "name") || attr(t, "property"));
     if ((n === "description" || n === "og:description") && !description) description = attr(t, "content").replace(/\s+/g, " ").trim();
+    if (n === "og:site_name" && !siteName) siteName = attr(t, "content").replace(/\s+/g, " ").trim();   /* round eight */
   }
   const lang = lower((/<html\b[^>]*\blang\s*=\s*["']?([a-zA-Z-]+)/i.exec(raw) || [])[1] || "");
   const links = [];
@@ -887,12 +954,25 @@ export function readHtml(html) {
   }
   const text = decodeEntities(body.replace(/<\/?(br|p|div|li|h[1-6]|tr|td|th|section|article|header|footer|ul|ol|nav|table|main|aside|blockquote|form|button|label|option)\b[^>]*>/gi, "\n").replace(/<[^>]+>/g, " "))
     .split("\n").map(l => l.replace(/[ \t\u00a0]+/g, " ").trim()).filter(Boolean).join("\n");
-  return { title, description, lang, links, text };
+  return { title, description, siteName, lang, links, text, extra };
 }
 
 /* the addresses a page publishes: in a mailto link, or written in its text
-   (entities decoded, as a reader's browser shows them; an address written
-   to be hidden, such as "info [at] ...", is left alone) */
+   (entities decoded, as a reader's browser shows them). Round eight (the
+   owner: the places would like to be contacted): an address the page guards
+   from machines (Cloudflare's guard, structured data) or writes as "info
+   [at] masjid [dot] org" is read as a visitor reads it; the latter counts as
+   loose text (a free mail one only where the place asks to be written to) */
+const AT_FORM = /\b([a-z0-9._%+-]{1,64})\s*[\[({]\s*at\s*[\])}]\s*([a-z0-9-]{1,63}(?:\s*(?:[\[({]\s*dot\s*[\])}]|\.)\s*[a-z0-9-]{1,63}){1,4})\b/gi;
+const AT_HAS = /\b[a-z0-9._%+-]{1,64}\s*[\[({]\s*at\s*[\])}]\s*[a-z0-9-]{1,63}/i;
+export function atAddresses(text) {
+  const out = [];
+  for (const m of String(text || "").matchAll(AT_FORM)) {
+    const a = lower(m[1] + "@" + m[2].replace(/\s*[\[({]\s*dot\s*[\])}]\s*/gi, ".").replace(/\s*\.\s*/g, "."));
+    if (EMAIL_ONE.test(a)) out.push(a);
+  }
+  return out;
+}
 export function addressesOn(doc, url) {
   const out = [];
   for (const l of doc.links || []) {
@@ -902,6 +982,8 @@ export function addressesOn(doc, url) {
     for (const one of a.split(",")) out.push({ addr: lower(one), how: "mailto", url });
   }
   for (const m of String(doc.text || "").matchAll(EMAIL_ANY)) out.push({ addr: lower(m[0]).replace(/\.+$/, ""), how: "text", url });
+  for (const e of doc.extra || []) out.push({ addr: e.addr, how: e.how, url });
+  for (const a of atAddresses(doc.text)) out.push({ addr: a, how: "text", url });
   return out;
 }
 /* the one address to write to: on the place's own domain, or a free mail
@@ -922,7 +1004,7 @@ export function pickAddress(found, site) {
        tag), never loose text elsewhere, where anyone can leave one (a
        comment, a hidden line); text on its own domain is its own still */
     if (!own && f.how === "text" && !f.contact) continue;
-    const score = (ROLE_BOX.test(local) ? 3 : 0) + (own ? 2 : 0) + (f.how === "mailto" ? 1 : 0) + (f.contact ? 1 : 0);
+    const score = (ROLE_BOX.test(local) ? 3 : 0) + (own ? 2 : 0) + (f.how === "mailto" || f.how === "guarded" || f.how === "structured" ? 1 : 0) + (f.contact ? 1 : 0);
     best.push({ ...f, own, score });
   }
   best.sort((x, y) => y.score - x.score || x.addr.localeCompare(y.addr));
@@ -963,7 +1045,7 @@ export function factsFrom(pages) {
       if (s.length < 25 || s.length > 220) continue;
       if (!/[a-z]{3}/.test(s) || /[{}<>|]/.test(s) || /https?:\/\/|www\./i.test(s)) continue;
       if (BOILER_RX.test(s) || INSTRUCTION_RX.test(s) || MONEY_FACT_RX.test(s)) continue;
-      if (EMAIL_HAS.test(s) || PHONE_ANY.test(s) || namesAPerson(s)) continue;
+      if (EMAIL_HAS.test(s) || AT_HAS.test(s) || PHONE_ANY.test(s) || namesAPerson(s)) continue;
       const key = s.toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ");
       if (seen.has(key)) continue;
       let w = 0;
@@ -994,6 +1076,66 @@ export function contactLink(doc, homeUrl) {
   return hits.length ? hits[0].u : null;
 }
 
+/* round eight: the words that say a page is a mosque's or an Islamic
+   place's, read on its own pages (never on its name alone: a domain that
+   lapsed and was bought by another hand still carries the old name) */
+export const ISLAMIC_RX = /\b(mosques?|masjids?|masjed|musall?a|islam|islamic|muslims?|madrass?ah?|madrasa|madaris|jamia|jamiat|jame|jami|quran|qur'?an|koran|salah|salat|jumu'?ah|jummah|jumuah|ummah|dawah|da'?wah|imams?|eid|ramadan|isoc|hifz|tarawee?h|halaqa\w*|khutba\w*|sunnah|hadith|insha'?allah|bismillah|assalamu)\b/i;
+/* the words of a name that say nothing of which place it is */
+const NAME_PLAIN = new Set(["mosque", "masjid", "masjed", "islamic", "islam", "muslim", "muslims", "centre", "center", "society", "association", "community",
+  "foundation", "trust", "school", "academy", "college", "institute", "incorporated", "limited", "jamia", "jame", "jamea", "madrasa", "madrasah", "madrassa",
+  "darul", "uloom", "education", "educational", "cultural", "culture", "organisation", "organization", "council", "federation", "union", "group", "house",
+  "city", "county", "north", "south", "east", "west", "central", "great", "grand", "national", "international", "united", "masjid", "musalla", "prayer",
+  "students", "student", "university", "youth", "women", "sisters", "brothers", "inc", "ltd", "the", "and", "for", "of"]);
+/* round eight: a site a search named without citing it must carry the
+   place's own name (a word of it that says which place it is), on its pages
+   or in its address; a name with no such word, its city */
+export function nameOnPages(name, city, pages, host) {
+  const words = lower(name).replace(/[^a-z0-9' ]+/g, " ").split(/\s+/).filter(w => w.length >= 4 && !NAME_PLAIN.has(w));
+  const hay = " " + lower((pages || []).map(pg => [pg.doc && pg.doc.title, pg.doc && pg.doc.siteName, pg.doc && pg.doc.description, String((pg.doc && pg.doc.text) || "").slice(0, 30000)].join(" ")).join(" ")).replace(/[^a-z0-9' ]+/g, " ") + " ";
+  const h = lower(host).replace(/[^a-z0-9]+/g, "");
+  if (words.length) return words.some(w => hay.includes(" " + w + " ") || hay.includes(" " + w + "s ") || h.includes(w));
+  const c = lower(city).replace(/[^a-z0-9' ]+/g, " ").trim();
+  return !!c && hay.includes(" " + c + " ");
+}
+/* round eight: a register writes a charity's legal name, often in capitals;
+   the place's own site usually says its name the way it says it */
+const SHOUT_KEEP = new Set(["QLD", "NSW", "VIC", "WA", "SA", "ACT", "NT", "TAS", "ISOC", "MSA", "UK", "USA", "NZ", "AU"]);
+export function tidyName(raw) {
+  let s0 = str(raw, 160).replace(/[,\s]+(inc\.?|incorporated|ltd\.?|limited|pty\.?\s+ltd\.?|co-?operative(\s+ltd\.?)?)$/i, "").trim();
+  if (s0 && s0 === s0.toUpperCase() && /[A-Z]{3}/.test(s0)) {
+    s0 = s0.split(/\s+/).map((w, i) => SHOUT_KEEP.has(w.replace(/[^A-Z]/g, "")) ? w
+      : (i > 0 && /^(OF|THE|AND|FOR|IN|AT|ON|TO)$/.test(w)) ? w.toLowerCase() : w.charAt(0) + w.slice(1).toLowerCase()).join(" ");
+  }
+  return s0;
+}
+function placeName(cand, doc) {
+  if (cand.source !== "acnc") return str(cand.name, 120);
+  const options = [doc.siteName].concat(String(doc.title || "").split(/\s+[|:\u00b7\u2013\u2014-]\s+|\s*::\s*/))
+    .map(x => str(x, 120)).filter(x => x.length >= 4 && x.length <= 80 && x !== x.toUpperCase() && ISLAMIC_RX.test(x) && !/^(home|welcome|homepage|index)\b/i.test(x) && !/@|https?:/i.test(x));
+  return options[0] || tidyName(cand.name);
+}
+/* round eight: more of the place's own pages worth reading when the home
+   and contact pages gave no address or too few facts: its about page, its
+   classes, its madrasa, its youth work (never a donation page, a login, a
+   file) */
+const MORE_RX = /about|who[\s_-]?we[\s_-]?are|our[\s_-]?(mosque|masjid|centre|center|story|history|community)|madras|madrasa|education|classes|courses|school|academy|learn|youth|services|programm?es?|activities|community|contact|get[\s_-]?in[\s_-]?touch|reach[\s_-]us|enquir|inquir/i;
+const NOT_MORE_RX = /donat|zakat|sadaq|login|log-?in|sign[\s_-]?in|register|cart|checkout|shop|store|privacy|terms|cookie|policy|calendar|prayer[\s_-]?times|timetable|gallery|feed|wp-json|wp-admin|wp-content|\.(pdf|jpe?g|png|gif|webp|svg|docx?|xlsx?|pptx?|zip|mp3|mp4)(\?|$)/i;
+export function moreLinks(doc, homeUrl, read) {
+  const hits = [];
+  for (const l of doc.links || []) {
+    if (/^(mailto|tel|javascript|data|sms|whatsapp):/i.test(l.href) || l.href.startsWith("#")) continue;
+    const t = l.href + " " + l.text;
+    if (!MORE_RX.test(t) || NOT_MORE_RX.test(l.href)) continue;
+    let u;
+    try { u = new URL(l.href, homeUrl); u.hash = ""; u = u.toString(); } catch { continue; }
+    if (!sameSite(u, homeUrl) || u === homeUrl || (read && read.has(u)) || hits.some(h => h.u === u)) continue;
+    const score = /contact|get[\s_-]?in[\s_-]?touch|enquir|inquir/i.test(t) ? 3 : /about|who[\s_-]?we|our[\s_-]/i.test(t) ? 2 : 1;
+    hits.push({ u, score });
+  }
+  hits.sort((a, b) => b.score - a.score);
+  return hits.map(h => h.u);
+}
+export const MORE_PAGES = 2;
 /* one candidate, checked against its own site: {ok, place} or {ok:false, why} */
 export async function checkSite(cand, F, timeLeft) {
   const site = siteUrl(cand.website);
@@ -1005,20 +1147,62 @@ export async function checkSite(cand, F, timeLeft) {
   const homeDoc = readHtml(home.html);
   const pages = [{ url: home.url, doc: homeDoc }];
   const found = addressesOn(homeDoc, home.url);
+  const room = () => typeof timeLeft !== "function" || timeLeft() > LIMITS.gapMs + LIMITS.pageTimeoutMs;
+  const read = new Set([home.url, site]);
   const contactUrl = contactLink(homeDoc, home.url);
-  if (contactUrl && (typeof timeLeft !== "function" || timeLeft() > LIMITS.gapMs + LIMITS.pageTimeoutMs)) {
-    const c = await F.page(contactUrl, site);
-    if (c.ok) { const d = readHtml(c.html); pages.push({ url: c.url, doc: d }); for (const f of addressesOn(d, c.url)) found.push({ ...f, contact: true }); }
-  }
+  const isContact = u => /contact|get[\s_-]?in[\s_-]?touch|reach[\s_-]us|enquir|inquir/i.test(u);
+  const readOne = async (u, contact) => {
+    read.add(u);
+    const pg = await F.page(u, site);
+    if (!pg.ok) return false;
+    const d = readHtml(pg.html);
+    pages.push({ url: pg.url, doc: d });
+    for (const f of addressesOn(d, pg.url)) found.push(contact ? { ...f, contact: true } : f);
+    return true;
+  };
+  if (contactUrl && room()) await readOne(contactUrl, true);
   /* an OpenStreetMap email tag is the place's own publication too */
   if (cand.email) found.push({ addr: lower(cand.email), how: "osm", url: cand.evidence || null, contact: true });
-  const pick = pickAddress(found, site);
-  if (!pick) return { ok: false, why: "no address of its own published on its home or contact page" };
-  const { facts, signals } = factsFrom(pages);
-  if (facts.length < FACTS_MIN) return { ok: false, why: "too little on its own pages to write from (" + facts.length + " facts)" };
+  let pick = pickAddress(found, site);
+  let { facts, signals } = factsFrom(pages);
+  /* round eight: up to two more of its own pages, when the first gave no
+     address or too few facts; with no contact link and no address, its
+     usual contact page is asked for by its usual name */
+  if (!pick || facts.length < FACTS_MIN + 1) {
+    const linked = moreLinks(homeDoc, home.url, read);
+    const guesses = !pick && !contactUrl && !linked.some(isContact) ? ["/contact-us", "/contact"] : [];
+    let extra = 0;
+    /* the usual contact page by its usual names, the second only when the
+       first is not there */
+    for (const g of guesses) {
+      if (extra >= MORE_PAGES || !room()) break;
+      let u;
+      try { u = new URL(g, home.url).toString(); } catch { continue; }
+      if (read.has(u)) continue;
+      extra++;
+      if (await readOne(u, true)) break;
+    }
+    for (const u of linked) {
+      pick = pickAddress(found, site);
+      ({ facts, signals } = factsFrom(pages));
+      if ((pick && facts.length >= FACTS_MIN + 1) || extra >= MORE_PAGES || !room()) break;
+      if (read.has(u)) continue;
+      extra++;
+      await readOne(u, isContact(u));
+    }
+    pick = pickAddress(found, site);
+    ({ facts, signals } = factsFrom(pages));
+  }
+  /* round eight: its pages must read as a mosque's or an Islamic place's */
+  const said = pages.map(pg => [pg.doc.title, pg.doc.siteName, pg.doc.description, String(pg.doc.text || "").slice(0, 30000)].join(" ")).join(" ");
+  if (!ISLAMIC_RX.test(said)) return { ok: false, why: "its pages do not read as a mosque's or an Islamic place's" };
+  /* round eight: a site a search named without citing it must be that place */
+  if (cand.verify === "name" && !nameOnPages(cand.name, cand.city, pages, host)) return { ok: false, why: "its pages do not carry the name the search gave it" };
+  if (!pick) return { ok: false, why: "no address of its own published on its pages" };
+  if (facts.length < FACTS_MIN) return { ok: false, why: "too little on its own pages to write from (" + facts.length + " fact" + (facts.length === 1 ? "" : "s") + ")" };
   const lang = (homeDoc.lang || "en").split("-")[0] || "en";
   const place = {
-    id: "p-" + hashOf(host), name: str(cand.name, 120), kind: cand.kind || "mosque", city: cand.city ? str(cand.city, 80) : null,
+    id: "p-" + hashOf(host), name: placeName(cand, homeDoc), kind: cand.kind || "mosque", city: cand.city ? str(cand.city, 80) : null,
     country: REGION.includes(cand.country) ? cand.country : null, website: site, domain: host, email: pick.addr,
     source: cand.source, sourceRef: cand.sourceRef || null, evidence: pick.url || site, lang, facts, signals,
     status: "new", foundAt: nowIso(), history: [{ at: nowIso(), kind: "found", source: cand.source, evidence: pick.url || site }]
@@ -1032,11 +1216,17 @@ export async function checkSite(cand, F, timeLeft) {
 }
 
 /* ---------------------------------------------------------------------------
-   5. THE SOURCES: OpenStreetMap, Wikidata, and the web when it is paid for
+   5. THE SOURCES (round eight, in turn): the seed, the web city by city, the
+      Australian charity register, Wikidata, OpenStreetMap; each paid search
+      only within its budget (the older web search is kept, off the walk)
 --------------------------------------------------------------------------- */
 export const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 export const WIKIDATA_URL = "https://query.wikidata.org/sparql";
+export const QLEVER_WD_URL = "https://qlever.dev/api/wikidata";   /* round eight: Wikidata answered in a second or two (7 October 2026) */
 export const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+export const OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models";
+export const ACNC_URL = "https://data.gov.au/data/api/3/action/datastore_search";
+export const ACNC_RESOURCE = "8fb32972-24e9-4c95-885e-7140be51be8a";   /* the ACNC register's CSV, in data.gov.au's datastore */
 /* round seven: only places with a website of their own (a place with an
    email tag and no site has nothing of its own to write from), the server
    given a minute, and the United States asked by region, since the whole
@@ -1068,25 +1258,38 @@ export function osmCandidates(json, cc0) {
   }
   return out;
 }
+
+/* WIKIDATA. Round eight: asked through QLever first (the public query
+   service timed out on the old question from a server on 7 October), the
+   public service after it; two questions, never a person: the region's
+   mosques with an official website (on QLever with every kind of mosque,
+   P31/P279*; on the public service, mosques themselves, which it answers in
+   seconds), and its Islamic schools, student societies, foundations and
+   charities (P140 Islam) with one. Labels by rdfs:label, which both answer. */
 const WD_COUNTRIES = "wd:Q16 wd:Q30 wd:Q145 wd:Q27 wd:Q408 wd:Q664 wd:Q258";
-/* the classes asked for, and the kind each is: schools, a madrasa, a
-   student society, foundations and charities, a non-profit */
-export const WD_KIND = Object.freeze({ Q3914: "school", Q9842: "school", Q159334: "school", Q2385804: "school", Q132834: "school",
+/* the classes asked for, and the kind each is: a mosque (round eight),
+   schools, a madrasa, a student society, foundations and charities, a
+   non-profit */
+export const WD_KIND = Object.freeze({ Q32815: "mosque", Q3914: "school", Q9842: "school", Q159334: "school", Q2385804: "school", Q132834: "school",
   Q1336920: "society", Q157031: "foundation", Q708676: "foundation", Q163740: "organisation" });
-export function wikidataQuery(page) {
-  const educators = page % 2 === 1;
-  const offset = Math.floor(page / 2) * 150;
-  if (educators) {
-    return "SELECT DISTINCT ?item ?itemLabel ?website ?cc WHERE {\n  VALUES ?country { " + WD_COUNTRIES + " }\n"
-      + "  VALUES ?occ { wd:Q37226 wd:Q1622272 wd:Q1234713 wd:Q974144 }\n"
-      + "  ?item wdt:P31 wd:Q5 ; wdt:P106 ?occ ; wdt:P27 ?country ; wdt:P856 ?website ; wdt:P140 wd:Q432 .\n"
-      + "  ?country wdt:P297 ?cc .\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nORDER BY ?item\nLIMIT 150 OFFSET " + offset;
-  }
-  return "SELECT DISTINCT ?item ?itemLabel ?website ?cc ?class ?placeLabel WHERE {\n  VALUES ?country { " + WD_COUNTRIES + " }\n"
-    + "  VALUES ?class { " + Object.keys(WD_KIND).map(q => "wd:" + q).join(" ") + " }\n"
-    + "  ?item wdt:P31 ?class ; wdt:P17 ?country ; wdt:P856 ?website ; wdt:P140 wd:Q432 .\n"
-    + "  ?country wdt:P297 ?cc .\n  OPTIONAL { ?item wdt:P131 ?place . }\n"
-    + "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nORDER BY ?item\nLIMIT 150 OFFSET " + offset;
+export const WD_PAGES = 2;
+export const WD_REST_MS = 7 * 86400000;      /* a whole pass, then a week's rest: the lists change slowly */
+const WD_PREFIXES = "PREFIX wd: <http://www.wikidata.org/entity/>\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n";
+export function wikidataQuery(page, onQlever) {
+  const mosques = (Number(page) || 0) % WD_PAGES === 0;
+  const what = mosques
+    ? "  ?item wdt:P31" + (onQlever ? "/wdt:P279*" : "") + " wd:Q32815 ; wdt:P17 ?country ; wdt:P856 ?website .\n  BIND(wd:Q32815 AS ?class)\n"
+    : "  VALUES ?class { " + Object.keys(WD_KIND).filter(q => q !== "Q32815").map(q => "wd:" + q).join(" ") + " }\n"
+      + "  ?item wdt:P31 ?class ; wdt:P17 ?country ; wdt:P856 ?website ; wdt:P140 wd:Q432 .\n";
+  /* the labels: rdfs:label on QLever (3 seconds for the mosques on 7
+     October); the public service's own label service there (the same
+     labels by rdfs:label took it 40 seconds) */
+  const labels = onQlever
+    ? "  OPTIONAL { ?item rdfs:label ?itemLabel . FILTER(LANG(?itemLabel) = \"en\") }\n"
+      + "  OPTIONAL { ?item wdt:P131 ?place . ?place rdfs:label ?placeLabel . FILTER(LANG(?placeLabel) = \"en\") }\n"
+    : "  OPTIONAL { ?item wdt:P131 ?place . }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n";
+  return WD_PREFIXES + "SELECT DISTINCT ?item ?itemLabel ?website ?cc ?class ?placeLabel WHERE {\n  VALUES ?country { " + WD_COUNTRIES + " }\n" + what
+    + "  ?country wdt:P297 ?cc .\n" + labels + "}\nLIMIT 1500";
 }
 export function wikidataCandidates(json) {
   const out = [];
@@ -1096,10 +1299,44 @@ export function wikidataCandidates(json) {
     const name = str(v("itemLabel"), 120), cc = String(v("cc")).toUpperCase();
     if (!name || /^Q\d+$/.test(name) || !REGION.includes(cc)) continue;
     const q = (v("class").match(/Q\d+$/) || [])[0];
-    out.push({ name, kind: q ? (WD_KIND[q] || "organisation") : "educator", city: str(v("placeLabel"), 80) || null, country: cc,
+    out.push({ name, kind: q ? (WD_KIND[q] || "organisation") : "organisation", city: str(v("placeLabel"), 80) || null, country: cc,
       website: siteUrl(v("website")), email: null, source: "wikidata", sourceRef: "wikidata:" + (v("item").match(/Q\d+$/) || [""])[0], evidence: v("item") || null });
   }
   return out;
+}
+
+/* THE AUSTRALIAN CHARITY REGISTER (round eight). The ACNC publishes every
+   registered charity, its legal and other names, its town and its website,
+   updated weekly (data.gov.au, CC BY 3.0 AU), and data.gov.au answers a
+   word search over it. The charities whose names say they are a mosque or
+   an Islamic place, with a website, are candidates; the house still reads
+   each site before anything is kept. A whole pass, then a week's rest. */
+export const ACNC_TERMS = Object.freeze(["mosque", "masjid", "islamic", "muslim", "quran", "madrasa", "madrasah", "jamia"]);
+export const ACNC_PAGE = 100;
+export const ACNC_REST_MS = 7 * 86400000;
+export const ISLAMIC_NAME_RX = /\b(mosques?|masjids?|masjed|musall?a|islam|islamic|muslims?|madrass?ah?|madrasa|jamia|jamiat|jame|quran|qur'?an|koran|ummah|dawah|da'?wah|darul|isoc)\b/i;
+export function acncUrl(term, offset) {
+  return ACNC_URL + "?resource_id=" + ACNC_RESOURCE + "&q=" + encodeURIComponent(String(term || "")) + "&limit=" + ACNC_PAGE + "&offset=" + Math.max(0, Number(offset) || 0)
+    + "&fields=" + encodeURIComponent("ABN,Charity_Legal_Name,Other_Organisation_Names,Town_City,State,Charity_Website");
+}
+const kindOfName = n => /\b(school|college|academy|madrass?ah?|madrasa|institute)\b/i.test(n) ? "school"
+  : /\b(students?|isoc|msa|university)\b/i.test(n) ? "society" : /\b(foundation|trust|fund)\b/i.test(n) ? "foundation" : "mosque";
+export function acncCandidates(json) {
+  const recs = json && json.result && Array.isArray(json.result.records) ? json.result.records : [];
+  const out = [];
+  for (const r of recs) {
+    if (!r || typeof r !== "object") continue;
+    const names = [r.Charity_Legal_Name].concat(String(r.Other_Organisation_Names || "").split(/\s*,\s*/)).map(x => str(x, 160)).filter(Boolean);
+    const named = names.find(n => ISLAMIC_NAME_RX.test(n));
+    if (!named) continue;
+    const website = siteUrl(String(r.Charity_Website || ""));
+    if (!website) continue;
+    const name = tidyName(named);
+    const abn = String(r.ABN || "").replace(/\D/g, "");
+    out.push({ name, kind: kindOfName(name), city: tidyName(r.Town_City) || null, country: "AU", website, email: null, source: "acnc",
+      sourceRef: abn ? "acnc:" + abn : null, evidence: abn ? "https://abr.business.gov.au/ABN/View?abn=" + abn : website });
+  }
+  return { cands: out, rows: recs.length };
 }
 
 /* THE WEB SEARCH, only when it is paid for. OpenRouter's web plugin, on one
@@ -1109,7 +1346,8 @@ export function wikidataCandidates(json) {
    worst case, and so does this search's own share, WEB_USD_MONTH. The
    actual cost is written to both ledgers. Anything else: no search, and a
    plain reason. It finds websites only; an address still comes from the
-   place's own pages. */
+   place's own pages. Round eight: kept, once a cycle, after the city
+   search (below), which is cheaper and finds more. */
 export const WEB_QUERIES = Object.freeze([
   { label: "Islamic weekend schools and madrasas that teach on Saturdays or Sundays", kind: "school" },
   { label: "Muslim student societies at universities and colleges", kind: "society" },
@@ -1139,6 +1377,62 @@ export async function webBudget(worstUsd) {
   } catch { return { ok: false, why: "the paid budget could not be read, so no web search (fail closed)" }; }
   return { ok: true, month, spent, mine };
 }
+/* one paid search, the same steps for each kind (round eight: shared by the
+   web search and the city search). The call is budgeted at one paid call's
+   ceiling (api/_llm.js PAID_CALL_MAX_USD), never only at its estimate, so a
+   search priced past its estimate still cannot carry the day past its cap;
+   the router's own reservation holds it before the request when it has one
+   (api/_llm.js paidReserve and paidSettle), and the hold becomes the actual
+   cost after. {sent:false, why} when no request was made; else {sent:true,
+   j (or null), why, costUsd, paidId} */
+async function paidWebCall(L, model, body, worstUsd) {
+  const ceiling = Number(L.PAID_CALL_MAX_USD);
+  const holdUsd = Number.isFinite(ceiling) && ceiling > worstUsd ? ceiling : worstUsd;
+  const b = await webBudget(holdUsd);
+  if (!b.ok) return { sent: false, why: b.why };
+  const reserve = typeof L.paidReserve === "function" && typeof L.paidSettle === "function";
+  let hold = null;
+  if (reserve) {
+    try { hold = await L.paidReserve(holdUsd, "web-search"); } catch { hold = { ok: false, why: "the paid budget could not be held" }; }
+    if (!hold || !hold.ok) return { sent: false, why: "no web search: " + str((hold && hold.why) || "the paid budget could not be held", 160) };
+  }
+  let r, j = null, why = "", paidId = null, timer;
+  try {
+    const F = netFetch();
+    r = await Promise.race([
+      F(OPENROUTER_URL, { method: "POST", headers: { "content-type": "application/json", Authorization: "Bearer " + String(process.env.OPENROUTER_API_KEY).trim(),
+        "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR Codex of Light" }, body: JSON.stringify(body) }),
+      new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("no answer in 30 s")), 30000); })
+    ]);
+    if (r.status === 402) {
+      try { await store([["SET", "nsoul:nocredit", nowIso() + " 402 (outreach web search)", "EX", "3600"]]); } catch { }
+      if (hold && hold.hold) { try { await L.paidSettle(hold.hold, { costUsd: 0, model, task: "web-search" }); } catch { } }
+      return { sent: true, nocredit: true, j: null, why: "OpenRouter has no credit (402), so no web search", costUsd: 0, paidId: null };
+    }
+    if (!r.ok) why = "the web search answered " + r.status;
+    else j = await r.json();
+  } catch (e) { why = "the web search did not answer (" + str(e && e.message || e, 80) + ")"; }
+  finally { clearTimeout(timer); }
+  /* charged: what OpenRouter says it cost, else what was held (a call
+     that may have been billed is never counted as free); an HTTP error
+     costs nothing */
+  const known = j && j.usage && j.usage.cost != null && isFinite(Number(j.usage.cost));
+  const used = known ? Number(j.usage.cost) : (r && !r.ok && r.status ? 0 : holdUsd);
+  const micro = Math.max(0, Math.ceil(used * 1e6));
+  const outcome = j ? null : { helped: false, note: "the search did not answer" };
+  if (reserve) {
+    /* the hold becomes the actual cost (or stays the worst case, unknown) */
+    try { const s = await L.paidSettle(hold.hold, { costUsd: known || (r && !r.ok && r.status) ? used : null, model, task: "web-search", outcome }); paidId = (s && s.paidId) || null; } catch { }
+    if (micro) { try { await store([["INCRBY", OK_KEYS.webSpend(b.month), String(micro)], ["EXPIRE", OK_KEYS.webSpend(b.month), String(70 * 86400)]]); } catch { } }
+  } else if (micro) {
+    try { await store([["INCRBY", K.spend(b.month), String(micro)], ["EXPIRE", K.spend(b.month), String(120 * 86400)], ["INCR", K.spend(b.month) + ":calls"],
+      ["INCRBY", OK_KEYS.webSpend(b.month), String(micro)], ["EXPIRE", OK_KEYS.webSpend(b.month), String(70 * 86400)]]); } catch { }
+    /* round four: the day's spend and a line in the ROI ledger, its outcome
+       what the search led to (the research fills it: a place kept from it) */
+    try { paidId = await L.paidRecord({ task: "web-search", model, costUsd: micro / 1e6, outcome }); } catch { }
+  }
+  return { sent: true, j, why, costUsd: micro / 1e6, paidId };
+}
 export async function webCandidates(n) {
   const q = WEB_QUERIES[n % WEB_QUERIES.length];
   const cc = REGION[Math.floor(n / WEB_QUERIES.length) % REGION.length];
@@ -1167,73 +1461,20 @@ export async function webCandidates(n) {
   const maxTokens = 700;
   const chars = messages.reduce((s, m) => s + m.content.length + 16, 0);
   const worstUsd = (Math.ceil(chars / 2) + WEB_RESULTS * 1000) * price.pr + maxTokens * price.co + price.rq + WEB_RESULTS * WEB_FEE_USD;
-  /* review fix, 7 October 2026: the call is budgeted at one paid call's
-     ceiling (api/_llm.js PAID_CALL_MAX_USD), never only at its estimate, so
-     a search priced past its estimate still cannot carry the day past its
-     cap; an estimate over the ceiling is refused by the router's own room */
-  const ceiling = Number(L.PAID_CALL_MAX_USD);
-  const holdUsd = Number.isFinite(ceiling) && ceiling > worstUsd ? ceiling : worstUsd;
-  const b = await webBudget(holdUsd);
-  if (!b.ok) return { ok: false, why: b.why, cands: [] };
-  /* review fix: the router's own reservation, when it has one (api/_llm.js
-     paidReserve and paidSettle): the hold sits in the day's and the month's
-     ledgers before the call, so two paid calls at once can never both pass
-     the cap; it then keeps both ledgers and the ROI line itself. Without
-     it, the ledgers are written here, as before. */
-  const reserve = typeof L.paidReserve === "function" && typeof L.paidSettle === "function";
-  let hold = null;
-  if (reserve) {
-    try { hold = await L.paidReserve(holdUsd, "web-search"); } catch { hold = { ok: false, why: "the paid budget could not be held" }; }
-    if (!hold || !hold.ok) return { ok: false, why: "no web search: " + str((hold && hold.why) || "the paid budget could not be held", 160), cands: [] };
-  }
-  let r, j = null, why = "", paidId = null, timer;
-  try {
-    const F = netFetch();
-    r = await Promise.race([
-      F(OPENROUTER_URL, { method: "POST", headers: { "content-type": "application/json", Authorization: "Bearer " + String(process.env.OPENROUTER_API_KEY).trim(),
-        "HTTP-Referer": "https://noorcodex.com", "X-Title": "NOOR Codex of Light" },
-        /* review fix: the engine is named. Unnamed, OpenRouter searches
-           natively for OpenAI, Anthropic and Google names, priced their own
-           way, past this estimate; Exa is the fee the estimate counts */
-        body: JSON.stringify({ model, messages, plugins: [{ id: "web", engine: WEB_ENGINE, max_results: WEB_RESULTS }], max_tokens: maxTokens, temperature: 0,
-          usage: { include: true }, provider: { data_collection: "deny", max_price: { prompt: L.DEEP_MAX_PROMPT_PER_MTOK, completion: L.DEEP_MAX_COMPLETION_PER_MTOK } } }) }),
-      new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("no answer in 30 s")), 30000); })
-    ]);
-    if (r.status === 402) {
-      try { await store([["SET", "nsoul:nocredit", nowIso() + " 402 (outreach web search)", "EX", "3600"]]); } catch { }
-      if (hold && hold.hold) { try { await L.paidSettle(hold.hold, { costUsd: 0, model, task: "web-search" }); } catch { } }
-      return { ok: false, why: "OpenRouter has no credit (402), so no web search", cands: [] };
-    }
-    if (!r.ok) why = "the web search answered " + r.status;
-    else j = await r.json();
-  } catch (e) { why = "the web search did not answer (" + str(e && e.message || e, 80) + ")"; }
-  finally { clearTimeout(timer); }
-  /* charged: what OpenRouter says it cost, else what was held (a call
-     that may have been billed is never counted as free); an HTTP error
-     costs nothing */
-  const known = j && j.usage && j.usage.cost != null && isFinite(Number(j.usage.cost));
-  const used = known ? Number(j.usage.cost) : (r && !r.ok && r.status ? 0 : holdUsd);
-  const micro = Math.max(0, Math.ceil(used * 1e6));
-  const outcome = j ? null : { helped: false, note: "the search did not answer" };
-  if (reserve) {
-    /* the hold becomes the actual cost (or stays the worst case, unknown) */
-    try { const s = await L.paidSettle(hold.hold, { costUsd: known || (r && !r.ok && r.status) ? used : null, model, task: "web-search", outcome }); paidId = (s && s.paidId) || null; } catch { }
-    if (micro) { try { await store([["INCRBY", OK_KEYS.webSpend(b.month), String(micro)], ["EXPIRE", OK_KEYS.webSpend(b.month), String(70 * 86400)]]); } catch { } }
-  } else if (micro) {
-    try { await store([["INCRBY", K.spend(b.month), String(micro)], ["EXPIRE", K.spend(b.month), String(120 * 86400)], ["INCR", K.spend(b.month) + ":calls"],
-      ["INCRBY", OK_KEYS.webSpend(b.month), String(micro)], ["EXPIRE", OK_KEYS.webSpend(b.month), String(70 * 86400)]]); } catch { }
-    /* round four: the day's spend and a line in the ROI ledger, its outcome
-       what the search led to (the research fills it: a place kept from it) */
-    try { paidId = await L.paidRecord({ task: "web-search", model, costUsd: micro / 1e6, outcome }); } catch { }
-  }
-  if (!j) return { ok: false, why: why || "no answer", cands: [], costUsd: micro / 1e6 };
-  const msg = (((j.choices || [])[0] || {}).message) || {};
+  /* review fix: the engine is named. Unnamed, OpenRouter searches natively
+     for OpenAI, Anthropic and Google names, priced their own way, past this
+     estimate; Exa is the fee the estimate counts */
+  const call = await paidWebCall(L, model, { model, messages, plugins: [{ id: "web", engine: WEB_ENGINE, max_results: WEB_RESULTS }], max_tokens: maxTokens, temperature: 0,
+    usage: { include: true }, provider: { data_collection: "deny", max_price: { prompt: L.DEEP_MAX_PROMPT_PER_MTOK, completion: L.DEEP_MAX_COMPLETION_PER_MTOK } } }, worstUsd);
+  if (!call.sent || call.nocredit) return { ok: false, why: call.why, cands: [] };
+  if (!call.j) return { ok: false, why: call.why || "no answer", cands: [], costUsd: call.costUsd };
+  const msg = (((call.j.choices || [])[0] || {}).message) || {};
   const parsed = jsonObject(msg.content);
   const cited = new Set(((msg.annotations || []).map(a => a && a.url_citation && a.url_citation.url).filter(Boolean)).map(hostOf).filter(Boolean));
   /* review fix: a site is kept only when the search itself cited it; an
      answer with no citations at all keeps nothing (a model may name any
      site, a real one or not) */
-  if (!cited.size) return { ok: false, why: "the search cited no sources, so none of the sites it named is kept", cands: [], costUsd: micro / 1e6, model, paidId };
+  if (!cited.size) return { ok: false, why: "the search cited no sources, so none of the sites it named is kept", cands: [], costUsd: call.costUsd, model, paidId: call.paidId };
   const cands = [];
   for (const x of (parsed && Array.isArray(parsed.places) ? parsed.places : []).slice(0, 8)) {
     const site = siteUrl(x && x.website);
@@ -1243,7 +1484,125 @@ export async function webCandidates(n) {
     cands.push({ name: str(x.name, 120), kind: ["school", "society", "mosque", "foundation"].includes(x.kind) ? x.kind : q.kind, city: str(x.city, 80) || null,
       country: xc, website: site, email: null, source: "web", sourceRef: "web:" + q.kind + ":" + cc, evidence: site });
   }
-  return { ok: true, cands, costUsd: micro / 1e6, model, paidId };
+  return { ok: true, cands, costUsd: call.costUsd, model, paidId: call.paidId };
+}
+
+/* THE CITY SEARCH (round eight). One question to one cheap search model
+   (perplexity/sonar on OpenRouter: 1 dollar a million tokens each way and
+   half a cent a search, about 0.6 cents in all), for one city of the region
+   at a time: its mosques and Islamic centres, its Islamic schools and
+   madrasas, and its universities' Muslim student societies, each with its
+   own website. The same budget as the web search (its share, the month's
+   cap, the day's cap, a paid call's ceiling), 20 searches a day at most.
+   It finds websites only: the house reads each site itself before anything
+   is kept, and a site the search did not cite must carry the place's own
+   name on its pages (verify: "name"), so a site it made up, or another
+   place's, is never kept. */
+export const WEB_MODEL = "perplexity/sonar";
+export const CITY_FEE_USD = 0.005;           /* its search fee a request (OpenRouter's list: web_search) */
+export const CITY_PER_DAY = 20;
+export const CITY_MAX = 15;                  /* places asked for a city */
+export const WEB_CITIES = Object.freeze({
+  GB: ["London (East London)", "Birmingham", "Bradford", "Manchester", "Leicester", "London (North London)", "Leeds", "Luton", "Blackburn", "Sheffield",
+    "London (West London)", "Glasgow", "Bolton", "Oldham", "Kirklees (Dewsbury and Huddersfield)", "London (South London)", "Preston", "Rochdale", "Nottingham",
+    "Coventry", "Cardiff", "Bristol", "Slough", "Burnley", "Edinburgh", "Derby", "Stoke-on-Trent", "Peterborough", "Liverpool", "Newcastle upon Tyne",
+    "Middlesbrough", "High Wycombe", "Reading", "Wolverhampton", "Walsall", "Sandwell", "Luton and Dunstable", "Milton Keynes", "Northampton", "Southampton",
+    "Portsmouth", "Oxford", "Cambridge", "Watford", "Crawley", "Swansea", "Newport", "Belfast", "Aberdeen", "Dundee", "Brighton", "Ipswich", "Norwich",
+    "Bedford", "Gloucester", "Halifax", "Keighley", "Batley", "Accrington", "Nelson and Colne", "Wakefield", "Bury", "Stockport", "Hull", "Sunderland", "Exeter", "Plymouth"],
+  US: ["New York City (Brooklyn)", "Chicago", "Houston", "Dearborn", "New York City (Queens)", "Dallas", "Los Angeles", "Philadelphia", "Washington DC area",
+    "Atlanta", "Detroit", "Paterson and Clifton", "Minneapolis", "Columbus Ohio", "Northern Virginia", "San Jose and Santa Clara", "Orange County California",
+    "Jersey City", "Boston", "Baltimore", "Austin", "San Antonio", "Fort Worth", "Phoenix", "San Diego", "San Francisco Bay Area", "Sacramento", "Seattle",
+    "Portland Oregon", "Denver", "Miami", "Orlando", "Tampa", "Jacksonville", "Charlotte", "Raleigh and Durham", "Richmond Virginia", "Nashville", "Memphis",
+    "Louisville", "Indianapolis", "Cleveland", "Cincinnati", "Toledo", "Milwaukee", "St. Louis", "Kansas City", "Omaha", "Oklahoma City", "Tulsa",
+    "New Orleans", "Birmingham Alabama", "Little Rock", "Albuquerque", "Tucson", "Las Vegas", "Salt Lake City", "Boise", "Pittsburgh", "Buffalo",
+    "Rochester New York", "Albany New York", "Hartford", "Providence", "Newark New Jersey", "New York City (the Bronx)", "Staten Island", "Long Island",
+    "Fresno", "Riverside and San Bernardino", "Bakersfield", "Lansing", "Grand Rapids", "Ann Arbor", "Madison Wisconsin", "Des Moines", "Wichita", "Lexington Kentucky",
+    "Knoxville", "Chattanooga", "Columbia South Carolina", "Greensboro", "Savannah", "Tallahassee", "Gainesville Florida", "El Paso", "Lubbock", "Anchorage", "Honolulu"],
+  CA: ["Toronto", "Mississauga", "Brampton", "Montreal", "Ottawa", "Calgary", "Edmonton", "Vancouver", "Surrey British Columbia", "Scarborough", "Markham",
+    "Winnipeg", "Hamilton Ontario", "London Ontario", "Windsor Ontario", "Kitchener and Waterloo", "Halifax", "Regina", "Saskatoon", "Oakville and Milton",
+    "Ajax and Pickering", "Oshawa", "Burnaby", "Quebec City", "Fredericton", "St. John's Newfoundland", "Victoria British Columbia", "Kelowna", "Barrie", "Guelph"],
+  AU: ["Sydney (South West)", "Melbourne (North)", "Sydney (West)", "Brisbane", "Perth", "Adelaide", "Melbourne (South East)", "Canberra", "Gold Coast",
+    "Newcastle New South Wales", "Wollongong", "Hobart", "Darwin", "Toowoomba", "Shepparton", "Cairns", "Townsville", "Geelong", "Logan Queensland", "Parramatta"],
+  IE: ["Dublin", "Cork", "Galway", "Limerick", "Waterford", "Dundalk", "Ballyhaunis", "Athlone", "Sligo", "Navan"],
+  NZ: ["Auckland", "Wellington", "Christchurch", "Hamilton New Zealand", "Dunedin", "Palmerston North", "Hutt Valley", "Nelson New Zealand"],
+  ZA: ["Cape Town", "Johannesburg", "Durban", "Pretoria", "Gqeberha (Port Elizabeth)", "Pietermaritzburg", "Lenasia", "Benoni", "Polokwane",
+    "Kimberley", "East London South Africa", "Bloemfontein", "KwaDukuza (Stanger)", "Ladysmith", "Newcastle KwaZulu-Natal", "Rustenburg", "Mahikeng", "Laudium", "Mayfair Johannesburg", "Athlone Cape Town"]
+});
+let CITY_LIST = null;
+/* the cities in turn, the countries mixed from the start */
+export function cityList() {
+  if (CITY_LIST) return CITY_LIST;
+  const lists = REGION.map(cc => (WEB_CITIES[cc] || []).map(c => [c, cc]));
+  const total = lists.reduce((s, l) => s + l.length, 0);
+  const out = [];
+  for (let i = 0; out.length < total; i++) for (const l of lists) if (i < l.length) out.push(l[i]);
+  CITY_LIST = out;
+  return out;
+}
+export function webCity(n) { const l = cityList(); const i = Math.floor(Number(n) || 0); return l[((i % l.length) + l.length) % l.length]; }
+/* the search model's live price, from OpenRouter's public list, six hours
+   in memory; a price that is not a fixed number, or past the ceilings the
+   deep tier answers to, refuses it */
+let webPriceCache = { at: 0, pricing: null, read: false };
+export function forgetWebPrice() { webPriceCache = { at: 0, pricing: null, read: false }; }
+async function webModelPrice(model) {
+  const now = Date.now();
+  if (!webPriceCache.read || now - webPriceCache.at > 6 * 3600000) {
+    let timer;
+    try {
+      const F = netFetch();
+      const r = await Promise.race([F(OPENROUTER_MODELS_URL, { headers: { accept: "application/json" } }),
+        new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("no answer in 8 s")), 8000); })]);
+      if (!r.ok) throw new Error("answered " + r.status);
+      const j = await r.json();
+      const m = (j && Array.isArray(j.data) ? j.data : []).find(x => x && x.id === model);
+      webPriceCache = { at: now, pricing: m && m.pricing && typeof m.pricing === "object" ? m.pricing : null, read: true };
+    } catch (e) {
+      if (!webPriceCache.read) return { ok: false, why: "the city search's live price could not be read (" + str(e && e.message || e, 60) + ")" };
+    } finally { clearTimeout(timer); }
+  }
+  const p = webPriceCache.pricing;
+  if (!p) return { ok: false, why: model + " is not on OpenRouter's price list today" };
+  const num = v => (v == null || v === "") ? 0 : Number(v);
+  const pr = num(p.prompt), co = Math.max(num(p.completion), num(p.internal_reasoning)), rq = num(p.request), ws = num(p.web_search);
+  if (![pr, co, rq, ws].every(x => isFinite(x) && x >= 0)) return { ok: false, why: "the city search's live price is not a fixed number" };
+  if (pr * 1e6 > 5 || co * 1e6 > 20 || rq > 0.01 || ws > 0.02) return { ok: false, why: "the city search's live price is over its ceiling" };
+  return { ok: true, pr, co, rq, ws: ws || CITY_FEE_USD };
+}
+export async function citySearch(n) {
+  const [city, cc] = webCity(n);
+  const pre = await webBudget(CITY_FEE_USD + 0.002);
+  if (!pre.ok) return { ok: false, why: pre.why, cands: [], city, cc };
+  const price = await webModelPrice(WEB_MODEL);
+  if (!price.ok) return { ok: false, why: price.why, cands: [], city, cc };
+  let L;
+  try { L = await routerMod(); } catch { return { ok: false, why: "the model router could not be loaded", cands: [], city, cc }; }
+  const messages = [
+    { role: "system", content: "ROLE: outreach-city-search\nFrom the web, find the Muslim places of one city: its mosques and Islamic centres, its Islamic schools, madrasas and weekend schools, and the Muslim student societies of its universities. Give each one's own official website, never a Facebook or Instagram page or a directory listing. Never give an email address, a phone number or a person's name. Answer with JSON only: {\"places\": [{\"name\", \"website\", \"city\", \"kind\": \"mosque\"|\"school\"|\"society\"|\"foundation\"}]}." },
+    { role: "user", content: "List up to " + CITY_MAX + " Muslim places in " + city + ", " + COUNTRY_NAME[cc] + " that have a website of their own." }
+  ];
+  const maxTokens = 1400;
+  const chars = messages.reduce((s, m) => s + m.content.length + 16, 0);
+  const worstUsd = Math.ceil(chars / 2) * price.pr + maxTokens * price.co + price.rq + price.ws;
+  const call = await paidWebCall(L, WEB_MODEL, { model: WEB_MODEL, messages, max_tokens: maxTokens, temperature: 0, usage: { include: true },
+    web_search_options: { search_context_size: "low" }, provider: { data_collection: "deny" } }, worstUsd);
+  if (!call.sent || call.nocredit) return { ok: false, why: call.why, cands: [], city, cc };
+  if (!call.j) return { ok: false, why: call.why || "no answer", cands: [], costUsd: call.costUsd, city, cc };
+  const msg = (((call.j.choices || [])[0] || {}).message) || {};
+  const parsed = jsonObject(msg.content);
+  const cited = new Set([].concat((msg.annotations || []).map(a => a && a.url_citation && a.url_citation.url), Array.isArray(call.j.citations) ? call.j.citations : [])
+    .filter(x => typeof x === "string" && x).map(hostOf).filter(Boolean));
+  const cands = [];
+  for (const x of (parsed && Array.isArray(parsed.places) ? parsed.places : []).slice(0, CITY_MAX)) {
+    const site = siteUrl(x && x.website);
+    const name = str(x && x.name, 120);
+    if (!site || !name || /@|https?:/i.test(name)) continue;
+    const h = hostOf(site);
+    if (NOT_OWN_SITE.test(h)) continue;
+    cands.push({ name, kind: ["school", "society", "mosque", "foundation"].includes(x.kind) ? x.kind : "mosque", city: str(x.city, 80) || city.replace(/\s*\(.*\)$/, ""),
+      country: cc, website: site, email: null, source: "web", sourceRef: "web:city:" + cc + ":" + str(city, 60), evidence: site, ...(cited.has(h) ? {} : { verify: "name" }) });
+  }
+  return { ok: true, cands, costUsd: call.costUsd, model: WEB_MODEL, paidId: call.paidId, city, cc };
 }
 function jsonObject(raw) {
   const s = String(raw == null ? "" : raw).replace(/<think>[\s\S]*?<\/think>/gi, " ");
@@ -1260,15 +1619,22 @@ function jsonObject(raw) {
 /* ---------------------------------------------------------------------------
    6. research: one run, about 45 seconds, inside its hand's minute
 --------------------------------------------------------------------------- */
-/* the steps the source walk takes in turn, the countries mixed from the
-   start; a web step is passed over when it is not paid for */
-/* round seven: the seed first (places the map listed with a website, read
-   on 7 October 2026 and kept in api/_outreach-seed.js, so the first runs
-   never wait on a busy map server), then the live sources in turn */
-export const SOURCE_CYCLE = Object.freeze(["seed", "osm:GB", "osm:CA", "wikidata", "osm:US-NE", "osm:AU", "web", "osm:US-SE", "osm:IE",
-  "osm:US-MW", "osm:NZ", "wikidata", "osm:US-S", "osm:ZA", "osm:US-W", "web"]);
+/* the steps the source walk takes in turn. Round seven: the seed first
+   (places the map listed with a website, read through a browser and kept in
+   api/_outreach-seed.js, so the first runs never wait on a busy map
+   server). Round eight: then the city search every other step, between the
+   Australian charity register, Wikidata and the map (the older web search,
+   webCandidates, is no longer on the walk: the city search finds more for
+   less); a paid step is passed over when it is not paid for, a source that
+   failed rests (SOURCE_REST_MS), and the walk goes on to the next source in
+   the same run while the run still has room for one */
+export const SOURCE_CYCLE = Object.freeze(["seed", "city", "acnc", "city", "wikidata", "city", "osm:GB", "city", "acnc", "city", "osm:CA", "city",
+  "osm:US-NE", "city", "osm:AU", "city", "osm:US-SE", "city", "osm:IE", "city", "osm:US-MW", "city", "osm:NZ", "city", "osm:US-S", "city", "osm:ZA", "city", "osm:US-W"]);
+export const SOURCE_REST_MS = Object.freeze({ osm: 3 * 3600000, wikidata: 3600000, acnc: 3600000, city: 1800000, web: 1800000 });
+const restKind = step => (String(step).startsWith("osm:") ? "osm" : String(step));
 let SEED_LIST = null;
 async function seedList() {
+  if (Array.isArray(outreachSeams.seed)) return outreachSeams.seed;
   if (SEED_LIST) return SEED_LIST;
   try { const m = await import("./_outreach-seed.js"); SEED_LIST = Array.isArray(m.SEED) ? m.SEED : []; } catch { SEED_LIST = []; }
   return SEED_LIST;
@@ -1300,10 +1666,19 @@ async function sourceStep(cursor, F, notes, left) {
     cursor.seed = at + SEED_TAKE;
     return { step: "seed", cands: all.slice(at, at + SEED_TAKE).map(seedCandidate).filter(Boolean) };
   }
+  /* round eight: a source that failed rests before it is asked again */
+  const rest = cursor.rest && typeof cursor.rest === "object" ? cursor.rest : (cursor.rest = {});
+  const resting = new Set();
+  const tire = (kind, why) => { rest[kind] = nowMs() + (SOURCE_REST_MS[kind] || 3600000); notes.push(why); };
+  /* after a source fails, the next is asked in the same run while the run
+     still has room for a source and some sites */
+  const roomForMore = () => typeof left !== "function" || left() > 15000;
   for (let i = 0; i < SOURCE_CYCLE.length; i++) {
     const step = SOURCE_CYCLE[(n + i) % SOURCE_CYCLE.length];
     cursor.n = n + i + 1;
     if (step === "seed") continue;
+    const kind = restKind(step);
+    if (Number(rest[kind]) > nowMs()) { resting.add(kind); continue; }
     if (step.startsWith("osm:")) {
       const cc = step.slice(4);
       /* round seven: the mirrors in turn, each within what the run has left */
@@ -1319,18 +1694,63 @@ async function sourceStep(cursor, F, notes, left) {
         } catch (e) { said.push(hostOf(url) + ": " + str(e && e.message || e, 60)); }
       }
       cursor.ov = (start + 1) % OVERPASS_URLS.length;
-      notes.push("OpenStreetMap (" + cc + ") did not answer: " + str(said.join("; "), 200));
+      tire("osm", "OpenStreetMap (" + cc + ") did not answer: " + str(said.join("; "), 200));
+      if (roomForMore()) continue;
       return { step, cands: [] };
     }
     if (step === "wikidata") {
       const page = Number(cursor.wd) || 0;
-      cursor.wd = page + 1;
+      const said = [];
+      for (const [base, onQlever] of [[QLEVER_WD_URL, true], [WIKIDATA_URL, false]]) {
+        if (typeof left === "function" && left() < 8000) break;
+        try {
+          const j = await F.api(base + "?format=json&query=" + encodeURIComponent(wikidataQuery(page, onQlever)), { headers: { accept: "application/sparql-results+json" } },
+            Math.min(onQlever ? 15000 : SOURCE_TIMEOUT_MS, budget()));
+          if (!j || !j.results || !Array.isArray(j.results.bindings)) throw new Error("answered with no list");
+          cursor.wd = page + 1;
+          if ((page + 1) % WD_PAGES === 0) rest.wikidata = nowMs() + WD_REST_MS;   /* a whole pass: the next in a week */
+          return { step, cands: wikidataCandidates(j) };
+        } catch (e) { said.push(hostOf(base) + ": " + str(e && e.message || e, 60)); }
+      }
+      tire("wikidata", "Wikidata did not answer: " + str(said.join("; "), 160));
+      if (roomForMore()) continue;
+      return { step, cands: [] };
+    }
+    if (step === "acnc") {
+      const c = cursor.acnc && typeof cursor.acnc === "object" ? cursor.acnc : { t: 0, off: 0 };
+      const t = Math.max(0, Number(c.t) || 0) % ACNC_TERMS.length, off = Math.max(0, Number(c.off) || 0);
       try {
-        const j = await F.api(WIKIDATA_URL + "?format=json&query=" + encodeURIComponent(wikidataQuery(page)), { headers: { accept: "application/sparql-results+json" } }, budget());
-        const cands = wikidataCandidates(j);
-        if (!cands.length && page > 1) cursor.wd = 0;   /* the end of the list: from the start again next time */
-        return { step, cands };
-      } catch (e) { notes.push("Wikidata did not answer: " + str(e && e.message || e, 80)); return { step, cands: [] }; }
+        const j = await F.api(acncUrl(ACNC_TERMS[t], off), { headers: { accept: "application/json" } }, Math.min(20000, budget()));
+        if (!j || j.success === false || !j.result) throw new Error("answered with no list");
+        const got = acncCandidates(j);
+        if (got.rows < ACNC_PAGE) {
+          /* this word is read to its end: the next word, and after the last a week's rest */
+          cursor.acnc = { t: (t + 1) % ACNC_TERMS.length, off: 0 };
+          if (t + 1 >= ACNC_TERMS.length) rest.acnc = nowMs() + ACNC_REST_MS;
+        } else cursor.acnc = { t, off: off + ACNC_PAGE };
+        return { step, cands: got.cands };
+      } catch (e) {
+        tire("acnc", "the Australian charity register did not answer: " + str(e && e.message || e, 80));
+        if (roomForMore()) continue;
+        return { step, cands: [] };
+      }
+    }
+    if (step === "city") {
+      const day = dayOf();
+      let asked = 0;
+      try { asked = parseInt((await store([["GET", OK_KEYS.cityDay(day)]]))[0], 10) || 0; } catch { asked = CITY_PER_DAY; }
+      if (asked >= CITY_PER_DAY) { notes.push("the day's " + CITY_PER_DAY + " city searches are made"); continue; }
+      const w = Number(cursor.city) || 0;
+      const r = await citySearch(w);
+      if (!r.ok && !r.costUsd && /no OpenRouter key|budget|spent|no credit|ledger|ceiling|price|could not be loaded|would not hold/.test(r.why)) { notes.push("no city search: " + r.why); continue; }
+      cursor.city = w + 1;
+      try { await store([["INCR", OK_KEYS.cityDay(day)], ["EXPIRE", OK_KEYS.cityDay(day), String(3 * 86400)]]); } catch { }
+      if (!r.ok) {
+        tire("city", "the city search (" + r.city + "): " + r.why);
+        if (roomForMore()) continue;
+        return { step, cands: [], costUsd: r.costUsd || 0 };
+      }
+      return { step, cands: r.cands || [], costUsd: r.costUsd || 0, paidId: r.paidId || null, city: r.city };
     }
     if (step === "web") {
       const w = Number(cursor.web) || 0;
@@ -1341,6 +1761,7 @@ async function sourceStep(cursor, F, notes, left) {
       return { step, cands: r.cands || [], costUsd: r.costUsd || 0, paidId: r.paidId || null };
     }
   }
+  if (resting.size) notes.push("resting after not answering: " + [...resting].join(", "));
   return { step: null, cands: [] };
 }
 /* the next candidate to check: the countries in turn */
@@ -1367,13 +1788,21 @@ async function researchRun(args, ctx) {
   if (!locked) return { ok: false, busy: true, error: "another search for places is under way" };
   const notes = [], rejected = {}, added = [];
   let checked = 0, step = null, webPaid = null, webKept = 0;   /* round four: what a paid web search led to */
+  let given = 0, stepCity = null;                              /* round eight: what the source gave, for the log */
   try {
-    const r0 = await store([["GET", COUNT.places(today)], ["GET", OK_KEYS.cands], ["GET", OK_KEYS.cursor]]);
+    const r0 = await store([["GET", COUNT.places(today)], ["GET", OK_KEYS.cands], ["GET", OK_KEYS.cursor], ["GET", OK_KEYS.seenV]]);
     const already = parseInt(r0[0], 10) || 0;
     if (already >= PLACES_PER_DAY) return { ok: true, added: 0, checked: 0, note: "the day's " + PLACES_PER_DAY + " new places are already found", undo: { kind: "noop", note: "nothing was added" } };
     let pool = parse(r0[1], []);
     pool = Array.isArray(pool) ? pool.filter(x => x && x.name && (x.website || x.email)) : [];
     const cursor = parse(r0[2], null) || {};
+    /* round eight, once: the sites the old rules set aside are read again
+       under the new ones (more pages, guarded addresses, two facts), and
+       the seed from its start (a place already kept is passed over unread) */
+    if (String(r0[3] || "") !== SEEN_V) {
+      await store([["DEL", OK_KEYS.seen], ["SET", OK_KEYS.seenV, SEEN_V]]);
+      cursor.seed = 0;
+    }
     const F = makeFetcher(ctx && ctx.io);
     /* round six: a source is asked only while its own clock still fits in
        the run (a short run from the tick may have no room for it) */
@@ -1381,6 +1810,8 @@ async function researchRun(args, ctx) {
     else if (pool.length < POOL_LOW) {
       const s = await sourceStep(cursor, F, notes, left);
       step = s.step;
+      given = (s.cands || []).length;
+      if (s.city) stepCity = s.city;
       webPaid = s.paidId || null;
       const have = new Set(pool.map(x => hostOf(x.website || "") || lower(x.email)));
       for (const c of s.cands) {
@@ -1461,7 +1892,7 @@ async function researchRun(args, ctx) {
   if (webPaid) { try { const L = await routerMod(); await L.paidOutcome(webPaid, { helped: webKept > 0, note: webKept ? webKept + " place(s) it found published an address of their own" : "none of what it found was kept this run" }); } catch { } }
   const note = added.length ? "found " + added.length + " new place" + (added.length === 1 ? "" : "s") + " that published an address of their own"
     : "no new place this time (" + checked + " checked)" + (notes.length ? "; " + str(notes[0], 160) : "");
-  return { ok: true, added: added.length, checked, step, rejected, notes: notes.slice(0, 5), note,
+  return { ok: true, added: added.length, checked, step, given, ...(stepCity ? { city: stepCity } : {}), rejected, notes: notes.slice(0, 5), note,
     places: added.slice(0, 20), undo: added.length ? { kind: "research-remove", ids: added.map(a => a.id) } : { kind: "noop", note: "nothing was added" } };
 }
 /* the exact inverse: the places this run added, while not one of them has
@@ -1491,27 +1922,27 @@ export const OFFERS = Object.freeze({
   "weekend-school": { path: "/school", label: "a free library for its weekend school",
     subject: "Free lessons and printables for your weekend school",
     give: "The School at " + SITE + "/school: the full course, for schools and organisations, a complete Islamic curriculum with Qur'an and Arabic tracks and a printable ijazah for each track, all free",
-    step: "a one line reply is enough, and we will send the pages that fit the ages they teach" },
+    step: "it is all free and asks nothing in return; if it helps, a one line reply is enough, and we will send the pages that fit the ages they teach" },
   youth: { path: "/teens", label: "a free room for its young people",
     subject: "A free room for your young people's questions",
     give: "For Teenagers at " + SITE + "/teens: written for them, not about them, on identity, doubts and questions, friends and pressure, screens and hard days at home, all free",
-    step: "a one line reply is enough, and we will send the pages that fit their sessions" },
+    step: "it is all free and asks nothing in return; if it helps, a one line reply is enough, and we will send the pages that fit their sessions" },
   society: { path: "/madrasa", label: "free study material for its members",
     subject: "Free study material for your society",
     give: "The Classroom at " + SITE + "/madrasa: the whole curriculum, in order, with 16 tracks and 106 interactive lessons, free for good",
-    step: "a one line reply is enough, and we will send the tracks that fit what they study" },
+    step: "it is all free and asks nothing in return; if it helps, a one line reply is enough, and we will send the tracks that fit what they study" },
   school: { path: "/school", label: "a free curriculum for its classes",
     subject: "A free Islamic curriculum for your classes",
     give: "The School at " + SITE + "/school: the full course, for schools and organisations, from the early years to adolescence, with Qur'an and Arabic tracks, all free",
-    step: "a one line reply is enough, and we will send the parts that fit their classes" },
+    step: "it is all free and asks nothing in return; if it helps, a one line reply is enough, and we will send the parts that fit their classes" },
   masjid: { path: "/masjid", label: "the free Masjid Toolbox and reels for its screens",
     subject: "Free tools for your masjid",
     give: "The Masjid Toolbox at " + SITE + "/masjid: boards, timetables and printables, with a prayer board, a khutba builder, a printable timetable and a qibla tool, and the short reels the house makes, free to show on its screens",
-    step: "a one line reply is enough, and we will send the links that fit" },
+    step: "it is all free and asks nothing in return; if it helps, a one line reply is enough, and we will send the links that fit" },
   reel: { path: "/", label: "a free library to share, and a reel together",
     subject: "A free library, and a reel together",
     give: "the library at " + SITE + ", free for anyone it serves, and a short reel made together about a question its community asks",
-    step: "a one line reply is enough to begin" }
+    step: "it is all free and asks nothing in return; if a reel together would help, a one line reply is enough to begin" }
 });
 export function offerFor(p) {
   const s = (p && p.signals) || {};
@@ -1530,6 +1961,7 @@ const WRITER_SYSTEM = [
   "Rules, every one:",
   "- Use ONLY the FACTS given about the place. Never add anything about it that the facts do not say: no programme, day, time, number, person, event or praise of something they did not write.",
   "- Offer exactly the free thing in OFFER, with its link, and end with the one easy next step in STEP.",
+  "- The letter gives and asks for nothing in return: a reply is only something they may do if it helps them.",
   "- Never promise or ask for money, never ask them to share, post or follow anything, never accept terms, never ask for a meeting or a call, never give a religious ruling, never name a person.",
   "- Begin with \"Assalamu alaykum,\" and keep the body under 130 words.",
   "- No signature and no closing line: the house adds them.",
@@ -1947,7 +2379,7 @@ async function sendRun(args, ctx = {}) {
   if (Date.parse(slot.sendAt) < nowMs() + SLOT.leadMs / 2) { const again = await takeSlot(p, "outreach"); if (again.ok) slot = again; }
   let q;
   try {
-    q = await m.M.queueOutgoing({ kind: "outreach", to: p.email, toName: p.name, subject: w.subject, text: w.text, placeId: p.id, why: str(ctx.why, 400) || "a first letter to a place that teaches", goal: GOAL_ID },
+    q = await m.M.queueOutgoing({ kind: "outreach", to: p.email, toName: p.name, subject: w.subject, text: w.text, placeId: p.id, why: str(ctx.why, 400) || "a first letter to a mosque or an Islamic place", goal: GOAL_ID },
       { actor: ctx.actor || "soul", cycle: ctx.cycle || null, viaHand: true, sendAt: slot.sendAt });
   } catch (e) { q = { ok: false, status: "held", reason: "the mailbox could not take the letter: " + str(e && e.message || e, 120) }; }
   const status = q && q.status;
@@ -2061,7 +2493,7 @@ async function followupRun(args, ctx = {}) {
 export const OUTREACH_HANDS = {
   research: { tier: "R1", args: "{}",
     /* round six: 75 a day, the daily hand and the tick's short searches together */
-    describe: "look for places that teach Islam in the English-speaking world (mosques and Islamic centres from OpenStreetMap; schools, student societies, foundations and educators from Wikidata; a web search only when the month's paid budget allows), keeping a place only when its own pages publish its address for contact, with 3 to 6 short facts from those pages; it reads politely (robots.txt honoured, one request a second, nothing from any other site); at most 75 new places a day, found here and in short searches between the daily cycles while fewer than 100 places are ready, and it writes to no one",
+    describe: "look for mosques and Islamic places in the English-speaking world (the map's own list kept in the code, a cheap web search city by city, the Australian charity register, Wikidata, and OpenStreetMap when its servers answer; a paid search only within its budget), keeping a place only when its own pages publish its address for contact and read as a mosque's or an Islamic place's, with 2 to 6 short facts from those pages; it reads politely (robots.txt honoured, one request a second on each site, nothing from any other site); at most 150 new places a day, found here and in short searches between the daily cycles while fewer than 150 places are ready, and it writes to no one",
     run: researchRun, undo: researchUndo },
   "outreach-send": { tier: "R2", caps: [], ownCapOnly: true, args: "{placeId, name, city, country, offer}",
     guardArgs: ["placeId", "name", "city", "country", "offer"],
@@ -2079,12 +2511,12 @@ const who = a => (str(a && a.name, 100) || "a place") + (a && a.city ? ", " + st
 const offerLabel = a => (a && OFFERS[a.offer] ? ": " + OFFERS[a.offer].label : "");
 export const OUTREACH_WORDS = Object.freeze({
   now: {
-    research: () => "Look for places that teach, from their own pages",
+    research: () => "Look for mosques and Islamic places, from their own pages",
     "outreach-send": a => "Write to " + who(a) + offerLabel(a),
     "outreach-followup": a => "Follow up with " + who(a)
   },
   past: {
-    research: () => "Looked for places that teach, from their own pages",
+    research: () => "Looked for mosques and Islamic places, from their own pages",
     "outreach-send": a => "Wrote to " + who(a) + offerLabel(a),
     "outreach-followup": a => "Followed up with " + who(a)
   }
@@ -2234,7 +2666,7 @@ const kindLine = p => {
   const s = p.signals || {};
   if (s.weekendSchool) return "runs a weekend school, its own pages say";
   if (s.youth) return "works with young people, its own pages say";
-  return "is " + (KIND_WORD[p.kind] || "a place that teaches") + ", its own pages say";
+  return "is " + (KIND_WORD[p.kind] || "an Islamic place") + ", its own pages say";
 };
 function placeWords(p) {
   const name = str(p.name, 100), city = p.city ? str(p.city, 60) : "";
@@ -2293,7 +2725,7 @@ export async function paceIntents(date, opts = {}) {
   const r = await store([["GET", COUNT.places(today)], ["GET", COUNT.letters(today)], ["GET", COUNT.followups(today)]]);
   const found = parseInt(r[0], 10) || 0;
   if (pc.ready < RESEARCH_LOW && found < PLACES_PER_DAY && !planned.some(i => i && i.action === "research")) {
-    out.intents.push({ action: "research", args: {}, why: "Fewer places are ready for a first letter than the coming days need; look for more places that teach, from their own published pages.",
+    out.intents.push({ action: "research", args: {}, why: "Fewer places are ready for a first letter than the coming days need; look for more mosques and Islamic places, from their own published pages.",
       expectedEffect: "more places ready for a first letter", metric: "outreach.places", evidence: {}, goal: GOAL_ID, seeded: true, outreach: true });
   }
   const lettersToday = parseInt(r[1], 10) || 0, followupsToday = parseInt(r[2], 10) || 0;
@@ -2375,7 +2807,7 @@ export async function outreachTick(opts = {}) {
   const o = opts && typeof opts === "object" ? opts : {};
   const t0 = Date.now();
   const until = Number(o.until) > 0 ? Number(o.until) : t0 + LIMITS.researchMs + TICK_MARGIN_MS;
-  const res = (ok, ran, why, added, checked) => ({ ok, ran, added: added || 0, checked: checked || 0, why: why ? str(why, 200) : null });
+  const res = (ok, ran, why, added, checked, more) => ({ ok, ran, added: added || 0, checked: checked || 0, why: why ? str(why, 200) : null, ...(more || {}) });
   try {
     const box = Math.min(t0 + LIMITS.researchMs, until - TICK_MARGIN_MS);
     if (box - Date.now() <= LIMITS.siteMinMs) return res(true, false, "too little time is left in this tick for a search");
@@ -2397,8 +2829,12 @@ export async function outreachTick(opts = {}) {
       const k = OK_KEYS.tickDay(today);
       await store([["HINCRBY", k, "runs", "1"], ["HINCRBY", k, "added", String(r.added || 0)], ["HINCRBY", k, "checked", String(r.checked || 0)], ["EXPIRE", k, String(3 * 86400)]]);
     } catch { /* the places themselves are counted already */ }
-    if (r.ok === false) return res(false, true, r.error, r.added, r.checked);
-    return res(true, true, r.note, r.added, r.checked);
+    /* round eight: which source this run asked, what it gave, and the main
+       reasons sites were set aside, for the log and the start's panel */
+    const top = Object.entries(r.rejected || {}).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => v + " " + str(k, 70));
+    const more = { source: r.step || null, given: Number(r.given) || 0, ...(r.city ? { city: r.city } : {}), ...(top.length ? { setAside: top } : {}) };
+    if (r.ok === false) return res(false, true, r.error, r.added, r.checked, more);
+    return res(true, true, r.note, r.added, r.checked, more);
   } catch (e) { return res(false, false, "the search for places could not run: " + str(e && e.message || e, 160)); }
 }
 

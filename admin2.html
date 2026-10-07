@@ -2742,7 +2742,7 @@ function hMailPaint(j,prev,arrive){
    the outreach. Pressed, a live run opens inside the card (never a sheet, so
    the rest of Home stays in reach) and walks three steps, each a line with
    its state and its seconds:
-     1. it looks for places that teach (POST {action:"outreach-start",
+     1. it looks for mosques and Islamic places (POST {action:"outreach-start",
         step:"research"}, up to about 50 seconds each, at most four times
         while fewer than 10 places are ready);
      2. it plans the first letters (POST step:"plan", up to five minutes),
@@ -2762,7 +2762,7 @@ function hMailPaint(j,prev,arrive){
    With less motion asked for, nothing pulses and nothing rises in. */
 var OUT={run:null,used:false,usedAt:null};
 var O_MS={cycle:15000,firstCycle:2500,watch:20000,tick:60000,home:60000,window:15*60000,rounds:4,ready:10};
-var O_STEPS=[["research","Looking for places that teach"],["plan","Planning the first letters"],["watch","Watching the first letters"]];
+var O_STEPS=[["research","Looking for mosques and Islamic places"],["plan","Planning the first letters"],["watch","Watching the first letters"]];
 var O_STAGE={sense:"Reading the house",assess:"Weighing the goals",plan:"Planning",council:"The council reads each letter",act:"Writing and sending",reflect:"Wrapping up",report:"Wrapping up"};
 var O_CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>';
 function oUsedAt(m){var s=m&&m.start&&typeof m.start==="object"?m.start:null,d=s?hParse(s.usedAt):null;return d||(OUT.used?(hParse(OUT.usedAt)||hNow()):null)}

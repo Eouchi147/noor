@@ -240,7 +240,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
       head: r.querySelector('.orh b').textContent, titles: [...r.querySelectorAll('.osh b')].map(b => b.textContent) }; });
   ok(p0.inCard && !p0.sheet && !p0.veil, 'the run opens inside the mail card, with no sheet and no veil over Home');
   ok(!p0.button, 'and the button is gone: it cannot be pressed twice');
-  ok(p0.titles.join(' | ') === 'Looking for places that teach | Planning the first letters | Watching the first letters', 'three steps, in plain words: ' + p0.titles.join(' | '));
+  ok(p0.titles.join(' | ') === 'Looking for mosques and Islamic places | Planning the first letters | Watching the first letters', 'three steps, in plain words: ' + p0.titles.join(' | '));
   ok(await steps(pg) === 'research:work plan:wait watch:wait', 'the first step works, the others wait: ' + await steps(pg));
   await pg.waitForTimeout(250);
   if (w === 390) {

@@ -112,6 +112,11 @@ const mailStub = {
   FIRST_TEN: 10
 };
 O.setOutreachSeams({ mail: mailStub });
+/* round eight: the seed (api/_outreach-seed.js) stood in by an empty list,
+   so each section asks the source it names; 12b hands in its own rows */
+O.setOutreachSeams({ seed: [] });
+/* a section that means one source points the walk at it */
+const atStep = (name, more) => S.set('nsoul:outreach:cursor', JSON.stringify({ n: O.SOURCE_CYCLE.indexOf(name), ...(more || {}) }));
 const mailReset = () => { MAIL.ready = { configured: true, on: true }; MAIL.dnc.clear(); MAIL.dncWhy.length = 0; MAIL.queued.length = 0; MAIL.status = 'sent'; MAIL.reason = ''; };
 
 /* ---------------------------------------------------------------- the mail tier: the letter writer, stood in */
@@ -228,8 +233,27 @@ const WD = { results: { bindings: [
 ] } };
 const WDQ = [];
 onNet(O.WIKIDATA_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(200, WD); });
+/* round eight: Wikidata through QLever, and the Australian charity register */
+onNet(O.QLEVER_WD_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(200, WD); });
+const ACNC_ROWS = [
+  { ABN: '11000000001', Charity_Legal_Name: 'BRISBANE ISLAMIC CENTRE INC', Other_Organisation_Names: null, Town_City: 'Brisbane', State: 'QLD', Charity_Website: 'www.brisbane-ic.example.org.au' },
+  { ABN: '11000000002', Charity_Legal_Name: 'Gold Coast Mosque Association Inc', Other_Organisation_Names: null, Town_City: 'Gold Coast', State: 'QLD', Charity_Website: null },
+  { ABN: '11000000003', Charity_Legal_Name: 'SUNSHINE GARDENING CLUB INC', Other_Organisation_Names: null, Town_City: 'Sunshine', State: 'VIC', Charity_Website: 'https://gardening.example.org.au' },
+  { ABN: '11000000004', Charity_Legal_Name: 'PERTH MUSLIM YOUTH ASSOCIATION INCORPORATED', Other_Organisation_Names: 'PMYA', Town_City: 'PERTH', State: 'WA', Charity_Website: 'https://pmya.example.org.au' }
+];
+const ACNCQ = [];
+onNet(O.ACNC_URL, async u => { ACNCQ.push(decodeURIComponent(u)); return resp(200, { success: true, result: { records: ACNC_ROWS, total: ACNC_ROWS.length } }); });
+site('www.brisbane-ic.example.org.au', { pages: { '/': html({ title: 'Brisbane Islamic Centre | Home', desc: 'A mosque and Islamic centre serving the families of Brisbane.', nav: [{ href: 'mailto:office@brisbane-ic.example.org.au', text: 'Email' }],
+  body: P('Our weekend madrasa teaches the Quran to children every Saturday.', 'The centre is open daily for prayers and learning.', 'Families from across the city learn together here.') }) } });
+site('pmya.example.org.au', { pages: { '/': '<!doctype html><html lang="en"><head><title>PMYA</title><meta property="og:site_name" content="Perth Muslim Youth"></head><body>'
+  + '<p>Perth Muslim Youth runs study circles and sport for young Muslims every week.</p><p>Our youth programme welcomes teenagers from across the city.</p>'
+  + '<p>Write to us: <a href="/cdn-cgi/l/email-protection#c7aea9a1a887b7aabea6e9a2bfa6aab7aba2e9a8b5a0e9a6b2">[email&#160;protected]</a></p></body></html>' } });
+site('gardening.example.org.au', { pages: { '/': html({ title: 'Sunshine Gardening Club', body: P('We grow vegetables together every weekend.', 'New members are welcome to join the club.') }) } });
 
-const research = () => HANDS.runHand({ action: 'research', args: {}, why: 'Fewer places are ready for a first letter than the coming days need; look for more places that teach, from their own published pages.' }, { actor: 'soul' });
+/* round eight: a fresh store begins the walk at the map's GB list, the way
+   these sections were written; a section that means another source says so */
+const research = () => { if (S.get('nsoul:outreach:cursor') == null) atStep('osm:GB');
+  return HANDS.runHand({ action: 'research', args: {}, why: 'Fewer places are ready for a first letter than the coming days need; look for more mosques and Islamic places, from their own published pages.' }, { actor: 'soul' }); };
 const placesNow = async () => (await O.placesView({ limit: 500 })).places;
 const byName = async n => (await placesNow()).find(p => p.name === n);
 const netTo = host => NET.calls.filter(c => { try { return new URL(c.url).hostname === host; } catch { return false; } });
@@ -274,7 +298,7 @@ console.log('\n1. research: an address only from what the place itself published
   ok(S.get(K.count('places', D0)) === '3', 'three new places counted for the day');
   /* the same place again, the next day: not kept twice, by domain or by address */
   setDay(addDays(D0, 1), '09:00');
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 0 }));
+  atStep('osm:GB');
   S.delete('nsoul:outreach:cands');
   HM.delete('nsoul:outreach:seen');
   const again = await research();
@@ -397,23 +421,38 @@ console.log('\n2. fetched politely');
 =========================================================================== */
 console.log('\n3. the sources in turn; a web search only within its budget');
 {
-  resetStore(); mailReset(); setDay(D0, '09:00'); OVERPASS.length = 0; WDQ.length = 0;
-  for (let i = 0; i < 3; i++) await research();
-  ok(OVERPASS.map(x => x.cc).join() === 'GB,CA' && WDQ.length === 1, 'the walk goes country by country, Wikidata between them: ' + OVERPASS.map(x => x.cc).join() + ' and Wikidata');
-  ok(/wdt:P856 \?website/.test(WDQ[0]) && /wdt:P140 wd:Q432/.test(WDQ[0]) && /wd:Q16 wd:Q30 wd:Q145 wd:Q27 wd:Q408 wd:Q664 wd:Q258/.test(WDQ[0]) && /wd:Q1336920/.test(WDQ[0]),
-    'Wikidata is asked for schools, student societies, foundations and the like, of the region, with an official website (P856)');
-  const kinds = Object.fromEntries((await placesNow()).map(p => [p.name, p.kind + ':' + p.source + ':' + p.country]));
-  ok(kinds['Example University Islamic Society'] === 'society:wikidata:GB' && kinds['Sydney Islamic College'] === 'school:wikidata:AU' && kinds['Example Education Foundation'] === 'foundation:wikidata:US' && kinds['Toronto Muslim Youth Centre'] === 'mosque:osm:CA',
-    'each kept with its kind, its source and its country');
-  ok(!(await placesNow()).some(p => /far\.example|unnamed/.test(p.website || '')), 'a place outside the region, or with no name, is never a candidate');
-  /* the web step: no key, no search, and the walk moves on */
+  resetStore(); mailReset(); setDay(D0, '09:00'); OVERPASS.length = 0; WDQ.length = 0; ACNCQ.length = 0;
   delete process.env.OPENROUTER_API_KEY;
+  atStep('seed');
+  for (let i = 0; i < 3; i++) await research();
+  atStep('osm:CA');
+  await research();
+  ok(ACNCQ.length === 1 && WDQ.length === 1 && OVERPASS.map(x => x.cc).join() === 'GB,CA',
+    'round eight: the walk asks the Australian charity register, Wikidata and the map in turn (with no key, the city searches between them are passed over): '
+    + ACNCQ.length + ' register, ' + WDQ.length + ' Wikidata, map ' + OVERPASS.map(x => x.cc).join());
+  ok(WDQ[0].startsWith(O.QLEVER_WD_URL) && /wdt:P856 \?website/.test(WDQ[0]) && /wdt:P31\/wdt:P279\* wd:Q32815/.test(WDQ[0]) && /wd:Q16 wd:Q30 wd:Q145 wd:Q27 wd:Q408 wd:Q664 wd:Q258/.test(WDQ[0]) && /rdfs:label/.test(WDQ[0]) && !/wikibase:label/.test(WDQ[0]),
+    'Wikidata is asked through QLever first, for the region\'s mosques (every kind) with an official website (P856), labels by rdfs:label');
+  ok(/wdt:P140 wd:Q432/.test(O.wikidataQuery(1, true)) && /wd:Q1336920/.test(O.wikidataQuery(1, true)) && !/wd:Q5 /.test(O.wikidataQuery(1, true)) && /wikibase:label/.test(O.wikidataQuery(0, false)) && !/P279/.test(O.wikidataQuery(0, false)),
+    'its second question: Islamic schools, student societies, foundations and the like (never a person); the public service asked for mosques themselves, with its own label service');
+  ok(/resource_id=8fb32972-24e9-4c95-885e-7140be51be8a/.test(ACNCQ[0]) && /q=mosque/.test(ACNCQ[0]) && /Charity_Website/.test(ACNCQ[0]), 'the register is asked one word at a time, for the websites');
+  const kinds = Object.fromEntries((await placesNow()).map(p => [p.name, p.kind + ':' + p.source + ':' + p.country]));
+  ok(kinds['Example University Islamic Society'] === 'society:wikidata:GB' && kinds['Sydney Islamic College'] === 'school:wikidata:AU' && kinds['Example Education Foundation'] === 'foundation:wikidata:US' && kinds['Toronto Muslim Youth Centre'] === 'mosque:osm:CA'
+    && kinds['Brisbane Islamic Centre'] === 'mosque:acnc:AU',
+    'each kept with its kind, its source and its country: ' + JSON.stringify(kinds));
+  ok(!(await placesNow()).some(p => /far\.example|unnamed|gardening/.test(p.website || '')) && netTo('gardening.example.org.au').length === 0,
+    'a place outside the region, with no name, or a charity whose name is not an Islamic place\'s, is never a candidate');
+  /* the paid steps: no key, no search, and the walk moves on */
   const orCalls = () => NET.calls.filter(c => /openrouter\.ai/.test(c.url));
   NET.calls.length = 0;
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 6 }));
+  atStep('city');
+  const nA = ACNCQ.length;
   const noKey = await research();
-  ok(noKey.ok && orCalls().length === 0 && noKey.entry.result.notes.some(n => /no web search: no OpenRouter key/.test(n)) && OVERPASS[OVERPASS.length - 1].cc === 'US' && /ISO3166-2"~"\^US-\(FL\|/.test(OVERPASS[OVERPASS.length - 1].q),
-    'with no OpenRouter key there is no web search at all, and the walk goes on to the next source (round seven: the United States region by region)');
+  const nn = noKey.entry.result.notes || [];
+  ok(noKey.ok && orCalls().length === 0 && nn.some(n => /no city search: no OpenRouter key/.test(n)) && ACNCQ.length === nA + 1 && !O.SOURCE_CYCLE.includes('web'),
+    'with no OpenRouter key there is no city search at all, and the walk goes on to the next source (the register); the older web search is no longer on the walk: ' + nn.join(' | '));
+  atStep('osm:US-SE');
+  await research();
+  ok(OVERPASS[OVERPASS.length - 1].cc === 'US' && /ISO3166-2"~"\^US-\(FL\|/.test(OVERPASS[OVERPASS.length - 1].q), 'the United States asked region by region (round seven)');
   process.env.OPENROUTER_API_KEY = 'or-test-key';
   const month = new Date(Date.parse(D0)).toISOString().slice(0, 7);
   let models = 0;
@@ -436,9 +475,9 @@ console.log('\n3. the sources in turn; a web search only within its budget');
   const nocredit = await web();
   ok(!nocredit.ok && /no credit/.test(nocredit.why) && WEB.bodies.length === 0, 'no credit on the account: no web search');
   S.delete('nsoul:nocredit');
-  S.set(O.OK_KEYS.webSpend(month), String(2e6));
+  S.set(O.OK_KEYS.webSpend(month), String(O.WEB_USD_MONTH * 1e6));
   const own = await web();
-  ok(!own.ok && /own 2 dollars this month are spent/.test(own.why) && WEB.bodies.length === 0, 'its own 2 dollars a month spent: no web search, whatever else is left');
+  ok(!own.ok && new RegExp('own ' + O.WEB_USD_MONTH + ' dollars this month are spent').test(own.why) && WEB.bodies.length === 0, 'its own ' + O.WEB_USD_MONTH + ' dollars a month spent (round eight: was 2): no web search, whatever else is left');
   S.set(O.OK_KEYS.webSpend(month), '0');
   const paid = await web();
   const b = WEB.bodies[0] || {};
@@ -556,7 +595,7 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   const u = await HANDS.undoAction(r.id, 'owner');
   ok(!u.ok && /an email cannot be unsent/.test(u.error), 'its undo is a refusal that says why: ' + u.error);
   ok(HOME.actionTitle(r.entry, D0) === 'Wrote to Al Noor Masjid, Leeds: a free library for its weekend school', 'Done says it in plain words: ' + HOME.actionTitle(r.entry, D0));
-  ok(HOME.intentTitle(sendIntent(alnoor), D0) === 'Write to Al Noor Masjid, Leeds: a free library for its weekend school' && HOME.intentTitle({ action: 'research', args: {} }, D0) === 'Look for places that teach, from their own pages',
+  ok(HOME.intentTitle(sendIntent(alnoor), D0) === 'Write to Al Noor Masjid, Leeds: a free library for its weekend school' && HOME.intentTitle({ action: 'research', args: {} }, D0) === 'Look for mosques and Islamic places, from their own pages',
     'and so does Next: ' + HOME.intentTitle(sendIntent(alnoor), D0));
 
   /* what the letter is held to: each refusal holds the place a week */
@@ -764,32 +803,32 @@ console.log('\n9. the counts');
 /* ===========================================================================
    10. THE CAPS: 20 new places a day, the pace, the owner's Send
 =========================================================================== */
-console.log('\n10. the caps (round six: 75 new places a day, the day\'s pace, ten waiting on his Send)');
+console.log('\n10. the caps (round eight: 150 new places a day, the day\'s pace, ten waiting on his Send)');
 {
   resetStore(); mailReset(); setDay(D0, '09:00');
   const many = [];
-  for (let i = 1; i <= 110; i++) {
+  for (let i = 1; i <= 160; i++) {
     const host = 'us-' + i + '.example.org';
     plain(host, 'Masjid Number ' + i, 'Houston', ['Our weekend school teaches the Quran to young people.', 'The masjid is open daily for prayers and learning.', 'Families from across the city learn together here.'], 'info@' + host);
     many.push({ type: 'node', id: 1000 + i, tags: { name: 'Masjid Number ' + i, website: 'https://' + host + '/', 'addr:city': 'Houston' } });
   }
   const savedUS = OSM.US;
   OSM.US = { elements: many };
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 4 }));
+  atStep('osm:US-NE');
   const r = await research();
-  ok(r.ok && r.entry.result.added === 75 && (await placesNow()).length === 75 && S.get(K.count('places', D0)) === '75', 'at most 75 new places a day: ' + r.entry.result.added);
+  ok(r.ok && r.entry.result.added === 150 && (await placesNow()).length === 150 && S.get(K.count('places', D0)) === '150', 'at most 150 new places a day (round eight: was 75): ' + r.entry.result.added);
   const r2 = await research();
-  ok(r2.ok && r2.entry.result.added === 0 && /75 new places are already found/.test(r2.entry.result.note) && (await placesNow()).length === 75, 'a second search the same day finds nothing more: ' + r2.entry.result.note);
+  ok(r2.ok && r2.entry.result.added === 0 && /150 new places are already found/.test(r2.entry.result.note) && (await placesNow()).length === 150, 'a second search the same day finds nothing more: ' + r2.entry.result.note);
   setDay(addDays(D0, 1), '09:00');
   const r3 = await research();
-  ok(r3.ok && r3.entry.result.added === 35, 'the next day the rest of the list is checked: ' + r3.entry.result.added);
+  ok(r3.ok && r3.entry.result.added === 10, 'the next day the rest of the list is checked: ' + r3.entry.result.added);
   OSM.US = savedUS;
   /* the pace: while the owner's first ten are not all sent, never more than
      his Send can take (ten waiting at most) */
   const pace = await O.paceIntents(today());
   const sends = pace.intents.filter(i => i.action === 'outreach-send');
   ok(sends.length === 10 && !pace.intents.some(i => i.action === 'research') && pace.summary.letters === 10 && pace.summary.pace === 20,
-    'the pace step: ten letters while his first ten are not all sent (the day\'s pace is 20; 110 ready, so no search): ' + sends.length);
+    'the pace step: ten letters while his first ten are not all sent (the day\'s pace is 20; 160 ready, so no search): ' + sends.length);
   ok(sends.every(i => HANDS.redLineCheck(i).ok && i.goal === 'g-outreach' && i.metric === 'outreach.contacted' && i.seeded && !/\d/.test(i.why + i.expectedEffect)),
     'each in words the guard accepts, naming its goal, and with no figure the auditor could not find (a name with a number is said by its kind)');
   ok(sends.every(i => /^a mosque in Houston, the United States runs a weekend school, its own pages say; offer it a free library for its weekend school, through the address it published for contact\.$/.test(i.why)), 'for example: ' + sends[0].why);
@@ -871,7 +910,7 @@ console.log('\n12. a whole daily cycle');
 {
   resetStore(); mailReset(); setDay(D0, '09:00');
   await research();
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 2 }));
+  atStep('osm:CA');
   await research();
   setDay(addDays(D0, 1), '05:20');
   putSnap(snapFor(addDays(D0, 1)));
@@ -933,7 +972,7 @@ console.log('\n14. round six: the pace, its warm-up and its brake');
 {
   resetStore(); mailReset(); setDay(D0, '09:00');
   ok(O.RAMP.join() === '20,30,40,50' && Object.isFrozen(O.RAMP) && O.LETTERS_MAX === 50 && O.LETTERS_PER_DAY === 50 && O.FOLLOWUPS_PER_DAY === 50 && O.WAITING_MAX === 10
-    && O.PLACES_PER_DAY === 75 && O.PLACES_KEEP === 3000 && O.RESEARCH_LOW === 100 && O.CANDS_KEEP === 600 && O.POOL_LOW === 60 && O.OUTREACH_TARGET === 1000 && O.GOAL_DAYS === 42,
+    && O.PLACES_PER_DAY === 150 && O.PLACES_KEEP === 3000 && O.RESEARCH_LOW === 150 && O.CANDS_KEEP === 600 && O.POOL_LOW === 60 && O.OUTREACH_TARGET === 1000 && O.GOAL_DAYS === 42,
     'the numbers in code: the ramp 20, 30, 40, 50 (frozen), 50 at most, ten waiting on his Send, 75 places a day, 3000 kept, a search below 100 ready, 1000 in 42 days');
   const none = await O.paceToday(D0);
   ok(none.week === 1 && none.letters === 20 && none.followups === 20 && none.start === null && !none.braked && /warm-up begins on the first day a letter goes on its own/.test(none.why) && !DASH.test(none.why),
@@ -1151,6 +1190,7 @@ console.log('\n18. round six: the tick\'s short search for places');
 {
   resetStore(); mailReset(); setDay(D0, '09:00'); OVERPASS.length = 0;
   const acts0 = (await SOUL.actionsList()).length;
+  atStep('osm:GB');
   const t1 = await O.outreachTick({ until: Date.now() + 120000 });
   ok(t1.ok && t1.ran && t1.added === 3 && t1.checked >= 3 && /found 3 new places/.test(t1.why) && OVERPASS.length === 1, 'below its target: one search, the same research as the hand\'s: ' + JSON.stringify(t1));
   ok((await SOUL.actionsList()).length === acts0, 'nothing written to the action ledger');
@@ -1160,6 +1200,7 @@ console.log('\n18. round six: the tick\'s short search for places');
   ok(pv.found === 3 && pv.searches.runs === 1 && pv.searches.added === 3, 'and the Home and the Mail room can say it: ' + JSON.stringify(pv.searches));
   /* a run's own seams: the fetch handed in is the one every request goes through, robots.txt first */
   const seen = [];
+  atStep('osm:CA');
   const t2 = await O.outreachTick({ until: Date.now() + 120000, fetch: async (u, init) => { seen.push(String(u)); return globalThis.fetch(u, init); } });
   ok(t2.ok && t2.ran && t2.added === 1 && seen.some(u => u.startsWith(O.OVERPASS_URL)) && seen.some(u => /toronto\.example\.ca\/robots\.txt$/.test(u)) && seen.some(u => /toronto\.example\.ca\/$/.test(u)),
     'a fetch handed in carries the whole search, the source, robots.txt and the place\'s own page: ' + t2.why);
@@ -1169,13 +1210,13 @@ console.log('\n18. round six: the tick\'s short search for places');
   S.delete('nsoul:outreach:lock:research');
   ok(busy.ok && !busy.ran && /another search for places is under way/.test(busy.why), 'a search already under way (the daily hand\'s): none begun beside it');
   /* not wanted: enough places ready, or the day's 75 found */
-  for (let i = 0; i < 100; i++) synth('p-ready-' + i, 'Masjid ' + i, 'GB');
+  for (let i = 0; i < O.RESEARCH_LOW; i++) synth('p-ready-' + i, 'Masjid ' + i, 'GB');
   const enough = await O.outreachTick({ until: Date.now() + 120000 });
-  ok(enough.ok && !enough.ran && /places are ready for a first letter, enough for now/.test(enough.why), 'a hundred ready or more: no search: ' + enough.why);
-  for (let i = 0; i < 100; i++) { HM.get(PLACES_KEY).delete('p-ready-' + i); HM.get(INDEX_KEY).delete('p-ready-' + i); }
-  S.set(K.count('places', D0), '75');
+  ok(enough.ok && !enough.ran && /places are ready for a first letter, enough for now/.test(enough.why), O.RESEARCH_LOW + ' ready or more (round eight: was a hundred): no search: ' + enough.why);
+  for (let i = 0; i < O.RESEARCH_LOW; i++) { HM.get(PLACES_KEY).delete('p-ready-' + i); HM.get(INDEX_KEY).delete('p-ready-' + i); }
+  S.set(K.count('places', D0), String(O.PLACES_PER_DAY));
   const done = await O.outreachTick({ until: Date.now() + 120000 });
-  ok(done.ok && !done.ran && /75 new places are already found/.test(done.why), 'the day\'s 75 found: no search: ' + done.why);
+  ok(done.ok && !done.ran && new RegExp(O.PLACES_PER_DAY + ' new places are already found').test(done.why), 'the day\'s ' + O.PLACES_PER_DAY + ' found (round eight: was 75): no search: ' + done.why);
   S.set(K.count('places', D0), '4');
   /* the mailbox not set up, the Lantern paused, too little time left: no search, an answer */
   MAIL.ready = { configured: false, on: false, reason: 'no app password' };
@@ -1194,7 +1235,7 @@ console.log('\n18. round six: the tick\'s short search for places');
   FAULT.all = false;
   ok(!threw && broke && broke.ok === false && broke.ran === false && typeof broke.why === 'string', 'a store that fails: {ok: false, ran: false, why}, never a throw: ' + (broke && broke.why));
   /* never past its time: the run's box ends TICK_MARGIN_MS before until */
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 0 }));
+  atStep('osm:GB');
   HM.delete('nsoul:outreach:seen');
   const until = Date.now() + 40000;
   const timed = await O.outreachTick({ until });
@@ -1287,7 +1328,7 @@ console.log('\n12b. round seven: an efficient search, a mirror when the map is b
   const MIRROR = [];
   onNet(O.OVERPASS_URLS[0], async () => { MIRROR.push('main'); return resp(429, '<?xml version="1.0"?><osm><remark>rate_limited</remark></osm>'); });
   onNet(O.OVERPASS_URLS[1], async (u, init) => { MIRROR.push('second'); return resp(200, OSM.CA); });
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 2 }));
+  atStep('osm:CA');
   const m = await research();
   ok(MIRROR.join() === 'main,second' && m.ok && (await placesNow()).some(p => p.name === 'Toronto Muslim Youth Centre'), 'the main map server busy (429): the next mirror is asked, and its list is used: ' + MIRROR.join());
   const cur = JSON.parse(S.get('nsoul:outreach:cursor'));
@@ -1295,10 +1336,14 @@ console.log('\n12b. round seven: an efficient search, a mirror when the map is b
   MIRROR.length = 0;
   onNet(O.OVERPASS_URLS[1], async () => { MIRROR.push('second'); return resp(504, 'busy'); });
   onNet(O.OVERPASS_URLS[2], async () => { MIRROR.push('third'); return resp(504, 'busy'); });
-  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 1, ov: 0 }));
+  atStep('osm:GB', { ov: 0 });
   const none = await research();
-  ok(none.ok && MIRROR.join() === 'main,second,third' && /OpenStreetMap \(GB\) did not answer/.test(none.entry.result.note) && /429/.test(none.entry.result.note),
-    'every mirror busy: the run says so in its own words: ' + none.entry.result.note);
+  const noneSaid = (none.entry.result.notes || []).join(' | ');
+  ok(none.ok && MIRROR.join() === 'main,second,third' && /OpenStreetMap \(GB\) did not answer/.test(noneSaid) && /429/.test(noneSaid),
+    'every mirror busy: the run says so in its own words: ' + noneSaid);
+  const curN = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(curN.rest && curN.rest.osm > SOUL.nowMs() + 2 * 3600000 && none.entry.result.step === 'acnc',
+    'round eight: the map rests three hours, and the same run goes on to the next source (here the register): ' + none.entry.result.step);
   onNet(O.OVERPASS_URLS[0], async (u, init) => { const q = decodeURIComponent(String(init.body || '').replace(/^data=/, '')); const cc = (/ISO3166-1"="([A-Z]{2})"/.exec(q) || [])[1] || (/ISO3166-2"~"\^(US)-/.exec(q) || [])[1]; OVERPASS.push({ cc, q, method: init.method, ua: init.headers && init.headers['user-agent'] }); return resp(200, OSM[cc] || { elements: [] }); });
 
   /* c. the seed, as rows */
@@ -1313,6 +1358,167 @@ console.log('\n12b. round seven: an efficient search, a mirror when the map is b
   const long = O.letterSubject({ name: 'The Very Long Name Islamic Educational and Cultural Centre of Greater Manchester' }, o);
   ok(long.startsWith('For The Very Long Name Islamic Educational and') && long.length < 110 && !/\s:/.test(long), 'a long name is cut at a word: ' + long);
   ok(O.letterSubject({ name: '' }, o) === o.subject, 'and with no name, the offer\'s own subject');
+}
+
+console.log('\n20. round eight: more ways to find places, more of each site, letters that give');
+{
+  /* a. the addresses a page carries for its visitors, read as a browser shows them */
+  const enc = (a, key = 0x2a) => key.toString(16).padStart(2, '0') + [...a].map(c => (c.charCodeAt(0) ^ key).toString(16).padStart(2, '0')).join('');
+  ok(O.cfDecode(enc('info@masjid.example.org')) === 'info@masjid.example.org' && O.cfDecode('zz') === null && O.cfDecode(enc('not an address')) === null,
+    'an address behind Cloudflare\'s guard is turned back the way a browser turns it');
+  const doc = O.readHtml('<html><head><script type="application/ld+json">{"@type":"Mosque","email":"mailto:office@ld.example.org"}</script></head><body><span class="__cf_email__" data-cfemail="'
+    + enc('salam@cf.example.org') + '">[email&#160;protected]</span><p>Write to imam [at] at.example.org.uk or info(at)masjid(dot)example(dot)org any day of the week.</p></body></html>');
+  const got = O.addressesOn(doc, 'https://x.example.org/').map(f => f.addr + ':' + f.how).sort();
+  ok(got.includes('office@ld.example.org:structured') && got.includes('salam@cf.example.org:guarded') && got.includes('imam@at.example.org.uk:text') && got.includes('info@masjid.example.org:text'),
+    'an address in its structured data, behind the guard, or written "[at]" is read: ' + got.join(', '));
+  ok(O.pickAddress([{ addr: 'mosque@gmail.com', how: 'guarded', url: 'x' }], 'https://m.example.org/').addr === 'mosque@gmail.com'
+    && O.pickAddress([{ addr: 'mosque@gmail.com', how: 'text', url: 'x' }], 'https://m.example.org/') === null,
+    'a free mail address the place guarded is its own publication; one written loose still is not');
+  ok(!O.factsFrom([{ url: 'u', doc: O.readHtml('<p>Write to the madrasa office at madrasa [at] school.example.org for the classes.</p>') }]).facts.length, 'a sentence that carries an "[at]" address is never a fact');
+
+  /* b. more of each site */
+  const PAGES = [];
+  const fake = pages => ({ async page(url) { PAGES.push(new URL(url).pathname); const p = pages[new URL(url).pathname]; return p == null ? { ok: false, why: 'the page answered 404' } : { ok: true, url, html: p }; }, calls: [] });
+  const cand = { name: 'Hidden Masjid', kind: 'mosque', city: 'Leeds', country: 'GB', website: 'https://hidden.example.org', source: 'osm', evidence: 'https://osm/x' };
+  const hidden = await O.checkSite(cand, fake({ '/': '<html lang="en"><head><title>Hidden Masjid</title></head><body><p>Our madrasa teaches the Quran to children every weekend.</p><p>The masjid is open daily for the five prayers.</p>'
+    + '<p>Email: <a href="/cdn-cgi/l/email-protection#' + enc('info@hidden.example.org') + '"><span class="__cf_email__" data-cfemail="' + enc('info@hidden.example.org') + '">[email&#160;protected]</span></a></p></body></html>' }), () => 999999);
+  ok(hidden.ok && hidden.place.email === 'info@hidden.example.org', 'an address only behind Cloudflare\'s guard: the place is kept, written to the way a visitor would: ' + (hidden.ok ? hidden.place.email : hidden.why));
+  PAGES.length = 0;
+  const usual = await O.checkSite({ ...cand, name: 'Quiet Masjid', website: 'https://quietm.example.org' }, fake({
+    '/': '<html lang="en"><head><title>Quiet Masjid</title></head><body><p>Our weekend school teaches Arabic and the Quran to young people.</p><p>The masjid welcomes the whole community for the daily prayers.</p></body></html>',
+    '/contact': '<html><body><p>Write to the office: office@quietm.example.org</p></body></html>' }), () => 999999);
+  ok(usual.ok && usual.place.email === 'office@quietm.example.org' && PAGES.join() === '/,/contact-us,/contact',
+    'no contact link and no address on its home page: its usual contact page is asked for by its usual names, the second only when the first is not there: ' + PAGES.join());
+  ok(O.FACTS_MIN === 2 && usual.ok && usual.place.facts.length === 2, 'two facts of its own are enough to write from (round eight: was three)');
+  PAGES.length = 0;
+  const about = await O.checkSite({ ...cand, name: 'About Masjid', website: 'https://aboutm.example.org' }, fake({
+    '/': '<html lang="en"><head><title>About Masjid</title></head><body><nav><a href="/about-us">About us</a><a href="/donate">Donate</a><a href="/timetable.pdf">Timetable</a></nav><p><a href="mailto:info@aboutm.example.org">Email</a></p><p>The masjid is open daily for the five prayers.</p></body></html>',
+    '/about-us': '<html lang="en"><body><p>Our Saturday madrasa teaches children the Quran and Arabic.</p><p>Young people meet on Fridays for study circles and sport.</p></body></html>' }), () => 999999);
+  ok(about.ok && about.place.facts.length >= 3 && PAGES.join() === '/,/about-us' && about.place.signals.weekendSchool,
+    'one fact on its home page: its about page is read for more (never a donation page or a file): ' + PAGES.join());
+  const lapsed = await O.checkSite({ ...cand, name: 'Lapsed Masjid', website: 'https://lapsed.example.org' }, fake({ '/': '<html lang="en"><head><title>Best Online Bonuses</title></head><body><p>Play the best online games with friends every evening.</p><p>New members get a welcome bonus every single week.</p><p><a href="mailto:info@lapsed.example.org">Mail</a></p></body></html>' }), () => 999999);
+  ok(!lapsed.ok && /do not read as a mosque/.test(lapsed.why), 'a domain whose pages no longer read as an Islamic place\'s (one that lapsed and was sold) is never kept: ' + lapsed.why);
+  const named = { name: 'Al Huda Academy', kind: 'school', city: 'Leeds', country: 'GB', website: 'https://school-site.example.org', source: 'web', verify: 'name' };
+  const pg = t => '<html lang="en"><head><title>' + t + '</title></head><body><p>Our weekend school teaches the Quran and Arabic to children.</p><p>The masjid welcomes families for prayers and learning.</p><p><a href="mailto:info@school-site.example.org">Email</a></p></body></html>';
+  const wrong = await O.checkSite(named, fake({ '/': pg('Green Street Mosque') }), () => 999999);
+  const right = await O.checkSite(named, fake({ '/': pg('Al Huda Academy, Leeds') }), () => 999999);
+  ok(!wrong.ok && /do not carry the name/.test(wrong.why) && right.ok, 'a site a search named without citing it must carry the place\'s own name on its pages: ' + wrong.why);
+  ok(O.nameOnPages('Islamic Centre', 'Leeds', [{ doc: { text: 'The centre of Leeds welcomes all.' } }], 'x.example.org') && !O.nameOnPages('Islamic Centre', '', [{ doc: { text: 'x' } }], 'x.example.org'),
+    'a name with no word of its own: its city must be on its pages instead');
+
+  /* c. the Australian charity register */
+  const ac = O.acncCandidates({ result: { records: ACNC_ROWS } });
+  ok(ac.rows === 4 && ac.cands.length === 2 && ac.cands[0].name === 'Brisbane Islamic Centre' && ac.cands[0].website === 'https://www.brisbane-ic.example.org.au/' && ac.cands[0].evidence === 'https://abr.business.gov.au/ABN/View?abn=11000000001'
+    && ac.cands[1].name === 'Perth Muslim Youth Association' && ac.cands[1].city === 'Perth' && ac.cands.every(c => c.source === 'acnc' && c.country === 'AU' && c.email === null),
+    'the register: only charities named as an Islamic place, with a website; names and towns in ordinary letters: ' + JSON.stringify(ac.cands.map(c => c.name + ' / ' + c.city)));
+  ok(O.tidyName('ISLAMIC SOCIETY OF QLD INC') === 'Islamic Society of QLD' && O.tidyName('Al-Noor Centre Ltd') === 'Al-Noor Centre' && O.tidyName('Masjid Al Taqwa') === 'Masjid Al Taqwa',
+    'a name in capitals in ordinary letters, its company suffix dropped; a name already written well left as it is');
+  resetStore(); mailReset(); setDay(D0, '09:00'); ACNCQ.length = 0;
+  atStep('acnc');
+  await research();
+  const pm = (await placesNow()).find(p => /pmya\.example\.org\.au/.test(p.website || ''));
+  ok(pm && pm.name === 'Perth Muslim Youth' && pm.email === 'info@pmya.example.org.au' && pm.city === 'Perth' && pm.source === 'acnc',
+    'a register\'s place takes the name its own site gives itself, and its address from behind the guard: ' + JSON.stringify(pm && [pm.name, pm.email, pm.city]));
+  const curA = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(curA.acnc && curA.acnc.t === 1 && curA.acnc.off === 0, 'a word read to its end (fewer rows than a page): the next word next time');
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: O.SOURCE_CYCLE.indexOf('acnc'), acnc: { t: O.ACNC_TERMS.length - 1, off: 0 } }));
+  await research();
+  const curB = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(curB.acnc.t === 0 && curB.rest && curB.rest.acnc > SOUL.nowMs() + 6 * 86400000, 'its last word read: the register rests a week (it is updated weekly)');
+
+  /* d. the city search */
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  process.env.OPENROUTER_API_KEY = 'or-test-key';
+  O.forgetWebPrice();
+  onNet('https://openrouter.ai/api/v1/models', async () => resp(200, { data: [{ id: 'anthropic/claude-sonnet-5', pricing: { prompt: '0.000003', completion: '0.000015' } },
+    { id: 'perplexity/sonar', pricing: { prompt: '0.000001', completion: '0.000001', web_search: '0.005' } }] }));
+  const CITY = { bodies: [] };
+  onNet(O.OPENROUTER_URL, async (u, init) => {
+    const body = JSON.parse(init.body);
+    CITY.bodies.push(body);
+    return resp(200, { usage: { cost: 0.0062 }, citations: ['https://leedscentral.example.org.uk/about'], choices: [{ message: {
+      content: '```json\n' + JSON.stringify({ places: [
+        { name: 'Leeds Central Masjid', website: 'https://leedscentral.example.org.uk', city: 'Leeds', kind: 'mosque' },
+        { name: 'Hyde Park Madrasa', website: 'hydepark-madrasa.example.org.uk', city: 'Leeds', kind: 'school' },
+        { name: 'A Page Elsewhere', website: 'https://www.facebook.com/somemasjid', kind: 'mosque' },
+        { name: 'info@bad.example.org', website: 'https://bad.example.org' }] }) + '\n```' } }] });
+  });
+  site('leedscentral.example.org.uk', { pages: { '/': html({ title: 'Leeds Central Masjid', desc: 'A masjid in the centre of Leeds.', nav: [{ href: 'mailto:info@leedscentral.example.org.uk', text: 'Email' }],
+    body: P('Our weekend madrasa teaches the Quran to children.', 'The masjid is open daily for the five prayers.') }) } });
+  site('hydepark-madrasa.example.org.uk', { pages: { '/': html({ title: 'Hyde Park Madrasa', desc: 'An evening madrasa for the children of Hyde Park.', nav: [{ href: 'mailto:admin@hydepark-madrasa.example.org.uk', text: 'Email' }],
+    body: P('Hyde Park Madrasa teaches the Quran and Arabic every weekday evening.', 'Families from across the area learn together here.') }) } });
+  const li = O.cityList().findIndex(([c, cc]) => c === 'Leeds' && cc === 'GB');
+  ok(O.cityList().length > 150 && li > 0 && O.cityList().slice(0, 7).map(x => x[1]).join() === O.REGION.join(), 'about two hundred cities of the region in turn, the countries mixed from the start: ' + O.cityList().length);
+  const cs = await O.citySearch(li);
+  const cb = CITY.bodies[0] || {};
+  ok(cs.ok && cb.model === 'perplexity/sonar' && !cb.plugins && cb.web_search_options && cb.web_search_options.search_context_size === 'low' && cb.provider && cb.provider.data_collection === 'deny'
+    && /Leeds, the United Kingdom/.test(cb.messages[1].content) && /never give an email address/i.test(cb.messages[0].content),
+    'one cheap search for one city (perplexity/sonar and its own search at the low size), the provider told to keep nothing, never an address asked for');
+  ok(cs.cands.length === 2 && cs.cands[0].website === 'https://leedscentral.example.org.uk/' && !cs.cands[0].verify && cs.cands[1].verify === 'name'
+    && cs.cands.every(c => c.source === 'web' && c.country === 'GB' && c.email === null),
+    'a site the search cited is a candidate as it is; one it did not cite must show its name on its own pages; a platform page, or a "name" that is an address, never: '
+    + JSON.stringify(cs.cands.map(c => [c.name, c.verify || 'cited'])));
+  const monthC = new Date(Date.parse(D0)).toISOString().slice(0, 7);
+  ok(S.get(O.OK_KEYS.webSpend(monthC)) === '6200' && cs.costUsd === 0.0062, 'its cost (0.62 of a cent) is written to the search\'s own share: ' + S.get(O.OK_KEYS.webSpend(monthC)));
+  CITY.bodies.length = 0;
+  atStep('city', { city: li });
+  const rc = await research();
+  const kept = (await placesNow()).map(p => p.name).sort();
+  ok(rc.ok && CITY.bodies.length === 1 && kept.join() === 'Hyde Park Madrasa,Leeds Central Masjid' && S.get(O.OK_KEYS.cityDay(today())) === '1',
+    'the walk\'s city step: one search, both its places read and kept, the day\'s searches counted: ' + kept.join(', '));
+  S.set(O.OK_KEYS.cityDay(today()), String(O.CITY_PER_DAY));
+  atStep('city', { city: li + 1 });
+  const capped = await research();
+  ok(CITY.bodies.length === 1 && (capped.entry.result.notes || []).some(n => new RegExp('day\'s ' + O.CITY_PER_DAY + ' city searches are made').test(n)),
+    'the day\'s ' + O.CITY_PER_DAY + ' city searches made: the walk passes over the next, and no search is made');
+  delete process.env.OPENROUTER_API_KEY;
+
+  /* e. a source that fails rests */
+  resetStore(); mailReset(); setDay(D0, '09:00'); OVERPASS.length = 0;
+  onNet(O.QLEVER_WD_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(502, 'bad gateway'); });
+  onNet(O.WIKIDATA_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(504, 'busy'); });
+  WDQ.length = 0;
+  atStep('wikidata');
+  const w1 = await research();
+  const cur1 = JSON.parse(S.get('nsoul:outreach:cursor'));
+  const w1Said = (w1.entry.result.notes || []).join(' | ');
+  ok(WDQ.length === 2 && /Wikidata did not answer: qlever\.dev: answered 502; query\.wikidata\.org: answered 504/.test(w1Said) && cur1.rest && cur1.rest.wikidata > SOUL.nowMs()
+    && w1.entry.result.step === 'osm:GB' && w1.entry.result.added === 3 && OVERPASS.length === 1,
+    'QLever and the public service both down: the run says so, Wikidata rests an hour, and the same run asks the next source (the map) instead: ' + w1Said);
+  S.set('nsoul:outreach:cursor', JSON.stringify({ ...cur1, n: O.SOURCE_CYCLE.indexOf('wikidata') }));
+  const w2 = await research();
+  ok(WDQ.length === 2 && OVERPASS.length === 2 && w2.entry.result.step === 'osm:GB', 'while it rests it is passed over, and the walk goes straight to the map: ' + w2.entry.result.note);
+  onNet(O.WIKIDATA_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(200, WD); });
+  onNet(O.QLEVER_WD_URL, async u => { WDQ.push(decodeURIComponent(u)); return resp(200, WD); });
+
+  /* f. the sites the old rules set aside are read again, once */
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  HM.set(O.OK_KEYS.seen, new Map([['old.example.org', JSON.stringify({ at: D0, why: 'too little on its own pages to write from (2 facts)' })]]));
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: O.SOURCE_CYCLE.indexOf('osm:GB'), seed: 300 }));
+  await research();
+  const curS = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(!(HM.get(O.OK_KEYS.seen) && HM.get(O.OK_KEYS.seen).get('old.example.org')) && S.get(O.OK_KEYS.seenV) === O.SEEN_V && curS.seed === 0,
+    'the first run under the new rules forgets what the old ones set aside, and walks the seed from its start');
+  HM.get(O.OK_KEYS.seen) ? HM.get(O.OK_KEYS.seen).set('old.example.org', JSON.stringify({ at: D0, why: 'x' })) : HM.set(O.OK_KEYS.seen, new Map([['old.example.org', JSON.stringify({ at: D0, why: 'x' })]]));
+  atStep('osm:CA');
+  await research();
+  ok(HM.get(O.OK_KEYS.seen).get('old.example.org'), 'and only once');
+
+  /* g. the seed walk, and the tick's account of what it asked */
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  O.setOutreachSeams({ seed: [['Al Noor Masjid', 'https://alnoor.example.org.uk/', 'Leeds', 'GB', 'n1'], ['Far Mosque', 'https://far.example.fr', '', 'FR', 'n2']] });
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 3 }));
+  const tk = await O.outreachTick({ until: Date.now() + 120000 });
+  O.setOutreachSeams({ seed: [] });
+  const curT = JSON.parse(S.get('nsoul:outreach:cursor'));
+  ok(tk.ran && tk.added === 1 && tk.source === 'seed' && tk.given === 1 && curT.seed === O.SEED_TAKE && curT.n === 3, 'the seed first, whatever the turn; the tick says which source it asked and what it gave: ' + JSON.stringify(tk));
+  atStep('osm:GB');
+  const tk2 = await O.outreachTick({ until: Date.now() + 120000 });
+  ok(tk2.ran && tk2.source === 'osm:GB' && Array.isArray(tk2.setAside) && tk2.setAside.length >= 1 && tk2.setAside.every(x => /^\d+ /.test(x)), 'and the main reasons sites were set aside: ' + JSON.stringify(tk2.setAside));
+
+  /* h. letters that give */
+  ok(Object.values(O.OFFERS).every(o => /asks nothing in return/.test(o.step)) && /asks for nothing in return/.test(O.writerMessages({ name: 'X', facts: [] }, 'masjid')[0].content),
+    'every letter\'s one step says the house asks nothing in return, and the writer is told the letter gives and asks for nothing');
 }
 
 console.log('\n13. the house\'s words');
