@@ -107,6 +107,25 @@ console.log("\n=== the Soul's tick: the bearer, and only for the tick ===");
   const saved = process.env.CRON_SECRET; delete process.env.CRON_SECRET;
   r = await scall({ query: { action: "tick" }, headers: { "user-agent": "vercel-cron/1.0" } });
   ok(r.code !== 401, "with no secret set, the vercel-cron agent is admitted to the tick");
+  /* review fix, 7 October 2026: production always has the secret, so a
+     production without it admits no cron at all (fail closed); previews and
+     tests keep the agent as the proof */
+  const savedEnv = process.env.VERCEL_ENV;
+  process.env.VERCEL_ENV = "production";
+  r = await scall({ query: { action: "tick" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code === 401, "in production with no secret, the vercel-cron agent is refused at the tick (got " + r.code + ")");
+  r = await scall({ query: { action: "tick" }, headers: { "x-vercel-signature": "abc" } });
+  ok(r.code === 401, "and so is the signature header");
+  r = await call({ query: { action: "due" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code === 401, "the same at social's 'due' (got " + r.code + ")");
+  const insights = (await import("../api/insights.js")).default;
+  const ir = res();
+  await insights({ method: "POST", headers: { "user-agent": "vercel-cron/1.0" }, query: {}, body: { action: "snapshot" } }, ir);
+  ok(ir.code === 401, "and at the insights snapshot (got " + ir.code + ")");
+  process.env.VERCEL_ENV = "preview";
+  r = await call({ query: { action: "due" }, headers: { "user-agent": "vercel-cron/1.0" } });
+  ok(r.code !== 401, "a preview with no secret keeps the agent as the proof (got " + r.code + ")");
+  if (savedEnv == null) delete process.env.VERCEL_ENV; else process.env.VERCEL_ENV = savedEnv;
   process.env.CRON_SECRET = saved;
 }
 

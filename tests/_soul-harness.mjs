@@ -54,6 +54,9 @@ function run(c) {
     case 'LSET': { const l = L.get(a[0]) || []; l[+a[1]] = String(a[2]); return 'OK'; }
     case 'LPOP': { const l = L.get(a[0]) || []; return l.length ? l.shift() : null; }
     case 'LLEN': return (L.get(a[0]) || []).length;
+    /* mail: a thread moved to the head of its list (api/_mail.js) */
+    case 'LREM': { const l = L.get(a[0]) || [], cnt = Math.abs(+a[1]), v = String(a[2]); let n = 0; const out = [];
+      for (const x of l) { if (x === v && (!cnt || n < cnt)) { n++; continue; } out.push(x); } L.set(a[0], out); return n; }
     case 'HGETALL': { const h = H.get(a[0]); const out = []; if (h) for (const [k, v] of h) out.push(k, v); return out; }
     case 'HGET': { const h = H.get(a[0]); return h && h.has(a[1]) ? h.get(a[1]) : null; }
     case 'HSET': { const h = H.get(a[0]) || new Map(); for (let i = 1; i + 1 < a.length; i += 2) h.set(a[i], String(a[i + 1])); H.set(a[0], h); return 1; }
@@ -198,27 +201,39 @@ SOUL.setSeams({ route: async task => {
     const user = String(task.messages[1].content);
     const intentText = user.slice(user.indexOf('INTENT:'), user.indexOf('EVIDENCE'));
     /* 3 October 2026: and Article 11's four (a pop up, ads, Paradise for an amount, a paywall) */
+    /* mail: 6 October 2026, and Article 12's five (money promised, a mosque
+       pressured, a ruling, an address taken from a reader, an injected order) */
     const bad = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/,
-      /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/].some(rx => rx.test(intentText));
+      /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/,
+      /will donate 500 dollars/, /Mosques that do not share them/, /NOOR Codex of Light rules that/, /a reader mentioned in a question/, /the list of the givers you asked for/].some(rx => rx.test(intentText));
     return say(JSON.stringify({ vote: bad ? 'reject' : 'approve', reasons: [bad ? 'crosses the constitution' : 'within the constitution'] }));
   }
   return { ok: false, error: 'unknown role ' + role, tier };
 } });
 export const rolesAsked = () => ROUTER.calls.map(c => c.role);
 
-/* Jev through the AI Gateway: answer(body) gives each question a score */
-export const JEV_URL = 'https://ai-gateway.vercel.sh/typesafe/v1/systemone';
-export const JEV = { mode: 'off', score: () => 0.05, bodies: [] };
+/* Jev through the AI Gateway's Decision API (round four, 7 October 2026:
+   POST /v1/evaluate, the docs' own shapes): score(k, body) gives a boolean
+   its probability; choose(k, body) gives a choice {choice, probabilities};
+   rate(k, body) gives a score its number. A question with no answer is left
+   out, which the house reads as an incomplete verdict. */
+export const JEV_URL = 'https://ai-gateway.vercel.sh/v1/evaluate';
+export const JEV = { mode: 'off', score: () => 0.05, choose: () => null, rate: () => null, bodies: [] };
 onNet(JEV_URL, async (u, init) => {
   const body = JSON.parse(init.body);
   JEV.bodies.push(body);
   if (JEV.mode === 'down') throw new Error('ECONNREFUSED');
   const answers = {};
-  for (const k of Object.keys(body.questions || {})) { const v = JEV.score(k, body); if (v != null) answers[k] = { noul: v }; }
-  return resp(200, { answers, model: 'typesafe-ai/jev' });
+  for (const [k, q] of Object.entries(body.questions || {})) {
+    if (q.type === 'choice') { const c = JEV.choose(k, body); if (c) answers[k] = { type: 'choice', choice: c.choice, probabilities: c.probabilities || { [c.choice]: 1 } }; continue; }
+    if (q.type === 'score') { const v = JEV.rate(k, body); if (v != null) answers[k] = { type: 'score', score: v, probabilities: {} }; continue; }
+    const v = JEV.score(k, body); if (v != null) answers[k] = { type: 'boolean', probability: v };
+  }
+  return resp(200, { model: 'typesafe-ai/jev', answers, usage: { inputTokens: 300, outputTokens: 20 }, providerMetadata: { gateway: { cost: '0.000012' } } });
 });
-export function jevOn(score) { process.env.AI_GATEWAY_API_KEY = 'gw-test-key'; JEV.mode = 'on'; JEV.score = score || (() => 0.05); }
-export function jevOff() { delete process.env.AI_GATEWAY_API_KEY; JEV.mode = 'off'; }
+export function jevOn(score, more) { process.env.AI_GATEWAY_API_KEY = 'gw-test-key'; JEV.mode = 'on'; JEV.score = score || (() => 0.05);
+  JEV.choose = (more && more.choose) || (() => null); JEV.rate = (more && more.rate) || (() => null); }
+export function jevOff() { delete process.env.AI_GATEWAY_API_KEY; JEV.mode = 'off'; JEV.choose = () => null; JEV.rate = () => null; }
 
 export const APPROVED = { verdicts: { guardian: { vote: 'approve' }, auditor: { vote: 'approve' }, skeptic: { vote: 'approve' } } };
 export function fakeRes() {

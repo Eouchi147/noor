@@ -9,8 +9,13 @@
 //   the Guardian: the constitution and the house's religious integrity. It
 //     holds a veto. Its first layer is code (api/_hands.js redLineCheck, the
 //     same pure guard every intent already passed); its second is a model,
-//     on the paid deep tier when the month's budget allows, else the
-//     strongest free tier.
+//     the strongest free tier (round four, 7 October 2026: no longer the
+//     paid tier by default). One paid Guardian is asked only as a tie
+//     break: when the free Guardian alone stands against an act the Skeptic
+//     and the Auditor approved (its veto is the whole difference), a paid
+//     name judges the same intent once (purpose "tie-break", api/_llm.js),
+//     and its verdict is the Guardian's; the call and what it changed go to
+//     the ROI ledger.
 //   the Auditor: every number in the intent's why and expected effect must
 //     already be in the evidence. This is mechanical, no model at all: the
 //     Lantern's own critic() (api/_agent.js), over the evidence pack the
@@ -43,7 +48,8 @@
 // ---------------------------------------------------------------------------
 
 import { constitutionText, councilRule, countsToday, CAP_LIMITS, seams, context } from "./_soul.js";
-import { ask as jevAsk, RISK_AT } from "./_jev.js";
+import { ask as jevAsk, RISK_AT, prob as jevProb, TEXT_QUESTIONS as JEV_TEXT_QUESTIONS, TEXT_LABEL as JEV_TEXT_LABEL } from "./_jev.js";   /* round four: prob, and the text questions now live in _jev.js */
+import { noteGuard, paidOutcome } from "./_llm.js";   /* round four: the scoreboard and the ROI ledger */
 import { redLineCheck } from "./_hands.js";
 import { critic, evidenceFromText } from "./_agent.js";
 import { HOUSE_RULES } from "./_playbook.js";
@@ -117,8 +123,13 @@ export async function guardian(intent, evidence, opts = {}) {
     { role: "system", content: GUARDIAN_SYSTEM + "\n\n" + constitutionText() + "\n\nHOUSE RULES:\n" + HOUSE_RULES.map(r => "- " + r).join("\n") + "\n\n" + lessonsText(opts.playbook) },
     { role: "user", content: dataBlock(intent, evidence) }
   ];
-  const r = await think("deep", messages, { max_tokens: 500, temperature: 0, timeout: 25000 });
-  return readVerdict("guardian", r);
+  /* round four: the free strong tier; the paid tier only as a tie break */
+  const paid = !!opts.tieBreak;
+  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 500, temperature: 0, timeout: 25000, ...(paid ? { purpose: "tie-break", paidOnly: true } : {}) });
+  const v = readVerdict("guardian", r);
+  try { await noteGuard(r, !v.failed); } catch { }
+  if (paid) return { ...v, paid: !!(r && r.paid), paidId: (r && r.paidId) || null, costUsd: (r && Number(r.costUsd)) || 0 };
+  return v;
 }
 
 /* every number, date and clock time in the why and the expected effect must
@@ -154,13 +165,16 @@ export async function skeptic(intent, evidence, opts = {}) {
     { role: "user", content: dataBlock(intent, evidence, left) }
   ];
   const r = await think("strong", messages, { max_tokens: 400, temperature: 0, timeout: 20000 });
-  return readVerdict("skeptic", r);
+  const v = readVerdict("skeptic", r);
+  try { await noteGuard(r, !v.failed); } catch { }   /* round four: a verdict that can be read is a check passed */
+  return v;
 }
 
 /* ---------------------------------------------------------------------------
    THE SENTINEL: Jev, four questions, a probability each
 --------------------------------------------------------------------------- */
 export const SENTINEL_QUESTIONS = Object.freeze({
+  /* "noul" is the TypeSafe name; api/_jev.js sends it as the Decision API's "boolean" */
   breaks_constitution: { type: "noul", instructions: "The proposed action would break one of these rules: never invent a verse, a hadith, a ruling, a source or a number; never deceive a reader or message an individual person; never post beyond the daily schedule or post anything not already on the house's own shelf; never delete or hide content; never create accounts, spend money or change keys or settings of an outside service; never change the house's own rules, caps, budget or code; never send personal data to a model." },
   misrepresents_islam: { type: "noul", instructions: "The proposed action or its wording would misrepresent Islam: it puts words in the mouth of the Prophet or a companion, cites a hadith or a ruling, takes a side between schools or sects, shows a prophet or a companion, or speaks with contempt of any person or faith." },
   spam_or_bait: { type: "noul", instructions: "The proposed action is spam or engagement bait: it posts more often than planned, repeats the same content, uses a misleading hook, or chases reactions rather than serving readers." },
@@ -182,11 +196,11 @@ function sentinelState(intent, evidence) {
 /* {role, vote:"reject"|"pass"|null, unavailable, reasons[], scores{}} */
 export async function sentinel(intent, evidence) {
   let r;
-  try { r = await jevAsk(sentinelState(intent, evidence), SENTINEL_QUESTIONS, jevOpts()); }
+  try { r = await jevAsk(sentinelState(intent, evidence), SENTINEL_QUESTIONS, { ...jevOpts(), purpose: "sentinel" }); }
   catch (e) { r = { ok: false, why: String(e && e.message || e).slice(0, 120) }; }
   if (!r || !r.ok) return { role: "sentinel", vote: null, unavailable: true, reasons: ["sentinel unavailable: " + String((r && r.why) || "no answer").slice(0, 160)], scores: {} };
   const scores = {};
-  for (const k of Object.keys(SENTINEL_QUESTIONS)) { const a = r.answers && r.answers[k]; scores[k] = (a && typeof a.noul === "number") ? Math.round(a.noul * 1000) / 1000 : null; }
+  for (const k of Object.keys(SENTINEL_QUESTIONS)) { const v = jevProb(r.answers && r.answers[k]); scores[k] = v == null ? null : Math.round(v * 1000) / 1000; }
   if (Object.values(scores).some(v => v == null)) return { role: "sentinel", vote: null, unavailable: true, reasons: ["sentinel unavailable: an incomplete answer"], scores };
   const reasons = Object.keys(scores).filter(k => scores[k] >= RISK_AT).map(k => LABEL[k] + " (" + scores[k] + ")");
   return reasons.length
@@ -197,21 +211,15 @@ export async function sentinel(intent, evidence) {
 /* religious safety of a text the soul writes (a message to the owner, a
    playbook lesson): {risky, unavailable, reasons[], scores{}}. Unreachable
    is never risky: the gate can only hold something back. */
-export const TEXT_QUESTIONS = Object.freeze({
-  attributes: { type: "noul", instructions: "The text quotes words as said by the Prophet Muhammad or by one of his companions, or presents something as a hadith or narration." },
-  hadith_number: { type: "noul", instructions: "The text gives a hadith collection name with a number, such as Bukhari 1234 or Muslim 56." },
-  ruling: { type: "noul", instructions: "The text issues a religious ruling, declaring something obligatory, forbidden, permitted or disliked, or takes a side in a dispute between schools or sects of Islam." },
-  slight: { type: "noul", instructions: "The text mocks, disparages or speaks with contempt of any person, group, people or religion." },
-  misrepresents: { type: "noul", instructions: "The text says something about Islam, the Qur'an or the Prophet that misrepresents what Muslims believe." }
-});
-const TEXT_LABEL = { attributes: "attributes words to the Prophet or a companion", hadith_number: "cites a hadith number", ruling: "issues a religious ruling", slight: "speaks with contempt of someone", misrepresents: "may misrepresent Islam" };
+export const TEXT_QUESTIONS = JEV_TEXT_QUESTIONS;   /* round four: kept in api/_jev.js, re-exported here unchanged */
+const TEXT_LABEL = JEV_TEXT_LABEL;
 export async function religiousRisk(text) {
   let r;
-  try { r = await jevAsk({ text: String(text || "").slice(0, 4000) }, TEXT_QUESTIONS, jevOpts()); }
+  try { r = await jevAsk({ text: String(text || "").slice(0, 4000) }, TEXT_QUESTIONS, { ...jevOpts(), purpose: "text" }); }
   catch (e) { r = { ok: false, why: String(e && e.message || e).slice(0, 120) }; }
   if (!r || !r.ok) return { risky: false, unavailable: true, reasons: [], why: String((r && r.why) || "no answer").slice(0, 160), scores: {} };
   const scores = {};
-  for (const k of Object.keys(TEXT_QUESTIONS)) { const a = r.answers && r.answers[k]; scores[k] = (a && typeof a.noul === "number") ? a.noul : null; }
+  for (const k of Object.keys(TEXT_QUESTIONS)) scores[k] = jevProb(r.answers && r.answers[k]);
   if (Object.values(scores).some(v => v == null)) return { risky: false, unavailable: true, reasons: [], why: "an incomplete answer", scores };
   const reasons = Object.keys(scores).filter(k => scores[k] >= RISK_AT).map(k => TEXT_LABEL[k]);
   return { risky: reasons.length > 0, unavailable: false, reasons, scores };
@@ -234,5 +242,68 @@ export async function convene(intent, evidence, opts = {}) {
     safe("skeptic", () => skeptic(intent, evidence, opts))
   ]);
   const verdicts = { guardian: g, auditor: a, skeptic: s };
-  return { approved: councilRule(verdicts), verdicts, ...(sen ? { sentinel: sen } : {}), at: new Date().toISOString() };
+  let approved = councilRule(verdicts);
+  /* round four (7 October 2026): THE TIE BREAK. Paid only when the free
+     judges disagree on a public act and the Guardian's vote is the whole
+     difference: the free Guardian rejected (by its model, not by the code
+     layer, and with a real verdict), while the Skeptic and the Auditor both
+     approved, so the council would approve with the Guardian's yes. A veto
+     the Auditor shares is two free judges against one and is not bought
+     back. Then one paid Guardian
+     reads the same intent; its verdict stands as the Guardian's, and the
+     free one is kept beside it. If no paid name may answer (no named use
+     left in the day's cap, no credit), the free verdicts stand as they are. */
+  let tieBreak = null;
+  const freeVeto = g && g.vote === "reject" && !g.failed && g.tier !== "code";
+  const skepticYes = s && s.vote === "approve" && !s.failed;
+  const auditorYes = a && a.vote === "approve" && !a.failed;
+  if (opts.tieBreak !== false && !approved && freeVeto && skepticYes && auditorYes && councilRule({ ...verdicts, guardian: { ...g, vote: "approve" } })) {
+    /* review fix, 7 October 2026: a caller with a deadline (opts.until, a
+       clock time in ms) gets a tie break only when one can finish inside
+       it; one asked is held to it too, and an answer that comes after it is
+       not used (its ledger line says so). The free verdicts then stand. */
+    const left = Number.isFinite(opts.until) ? opts.until - Date.now() : Infinity;
+    if (left < TIE_LIMITS.needMs) {
+      tieBreak = { asked: false, paid: false, why: "too little of the council's time was left for a paid tie break, so the free verdicts stand" };
+    } else {
+      const call = safe("guardian", () => guardian(intent, evidence, { ...opts, tieBreak: true }));
+      let t;
+      const paidG = Number.isFinite(left)
+        ? await Promise.race([call, new Promise(res => { t = setTimeout(() => res(LATE), left); })]).finally(() => clearTimeout(t))
+        : await call;
+      if (paidG === LATE) {
+        tieBreak = { asked: true, paid: false, late: true, why: "the paid Guardian did not answer inside the council's time, so the free verdicts stand" };
+        call.then(v => (v && v.paidId ? paidOutcome(v.paidId, { helped: false, note: TIE_NOTES.late }) : null)).catch(() => {});
+      } else if (paidG && paidG.paid && !paidG.failed) {
+        verdicts.guardian = { ...paidG, tieBreak: true, free: { vote: g.vote, reasons: g.reasons, tier: g.tier || null, model: g.model || null } };
+        const was = approved;
+        approved = councilRule(verdicts);
+        tieBreak = { asked: true, paid: true, model: paidG.model || null, costUsd: paidG.costUsd || 0, vote: paidG.vote, changed: approved !== was, paidId: paidG.paidId || null };
+        /* a caller that keeps the verdict (the cycle, the Lantern's own
+           room) writes what it led to once it knows the verdict stood */
+        if (paidG.paidId && !opts.deferOutcome) await tieBreakOutcome({ tieBreak }, true);
+      } else {
+        tieBreak = { asked: true, paid: false, why: String((paidG && paidG.reasons && paidG.reasons[0]) || "no paid model could answer").slice(0, 200) };
+      }
+    }
+  }
+  return { approved, verdicts, ...(sen ? { sentinel: sen } : {}), ...(tieBreak ? { tieBreak } : {}), at: new Date().toISOString() };
+}
+/* the time a paid tie break needs: its own call (25 seconds) and a margin
+   (a test may shorten it, as api/_mind.js LIMITS is shortened) */
+export const TIE_LIMITS = { needMs: 26000 };
+const LATE = Symbol("late");
+const TIE_NOTES = {
+  lifted: "the paid Guardian lifted the free Guardian's lone veto, so the act went to its hand",
+  agreed: "the paid Guardian agreed with the free one, so the act stayed refused",
+  late: "the paid Guardian answered after the council's time ran out, so its verdict was not used"
+};
+/* what a paid tie break led to, in the ROI ledger, from the verdict the
+   caller kept: used (it stood) or not (the caller's own clock ran out first) */
+export async function tieBreakOutcome(council, used) {
+  const tb = council && council.tieBreak;
+  if (!tb || !tb.paidId) return { ok: false };
+  const helped = !!used && !!tb.changed;
+  const note = !used ? TIE_NOTES.late : tb.changed ? TIE_NOTES.lifted : TIE_NOTES.agreed;
+  try { return await paidOutcome(tb.paidId, { helped, note }); } catch { return { ok: false }; }
 }

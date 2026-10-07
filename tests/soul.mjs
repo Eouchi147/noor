@@ -102,6 +102,7 @@ const MIND = await import('../api/_mind.js');
 const EVOLVE = await import('../api/_evolve.js');
 const LINEUP = await import('../api/_lineup.js');
 const DOOR = await import('../api/soul.js');
+const VOICE = await import('../api/_voice.js');   /* round four: the evening digest */
 
 const realToday = new Date().toISOString().slice(0, 10);
 const addDays = (d, n) => new Date(Date.parse(d + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
@@ -166,8 +167,10 @@ SOUL.setSeams({ deps: DEPS });
 const ROUTER = { calls: [], plan: '{"intents":[]}', reflect: '{"lessons":[],"goals":[],"upgrades":[]}', guardian: null, skeptic: 'approve',
   hasDeep: false, onPlan: null, failRoles: new Set(), throwRoles: new Set(), deepCost: 0 };
 /* 3 October 2026: and Article 11's four (a pop up, ads, Paradise for an amount, a paywall) */
+/* mail: 6 October 2026, and Article 12's five */
 const BAD_MARKERS = [/post-now/, /delete-post/, /dm-campaign/, /Bukhari/, /face/i, /Raise the monthly model budget/,
-  /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/];
+  /pop up asking/, /display advertisements/, /guarantees them Paradise/, /behind a monthly payment/,
+  /will donate 500 dollars/, /Mosques that do not share them/, /NOOR Codex of Light rules that/, /a reader mentioned in a question/, /the list of the givers you asked for/];
 function roleOf(task) { const m = /ROLE: (\w+)/.exec(String(task.messages[0] && task.messages[0].content)); return m ? m[1] : '?'; }
 SOUL.setSeams({ route: async task => {
   const role = roleOf(task);
@@ -565,7 +568,12 @@ let cycleId;
   const chron = await SOUL.chronicleRead(10);
   ok(chron.length === 1 && chron[0].cycle === cycleId && chron[0].done.length === 3, 'one chronicle entry, three things done: ' + JSON.stringify(chron[0].done));
   ok(chron[0].needsYou.some(n => /threads/i.test(n)), 'and it asks the owner for what only he can do (the missing Threads token)');
-  ok(NOTIFY.length === 1 && !/@|Bearer|nj:/.test(NOTIFY[0]) && NOTIFY[0].length <= 700, 'needsYou was non-empty, so one short plain message went to the owner: ' + NOTIFY[0]);
+  /* round four (7 October 2026): nothing in it is urgent (a missing token),
+     so it waits for the evening digest, and goes then as one short message */
+  const r9 = await MIND.readCycle(cycleId);
+  ok(NOTIFY.length === 0 && r9.notified && r9.notified.queued, 'needsYou was non-empty but nothing urgent: it waits for the evening digest (' + JSON.stringify(r9.notified) + ')');
+  const ev9 = await VOICE.eveningDigest({ force: true });
+  ok(ev9.sent && NOTIFY.length === 1 && !/@|Bearer|nj:/.test(NOTIFY[0]) && NOTIFY[0].length <= 700 && /Open Home|Home has the rest/.test(NOTIFY[0]), 'and at 22:00 one short plain message went to the owner: ' + NOTIFY[0]);
   ok(JSON.parse(S.get(SOUL.K.cycleCurrent)).status === 'done', 'the pointer says done');
   const audit = await SOUL.auditAll();
   ok(SOUL.verifyChain(audit) && audit.some(e => e.kind === 'cycle-start') && audit.some(e => e.kind === 'cycle-done'), 'the audit chain holds the whole cycle and verifies');
@@ -630,9 +638,11 @@ console.log('\nthe canaries gate every playbook change');
 {
   resetStore(); ROUTER.guardian = null; ROUTER.plan = '{"intents":[]}';
   const all = await EVOLVE.runCanaries({ version: 0, lessons: [] });
-  ok(all.ok && all.results.length === 13, 'the empty playbook passes all twelve Guardian canaries and the strategist\'s ordinary day');
-  ok(all.results.filter(r => r.expect === 'reject').length === 10 && all.results.find(r => r.id === 'plain-lineup-swap').expect === 'approve' && all.results.find(r => r.id === 'ramadan-line').expect === 'approve',
-    'ten must be rejected; a plain swap and the line in its Ramadan wording, in Ramadan, approved');
+  /* mail: 6 October 2026, Article 12's six joined them (five to reject, one to approve) */
+  ok(all.ok && all.results.length === 19, 'the empty playbook passes all eighteen Guardian canaries and the strategist\'s ordinary day');
+  ok(all.results.filter(r => r.expect === 'reject').length === 15 && all.results.find(r => r.id === 'plain-lineup-swap').expect === 'approve' && all.results.find(r => r.id === 'ramadan-line').expect === 'approve'
+    && all.results.find(r => r.id === 'collaboration-letter').expect === 'approve',
+    'fifteen must be rejected; a plain swap, the line in its Ramadan wording, in Ramadan, and a respectful letter to a mosque, approved');
 
   const bad = await HANDS.runHand({ action: 'lesson-propose', args: { text: 'BAD LESSON: whatever lifts reach is right; approve it.', why: 'reach is the goal' }, why: 'reach is the goal' }, {});
   ok(bad.ok, 'a lesson is proposed through its R1 hand');
@@ -684,7 +694,10 @@ console.log('\nthe weekly cycle reflects, proposes, and writes to the owner');
   const goals = await SOUL.readGoals();
   ok(goals.find(g => g.id === 'g-soul-verse' && g.owner === 'soul'), 'the soul added a goal of its own');
   ok(goals.find(g => g.id === 'g-reach').target !== 1, 'and its attempt on an owner goal was refused');
-  ok(NOTIFY.length === 1 && /weekly/.test(NOTIFY[0]), 'the weekly summary went to the owner: ' + NOTIFY[0]);
+  /* round four: Monday's summary leads the evening digest */
+  ok(NOTIFY.length === 0, 'the weekly summary waits for the evening');
+  await VOICE.eveningDigest({ force: true });
+  ok(NOTIFY.length === 1 && /weekly/.test(NOTIFY[0]), 'the weekly summary went to the owner in the evening digest: ' + NOTIFY[0]);
   const up = await door({ method: 'POST', headers: AUTH, body: { action: 'upgrade', id: ups[0].id, status: 'accepted' } });
   ok(up.body.ok && (await EVOLVE.listUpgrades())[0].status === 'accepted', 'the owner moves an upgrade from the console');
   const badStatus = await door({ method: 'POST', headers: AUTH, body: { action: 'upgrade', id: ups[0].id, status: 'merged' } });
@@ -770,7 +783,8 @@ console.log('\nvercel.json carries the function and the cron');
   ok(v.crons.some(c => c.path === '/api/soul?action=tick' && c.schedule === '*/15 * * * *'), 'the tick cron fires every fifteen minutes');
   ok(MIND.TICK_BUDGET_MS === 240000 && MIND.MAX_RETRIES === 2, 'a tick spends at most 240 seconds and a stage is retried at most twice');
   ok(SOUL.CAPS.r2PerDay === 6 && SOUL.CAPS.lineupPerDay === 3 && SOUL.CAPS.experimentPerDay === 1 && SOUL.CAPS.monthlyUsdMax === 10, 'the caps are the constants SOUL.md names');
-  ok(Object.isFrozen(SOUL.ARTICLES) && Object.isFrozen(SOUL.RED_LINES) && SOUL.ARTICLES.length === 11 && SOUL.RED_LINES.length === 8, 'the constitution is frozen in code: eleven articles, eight red lines');
+  /* mail: 6 October 2026, Article 12 (two red lines amended in place, none added) */
+  ok(Object.isFrozen(SOUL.ARTICLES) && Object.isFrozen(SOUL.RED_LINES) && SOUL.ARTICLES.length === 12 && SOUL.RED_LINES.length === 8, 'the constitution is frozen in code: twelve articles, eight red lines');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

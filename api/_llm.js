@@ -37,6 +37,43 @@
 // private sender no other path can reach, and ALLOW_PAID_MODELS still opens
 // nothing here.
 //
+// ROUND FOUR, 7 OCTOBER 2026 (the owner: "the best free models ... and it
+// can use paid models if needed but ... use them scarcely"). Five changes,
+// each marked "round four" where it lives:
+//   1. two more free doors: the AI Gateway's own free models (§1b), found
+//      live by their zero price, reached by the deployment's OIDC token (the
+//      same credential as api/_jev.js), every request carrying zero data
+//      retention and no training (GATEWAY_PRIVACY); and Cerebras, only when a
+//      CEREBRAS_API_KEY is set;
+//   2. a scoreboard per model (§4b): answered, failed, its checks passed,
+//      latency and the last error, two weeks deep, written in the same
+//      pipeline as the usage after every call; inside each tier the free
+//      names are ordered by that measured quality, the tier's own order (the
+//      lead provider first) breaking ties;
+//   3. Groq's real limit, tokens a minute, is counted (CAPS.groq.tpm);
+//   4. the deep tier pays only for one of five named uses (PAID_PURPOSES),
+//      under a day's cap of 0.50 dollars inside the month's 10, and never for
+//      a call whose worst case passes 0.10 dollars unless it is the Monday
+//      strategy; the mail tier pays only for a letter retry;
+//   5. every paid call is a line in the ROI ledger nsoul:paid:<YYYY-MM>,
+//      {at, task, model, costUsd, outcome}, the outcome filled in later by
+//      what the call led to (paidOutcome).
+//
+// ROUND FIVE, 7 OCTOBER 2026 (the models review, each marked "round five"):
+//   D1. the paid caps hold under parallel calls and a store that refuses
+//       writes: the worst case is held before the call, the actual put in
+//       its place after, and a cost that cannot be written closes the paid
+//       door for the day for every caller (section 8);
+//   D4. a paid call that can carry mail or a person's words asks OpenRouter
+//       for zero data retention endpoints only (zdr: true);
+//   D7. an unmeasured name is no longer ranked under every measured one, and
+//       once an hour a tier asks the best name not measured for a day first,
+//       so one bad hour no longer demotes a lead for good (section 4b);
+//   and NVIDIA's API catalog joins the free doors for totals only (fast,
+//   strong, long; never mail, never a person's words), found live, ranked by
+//   the scoreboard, and held back until the owner says NVIDIA allows his use
+//   (NVIDIA_PRODUCTION_OK, section 1c: its free catalog is a trial).
+//
 // "FREE" BELONGS TO THE ACCOUNT, NOT THE MODEL. A model named on an
 // allow-list is only actually free if the account whose key answers for it
 // has no billing turned on: a Groq organisation still on its free plan, or
@@ -50,32 +87,63 @@
 // else in the message is even looked at. See scrub() below.
 // ---------------------------------------------------------------------------
 
+import crypto from "node:crypto";
 import { kv, kvReady } from "./_kv.js";
 import { isFree as orIsFree, refreshFreeModels as orRefreshFreeModels } from "./_models.js";
+import { GATEWAY_PRIVACY, credential as gatewayCredential } from "./_jev.js";   /* round four */
 
 /* ---------------------------------------------------------------------------
    1. PROVIDERS. One OpenAI-compatible base URL each; a provider with no key
       set on this deployment simply does not exist, quietly, the same way a
       missing OPENROUTER_API_KEY already makes the Lantern fall back to
       written text rather than error.
+
+      Round four: "gateway" is Vercel's AI Gateway (its OpenAI-compatible
+      chat completions, docs/ai-gateway), keyed by AI_GATEWAY_API_KEY or the
+      deployment's own OIDC token, exactly as api/_jev.js reaches Jev; and
+      "cerebras" (inference-docs.cerebras.ai, read 7 October 2026: the base
+      https://api.cerebras.ai/v1, a Bearer CEREBRAS_API_KEY), present only
+      when that key is set.
+
+      Round five: "nvidia" is NVIDIA's API catalog (build.nvidia.com), the
+      OpenAI-compatible https://integrate.api.nvidia.com/v1 with a Bearer
+      NVIDIA_API_KEY, present only when that key is set AND the owner has set
+      NVIDIA_PRODUCTION_OK=1 (section 1c says why).
 --------------------------------------------------------------------------- */
 const PROVIDER_BASE = {
   openrouter: "https://openrouter.ai/api/v1",
   groq: "https://api.groq.com/openai/v1",
-  gemini: "https://generativelanguage.googleapis.com/v1beta/openai"
+  gemini: "https://generativelanguage.googleapis.com/v1beta/openai",
+  gateway: "https://ai-gateway.vercel.sh/v1",
+  cerebras: "https://api.cerebras.ai/v1",
+  nvidia: "https://integrate.api.nvidia.com/v1"
 };
 const PROVIDER_KEYENV = {
   openrouter: "OPENROUTER_API_KEY",
   groq: "GROQ_API_KEY",
-  gemini: "GEMINI_API_KEY"
+  gemini: "GEMINI_API_KEY",
+  gateway: "AI_GATEWAY_API_KEY",
+  cerebras: "CEREBRAS_API_KEY",
+  nvidia: "NVIDIA_API_KEY"
 };
 const PROVIDERS = Object.keys(PROVIDER_KEYENV);
 
-function keyFor(provider) { return String(process.env[PROVIDER_KEYENV[provider]] || "").trim(); }
+/* round five: the owner's own word that NVIDIA allows his use of its free
+   catalog in production (its trial terms say it does not, section 1c) */
+export const NVIDIA_OK_ENV = "NVIDIA_PRODUCTION_OK";
+const nvidiaAllowed = () => String(process.env[NVIDIA_OK_ENV] || "").trim() === "1";
+/* the key is there but the door is held: what the models view says */
+export function nvidiaHeld() { return !!String(process.env.NVIDIA_API_KEY || "").trim() && !nvidiaAllowed(); }
+
+function keyFor(provider) {
+  if (provider === "gateway") return String(gatewayCredential() || "").trim();   /* round four: the key, or the OIDC token */
+  if (provider === "nvidia" && !nvidiaAllowed()) return "";                      /* round five: held until he says */
+  return String(process.env[PROVIDER_KEYENV[provider]] || "").trim();
+}
 export function providerPresent(provider) { return !!keyFor(provider); }
 export function providersConfigured() {
   const out = {};
-  for (const p of PROVIDERS) out[p] = providerPresent(p) ? "set" : "missing";
+  for (const p of PROVIDERS) out[p] = providerPresent(p) ? "set" : (p === "nvidia" && nvidiaHeld() ? "held" : "missing");   /* round five: a key held back by its terms */
   return out;
 }
 
@@ -103,17 +171,61 @@ const GROQ_ALLOW = [
   "openai/gpt-oss-safeguard-20b",
   "qwen/qwen3.8-27b"
 ];
+/* round four, read again 7 October 2026: Groq's free table and Gemini's
+   pricing page still name exactly these (ai.google.dev/gemini-api/docs/
+   pricing: the 3.8, 3.7, 3.6 and 3.5 Flash and the 3.5 and 3.1 Flash-Lite
+   "Free of charge", 3.1 Pro Preview "Not available"), so the lists stand. */
 const GEMINI_FLASH_ORDER = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash"];
 const GEMINI_FLASH_LITE_ORDER = ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"];
 const GEMINI_ALLOW = GEMINI_FLASH_ORDER.concat(GEMINI_FLASH_LITE_ORDER);
+/* round four: Cerebras's free trial, inference-docs.cerebras.ai read 7
+   October 2026: gpt-oss-120b and qwen-3.8-27b, each 5 requests and 30,000
+   uncached tokens a minute and 1,000,000 tokens a day. (zai-glm-4.7, named
+   in the brief, was not on the page that day, so it is not here.) */
+const CEREBRAS_ALLOW = ["gpt-oss-120b", "qwen-3.8-27b"];
 
-const ALLOW = { groq: GROQ_ALLOW, gemini: GEMINI_ALLOW };
+/* ---------------------------------------------------------------------------
+   1c. NVIDIA'S API CATALOG (round five, 7 October 2026). What was read that
+       day, and what follows from it:
+       - the list: GET https://integrate.api.nvidia.com/v1/models, public, the
+         OpenAI shape {object, data[{id, object, created, owned_by}]}, about
+         ninety names, chat models beside embedders, guards and vision ones;
+       - the price: none per model. NVIDIA's NIM FAQ (docs.api.nvidia.com/
+         nim/docs/product, updated 6 August 2026): "Members of the NVIDIA
+         Developer Program have free access to NIM API endpoints for
+         prototyping", and "Using NIM in production requires an NVIDIA AI
+         Enterprise license", production being "any use of NIM for purposes
+         other than development, testing, research or evaluation";
+       - the terms: the NVIDIA API Trial Terms of Service (v. 19 September
+         2025, assets.ngc.nvidia.com/products/api-catalog/legal): "for
+         limited trial purposes only and without use of the API Service or
+         Generated Content in production"; content is not kept "at the end
+         of each API Service session" (2.3), but NVIDIA collects "User
+         Content and Generated Content to improve NVIDIA products and
+         services, including AI models" (3.3), and no personal information
+         may be uploaded;
+       - the rate: no table is published; NVIDIA's forum (July 2026) gives
+         40 requests a minute for the account, "dependent on model, use-case
+         and the amount of current overall traffic".
+       So: it may learn from what it reads, so it is for totals only, never
+       mail and never a person's words; its free use is a trial, so it is
+       held back until the owner sets NVIDIA_PRODUCTION_OK=1 (when NVIDIA
+       allows his use); and its list is read live with no written fallback,
+       the chat names below intersected with what the catalog lists today.
+       One bucket for the whole account (30 a minute, under its 40).
+--------------------------------------------------------------------------- */
+/* the quick names first, then the strong ones, each family best first */
+export const NVIDIA_FAST = Object.freeze(["nvidia/nemotron-3.5-lightning-30b-a3b", "z-ai/glm-5.3-flash", "openai/gpt-oss-20b"]);
+export const NVIDIA_STRONG = Object.freeze(["nvidia/nemotron-3-super-120b-a12b", "moonshotai/kimi-k3", "z-ai/glm-5.3", "deepseek-ai/deepseek-v4.1-flash", "nvidia/nemotron-3-ultra-550b-a55b"]);
+const NVIDIA_ALLOW = NVIDIA_FAST.concat(NVIDIA_STRONG);
+
+const ALLOW = { groq: GROQ_ALLOW, gemini: GEMINI_ALLOW, cerebras: CEREBRAS_ALLOW, nvidia: NVIDIA_ALLOW };
 
 /* ---- live discovery, cached in the store the same shape as _models.js ---- */
 const SIX_HOURS = 6 * 3600 * 1000;
 const KEEP = 60 * 60 * 24 * 30;
 const K_LIVE = p => "nllm:live:" + p;
-const LIVE = { groq: { at: 0, ids: [] }, gemini: { at: 0, ids: [] } };
+const LIVE = { groq: { at: 0, ids: [] }, gemini: { at: 0, ids: [] }, cerebras: { at: 0, ids: [] }, gateway: { at: 0, ids: [] }, nvidia: { at: 0, ids: [] } };
 
 async function fetchModelIds(provider) {
   const key = keyFor(provider);
@@ -132,6 +244,8 @@ async function fetchModelIds(provider) {
   } catch { clearTimeout(t); return []; }
 }
 
+/* round five: a test's own fresh instance, as a cold start would have it */
+export function forgetLive(provider) { if (LIVE[provider]) LIVE[provider] = { at: 0, ids: [] }; }
 async function liveModels(provider, force) {
   const now = Date.now();
   const cache = LIVE[provider];
@@ -159,6 +273,73 @@ async function liveModels(provider, force) {
   return ids.length ? ids : cache.ids;
 }
 
+/* ---------------------------------------------------------------------------
+   1b. THE AI GATEWAY'S FREE MODELS (round four, 7 October 2026). Its public
+       list (GET https://ai-gateway.vercel.sh/v1/models, no key needed;
+       docs/ai-gateway/models-and-providers, "Response fields": data[].id,
+       data[].type, data[].pricing.input and .output, per token as strings,
+       with optional input_tiers and output_tiers) is read live, and a model
+       is free here only when it is a language model whose every price field
+       reads exactly zero and which carries no tier at all. There is no
+       written fallback for this door: the free list changes by the month
+       ("this month's free list"), so a list read once could name a model
+       that is priced today. When the list cannot be read and no copy younger
+       than a day is held, no gateway model is allowed at all. Cached six
+       hours, in memory and in the store, the same shape as the others.
+--------------------------------------------------------------------------- */
+export const GATEWAY_MODELS_URL = "https://ai-gateway.vercel.sh/v1/models";
+const GATEWAY_STALE = 24 * 3600 * 1000;
+const zeroPrice = v => v != null && String(v).trim() !== "" && Number(v) === 0;
+export function gatewayFreeOf(list) {
+  const out = [];
+  for (const m of Array.isArray(list) ? list : []) {
+    if (!m || typeof m.id !== "string" || m.type !== "language") continue;
+    const p = m.pricing && typeof m.pricing === "object" ? m.pricing : null;
+    if (!p || !zeroPrice(p.input) || !zeroPrice(p.output)) continue;
+    let priced = false;
+    for (const [k, v] of Object.entries(p)) {
+      if (/_tiers$/.test(k)) { if (Array.isArray(v) ? v.length : v != null) priced = true; continue; }
+      if (v != null && typeof v !== "object" && !zeroPrice(v)) priced = true;
+    }
+    if (!priced && !out.includes(m.id)) out.push(m.id);
+  }
+  return out;
+}
+async function fetchGatewayFree() {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 6000);
+  try {
+    const r = await fetch(GATEWAY_MODELS_URL, { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) return null;
+    const j = await r.json();
+    return gatewayFreeOf(j && j.data);
+  } catch { clearTimeout(t); return null; }
+}
+async function gatewayFreeModels(force) {
+  const now = Date.now();
+  const cache = LIVE.gateway;
+  if (!force && cache.at && now - cache.at < SIX_HOURS) return cache.ids;
+  let stored = null;
+  if (kvReady()) {
+    try {
+      const r = await kv([["GET", K_LIVE("gateway")]]);
+      const raw = r && r[0];
+      const j = raw ? (typeof raw === "string" ? JSON.parse(raw) : raw) : null;
+      if (j && Array.isArray(j.ids)) stored = { at: Number(j.at) || 0, ids: j.ids };
+    } catch { stored = null; }
+  }
+  if (!force && stored && now - stored.at < SIX_HOURS) { LIVE.gateway = stored; return stored.ids; }
+  const ids = await fetchGatewayFree();
+  if (ids) {
+    LIVE.gateway = { at: now, ids };
+    if (kvReady()) { try { await kv([["SET", K_LIVE("gateway"), JSON.stringify({ at: now, ids })], ["EXPIRE", K_LIVE("gateway"), String(KEEP)]]); } catch { } }
+    return ids;
+  }
+  const best = [cache, stored].filter(Boolean).sort((a, b) => b.at - a.at)[0];
+  return best && best.at && now - best.at < GATEWAY_STALE ? best.ids : [];
+}
+
 /* The free, allowed models for a provider right now: the allow-list
    intersected with what the provider's own /models endpoint says exists
    today. If live discovery cannot be reached at all (no network, no key),
@@ -169,10 +350,14 @@ async function liveModels(provider, force) {
 export async function freeModels(provider, force) {
   if (!providerPresent(provider)) return [];
   if (provider === "openrouter") return await orRefreshFreeModels(!!force);
+  if (provider === "gateway") return await gatewayFreeModels(!!force);   /* round four: live only */
   const allow = ALLOW[provider];
   if (!allow) return [];
   const ids = await liveModels(provider, !!force);
   if (ids.length) return allow.filter(id => ids.includes(id));
+  /* round five: NVIDIA's catalog changes by the week, so a list not read
+     today names nothing (no written fallback, as for the gateway) */
+  if (provider === "nvidia") return [];
   return allow.slice();
 }
 
@@ -289,16 +474,34 @@ export function scrub(text) {
       that cannot count must never be the reason the Lantern goes dark, the
       same principle api/_models.js already lives by.
 --------------------------------------------------------------------------- */
+/* round four: tpm, tokens a minute, which is Groq's real ceiling on its
+   free plan (8,000 a minute for the gpt-oss names; kept at 7,000 here) and
+   Cerebras's (30,000 uncached); each call reserves its own estimate, the
+   prompt at four characters a token plus the whole max_tokens. The gateway's
+   free tier is "rate limited per model" with no number published, so its
+   bucket is a cautious guess, like Gemini's. */
 const CAPS = {
-  groq: { rpm: 25, rpd: 800, tpd: 150000 },
+  groq: { rpm: 25, rpd: 800, tpd: 150000, tpm: 7000 },
   gemini: { rpm: 8, rpd: 150 },
-  openrouter: { rpm: 15, rpd: () => { const n = parseInt(process.env.OPENROUTER_DAILY, 10); return n > 0 ? n : 40; } }
+  openrouter: { rpm: 15, rpd: () => { const n = parseInt(process.env.OPENROUTER_DAILY, 10); return n > 0 ? n : 40; } },
+  gateway: { rpm: 10, rpd: 200 },
+  cerebras: { rpm: 4, rpd: 900, tpd: 900000, tpm: 25000 },
+  /* round five: NVIDIA's 40 a minute is the account's, every name together
+     (section 1c), so one bucket stands for all of them, kept at 30; no daily
+     number is published, so the day's is a cautious guess */
+  nvidia: { rpm: 30, rpd: 1000 }
+};
+export const estimateTokens = (messages, maxTokens) => {
+  let chars = 0;
+  for (const m of Array.isArray(messages) ? messages : []) chars += String((m && m.content) == null ? "" : m.content).length;
+  return Math.ceil(chars / 4) + Math.max(0, parseInt(maxTokens, 10) || 500);
 };
 
 const dayStr = now => new Date(now).toISOString().slice(0, 10);
 const minuteEpoch = now => Math.floor(now / 60000);
 const rlKey = (provider, model, kind, part) => "nllm:rl:" + provider + ":" + model + ":" + kind + ":" + part;
 const tokKey = (provider, model, day) => "nllm:tok:" + provider + ":" + model + ":" + day;
+const tpmKey = (provider, model, minute) => "nllm:tpm:" + provider + ":" + model + ":" + minute;
 
 /* Checked before every call, and reserved atomically with it: a name that is
    only found to be over budget AFTER it answered would defeat the point.
@@ -310,35 +513,41 @@ const tokKey = (provider, model, day) => "nllm:tok:" + provider + ":" + model + 
    least the other half. Every other caller is the Lantern's, as before. */
 export const SOUL_FREE_SHARE = 0.5;
 const soulKey = (provider, model, day) => "nllm:rl:" + provider + ":" + model + ":soul:" + day;
-export async function checkAndReserve(provider, model, now, caller) {
+export async function checkAndReserve(provider, model, now, caller, estTokens) {
   const caps = CAPS[provider];
   if (!caps) return { ok: true };
   if (!kvReady()) return { ok: true };
   /* OpenRouter's free allowance belongs to the account, not to a model:
      fifty requests a day however they are spread across its free names. Now
      that a tier walks several of them, one bucket stands for all. */
-  if (provider === "openrouter") model = "*";
+  if (provider === "openrouter" || provider === "nvidia") model = "*";   /* round five: NVIDIA's allowance is the account's too */
   const rpd = typeof caps.rpd === "function" ? caps.rpd() : caps.rpd;
   const mKey = rlKey(provider, model, "m", minuteEpoch(now));
   const dKey = rlKey(provider, model, "d", dayStr(now));
   const wantTok = !!caps.tpd;
+  /* round four: tokens a minute, when the caller gave its estimate */
+  const est = Math.max(0, parseInt(estTokens, 10) || 0);
+  const wantTpm = !!caps.tpm && est > 0;
+  const tKey = tpmKey(provider, model, minuteEpoch(now));
   try {
     const soul = caller === "soul";
     const sKey = soulKey(provider, model, dayStr(now));
     const cmds = [["GET", mKey], ["GET", dKey]];
-    if (wantTok) cmds.push(["GET", tokKey(provider, model, dayStr(now))]);
-    if (soul) cmds.push(["GET", sKey]);
+    const at = {};
+    if (wantTok) { at.tok = cmds.length; cmds.push(["GET", tokKey(provider, model, dayStr(now))]); }
+    if (soul) { at.soul = cmds.length; cmds.push(["GET", sKey]); }
+    if (wantTpm) { at.tpm = cmds.length; cmds.push(["GET", tKey]); }
     const r = await kv(cmds);
-    const mCount = parseInt(r[0] || "0", 10) || 0;
-    const dCount = parseInt(r[1] || "0", 10) || 0;
-    const tCount = wantTok ? (parseInt(r[2] || "0", 10) || 0) : 0;
-    const sCount = soul ? (parseInt(r[wantTok ? 3 : 2] || "0", 10) || 0) : 0;
+    const n = i => (i == null ? 0 : (parseInt(r[i] || "0", 10) || 0));
+    const mCount = n(0), dCount = n(1), tCount = n(at.tok), sCount = n(at.soul), pmCount = n(at.tpm);
     if (mCount >= caps.rpm) return { ok: false, why: "rpm" };
     if (dCount >= rpd) return { ok: false, why: "rpd" };
     if (wantTok && tCount >= caps.tpd) return { ok: false, why: "tpd" };
+    if (wantTpm && pmCount + est > caps.tpm) return { ok: false, why: "tpm, " + caps.tpm + " tokens a minute" };
     if (soul && sCount >= Math.floor(rpd * SOUL_FREE_SHARE)) return { ok: false, why: "the daily cycle's share of the day (" + Math.floor(rpd * SOUL_FREE_SHARE) + " of " + rpd + "; the rest is kept for the Lantern's conversation and the readers)" };
     const inc = [["INCR", mKey], ["EXPIRE", mKey, "70"], ["INCR", dKey], ["EXPIRE", dKey, "90000"]];
     if (soul) inc.push(["INCR", sKey], ["EXPIRE", sKey, "90000"]);
+    if (wantTpm) inc.push(["INCRBY", tKey, String(est)], ["EXPIRE", tKey, "70"]);
     await kv(inc);
     return { ok: true };
   } catch { return { ok: true }; }
@@ -352,11 +561,16 @@ async function addTokens(provider, model, now, n) {
   } catch { }
 }
 
-async function recordUsage(provider, now, tokens) {
+/* the day's usage of a provider and (round four) the model's own scoreboard
+   line, in one pipeline after every call: cheap enough to run every time */
+async function recordUsage(provider, now, tokens, model, got) {
   if (!kvReady()) return;
   try {
     const k = "nllm:usage:" + provider + ":" + dayStr(now);
-    await kv([["HINCRBY", k, "requests", "1"], ["HINCRBY", k, "tokens", String(tokens || 0)], ["EXPIRE", k, "2592000"]]);
+    const cmds = [["HINCRBY", k, "requests", "1"], ["HINCRBY", k, "tokens", String(tokens || 0)], ["EXPIRE", k, "2592000"]];
+    if (model && got) cmds.push(...scoreCommands(provider, model, now, got));
+    await kv(cmds);
+    if (model) SCORE_MEM.delete(provider + ":" + model);
   } catch { }
 }
 
@@ -388,6 +602,157 @@ function resetLabel(now) {
   const d = new Date(now);
   d.setUTCHours(24, 0, 0, 0);
   return d.toISOString().slice(0, 16).replace("T", " ") + " UTC";
+}
+
+/* ---------------------------------------------------------------------------
+   4b. THE SCOREBOARD (round four, 7 October 2026). The best free model is
+       measured, never guessed: every call a model answers or fails adds to
+       its own line, nllm:score:<provider>:<model>:<week> (a hash: n calls,
+       ok, fail, ms summed over the answers, gn and gp for the checks its
+       answers met and passed, err and errAt for the last failure), in the
+       same pipeline as the usage. A caller that holds its answer to a check
+       (the brief's guard, a verdict that can be read, a letter's checks)
+       says how it went with noteGuard(). Two weeks are read, this one and
+       the last, so an old fault fades on its own.
+
+       QUALITY is the share answered times the share of checks passed, each
+       pulled toward 0.75 by three imagined calls so one answer moves it
+       little; a model with fewer than 5 calls (or 3 checks) is simply 0.75
+       on that count until it has shown more. Inside a tier the candidates
+       are sorted by quality in tenths, highest first, and the tier's own
+       order (its lead provider first) decides between equals, so an
+       unmeasured house keeps exactly the order it always had.
+
+       Round five (the review, D7): a count with too little behind it is 1,
+       not 0.75, and tenths stop at 9, so an unmeasured name stands level
+       with a healthy measured one; and once an hour each tier asks first the
+       best name that has not been measured for a day (exploreFirst), so a
+       lead sunk by one bad hour is heard again and its fault fades with the
+       two weeks. Each line also keeps `at`, when it was last measured.
+--------------------------------------------------------------------------- */
+export const SCORE_PRIOR = 0.75;
+export const SCORE_MIN_CALLS = 5;
+export const SCORE_MIN_CHECKS = 3;
+const SCORE_WEIGHT = 3;
+const SCORE_KEEP_S = 21 * 86400;
+const SCORE_MEM_MS = 60000;
+const SCORE_MEM = new Map();
+const weekOf = now => Math.floor(Math.floor(now / 86400000) / 7);
+export const K_SCORE = (provider, model, week) => "nllm:score:" + provider + ":" + model + ":" + week;
+function scoreCommands(provider, model, now, got) {
+  const k = K_SCORE(provider, model, weekOf(now));
+  const at = new Date(now).toISOString();
+  const cmds = [["HINCRBY", k, "n", "1"], ["HINCRBY", k, got.ok ? "ok" : "fail", "1"]];
+  if (got.ok && Number.isFinite(got.ms) && got.ms > 0) cmds.push(["HINCRBY", k, "ms", String(Math.round(got.ms))]);
+  /* round five (D7): when it was last measured, so a name that has not been
+     asked for a day is asked once more (exploreFirst, below) */
+  if (!got.ok) cmds.push(["HSET", k, "err", String(got.error || "failed").slice(0, 120), "errAt", at, "at", at]);
+  else cmds.push(["HSET", k, "at", at]);
+  cmds.push(["EXPIRE", k, String(SCORE_KEEP_S)]);
+  return cmds;
+}
+/* a caller's word on what an answer was worth: passed its check or not.
+   result is route()'s own answer (it names its provider and model) */
+export async function noteGuard(result, passed) {
+  const named = result && (result.measured || result);
+  const p = named && named.provider, m = named && named.model;
+  if (!p || !m || !PROVIDER_BASE[p] || !kvReady()) return;
+  const k = K_SCORE(p, m, weekOf(Date.now()));
+  try { await kv([["HINCRBY", k, "gn", "1"], ["HINCRBY", k, "gp", passed ? "1" : "0"], ["EXPIRE", k, String(SCORE_KEEP_S)]]); } catch { }
+  SCORE_MEM.delete(p + ":" + m);
+}
+const hashOfReply = raw => {
+  const out = {};
+  if (Array.isArray(raw)) { for (let i = 0; i + 1 < raw.length; i += 2) out[raw[i]] = raw[i + 1]; return out; }
+  if (raw && typeof raw === "object") return raw;
+  if (typeof raw === "string") { try { const j = JSON.parse(raw); return j && typeof j === "object" ? j : {}; } catch { return {}; } }
+  return out;
+};
+/* a call made outside the walks (the engine room's probe of every name)
+   counted on the scoreboard all the same */
+export async function measureCall(provider, model, got) {
+  if (!provider || !model || !got || !PROVIDER_BASE[provider]) return;
+  const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
+  if (parkable(provider, got)) await rememberRefused(model, got.error, provider);
+  await recordUsage(provider, Date.now(), tokens, model, got);
+}
+/* the memory of the last minute's reads, forgotten on demand (a test, or
+   the probe that has just measured every name) */
+export function forgetScores() { SCORE_MEM.clear(); }
+/* this week and the last, added together; the latest error of the two */
+export async function scoresFor(cands, now) {
+  const t = Number.isFinite(now) ? now : Date.now();
+  const out = new Map();
+  const need = [];
+  for (const c of cands || []) {
+    const key = c.provider + ":" + c.model;
+    const m = SCORE_MEM.get(key);
+    if (m && t - m.at < SCORE_MEM_MS) out.set(key, m.s); else need.push(c);
+  }
+  if (!need.length || !kvReady()) return out;
+  const w = weekOf(t);
+  try {
+    const r = await kv(need.flatMap(c => [["HGETALL", K_SCORE(c.provider, c.model, w)], ["HGETALL", K_SCORE(c.provider, c.model, w - 1)]]));
+    need.forEach((c, i) => {
+      const a = hashOfReply(r && r[2 * i]), b = hashOfReply(r && r[2 * i + 1]);
+      const num = (h, f) => parseInt(h[f], 10) || 0;
+      const s = { n: num(a, "n") + num(b, "n"), ok: num(a, "ok") + num(b, "ok"), fail: num(a, "fail") + num(b, "fail"),
+        ms: num(a, "ms") + num(b, "ms"), gn: num(a, "gn") + num(b, "gn"), gp: num(a, "gp") + num(b, "gp"),
+        err: a.err || b.err || "", errAt: a.err ? (a.errAt || "") : (b.errAt || ""),
+        at: [a.at, b.at, a.errAt, b.errAt].filter(Boolean).map(String).sort().pop() || "" };
+      const key = c.provider + ":" + c.model;
+      out.set(key, s);
+      SCORE_MEM.set(key, { at: t, s });
+    });
+  } catch { /* an unread scoreboard ranks nothing: the tier's own order stands */ }
+  return out;
+}
+/* round five (the review, D7): a count with too little behind it is no
+   evidence either way, so it is 1, neither lifting nor lowering: an
+   unmeasured name no longer scores 0.75 x 0.75 = 0.56 under every healthy
+   measured one (it scored 0.56, and a lead demoted by one bad hour then sat
+   under the fallback for good). Tenths are capped at 9, so an unmeasured
+   name and a healthy measured one are equals and the tier's own order (its
+   lead first) decides between them, as it always did. */
+export function qualityOf(s) {
+  const x = s || {};
+  const succ = (x.n || 0) >= SCORE_MIN_CALLS ? ((x.ok || 0) + SCORE_PRIOR * SCORE_WEIGHT) / (x.n + SCORE_WEIGHT) : 1;
+  const guard = (x.gn || 0) >= SCORE_MIN_CHECKS ? ((x.gp || 0) + SCORE_PRIOR * SCORE_WEIGHT) / (x.gn + SCORE_WEIGHT) : 1;
+  return Math.round(succ * guard * 1000) / 1000;
+}
+const tenthOf = q => Math.min(9, Math.floor(q * 10 + 1e-9));
+/* the candidates by measured quality, the tier's own order between equals */
+export async function rankByQuality(cands, now) {
+  if (!Array.isArray(cands) || cands.length < 2) return cands || [];
+  const s = await scoresFor(cands, now);
+  return cands.map((c, i) => ({ c, i, q: tenthOf(qualityOf(s.get(c.provider + ":" + c.model))) }))
+    .sort((a, b) => (b.q - a.q) || (a.i - b.i)).map(x => x.c);
+}
+/* round five (D7): faults fade. Once an hour a tier sends one call first to
+   the best of its names that has not been measured for a day: a name a bad
+   hour sank is asked again, does well or not, and the two weeks of the
+   scoreboard carry the rest. When the name the order puts first is itself
+   unmeasured for a day it is asked anyway, so nothing moves and the hour is
+   not spent. One mark an hour a tier, in the store and in memory. */
+export const EXPLORE_EVERY_MS = 3600 * 1000;
+export const STALE_AFTER_MS = 24 * 3600 * 1000;
+export const K_EXPLORE = (tier, hour) => "nllm:explore:" + tier + ":" + hour;
+const EXPLORE_MEM = new Map();
+export function forgetExplore() { EXPLORE_MEM.clear(); }
+const staleAt = (s, now) => { const t = Date.parse((s && s.at) || ""); return !Number.isFinite(t) || now - t > STALE_AFTER_MS; };
+export async function exploreFirst(tier, ranked, now) {
+  if (!Array.isArray(ranked) || ranked.length < 2) return ranked || [];
+  const t = Number.isFinite(now) ? now : Date.now();
+  const hour = Math.floor(t / EXPLORE_EVERY_MS);
+  if (EXPLORE_MEM.get(tier) === hour) return ranked;
+  const s = await scoresFor(ranked, t);
+  const at = ranked.findIndex(c => staleAt(s.get(c.provider + ":" + c.model), t));
+  if (at <= 0) return ranked;
+  EXPLORE_MEM.set(tier, hour);
+  let first = !kvReady();
+  if (!first) { try { first = (await kv([["SET", K_EXPLORE(tier, hour), ranked[at].provider + ":" + ranked[at].model, "NX", "EX", String(Math.ceil(EXPLORE_EVERY_MS / 1000) + 60)]]))[0] === "OK"; } catch { first = false; } }
+  if (!first) return ranked;
+  return [ranked[at]].concat(ranked.filter((_, i) => i !== at));
 }
 
 /* ---------------------------------------------------------------------------
@@ -442,11 +807,23 @@ async function send(provider, model, messages, opts, extra) {
      the reply, since one free name wrote it straight into the text. */
   if (provider === "groq" && /gpt-oss/.test(model)) body.reasoning_effort = opts.reasoning_effort || "low";
   if (provider === "openrouter") body.reasoning = { exclude: true };
+  /* round four: every gateway request asks that the provider keep nothing
+     and learn nothing (docs/ai-gateway/security-and-compliance: the request
+     body's providerOptions.gateway, zeroDataRetention and
+     disallowPromptTraining); a model no such provider serves is refused by
+     the gateway itself, 400 no_providers_available, and is set aside below */
+  if (provider === "gateway") body.providerOptions = { gateway: { ...GATEWAY_PRIVACY } };
   if (extra && extra.paid && provider === "openrouter") {
     body.usage = { include: true };
     body.provider = {
       max_price: { prompt: DEEP_MAX_PROMPT_PER_MTOK, completion: DEEP_MAX_COMPLETION_PER_MTOK },
-      data_collection: "deny"
+      data_collection: "deny",
+      /* round five (D4): an endpoint with zero data retention, nothing else,
+         when the call can carry mail or a person's words (openrouter.ai/docs/
+         features/zdr, read 7 October 2026: "provider": {"zdr": true}, "the
+         request will only be routed to endpoints that have a Zero Data
+         Retention policy") */
+      ...(extra.zdr ? { zdr: true } : {})
     };
   }
 
@@ -465,10 +842,16 @@ async function send(provider, model, messages, opts, extra) {
     clearTimeout(timer);
     const ms = Date.now() - t0;
     if (!r.ok) {
-      let why = "";
-      try { const e = await r.json(); why = String((e && e.error && (e.error.message || e.error)) || "").slice(0, 160); }
+      let why = "", type = "";
+      try {
+        const e = await r.json();
+        why = String((e && e.error && (e.error.message || e.error)) || "").slice(0, 160);
+        type = String((e && (e.type || (e.error && typeof e.error === "object" && e.error.type))) || "");
+      }
       catch { try { why = (await r.text()).slice(0, 160); } catch { } }
-      return { ok: false, error: "http " + r.status + (why ? ": " + why : ""), status: r.status, provider, model, ms };
+      /* round four: the gateway found no provider that keeps nothing */
+      const noProvider = type === "no_providers_available";
+      return { ok: false, error: "http " + r.status + (why ? ": " + why : ""), status: r.status, provider, model, ms, ...(noProvider ? { noProvider: true } : {}) };
     }
     const j = await r.json();
     const choice = ((j.choices || [])[0] || {}).message || {};
@@ -478,7 +861,7 @@ async function send(provider, model, messages, opts, extra) {
     /* an empty reply still answered 200, and on a paid name a 200 is billed:
        the usage goes back with it so the ledger can count it */
     if (!content && !tool_calls) return { ok: false, error: "empty", status: r.status, usage, provider, model, ms };
-    return { ok: true, content, tool_calls, usage, model: j.model || model, provider, ms };
+    return { ok: true, content, tool_calls, usage, model: j.model || model, asked: model, provider, ms };
   } catch (e) {
     clearTimeout(timer);
     /* netError: the request may have reached the provider before the
@@ -493,18 +876,32 @@ async function send(provider, model, messages, opts, extra) {
       last name that actually worked, remembered per tier the way
       api/_models.js remembers nlm:good.
 --------------------------------------------------------------------------- */
+/* round four: the fast tier asks Gemini's flash, not its flash-lite (in May
+   the free flash-lite and pro answered with no quota at all, while flash
+   worked); Cerebras's gpt-oss-120b stands beside Groq's when its key is set;
+   and the gateway's free names come last, since each must first find a
+   provider that keeps nothing. The scoreboard (section 4b) then orders what
+   is measured; this order breaks the ties. */
+/* round five: NVIDIA's catalog after Cerebras (or Groq), before OpenRouter's
+   free names, its quick names for "fast" and its strong ones elsewhere */
 const TIERS = {
   /* routing, tool selection, short classification: speed over depth */
   fast: [
     { provider: "groq", pick: "openai/gpt-oss-20b" },
-    { provider: "gemini", pick: "flash-lite" },
-    { provider: "openrouter", pick: "best" }
+    { provider: "cerebras", pick: "gpt-oss-120b" },
+    { provider: "gemini", pick: "flash" },
+    { provider: "nvidia", pick: "fast" },
+    { provider: "openrouter", pick: "best" },
+    { provider: "gateway", pick: "best" }
   ],
   /* synthesis, strategy, writing: quality over speed */
   strong: [
     { provider: "gemini", pick: "flash" },
     { provider: "groq", pick: "openai/gpt-oss-120b" },
-    { provider: "openrouter", pick: "best" }
+    { provider: "cerebras", pick: "gpt-oss-120b" },
+    { provider: "nvidia", pick: "strong" },
+    { provider: "openrouter", pick: "best" },
+    { provider: "gateway", pick: "best" }
   ],
   /* large context dumps: Gemini's flash family carries the biggest window
      of the three, so it goes first; the fallback below it is the same as
@@ -512,12 +909,15 @@ const TIERS = {
   long: [
     { provider: "gemini", pick: "flash" },
     { provider: "groq", pick: "openai/gpt-oss-120b" },
-    { provider: "openrouter", pick: "best" }
+    { provider: "nvidia", pick: "strong" },
+    { provider: "openrouter", pick: "best" },
+    { provider: "gateway", pick: "best" }
   ]
 };
+export const TIER_NAMES = Object.freeze(Object.keys(TIERS));
 
 function resolveModel(provider, pick, ids) {
-  if (provider === "groq") return ids.includes(pick) ? pick : null;
+  if (provider === "groq" || provider === "cerebras") return ids.includes(pick) ? pick : null;
   if (provider === "gemini") {
     const order = pick === "flash-lite" ? GEMINI_FLASH_LITE_ORDER : GEMINI_FLASH_ORDER;
     for (const id of order) if (ids.includes(id)) return id;
@@ -592,6 +992,36 @@ export async function chainFor(tier, opts = {}) {
       }
       continue;
     }
+    /* round four: the gateway's free names, the same way, and a name the
+       gateway refused under the privacy flags in the last day waits */
+    if (step.provider === "gateway") {
+      const parked = await refusedSet(ids.slice(0, GW_DEPTH + 4), "gateway");
+      let n = 0;
+      for (const id of ids) {
+        if (n >= GW_DEPTH) break;
+        if (parked.has(id)) continue;
+        push("gateway", id); n++;
+      }
+      continue;
+    }
+    if (step.provider === "cerebras") {
+      const model = resolveModel("cerebras", step.pick, ids);
+      if (model && !(await refusedSet([model], "cerebras")).has(model)) push("cerebras", model);
+      continue;
+    }
+    /* round five: NVIDIA's names of the step's family that the catalog lists
+       today, the best two, stepping past one it refused in the last day */
+    if (step.provider === "nvidia") {
+      const fam = (step.pick === "fast" ? NVIDIA_FAST : NVIDIA_STRONG).filter(id => ids.includes(id));
+      const parked = await refusedSet(fam, "nvidia");
+      let n = 0;
+      for (const id of fam) {
+        if (n >= NV_DEPTH) break;
+        if (parked.has(id)) continue;
+        push("nvidia", id); n++;
+      }
+      continue;
+    }
     /* Gemini's newest flash answered 503 (busy) for a whole morning on
        25 September while the key itself was fine, so a flash step also
        carries the next live flash name before the walk leaves Gemini */
@@ -603,27 +1033,42 @@ export async function chainFor(tier, opts = {}) {
     const model = resolveModel(step.provider, step.pick, ids);
     if (model) push(step.provider, model);
   }
-  return out;
+  /* round four: measured quality first, the tier's own order between equals;
+     round five (D7): and, for a call (opts.explore), once an hour the best
+     name not measured for a day goes first */
+  if (opts.unranked) return out;
+  const now = Date.now();
+  const ranked = await rankByQuality(out, now);
+  return opts.explore ? await exploreFirst(tier, ranked, now) : ranked;
 }
 
 /* how many OpenRouter free names a tier walks, and the memory of a name that
    refused the house outright (403, 404: not a passing fault, a door) */
 const OR_DEPTH = 4;
-const K_REFUSED = id => "nllm:refused:" + id;
+const GW_DEPTH = 3;   /* round four: the gateway's free names a tier walks */
+const NV_DEPTH = 2;   /* round five: NVIDIA's names a tier step walks */
+/* OpenRouter's keys keep their old shape; the other doors carry their name */
+const K_REFUSED = (id, provider) => "nllm:refused:" + (provider && provider !== "openrouter" ? provider + ":" : "") + id;
 const REFUSED_S = 24 * 3600;
-async function refusedSet(ids) {
+async function refusedSet(ids, provider) {
   const out = new Set();
   if (!kvReady() || !ids.length) return out;
   try {
-    const r = await kv(ids.map(id => ["GET", K_REFUSED(id)]));
+    const r = await kv(ids.map(id => ["GET", K_REFUSED(id, provider)]));
     ids.forEach((id, i) => { if (r && r[i]) out.add(id); });
   } catch { }
   return out;
 }
-async function rememberRefused(id, why) {
+async function rememberRefused(id, why, provider) {
   if (!kvReady()) return;
-  try { await kv([["SET", K_REFUSED(id), String(why || "refused").slice(0, 160)], ["EXPIRE", K_REFUSED(id), String(REFUSED_S)]]); } catch { }
+  try { await kv([["SET", K_REFUSED(id, provider), String(why || "refused").slice(0, 160)], ["EXPIRE", K_REFUSED(id, provider), String(REFUSED_S)]]); } catch { }
 }
+/* round four: when a name is set aside for a day rather than asked again.
+   OpenRouter's 403 and 404 as before; the gateway's no provider that keeps
+   nothing, and its or Cerebras's 403 and 404 (a name that has gone) */
+const parkable = (provider, got) => !!got && !got.ok && (
+  ((provider === "openrouter" || provider === "gateway" || provider === "cerebras" || provider === "nvidia") && (got.status === 403 || got.status === 404))
+  || (provider === "gateway" && !!got.noProvider));
 
 /* ---------------------------------------------------------------------------
    response_format:{type:"json_object"} only helps when the model on the
@@ -686,15 +1131,40 @@ async function jsonCapable(provider, model) {
       tried, why each one was skipped or failed, and, when every bucket for
       the day is empty, exactly when it resets.
 
-      "deep" (the Soul's strategist and Guardian only) first walks §8's paid
-      names under the monthly cap, then the "strong" free chain exactly as
-      that tier would. Its answer, success or not, also carries paid (true
-      only when a paid name answered) and costUsd (what this call added to
-      the month's ledger, 0 when nothing paid was billed).
+      "deep" first walks §8's paid names under the caps, then the "strong"
+      free chain exactly as that tier would. Its answer, success or not, also
+      carries paid (true only when a paid name answered) and costUsd (what
+      this call added to the month's ledger, 0 when nothing paid was billed).
+
+      Round four (7 October 2026): a deep task pays only when task.purpose
+      names one of PAID_PURPOSES; with no purpose, or another, the paid names
+      are passed over in words and the free chain answers. task.paidOnly
+      asks for the paid answer or nothing (a tie break, where a second free
+      opinion is not what was asked for). A paid answer carries paidId, its
+      line in the ROI ledger. Every answer carries measured {provider,
+      model}, the scoreboard's own name for whoever answered, for noteGuard.
 --------------------------------------------------------------------------- */
+export const PAID_PURPOSES = Object.freeze({
+  "weekly-strategy": "the Monday strategy",
+  "weekly-reflection": "the Monday reflection",
+  "tie-break": "a tie break",
+  "letter-retry": "a letter retry",
+  "ask-deep": "a think deeply in Ask"
+});
+/* the research's web search for places (api/_outreach.js, the mission
+   builder's, 2 dollars a month at most) is paid too: it keeps its own door
+   and share, and since round four it also answers to the day's cap and is a
+   line in the same ROI ledger, under this name */
+export const LEDGER_TASKS = Object.freeze({ ...PAID_PURPOSES, "web-search": "a web search for places" });
+export const PAID_DAY_CAP_USD = 0.5;
+export const PAID_CALL_MAX_USD = 0.1;
+export const paidPurposeOf = p => (typeof p === "string" && Object.prototype.hasOwnProperty.call(PAID_PURPOSES, p) ? p : null);
+const PURPOSES_WORDS = "the Monday strategy and reflection, a tie break between the free judges, a letter retry for a place of high value, and the owner's own think deeply";
+
 export async function route(task = {}) {
   const deep = task.tier === "deep";
-  const tier = deep ? "deep" : (["fast", "strong", "long"].includes(task.tier) ? task.tier : "fast");
+  /* 6 October 2026: "mail" joins the tiers (section 9 below) */
+  const tier = deep ? "deep" : (["fast", "strong", "long", "mail"].includes(task.tier) ? task.tier : "fast");
   const messages = Array.isArray(task.messages) ? task.messages : [];
   if (!messages.length) return deep ? { ok: false, error: "no messages", tier, paid: false, costUsd: 0 } : { ok: false, error: "no messages", tier };
 
@@ -709,31 +1179,59 @@ export async function route(task = {}) {
   const now = Date.now();
   const tried = [];
 
+  /* 6 October 2026 (LANTERN.md section 11.1): correspondence goes only to
+     models that neither keep nor learn from it (section 9 below) */
+  if (tier === "mail") return await mailWalk(task, messages, now, tried);
+
   if (!deep) return await freeWalk(tier, task, messages, perPerson, now, tried, task.caller);
 
-  const paid = await deepWalk(task, messages, perPerson, now, tried);
+  /* round four: paid only for a named use */
+  const purpose = paidPurposeOf(task.purpose);
+  let paid = { ok: false, got: null, micro: 0 };
+  if (!purpose) tried.push({ provider: "openrouter", model: "(deep)", paid: true, err: "skipped: paid models are kept for " + PURPOSES_WORDS + "; this call named none of them, so the free names answer" });
+  else paid = await deepWalk(task, messages, perPerson, now, tried, purpose);
   const costUsd = paid.micro / 1e6;
   if (paid.ok) {
     return { ok: true, spendRecorded: !paid.spendFailed, content: paid.got.content, tool_calls: paid.got.tool_calls, usage: paid.got.usage,
-             model: paid.got.model, provider: "openrouter", tier, tried, paid: true, costUsd };
+             model: paid.got.model, provider: "openrouter", tier, tried, paid: true, costUsd, purpose, paidId: paid.paidId || null,
+             measured: { provider: "openrouter", model: paid.got.asked || paid.got.model } };
+  }
+  if (task.paidOnly) {
+    const why = tried.filter(t => t.paid).map(t => t.model + ": " + (t.err || "no answer")).join("; ").slice(0, 300);
+    return { ok: false, error: "no paid model answered (" + (why || "none was allowed") + ")", tier, tried, paid: false, costUsd, purpose,
+             ...(paid.spendFailed ? { spendRecorded: false, paidButUnrecorded: true } : {}) };
   }
   const free = await freeWalk("strong", task, messages, perPerson, now, tried, task.caller);
-  return { ...free, tier, paid: false, costUsd, ...(paid.spendFailed ? { spendRecorded: false, paidButUnrecorded: true } : {}) };
+  return { ...free, tier, paid: false, costUsd, ...(purpose ? { purpose } : {}), ...(paid.spendFailed ? { spendRecorded: false, paidButUnrecorded: true } : {}) };
 }
 
 async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
-  const candidates = await chainFor(tier);
+  const candidates = await chainFor(tier, { explore: true });   /* round five: faults fade */
   if (!candidates.length) {
     return { ok: false, error: "no free model is configured for the \"" + tier + "\" tier (no provider key set, or nothing on its free tier is live today)", tier, tried };
   }
 
+  const est = estimateTokens(messages, task.opts && task.opts.max_tokens);   /* round four: tokens a minute */
   let anyAttempted = false;
   for (const cand of candidates) {
     if (perPerson && cand.provider === "gemini") {
       tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to Gemini's free tier" });
       continue;
     }
-    const gate = await checkAndReserve(cand.provider, cand.model, now, caller);
+    /* round four: Cerebras says it does not train on what it reads, but its
+       pages say nothing of how long it keeps it, so nothing about a person
+       goes there either */
+    if (perPerson && cand.provider === "cerebras") {
+      tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to Cerebras (its retention is not published)" });
+      continue;
+    }
+    /* round five: NVIDIA's trial terms let it collect what it reads to
+       improve its models, and forbid personal information (section 1c) */
+    if (perPerson && cand.provider === "nvidia") {
+      tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to NVIDIA (its trial terms let it learn from what it reads)" });
+      continue;
+    }
+    const gate = await checkAndReserve(cand.provider, cand.model, now, caller, est);
     if (!gate.ok) {
       tried.push({ provider: cand.provider, model: cand.model, err: "rate limit reached for today (" + gate.why + ")" });
       continue;
@@ -745,13 +1243,14 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
     }
     const got = await chatOnce(cand.provider, cand.model, messages, callOpts);
     tried.push({ provider: cand.provider, model: cand.model, ms: got.ms, err: got.ok ? "" : got.error });
-    if (!got.ok && cand.provider === "openrouter" && (got.status === 403 || got.status === 404)) await rememberRefused(cand.model, got.error);
+    if (parkable(cand.provider, got)) await rememberRefused(cand.model, got.error, cand.provider);
     const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
-    await recordUsage(cand.provider, now, tokens);
+    await recordUsage(cand.provider, now, tokens, cand.model, got);
     if (got.ok) {
       await addTokens(cand.provider, cand.model, now, tokens);
       await rememberGood(tier, cand.provider + ":" + cand.model);
-      return { ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider: got.provider, tier, tried };
+      return { ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider: got.provider, tier, tried,
+               measured: { provider: cand.provider, model: cand.model } };
     }
     if (got.blocked) return { ok: false, error: got.error, blocked: true, tier, tried };
   }
@@ -783,22 +1282,41 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
         5. the worst case (prompt length at two characters a token, plus
            max_tokens all spent, at the live price) plus the month's spend
            so far stays within deepCapUsd().
-      After the call the actual cost is added (INCRBY, micro-dollars, never
-      negative): OpenRouter's own usage.cost when it reports one, else the
-      reported tokens at the live price, else the worst case. A timeout or a
-      dropped line is charged the worst case too, since the request may have
-      been billed before the line went; an http error is charged nothing.
+        6. (round four) the worst case plus the day's spend so far stays
+           within PAID_DAY_CAP_USD, 0.50 dollars, read from
+           nsoul:spend:day:<YYYY-MM-DD>; and the worst case alone is no more
+           than PAID_CALL_MAX_USD, 0.10 dollars, unless the call is the
+           Monday strategy (purpose "weekly-strategy"), the one use allowed
+           to think at length.
+      The actual cost is OpenRouter's own usage.cost when it reports one,
+      else the reported tokens at the live price, else the worst case. A
+      timeout or a dropped line is charged the worst case too, since the
+      request may have been billed before the line went; an http error is
+      charged nothing.
 
-      The check and the write are two steps, not one atomic reservation:
-      the Soul calls the deep tier one call at a time inside a tick, so the
-      most two overlapping calls could ever pass the cap by is one call's
-      own worst case, a few cents at these ceilings.
+      Round five (the review, D1: the check, the send and the write were
+      three steps, so five parallel asks all passed one read of the day's
+      ledger, and a store that refused writes recorded nothing at all): the
+      worst case is now HELD before a byte is sent, INCRBY on the month's
+      and the day's ledger in one pipeline (reserveSpend). A hold that takes
+      either past its cap is given back at once and the call refused; a hold
+      the store does not take refuses every paid call (fail closed). After
+      the call the actual cost replaces the hold (INCRBY actual minus worst,
+      settleSpend). A correction that adds and cannot be written leaves the
+      ledger short, so the answer says spendRecorded:false and the paid door
+      closes for the rest of the UTC day, here, for every caller (the same
+      nsoul:deepoff:<date> api/_mind.js and api/_mail.js close and read).
 --------------------------------------------------------------------------- */
 export const DEEP_CAP_USD_MAX = 10;
 /* strong reasoning names, best first; every one is re-checked against the
    live list and price before each call, so a name that is retired or
-   repriced is simply skipped, never trusted from this list alone */
-export const DEEP_MODELS = Object.freeze(["anthropic/claude-sonnet-5", "openai/gpt-6-luna", "google/gemini-3.8-pro"]);
+   repriced is simply skipped, never trusted from this list alone.
+   Round four, read on OpenRouter 7 October 2026: anthropic/claude-sonnet-5
+   (2 and 10 dollars a million, prompt and completion) and openai/gpt-6-luna
+   (0.10 and 0.50) are live; google/gemini-3.8-pro answered 404, there is no
+   such name, and Google's pro today is google/gemini-3.1-pro-preview (2 and
+   12), so that is the third. */
+export const DEEP_MODELS = Object.freeze(["anthropic/claude-sonnet-5", "openai/gpt-6-luna", "google/gemini-3.1-pro-preview"]);
 export const DEEP_MAX_PROMPT_PER_MTOK = 5;       /* USD per million prompt tokens */
 export const DEEP_MAX_COMPLETION_PER_MTOK = 20;  /* USD per million completion tokens */
 const DEEP_MAX_REQUEST_USD = 0.01;               /* a flat per-request fee, if a name carries one */
@@ -809,6 +1327,9 @@ const monthStr = now => new Date(now).toISOString().slice(0, 7);
 const K_SPEND = month => "nsoul:spend:" + month;
 const K_SPEND_CALLS = month => "nsoul:spend:" + month + ":calls";
 const K_NOCREDIT = "nsoul:nocredit";
+/* round four: the day's own spend, beside the month's */
+export const K_SPEND_DAY = day => "nsoul:spend:day:" + day;
+const SPEND_DAY_KEEP_S = 3 * 24 * 3600;
 
 /* min(10, SOUL_MONTHLY_USD). The variable may lower the cap, to 0 if the
    owner wants no paid calls at all; it can never raise it above
@@ -925,22 +1446,83 @@ function actualMicro(usage, price, fallbackMicro) {
 }
 
 /* throws on any store fault or a ledger value that is not a plain count:
-   the caller treats a throw as "refuse paid" */
+   the caller treats a throw as "refuse paid". Round five: it also reads
+   whether the paid door was closed for the day (off). */
 async function readLedger(now) {
   const month = monthStr(now);
-  const r = await kv([["GET", K_SPEND(month)], ["GET", K_SPEND_CALLS(month)], ["GET", K_NOCREDIT]]);
-  if (!Array.isArray(r) || r.length < 3) throw new Error("ledger unreadable");
+  const r = await kv([["GET", K_SPEND(month)], ["GET", K_SPEND_CALLS(month)], ["GET", K_NOCREDIT], ["GET", K_SPEND_DAY(dayStr(now))], ["GET", K_DEEPOFF(dayStr(now))]]);
+  if (!Array.isArray(r) || r.length < 4) throw new Error("ledger unreadable");
   const micro = r[0] == null ? 0 : Number(r[0]);
   const calls = r[1] == null ? 0 : Number(r[1]);
-  if (!Number.isFinite(micro) || micro < 0 || !Number.isFinite(calls) || calls < 0) throw new Error("ledger corrupt");
-  return { month, micro, calls, nocredit: r[2] ? String(r[2]) : "" };
+  const day = r[3] == null ? 0 : Number(r[3]);
+  if (!Number.isFinite(micro) || micro < 0 || !Number.isFinite(calls) || calls < 0 || !Number.isFinite(day) || day < 0) throw new Error("ledger corrupt");
+  return { month, micro, calls, nocredit: r[2] ? String(r[2]) : "", day, off: !!r[4] || paidOffDay === dayStr(now) };
 }
 
-async function recordSpend(now, micro) {
+/* round five (D1): the paid door, closed for the rest of a UTC day when a
+   paid cost could not be written. The store keeps the mark when it can
+   (api/_soul.js K.deepOff names the same key), this instance keeps it
+   whether or not. */
+export const K_DEEPOFF = day => "nsoul:deepoff:" + day;
+let paidOffDay = "";
+export async function closePaidDay(why, now) {
+  const t = Number.isFinite(now) ? now : Date.now();
+  paidOffDay = dayStr(t);
+  if (!kvReady()) return;
+  try { await kv([["SET", K_DEEPOFF(dayStr(t)), JSON.stringify({ at: new Date(t).toISOString(), why: String(why || "a paid call's cost could not be written to the ledger").slice(0, 160) }), "EX", "172800"]]); } catch { }
+}
+/* a test's own day turns: the memory of a closed door is for one day only */
+export function forgetPaidDay() { paidOffDay = ""; }
+const PAID_OFF_WHY = "the paid door is closed for the rest of the day: a paid call's cost could not be written to the ledger";
+
+/* the worst case held in both ledgers before anything is sent. {ok, hold}
+   or {ok:false, store, why}: a cap it would pass (the hold given back at
+   once) or a store that did not take it (store:true, fail closed) */
+async function reserveSpend(now, micro, capMicro, dayCapMicro) {
   const m = Number.isFinite(micro) && micro > 0 ? Math.ceil(micro) : 0;
-  const month = monthStr(now);
-  await kv([["INCRBY", K_SPEND(month), String(m)], ["EXPIRE", K_SPEND(month), String(SPEND_KEEP_S)],
-            ["INCR", K_SPEND_CALLS(month)], ["EXPIRE", K_SPEND_CALLS(month), String(SPEND_KEEP_S)]]);
+  const month = monthStr(now), day = dayStr(now), dk = K_SPEND_DAY(day);
+  let r;
+  try { r = await kv([["INCRBY", K_SPEND(month), String(m)], ["EXPIRE", K_SPEND(month), String(SPEND_KEEP_S)], ["INCRBY", dk, String(m)], ["EXPIRE", dk, String(SPEND_DAY_KEEP_S)]]); }
+  catch { return { ok: false, store: true, why: "the spend ledger did not take the hold on its worst case, so nothing is paid (fail closed)" }; }
+  const mAfter = r && r[0] != null ? Number(r[0]) : NaN, dAfter = r && r[2] != null ? Number(r[2]) : NaN;
+  const hold = { month, day, micro: m, at: now };
+  if (!Number.isFinite(mAfter) || !Number.isFinite(dAfter)) {
+    await giveBack({ ...hold, micro: 0 }, Number.isFinite(mAfter) ? m : 0, Number.isFinite(dAfter) ? m : 0);
+    return { ok: false, store: true, why: "the spend ledger did not take the hold on its worst case, so nothing is paid (fail closed)" };
+  }
+  if (mAfter > capMicro) {
+    await giveBack(hold, m, m);
+    return { ok: false, why: "its worst case of " + usdLabel(m) + " would pass the monthly cap (" + usdLabel(Math.max(0, mAfter - m)) + " of " + usdLabel(capMicro) + " spent or held in " + month + ")" };
+  }
+  if (dAfter > dayCapMicro) {
+    await giveBack(hold, m, m);
+    return { ok: false, why: "its worst case of " + usdLabel(m) + " would pass the day's cap (" + usdLabel(Math.max(0, dAfter - m)) + " of " + usdLabel(dayCapMicro) + " spent or held today)" };
+  }
+  return { ok: true, hold };
+}
+/* a hold given back (a refusal, an answer that cost less): best effort, since
+   a give back that fails only leaves the ledger counting more than was spent */
+async function giveBack(hold, monthMicro, dayMicro) {
+  const cmds = [];
+  if (monthMicro > 0) cmds.push(["INCRBY", K_SPEND(hold.month), String(-monthMicro)]);
+  if (dayMicro > 0) cmds.push(["INCRBY", K_SPEND_DAY(hold.day), String(-dayMicro)]);
+  if (!cmds.length) return;
+  try { await kv(cmds); } catch { }
+}
+/* after the call: the actual cost in place of the worst case held, and the
+   month's count of paid calls when it was billed. {ok} or {ok:false, short}:
+   a correction that adds was not written, so the ledger is short by it */
+async function settleSpend(hold, actualMicro, billed) {
+  const actual = Number.isFinite(actualMicro) && actualMicro > 0 ? Math.ceil(actualMicro) : 0;
+  const delta = actual - hold.micro;
+  const cmds = [];
+  if (delta) cmds.push(["INCRBY", K_SPEND(hold.month), String(delta)], ["INCRBY", K_SPEND_DAY(hold.day), String(delta)]);
+  if (billed) cmds.push(["INCR", K_SPEND_CALLS(hold.month)], ["EXPIRE", K_SPEND_CALLS(hold.month), String(SPEND_KEEP_S)]);
+  if (!cmds.length) return { ok: true };
+  let r = null;
+  try { r = await kv(cmds); } catch { r = null; }
+  if (delta > 0 && !(r && Number.isFinite(Number(r[0])) && Number.isFinite(Number(r[1])))) return { ok: false, short: delta };
+  return { ok: true };
 }
 
 /* a 402 from OpenRouter means the account holds no credit: every paid name
@@ -958,7 +1540,7 @@ async function rememberNoCredit(now, why) {
 /* Walks the paid names. Returns { ok, got, micro } where micro is what this
    walk added to the ledger (on success, a timeout, or both). Every name it
    passes over, and why, goes into tried with paid:true. */
-async function deepWalk(task, messages, perPerson, now, tried) {
+async function deepWalk(task, messages, perPerson, now, tried, purpose) {
   const out = { ok: false, got: null, micro: 0 };
   const note = (model, err, more) => tried.push({ provider: "openrouter", model, paid: true, err, ...(more || {}) });
   const models = deepModels();
@@ -976,39 +1558,80 @@ async function deepWalk(task, messages, perPerson, now, tried) {
     note("(deep)", "skipped: no credit on the OpenRouter account (402" + (ledger.nocredit ? " at " + ledger.nocredit.slice(0, 20) : "") + "); free models only for the hour");
     return out;
   }
+  /* round five (D1): a door closed for the day stays closed, whoever asks */
+  if (ledger.off) { note("(deep)", "skipped: " + PAID_OFF_WHY); return out; }
   const prices = await deepPrices(false);
   if (!prices) { note("(deep)", "skipped: OpenRouter's live model list could not be read, so no price can be checked and paid is refused"); return out; }
 
   const capMicro = toMicro(deepCapUsd()) || 0;
-  let spent = ledger.micro;
+  const dayCapMicro = toMicro(PAID_DAY_CAP_USD) || 0;
+  const callMaxMicro = toMicro(PAID_CALL_MAX_USD) || 0;
+  let spent = ledger.micro, spentDay = ledger.day;
   const opts = task.opts || {};
   const maxTokens = Math.max(1, parseInt(opts.max_tokens, 10) || 500);
+  /* round five (the review, D4): a paid call that can carry mail or a
+     person's words (the mail tier's letter retry, the owner's own Ask) is
+     routed only to endpoints that keep nothing, OpenRouter's zdr flag beside
+     data_collection "deny" */
+  const zdr = task.tier === "mail" || purpose === "letter-retry" || purpose === "ask-deep";
   for (const model of models) {
     const p = prices.get(model);
     if (!p) { note(model, "skipped: not on OpenRouter's live model list today"); continue; }
     const price = deepPriceOf(p);
     if (!price.ok) { note(model, "refused: " + price.why); continue; }
     const est = worstCaseMicro(price, messages, maxTokens, opts.tools);
+    /* round four: one call's own ceiling, the Monday strategy alone above it */
+    if (est > callMaxMicro && purpose !== "weekly-strategy") {
+      note(model, "refused: its worst case of " + usdLabel(est) + " is over the " + usdLabel(callMaxMicro) + " a single call may cost (only the Monday strategy may pass it)");
+      continue;
+    }
     if (spent + est > capMicro) {
       note(model, "refused: its worst case of " + usdLabel(est) + " would pass the monthly cap (" + usdLabel(spent) + " of " + usdLabel(capMicro) + " spent in " + ledger.month + ")");
+      continue;
+    }
+    /* round four: and the day's own cap, inside the month's */
+    if (spentDay + est > dayCapMicro) {
+      note(model, "refused: its worst case of " + usdLabel(est) + " would pass the day's cap (" + usdLabel(spentDay) + " of " + usdLabel(dayCapMicro) + " spent today)");
+      continue;
+    }
+    /* round five (D1): the worst case held in both ledgers before a byte is
+       sent; what the read above could not see (a call running beside this
+       one) the hold sees */
+    const held = await reserveSpend(now, est, capMicro, dayCapMicro);
+    if (!held.ok) {
+      note(model, "refused: " + held.why);
+      if (held.store) return out;
       continue;
     }
     const callOpts = { ...opts, max_tokens: maxTokens, timeout: opts.timeout || DEEP_TIMEOUT_MS };
     if (task.json && !callOpts.response_format && await jsonCapable("openrouter", model)) {
       callOpts.response_format = { type: "json_object" };
     }
-    const got = await send("openrouter", model, messages, callOpts, { paid: true });
+    const got = await send("openrouter", model, messages, callOpts, { paid: true, zdr });
 
     let micro = 0;
     if (got.ok || got.status === 200) micro = actualMicro(got.usage, price, est);
     else if (got.netError) micro = est;
     let ledgerNote = "";
-    if (got.ok || micro > 0) {
-      try { await recordSpend(now, micro); }
-      catch { ledgerNote = " (store fault: this cost was not written to the ledger)"; out.spendFailed = true; }
-      spent += micro;
-      out.micro += micro;
+    const settled = await settleSpend(held.hold, micro, got.ok || micro > 0);
+    if (!settled.ok) {
+      ledgerNote = " (store fault: " + usdLabel(settled.short) + " of this cost could not be written to the ledger, so the paid door is closed for the rest of the day)";
+      out.spendFailed = true;
+      await closePaidDay("a paid call's cost could not be written to the ledger", now);
     }
+    if (got.ok || micro > 0) {
+      spent += micro;
+      spentDay += micro;
+      out.micro += micro;
+      /* round four: every paid call is a line in the ROI ledger, its outcome
+         left for what the call leads to (paidOutcome); a call that failed is
+         its own outcome at once */
+      const line = await roiAdd(now, { task: purpose || "deep", model, costUsd: micro / 1e6,
+        outcome: got.ok ? null : { helped: false, note: "the call failed: " + String(got.error || "no answer").slice(0, 120), at: new Date(now).toISOString() } });
+      if (got.ok && line) out.paidId = line;
+    }
+    const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
+    await recordUsage("openrouter", now, tokens, model, got);   /* round four: the paid names are measured too */
     if (got.status === 402) {
       await rememberNoCredit(now, got.error);
       note(model, "no credit: OpenRouter answered 402, so the deep tier uses free models for the next hour", { ms: got.ms });
@@ -1016,9 +1639,226 @@ async function deepWalk(task, messages, perPerson, now, tried) {
     }
     note(model, (got.ok ? "" : got.error) + ledgerNote, { ms: got.ms, costUsd: micro / 1e6 });
     if (got.ok) { out.ok = true; out.got = got; return out; }
-    if (got.blocked) return out;
+    if (got.blocked || out.spendFailed) return out;   /* round five: a closed door asks no second name */
   }
   return out;
+}
+
+/* ---------------------------------------------------------------------------
+   8b. THE ROI LEDGER (round four, 7 October 2026): what each paid dollar
+       bought. nsoul:paid:<YYYY-MM>, a hash of one line a paid call, {id, at,
+       task, model, costUsd, outcome}; task is the use it was paid for
+       (LEDGER_TASKS), outcome null until the caller learns what the call led
+       to and says so with paidOutcome(id, {helped, note}). Kept 400 days.
+--------------------------------------------------------------------------- */
+export const K_PAID = month => "nsoul:paid:" + month;
+const PAID_KEEP_S = 400 * 86400;
+async function roiAdd(now, e) {
+  if (!kvReady()) return null;
+  const month = monthStr(now);
+  const id = "pd-" + month + "-" + crypto.randomBytes(4).toString("hex");
+  const line = { id, at: new Date(now).toISOString(), task: String(e.task || "deep").slice(0, 40), model: String(e.model || "").slice(0, 80),
+    costUsd: Math.round((Number(e.costUsd) || 0) * 1e6) / 1e6, outcome: e.outcome || null };
+  try { await kv([["HSET", K_PAID(month), id, JSON.stringify(line)], ["EXPIRE", K_PAID(month), String(PAID_KEEP_S)]]); return id; }
+  catch { return null; }
+}
+/* a paid line written from outside this file: the research's web search
+   (api/_outreach.js), which keeps its own door; its cost is already in the
+   month's ledger by its own hand, so this adds only the day's and the line.
+   (Round five: a caller that pays outside route() should hold its worst
+   case first with paidReserve and settle it with paidSettle, below, which
+   keep both ledgers and the line themselves; paidRecord stays for the
+   callers that have not moved yet.) */
+export async function paidRecord(e = {}) {
+  const now = Number.isFinite(e.now) ? e.now : Date.now();
+  const micro = toMicro(e.costUsd) || 0;
+  if (micro && kvReady()) {
+    const dk = K_SPEND_DAY(dayStr(now));
+    try { await kv([["INCRBY", dk, String(micro)], ["EXPIRE", dk, String(SPEND_DAY_KEEP_S)]]); } catch { }
+  }
+  return roiAdd(now, { task: e.task, model: e.model, costUsd: micro / 1e6, outcome: e.outcome || null });
+}
+/* the day's paid room for a call whose worst case is estUsd, read the same
+   way deepWalk reads it: {ok, why, dayUsd, monthUsd}; a store that cannot be
+   read refuses (fail closed) */
+export async function paidRoom(estUsd, purpose) {
+  const now = Date.now();
+  if (!kvReady()) return { ok: false, why: "no store to keep the spend ledger, so nothing paid" };
+  let l;
+  try { l = await readLedger(now); } catch { return { ok: false, why: "the spend ledger could not be read, so nothing paid (fail closed)" }; }
+  if (l.off) return { ok: false, why: PAID_OFF_WHY };   /* round five (D1) */
+  const est = toMicro(estUsd) || 0;
+  if (est > (toMicro(PAID_CALL_MAX_USD) || 0) && purpose !== "weekly-strategy") return { ok: false, why: "its worst case of " + usdLabel(est) + " is over the paid budget of " + usdLabel(toMicro(PAID_CALL_MAX_USD)) + " a call" };
+  if (l.day + est > (toMicro(PAID_DAY_CAP_USD) || 0)) return { ok: false, why: "the day's paid budget of " + usdLabel(toMicro(PAID_DAY_CAP_USD)) + " would not hold it (" + usdLabel(l.day) + " spent today)" };
+  if (l.micro + est > (toMicro(deepCapUsd()) || 0)) return { ok: false, why: "the month's paid budget would not hold it" };
+  return { ok: true, dayUsd: l.day / 1e6, monthUsd: l.micro / 1e6 };
+}
+/* round five (D1): a paid call made outside route() holds its worst case the
+   way deepWalk does, before it is sent: {ok, hold} or {ok:false, why}. The
+   caller then writes neither ledger itself: paidSettle puts the actual cost
+   in place of the hold, counts the call, writes its ROI line and closes the
+   paid door for the day when the cost could not be written. */
+export async function paidReserve(estUsd, purpose) {
+  const room = await paidRoom(estUsd, purpose);
+  if (!room.ok) return room;
+  const now = Date.now();
+  const r = await reserveSpend(now, toMicro(estUsd) || 0, toMicro(deepCapUsd()) || 0, toMicro(PAID_DAY_CAP_USD) || 0);
+  return r.ok ? { ok: true, hold: { ...r.hold, purpose: paidPurposeOf(purpose) || String(purpose || "").slice(0, 40) } } : { ok: false, why: r.why };
+}
+/* e: {costUsd (the actual, null when it is not known: the hold stands),
+   model, task, outcome}. {ok, paidId, spendRecorded} */
+export async function paidSettle(hold, e = {}) {
+  if (!hold || !hold.month || !hold.day || !Number.isFinite(hold.micro)) return { ok: false, spendRecorded: false, why: "no hold to settle" };
+  const known = e.costUsd != null && Number.isFinite(Number(e.costUsd));
+  const actual = known ? (toMicro(e.costUsd) || 0) : hold.micro;
+  const s = await settleSpend(hold, actual, actual > 0);
+  if (!s.ok) await closePaidDay("a paid call's cost could not be written to the ledger");
+  const paidId = actual > 0 ? await roiAdd(hold.at || Date.now(), { task: e.task || hold.purpose || "deep", model: e.model, costUsd: actual / 1e6, outcome: e.outcome || null }) : null;
+  return { ok: true, paidId, spendRecorded: s.ok, costUsd: actual / 1e6 };
+}
+export async function paidOutcome(id, outcome) {
+  const m = /^pd-(\d{4}-\d{2})-[0-9a-f]+$/.exec(String(id || ""));
+  if (!m || !kvReady()) return { ok: false };
+  try {
+    const r = await kv([["HGET", K_PAID(m[1]), id]]);
+    const cur = r && r[0] ? (typeof r[0] === "string" ? JSON.parse(r[0]) : r[0]) : null;
+    if (!cur) return { ok: false };
+    const o = outcome && typeof outcome === "object" ? outcome : {};
+    cur.outcome = { helped: !!o.helped, note: String(o.note || "").replace(/\s+/g, " ").slice(0, 200), at: new Date().toISOString() };
+    await kv([["HSET", K_PAID(m[1]), id, JSON.stringify(cur)], ["EXPIRE", K_PAID(m[1]), String(PAID_KEEP_S)]]);
+    return { ok: true, line: cur };
+  } catch { return { ok: false }; }
+}
+export async function paidLedger(month) {
+  const mo = /^\d{4}-\d{2}$/.test(String(month || "")) ? month : monthStr(Date.now());
+  if (!kvReady()) return [];
+  try {
+    const r = await kv([["HGETALL", K_PAID(mo)]]);
+    const h = hashOfReply(r && r[0]);
+    return Object.values(h).map(v => { try { return typeof v === "string" ? JSON.parse(v) : v; } catch { return null; } })
+      .filter(x => x && x.id).sort((a, b) => String(a.at).localeCompare(String(b.at)));
+  } catch { return []; }
+}
+/* {month, calls, usd, helped, waiting, uses: {task: n}, line}: the month's
+   paid use as the Home and the brief say it */
+export async function roiSummary(month) {
+  const mo = /^\d{4}-\d{2}$/.test(String(month || "")) ? month : monthStr(Date.now());
+  const lines = await paidLedger(mo);
+  const uses = {};
+  let usd = 0, helped = 0, waiting = 0;
+  for (const l of lines) {
+    usd += Number(l.costUsd) || 0;
+    uses[l.task] = (uses[l.task] || 0) + 1;
+    if (l.outcome && l.outcome.helped) helped++;
+    if (!l.outcome) waiting++;
+  }
+  usd = Math.round(usd * 100) / 100;
+  return { month: mo, calls: lines.length, usd, helped, waiting, uses, line: roiLine(lines.length, usd, uses) };
+}
+/* "Paid models this month: 1.20 dollars, 3 uses: the Monday strategy, a tie
+   break and a letter retry." (null when nothing was paid for this month) */
+export function roiLine(calls, usd, uses) {
+  if (!calls) return null;
+  const words = [];
+  for (const [task, n] of Object.entries(uses || {})) {
+    const w = LEDGER_TASKS[task] || "another use";
+    words.push(n > 1 ? w.replace(/^(a|an|the) /, "") + " " + n + " times" : w);
+  }
+  const list = words.length <= 1 ? (words[0] || "") : words.slice(0, -1).join(", ") + " and " + words[words.length - 1];
+  return "Paid models this month: " + (Math.round((Number(usd) || 0) * 100) / 100).toFixed(2) + " dollars, " + calls + (calls === 1 ? " use" : " uses") + (list ? ": " + list : "") + ".";
+}
+
+/* ---------------------------------------------------------------------------
+   9. THE MAIL TIER (6 October 2026, LANTERN.md section 11.1). The mailbox's
+      correspondence, the messages the house receives and the answers it
+      writes, is per-person data, which the amended red line lets only models
+      that neither keep nor learn from it read, and only to answer it:
+        1. Groq's free names, gpt-oss-120b then gpt-oss-20b (Groq keeps no
+           inference data by default), each through the same free gate and
+           the same bucket as every other free call (caller "soul" takes at
+           most half of a day);
+        2. (round four) the AI Gateway's free names, every request carrying
+           zero data retention and no training, so the gateway itself lets
+           only a provider that keeps nothing answer (or refuses, 400
+           no_providers_available, and the name waits a day); these and
+           Groq's are ordered by the scoreboard, Groq first between equals;
+        3. then, only for a letter retry (task.purpose "letter-retry", round
+           four), the deep tier's own paid names on OpenRouter, through every
+           gate of section 8 (the code list, the live price, the ceilings,
+           the hold on the day's and the month's caps) with the provider
+           preferences data_collection "deny" AND zdr true (round five, the
+           review, D4: "deny" alone still let an endpoint that keeps prompts
+           for a while answer; zdr routes only to endpoints with a zero data
+           retention policy, and a name with none is refused by OpenRouter
+           and passed over). Any other mail call stops at the free names.
+      Gemini's free tier, Cerebras and OpenRouter's ":free" names are never
+      candidates here at all. Journal text is still refused before anything
+      (route()). Every message is still scrubbed in send(), and the caller
+      (api/_mail.js) masks every address and phone number before it gets
+      here. The answer has the deep tier's shape: paid, and costUsd.
+--------------------------------------------------------------------------- */
+export const MAIL_GROQ = Object.freeze(["openai/gpt-oss-120b", "openai/gpt-oss-20b"]);
+/* the mail tier's free candidates, unranked: Groq's two names, then the
+   gateway's (round four); what is passed over is said in tried */
+async function mailCandidates(tried) {
+  const cands = [];
+  if (providerPresent("groq")) {
+    const ids = await freeModels("groq", false);
+    for (const model of MAIL_GROQ) {
+      if (!ids.includes(model)) { tried.push({ provider: "groq", model, err: "skipped: not on Groq's live free list today" }); continue; }
+      cands.push({ provider: "groq", model });
+    }
+  } else tried.push({ provider: "groq", model: "(mail)", err: "skipped: no GROQ_API_KEY on this deployment" });
+  /* round four: the gateway's free names, asked to keep nothing */
+  if (providerPresent("gateway")) {
+    const ids = await freeModels("gateway", false);
+    const parked = await refusedSet(ids.slice(0, GW_DEPTH + 4), "gateway");
+    let n = 0;
+    for (const id of ids) {
+      if (n >= GW_DEPTH) break;
+      if (parked.has(id)) { tried.push({ provider: "gateway", model: id, err: "skipped: refused in the last day under zero data retention" }); continue; }
+      cands.push({ provider: "gateway", model: id }); n++;
+    }
+  }
+  return cands;
+}
+async function mailWalk(task, messages, now, tried) {
+  const done = (more) => ({ tier: "mail", tried, paid: false, costUsd: 0, ...more });
+  const cands = await mailCandidates(tried);
+  const est = estimateTokens(messages, task.opts && task.opts.max_tokens);
+  for (const cand of await exploreFirst("mail", await rankByQuality(cands, now), now)) {   /* round five: faults fade */
+    const { provider, model } = cand;
+    const gate = await checkAndReserve(provider, model, now, task.caller, est);
+    if (!gate.ok) { tried.push({ provider, model, err: "rate limit reached for today (" + gate.why + ")" }); continue; }
+    const callOpts = { ...(task.opts || {}) };
+    if (task.json && !callOpts.response_format && await jsonCapable(provider, model)) callOpts.response_format = { type: "json_object" };
+    const got = await chatOnce(provider, model, messages, callOpts);
+    tried.push({ provider, model, ms: got.ms, err: got.ok ? "" : got.error });
+    if (parkable(provider, got)) await rememberRefused(model, got.error, provider);
+    const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
+    await recordUsage(provider, now, tokens, model, got);
+    if (got.ok) {
+      await addTokens(provider, model, now, tokens);
+      return done({ ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider, measured: { provider, model } });
+    }
+    if (got.blocked) return done({ ok: false, error: got.error, blocked: true });
+  }
+  /* correspondence may reach a paid name that keeps nothing: perPerson is
+     false here by the amended red line, and only here. task.noPaid: the
+     caller found the paid names closed for the day (nsoul:deepoff). Round
+     four: and only for a letter retry. */
+  let paid = { ok: false, got: null, micro: 0 };
+  const purpose = paidPurposeOf(task.purpose);
+  if (purpose !== "letter-retry") tried.push({ provider: "openrouter", model: "(mail)", paid: true, err: "skipped: on the mail tier a paid model is asked only to write a letter again for a place of high value, after its free drafts failed their checks twice" });
+  else if (task.noPaid) tried.push({ provider: "openrouter", model: "(mail)", paid: true, err: "skipped: paid names are closed for the rest of the day" });
+  else paid = await deepWalk(task, messages, false, now, tried, purpose);
+  const costUsd = paid.micro / 1e6;
+  if (paid.ok) {
+    return done({ ok: true, spendRecorded: !paid.spendFailed, content: paid.got.content, tool_calls: paid.got.tool_calls, usage: paid.got.usage,
+      model: paid.got.model, provider: "openrouter", paid: true, costUsd, purpose, paidId: paid.paidId || null, measured: { provider: "openrouter", model: paid.got.asked || paid.got.model } });
+  }
+  return done({ ok: false, error: "no model that keeps nothing answered (" + tried.map(t => t.model + ": " + (t.err || "no answer")).join("; ").slice(0, 300) + ")",
+    costUsd, ...(paid.spendFailed ? { spendRecorded: false, paidButUnrecorded: true } : {}) });
 }
 
 /* The month's paid spend, for the Soul's console. usd is null (with an
@@ -1030,10 +1870,58 @@ export async function spendReport(now) {
   if (!kvReady()) return { month, usd: 0, capUsd, calls: 0, note: "no store: paid calls are refused, so nothing is spent" };
   try {
     const l = await readLedger(t);
-    return { month, usd: l.micro / 1e6, capUsd, calls: l.calls, noCredit: l.nocredit || "" };
+    return { month, usd: l.micro / 1e6, capUsd, calls: l.calls, noCredit: l.nocredit || "",
+      dayUsd: l.day / 1e6, dayCapUsd: PAID_DAY_CAP_USD, callMaxUsd: PAID_CALL_MAX_USD };   /* round four */
   } catch {
     return { month, usd: null, capUsd, calls: null, error: "the spend ledger could not be read" };
   }
 }
 
-export { PROVIDERS, GROQ_ALLOW, GEMINI_ALLOW };
+/* ---------------------------------------------------------------------------
+   10. THE RANKING IN PLAIN WORDS (round four): what the engine room's models
+       view and the cycle's evidence show. Each tier's candidates in the order
+       the next call would ask them, with what each has shown these two weeks,
+       and one sentence a tier the owner can read.
+--------------------------------------------------------------------------- */
+const PROVIDER_WORD = { groq: "Groq", gemini: "Gemini", openrouter: "OpenRouter", gateway: "the AI Gateway", cerebras: "Cerebras", nvidia: "NVIDIA" };
+const nameOf = c => (PROVIDER_WORD[c.provider] || c.provider) + "'s " + String(c.model).replace(/^[a-z0-9-]+\//i, "");
+function shownOf(r) {
+  if (!r.calls) return "not measured yet";
+  const bits = ["answered " + r.answered + " of " + r.calls];
+  if (r.checks) bits.push("passed " + r.passed + " of " + r.checks + " checks");
+  if (r.msAvg != null) bits.push(r.msAvg < 100 ? "under a tenth of a second" : (Math.round(r.msAvg / 100) / 10) + " seconds");
+  return bits.join(", ");
+}
+const TIER_WORD = { fast: "Quick work", strong: "Writing and judging", long: "Long reading", mail: "Mail" };
+export async function rankingReport() {
+  const now = Date.now();
+  const out = { at: new Date(now).toISOString(), tiers: {}, words: [] };
+  for (const tier of TIER_NAMES.concat(["mail"])) {
+    const chain = tier === "mail" ? await rankByQuality(await mailCandidates([]), now) : await chainFor(tier);
+    const stats = await scoresFor(chain, now);
+    const rows = chain.map(c => {
+      const st = stats.get(c.provider + ":" + c.model) || {};
+      return { provider: c.provider, model: c.model, quality: qualityOf(st), calls: st.n || 0, answered: st.ok || 0, failed: st.fail || 0,
+        checks: st.gn || 0, passed: st.gp || 0, msAvg: st.ok ? Math.round((st.ms || 0) / st.ok) : null, lastError: st.err || null, lastErrorAt: st.errAt || null };
+    });
+    out.tiers[tier] = rows;
+    out.words.push(rows.length
+      ? TIER_WORD[tier] + ": " + rows.slice(0, 3).map((r, i) => (i === 0 ? "first " : "then ") + nameOf(r) + " (" + shownOf(r) + ")").join(", ") + (rows.length > 3 ? ", and " + (rows.length - 3) + " more after them" : "") + "."
+      : TIER_WORD[tier] + ": no free model is configured or live today.");
+  }
+  /* the gateway's own free list, and which of it waits */
+  if (providerPresent("gateway")) {
+    const ids = await freeModels("gateway", false);
+    const parked = await refusedSet(ids, "gateway");
+    out.gateway = { free: ids, waiting: ids.filter(id => parked.has(id)) };
+    out.words.push(ids.length
+      ? "The AI Gateway's free models today: " + ids.join(", ") + (out.gateway.waiting.length ? "; " + out.gateway.waiting.length + " of them found no provider that keeps nothing and learns nothing, so they wait a day before they are asked again." : "; each is asked to keep nothing and learn nothing.")
+      : "The AI Gateway's free list could not be read, or holds no language model today.");
+  } else out.gateway = null;
+  /* round five: NVIDIA's catalog, held back while its trial terms stand */
+  out.nvidia = providerPresent("nvidia") ? { on: true, free: await freeModels("nvidia", false) } : { on: false, held: nvidiaHeld() };
+  if (out.nvidia.held) out.words.push("NVIDIA's free models are held back: its catalog is free for trial use only, not production, so they are asked only once NVIDIA allows the house's use and NVIDIA_PRODUCTION_OK is set.");
+  return out;
+}
+
+export { PROVIDERS, GROQ_ALLOW, GEMINI_ALLOW, CEREBRAS_ALLOW, NVIDIA_ALLOW };

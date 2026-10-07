@@ -30,7 +30,8 @@ globalThis.fetch = async (url, opt = {}) => {
   }
   if (url === 'https://openrouter.ai/api/v1/models') return { ok: true, status: 200, json: async () => ({ data: [{ id: 'test/free-writer:free', context_length: 8000, pricing: { prompt: '0', completion: '0', request: '0' }, architecture: { input_modalities: ['text'], output_modalities: ['text'] } }] }) };
   if (url === 'https://openrouter.ai/api/v1/chat/completions') return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: JSON.stringify(WRITER) } }] }) };
-  if (url.startsWith('https://ai-gateway.vercel.sh/typesafe/v1/systemone')) {
+  /* round four: the gateway's Decision API, POST /v1/evaluate */
+  if (url.startsWith('https://ai-gateway.vercel.sh/v1/evaluate')) {
     const body = JSON.parse(opt.body); sent.push({ url, auth: opt.headers && opt.headers.authorization, body });
     if (JEV === 'down') throw new Error('ECONNREFUSED');
     if (JEV === 'hang') return new Promise((res, rej) => opt.signal && opt.signal.addEventListener('abort', () => { const e = new Error('a'); e.name = 'AbortError'; rej(e); }));
@@ -40,7 +41,8 @@ globalThis.fetch = async (url, opt = {}) => {
 };
 const J = await import('../api/_jev.js');
 /* a stand in judge: every risk at `risk`, relevance at `topic` */
-const judgeWith = (risk, topic, over = {}) => body => ({ model: 'typesafe-ai/jev', answers: Object.fromEntries(Object.keys(body.questions).map(k => [k, { type: 'noul', noul: k in over ? over[k] : (k === 'on_topic' ? topic : risk) }])) });
+/* round four: answered the way the Decision API answers a boolean, {type, probability} */
+const judgeWith = (risk, topic, over = {}) => body => ({ model: 'typesafe-ai/jev', answers: Object.fromEntries(Object.keys(body.questions).map(k => [k, { type: 'boolean', probability: k in over ? over[k] : (k === 'on_topic' ? topic : risk) }])) });
 
 console.log('\nasking Jev');
 {
@@ -54,7 +56,11 @@ console.log('\nasking Jev');
   ok(last.auth === 'Bearer oidc-abc', 'the deployment’s own token is the credential: no key to create or leak');
   ok(last.body.model === 'typesafe-ai/jev' && last.body.state.text === 'A reflection.', 'one POST, the model named, the text as the state');
   ok(/faith/.test(last.body.questions.on_topic.instructions) && !/3:190/.test(last.body.questions.on_topic.instructions), 'the relevance question asks what Jev can see (is it about faith), not what it cannot (the meaning of a verse it is never shown)');
-  ok(['attributes', 'hadith_number', 'ruling', 'slight', 'on_topic'].every(k => last.body.questions[k] && last.body.questions[k].type === 'noul'), 'five yes or no questions, asked at once');
+  ok(['attributes', 'hadith_number', 'ruling', 'slight', 'on_topic'].every(k => last.body.questions[k] && last.body.questions[k].type === 'boolean'), 'five yes or no questions, asked at once');
+  /* round four: every call asks that nothing is kept and nothing learned */
+  ok(last.url === 'https://ai-gateway.vercel.sh/v1/evaluate' && last.body.providerOptions && last.body.providerOptions.gateway
+    && last.body.providerOptions.gateway.zeroDataRetention === true && last.body.providerOptions.gateway.disallowPromptTraining === true,
+    'through the Decision API, POST /v1/evaluate, with zero data retention and no training on the request itself');
 }
 
 console.log('\nwhat it refuses');
@@ -86,7 +92,7 @@ console.log('\nwhen the judge is not there');
   const t0 = Date.now();
   const h = await J.judge('verse', 'x', { ref: '1:1' }, { timeoutMs: 400 });
   ok(h.pass && h.gate === 'unavailable' && /in time/.test(h.why) && Date.now() - t0 < 2000, 'a line that never answers is cut off, and the Lantern does not wait on it');
-  JEV = body => ({ answers: { attributes: { type: 'noul', noul: 0.1 } } });
+  JEV = body => ({ answers: { attributes: { type: 'boolean', probability: 0.1 } } });
   const part = await J.judge('verse', 'x', { ref: '1:1' });
   ok(part.gate === 'unavailable', 'an answer missing questions is not a pass on them: the whole verdict is treated as absent');
 }

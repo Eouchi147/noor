@@ -611,6 +611,61 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .lamp .spk2 path{fill:none;stroke:rgba(233,200,106,.6);stroke-width:1.5;vector-effect:non-scaling-stroke}
 .lamp .say{margin:10px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
 .lamp .say.warn{color:var(--wait)}
+/* the Lantern's mail (LANTERN.md 11.4): today's numbers, the first ten
+   letters he approves, the outreach toward fifty places, the last few
+   things it did, and the door to the Mail room */
+.mailc{background:linear-gradient(180deg,rgba(126,155,209,.06),rgba(126,155,209,0) 110px),var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 16px 0}
+.mailc.setup,.mailc.fail{padding-bottom:16px}
+.mailc .mtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mailc .mtop .state{min-height:30px;font-size:12.5px;white-space:normal}
+.mnums{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:14px 0 0}
+.mn{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 4px 8px;text-align:center;min-width:0}
+.mn b{display:block;font-family:var(--f-disp);font-size:22px;font-weight:600;line-height:1.1;color:var(--cream);font-variant-numeric:tabular-nums}
+.mn span{display:block;margin-top:4px;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600;line-height:1.25}
+/* on a phone a tile is narrow: the words stay whole, in small letters */
+@media(max-width:519px){.mn span{text-transform:none;letter-spacing:0;font-size:10.5px;font-weight:500}}
+.mn.hot{border-color:rgba(233,200,106,.38)}.mn.hot b{color:var(--gold)}
+.mten,.mout{display:flex;align-items:center;gap:12px;margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.pips{display:grid;grid-template-columns:repeat(10,8px);gap:4px;flex:0 0 auto}
+.pips i{display:block;width:8px;height:8px;border-radius:50%;border:1px solid var(--gold-dim)}
+.pips i.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(233,200,106,.5)}
+.mten p,.mout p{margin:0;flex:1;min-width:0;font-size:13px;line-height:1.45;color:var(--text)}
+.mten p b,.mout p b{color:var(--cream);font-weight:600}
+.mout p span{display:block;color:var(--muted);font-size:12.5px}
+.mout svg{width:44px;height:44px;flex:0 0 auto;overflow:visible}
+.mlast{margin:12px 0 0;padding:4px 0 0;border-top:1px solid var(--line)}
+.mlast .ml{display:flex;gap:10px;align-items:baseline;padding:6px 0;font-size:13px;line-height:1.45;color:var(--text);overflow-wrap:anywhere}
+.mlast .ml code{flex:0 0 auto;min-width:52px;background:none;border:0;padding:0;color:var(--gold-dim);font-size:11px}
+.mailc .go{display:flex;align-items:center;gap:10px;width:100%;min-height:50px;margin:12px 0 0;border-top:1px solid var(--line);color:var(--gold);font-weight:600;font-size:13.5px;text-align:left}
+.mailc .go .chev{margin-left:auto;color:var(--gold-dim);display:flex}
+.mailc .hcalm{background:none;border:0;padding:0}
+.mailc .acts{margin-top:14px}
+.mailc .acts .btn{flex:1 1 auto}
+/* the Lantern's voice on Telegram (round four): while it is not linked, why
+   it matters and the way to link it; once linked, one quiet line */
+.hvoice{display:flex;align-items:center;gap:12px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px 12px 16px;text-align:left}
+.hvoice .x{flex:1;min-width:0}
+.hvoice .x b{display:block;color:var(--cream);font-weight:600;font-size:14px;line-height:1.4;overflow-wrap:anywhere}
+.hvoice .x span{display:block;color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:2px}
+.hvoice .btn{flex:0 0 auto;min-height:44px;padding:0 14px}
+.hvoice.line{min-height:52px;border-style:dashed;border-color:var(--line2);background:none;padding:6px 12px 6px 14px}
+.hvoice.line .x b{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--text)}
+.hvoice.line .x b em{font-style:normal;color:var(--wait)}
+.hvoice.line .chev{color:var(--faint);display:flex}
+.hvoice .hic{width:34px;height:34px}
+/* the mail sheet: a message the judge sorted on its own */
+.mjudge{margin:8px 0 0;padding:6px 10px;border-left:2px solid var(--gold-dim);background:var(--panel2);border-radius:0 8px 8px 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+/* a letter waiting for his yes: the whole email, as text, never markup */
+.dc .ltr{margin:12px 0 0;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,249,227,.035),rgba(255,249,227,0) 70px),var(--ink)}
+.dc .ltr .lh{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
+.dc .ltr .lk{flex:0 0 58px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.dc .ltr .lv{flex:1;min-width:0;color:var(--text);overflow-wrap:anywhere}
+.dc .ltr .lv .ad{display:inline-block;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.dc .ltr .lv.sj{color:var(--cream);font-weight:600}
+.dc .ltr .lt{padding:12px 14px 14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;color:var(--text)}
+.dc .ften{color:var(--gold-dim)}
+/* a sent email in Done: no Undo (an email cannot be unsent), its door to Gmail */
+.hrow .u .hlink{padding:0 4px;font-size:12.5px}
 /* ask, and the door to the engine room */
 .hask{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
 .hask .lant-in textarea{min-height:48px}
@@ -665,7 +720,7 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 /* the toast that carries an Undo */
 #toast.act{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:5px 5px 5px 16px;text-align:left;width:min(calc(100% - 32px),440px);justify-content:space-between}
 #toast .tact{min-height:44px;padding:0 16px;border-radius:8px;background:#1a1608;color:var(--cream);font-weight:700;font-size:13px;flex:0 0 auto}
-@media(prefers-reduced-motion:reduce){#sheet,#veil,#toast{transition:none!important}#s-home *,#s-home *::before,#s-home *::after{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){#sheet,#veil,#toast{transition:none!important}#s-home *,#s-home *::before,#s-home *::after,#s-mail *,#s-mail *::before,#s-mail *::after{transition:none!important;animation:none!important}}
 @media(min-width:600px){.orb{width:min(340px,100%)}}
 @media(min-width:900px){#sheet.wide{left:calc(var(--rail) + 50% - 380px);width:760px}}
 @media(min-width:1200px){
@@ -680,6 +735,72 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .tabs button{min-height:44px;display:flex;align-items:center;justify-content:center;gap:7px}
 .tabs .tn{font-family:var(--f-mono);font-size:10.5px;min-width:20px;height:18px;padding:0 6px;border-radius:100px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
 .tabs .tn:empty{display:none}
+/* ---- THE MAIL ROOM (LANTERN.md 11.4): the switch with the caps, then the
+   inbox the Lantern handled, the places it writes to, and do not contact.
+   Every tap target is a thumb's size; an address is shown here as text and
+   never put in a link. */
+#s-mail .back{min-height:44px}
+#s-mail .btn{min-height:44px}
+.msw{background:linear-gradient(180deg,rgba(233,200,106,.05),rgba(233,200,106,0) 90px),var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px 16px 16px;margin:12px 0 0}
+.msw.off{background:var(--panel)}
+.mswb{display:flex;align-items:center;gap:14px;width:100%;min-height:60px;text-align:left}
+.mswb .mswt{flex:1;min-width:0}
+.mswb .mswt b{display:block;color:var(--cream);font-weight:600;font-size:15px;line-height:1.35}
+.mswb .mswt span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45;margin-top:2px}
+.mswb .sw{display:block}
+.mswb .sw::after{transition:transform .16s ease}
+.mswb[aria-checked="true"] .sw{background:rgba(233,200,106,.2);border-color:var(--gold-dim)}
+.mswb[aria-checked="true"] .sw::after{transform:translateX(21px);background:var(--gold)}
+.msw .hcf{margin-top:8px}
+.msw .mnone{display:flex;gap:12px;align-items:flex-start;padding:10px 0 0}
+.msw .mnone b{display:block;color:var(--cream);font-weight:600;font-size:15px}
+.msw .mnone span{display:block;color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:2px}
+.mcaps{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.55}
+.mcaps b{color:var(--text);font-weight:600}
+.msw .mnums{margin-top:12px}
+.msw .mten{margin-top:12px}
+#s-mail .tabs{margin:16px 0 14px}
+#s-mail .seg button{padding:10px 4px}
+.mfil{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+/* on a phone a row of filters is one line that slides under the thumb, its far edge fading */
+@media(max-width:599px){.mfil.slide{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:24px;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  .mfil.slide::-webkit-scrollbar{display:none}.mfil.slide button{flex:0 0 auto;white-space:nowrap}}
+.mfil button{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);background:var(--panel2);font-size:12.5px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.mfil button.on{color:var(--gold);border-color:var(--gold-dim);background:rgba(233,200,106,.08)}
+.mfil button .n{font-family:var(--f-mono);font-size:10.5px;color:var(--faint)}
+.mfil button.on .n{color:var(--gold-dim)}
+.mfil select.fi{width:auto;min-width:0;max-width:100%;min-height:44px;padding:8px 34px 8px 12px;font-size:16px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+#s-mail .list>.row{width:100%;text-align:left}
+#s-mail .row .t>b{white-space:normal;overflow-wrap:anywhere}
+#s-mail .row .r .pill{margin-left:6px}
+.mstrip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0 0 12px}
+.mstrip .mn b{font-size:20px}
+.mprog{position:relative;height:4px;border-radius:2px;background:rgba(255,249,227,.08);overflow:hidden;margin:0 0 14px}
+.mprog i{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:2px;background:var(--gc,var(--gold));transform-origin:left center}
+.mdadd{display:flex;gap:8px;align-items:stretch;margin:0 0 12px}
+.mdadd .fi{flex:1;min-width:0;min-height:44px}
+.mdadd .btn{flex:0 0 auto}
+.mdrow{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px 10px 14px}
+.mdrow .mdt{display:flex;align-items:center;gap:10px}
+.mdrow .mdt .t{flex:1;min-width:0}
+.mdrow .mdt .t b{display:block;color:var(--cream);font-weight:600;font-size:14px;font-family:var(--f-mono);overflow-wrap:anywhere}
+.mdrow .mdt .t span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45;overflow-wrap:anywhere}
+.mdrow .hcf{margin-top:10px}
+/* a thread or a place at length, in its sheet */
+.msh h3{margin:18px 0 6px;font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
+.msh .msg{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.msh .kv{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.5}
+.msh .kv:first-of-type{border-top:0}
+.msh .kv em{flex:0 0 112px;font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.msh .kv span,.msh .kv a{flex:1;min-width:0;overflow-wrap:anywhere}
+.msh .kv a{display:inline-flex;align-items:center;gap:5px;min-height:44px}
+.msh .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 0}
+.msh .ad{font-family:var(--f-mono);font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.msh .btn{min-height:44px}
+.msh .hist{margin:0;padding:0;list-style:none}
+.msh .hist li{display:flex;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45;color:var(--text);overflow-wrap:anywhere}
+.msh .hist li:first-child{border-top:0}
+.msh .hist code{flex:0 0 auto;background:none;border:0;padding:0;color:var(--gold-dim);font-size:11px;min-width:64px}
 .link.door{cursor:pointer;width:100%;text-align:left;min-height:58px}
 .link .hic{margin:0;display:flex}
 .link.door b{font-size:14.5px}
@@ -1032,6 +1153,53 @@ select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .soul-tj .nums em{font-style:normal;color:var(--faint)}
 .soul-why{color:var(--wait);margin:8px 0 0;overflow-wrap:anywhere}
 .soul-eff .pill{justify-self:end}
+/* ---- Brains (round four): which free models the Lantern asks and in what
+   order, how each has done, the judge, the gateway's free list and what each
+   paid dollar bought. Read rarely, so it is calm: plain sentences first, a
+   small bar and a word for each model's quality, never a number alone. */
+/* a wide screen keeps the card's lines to a reading length */
+.brains>*{max-width:720px}
+.brains .bw p{margin:0 0 8px;font-size:13.5px;line-height:1.55;color:var(--text);overflow-wrap:anywhere}
+.brains .bw p:last-child{margin-bottom:0}
+.brains h3{margin:18px 0 6px;font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
+.brains .btier{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.brains .btier:first-of-type{border-top:0;padding-top:0}
+.brains .btier>b{display:block;margin:0 0 4px;color:var(--cream);font-weight:600;font-size:13.5px}
+.bml{list-style:none;margin:0;padding:0}
+.bml li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.bml li:first-child{border-top:0}
+.bml .no{font-family:var(--f-mono);font-size:11px;color:var(--faint);align-self:start;padding-top:1px}
+.bml .nm{min-width:0;color:var(--text);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.bml .q{display:flex;align-items:center;gap:8px;justify-content:flex-end;white-space:nowrap}
+.bml .qb{width:52px;height:4px;border-radius:2px;background:rgba(255,249,227,.08);overflow:hidden;flex:0 0 auto}
+.bml .qb i{display:block;height:100%;width:100%;background:var(--gold);transform-origin:left center}
+.bml .qb.none{background:repeating-linear-gradient(90deg,rgba(255,249,227,.16) 0 2px,transparent 2px 6px)}
+.bml .qb.fair i{opacity:.62}
+.bml .qb.poor i{background:var(--bad)}
+.bml .qw{font-size:11.5px;color:var(--muted);min-width:0}
+.bml .dt{grid-column:2/4;font-size:12px;color:var(--muted);line-height:1.45;overflow-wrap:anywhere}
+.bml .er{grid-column:2/4;font-size:12px;color:var(--wait);line-height:1.45;overflow-wrap:anywhere}
+.brains details.more>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:var(--gold);font-size:12.5px;font-weight:600;list-style:none}
+.brains details.more>summary::-webkit-details-marker{display:none}
+.brains .jv{font-size:13.5px;line-height:1.55;color:var(--text);margin:0;overflow-wrap:anywhere}
+.brains .jv.down{color:var(--wait)}
+.brains .jv+.jv{margin-top:4px}
+.brains .gw{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0}
+.brains .gw span{display:inline-flex;align-items:center;gap:6px;max-width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:100px;padding:4px 10px;font-family:var(--f-mono);font-size:11px;color:var(--text);overflow-wrap:anywhere}
+.brains .gw span i{width:7px;height:7px;border-radius:50%;background:var(--good);flex:0 0 auto}
+.brains .gw span.wait{color:var(--muted)}.brains .gw span.wait i{background:var(--wait)}
+.brains .pd{margin:0;padding:0;list-style:none}
+.brains .pd li{padding:9px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--text);overflow-wrap:anywhere}
+.brains .pd li:first-child{border-top:0}
+.brains .pd .h{display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+.brains .pd .h b{color:var(--cream);font-weight:600;min-width:0}
+.brains .pd .h code{flex:0 0 auto;background:none;border:0;padding:0;color:var(--gold-dim);font-size:11.5px}
+.brains .pd .m{display:block;color:var(--faint);font-size:11.5px}
+.brains .pd .o{display:block;margin-top:3px;font-size:12.5px;color:var(--muted)}
+.brains .pd .o.good{color:var(--good)}.brains .pd .o.no{color:var(--wait)}
+.brains .sp{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.brains .sp+.sp,.brains .sp+.pd{margin-top:6px}
+.brains .sp b{color:var(--text);font-weight:600}
 </style>
 </head>
 <body>
@@ -1071,6 +1239,7 @@ select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
          are reached from More (or from a link on Home), so the bar keeps its
          five buttons. The engine room is the code's own api/soul.js room. -->
     <section class="surf" id="s-engine"></section>
+    <section class="surf" id="s-mail"></section>
     <section class="surf" id="s-lights"></section>
     <section class="surf" id="s-legacy"></section>
     <section class="surf" id="s-marketing"></section>
@@ -1145,6 +1314,7 @@ var ICO={
   rise:'<svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7"/><path d="M15 8h5v5"/></svg>',
   cal:'<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>',
   out:'<svg viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M17 14v5H5V7h5"/></svg>',
+  plane:'<svg viewBox="0 0 24 24"><path d="M21 4L3 11l6.5 2.5L12 20l3-5.5"/><path d="M21 4l-6 11M21 4L9.5 13.5"/></svg>',
   down:'<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>'
 };
 var SLOT_WHAT={dawn:"What today is in the Islamic year",reelA:"A reel · morning",lead:"What is coming",reelC:"A reel · noon",light:"The day's card",reelD:"A reel · afternoon",word:"One of 523 words",reelB:"A reel · evening",dusk:"One of 71 chapters of the Path",reelE:"A reel · night"};
@@ -1236,14 +1406,14 @@ var CUR="home";
    holds it. Nothing here counts the surfaces: the bar's columns are counted
    from the buttons that are in it. */
 var BAR={home:1,ask:1,posts:1,numbers:1,more:1};
-var ROOM={engine:1,lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,flow:1,readers:1};
+var ROOM={engine:1,mail:1,lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,flow:1,readers:1};
 var NAMES={home:"Home",ask:"Ask the Lantern",posts:"Posts",numbers:"Numbers",more:"More",
-  engine:"The engine room",lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",
+  engine:"The engine room",mail:"Mail",lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",
   controls:"Controls",flow:"Flow",readers:"Readers' inbox"};
 var SHORT={home:"Home",ask:"Ask",posts:"Posts",numbers:"Numbers",more:"More"};
 var ALIAS={today:["home"],soul:["engine"],lantern:["ask"],house:["more"],reels:["posts","share"],observatory:["numbers","overview"]};
 var LOAD={home:drawHome,ask:drawLantern,posts:function(f){return drawTabbed("posts",f)},numbers:function(f){return drawTabbed("numbers",f)},more:drawHouse,
-  engine:drawSoul,lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
+  engine:drawSoul,mail:drawMail,lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
   controls:drawControls,flow:drawFlow,readers:drawReaders};
 var LOADED={};
 /* where a name in the hash, or in a link the house sent, leads: a surface or
@@ -2070,30 +2240,61 @@ function hLink(l){
   return null;
 }
 function hSty(s){s=String(s||"").toLowerCase();return s==="primary"?"":s==="danger"?" danger":" ghost"}
-function hOptById(d,id){return (Array.isArray(d.options)?d.options:[]).filter(function(o){return o&&String(o.id)===String(id)})[0]||null}
+/* the options drawn as buttons; a letter's three carry their own names when
+   the house sent none (Send, Not this one, Later) */
+var H_LOPT={send:"Send",no:"Not this one",later:"Later"};
+function hOpts(d){var lt=hLetter(d);return (Array.isArray(d&&d.options)?d.options:[]).filter(function(o){return o&&o.id!=null}).map(function(o){
+  return (!o.label&&lt&&H_LOPT[String(o.id)])?Object.assign({},o,{label:H_LOPT[String(o.id)]}):o}).filter(function(o){return o.label})}
+function hOptById(d,id){return hOpts(d).filter(function(o){return String(o.id)===String(id)})[0]||null}
 function hDraft(d){var x=d&&d.draft;return x&&typeof x==="object"&&String(x.text||"").trim()?{title:String(x.title||""),text:String(x.text)}:null}
+/* a letter waiting for his yes (LANTERN.md 11.1, the first ten and anything
+   else waiting on him): the whole email, its line breaks kept, as text and
+   never markup, and never through the house's word changes, because what is
+   shown is exactly what goes */
+var H_LETTER={outreach:"A first letter",followup:"A follow-up",reply:"A reply"};
+function hLetter(d){var l=d&&d.letter;if(!l||typeof l!=="object")return null;var text=String(l.text==null?"":l.text);if(!text.trim())return null;
+  return {to:String(l.to||""),toName:String(l.toName||""),subject:String(l.subject||""),text:text,kind:String(l.kind||"").toLowerCase(),from:String(l.from||"")}}
+function hLetterHtml(lt){
+  return '<div class="ltr" role="group" aria-label="The letter, as it will be sent">'
+    +'<div class="lh"><span class="lk">To</span><span class="lv">'+(lt.toName?esc(lt.toName)+' ':'')+(lt.to?'<span class="ad">'+esc(lt.to)+'</span>':'')+'</span></div>'
+    +'<div class="lh"><span class="lk">From</span><span class="lv">'+(lt.from?esc(lt.from):'NOOR Codex of Light <span class="ad">salam@noorcodex.com</span>')+'</span></div>'
+    +'<div class="lh"><span class="lk">Subject</span><span class="lv sj">'+esc(lt.subject||"(no subject)")+'</span></div>'
+    +'<div class="lt">'+esc(lt.text)+'</div></div>';
+}
+/* what a confirm asks: the house's own words, or, for a letter's Send (which
+   always asks: an email cannot be taken back), who it goes to and from where */
+function hConfirmWords(d,o){var lt=hLetter(d);
+  if(typeof o.confirm==="string"&&o.confirm.trim())return lw(o.confirm);
+  if(lt&&String(o.id)==="send")return "Send this letter to "+(lt.toName||lt.to||"them")+" now, from "+(lt.from||"salam@noorcodex.com")+"? An email cannot be taken back.";
+  return "Are you sure? This cannot be taken back from here.";
+}
 function hDecision(d,i){
   var kind=String(d.kind||"").toLowerCase(),lk=hLink(d.link),steps=(Array.isArray(d.steps)?d.steps:[]).map(sItem).filter(Boolean);
-  var at=hParse(d.at),ex=hParse(d.expires),g=hGoalName(d.goal),gi=hGoalIdx(d.goal),dr=hDraft(d);
+  var at=hParse(d.at),ex=hParse(d.expires),g=hGoalName(d.goal),gi=hGoalIdx(d.goal),dr=hDraft(d),lt=hLetter(d);
   var cf=HOME.cf&&HOME.cf.k==="d"&&HOME.cf.id===String(d.id)?HOME.cf:null,copt=cf?hOptById(d,cf.o):null;
-  var opts=(Array.isArray(d.options)?d.options:[]).filter(function(o){return o&&o.id!=null&&o.label});
+  var opts=hOpts(d);
   var openOpt=lk?opts.filter(function(o){return String(o.id)==="open"})[0]:null;
   var btns=[];
   var gold=opts.some(function(o){return o!==openOpt&&String(o.style||"").toLowerCase()==="primary"});
   if(lk)btns.push('<a class="btn'+(openOpt?hSty(openOpt.style):(gold?" ghost gold":""))+'" href="'+esc(lk.href)+'" data-dlink="'+i+'"'+(lk.url?' target="_blank" rel="noopener"':'')+'>'
     +esc((openOpt&&openOpt.label)||(d.link&&d.link.label)||"Open")+(lk.url?' <span aria-hidden="true">↗</span>':'')+'</a>');
   opts.forEach(function(o,oi){if(o!==openOpt)btns.push('<button type="button" class="btn'+hSty(o.style)+'" data-dopt="'+i+'|'+oi+'">'+esc(o.label)+'</button>')});
-  return '<article class="dc" data-did="'+esc(d.id)+'"'+(gi>=0?' data-gi="'+gi+'" style="--gc:'+hCol(gi)+'"':'')+'>'
-    +'<div class="k">'+(H_KIND[kind]?'<span class="pill gold">'+esc(H_KIND[kind])+'</span>':'')+(at?'<span>asked '+esc(ago(at.toISOString()))+'</span>':'')+(ex?'<span>'+esc(hUntil(ex))+'</span>':'')+'</div>'
-    +'<h3>'+hs(d.title||"A decision")+'</h3>'
+  /* one of the first ten letters says so, so he knows why it waits on him */
+  var ten=lt&&HOME.data&&HOME.data.mail&&typeof HOME.data.mail==="object"?hMailTen(HOME.data.mail):null;
+  var kindPill=lt?'<span class="pill gold">'+esc(H_LETTER[lt.kind]||"A letter to send")+'</span>':(H_KIND[kind]?'<span class="pill gold">'+esc(H_KIND[kind])+'</span>':'');
+  var sendQ=cf&&copt&&lt&&String(copt.id)==="send";
+  return '<article class="dc'+(lt?' letter':'')+'" data-did="'+esc(d.id)+'"'+(gi>=0?' data-gi="'+gi+'" style="--gc:'+hCol(gi)+'"':'')+'>'
+    +'<div class="k">'+kindPill+(ten&&ten.sent<ten.of?'<span class="ften">one of the first '+ten.of+'</span>':'')+(at?'<span>asked '+esc(ago(at.toISOString()))+'</span>':'')+(ex?'<span>'+esc(hUntil(ex))+'</span>':'')+'</div>'
+    +'<h3>'+hs(d.title||(lt?"A letter":"A decision"))+'</h3>'
     +(d.why?'<p class="why">'+hs(d.why)+'</p>':'')
+    +(lt?hLetterHtml(lt):'')
     +((g||d.impact)?'<div class="meta">'+(g?'<div class="hm">'+(gi>=0?hGdot(gi):ICO.target)+'<span><em>For </em>'+esc(g)+'</span></div>':'')
       +(d.impact?'<div class="hm">'+ICO.rise+'<span><em>Expected </em>'+hs(d.impact)+'</span></div>':'')+'</div>':'')
-    +(dr?'<div class="dft"><b>A draft for you to send:</b> '+hs(dr.title||d.title||"the letter")+'</div><div class="drf"><button type="button" class="btn ghost gold" data-draft="'+i+'">Read the draft</button><button type="button" class="btn ghost" data-dcopy="'+i+'">Copy</button></div>':'')
+    +(dr&&!lt?'<div class="dft"><b>A draft for you to send:</b> '+hs(dr.title||d.title||"the letter")+'</div><div class="drf"><button type="button" class="btn ghost gold" data-draft="'+i+'">Read the draft</button><button type="button" class="btn ghost" data-dcopy="'+i+'">Copy</button></div>':'')
     +(steps.length&&!lk?'<ol class="hsteps">'+steps.slice(0,6).map(function(x){return '<li>'+hs(x)+'</li>'}).join("")+'</ol>':'')
     +(steps.length&&lk?'<div class="meta"><div class="hm">'+ICO.out+'<span><em>'+steps.length+' short step'+(steps.length===1?'':'s')+', shown when you open it</em></span></div></div>':'')
     +(d.link&&!lk?'<p class="warn">This decision carried a link the console did not recognise, so it is not offered here.</p>':'')
-    +(cf&&copt?hConfirm(typeof copt.confirm==="string"?lw(copt.confirm):"Are you sure? This cannot be taken back from here.",copt.label,"dyes","dno",String(copt.style).toLowerCase()==="danger"?"danger":"")
+    +(cf&&copt?hConfirm(hConfirmWords(d,copt),sendQ?"Yes, send it":copt.label,"dyes","dno",String(copt.style).toLowerCase()==="danger"?"danger":"")
       :(btns.length?'<div class="opts">'+btns.join("")+'</div>':''))
     +'</article>';
 }
@@ -2187,17 +2388,29 @@ function hRoutine(t){
   return '<div class="hrow rt" id="h-routine"><div class="hic '+(ok?"good":"bad")+'">'+(ok?ICO.ok:ICO.warn)+'</div><div class="x"><b>'+esc(line)+'</b><span class="dd">'
     +esc(sub.length?sub.join(", ").replace(/^./,function(c){return c.toUpperCase()})+".":"The routine, from the posting schedule.")+'</span></div></div>';
 }
+/* a door on a row of Done (a sent email's, in Gmail): an https address,
+   opened in a new tab with no referrer, or a room of this console; any other
+   address is not a link at all */
+function hSafeLink(l,rooms){
+  var href=l&&typeof l==="object"?String(l.href||l.url||""):(typeof l==="string"?l:"");href=href.trim();if(!href)return null;
+  var label=l&&typeof l==="object"&&typeof l.label==="string"&&l.label.trim()?l.label.trim():"";
+  if(/^https:\/\/[^\s"'<>\\]+$/i.test(href))return {url:true,href:href,label:label||(/^https:\/\/mail\.google\.com\//i.test(href)?"Open in Gmail":"Open")};
+  var m=rooms&&/^(?:\/admin2(?:\.html)?)?#([A-Za-z][\w-]*)$/.exec(href),r=m&&resolve(m[1]);
+  return r?{room:r.s,href:"#"+r.s,label:label||("Open "+NAMES[r.s])}:null;
+}
 function hDoneRow(x,i){
   var by=H_BY[String(x.by||"").toLowerCase()]||H_BY.machine,bad=x.ok===false,at=hParse(x.at),g=hGoalName(x.goal),gi=hGoalIdx(x.goal);
   var cf=HOME.cf&&HOME.cf.k==="u"&&HOME.cf.id===String(x.actionId)?HOME.cf:null;
   var canUndo=x.undo===true&&x.actionId!=null&&x.actionId!==""&&!bad;
-  var fresh=HOME.fresh&&HOME.fresh[hDoneKey(x)];
+  var fresh=HOME.fresh&&HOME.fresh[hDoneKey(x)],dl=hSafeLink(x.link,true);
   var meta=(bad?'<span class="no">did not work</span> · ':'')+'by '+esc(by[0])+(at?' · '+esc(hClock(at))+' UTC':'');
+  var u=(canUndo&&!cf?'<button type="button" class="btn ghost" data-undo="'+i+'">Undo</button>':'')
+    +(dl?'<a class="hlink" href="'+esc(dl.href)+'"'+(dl.url?' target="_blank" rel="noopener noreferrer"':' data-dlroom="'+esc(dl.room)+'"')+'>'+esc(dl.label)+(dl.url?' <span aria-hidden="true">↗</span>':'')+'</a>':'');
   return '<div class="hrow'+(bad?' bad':'')+(fresh?' fresh':'')+'" data-dk="'+esc(hDoneKey(x))+'"'+(gi>=0?' data-gi="'+gi+'"':'')+'>'+(fresh?'<span class="glw" aria-hidden="true"></span>':'')
     +'<div class="hic '+(bad?"bad":by[2])+'">'+ICO[by[1]]+(gi>=0?'<span class="gd" style="--gc:'+hCol(gi)+'" aria-hidden="true"></span>':'')+'</div><div class="x"><b>'+hs(x.title||"An action")+(fresh?'<span class="nl">new<span class="sro"> since your last visit</span></span>':'')+'</b>'
     +(x.detail?'<span class="dd">'+hs(x.detail)+'</span>':'')+'<span class="m">'+meta+'</span>'+(g?'<span class="m g">for '+esc(g)+'</span>':'')
     +(cf?hConfirm("Put this back as it was? The Lantern undoes it, and the record says you asked.","Undo it","uyes","uno",""):'')+'</div>'
-    +(canUndo&&!cf?'<div class="u"><button type="button" class="btn ghost" data-undo="'+i+'">Undo</button></div>':'')+'</div>';
+    +(u?'<div class="u">'+u+'</div>':'')+'</div>';
 }
 function hDone(j){
   var ds=hDoneList(),t=j.today&&typeof j.today==="object"?j.today:null,rt=hRoutine(t);
@@ -2343,6 +2556,66 @@ function hGivingPaint(j,prev,arrive){
   if(g!=null)hCount($("h-givers"),g,function(v){return fnum(Math.round(v))},900,arrive?0:(oldG==null?g:oldG));
 }
 
+/* ---- 8b. the Lantern's mail (the `mail` part, LANTERN.md 11.4) ----
+   What the Lantern did with the house's mail today, the first ten letters
+   he approves before it writes on its own, its outreach toward fifty
+   places, the last few things it did, and the door to the Mail room. With
+   no mailbox it shows only the setup card's call to action; with the part
+   missing, why, in plain words. A Home with no `mail` part at all (a house
+   not yet built for it) draws no card. Every word is escaped, and an
+   address is never put in a link. */
+var H_MAILN=[["received","received"],["answered","answered"],["filed","filed"],["forYou","for you"],["sent","sent"]];
+/* the setup card on the desk: by its id, or by the words it is raised with */
+function hMailSetup(j){return (hList(j,"decisions")||[]).filter(function(d){return /^mail[-:_]?setup$/i.test(String(d.id||""))||/^give the lantern its mailbox\.?$/i.test(String(d.title||"").trim())})[0]||null}
+function hMailTen(m){var t=m&&m.firstTen&&typeof m.firstTen==="object"?m.firstTen:{},of=hNum(t.of)||10;return {of:of,sent:Math.max(0,Math.min(of,hNum(t.sent)||0))}}
+function hPips(t){var s="";for(var i=0;i<t.of;i++)s+='<i'+(i<t.sent?' class="on"':'')+'></i>';return '<span class="pips" aria-hidden="true">'+s+'</span>'}
+function hTenHtml(t){return '<div class="mten">'+hPips(t)+'<p>'+(t.sent>=t.of?'All of the first '+t.of+' were approved: <b>it writes on its own now</b>.':'<b>'+t.sent+' of the first '+t.of+'</b> approved; then it writes on its own.')+'</p></div>'}
+function hMailNums(t){t=t&&typeof t==="object"?t:{};
+  return '<div class="mnums" role="list" aria-label="Today\'s mail">'+H_MAILN.map(function(k){var v=hNum(t[k[0]]);
+    return '<div class="mn'+(k[0]==="forYou"&&v>0?' hot':'')+'" role="listitem"><b data-mk="'+k[0]+'">'+(v==null?'·':esc(fnum(v)))+'</b><span>'+esc(k[1])+'</span></div>'}).join("")+'</div>'}
+/* the outreach toward its target: a small ring of the goals' own sweep, in
+   the outreach goal's colour when the goals carry it, else the house's gold */
+function hOutCol(j){var gs=hList(j,"goals")||[];for(var i=0;i<gs.length&&i<H_COL.length;i++){if(/^outreach\./.test(String(gs[i].metric||""))||String(gs[i].id)==="g-outreach")return hCol(i)}return "#E9C86A"}
+function hOutRing(p,c){var P=function(t){t=(t-135)*Math.PI/180;return (22+17*Math.sin(t)).toFixed(2)+" "+(22-17*Math.cos(t)).toFixed(2)},a=270*Math.max(0,Math.min(1,p||0));
+  return '<svg viewBox="0 0 44 44" aria-hidden="true"><path d="M'+P(0)+'A17 17 0 1 1 '+P(270)+'" fill="none" stroke="'+c+'" stroke-opacity=".22" stroke-width="4" stroke-linecap="round"/>'
+    +(a>1?'<path class="arc" d="M'+P(0)+'A17 17 0 '+(a>180?1:0)+' 1 '+P(a)+'" fill="none" stroke="'+c+'" stroke-width="4" stroke-linecap="round"/>':'')+'</svg>'}
+function hMailHtml(j){
+  var m=j.mail,head=hHead("The Lantern's mail",null,false);
+  var door='<button type="button" class="go" data-mroom="1">Open the mail room<span class="chev">'+ICO.chev+'</span></button>';
+  if(m==null||typeof m!=="object")return head+'<div class="hfail" id="h-mailc"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>The Lantern\'s mail could not be read just now.</b><span>'+esc(hReason(hWhy(j,"mail")))+'</span>'
+    +'<div class="acts"><button type="button" class="btn ghost" data-mroom="1">Open the mail room</button></div></div></div>';
+  if(m.configured===false){
+    /* no mailbox: the setup card's call to action, and nothing else */
+    var ds=hList(j,"decisions")||[],sd=hMailSetup(j),lk=sd&&hLink(sd.link);
+    return head+'<div class="mailc setup" id="h-mailc"><div class="hcalm"><div class="hic">'+ICO.mail+'</div><div><b>'+hs((sd&&sd.title)||"Give the Lantern its mailbox")+'</b>'
+      +'<span>'+hs((sd&&sd.why)||"Once it has its app password it reads and answers the house's mail and writes to places for you. About five minutes.")+'</span></div></div>'
+      +'<div class="acts">'+(lk?'<a class="btn" href="'+esc(lk.href)+'" data-dlink="'+ds.indexOf(sd)+'"'+(lk.url?' target="_blank" rel="noopener"':'')+'>'+esc((sd.link&&sd.link.label)||"Open the guide")+(lk.url?' <span aria-hidden="true">↗</span>':'')+'</a>'
+        :'<button type="button" class="btn ghost" data-mroom="1">Open the mail room</button>')+'</div></div>';
+  }
+  var on=m.on!==false,o=m.outreach&&typeof m.outreach==="object"?m.outreach:null,out="";
+  if(o){var tg=hNum(o.target)||50,ct=hNum(o.contacted)||0,bits=[];
+    if(hNum(o.replied)!=null)bits.push(fnum(hNum(o.replied))+" replied");if(hNum(o.working)!=null)bits.push(fnum(hNum(o.working))+" working together");if(hNum(o.places)!=null)bits.push(fnum(hNum(o.places))+" found");
+    out='<div class="mout">'+hOutRing(ct/tg,hOutCol(j))+'<p><b>'+esc(fnum(ct))+' of '+esc(fnum(tg))+'</b> places written to'+(bits.length?'<span>'+esc(bits.join(" · "))+'</span>':'')+'</p></div>'}
+  var last=(Array.isArray(m.last)?m.last:[]).filter(function(x){return x&&typeof x==="object"&&String(x.title||"").trim()}).sort(function(a,b){return String(b.at||"").localeCompare(String(a.at||""))}).slice(0,3);
+  var lastH=last.length?'<div class="mlast" aria-label="The last things it did">'+last.map(function(x){var d=hParse(x.at);
+    var n=d?hDaysFrom(d):null;return '<div class="ml"><code>'+esc(d?(n===0?hClock(d):n===-1?"yesterday":hShort(d)):"lately")+'</code><span>'+hs(x.title)+'</span></div>'}).join("")+'</div>':'';
+  return head+'<div class="mailc'+(on?'':' off')+'" id="h-mailc"><div class="mtop"><span class="state '+(on?'good':'wait')+'" id="h-mail-state"><i></i>'
+      +(on?'Mail is on: the Lantern reads and writes':'Mail is off: the Lantern reads, and writes nothing')+'</span></div>'
+    +hMailNums(m.today)+hTenHtml(hMailTen(m))+out+lastH+door+'</div>';
+}
+function hMailPaint(j,prev,arrive){
+  var box=$("h-mail");if(!box)return;
+  var has=!!j&&(Object.prototype.hasOwnProperty.call(j,"mail")||!!hWhy(j,"mail"));
+  box.hidden=!has;if(!has){box.innerHTML="";return}
+  var pt=prev&&prev.mail&&typeof prev.mail==="object"&&prev.mail.today||{},t=j.mail&&typeof j.mail==="object"&&j.mail.today||{};
+  box.innerHTML=hMailHtml(j);
+  /* the numbers count from where they stood (from nothing on arrival) */
+  box.querySelectorAll("[data-mk]").forEach(function(el){var k=el.dataset.mk,v=hNum(t[k]);if(v==null)return;var was=hNum(pt[k]);
+    hCount(el,v,function(x){return fnum(Math.round(x))},arrive?900:700,arrive?0:(was==null?v:was))});
+  if(arrive){box.querySelectorAll(".pips i").forEach(function(p,n){hAnim(p,[{opacity:0,transform:"scale(.3)"},{opacity:1,transform:"none"}],{duration:420,delay:500+n*55,easing:"cubic-bezier(.3,1.4,.5,1)",fill:"backwards"})});
+    var r=box.querySelector(".mout svg");if(r)hAnim(r,[{opacity:0,transform:"rotate(-40deg) scale(.85)"},{opacity:1,transform:"none"}],{duration:800,delay:600,easing:H_EASE,fill:"backwards"})}
+}
+
 /* ---- 9. ideas to grow: Go lights the card and sends it on, Not now slides it
    aside, Never lets it fade ---- */
 var H_WHO={lantern:["gold","The Lantern does it"],build:["blue","A build for Claude"],you:["wait","You do it"]};
@@ -2383,13 +2656,50 @@ function hAskBox(){
   return hHead("Ask the Lantern",null,false)+'<div class="hask"><div class="lant-in"><textarea id="h-ask-text" rows="2" placeholder="Give an order or ask a question" aria-label="Ask the Lantern"></textarea><button class="go" id="h-ask-go" type="button">Ask</button></div>'
     +'<div class="sugs" role="group" aria-label="Suggested orders">'+H_SUGS.map(function(s,i){return '<button type="button" data-sug="'+i+'">'+esc(s)+'</button>'}).join("")+'</div></div>';
 }
+/* this month's paid use in one calm phrase (spend.roi, round four), said
+   only when something was paid for: "Paid thinking this month: 1.20 dollars,
+   3 uses, 2 helped" */
+function hPaidWords(sp){
+  var r=sp&&sp.roi&&typeof sp.roi==="object"?sp.roi:null,n=r?hNum(r.calls):null;if(!n||n<1)return "";
+  var usd=hNum(r.usd)||0,hp=hNum(r.helped)||0;
+  return "Paid thinking this month: "+usd.toFixed(2)+" dollars, "+fnum(n)+(n===1?" use":" uses")+", "+(hp?fnum(hp)+" helped":"none has helped yet");
+}
 function hEngine(j){
-  var bits=[],sp=j&&j.spend,tg=j&&j.voice&&j.voice.telegram;
-  if(sp&&hNum(sp.usd)!=null)bits.push("$"+hNum(sp.usd).toFixed(2)+(hNum(sp.capUsd)!=null?" of $"+hNum(sp.capUsd).toFixed(2):"")+" spent this month");
+  var bits=[],sp=j&&j.spend,tg=j&&j.voice&&j.voice.telegram,paid=hPaidWords(sp);
+  if(paid)bits.push(paid);
+  else if(sp&&hNum(sp.usd)!=null)bits.push("$"+hNum(sp.usd).toFixed(2)+(hNum(sp.capUsd)!=null?" of $"+hNum(sp.capUsd).toFixed(2):"")+" spent this month");
   if(tg&&typeof tg.linked==="boolean")bits.push(tg.linked?"Telegram linked":"Telegram not linked");
   return '<button type="button" class="heng" data-engine="1"><div class="hic">'+ICO.gear+'</div><div style="min-width:0"><b>The engine room</b><span class="s">The audit, the playbook, the instruments and every cycle in full</span>'
     +(bits.length?'<span class="s live">'+esc(bits.join(" · "))+'</span>':'')+'</div><span class="chev">'+ICO.chev+'</span></button>';
 }
+/* ---- 12. the Lantern's voice on Telegram (voice, round four) ----
+   Not linked: why it matters (voice.telegram.why, the house's own words)
+   and the way to the link, which lives in the engine room. Linked: one
+   quiet line, today's urgent messages and the evening's summary. */
+function hVoiceHtml(j){
+  var v=j&&j.voice&&typeof j.voice==="object"?j.voice:null,tg=v&&v.telegram&&typeof v.telegram==="object"?v.telegram:null;
+  if(j&&j.voice===null&&hWhy(j,"voice"))return '<button type="button" class="hvoice line" id="h-tg" data-tgopen="1"><span class="hic">'+ICO.plane+'</span><span class="x"><b>Telegram: its state could not be read just now</b><span>'+esc(hReason(hWhy(j,"voice")))+'</span></span><span class="chev">'+ICO.chev+'</span></button>';
+  if(!tg||typeof tg.linked!=="boolean")return "";
+  if(!tg.linked){
+    var why=String(tg.why||"so the Lantern can reach you when something is urgent").replace(/\s+/g," ").trim();
+    why=why.charAt(0).toUpperCase()+why.slice(1);if(!/[.!?]$/.test(why))why+=".";
+    return '<div class="hvoice" id="h-tg"><span class="hic">'+ICO.plane+'</span><div class="x"><b>Telegram is not linked</b><span id="h-tg-why">'+hs(why)+'</span></div>'
+      +'<button type="button" class="btn ghost gold" data-tglink="1">Link it</button></div>';
+  }
+  var today=Array.isArray(v.today)?v.today.filter(function(x){return x&&typeof x==="object"}):null;
+  var isD=function(x){return String(x.kind||"")==="digest"};
+  var urgent=today?today.filter(function(x){return !isD(x)&&x.sent===true}).length:null;
+  var missed=today?today.filter(function(x){return !isD(x)&&x.sent===false}).length:0;
+  var dsent=today?today.some(function(x){return isD(x)&&x.sent===true}):false;
+  var at=String(v.digestAt||"").trim(),wait=hNum(v.digestWaiting),bits=[];
+  if(urgent!=null)bits.push(urgent?fnum(urgent)+" urgent today":"nothing urgent today");
+  if(dsent)bits.push("tonight's summary went out");
+  else if(at)bits.push("tonight's summary at "+at+(wait!=null?(wait?" ("+fnum(wait)+" waiting)":" (nothing waiting yet)"):""));
+  var line=bits.length?"Telegram: "+bits.join(" · "):"Telegram is linked: the Lantern writes there when something is urgent";
+  return '<button type="button" class="hvoice line" id="h-tg" data-tgopen="1"><span class="hic good">'+ICO.plane+'</span><span class="x"><b id="h-tg-line">'+esc(line)
+    +(missed?' <em>· '+fnum(missed)+' did not get through</em>':'')+'</b><span class="sro">Opens the Voice card in the engine room.</span></span><span class="chev">'+ICO.chev+'</span></button>';
+}
+function hVoicePaint(j){var box=$("h-voice");if(!box)return;var h=hVoiceHtml(j);box.hidden=!h;box.innerHTML=h}
 function askFromHome(){
   var ta=$("h-ask-text"),text=(ta.value||"").trim();
   if(!text){try{ta.focus()}catch(x){}return toast("Write an order or a question first.")}
@@ -2472,13 +2782,14 @@ function hGoalChart(el,g,pr,hist){
 
 /* ---- drawing it: the parts, where they stand, and the read that feeds them ----
    On a phone one column in the order section 7 item 11 names, the goals
-   once, under the drawing whose rings they name; on a desk of 1200px or
-   more a cockpit of three zones: the drawing, the horizon, the goals and
-   the lamp on one side, the brief, the desk and Done in the middle, Next,
-   the ideas and Ask on the other. The parts are moved, never drawn twice,
-   so a reader of the screen meets them in the order he sees. */
-var H_ORDER=["h-face","h-goals","h-fail","h-brief","h-decide","h-next","h-done","h-giving","h-ideas","h-ask","h-engine"];
-var H_ZONES={a:["h-face","h-goals","h-giving"],b:["h-fail","h-brief","h-decide","h-done"],c:["h-next","h-ideas","h-ask","h-engine"]};
+   once, under the drawing whose rings they name, and the Lantern's mail
+   after Done (section 11.4); on a desk of 1200px or more a cockpit of three
+   zones: the drawing, the horizon, the goals and the lamp on one side, the
+   brief, the desk, Done and the mail in the middle, Next, the ideas and Ask
+   on the other. The parts are moved, never drawn twice, so a reader of the
+   screen meets them in the order he sees. */
+var H_ORDER=["h-face","h-goals","h-fail","h-brief","h-decide","h-next","h-done","h-mail","h-voice","h-giving","h-ideas","h-ask","h-engine"];
+var H_ZONES={a:["h-face","h-goals","h-giving"],b:["h-fail","h-brief","h-decide","h-done","h-mail","h-voice"],c:["h-next","h-ideas","h-ask","h-engine"]};
 var H_MQ=null;try{H_MQ=window.matchMedia("(min-width:1200px)")}catch(e){H_MQ=null}
 function hPlace(){
   var el=$("s-home");if(!el||!el.dataset.built)return;
@@ -2497,6 +2808,8 @@ function hSkel(){
     +'<div class="hdata" id="h-brief"><div class="card brief"><div class="sk" style="width:40%"></div><div class="sk" style="height:18px;margin-top:16px"></div><div class="sk" style="height:18px;margin-top:8px;width:92%"></div><div class="sk" style="height:18px;margin:8px 0 18px;width:70%"></div></div></div>'
     +'<section class="hdata" id="h-decide">'+hHead("Your decisions",null,false)+skel(2)+'</section>'
     +'<section class="hdata" id="h-next"></section><section class="hdata" id="h-done"></section>'
+    +'<section class="hdata" id="h-mail" hidden></section>'
+    +'<section class="hdata" id="h-voice" hidden aria-label="Telegram"></section>'
     +'<section class="hdata" id="h-giving"></section><section class="hdata" id="h-ideas"></section>'
     +'<section id="h-ask">'+hAskBox()+'</section><div id="h-engine">'+hEngine(null)+'</div>'
     +'</div><div class="hz" id="hz-b"></div><div class="hz" id="hz-c"></div></div>';
@@ -2524,6 +2837,8 @@ function paintHome(prev,arrive,opts){
   var fn=hFlipPrep($("h-next"),".hnx[data-nid]","data-nid");
   $("h-next").innerHTML=hNext(j);hFlipPlay($("h-next"),".hnx[data-nid]","data-nid",fn,!arrive);
   hDonePaint(j);
+  hMailPaint(j,prev,arrive);
+  hVoicePaint(j);
   hGivingPaint(j,prev,arrive);
   var fi=hFlipPrep($("h-ideas"),".hidea[data-iid]","data-iid");
   $("h-ideas").innerHTML=hIdeas(j);hFlipPlay($("h-ideas"),".hidea[data-iid]","data-iid",fi,!arrive);
@@ -2531,7 +2846,7 @@ function paintHome(prev,arrive,opts){
   $("h-engine").innerHTML=hEngine(j);
   hDots(j);
   /* on arrival the parts rise in, one after another, under the drawing */
-  if(arrive)["h-goals","h-brief","h-decide","h-next","h-done","h-giving","h-ideas","h-ask","h-engine"].forEach(function(id,n){var e=$(id);if(e&&e.getClientRects().length)hAnim(e,[{opacity:0,transform:"translateY(12px)"},{opacity:1,transform:"none"}],{duration:600,delay:260+n*70,easing:H_EASE,fill:"backwards"})});
+  if(arrive)["h-goals","h-brief","h-decide","h-next","h-done","h-mail","h-voice","h-giving","h-ideas","h-ask","h-engine"].forEach(function(id,n){var e=$(id);if(e&&e.getClientRects().length)hAnim(e,[{opacity:0,transform:"translateY(12px)"},{opacity:1,transform:"none"}],{duration:600,delay:260+n*70,easing:H_EASE,fill:"backwards"})});
   hLoopsSync();hNowTick();
 }
 function paintHomeFail(r){
@@ -2609,7 +2924,7 @@ function hPost(body,b,fx){
     if(!thinking&&(!r.ok||j.ok===false)){back();toast(lw(j.message||j.error)||"It refused.",true);return false}
     HOME.cf=null;
     var said=thinking?"The Lantern is already thinking.":(lw(j.message)||H_SAID[body.action]||(body.action==="idea"?(body.choice==="go"?"Going ahead.":body.choice==="later"?"Set aside for now.":"Set aside for good."):"Done."));
-    Object.keys(C).forEach(function(k){if(k==="home"||/^soul:/.test(k))delete C[k]});LOADED.engine=false;
+    Object.keys(C).forEach(function(k){if(k==="home"||/^soul:/.test(k))delete C[k]});LOADED.engine=false;LOADED.mail=false;
     var leave=fx&&fx.leave?fx.leave():Promise.resolve();
     return Promise.all([homeQ(true),leave]).then(function(a){
       hApply(a[0],{went:fx&&fx.went});hLiveSync();
@@ -2630,6 +2945,9 @@ function wireHome(el){
     if((a=t.closest("[data-hretry]")))return void drawHome(true);
     if((a=t.closest("[data-jump]"))){var to=$(a.dataset.jump);if(to)try{to.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(x){to.scrollIntoView()}return}
     if((a=t.closest("[data-engine]")))return void show("engine");
+    if((a=t.closest("[data-mroom]")))return void show("mail");
+    if((a=t.closest("[data-tglink],[data-tgopen]")))return void goRoom("engine","soul-voice");
+    if((a=t.closest("[data-dlroom]"))){e.preventDefault();return void show(a.dataset.dlroom)}
     if((a=t.closest("[data-sug]"))){var ta=$("h-ask-text");ta.value=H_SUGS[+a.dataset.sug]||"";try{ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}catch(x){}return}
     if((a=t.closest("#h-ask-go")))return void askFromHome();
     if(!j)return;
@@ -2646,9 +2964,10 @@ function wireHome(el){
       return hSteps(d,lk)}
     if((a=t.closest("[data-draft]"))){var dd=(hList(j,"decisions")||[])[+a.dataset.draft];if(dd)hDraftSheet(dd,+a.dataset.draft);return}
     if((a=t.closest("[data-dcopy]"))){var dc=(hList(j,"decisions")||[])[+a.dataset.dcopy],dr=hDraft(dc);if(dr)hCopy(dr.text,a);return}
-    if((a=t.closest("[data-dopt]"))){var q=a.dataset.dopt.split("|"),d1=(hList(j,"decisions")||[])[+q[0]],o=d1&&(Array.isArray(d1.options)?d1.options:[]).filter(function(x){return x&&x.id!=null&&x.label})[+q[1]];
+    if((a=t.closest("[data-dopt]"))){var q=a.dataset.dopt.split("|"),d1=(hList(j,"decisions")||[])[+q[0]],o=d1&&hOpts(d1)[+q[1]];
       if(!d1||!o)return;
-      if(o.confirm){HOME.cf={k:"d",id:String(d1.id),o:String(o.id)};return hRepaint("[data-dyes]")}
+      /* a letter's Send always asks first, inside its card: an email cannot be unsent */
+      if(o.confirm||(hLetter(d1)&&String(o.id)==="send")){HOME.cf={k:"d",id:String(d1.id),o:String(o.id)};return hRepaint("[data-dyes]")}
       return void hPost({action:"decide",id:d1.id,option:o.id},a,hCardFx(a))}
     if((a=t.closest("[data-dyes]"))){var cf=HOME.cf,d2=cf&&cf.k==="d"&&(hList(j,"decisions")||[]).filter(function(x){return String(x.id)===cf.id})[0],o2=d2&&hOptById(d2,cf.o);
       if(d2&&o2)hPost({action:"decide",id:d2.id,option:o2.id},a,hCardFx(a));return}
@@ -3117,6 +3436,218 @@ function drawReaders(force){
   }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The inbox could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
 }
 
+/* ================= THE MAIL ROOM =================
+   LANTERN.md 11.4: what the Lantern does with the house's mail, read from
+   GET /api/soul?view=mail. At the top the switch (on, it reads and writes;
+   off, it still reads and writes nothing; turning it off asks first), the
+   caps, the first ten and today's numbers. Then three tabs: the inbox it
+   handled, each thread opening its summary and the reply it sent; the
+   places it writes to, filtered by status and country, each with its
+   source, the page it was found on and its history; and do not contact,
+   with add, and remove after asking. Nothing personal reaches a URL: the tab
+   and the filters live in this page alone, an address goes to the house only
+   inside a POST body, and an address is shown as text, never as a link.
+   Only https links are drawn, opened with no referrer. Every word is the
+   house's or its correspondents' own, escaped; what was written to someone
+   is shown exactly as it went. */
+var MAIL={tab:"inbox",fa:"all",fs:"all",fc:"all",cf:null,r:null};
+var mailQ=function(force){
+  var c=C["soul:mail"];
+  if(!force&&c&&Date.now()-c.at<TTL)return Promise.resolve(c.v);
+  return get("/api/soul?view=mail").then(function(r){if(r&&r.ok&&r.j&&r.j.ok!==false)C["soul:mail"]={at:Date.now(),v:r};return r},
+    function(){return {ok:false,status:0,j:null,net:true}});
+};
+/* what the Lantern did with a thread: [pill, word, icon, the sentence] */
+var M_ACT={answered:["good","answered","ok","The Lantern answered it."],"for-you":["gold","for you","person","It is for you: it waits on Home, and stays unread and starred in Gmail."],
+  filed:["","filed","ring","Filed quietly; nothing was sent."],waiting:["wait","waiting","cal","It waits: the Lantern has not answered it yet."]};
+var M_ACTS=["for-you","answered","waiting","filed"];
+/* where a place stands: [pill, word] */
+var M_ST={"new":["","new"],written:["blue","written to"],followed:["blue","followed up"],replied:["good","replied"],working:["gold","working together"],declined:["","declined"],dnc:["","do not contact"]};
+var M_STS=["new","written","followed","replied","working","declined","dnc"];
+var M_SRC={osm:"OpenStreetMap",openstreetmap:"OpenStreetMap",wikidata:"Wikidata",website:"its own website",site:"its own website",search:"a web search",web:"a web search",inbox:"a message it sent the house"};
+function mWords(s){var t=sWords(s);return t?t.charAt(0).toUpperCase()+t.slice(1):""}
+function mAct(t){return M_ACT[String(t&&t.action||"").toLowerCase()]||["",sWords(t&&t.action)||"read","mail","The Lantern read it."]}
+function mSt(p){return M_ST[String(p&&p.status||"").toLowerCase()]||["",sWords(p&&p.status)||"found"]}
+/* an https address and nothing else, for a place's website and its evidence */
+function mHttps(u){var s=typeof u==="string"?u.trim():"";return /^https:\/\/[^\s"'<>\\]+$/i.test(s)?s:null}
+function mHost(u){var m=/^https:\/\/([^\/?#]+)([^?#]*)/i.exec(u||"");if(!m)return u;var p=m[2].replace(/\/+$/,"");return m[1].replace(/^www\./i,"")+(p&&p.length<=28?p:p?p.slice(0,26)+"…":"")}
+function mWhen(at){var d=hParse(at),n=d?hDaysFrom(d):null;return d?(n===0?hClock(d)+" UTC":n===-1?"yesterday":hShort(d)):""}
+function mObjs(v){return Array.isArray(v)?v.filter(function(x){return x&&typeof x==="object"}):null}
+function drawMail(force){
+  var el=$("s-mail");MAIL.cf=null;
+  if(!el.dataset.built){el.innerHTML=BACK+'<div id="mail-top"><div class="msw"><div class="sk" style="height:44px;margin-top:10px"></div></div></div><div id="mail-tabs"></div><div id="mail-pane" role="tabpanel">'+skel(3)+'</div>';el.dataset.built="1";wireMail(el)}
+  return mailQ(force).then(function(r){if(r&&r.locked)return;MAIL.r=r;mailPaint()});
+}
+function mailData(){var r=MAIL.r;return r&&r.ok&&r.j&&typeof r.j==="object"&&r.j.ok!==false?r.j:null}
+function mailPaint(){
+  var d=mailData();if(!$("mail-top"))return;
+  if(!d){var r=MAIL.r||{},e=String((r.j&&(r.j.error||r.j.message))||"");
+    var head=r.net?"Could not reach the house.":(r.status===404||/unknown view|no such view/i.test(e))?"The mail cannot be read from this deployment yet.":"The mail could not be read just now.";
+    $("mail-top").innerHTML='<div class="hfail" style="margin-top:12px"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>'+esc(head)+'</b><span>'+esc(r.net?"Nothing is lost. Try again in a moment.":hReason(e))+'</span><div class="acts"><button type="button" class="btn ghost" data-mretry="1">Try again</button></div></div></div>';
+    $("mail-tabs").innerHTML="";$("mail-pane").innerHTML="";return}
+  $("mail-top").innerHTML=mailTopHtml(d);
+  $("mail-tabs").innerHTML=mailTabsHtml(d);
+  mailPanePaint(d);
+}
+function mailPanePaint(d){
+  var p=$("mail-pane");if(!p)return;d=d||mailData();if(!d)return;
+  p.setAttribute("aria-labelledby","mail-tab-"+MAIL.tab);
+  p.innerHTML=MAIL.tab==="places"?mailPlacesHtml(d):MAIL.tab==="dnc"?mailDncHtml(d):mailInboxHtml(d);
+}
+/* the switch, the caps, the first ten and today */
+function mailTopHtml(d){
+  var m=d.mail&&typeof d.mail==="object"?d.mail:{},reason=typeof m.reason==="string"?m.reason.trim():"";
+  if(m.configured===false){
+    var sd=HOME.data?hMailSetup(HOME.data):null,lk=sd&&hLink(sd.link);
+    return '<div class="msw off"><div class="mnone"><div class="hic">'+ICO.mail+'</div><div><b>No mailbox yet</b><span>'+hs(reason||"The Lantern has no app password yet, so it reads nothing and sends nothing.")+'</span></div></div>'
+      +(lk?'<div class="acts"><a class="btn" href="'+esc(lk.href)+'" data-msetup="1"'+(lk.url?' target="_blank" rel="noopener"':'')+'>'+esc((sd.link&&sd.link.label)||"Open the guide")+(lk.url?' <span aria-hidden="true">↗</span>':'')+'</a></div>':'')+'</div>';
+  }
+  var on=m.on!==false,cf=MAIL.cf&&MAIL.cf.k==="off",caps=m.caps&&typeof m.caps==="object"?m.caps:{},n=function(v){v=hNum(v);return v==null?"·":fnum(v)};
+  var sub=reason||(on?"It answers readers, files the rest and writes to places, within its caps.":"Reading goes on: it still sorts the inbox, and what is yours still reaches Home.");
+  return '<div class="msw'+(on?'':' off')+'" id="mail-sw">'
+    +'<button type="button" class="mswb" role="switch" aria-checked="'+(on?"true":"false")+'" data-msw="1"'+(cf?' hidden':'')+'><span class="mswt"><b>'+(on?"Mail is on: the Lantern reads and writes":"Mail is off: the Lantern reads, and writes nothing")+'</b><span>'+hs(sub)+'</span></span><span class="sw" aria-hidden="true"></span></button>'
+    +(cf?hConfirm("Turn mail off? The Lantern stops writing at once: no letter, reply or follow-up goes out. It keeps reading and sorting the inbox, and what is for you still reaches Home.","Yes, turn it off","mswyes","mswno","danger"):'')
+    +'<div class="mcaps">Each day at most <b>'+n(caps.outreach)+' first letters</b>, <b>'+n(caps.replies)+' replies</b> and <b>'+n(caps.followups)+' follow-ups</b>: <b>'+n(caps.total)+' emails in all</b>. One no is final.</div>'
+    +hTenHtml(hMailTen(m))
+    +hMailNums(m.today)+'</div>';
+}
+function mailTabsHtml(d){
+  var th=mObjs(d.threads),pl=mObjs(d.places),dn=mObjs(d.dnc);
+  return '<div class="seg tabs" role="tablist" aria-label="The mail">'+[["inbox","Inbox",th],["places","Places",pl],["dnc","Do not contact",dn]].map(function(t){var on=MAIL.tab===t[0];
+    return '<button type="button" role="tab" id="mail-tab-'+t[0]+'" aria-controls="mail-pane" aria-selected="'+(on?"true":"false")+'" class="'+(on?"on":"")+'" data-mtab="'+t[0]+'">'+esc(t[1])+'<span class="tn">'+(t[2]?t[2].length:"")+'</span></button>'}).join("")+'</div>';
+}
+function mailFail(what,why){return '<div class="hfail"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>'+esc(what)+'</b><span>'+esc(hReason(why))+'</span></div></div>'}
+function mailChips(attr,cur,list){
+  return list.map(function(c){var on=cur===c[0];return '<button type="button" data-'+attr+'="'+esc(c[0])+'" aria-pressed="'+(on?"true":"false")+'" class="'+(on?"on":"")+'">'+esc(c[1])+(c[2]!=null?'<span class="n">'+c[2]+'</span>':'')+'</button>'}).join("");
+}
+/* the inbox: newest first, what it did with each, for him first in the filters */
+function mailInboxHtml(d){
+  var th=mObjs(d.threads);
+  if(!th)return mailFail("The inbox could not be read just now.",hWhy(d,"threads"));
+  if(!th.length)return '<div class="empty">Nothing has arrived yet. What the Lantern reads, and what it does with each message, lands here.</div>';
+  var cnt={};th.forEach(function(t){var a=String(t.action||"").toLowerCase();cnt[a]=(cnt[a]||0)+1});
+  if(MAIL.fa!=="all"&&!cnt[MAIL.fa])MAIL.fa="all";
+  var rows=th.map(function(t,i){return [t,i]}).filter(function(p){return MAIL.fa==="all"||String(p[0].action||"").toLowerCase()===MAIL.fa})
+    .sort(function(a,b){return String(b[0].at||"").localeCompare(String(a[0].at||""))});
+  return '<div class="mfil slide" role="group" aria-label="Show">'+mailChips("mfa",MAIL.fa,[["all","All",th.length]].concat(M_ACTS.filter(function(a){return cnt[a]}).map(function(a){return [a,mWords(M_ACT[a][1]),cnt[a]]})))+'</div>'
+    +'<div class="list" id="mail-threads">'+rows.map(function(p){var t=p[0],A=mAct(t),who=String(t.fromName||"").trim()||String(t.from||"").trim()||"Someone";
+      return '<button type="button" class="row tap" data-thread="'+p[1]+'"><div class="ic">'+ICO[A[2]]+'</div><div class="t"><b>'+esc(String(t.subject||"").trim()||"(no subject)")+'</b><span>'+esc(who+" · "+mWhen(t.at)+(t.kind?" · "+sWords(t.kind):""))+'</span></div>'
+        +'<div class="r"><span class="pill '+A[0]+'">'+esc(A[1])+'</span></div></button>'}).join("")+'</div>';
+}
+/* round four: a message the judge (Jev) sorted on its own, no writing model
+   reading it, says so, with how sure the judge was (judged {by, p}) */
+function mJudged(t){
+  var j=t&&t.judged&&typeof t.judged==="object"?t.judged:null;
+  if(!j||!/^(jev|judge)$/i.test(String(j.by||"").trim()))return "";
+  var p=hNum(j.p);if(p!=null&&p>1&&p<=100)p=p/100;
+  return "Sorted by the judge"+(p!=null&&p>=0&&p<=1?" ("+Math.round(p*100)+" percent sure)":"");
+}
+function mailThreadSheet(t){
+  var A=mAct(t),rp=t.reply&&typeof t.reply==="object"&&String(t.reply.text||"").trim()?t.reply:null,who=String(t.fromName||"").trim()||"Someone";
+  sheet('<div class="msh"><h2>'+esc(String(t.subject||"").trim()||"(no subject)")+'</h2>'
+    +'<p class="sub">From '+esc(who)+(t.from?' · <span class="ad">'+esc(t.from)+'</span>':'')+(mWhen(t.at)?' · '+esc(mWhen(t.at)):'')+'</p>'
+    +'<div class="tags"><span class="pill '+A[0]+'">'+esc(A[1])+'</span>'+(t.kind?'<span class="pill">'+esc(sWords(t.kind))+'</span>':'')+'</div>'
+    +'<h3>What the Lantern did</h3><p class="small" style="margin:0;color:var(--text)">'+esc(A[3])+'</p>'
+    +(mJudged(t)?'<p class="mjudge" id="mail-judged">'+esc(mJudged(t))+'</p>':'')
+    +(String(t.summary||"").trim()?'<h3>In short</h3><div class="msg" id="mail-summary">'+esc(t.summary)+'</div>':'')
+    +(rp?'<h3>The reply it sent</h3><div class="msg" id="mail-reply">'+esc(rp.text)+'</div>'+(mWhen(rp.at)?'<p class="sub" style="margin:8px 0 0">Sent '+esc(mWhen(rp.at))+'.</p>':'')
+      :'<h3>The reply</h3><p class="small muted" style="margin:0">'+(String(t.action||"").toLowerCase()==="answered"?"The reply itself is no longer kept; the summary stays.":"No reply was sent.")+'</p>')
+    +'<div class="acts"><button class="btn" id="cl">Close</button></div></div>',true);
+}
+/* the places: in the order the Lantern writes to them, filtered by where they
+   stand and by country; the outreach toward its target above them */
+function mailPlacesHtml(d){
+  var ps=mObjs(d.places),k=d.counts&&typeof d.counts==="object"?d.counts:{},n=function(v){v=hNum(v);return v==null?"·":fnum(v)};
+  if(!ps)return mailFail("The places could not be read just now.",hWhy(d,"places"));
+  var hm=HOME.data&&HOME.data.mail&&HOME.data.mail.outreach||{},tg=hNum(hm.target)||50,ct=hNum(k.contacted);
+  var strip='<div class="mstrip" role="list" aria-label="The places">'+[["places","found"],["contacted","written to"],["replied","replied"],["working","working together"],["declined","declined"],["dnc","do not contact"]].map(function(x){
+    return '<div class="mn" role="listitem"><b>'+n(k[x[0]])+'</b><span>'+esc(x[1])+'</span></div>'}).join("")+'</div>'
+    +'<div class="mprog" role="img" aria-label="'+esc((ct==null?"None":fnum(ct))+" of "+tg+" places written to")+'" style="--gc:'+(HOME.data?hOutCol(HOME.data):"#E9C86A")+'"><i style="transform:scaleX('+(ct==null?0:+Math.min(1,ct/tg).toFixed(4))+')"></i></div>';
+  if(!ps.length)return strip+'<div class="empty">No place is found yet. The Lantern looks for up to 20 a day: mosques, schools, student societies and educators that publish an address for being contacted.</div>';
+  var sc={},cc={};ps.forEach(function(p){var s=String(p.status||"").toLowerCase();sc[s]=(sc[s]||0)+1;var c=String(p.country||"").trim();if(c)cc[c]=(cc[c]||0)+1});
+  if(MAIL.fs!=="all"&&!sc[MAIL.fs])MAIL.fs="all";if(MAIL.fc!=="all"&&!cc[MAIL.fc])MAIL.fc="all";
+  var countries=Object.keys(cc).sort();
+  var rows=ps.map(function(p,i){return [p,i]}).filter(function(x){return (MAIL.fs==="all"||String(x[0].status||"").toLowerCase()===MAIL.fs)&&(MAIL.fc==="all"||String(x[0].country||"").trim()===MAIL.fc)});
+  return strip+'<div class="mfil slide" role="group" aria-label="Where they stand">'+mailChips("mfs",MAIL.fs,[["all","All",ps.length]].concat(M_STS.filter(function(s){return sc[s]}).map(function(s){return [s,mWords(M_ST[s][1]),sc[s]]})))+'</div>'
+    +(countries.length>1?'<div class="mfil"><select class="fi" data-mfc="1" aria-label="Country"><option value="all">Every country</option>'+countries.map(function(c){return '<option value="'+esc(c)+'"'+(MAIL.fc===c?' selected':'')+'>'+esc(c)+' ('+cc[c]+')</option>'}).join("")+'</select></div>':'')
+    +(rows.length?'<div class="list" id="mail-places">'+rows.map(function(x){var p=x[0],S=mSt(p),where=[String(p.city||"").trim(),String(p.country||"").trim()].filter(Boolean).join(", ");
+      return '<button type="button" class="row tap" data-place="'+x[1]+'"><div class="ic">'+ICO.target+'</div><div class="t"><b>'+esc(String(p.name||"").trim()||"A place")+'</b><span>'+esc([sWords(p.kind),where].filter(Boolean).join(" · "))+'</span></div>'
+        +'<div class="r"><span class="pill '+S[0]+'">'+esc(S[1])+'</span></div></button>'}).join("")+'</div>'
+      :'<div class="empty">No place matches these filters.</div>');
+}
+function mailPlaceSheet(p){
+  var S=mSt(p),web=mHttps(p.website),ev=mHttps(p.evidence),where=[String(p.city||"").trim(),String(p.country||"").trim()].filter(Boolean).join(", "),sc=hNum(p.score);
+  var hist=mObjs(p.history)||[];hist=hist.slice().sort(function(a,b){return String(b.at||"").localeCompare(String(a.at||""))});
+  var kv=function(k,v){return '<div class="kv"><em>'+esc(k)+'</em><span>'+v+'</span></div>'};
+  var out=function(u,txt){return '<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(txt)+' <span aria-hidden="true">↗</span></a>'};
+  sheet('<div class="msh"><h2>'+esc(String(p.name||"").trim()||"A place")+'</h2><p class="sub">'+esc([mWords(p.kind),where].filter(Boolean).join(" · "))+'</p>'
+    +'<div class="tags"><span class="pill '+S[0]+'">'+esc(S[1])+'</span>'+(sc!=null?'<span class="pill">usefulness '+esc(fnum(sc))+'</span>':'')+'</div>'
+    +'<h3>Where it was found</h3>'
+    +kv("Website",web?out(web,mHost(web)):'<span class="muted">'+(p.website?"not a secure address, so not opened from here":"none")+'</span>')
+    +kv("Writes to",String(p.email||"").trim()?'<span class="ad">'+esc(p.email)+'</span>':'<span class="muted">no published address</span>')
+    +kv("Found through",esc(M_SRC[String(p.source||"").toLowerCase()]||mWords(p.source)||"·"))
+    +kv("The evidence",ev?out(ev,"the page it was found on"):'<span class="muted">'+(p.evidence?"not a secure address, so not opened from here":"none")+'</span>')
+    +'<h3>Its history</h3>'+(hist.length?'<ul class="hist">'+hist.map(function(h){return '<li><code>'+esc(mWhen(h.at)||"·")+'</code><span>'+esc(h.what||"")+'</span></li>'}).join("")+'</ul>':'<p class="small muted" style="margin:0">Nothing has happened with it yet.</p>')
+    +'<div class="acts"><button class="btn" id="cl">Close</button></div></div>',true);
+}
+/* do not contact: anyone who said no, and anyone he adds; one no is final */
+function mailDncHtml(d){
+  var ds=mObjs(d.dnc),cf=MAIL.cf&&MAIL.cf.k==="rm"?MAIL.cf:null;
+  var form='<form class="mdadd" data-mdadd="1" autocomplete="off" novalidate><input class="fi" id="mail-dnc-in" type="text" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" maxlength="254" placeholder="An address or a domain" aria-label="An address or a domain never to write to"/><button type="submit" class="btn">Add</button></form>';
+  if(!ds)return form+mailFail("The list could not be read just now.",hWhy(d,"dnc"));
+  if(!ds.length)return form+'<div class="empty">No one is on the list. Anyone who says no, unsubscribes or complains is added at once, and never written to again.</div>';
+  return form+'<div class="list" id="mail-dnc">'+ds.map(function(x,i){var on=cf&&cf.a===String(x.address);
+    return '<div class="mdrow" data-mdi="'+i+'"><div class="mdt"><div class="t"><b>'+esc(x.address||"")+'</b><span>'+esc(["added "+(mWhen(x.at)||"before")].concat(String(x.why||"").trim()?[x.why]:[]).join(" · "))+'</span></div>'
+      +(on?'':'<button type="button" class="btn ghost" data-mdrm="'+i+'">Remove</button>')+'</div>'
+      +(on?hConfirm("Take "+String(x.address||"this address")+" off the list? The Lantern may write to it again, within its rules.","Yes, take it off","mdyes","mdno","danger"):'')+'</div>'}).join("")+'</div>';
+}
+/* one POST from the room: the house's own words come back as the toast, and
+   the room and Home are read again */
+function mailPost(body,b,said){
+  var was=b?b.innerHTML:"";if(b){b.disabled=true;b.textContent="Working…"}
+  return post("/api/soul",body).then(function(r){if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false){if(b&&b.isConnected){b.disabled=false;b.innerHTML=was}toast(lw(j.message||j.error)||"It refused.",true);return false}
+    MAIL.cf=null;delete C["soul:mail"];delete C.home;HLIVE.at=0;
+    toast(lw(j.message)||said||"Done.");
+    return drawMail(true).then(function(){return true});
+  },function(){if(b&&b.isConnected){b.disabled=false;b.innerHTML=was}toast("Could not reach the house.",true);return false});
+}
+/* an address or a domain, as he typed it: trimmed, in small letters, a domain without its @ */
+function mailAddr(v){var a=String(v||"").trim().toLowerCase().replace(/^@/,"");
+  if(/^[^\s@<>"'(),;:\\]+@(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(a)||/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(a))return a;return null}
+function wireMail(el){
+  el.addEventListener("click",function(e){
+    var t=e.target;if(!t||!t.closest)return;var a,d=mailData();
+    if((a=t.closest("[data-mretry]")))return void drawMail(true);
+    if(!d)return;
+    if((a=t.closest("[data-msetup]"))){var sd=HOME.data?hMailSetup(HOME.data):null,lk=sd&&hLink(sd.link);if(lk&&lk.room){e.preventDefault();show(lk.href)}if(sd&&lk)hSteps(sd,lk);return}
+    if((a=t.closest("[data-msw]"))){var on=a.getAttribute("aria-checked")==="true";
+      if(on){MAIL.cf={k:"off"};$("mail-top").innerHTML=mailTopHtml(d);var y=el.querySelector("[data-mswyes]");if(y)try{y.focus({preventScroll:true})}catch(x){y.focus()}return}
+      return void mailPost({action:"mail-switch",on:true},a,"Mail is on.")}
+    if((a=t.closest("[data-mswno]"))){MAIL.cf=null;$("mail-top").innerHTML=mailTopHtml(d);var s=el.querySelector("[data-msw]");if(s)try{s.focus({preventScroll:true})}catch(x){}return}
+    if((a=t.closest("[data-mswyes]")))return void mailPost({action:"mail-switch",on:false},a,"Mail is off. Reading goes on.");
+    if((a=t.closest("[data-mtab]"))){if(MAIL.tab===a.dataset.mtab)return;MAIL.tab=a.dataset.mtab;MAIL.cf=MAIL.cf&&MAIL.cf.k==="off"?MAIL.cf:null;$("mail-tabs").innerHTML=mailTabsHtml(d);mailPanePaint(d);return}
+    if((a=t.closest("[data-mfa]"))){MAIL.fa=a.dataset.mfa;return mailPanePaint(d)}
+    if((a=t.closest("[data-mfs]"))){MAIL.fs=a.dataset.mfs;return mailPanePaint(d)}
+    if((a=t.closest("[data-thread]"))){var th=(Array.isArray(d.threads)?d.threads:[])[+a.dataset.thread];if(th&&typeof th==="object")mailThreadSheet(th);return}
+    if((a=t.closest("[data-place]"))){var pl=(Array.isArray(d.places)?d.places:[])[+a.dataset.place];if(pl&&typeof pl==="object")mailPlaceSheet(pl);return}
+    if((a=t.closest("[data-mdrm]"))){var x=(Array.isArray(d.dnc)?d.dnc:[])[+a.dataset.mdrm];if(!x)return;MAIL.cf={k:"rm",a:String(x.address)};mailPanePaint(d);var yy=el.querySelector("[data-mdyes]");if(yy)try{yy.focus({preventScroll:true})}catch(z){}return}
+    if((a=t.closest("[data-mdno]"))){MAIL.cf=null;return mailPanePaint(d)}
+    if((a=t.closest("[data-mdyes]"))){var cf=MAIL.cf;if(cf&&cf.k==="rm")mailPost({action:"dnc-remove",address:cf.a},a,"Taken off the list.");return}
+  });
+  el.addEventListener("change",function(e){var s=e.target&&e.target.closest&&e.target.closest("[data-mfc]");if(!s)return;MAIL.fc=s.value||"all";mailPanePaint();var n=el.querySelector("[data-mfc]");if(n)try{n.focus({preventScroll:true})}catch(x){}});
+  el.addEventListener("submit",function(e){var f=e.target&&e.target.closest&&e.target.closest("[data-mdadd]");if(!f)return;e.preventDefault();
+    var inp=f.querySelector("input"),addr=mailAddr(inp&&inp.value),b=f.querySelector("button");
+    if(!addr){toast("Write an address such as name@example.org, or a domain such as example.org.",true);try{inp.focus()}catch(x){}return}
+    mailPost({action:"dnc-add",address:addr},b,"Added. The Lantern never writes to it.").then(function(okd){if(okd===false&&inp&&inp.isConnected)inp.value=addr})});
+}
+function mailHubStat(){var m=HOME.data&&HOME.data.mail;
+  if(!m||typeof m!=="object")return ["·","the house's mail, handled"];
+  if(m.configured===false)return ["·","no mailbox yet"];
+  var o=m.outreach&&typeof m.outreach==="object"?m.outreach:{},ct=hNum(o.contacted),tg=hNum(o.target)||50;
+  return [ct==null?"·":ct+" of "+tg,"places written to · mail is "+(m.on===false?"off":"on")];
+}
+
 /* ================= MORE =================
    The hub every room is reached from (the House of the console before Home):
    the rooms first, the engine room leading them, then the health of the
@@ -3154,9 +3685,11 @@ function drawHouse(force){
       controls:sd?[setHere+" of "+sd.length,"dials set here · the rest are default"]:["·","the dials could not be read"],
       flow:[FLOW_DAYS+" days","the window the map reads, from a post to a gift"],
       readers:ib?[String(nNew),"new · "+nHeld+" "+(nHeld===1?"reply":"replies")+" waiting"]:["·","the inbox could not be read"],
-      engine:soulHubStat(so)
+      engine:soulHubStat(so),
+      mail:mailHubStat()
     };
-    var rooms=[["engine","The engine room","Everything the Lantern runs on: the audit, the playbook, the budget, Telegram, the instruments and every cycle in full"],["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["flow","Flow","Where the energy goes: posts, reach, readers, gifts"],["readers","Readers' inbox","Messages, and replies waiting to be read"]];
+    var rooms=[["engine","The engine room","Everything the Lantern runs on: the audit, the playbook, the budget, Telegram, the instruments and every cycle in full"],
+      ["mail","Mail","What the Lantern reads, answers and writes: the inbox, the places it writes to, do not contact"],["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["flow","Flow","Where the energy goes: posts, reach, readers, gifts"],["readers","Readers' inbox","Messages, and replies waiting to be read"]];
     el.innerHTML=
       '<p class="sec">The rooms</p><div class="rooms">'+rooms.map(function(r){var s=stat[r[0]]||["·",""];
         return '<button class="card tap'+(r[0]==="engine"?" feat":"")+'" data-room="'+r[0]+'"><b>'+esc(r[1])+'</b><span class="w">'+esc(r[2])+'</span><div class="v">'+esc(s[0])+'</div><span class="w">'+esc(s[1])+'</span></button>'}).join("")+'</div>'
@@ -4017,7 +4550,7 @@ function lantModelsHtml(m){
   if(!keys.length)return '';
   return '<div class="lant-models">'+keys.map(function(k){
     var on=providers[k]==="set"||providers[k]===true;
-    return '<div class="m'+(on?" on":"")+'"><i></i>'+esc(k)+' '+(on?"set":"missing")+'</div>';
+    return '<div class="m'+(on?" on":"")+'"><i></i>'+esc(k)+' '+(on?"set":(providers[k]==="held"?"held back":"missing"))+'</div>';   /* round five: NVIDIA held back by its terms */
   }).join("")+'</div>';
 }
 function lantLedgerHtml(items,cap,countToday){
@@ -4575,6 +5108,131 @@ function soulEvo(ev){
   return book+'<p class="sec" style="margin-top:18px">Lessons waiting for their test</p>'+props+'<p class="sec" style="margin-top:18px">Upgrades the Lantern proposes</p>'+ups;
 }
 
+/* ---- 7b. the brains (round four, GET /api/lantern-models) ----
+   Which free models answer, in the order the next call asks them, and how
+   each has done these two weeks (quality as a small bar and a plain word,
+   never a number alone); the judge's calls today and yesterday; the AI
+   Gateway's free names; and what paid thinking bought this month, use by
+   use. A room he visits rarely, so it reads top to bottom on a phone. */
+var BR_TIER=[["fast","Quick work"],["strong","Writing and judging"],["long","Long reading"],["mail","Mail"]];
+var BR_PROV={groq:"Groq",gemini:"Gemini",openrouter:"OpenRouter",gateway:"the AI Gateway",cerebras:"Cerebras",nvidia:"NVIDIA"};   /* round five: NVIDIA's catalog */
+var BR_TASK={"weekly-strategy":"The Monday strategy","weekly-reflection":"The Monday reflection","tie-break":"A tie break between the free judges","letter-retry":"A letter retry for a place of high value","ask-deep":"A think deeply in Ask","web-search":"A web search for places"};
+var BR_JEV={light:"the daily lights",sentinel:"actions before they run",text:"the Lantern's own writing","mail-kind":"sorting the inbox",letter:"letters before they go",place:"places found for letters",brief:"the morning brief",idea:"ideas to grow"};
+var BR_MIN=5;   /* api/_llm.js SCORE_MIN_CALLS: below it a model keeps the tier's own place */
+var BR_SKEL='<div class="card brains"><div class="sk" style="width:72%"></div><div class="sk" style="width:92%;margin-top:10px"></div><div class="sk" style="width:58%;margin-top:10px"></div></div>';
+function brModel(m){return String(m==null?"":m).replace(/^[a-z0-9._-]+\//i,"").trim()||"a model"}
+function brProv(p){var k=String(p==null?"":p).toLowerCase();return BR_PROV[k]||sWords(p)||"a provider"}
+function brQuality(r){
+  var calls=hNum(r.calls)||0,q=hNum(r.quality);
+  if(!calls||q==null)return {w:"not measured yet",c:"none",q:null};
+  if(calls<BR_MIN)return {w:"too few calls yet",c:"none",q:null};
+  q=Math.max(0,Math.min(1,q));
+  return q>=.85?{w:"excellent",c:"",q:q}:q>=.7?{w:"good",c:"",q:q}:q>=.5?{w:"fair",c:"fair",q:q}:{w:"poor",c:"poor",q:q};
+}
+function brSecs(ms){ms=hNum(ms);if(ms==null)return "";return ms<100?"under a tenth of a second":(Math.round(ms/100)/10)+" seconds"}
+function brShown(r){
+  var calls=hNum(r.calls)||0,bits=["on "+brProv(r.provider)];
+  if(calls){bits.push("answered "+fnum(hNum(r.answered)||0)+" of "+fnum(calls));
+    if(hNum(r.checks))bits.push("passed "+fnum(hNum(r.passed)||0)+" of "+fnum(hNum(r.checks))+" checks");
+    var s=brSecs(r.msAvg);if(s)bits.push(s)}
+  else bits.push("not asked these two weeks");
+  return bits.join(" · ");
+}
+function brRow(r,i){
+  var Q=brQuality(r),err=String(r.lastError==null?"":r.lastError).replace(/\s+/g," ").trim(),when=r.lastErrorAt?ago(r.lastErrorAt):"";
+  return '<li><span class="no">'+(i+1)+'</span><span class="nm">'+esc(brModel(r.model))+'</span>'
+    +'<span class="q"><span class="qb'+(Q.c?" "+Q.c:"")+'" role="img" aria-label="'+esc("Quality: "+Q.w)+'">'+(Q.q!=null?'<i style="transform:scaleX('+Q.q.toFixed(3)+')"></i>':'')+'</span><span class="qw">'+esc(Q.w)+'</span></span>'
+    +'<span class="dt">'+esc(brShown(r))+'</span>'
+    +(err?'<span class="er">The last fault'+(when?", "+esc(when):"")+': '+esc(lw(err).slice(0,220))+'</span>':'')+'</li>';
+}
+function brTiers(rk){
+  if(rk===undefined)return '<p class="sp" id="brain-rank-old">The measured order comes with the next deployment; until then each tier asks its free models in its own order.</p>';
+  if(!rk||typeof rk!=="object")return '<p class="sp" id="brain-rank-fail">The ranking could not be read just now. The free models are still asked, in each tier\'s own order.</p>';
+  var out=BR_TIER.filter(function(t){return Object.prototype.hasOwnProperty.call(rk,t[0])}).map(function(t){
+    var rows=Array.isArray(rk[t[0]])?rk[t[0]].filter(function(x){return x&&typeof x==="object"}):[];
+    if(!rows.length)return '<div class="btier" id="brain-tier-'+t[0]+'"><b>'+esc(t[1])+'</b><p class="sp">No free model is configured or live today.</p></div>';
+    var top=rows.slice(0,4),more=rows.slice(4);
+    return '<div class="btier" id="brain-tier-'+t[0]+'"><b>'+esc(t[1])+'</b><ol class="bml" aria-label="'+esc(t[1]+": the free models, in the order they are asked")+'">'+top.map(brRow).join("")+'</ol>'
+      +(more.length?'<details class="more"><summary>And '+more.length+' more after them</summary><ol class="bml" start="5">'+more.map(function(r,i){return brRow(r,i+4)}).join("")+'</ol></details>':'')+'</div>';
+  }).join("");
+  return out||'<p class="sp">No tier has a free model to rank yet.</p>';
+}
+function brCost(v){v=hNum(v);if(v==null)return "";return v<.01?"under a cent":v.toFixed(2)+" dollars"}
+function brJevDay(d,label){
+  if(!d||typeof d!=="object")return '<p class="jv">'+esc(label)+': the count could not be read.</p>';
+  var calls=hNum(d.calls)||0,okn=hNum(d.ok)||0,cost=hNum(d.costUsd)||0;
+  if(!calls)return '<p class="jv">'+esc(label)+': not asked.</p>';
+  var down=okn===0||okn*2<calls,sec=brSecs(d.msAvg);
+  var s=label+": "+fnum(calls)+(calls===1?" call":" calls")+", "+(okn===calls?"all answered":fnum(okn)+" answered")+(sec&&okn?", "+sec+" each":"")+(cost>0?", for "+brCost(cost):"")+".";
+  if(down)s+=" "+(okn===0?"The judge did not answer":"The judge mostly did not answer")+"; while it is down, everything it would judge goes on exactly as before it existed.";
+  return '<p class="jv'+(down?" down":"")+'">'+esc(s)+'</p>';
+}
+function brJev(jv){
+  if(jv===undefined)return "";
+  jv=jv&&typeof jv==="object"?jv:{};
+  var by=jv.today&&jv.today.by&&typeof jv.today.by==="object"?jv.today.by:null;
+  var uses=by?Object.keys(by).map(function(k){return [k,hNum(by[k])||0]}).filter(function(x){return x[1]>0}).sort(function(a,b){return b[1]-a[1]}):[];
+  return '<h3>The judge, Jev</h3><div id="brain-jev">'+brJevDay(jv.today,"Today")+brJevDay(jv.yesterday,"Yesterday")
+    +(uses.length?'<p class="sp" style="margin-top:6px">Today\'s calls: '+esc(uses.slice(0,5).map(function(x){return (BR_JEV[x[0]]||sWords(x[0]))+" ("+fnum(x[1])+")"}).join(", "))+'.</p>':'')+'</div>';
+}
+function brGateway(gw){
+  if(gw===undefined)return "";
+  var h='<h3>The AI Gateway\'s free models</h3>';
+  if(!gw||typeof gw!=="object")return h+'<p class="sp" id="brain-gw">The AI Gateway is not set up on this deployment, so its free models are not asked.</p>';
+  var free=Array.isArray(gw.free)?gw.free.map(String):[],wait=Array.isArray(gw.waiting)?gw.waiting.map(String):[];
+  if(!free.length)return h+'<p class="sp" id="brain-gw">Its free list could not be read today, or holds no language model.</p>';
+  var nw=free.filter(function(id){return wait.indexOf(id)>=0}).length;
+  return h+'<div class="gw" id="brain-gw" role="list">'+free.map(function(id){var w=wait.indexOf(id)>=0;return '<span role="listitem"'+(w?' class="wait"':'')+'><i aria-hidden="true"></i>'+esc(brModel(id))+' · '+(w?"waiting a day":"answering")+'</span>'}).join("")+'</div>'
+    +'<p class="sp" style="margin-top:6px">'+(nw?esc(fnum(nw)+" of them found no provider that keeps nothing and learns nothing, so "+(nw===1?"it waits":"they wait")+" a day before "+(nw===1?"it is":"they are")+" asked again."):"Each is asked to keep nothing and learn nothing.")+'</p>';
+}
+function brPaid(pd){
+  if(pd===undefined)return "";
+  pd=pd&&typeof pd==="object"?pd:{};
+  var roi=pd.roi&&typeof pd.roi==="object"?pd.roi:null,sp=pd.spend&&typeof pd.spend==="object"?pd.spend:null;
+  var lines=(Array.isArray(pd.lines)?pd.lines.filter(function(x){return x&&typeof x==="object"}):[]).slice().sort(function(a,b){return String(b.at||"").localeCompare(String(a.at||""))});
+  var calls=roi?hNum(roi.calls)||0:lines.length,helped=roi?hNum(roi.helped)||0:lines.filter(function(l){return l.outcome&&l.outcome.helped}).length,waiting=roi?hNum(roi.waiting)||0:0;
+  var usd=roi&&hNum(roi.usd)!=null?hNum(roi.usd):lines.reduce(function(a,l){return a+(hNum(l.costUsd)||0)},0);
+  var lead=calls?'<p class="sp" id="brain-roi"><b>'+esc("This month: "+usd.toFixed(2)+" dollars, "+fnum(calls)+(calls===1?" use":" uses"))+'</b>'
+      +esc(", "+(helped?fnum(helped)+" helped":"none has helped yet")+(waiting?", "+fnum(waiting)+" still to be judged":"")+".")+'</p>'
+    :pd.roi===null&&!lines.length?'<p class="sp" id="brain-roi">What paid thinking bought this month could not be read just now.</p>'
+    :'<p class="sp" id="brain-roi">No paid model was used this month: the free ones did all the work.</p>';
+  var spend="";
+  if(sp){var mu=hNum(sp.usd),du=hNum(sp.dayUsd),dc=hNum(sp.dayCapUsd),cu=hNum(sp.capUsd),mx=hNum(sp.callMaxUsd);
+    spend=mu==null?'<p class="sp" id="brain-spend">The spend ledger could not be read just now.</p>'
+      :'<p class="sp" id="brain-spend">'+esc((du!=null?"Today "+du.toFixed(2)+(dc!=null?" of "+dc.toFixed(2):"")+" dollars; this month ":"This month ")+mu.toFixed(2)+(cu!=null?" of "+cu.toFixed(2):"")+" dollars."
+        +(mx!=null?" No single paid call may cost more than "+mx.toFixed(2)+" dollars.":""))+'</p>'}
+  var list=lines.length?'<ol class="pd" id="brain-paid" aria-label="Each paid use this month, the newest first">'+lines.map(function(l){
+      var o=l.outcome&&typeof l.outcome==="object"?l.outcome:null,note=o?String(o.note==null?"":o.note).replace(/\s+/g," ").trim():"";
+      return '<li><div class="h"><b>'+esc(BR_TASK[l.task]||"Another paid use")+'</b><code>'+esc(brCost(l.costUsd)||"cost not kept")+'</code></div>'
+        +'<span class="m">'+esc([mWhen(l.at),l.model?String(l.model):""].filter(Boolean).join(" · "))+'</span>'
+        +'<span class="o'+(o?(o.helped?" good":" no"):"")+'">'+esc(o?(o.helped?"It helped":"It did not help")+(note?": "+lw(note):"."):"Waiting to see whether it helped.")+'</span></li>'}).join("")+'</ol>':'';
+  return '<h3>Paid thinking</h3><div id="brain-paidwrap">'+lead+spend+list+'</div>';
+}
+function brainsHtml(j){
+  if(!j||typeof j!=="object"||j.ok===false)return '<div class="card brains" id="brains-card"><p class="sp" id="brain-fail">The models could not be read just now'+(j&&j.error?" ("+esc(lw(String(j.error)).slice(0,160))+")":"")+'. The rest of this room is unaffected; press refresh at the top to ask again.</p></div>';
+  var words=Array.isArray(j.words)?j.words.filter(function(w){return typeof w==="string"&&w.trim()}):[];
+  return '<div class="card brains" id="brains-card">'
+    +(words.length?'<div class="bw" id="brain-words">'+words.map(function(w){return '<p>'+hs(w)+'</p>'}).join("")+'</div>':'')
+    +'<h3'+(words.length?'':' style="margin-top:0"')+'>The free models, in the order they are asked</h3>'+brTiers(j.ranking)
+    +brJev(j.jev)+brGateway(j.gateway)+brPaid(j.paid)+'</div>';
+}
+/* the bars grow in once, after the card arrives (transforms only; none for less motion) */
+function brainsArrive(b){b.querySelectorAll(".qb i").forEach(function(i,n){var m=/scaleX\(([\d.]+)\)/.exec(i.style.transform||"");if(!m)return;
+  hAnim(i,[{transform:"scaleX(0)"},{transform:"scaleX("+m[1]+")"}],{duration:700,delay:Math.min(n,12)*40,easing:H_EASE,fill:"backwards"})})}
+/* the card arrives after the room is drawn: when he is already below it
+   (the Voice card, reached from Home), what he is looking at stays put */
+function brainsPut(html){
+  var b=$("soul-brains");if(!b)return null;
+  var r=b.getBoundingClientRect(),above=r.bottom<=80,h0=b.offsetHeight;
+  b.innerHTML=html;
+  if(above){var dh=b.offsetHeight-h0;if(dh)window.scrollBy(0,dh)}
+  return b;
+}
+function soulBrainsLoad(force){
+  if(!$("soul-brains"))return Promise.resolve();
+  return lantModelsQ(force).then(function(j){var b=brainsPut(brainsHtml(j));if(b)brainsArrive(b)},function(){brainsPut(brainsHtml(null))});
+}
+
 /* ---- 8. the budget ---- */
 function soulBudget(t){
   var sp=t.spend||{},usd=sNum(sp.usd),cap=sNum(sp.capUsd),c=t.counts||{},a=sNum(c.actionsToday),ac=sNum(c.capToday);
@@ -4590,12 +5248,14 @@ function soulBudget(t){
 }
 
 /* ---- 9. the voice: Telegram, linked once by a code ---- */
+/* round four: urgent at once, the rest in one message each evening (api/_voice.js) */
+function vDigestAt(){var v=HOME.data&&HOME.data.voice,a=v&&typeof v==="object"?String(v.digestAt||"").trim():"";return a||"22:00 UTC"}
 function soulVoice(t){
   var tg=t.telegram||t.voice||{},linked=tg.linked===true||tg.status==="linked";if(!tg.at&&tg.since)tg={linked:tg.linked,at:tg.since};
   var head='<div style="display:flex;gap:12px;align-items:flex-start"><div class="ic" style="width:34px;height:34px;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:'+(linked?"var(--good)":"var(--faint)")+'"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(linked?'<path d="M5 12l4 4L19 7"/>':'<circle cx="12" cy="12" r="7"/>')+'</svg></div>'
     +'<div style="flex:1;min-width:0"><div style="color:var(--cream);font-weight:600" id="soul-tg-state">Telegram '+(linked?"is linked":"is not linked")+'</div>'
-    +'<div class="muted small" style="margin-top:3px">'+(linked?"The Lantern writes to you there only when it needs you, and once a week with a summary."+(tg.at?" Linked "+esc(sDayY(tg.at))+".":"")
-      :"Link it once and the Lantern can reach you when it needs you, and send a summary once a week. Everything else stays here.")+'</div></div></div>';
+    +'<div class="muted small" style="margin-top:3px">'+(linked?"The Lantern writes to you there at once when something is urgent, and once each evening, at "+esc(vDigestAt())+", with everything else."+(tg.at?" Linked "+esc(sDayY(tg.at))+".":"")
+      :"Link it once, so the Lantern can reach you when something is urgent, with one summary each evening at "+esc(vDigestAt())+". Everything else stays here.")+'</div></div></div>';
   var body;
   if(SOUL.tg&&SOUL.tg.code){
     body='<div class="soul-code" id="soul-tg-code">'+esc(SOUL.tg.code)+'</div>'
@@ -4949,7 +5609,7 @@ function soulWire(el){
     var wk=e.target&&e.target.closest&&e.target.closest("select[data-soul-week]");if(wk)soulSetWeek(wk.value)});
   window.addEventListener("resize",function(){clearTimeout(SOUL.rt);SOUL.rt=setTimeout(function(){if(CUR==="engine")soulPaint()},120)});
 }
-var ENGINE_HEAD='<p class="sec">The engine room</p><p class="muted small" style="margin:-6px 0 14px">Everything the Lantern runs on: its mission and its state, the goals and how they move, every cycle in full, the playbook, the budget, its voice on Telegram and the record of everything it did.</p>';
+var ENGINE_HEAD='<p class="sec">The engine room</p><p class="muted small" style="margin:-6px 0 14px">Everything the Lantern runs on: its mission and its state, the goals and how they move, every cycle in full, the playbook, the models it thinks with, the budget, its voice on Telegram and the record of everything it did.</p>';
 function drawSoul(force){
   var el=$("s-engine");
   obsWireTip();
@@ -4974,10 +5634,12 @@ function drawSoul(force){
       +'<p class="sec">How the numbers move</p><div id="soul-metrics">'+soulMetrics(SOUL.data.mw)+'</div>'
       +'<p class="sec">The chronicle</p><div id="soul-chron">'+soulChron(a[3])+'</div>'
       +'<p class="sec">Evolution</p><div id="soul-evo">'+soulEvo(a[4])+'</div>'
+      +'<p class="sec">Brains</p><div id="soul-brains">'+BR_SKEL+'</div>'
       +'<p class="sec">Budget</p><div id="soul-budget">'+soulBudget(t)+'</div>'
       +'<p class="sec">Voice</p><div id="soul-voice">'+soulVoice(t)+'</div>'
       +'<p class="sec">Audit</p><div id="soul-audit">'+soulAudit(a[5])+'</div>';
     soulPaint();
+    return soulBrainsLoad(force);
   });
 }
 

@@ -43,6 +43,16 @@
 //   it reads the Lantern's own state through its "lantern" tool;
 //   GET ?action=ledger reads the one ledger (and the older entries this file
 //     kept before), so the console's older room keeps working.
+//
+// THINK DEEPLY (round four, 7 October 2026). When the owner's own words in
+// Ask say "think deeply" or "think hard" as a whole order, where the message
+// begins or ends (the review fix of 7 October 2026), the run's one
+// synthesis, the answer itself, is asked of a paid model under the router's
+// "ask-deep" use (api/_llm.js: the day's 0.50 dollars and a call's 0.10
+// dollar ceiling, inside the month's 10), with up to 25 seconds to think; if
+// no paid model may answer, the free strong tier writes it as always. The
+// plan and the subagents stay free. The call is a line in the ROI ledger,
+// its outcome whether the answer it wrote was the one he read.
 // ---------------------------------------------------------------------------
 
 import fs from "node:fs";
@@ -50,10 +60,10 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import { kv, kvReady } from "./_kv.js";
-import { route as llmRoute, scrub } from "./_llm.js";
+import { route as llmRoute, scrub, paidOutcome } from "./_llm.js";
 import { runAgent, undoAction, buildProposal, ACTION_TYPES, AUTONOMOUS_DAILY_CAP, BUDGETS, compactToolOutputs } from "./_agent.js";
 import { HANDS, tierOf, redLineCheck, runHand, undoAction as undoHand } from "./_hands.js";
-import { convene } from "./_council.js";
+import { convene, tieBreakOutcome } from "./_council.js";   /* review fix: the tie break's outcome from the verdict kept */
 import { actionsList, sayLantern, setRequest } from "./_soul.js";
 import { lanternState, intentTitle, actionTitle } from "./_home.js";
 import * as DEC from "./_decisions.js";
@@ -149,10 +159,16 @@ export async function lanternAct(intent, ctx = {}) {
     const left = typeof ctx.timeLeftMs === "function" ? ctx.timeLeftMs() : COUNCIL_MS + 15000;
     const ms = Math.max(3000, Math.min(COUNCIL_MS, left - 15000));
     let t;
+    /* review fix, 7 October 2026: the council knows its deadline, and a
+       paid tie break's outcome is written from the verdict kept here */
+    const pending = convene(it, conversationEvidence(ctx.toolOutputs), { until: Date.now() + Math.max(0, ms - 1000), deferOutcome: true })
+      .catch(e => ({ approved: false, verdicts: {}, error: String(e && e.message || e).slice(0, 160) }));
     council = await Promise.race([
-      convene(it, conversationEvidence(ctx.toolOutputs)).catch(e => ({ approved: false, verdicts: {}, error: String(e && e.message || e).slice(0, 160) })),
+      pending,
       new Promise(res => { t = setTimeout(() => res({ approved: false, verdicts: {}, timedOut: true }), ms); })
     ]).finally(() => clearTimeout(t));
+    if (council && council.timedOut) pending.then(late => tieBreakOutcome(late, false)).catch(() => {});
+    else if (council && council.tieBreak && council.tieBreak.paidId) await tieBreakOutcome(council, true);
     if (!council || !council.approved) return { ok: false, refused: "council", council, error: councilSaid(council) };
     approval = council;
   }
@@ -787,9 +803,11 @@ async function handleAsk(req, res, body) {
     sseWrite(res, type, data);
   };
 
+  /* round four: the owner's own "think deeply" pays for one synthesis */
+  const { route: routeFor, paidCalls } = askRoute(message, llmRoute);
   let out;
   try {
-    out = await runAgent({ message, thread: prior, tools, route: llmRoute, emit, scrub, ledger, hands: handsFor() });
+    out = await runAgent({ message, thread: prior, tools, route: routeFor, emit, scrub, ledger, hands: handsFor() });
   } catch (e) {
     sseWrite(res, "error", { error: String(e && e.message || e).slice(0, 300) });
     try { res.end(); } catch { }
@@ -799,6 +817,12 @@ async function handleAsk(req, res, body) {
   const turns = prior.concat([{ role: "user", content: message, at: new Date().toISOString() },
                                { role: "assistant", content: out.answer, at: new Date().toISOString() }]);
   await threadWrite(threadId, turns);
+  /* round four: what the paid answer led to, in the ROI ledger */
+  for (const r of paidCalls) {
+    if (!r.paidId) continue;
+    const used = !!(out.answer && r.content && out.answer.length > 40 && !/^Here is what could be read without/.test(out.answer));
+    try { await paidOutcome(r.paidId, { helped: used, note: used ? "its answer was the one the owner read in Ask" : "its answer could not be used" }); } catch { }
+  }
 
   /* the answer streams BEFORE the artifacts, not after: a malformed or
      refused artifact (both handled inside runAgent's own schema check
@@ -808,6 +832,35 @@ async function handleAsk(req, res, body) {
   for (const a of (out.artifacts || [])) sseWrite(res, "artifact", a);
   sseWrite(res, "done", { thread: threadId, notCompleted: out.notCompleted, exhausted: out.exhausted, modelCalls: out.modelCalls, toolCalls: out.toolCalls });
   try { res.end(); } catch { }
+}
+
+/* round four: the owner's own words asking for depth, and nothing else.
+   Review fix, 7 October 2026: "think deeply" or "think hard" only as a whole
+   order, where the message begins ("Think deeply about why reach fell",
+   "Please think hard: ...") or ends ("... Think hard.", "..., and think
+   deeply"), never inside a question that only uses the words ("do you think
+   deep dives ...", "think harder topics", "think hard-working parents") */
+export const THINK_DEEPLY_RX = new RegExp(String.raw`^\s*(?:please[\s,]+)?think\s+(?:deeply|hard)(?![\w-])`
+  + String.raw`|(?:^|[.:!,;?\n]|\band)\s*(?:please[\s,]+)?think\s+(?:deeply|hard)(?:[\s,]+please)?\s*[.!?]*\s*$`, "i");
+export function thinkDeeply(message) { return THINK_DEEPLY_RX.test(String(message || "")); }
+/* the run's router: the base one, unless he asked for depth, and then the
+   one synthesis (the strong, JSON call the answer is written by) goes to the
+   deep tier under the "ask-deep" use, with time to think; the plan and the
+   subagents stay free. paidCalls holds what was paid for. */
+export function askRoute(message, base) {
+  const paidCalls = [];
+  if (!thinkDeeply(message)) return { route: base, paidCalls, deep: false };
+  let asked = false;
+  const route = async task => {
+    if (task && task.tier === "strong" && task.json && !asked) {
+      asked = true;
+      const r = await base({ ...task, tier: "deep", purpose: "ask-deep", opts: { ...(task.opts || {}), timeout: Math.max(Number(task.opts && task.opts.timeout) || 0, 25000) } });
+      if (r && r.paid) paidCalls.push(r);
+      return r;
+    }
+    return base(task);
+  };
+  return { route, paidCalls, deep: true };
 }
 
 /* ---------------------------------------------------------------------------

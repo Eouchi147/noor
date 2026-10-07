@@ -46,7 +46,8 @@ function cronMaySnapshot(req) {
   const bearer = String((req.headers || {}).authorization || "").replace(/^Bearer\s+/i, "");
   const bearerOk = !!secret && bearer.length === secret.length && crypto.timingSafeEqual(Buffer.from(bearer), Buffer.from(secret));
   const fromVercelCron = !!req.headers["x-vercel-signature"] || /vercel-cron/i.test(String(req.headers["user-agent"] || ""));
-  return secret ? bearerOk : fromVercelCron;
+  /* review fix, 7 October 2026: a production without the secret admits no cron (fail closed) */
+  return secret ? bearerOk : (fromVercelCron && process.env.VERCEL_ENV !== "production");
 }
 
 export default async function handler(req, res) {

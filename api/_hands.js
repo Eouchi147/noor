@@ -54,8 +54,10 @@ import { getOverrideRaw, setOverride, clearOverride, restoreOverride, otherPicks
 import { EXPERIMENTS, readState as expReadState, resolveCurrent as expResolveCurrent, planExperiment, stopExperiment, biasFor, biasFromAny } from "./_experiments.js";
 import * as I from "./_instruments.js";
 import { LEVERS } from "./_levers.js";
+import { OUTREACH_HANDS } from "./_outreach.js";   /* outreach: research and letters to places (LANTERN.md section 11.3) */
 import { GIVING_HANDS, refreshGiving } from "./_giving.js";   /* sustaining the house (LANTERN.md section 9) */
 import { MISSION_HANDS } from "./_mission.js";   /* mission: the Lantern's mission powers (LANTERN.md section 8) */
+import { MAIL_HANDS } from "./_mail.js";   /* mail: the Lantern's mailbox (LANTERN.md section 11) */
 
 /* ---------------------------------------------------------------------------
    1. THE RED LINES, MACHINE-CHECKED. One pattern family a line, run over the
@@ -63,7 +65,8 @@ import { MISSION_HANDS } from "./_mission.js";   /* mission: the Lantern's missi
       own seeded goals are named here as well: an intent touching one is the
       "owner's goals" red line however it is phrased.
 --------------------------------------------------------------------------- */
-const OWNER_GOAL_IDS = ["g-reach", "g-attention", "g-search", "g-health", "g-sustain"];   /* g-sustain: 3 October 2026, added once as his */
+const OWNER_GOAL_IDS = ["g-reach", "g-attention", "g-search", "g-health", "g-sustain",
+  "g-outreach"];   /* g-sustain: 3 October 2026, added once as his; outreach: g-outreach, 6 October 2026, the same way */
 /* 6 October 2026 (the review of money): the words the two lines of Article
    11 read. GIVE is giving money: a gift, a donation, money, sadaqa, zakat,
    a giver, "who give", and "give" itself only where it means giving money
@@ -87,11 +90,20 @@ const RL = [
     /\b(purchase|purchasing|buy|buying|boost(ed|ing)?\s+(a\s+)?post|top\s*up|subscribe\s+to\s+(a\s+)?paid|paid\s+promotion|ad\s+campaign|run\s+ads)\b/i,
     /\b(change|changing|rotate|rotating|replace|replacing|set|setting|edit|editing|update|updating|revoke|revoking)\b[^.;\n]{0,40}\b(api\s*keys?|keys|tokens?|credentials?|passwords?|secrets?|account\s+settings|settings\s+of|webhooks?)\b/i,
     /\b(create|open|register)[-_]account\b/i ] },
+  /* mail: 6 October 2026 (LANTERN.md section 11, Article 12), the line in two
+     parts. `rx` (a direct message, a comment, an inbox) holds for every hand,
+     the mail hands too. `rxMail` (writing, emailing, contacting, replying to
+     someone) is not read for the sanctioned mail hands (MAIL_SANCTIONED,
+     below), whose every email meets Article 12's gates in api/_mail.js
+     queueOutgoing instead; for every other hand it holds as before. */
   { id: "message-individuals", rx: [
     /\b(dm|dms|direct\s+messages?|private\s+messages?|inbox\s+them)\b/i,
-    /\b(message|messaging|email|emailing|contact|contacting|reply\s+to|replying\s+to|comment\s+on|commenting\s+on|write\s+to|writing\s+to)\s+(each|every|all|individual|our|the|those|these|them|him|her|users?|followers?|people|readers?|commenters?|subscribers?)\b/i,
+    /\b(comment\s+on|commenting\s+on)\s+(each|every|all|individual|our|the|those|these|them|him|her|users?|followers?|people|readers?|commenters?|subscribers?)\b/i,
+    /\b(dm|comment)[-_](campaign|users?|followers?|people|readers?)\b/i ],
+    rxMail: [
+    /\b(message|messaging|email|emailing|contact|contacting|reply\s+to|replying\s+to|write\s+to|writing\s+to)\s+(each|every|all|individual|our|the|those|these|them|him|her|users?|followers?|people|readers?|commenters?|subscribers?)\b/i,
     /\bsend\w*\b[^.;\n]{0,30}\b(emails?|messages?|dms?|newsletters?)\b/i,
-    /\b(dm|message|email|reply|comment)[-_](campaign|users?|followers?|people|readers?)\b/i ] },
+    /\b(message|email|reply)[-_](campaign|users?|followers?|people|readers?)\b/i ] },
   { id: "off-schedule-posting", rx: [
     /\b(post|posting|publish|publishing|send|sending|upload|uploading)\b[^.;\n]{0,40}\b(now|immediately|right\s+away|extra|additional|another|more\s+often|twice|outside\s+the\s+schedule|beyond\s+the\s+schedule|off\s*schedule)\b/i,
     /\b(extra|additional|unscheduled|bonus)\s+(posts?|slots?|reels?|stories)\b/i,
@@ -188,9 +200,13 @@ export const withoutDenials = s => String(s || "").split(/(\n|[.;!?](?=\s|$))/).
 const clausesOf = s => String(s || "").split(/\n|[.;!?](?=\s|$)/);
 /* the lines a guarded hand's letter is read by (redLineCheck, below) */
 const LETTER_LINES = Object.freeze(["ads-paywall-data", "pressure-giving", "per-person-data"]);
-function lineHits(line, body, plain, action) {
+/* mail: the hands that write email within Article 12 (api/_mail.js's, and
+   api/_outreach.js's): the messaging line's email part is not read for them,
+   and every other line, its direct message and comment part too, is */
+export const MAIL_SANCTIONED = Object.freeze(["mail-send", "mail-reply", "mail-triage", "outreach-send", "outreach-followup", "research"]);
+function lineHits(line, body, plain, action, sanctioned) {
   const t = line.denials ? plain : body;
-  for (const rx of line.rx) {
+  for (const rx of (line.rxMail && !sanctioned ? line.rx.concat(line.rxMail) : line.rx)) {
     if (rx.source.startsWith("^")) { if (action != null && rx.test(action)) return true; continue; }
     if (rx.test(t)) return true;
   }
@@ -236,7 +252,17 @@ export function redLineCheck(intent) {
   if ((action === "goal" || /goal/i.test(action)) && (OWNER_GOAL_IDS.includes(String(goalArg.id || "")) || goalArg.owner === "owner"))
     return refuse("self-modification", "red line: the owner's goals change only from the console");
   const plain = withoutDenials(body);
-  for (const line of RL) if (lineHits(line, body, plain, action)) return refuse(line.id);
+  /* mail: for Article 12's hands the messaging line reads only its direct
+     message and comment part, and only over what the Lantern says it is
+     doing (the action and its reasons), never a letter's own words, which may
+     thank a reader "for your comment on the page"; every other line reads
+     the whole intent, the letter too */
+  const sanctioned = MAIL_SANCTIONED.includes(action);
+  const ownWords = sanctioned ? [action, nameAsWords, flatText(it.why), flatText(it.expectedEffect)].join(" \n ") : "";
+  for (const line of RL) {
+    if (sanctioned && line.rxMail) { if (lineHits(line, ownWords, ownWords, action, true)) return refuse(line.id); continue; }
+    if (lineHits(line, body, plain, action, false)) return refuse(line.id);
+  }
   /* 6 October 2026 (the review): the fields a guarded hand leaves out (a
      letter's title and text) are still read, by the lines about what a
      letter says: Article 11's two (no advertisement, no paywall, nothing
@@ -263,10 +289,11 @@ export function redLineCheck(intent) {
 const RED_LINES_TEXT = {
   "delete-content": "deleting or hiding any post on any network, or any content of the library",
   "external-accounts": "creating accounts, accepting terms, spending money, changing keys or settings of any external service",
-  "message-individuals": "messaging individuals (DMs, comments, emails) on the house's behalf",
+  /* mail: the two lines amended with Article 12 (6 October 2026) */
+  "message-individuals": "messaging anyone except as Article 12 allows: never a direct message or a comment on any network, never an email from any address but salam@noorcodex.com, never to an address that was not published for contact or did not write first, never beyond the mail caps, never again after a no",
   "off-schedule-posting": "posting beyond the daily schedule, or posting anything that is not a card or reel already in the house's own shelf",
   "self-modification": "changing the constitution, red lines, caps, budget, evals, the owner's goals, or code",
-  "per-person-data": "sending per-person data or Journal text to any model",
+  "per-person-data": "sending per-person data or Journal text to any model, except the correspondence the house receives and writes, which only models that neither keep nor learn from it may read, to answer it; Journal text never",
   "ads-paywall-data": "showing advertisements, putting any part of the library behind a payment, or selling or sharing anything about readers",
   "pressure-giving": "asking for money with pressure: a pop up, a countdown, guilt or fear, a reward tied to an amount, an appeal aimed at children, or wording not written into the code",
   "unknown": "an intent with no action"
@@ -655,10 +682,14 @@ export const HANDS = {
 };
 /* the posting levers (api/_levers.js) join the registry under the same rules */
 for (const [n, h] of Object.entries(LEVERS)) { if (!HANDS[n]) HANDS[n] = h; }
+/* outreach: and the research and the letters to places (api/_outreach.js, LANTERN.md section 11.3) */
+for (const [n, h] of Object.entries(OUTREACH_HANDS)) { if (!HANDS[n]) HANDS[n] = h; }
 /* sustaining the house (api/_giving.js, LANTERN.md section 9), the same way */
 for (const [n, h] of Object.entries(GIVING_HANDS)) { if (!HANDS[n]) HANDS[n] = h; }
 /* mission: and so do the mission powers (api/_mission.js, LANTERN.md section 8) */
 for (const [n, h] of Object.entries(MISSION_HANDS)) { if (!HANDS[n]) HANDS[n] = h; }
+/* mail: and the mailbox's hands (api/_mail.js, LANTERN.md section 11) */
+for (const [n, h] of Object.entries(MAIL_HANDS)) { if (!HANDS[n]) HANDS[n] = h; }
 
 async function readGoalsSafe() {
   try { return await readGoals(); } catch { return []; }

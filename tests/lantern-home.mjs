@@ -40,6 +40,7 @@ const HOME = await import('../api/_home.js');
 const DEC = await import('../api/_decisions.js');
 const AGENT = await import('../api/_agent.js');
 const LA = await import('../api/lantern-agent.js');
+const VOICE = await import('../api/_voice.js');   /* round four: the evening digest */
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
@@ -104,7 +105,8 @@ let CYCLE1, H1;
   ok(r.statusCode === 200 && h.ok === true, 'GET ?view=home answers 200 ok');
   ok(ms < 10000 && ROUTER.calls.length === before, 'in ' + ms + ' ms, well under ten seconds, and no model was asked');
   /* 3 October 2026: and `giving` (LANTERN.md section 10) */
-  const TOP = ['ok', 'now', 'name', 'paused', 'status', 'brief', 'decisions', 'done', 'next', 'coming', 'goals', 'ideas', 'today', 'voice', 'spend', 'giving'];
+  /* mail: 6 October 2026, and `mail` (LANTERN.md section 11.4; tests/mail.mjs holds the rest) */
+  const TOP = ['ok', 'now', 'name', 'paused', 'status', 'brief', 'decisions', 'done', 'next', 'coming', 'goals', 'ideas', 'today', 'voice', 'spend', 'giving', 'mail'];
   ok(TOP.every(k => Object.prototype.hasOwnProperty.call(h, k)) && Object.keys(h).filter(k => !TOP.includes(k)).join() === 'missing', 'the top level is the contract\'s, plus the one documented `missing`: ' + Object.keys(h).join(','));
   ok(h.name === 'the Lantern' && h.paused === false && h.status === 'needs-you' && Object.keys(h.missing).join() === 'giving' && h.giving === null && /not configured/.test(h.missing.giving),
     'the Lantern, not paused, needs you; nothing missing but the gifts, which this deployment has no Stripe key to read: ' + h.missing.giving);
@@ -116,8 +118,9 @@ let CYCLE1, H1;
   ok(h.brief.numbers[0].value === 19000 && h.brief.numbers[0].unit === 'people' && h.brief.numbers[2].value === 40 && h.brief.numbers[2].unit === 'percent' && h.brief.numbers[2].deltaUnit === 'points',
     'with the snapshot\'s own numbers: 19000 people, 40 percent watched');
   /* draft: LANTERN.md section 10 (a letter, section 8), null on every card that carries none; tests/mission.mjs holds the rest */
-  const DECISION = ['id', 'kind', 'title', 'why', 'goal', 'impact', 'options', 'link', 'steps', 'at', 'expires', 'draft'];
-  ok(h.decisions.length >= 6 && h.decisions.every(d => same(d, DECISION) && d.draft === null), 'decisions: ' + h.decisions.length + ' cards, each exactly {' + DECISION.join(', ') + '}, no letter on any');
+  /* mail: and `letter` (an email waiting for his Send, section 11.4), null here */
+  const DECISION = ['id', 'kind', 'title', 'why', 'goal', 'impact', 'options', 'link', 'steps', 'at', 'expires', 'draft', 'letter'];
+  ok(h.decisions.length >= 6 && h.decisions.every(d => same(d, DECISION) && d.draft === null && d.letter === null), 'decisions: ' + h.decisions.length + ' cards, each exactly {' + DECISION.join(', ') + '}, no letter on any');
   ok(h.decisions.every(d => d.options.length && d.options.every(o => same(o, ['id', 'label', 'style', 'confirm']) && ['primary', 'plain', 'danger'].includes(o.style))), 'every option is {id, label, style, confirm}, its style the contract\'s');
   ok(h.decisions.every(d => (d.link === null || same(d.link, ['href', 'label'])) && Array.isArray(d.steps) && d.steps.every(s => typeof s === 'string')), 'every link is null or {href, label}; steps are strings');
   const kinds = new Set(h.decisions.map(d => d.kind));
@@ -130,8 +133,9 @@ let CYCLE1, H1;
   ok(inbox.kind === 'you' && inbox.link.href === '/admin2#readers' && inbox.options.some(o => o.id === 'open'), 'an inbox card opens the Readers room (#readers)');
   const tok = h.decisions.find(d => /Instagram token/.test(d.title));
   ok(tok.link.href === '/admin2#posts' && tok.steps.length === 3, 'a token card opens the token clock in Posts, with its steps');
-  const DONE = ['id', 'at', 'title', 'detail', 'goal', 'by', 'ok', 'undo', 'actionId'];
-  ok(h.done.length >= 3 && h.done.every(d => same(d, DONE) && ['lantern', 'owner', 'machine'].includes(d.by) && typeof d.undo === 'boolean'), 'done: each {' + DONE.join(', ') + '}');
+  /* mail: and `link` (a sent email's own link in Gmail, section 11.4), null here */
+  const DONE = ['id', 'at', 'title', 'detail', 'goal', 'by', 'ok', 'undo', 'actionId', 'link'];
+  ok(h.done.length >= 3 && h.done.every(d => same(d, DONE) && ['lantern', 'owner', 'machine'].includes(d.by) && typeof d.undo === 'boolean' && d.link === null), 'done: each {' + DONE.join(', ') + '}');
   const refresh = h.done.find(d => d.title === 'Read the networks\' numbers again');
   ok(refresh && refresh.by === 'lantern' && refresh.ok && refresh.undo === false && refresh.goal === 'g-reach' && /^act-/.test(refresh.actionId), 'the morning\'s refresh is in Done: the Lantern\'s, for g-reach, no Undo for a read of public numbers');
   const note = h.done.find(d => /^Wrote a note/.test(d.title));
@@ -161,7 +165,12 @@ let CYCLE1, H1;
   /* slots: LANTERN.md section 10, the day across the horizon; tests/mission.mjs holds its fields */
   ok(same(h.today, ['posts', 'fixed', 'reach7', 'slots']) && same(h.today.posts, ['sent', 'due', 'failed']) && h.today.posts.sent === 1 && h.today.posts.due === 1 && h.today.fixed === 0 && same(h.today.reach7, ['value', 'delta']) && h.today.reach7.value === 19000 && Array.isArray(h.today.slots),
     'today: {posts {sent 1, due 1, failed 0}, fixed 0, reach7 {value 19000, delta}, slots}');
-  ok(same(h.voice, ['telegram']) && h.voice.telegram.linked === false && same(h.spend, ['usd', 'capUsd']) && h.spend.capUsd === 10, 'voice {telegram {linked}} and spend {usd, capUsd}');
+  /* round four (7 October 2026): the voice says why the link matters while it is missing, and when the evening digest goes;
+     spend carries roi {calls, usd, helped}, what the month's paid calls bought */
+  ok(same(h.voice, ['telegram', 'digestAt', 'digestWaiting', 'today']) && same(h.voice.telegram, ['linked', 'why']) && h.voice.telegram.linked === false
+    && h.voice.telegram.why === 'so the Lantern can reach you when something is urgent' && h.voice.digestAt === '22:00 UTC'
+    && same(h.spend, ['usd', 'capUsd', 'roi']) && h.spend.capUsd === 10 && same(h.spend.roi, ['calls', 'usd', 'helped']) && h.spend.roi.calls === 0,
+    'voice {telegram {linked, why}, digestAt, digestWaiting, today} and spend {usd, capUsd, roi {calls, usd, helped}}');
 }
 
 /* ===========================================================================
@@ -639,6 +648,8 @@ console.log('\n11. every string the owner reads says the Lantern, never the soul
   walk(h, '');
   for (const s of SAID.concat(OUTCOMES)) if (/soul/i.test(s)) found.push('said: ' + s.slice(0, 80));
   ok(found.length === 0, 'the Home, every answer to its buttons, the ledger door, the conversation\'s outcomes: no "soul" anywhere' + (found.length ? ': ' + found.join(' | ') : ''));
+  /* round four: the morning's message reaches him in the evening digest */
+  await VOICE.eveningDigest({ force: true });
   ok(NOTIFY.length === 1 && /^NOOR Lantern/.test(NOTIFY[0]) && /Home/.test(NOTIFY[0]) && !/soul/i.test(NOTIFY[0]), 'the Telegram message too: ' + NOTIFY[0].slice(0, 60));
   ok(SOUL.sayLantern('that slot was set by the Soul; the soul never overwrites it') === 'that slot was set by the Lantern; the Lantern never overwrites it'
     && SOUL.sayLantern("The soul's own goals, a soul skip, the Soul room") === "The Lantern's own goals, a Lantern skip, the engine room", 'one function turns the old name into the one the owner reads');

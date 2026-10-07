@@ -28,6 +28,11 @@
     12. the verse-length test is not planned again inside 14 days of the
         owner's stop; the reconcile undo checks what is there now; no stale
         deepOnce comment.
+    R5. the second review (7 October 2026): the paid Monday strategy is
+        credited only with the intents it proposed; a paid tie break only
+        inside the council's own time, its outcome written from the verdict
+        the cycle kept; a morning no model could answer is said (Home, the
+        voice, the evening); Ask's "think deeply" only as a whole order.
 
    Run:  node tests/soul-review.mjs
 */
@@ -45,6 +50,7 @@ const D1 = addDays(D0, 1);
 setDay(D0, '05:30');
 const LLM = await import('../api/_llm.js');
 const SOCIAL = await import('../api/social.js');
+const VOICE = await import('../api/_voice.js');   /* round four: the evening digest */
 async function freeVerse(date, slot) {
   const picks = await LINEUP.otherPicksFor(MANIFEST, date, slot, null, new Map(), null, { records: {} });
   const taken = new Set(Object.values(picks));
@@ -321,7 +327,8 @@ console.log('\n8. actions updated by id; a lesson group withdrawn together');
 console.log('\n9. the owner is not told the same thing every day');
 {
   resetStore(); NOTIFY.length = 0; ROUTER.plan = '{"intents":[]}';
-  const run = async d => { setDay(d); quietExp(); return MIND.tick({ force: true }); };
+  /* round four: each day's needs reach him in that evening's digest */
+  const run = async d => { setDay(d); quietExp(); const t = await MIND.tick({ force: true }); await VOICE.eveningDigest({ force: true }); return t; };
   await run('2026-10-06');
   const first = NOTIFY.length;
   await run('2026-10-07');
@@ -429,8 +436,9 @@ console.log('\nR1. a tick ends on time: the canaries resume, a hung hand is let 
   const a = await EVOLVE.runCanaries(cand, { progressKey: 'nsoul:canary:test', until: CLOCK.t + 100000 });
   ok(a.incomplete && a.results.length === 3 && strong === 3, 'out of time after three canaries: it stops and says the verdict is not in (' + strong + ' asked)');
   const b = await EVOLVE.runCanaries(cand, { progressKey: 'nsoul:canary:test' });
-  /* 3 October 2026: twelve Guardian canaries now (Article 11's five joined the seven) */
-  ok(b.ok && b.results.length === 13 && strong === 12, 'the next run asks only the nine it had not, then the strategist: 12 Guardian answers in all, none twice');
+  /* 3 October 2026: twelve Guardian canaries now (Article 11's five joined the seven);
+     mail: 6 October 2026, eighteen (Article 12's six joined) */
+  ok(b.ok && b.results.length === 19 && strong === 18, 'the next run asks only the fifteen it had not, then the strategist: 18 Guardian answers in all, none twice');
 
   /* through a weekly cycle: the reflection's canaries resume on the next tick */
   resetStore(); strong = 0;
@@ -442,11 +450,12 @@ console.log('\nR1. a tick ends on time: the canaries resume, a hung hand is let 
   const r1 = await MIND.readCycle(t1.id);
   ok(t1.timeUp && r1.stage === 'reflect' && r1.reflect.weekly.canaryResumes === 1 && !r1.reflect.weekly.evaluated, 'the canaries ran out of the tick and the cycle stopped at reflect, to resume (' + strong + ' answers so far)');
   const sofar = strong;
-  /* twelve canaries at a minute each take more than one more tick: the
-     cycle resumes tick after tick until they are all answered */
+  /* eighteen canaries (mail: 6 October 2026) at a minute each take more
+     than one more tick: the cycle resumes tick after tick until they are
+     all answered */
   let t2 = null, more = 0;
-  for (const at of ['05:40', '06:00', '06:20', '06:40']) { if (t2 && t2.status === 'done') break; setDay(monday, at); t2 = await MIND.tick({}); more++; }
-  ok(t2.status === 'done' && strong === 12 && sofar < 12, 'the later ticks finished them: 12 Guardian answers across ' + (more + 1) + ' ticks, none repeated');
+  for (const at of ['05:40', '06:00', '06:20', '06:40', '07:00', '07:20', '07:40']) { if (t2 && t2.status === 'done') break; setDay(monday, at); t2 = await MIND.tick({}); more++; }
+  ok(t2.status === 'done' && strong === 18 && sofar < 18, 'the later ticks finished them: 18 Guardian answers across ' + (more + 1) + ' ticks, none repeated');
   ok((await EVOLVE.readPlaybook()).version === 1, 'and the lesson was applied');
   SOUL.setSeams({ route: SR });
   ROUTER.reflect = '{"lessons":[],"goals":[],"upgrades":[]}'; ROUTER.guardian = 'approve';
@@ -478,6 +487,8 @@ console.log('\nR1. a tick ends on time: the canaries resume, a hung hand is let 
   S.set(SOUL.K.cycleCurrent, JSON.stringify({ id: rw.id, date: monday, kind: 'weekly', status: 'running' }));
   setDay(monday, '05:35');
   const tf = await MIND.tick({});
+  /* round four: the summary leads that evening's digest */
+  await VOICE.eveningDigest({ force: true });
   ok(tf.status === 'failed' && NOTIFY.length === 1 && /weekly/.test(NOTIFY[0]) && /failed at reflect/.test(NOTIFY[0]), 'killed a third time, the weekly cycle still sends its summary, saying it failed: ' + (NOTIFY[0] || '').slice(0, 160));
   await MIND.tick({ force: true });
   ok(NOTIFY.filter(n => /failed at reflect/.test(n)).length === 1, 'and only once');
@@ -493,7 +504,8 @@ console.log('\nR2. the canaries ask as the real plan asks, at temperature 0');
   SOUL.setSeams({ route: SR }); ROUTER.guardian = 'approve';
   const role = t => /ROLE: (\w+)/.exec(t.messages[0].content)[1];
   const st = tasks.filter(t => role(t) === 'strategist');
-  ok(st.length >= 1 && st[0].tier === 'deep' && st[0].opts.max_tokens === 1400 && st[0].opts.timeout === 30000 && st[0].opts.temperature === 0, 'the strategist canary: the deep tier, 1400 tokens, 30 seconds, temperature 0');
+  /* round four: an ordinary morning plans on the free strong tier, and so does its canary */
+  ok(st.length >= 1 && st[0].tier === 'strong' && st[0].opts.max_tokens === 1400 && st[0].opts.timeout === 30000 && st[0].opts.temperature === 0, 'the strategist canary: the free strong tier, as the daily plan asks, 1400 tokens, 30 seconds, temperature 0');
   const gd = tasks.filter(t => role(t) === 'guardian');
   ok(gd.length >= 7 && gd.every(t => t.opts.temperature === 0), 'every Guardian canary at temperature 0');
 }
@@ -527,6 +539,132 @@ console.log('\nR4. the small things');
   ok(DOORM.KEY_MISS_MS === 60000, 'for one minute');
   const k = JSON.parse(S.get(SOUL.K.indexnowKey)).key;
   ok((await door({ query: { action: 'indexnow-key', key: k } })).statusCode === 200, 'and the real key still answers');
+}
+
+/* ===========================================================================
+   R5. THE SECOND REVIEW (7 October 2026): what a paid call is credited
+       with, a tie break inside the council's own time, a morning no model
+       answered, and Ask's "think deeply" (the reviewers' repros, as checks)
+=========================================================================== */
+console.log('\nR5. the second review: paid credit, the tie break\'s clock, a silent morning, think deeply');
+{
+  const { jevOff } = await import('./_soul-harness.mjs');
+  const DEC = await import('../api/_decisions.js');
+  const HOME = await import('../api/_home.js');
+  const LA = await import('../api/lantern-agent.js');
+  const SR = SOUL.seams.route;
+  const month = realToday.slice(0, 7);
+  const ticks = async (date, kind) => { for (let i = 0; i < 8; i++) { const r = await MIND.tick({}); if (r.status === 'done' || !r.ran) break; } return MIND.readCycle(date + '-' + kind); };
+  const roleOf = t => (/ROLE: (\w+)/.exec(String(t.messages[0] && t.messages[0].content)) || [])[1];
+  jevOff();
+
+  /* a. the paid Monday strategy is credited only with the intents it proposed (roi-strategy) */
+  const monday = (() => { let d = realToday; while (new Date(d + 'T12:00:00Z').getUTCDay() !== 1) d = addDays(d, 1); return d; })();
+  const strategy = async planText => {
+    resetStore(); ROUTER.failRoles.clear(); ROUTER.plan = '{"intents":[]}'; ROUTER.guardian = 'approve'; ROUTER.skeptic = 'approve';
+    ROUTER.reflect = '{"lessons":[],"retire":[],"goals":[],"upgrades":[],"ideas":[]}';
+    S.set('nexp:state', JSON.stringify({ current: { id: 'verse-length', start: addDays(monday, -2), args: {} }, history: [] }));
+    setDay(addDays(monday, -3), '06:00');
+    await HOME.queueAdd([{ action: 'note', args: { text: 'Look at the verse reels again on Monday.' }, why: 'queued by Friday\'s free plan', due: monday }], 'fri-daily');
+    SOUL.setSeams({ route: async task => {
+      if (task.tier === 'deep' && task.purpose === 'weekly-strategy') {
+        const paidId = await LLM.paidRecord({ task: 'weekly-strategy', model: 'anthropic/claude-sonnet-5', costUsd: 0.03 });
+        return { ok: true, content: planText, tier: 'deep', paid: true, paidId, costUsd: 0.03, spendRecorded: true, model: 'anthropic/claude-sonnet-5' };
+      }
+      return SR(task);
+    } });
+    setDay(monday, '05:20');
+    const rec = await ticks(monday, 'weekly');
+    SOUL.setSeams({ route: SR });
+    return { rec, line: (await LLM.paidLedger(month)).find(l => l.task === 'weekly-strategy') };
+  };
+  let w = await strategy('{"intents":[]}');
+  ok(w.rec.intents.some(i => i.queued && i.action === 'note' && i.status === 'done') && w.line && w.line.outcome && w.line.outcome.helped === false && /none of its intents ran/.test(w.line.outcome.note),
+    'a paid strategy that proposed nothing is not credited with Friday\'s queued note that ran: ' + (w.line && w.line.outcome && w.line.outcome.note));
+  w = await strategy(JSON.stringify({ intents: [{ action: 'note', args: { text: 'The Monday strategy keeps a note.' }, why: 'the week ahead starts from what worked', expectedEffect: '', metric: '' }] }));
+  ok(w.rec.intents.filter(i => i.action === 'note' && i.status === 'done').length === 2 && w.rec.intents.filter(i => i.fromPlan).length === 1
+    && w.line.outcome.helped === true && /^1 of its intents ran/.test(w.line.outcome.note), 'one it proposed ran beside the queued one: credited with one, its own: ' + w.line.outcome.note);
+
+  /* b. the tie break and the council's clock (tiebreak-late) */
+  const verse = (await freeVerse(D1, 'reelB'))[0];
+  const swap = { action: 'lineup-swap', args: { date: D1, slot: 'reelB', id: verse }, why: 'Verse reels reached 1204 people over 12 posts, against 640 for word reels.', expectedEffect: 'more reach', metric: 'northStar', evidence: { n: 12 } };
+  const PG = { delay: 0, asked: 0 };
+  const paidGuardian = () => SOUL.setSeams({ route: async task => {
+    if (roleOf(task) === 'guardian' && task.tier === 'deep') {
+      PG.asked++;
+      if (PG.delay) await new Promise(r => setTimeout(r, PG.delay));
+      const paidId = await LLM.paidRecord({ task: 'tie-break', model: 'anthropic/claude-sonnet-5', costUsd: 0.03 });
+      return { ok: true, content: '{"vote":"approve","reasons":["fine"]}', tier: 'deep', paid: true, paidId, costUsd: 0.03, spendRecorded: true, model: 'anthropic/claude-sonnet-5' };
+    }
+    return SR(task);
+  } });
+  /* on a day of its own: block 10 above closed the deep tier for D0 in this process */
+  const TB_DAY = addDays(D0, 3);
+  const dailyWith = async () => {
+    resetStore(); ROUTER.failRoles.clear(); ROUTER.plan = JSON.stringify({ intents: [swap] }); ROUTER.guardian = 'reject'; ROUTER.skeptic = 'approve';
+    setDay(TB_DAY, '05:20'); quietExp();
+    const rec = await ticks(TB_DAY, 'daily');
+    return { it: rec.intents.find(i => i.action === 'lineup-swap'), lines: (await LLM.paidLedger(month)).filter(l => l.task === 'tie-break') };
+  };
+  paidGuardian(); PG.delay = 400; PG.asked = 0;
+  const savedStep = MIND.LIMITS.modelStepMs;
+  MIND.LIMITS.modelStepMs = 200;
+  let tb = await dailyWith();
+  MIND.LIMITS.modelStepMs = savedStep;
+  await new Promise(r => setTimeout(r, 500));
+  ok(tb.it.status === 'rejected' && !tb.it.council.timedOut && tb.it.council.tieBreak && tb.it.council.tieBreak.asked === false && PG.asked === 0 && tb.lines.length === 0,
+    'with too little of the council\'s time left, no paid tie break is asked at all: nothing paid, nothing logged as helped, the free veto stands: ' + (tb.it.council.tieBreak && tb.it.council.tieBreak.why));
+  PG.delay = 0; PG.asked = 0;
+  tb = await dailyWith();
+  ok(tb.it.council.approved && tb.it.council.tieBreak.paid && tb.it.council.tieBreak.changed && PG.asked === 1 && tb.lines.length === 1 && tb.lines[0].outcome && tb.lines[0].outcome.helped === true && /lifted/.test(tb.lines[0].outcome.note),
+    'inside its time, the paid Guardian decides, and the cycle writes what it led to from the verdict it kept: ' + (tb.lines[0] && tb.lines[0].outcome && tb.lines[0].outcome.note));
+  /* one asked in time that answers past the council's deadline is not used, and its line says so */
+  resetStore(); setDay(TB_DAY, '09:00'); PG.delay = 300; PG.asked = 0;
+  COUNCIL.TIE_LIMITS.needMs = 50;
+  const evidence = { byKind: [{ kind: 'verse reels', posts: 12, reach: 1204 }, { kind: 'word reels', posts: 9, reach: 640 }] };
+  const late = await COUNCIL.convene(swap, evidence, { until: Date.now() + 120, deferOutcome: true, sentinel: false });
+  await new Promise(r => setTimeout(r, 400));
+  COUNCIL.TIE_LIMITS.needMs = 26000;
+  const lateLine = (await LLM.paidLedger(month)).find(l => l.task === 'tie-break');
+  ok(!late.approved && late.tieBreak.late && PG.asked === 1 && lateLine && lateLine.outcome && lateLine.outcome.helped === false && /after the council's time ran out/.test(lateLine.outcome.note),
+    'a paid answer that comes after the council\'s deadline is never used, and the ledger says so: ' + (lateLine && lateLine.outcome && lateLine.outcome.note));
+  ok(COUNCIL.TIE_LIMITS.needMs === 26000, 'a tie break is asked only with 26 seconds of the council\'s time left (its own 25 and a margin)');
+  SOUL.setSeams({ route: SR }); ROUTER.guardian = 'approve'; ROUTER.skeptic = 'approve';
+
+  /* c. a morning no model could answer is said, on Home and in the evening (silent-brain) */
+  resetStore(); quietExp(); NOTIFY.length = 0; ROUTER.plan = '{"intents":[]}';
+  SOUL.setSeams({ route: async t => ({ ok: false, error: 'the free allowance for today is used up; resets at ' + D0 + ' 24:00 UTC', tier: t.tier }) });
+  setDay(D0, '05:20');
+  let rec = await ticks(D0, 'daily');
+  SOUL.setSeams({ route: SR });
+  const brain = (rec.report.needsYou || [])[0] || '';
+  ok(/^no model could answer this morning; the plan could not be made \(the free allowance for today is used up, resets at/.test(brain), 'the morning\'s report leads with it: ' + brain.slice(0, 120));
+  const cards = (await DEC.readOpen()).map(d => d.title);
+  ok(cards.includes('No model could answer this morning'), 'his Home carries it as a card');
+  const um = (rec.urgent || []).find(u => u.kind === 'models');
+  ok(um && (VOICE.URGENT.models ? um.sent : !um.sent), 'it is offered to the voice as urgent (kind "models"' + (VOICE.URGENT.models ? ', sent at once)' : '; this voice does not know the kind yet, so it waits for the evening)'));
+  setDay(D0, '22:05');
+  const ev = await VOICE.eveningDigest({});
+  ok(ev.sent && NOTIFY.some(t => /no model could answer this morning/.test(t)), 'and the evening\'s message says it');
+  /* the strategist answers, but no model reviewer of the council does */
+  resetStore(); quietExp(); NOTIFY.length = 0; ROUTER.plan = JSON.stringify({ intents: [swap] }); ROUTER.failRoles.add('guardian'); ROUTER.failRoles.add('skeptic');
+  setDay(D0, '05:20');
+  rec = await ticks(D0, 'daily');
+  ROUTER.failRoles.clear();
+  ok(/^no model could answer this morning; 1 public act went without review/.test((rec.report.needsYou || [])[0] || ''), 'a council that heard from none of its model reviewers is said too: ' + String((rec.report.needsYou || [])[0]).slice(0, 90));
+  /* a message the scrubber refused is not a model that could not answer */
+  resetStore(); quietExp(); ROUTER.plan = '{"intents":[]}';
+  SOUL.setSeams({ route: async t => (roleOf(t) === 'strategist' ? { ok: false, blocked: true, error: 'the message was refused by the scrubber', tier: t.tier } : SR(t)) });
+  setDay(D0, '05:20');
+  rec = await ticks(D0, 'daily');
+  SOUL.setSeams({ route: SR });
+  ok(rec.plan.blocked && !(rec.report.needsYou || []).some(n => /no model could answer/.test(n)) && MIND.brainOut(rec) === null, 'a plan the scrubber refused raises no such line');
+
+  /* d. "think deeply" only as a whole order (think-deep) */
+  const asks = ['Do you think deep dives on the Seerah would reach more people?', 'Why do I think harder topics get fewer views?', 'Which reels do you think hard-working parents watch?', 'I want you to think hard'];
+  const orders = ['Think deeply about why reach fell this week', 'please think hard', 'Think deeply: what should the house do next?', 'Which reels serve Ramadan best? Think hard.', 'What should we post on Friday, and think deeply'];
+  ok(asks.every(m => !LA.thinkDeeply(m)) && orders.every(m => LA.thinkDeeply(m)), 'Ask pays for depth only when he orders it, where his message begins or ends, never for a question that only uses the words');
+  ok(!LA.askRoute(asks[0], async t => t).deep && LA.askRoute(orders[2], async t => t).deep, 'and the run\'s router follows it');
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');

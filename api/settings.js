@@ -43,6 +43,11 @@ export const DIALS = {
   "lantern.paid":      { t: "bool", env: "ALLOW_PAID_MODELS", envTrue: "1", def: false,
                          g: "The Lantern", n: "May fall back to paid models",
                          h: "Off keeps every request on the free chain. On means a busy day can bill you." },
+  /* 6 October 2026 (LANTERN.md section 11.1): the Lantern's mail switch,
+     read by api/_mail.js before every send */
+  "mail.on":           { t: "bool", def: true,
+                         g: "The Lantern", n: "Mail",
+                         h: "Off stops every email the Lantern would send, at once. Reading the mailbox goes on; nothing is sent. Pause on Home stops everything." },
 
   /* ---- reading aids -------------------------------------------------- */
   "guide.on":          { t: "bool", env: "GUIDE_PUBLIC", envTrue: "1", def: false, pub: true,
@@ -208,6 +213,27 @@ export async function settings() {
     out[k] = Object.prototype.hasOwnProperty.call(saved, k) ? saved[k] : envDefault(d);
   }
   return out;
+}
+
+/* 6 October 2026 (LANTERN.md section 11): one dial set from inside the house
+   (the Lantern's mail switch on Home and in the Mail room, api/_mail.js),
+   read fresh from the store so no other saved dial is lost. {ok, error?} */
+export async function setDial(k, v) {
+  const d = DIALS[k];
+  if (!d) return { ok: false, error: k + " is not a dial" };
+  if (!(await kvReady())) return { ok: false, error: "no store configured, so nothing can be saved" };
+  const c = v === null ? null : coerce(d, v);
+  if (v !== null && c === null) return { ok: false, error: JSON.stringify(v) + " is not a value this dial takes" };
+  try {
+    const [raw] = await kv([["GET", KEY]]);
+    const saved = raw ? JSON.parse(raw) : {};
+    if (c === null) delete saved[k]; else saved[k] = c;
+    await kv([["SET", KEY, JSON.stringify(saved)]]);
+  } catch {
+    return { ok: false, error: "the store refused the write" };
+  }
+  cache = { at: 0, val: null };
+  return { ok: true };
 }
 
 function verify(cookieHeader, secret) {

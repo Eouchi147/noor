@@ -1349,7 +1349,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   console.log(tag + ' · More: every other room, the engine room first');
   await pg.click('nav.bar [data-s="more"]');
   await pg.waitForSelector('#s-more [data-room]', { timeout: 10000 }); await pg.waitForTimeout(300);
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).join(',')) === 'engine,lights,legacy,marketing,journal,night,system,controls,flow,readers', 'the rooms, the engine room first');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).join(',')) === 'engine,mail,lights,legacy,marketing,journal,night,system,controls,flow,readers', 'the rooms, the engine room first and the Lantern\'s mail beside it');
   ok(await pg.evaluate(() => { const c = document.querySelector('#s-more [data-room]'); return c.classList.contains('feat') && /The engine room/.test(c.innerText) && /31,240/.test(c.innerText); }), 'the engine room leads, with its live number');
   ok(await pg.evaluate(() => /2/.test(document.querySelector('#s-more [data-room="readers"] .v').textContent)), "the readers' inbox card counts what is new");
   ok(await pg.evaluate(() => document.querySelector('#s-more p.sec').textContent) === 'The rooms', 'the rooms come first on the hub, before its health');

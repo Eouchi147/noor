@@ -38,9 +38,13 @@ import * as DEC from "./_decisions.js";
 import { sentences } from "./_prose.js";
 import { SLOTS } from "./_schedule.js";
 import { EXPERIMENTS } from "./_experiments.js";
+import { OUTREACH_WORDS } from "./_outreach.js";   /* outreach: the words for its hands (LANTERN.md section 11.3) */
 import * as G from "./_giving.js";   /* the giving part and its words (LANTERN.md sections 9 and 10) */
 import { daySlots } from "./_dayline.js";   /* mission: today.slots (LANTERN.md section 10) */
 import { MISSION_WORDS } from "./_mission.js";   /* mission: the words for its hands (LANTERN.md section 8) */
+import { MAIL_WORDS, homeMail, briefMail } from "./_mail.js";   /* mail: the mailbox's part and words (LANTERN.md section 11) */
+import { roiSummary } from "./_llm.js";   /* round four: what paid models bought this month */
+import * as V from "./_voice.js";   /* round four: the owner's voice */
 
 const str = (v, n) => String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, n || 200);
 const clip = (v, n) => { const s = str(v, 2000); return s.length <= n ? s : s.slice(0, n - 3).replace(/\s+\S*$/, "") + "..."; };
@@ -98,9 +102,15 @@ const PAST_WORDS = {
 /* the giving hands' own words (api/_giving.js) */
 Object.assign(NOW_WORDS, G.GIVING_WORDS.now);
 Object.assign(PAST_WORDS, G.GIVING_WORDS.past);
+/* outreach: the words for research and the letters to places (api/_outreach.js) */
+Object.assign(NOW_WORDS, OUTREACH_WORDS.now);
+Object.assign(PAST_WORDS, OUTREACH_WORDS.past);
 /* mission: the words for the mission powers' hands (api/_mission.js) */
 Object.assign(NOW_WORDS, MISSION_WORDS.now);
 Object.assign(PAST_WORDS, MISSION_WORDS.past);
+/* mail: and the mailbox's hands (api/_mail.js) */
+Object.assign(NOW_WORDS, MAIL_WORDS.now);
+Object.assign(PAST_WORDS, MAIL_WORDS.past);
 function generic(name, past) {
   const h = HANDS[name];
   const d = h && h.describe ? String(h.describe).split(/[,;(]/)[0] : String(name || "an action").replace(/-/g, " ");
@@ -132,7 +142,9 @@ export const METRIC_UNIT = Object.freeze({
   "site.visitors7": "visitors", "site.searchShare": "share", "attention.watchedMedian": "share", "attention.watchSecsMedian": "seconds",
   "output.health": "share", "output.posts7": "posts", "spend.usd": "usd", "learning.lessons": "lessons",
   /* 3 October 2026: the sustain goal counts givers; the test goal, days run */
-  "giving.monthly": "givers", "learning.experiment": "days"
+  "giving.monthly": "givers", "learning.experiment": "days",
+  /* outreach: the outreach goal counts places (6 October 2026) */
+  "outreach.contacted": "places", "outreach.places": "places", "outreach.replied": "places", "outreach.working": "places"
 });
 export const unitOf = m => METRIC_UNIT[m] || null;
 export function goalFor(metric, goals) {
@@ -507,9 +519,20 @@ export async function briefFacts(rec, extra = {}) {
     posts, goals, did, plans,
     decisions: typeof extra.decisions === "number" ? extra.decisions : null,
     /* the gifts, totals only, when there is something true to say (LANTERN.md section 9) */
-    giving: G.briefGiving(snap, weekAgo)
+    giving: G.briefGiving(snap, weekAgo),
+    /* mail: yesterday's mailbox, totals only, when it moved (LANTERN.md section 11) */
+    mail: await briefMail(date)
   };
+  /* round four: the month's paid models, when any was paid for; said in one
+     sentence after the paragraph, in code (paidLine below) */
+  try { const roi = await roiSummary(String(date).slice(0, 7)); if (roi && roi.calls) facts.paid = { calls: roi.calls, usd: roi.usd, helped: roi.helped, line: roi.line }; } catch { }
   return facts;
+}
+/* round four: the one plain sentence on paid models, "Paid models this
+   month: 1.20 dollars, 3 uses: the Monday strategy, a tie break and a
+   letter retry.", appended to the brief's paragraph whoever wrote it */
+export function paidLine(f) {
+  return f && f.paid && f.paid.calls && f.paid.line ? String(f.paid.line) : "";
 }
 export function briefNumbers(f) {
   return [
@@ -537,6 +560,16 @@ export function briefTemplate(f) {
   if (g.onTrack) gp.push(g.onTrack + " on track");
   if (g.behind) gp.push(g.behind + " behind");
   if (gp.length) s.push("Of the goals, " + joinList(gp) + ".");
+  /* mail: one sentence on yesterday's mailbox, totals only, when it moved;
+     it gives way before the gifts' sentence when the brief runs long */
+  const ml = f.mail;
+  if (ml && (ml.sent || ml.answered || ml.forYou)) {
+    const mb = [];
+    if (ml.sent) mb.push("sent " + fmt(ml.sent) + (ml.sent === 1 ? " email" : " emails"));
+    if (ml.answered) mb.push("answered " + fmt(ml.answered) + (ml.answered === 1 ? " message" : " messages"));
+    if (ml.forYou) mb.push("handed " + fmt(ml.forYou) + " to you");
+    s.push("Yesterday the Lantern " + joinList(mb) + " in the mailbox.");
+  }
   /* one sentence on giving, when the reading has something true to say */
   const gv = f.giving;
   if (gv && (gv.newMonthly7 || gv.coverPct != null)) {
@@ -632,6 +665,7 @@ export async function writeBrief(rec, opts = {}) {
     } catch (e) { r = { ok: false, error: str(e && e.message || e, 160) }; }
     if (r && r.ok) {
       const g = guardBrief(r.content, facts);
+      try { const L = await import("./_llm.js"); await L.noteGuard(r, !!g.ok); } catch { }   /* round four: the scoreboard */
       if (g.ok) {
         let held = false;
         if (typeof opts.risk === "function") { try { const k = await opts.risk(g.text); held = !!(k && k.risky); if (held) why = "the sentinel held the paragraph back"; } catch { } }
@@ -639,6 +673,9 @@ export async function writeBrief(rec, opts = {}) {
       } else why = g.why;
     } else why = r ? str(r.error, 160) : "no answer";
   } else why = "no time was left in the tick for a model, so the template speaks";
+  /* round four: the paid sentence, after the paragraph */
+  const pl = paidLine(facts);
+  if (pl) text = String(text).replace(/\s+$/, "") + " " + pl;
   const brief = { date: rec.date, text: sayLantern(text), numbers: briefNumbers(facts), at: nowIso(), cycle: rec.id, by, why, model, facts };
   try {
     await store([["SET", K.brief(rec.date), JSON.stringify(brief), "EX", String(BRIEF_KEEP_S)], ["SET", K.briefLast, rec.date, "EX", String(BRIEF_KEEP_S)]]);
@@ -804,6 +841,8 @@ export async function skipNext(id) {
       is in `missing`. Shared reads are made once.
 --------------------------------------------------------------------------- */
 export const PART_MS = 6000;
+/* round four: the words the Home and the link card say while Telegram is not linked */
+export const VOICE_WHY = "so the Lantern can reach you when something is urgent";
 export const SLOTS_MS = 5000;   /* mission: today.slots' own clock, inside the today part's */
 function within(p, ms, what) {
   let t;
@@ -817,6 +856,13 @@ function undoable(a) {
   if (a.undo.kind === "noop" || a.undo.kind === "irreversible") return false;
   const h = HANDS[a.hand];
   return !!(h && typeof h.undo === "function");
+}
+/* mail: a sent email's own link in Gmail (LANTERN.md section 11.4); every
+   other item null */
+function doneLink(a) {
+  const l = a && a.ok && a.result && a.result.link;
+  const href = l && typeof l === "object" ? String(l.href || "") : "";
+  return /^https:\/\/mail\.google\.com\/mail\/u\/0\/#search\/rfc822msgid:[A-Za-z0-9._%+-]+$/.test(href) ? { href, label: sayLantern(str(l.label, 60)) || "Open in Gmail" } : null;
 }
 function doneDetail(a, today) {
   if (!a.ok) return sayLantern("It did not run: " + str(a.error, 200));
@@ -886,6 +932,8 @@ export async function homeView(opts = {}) {
   /* the gifts (LANTERN.md section 10), from the record the cycle keeps,
      never Stripe on this request */
   const givingP = part("giving", async () => G.homeGiving({ actions: S.actions }));
+  /* mail: the mailbox (LANTERN.md section 11.4), null with missing.mail on a fault */
+  const mailP = part("mail", async () => homeMail());
 
   const [paused, brief, decisions, done, next, coming, goals, ideas, todayPart, voice, spend] = await Promise.all([
     part("paused", async () => !!(await S.paused())),
@@ -897,7 +945,7 @@ export async function homeView(opts = {}) {
       const goals = await goalsSafe();
       const acts = (await S.actions()).filter(a => a && a.at && String(a.at).slice(0, 10) >= addDays(today, -2) && a.tier !== "R0");
       const out = acts.map(a => ({ id: a.id, at: a.at, title: actionTitle(a, today), detail: doneDetail(a, today), goal: goalFor(a.metric, goals),
-        by: BY_FOR(a), ok: !!a.ok, undo: undoable(a), actionId: a.id }));
+        by: BY_FOR(a), ok: !!a.ok, undo: undoable(a), actionId: a.id, link: doneLink(a) }));   /* mail: link */
       /* the routine: the posting machine's own day, one line for each
          finished day (2026-10-03: today's own count is `today.posts`, which
          the Home draws at the top of Done, so it is not said twice) */
@@ -909,7 +957,7 @@ export async function homeView(opts = {}) {
         const when = d === addDays(today, -1) ? " yesterday" : " on " + dayWord(d, today);
         out.push({ id: "routine:" + d, at: d + "T23:59:00.000Z", title: fmt(t.sent) + " of " + fmt(t.due) + " posts went out" + when,
           detail: t.failed ? fmt(t.failed) + " reached no network" + (t.pending ? ", " + fmt(t.pending) + " still processing" : "") + "." : t.pending ? fmt(t.pending) + " still processing at the network." : "",
-          goal: "g-health", by: "machine", ok: t.sent === t.due, undo: false, actionId: null });
+          goal: "g-health", by: "machine", ok: t.sent === t.due, undo: false, actionId: null, link: null });
       });
       return out.sort((a, b) => String(b.at).localeCompare(String(a.at))).slice(0, 40);
     }),
@@ -999,15 +1047,26 @@ export async function homeView(opts = {}) {
     part("voice", async () => {
       const T = await import("./_telegram.js");
       const st = typeof T.ownerStatus === "function" ? await T.ownerStatus() : { linked: false };
-      return { telegram: { linked: !!(st && st.linked) } };
+      const linked = !!(st && st.linked);
+      /* round four: why the link matters while it is missing, and the evening */
+      let v = null;
+      try { v = await V.voiceView(); } catch { v = null; }
+      return { telegram: { linked, why: linked ? null : VOICE_WHY }, ...(v ? { digestAt: v.digestAt, digestWaiting: v.digestWaiting, today: v.today } : {}) };
     }),
-    part("spend", async () => { const s = await spendView(); return { usd: s.usd, capUsd: s.capUsd }; })
+    part("spend", async () => {
+      const s = await spendView();
+      /* round four: what the month's paid calls bought (spend.roi) */
+      let roi = null;
+      try { const r = await roiSummary(); roi = { calls: r.calls, usd: r.usd, helped: r.helped }; } catch { roi = null; }
+      return { usd: s.usd, capUsd: s.capUsd, roi };
+    })
   ]);
   const visibleCount = Array.isArray(decisions) ? decisions.length : 0;
   const status = paused ? "paused" : visibleCount ? "needs-you" : "working";
   const giving = await givingP;
+  const mail = await mailP;   /* mail */
   return { ok: true, now: nowIso(), name: "the Lantern", paused: !!paused, status, brief, decisions, done, next, coming, goals, ideas,
-    today: todayPart, voice, spend, giving, missing };
+    today: todayPart, voice, spend, giving, mail, missing };
 }
 
 /* ---------------------------------------------------------------------------
@@ -1020,10 +1079,19 @@ export async function lanternState(opts = {}) {
   let effects = [], playbook = [];
   try { effects = (await I.readEffects(10)).map(e => ({ action: intentTitle({ action: e.action, args: {} }), metric: e.metric, date: e.date, delta: e.delta, verdict: e.verdict })); } catch { effects = []; }
   try { const E = await import("./_evolve.js"); playbook = ((await E.readPlaybook()).lessons || []).slice(-10).map(l => sayLantern(str(l.text, 200))); } catch { playbook = []; }
+  /* mail: a card about an email says what kind of thing waits, never what
+     the email says or who wrote it: the conversation may be answered by a
+     model that keeps what it reads (LANTERN.md section 11.1, the amended
+     per-person line) */
+  let mailIds = new Set();
+  try { mailIds = new Set((await DEC.readOpen()).filter(d => /^mail/.test(String(d.source || "")) && d.key !== "mail-setup").map(d => d.id)); } catch { mailIds = new Set(); }
+  const isMail = d => mailIds.has(d.id) || !!d.letter || /^https:\/\/mail\.google\.com\//.test(String((d.link && d.link.href) || ""));
+  const mailCard = d => ({ title: d.letter && d.kind === "approve" ? "An email waits for your Send" : sayLantern(str(d.title, 80)), kind: d.kind, why: "an email in the mailbox; what it says stays out of this conversation" });
   return {
     status: h.status, paused: h.paused,
-    brief: h.brief ? { date: h.brief.date, text: h.brief.text, numbers: (h.brief.numbers || []).map(n => ({ label: n.label, value: n.value, delta: n.delta, unit: n.unit })) } : null,
-    decisions: (h.decisions || []).slice(0, 12).map(d => ({ title: d.title, kind: d.kind, why: clip(d.why, 160) })),
+    /* round four: the conversation's state stays without the spend, so the brief's paid sentence is left out */
+    brief: h.brief ? { date: h.brief.date, text: String(h.brief.text || "").replace(/\s*Paid models this month: [^.]*(\.\d+[^.]*)*\.\s*$/, ""), numbers: (h.brief.numbers || []).map(n => ({ label: n.label, value: n.value, delta: n.delta, unit: n.unit })) } : null,
+    decisions: (h.decisions || []).slice(0, 12).map(d => (isMail(d) ? mailCard(d) : { title: d.title, kind: d.kind, why: clip(d.why, 160) })),
     done: (h.done || []).slice(0, 15).map(d => ({ at: String(d.at || "").slice(0, 16), title: d.title, by: d.by, ok: d.ok })),
     next: (h.next || []).slice(0, 10).map(n => ({ title: n.title, when: n.when, status: n.status, reason: n.reason })),
     coming: h.coming || [],
@@ -1034,6 +1102,8 @@ export async function lanternState(opts = {}) {
     /* 6 October 2026: an amount only as a total of three gifts or more (api/_giving.js modelTotals) */
     giving: h.giving ? { currency: h.giving.currency, monthlyGivers: h.giving.monthly.givers, delta7: h.giving.monthly.delta7, gifts30: G.modelTotals(h.giving.gifts30),
       thisMonth: G.modelTotals(h.giving.thisMonth), costsCovered: G.modelTotals(h.giving.thisMonth).net == null ? null : h.giving.upkeep.cover, line: h.giving.line.id, noteAt: h.giving.note ? h.giving.note.at : null } : null,
+    /* mail: the mailbox as totals only, never a title from it */
+    mail: h.mail ? { configured: h.mail.configured, on: h.mail.on, firstTen: h.mail.firstTen, today: h.mail.today, outreach: h.mail.outreach } : null,
     missing: Object.keys(h.missing || {})
   };
 }

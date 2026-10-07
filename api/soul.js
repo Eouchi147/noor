@@ -19,7 +19,16 @@
 //      youtube|radar|coverage           the instruments (SOUL.md section 11).
 // POST {action:"pause"|"resume"|"run"|"undo"|"goal"|"upgrade"|"benchmarks"|
 //      "tg-code"|"tg-link"|"tg-test"}
-// GET  /api/soul?action=tick           the cron, every fifteen minutes.
+// GET  /api/soul?view=mail             the Mail room (LANTERN.md section 11,
+//   6 October 2026): the switch and its caps, the first ten, today, the
+//   threads the Lantern handled, the places, do not contact, `missing`.
+// POST {action:"mail-switch", on} | {action:"dnc-add"|"dnc-remove",
+//      address}: the owner's own, each answering {ok, message}.
+// GET  /api/soul?action=tick           the cron, every fifteen minutes; after
+//   the cycle it reads the mailbox (api/_mail.js mailTick), answered as
+//   `mail` beside the cycle's own fields; then (round four) the owner's voice
+//   (api/_voice.js voiceTick): letters waiting for his Send, at most once in
+//   six hours, and the evening digest from 22:00 UTC, answered as `voice`.
 // GET  /api/soul?action=indexnow-key&key=  PUBLIC: the IndexNow key file,
 //   reached at /<key>.txt through vercel.json's rewrite. It answers the key
 //   as plain text when the name asked for is the key, and 404 otherwise;
@@ -49,6 +58,8 @@ import { tick, readCycle } from "./_mind.js";
 import { readPlaybook, listProposals, listUpgrades, setUpgradeStatus } from "./_evolve.js";
 import { homeView, doNow, skipNext, ideaChoice } from "./_home.js";
 import { decide, closeByRef } from "./_decisions.js";
+import * as MAIL from "./_mail.js";   /* mail: the Lantern's mailbox (LANTERN.md section 11) */
+import * as VOICE from "./_voice.js";   /* round four: the owner's voice, urgent now and the rest at 22:00 */
 
 const json = (res, code, obj) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -70,6 +81,10 @@ function cronAdmitted(req) {
   const fromVercelCron = !!h["x-vercel-signature"] || /vercel-cron/i.test(String(h["user-agent"] || ""));
   const bearer = String(h.authorization || "").replace(/^Bearer\s+/i, "");
   const secret = process.env.CRON_SECRET || "";
+  /* review fix, 7 October 2026: production always carries CRON_SECRET, so a
+     production without it admits no tick at all (fail closed): a user agent
+     can be typed by anyone. Previews and tests keep the old proof. */
+  if (!secret && process.env.VERCEL_ENV === "production") return false;
   const bearerOk = !!secret && bearer.length === secret.length && crypto.timingSafeEqual(Buffer.from(bearer), Buffer.from(secret));
   return secret ? bearerOk : fromVercelCron;
 }
@@ -140,6 +155,18 @@ async function viewInstrument(name) {
   return { latest, lastTry: last, history: hist };
 }
 
+/* mail: the mailbox after the cycle, under a hard clock of its own (its
+   minute, its last message and its goodbye to the server); never throws */
+export const MAIL_TICK_HARD_MS = 80000;
+async function mailAfterTick(t0) {
+  let timer;
+  try {
+    return await Promise.race([MAIL.mailTick({ startedAt: t0 }),
+      new Promise(res => { timer = setTimeout(() => res({ ok: false, error: "the mailbox took longer than " + MAIL_TICK_HARD_MS / 1000 + " seconds; it is read again at the next tick" }), MAIL_TICK_HARD_MS); })]);
+  } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
+  finally { clearTimeout(timer); }
+}
+
 async function telegramCall(fnName, ...args) {
   let T;
   try { T = await import("./_telegram.js"); } catch (e) { return { ok: false, error: "the Telegram module could not be loaded: " + String(e && e.message || e).slice(0, 120) }; }
@@ -179,9 +206,25 @@ export default async function handler(req, res) {
     if (!storeReady()) return json(res, 200, { ok: false, error: "no store is configured, so the Lantern has nowhere to live", message: "No store is configured, so the Lantern has nowhere to live." });
 
     if (req.method === "GET") {
-      if (isTick) return json(res, 200, await tick({ by: gate.ok ? "owner" : "cron" }));
+      if (isTick) {
+        /* mail: the mailbox is read after the cycle's own stages, on its own
+           lock and clock, never holding them up (LANTERN.md section 11) */
+        const t0 = Date.now();
+        let r, fault = null;
+        try { r = await tick({ by: gate.ok ? "owner" : "cron" }); } catch (e) { fault = e; }
+        const mail = await mailAfterTick(t0);
+        /* round four: then the voice, under its own short clock, never a throw */
+        let voice, vt;
+        try { voice = await Promise.race([VOICE.voiceTick(), new Promise(res2 => { vt = setTimeout(() => res2({ ok: false, error: "the voice took longer than 15 seconds" }), 15000); })]); }
+        catch (e) { voice = { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
+        finally { clearTimeout(vt); }
+        if (fault) throw fault;
+        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice } : r);
+      }
       const view = String(q.view || "today");
       if (view === "home") return json(res, 200, await homeView());
+      /* mail: the Mail room (threads, places, do not contact, the switch) */
+      if (view === "mail") return json(res, 200, await MAIL.mailView());
       if (view === "today") return json(res, 200, await viewToday());
       if (view === "chronicle") return json(res, 200, { ok: true, items: await chronicleRead(int(q.limit, 20, 1, 400)) });
       if (view === "metrics") {
@@ -270,6 +313,14 @@ export default async function handler(req, res) {
     if (action === "tg-code") return json(res, 200, await telegramCall("ownerLinkCode"));
     if (action === "tg-link") return json(res, 200, await telegramCall("ownerLink"));
     if (action === "tg-test") return json(res, 200, await telegramCall("notifyOwner", "NOOR Lantern: a test message from the console, " + dayOf() + ". If you can read this, the link works."));
+    /* mail: the switch and do not contact (LANTERN.md section 11), the owner's only */
+    if (action === "mail-switch") {
+      const on = body.on === true || body.on === "true" || body.on === 1 || body.on === "1" ? true : body.on === false || body.on === "false" || body.on === 0 || body.on === "0" ? false : null;
+      if (on === null) return json(res, 400, { ok: false, message: "Say on or off." });
+      return json(res, 200, await MAIL.mailSwitch(on));
+    }
+    if (action === "dnc-add") return json(res, 200, await MAIL.addDoNotContact(String(body.address || ""), "the owner"));
+    if (action === "dnc-remove") return json(res, 200, await MAIL.removeDoNotContact(String(body.address || "")));
     return json(res, 400, { ok: false, error: "unknown action", message: "That is not something the Lantern knows how to do." });
   } catch (e) {
     const said = sayLantern(String(e && e.message || e).slice(0, 200));

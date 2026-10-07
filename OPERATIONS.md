@@ -71,10 +71,14 @@ of them you must **redeploy** (Deployments → ⋯ → Redeploy) for the change 
 | `OPENROUTER_API_KEY` | Starts `sk-or-`. | openrouter.ai/keys | Every AI feature falls back to written text. Site still fine. |
 | `OPENROUTER_MODEL` | *Optional.* Force one model. **Ignored if it is not free.** | none | The house picks the best free model itself. This is the recommended state. |
 | `GROQ_API_KEY` | The Lantern's fast provider (`api/_llm.js`): free `gpt-oss` and `qwen` models, tens of requests a second. Free belongs to the account, not the model: make this key from an account with **no billing enabled**, or a model this router treats as free could still be charged to you. | console.groq.com/keys | That provider is simply absent; the Lantern still routes to Gemini and OpenRouter. |
-| `GEMINI_API_KEY` | The Lantern's strong provider: free 3.x Flash and Flash-Lite models. Same rule: use a key from an account with **no billing enabled**. | aistudio.google.com/apikey | Same: that provider is absent, no error. |
+| `GEMINI_API_KEY` | The Lantern's strong provider: free 3.x Flash and Flash-Lite models. Same rule: use a key from an account with **no billing enabled**. Since 7 October the fast tier asks Flash too (the free Flash-Lite had no quota in May). Gemini's free tier learns from what it reads, so only totals ever go there. | aistudio.google.com/apikey | Same: that provider is absent, no error. |
+| `AI_GATEWAY_API_KEY` | *Optional* (7 October 2026). Vercel's AI Gateway: Jev, the judge, and the gateway's own free models. Not needed on Vercel: the deployment's **OIDC token** is the credential (the same one Jev always used), so there is no key to create. A key, if one is set, is used first. Every call asks for zero data retention and no training. | vercel.com, AI Gateway, API keys | With neither a key nor OIDC, Jev is "unavailable" (every judgement falls back to what the house did before) and the gateway's free models are absent. |
+| `CEREBRAS_API_KEY` | *Optional* (7 October 2026). Cerebras's free trial: `gpt-oss-120b` and `qwen-3.8-27b`, very fast, for totals only (its pages do not say how long it keeps what it reads, so nothing about a person goes there, and it is never in the mail tier). Use an account with **no billing enabled**. | cloud.cerebras.ai | That provider is absent, no error. |
+| `NVIDIA_API_KEY` | *Optional* (round five, 7 October 2026). NVIDIA's API catalog (build.nvidia.com), free for members of NVIDIA's Developer Program, for totals only (never mail, never a person's words). **Not used unless `NVIDIA_PRODUCTION_OK` is also `1`**: NVIDIA's own terms make the free catalog a trial, not for production (see "NVIDIA's catalog" in §3). | build.nvidia.com | NVIDIA is absent, no error. |
+| `NVIDIA_PRODUCTION_OK` | *Optional.* `1` is your word that NVIDIA allows your use of its catalog for the Lantern (for example under a licence NVIDIA sells for production). Leave it unset while the free trial terms apply. | You | NVIDIA's names are held back, and the engine room says why. |
 | `OPENROUTER_DAILY` | *Optional.* Raises the Lantern's conservative OpenRouter daily budget (default 40) if your account has purchased credits and holds a larger free-request ceiling. | none | The router stays at the cautious default of 40 free OpenRouter requests a day. |
 | `ALLOW_PAID_MODELS` | Set to `1` **only** if you intend to be billed. | none | Paid models are dropped before the request is made. Leave unset. |
-| `SOUL_MONTHLY_USD` | *Optional.* Lowers the Soul's monthly cap on paid models (the deep tier). `0` turns paid off. **Cannot raise it above 10**: the code takes min(10, this). | none | The cap is the code's own 10 USD a month. |
+| `SOUL_MONTHLY_USD` | *Optional.* Lowers the Soul's monthly cap on paid models (the deep tier). `0` turns paid off. **Cannot raise it above 10**: the code takes min(10, this). The day's cap (0.50) and a call's ceiling (0.10) are code constants, not variables. | none | The cap is the code's own 10 USD a month. |
 | `SOUL_DEEP_MODELS` | *Optional.* Narrows the deep tier's paid models to a subset of the code list, as a comma list or a JSON array. A name not on the code list is ignored, so this can never add one. | none | The whole code list (`DEEP_MODELS` in `api/_llm.js`). |
 
 ### Required for the store (strongly recommended)
@@ -96,6 +100,16 @@ on every cold start. The library itself is unaffected.
 |---|---|
 | `STRIPE_SECRET_KEY` | Starts `sk_live_`. Reads charges for the ledger and takes gifts. |
 | `NOOR_MONEY_MODE` | `donate` (default) or `guardian`. |
+
+### The Lantern's mail (6 October 2026, "The Lantern's mail" in §8)
+
+| Variable | What it is | Get it from | Without it |
+|---|---|---|---|
+| `GMAIL_APP_PASSWORD` | The 16 letter app password of noorcodexoflight@gmail.com, with or without its spaces. Mark it **Sensitive**. The code reads it only where it connects, and never logs, stores or returns it. | myaccount.google.com/apppasswords (2-Step Verification must be on) | Nothing is read and nothing is sent; Home carries one card, "Give the Lantern its mailbox", with the guide. |
+| `GMAIL_USER` | *Optional.* The mailbox, if it is ever another account. | none | noorcodexoflight@gmail.com, a constant in `api/_mail.js`. |
+| `MAIL_FROM` | *Optional.* Another sending address, **only within noorcodex.com**; any other is ignored. | none | salam@noorcodex.com. |
+| `MAIL_SENDER` | *Optional.* `resend` sends through Resend's API instead of Gmail's SMTP. | none | `gmail`: smtp.gmail.com:465 with the app password, From salam@noorcodex.com (the Send mail as alias in that Gmail). |
+| `RESEND_API_KEY` | Only with `MAIL_SENDER=resend`. Sending access only; Sensitive. | resend.com, once noorcodex.com is verified there | With `MAIL_SENDER=resend` and no key, the mailbox counts as not set up: nothing is sent. |
 
 ### Tuning, all optional
 
@@ -221,9 +235,11 @@ retired model names, waiting nine seconds each, and returning nothing.
 
 ### The deep tier: the Soul's one paid door, `api/_llm.js` §8
 
-Every Lantern tier (fast, strong, long) is free only and stays that way. The Soul
-alone (its strategist and the Guardian) may ask for `tier: "deep"`, which tries a
-short code list of strong paid OpenRouter models first and falls back to the free
+Every Lantern tier (fast, strong, long) is free only and stays that way. Since
+7 October 2026 a `tier: "deep"` call pays **only when it names one of five uses**
+(see "The models and the money for them" below); any other deep call is answered
+by the free "strong" chain and says why. A deep call that may pay tries a short
+code list of strong paid OpenRouter models first and falls back to the free
 "strong" chain whenever any gate says no:
 
 1. The model is on `DEEP_MODELS` in code (`SOUL_DEEP_MODELS` may only narrow it).
@@ -235,10 +251,17 @@ short code list of strong paid OpenRouter models first and falls back to the fre
    than 5 USD per million prompt tokens and 20 USD per million completion tokens.
 5. The worst case of this call (its prompt and its whole `max_tokens` at the live
    price) plus the month's spend so far fits under the cap.
+6. (7 October 2026) The worst case plus the day's spend (`nsoul:spend:day:<date>`)
+   fits under **0.50 USD a day**, and the worst case alone is no more than
+   **0.10 USD**, unless the call is the Monday strategy.
+7. (round five) The worst case is **held** in the month's and the day's ledgers in one
+   write before the call; a hold that passes either cap is given back and refused, a
+   hold the store does not take refuses paid, and the door is not closed for the day
+   (`nsoul:deepoff:<date>`).
 
 **The cap** is 10 USD a calendar month (UTC), `DEEP_CAP_USD_MAX` in code.
 `SOUL_MONTHLY_USD` can lower it, never raise it. After each paid call the actual cost
-is added to the ledger in micro-dollars: OpenRouter's own reported cost, else the
+takes the place of its hold in the ledger (round five), in micro-dollars: OpenRouter's own reported cost, else the
 reported tokens at the live price, else the worst case. A paid call that times out is
 charged its worst case, since it may have been billed. `spendReport()` gives the
 month, the dollars, the cap and the number of paid calls; the console shows it.
@@ -251,6 +274,164 @@ hour before trying a paid model again. Every deep answer says `paid: true|false`
 `costUsd`, and its `tried` list says why each paid model was passed over.
 
 `ALLOW_PAID_MODELS` has no effect on any of this, in either direction.
+
+### The models and the money for them (7 October 2026)
+
+The owner: "the best free models ... take advantage of JEV ... paid models if
+needed but ... extreme ROI ... and use them scarcely." So, in `api/_llm.js`,
+`api/_jev.js`, `api/_judge.js` and the callers:
+
+**The free doors, each tier in this order before anything is measured.**
+Fast: Groq `gpt-oss-20b`, Cerebras `gpt-oss-120b` (only with its key), Gemini Flash,
+OpenRouter's free names, the AI Gateway's free names. Strong: Gemini Flash (two of
+its names), Groq `gpt-oss-120b`, Cerebras, OpenRouter, the gateway. Long: Gemini
+Flash, Groq, OpenRouter, the gateway. Mail: Groq `gpt-oss-120b` and `20b`, then the
+gateway's free names (never Gemini, Cerebras or a `:free` name).
+
+**The gateway's free list is read live** (`GET https://ai-gateway.vercel.sh/v1/models`,
+no key needed): a model is free only when it is a language model whose every price
+field is zero and which carries no price tier. It is kept six hours (`nllm:live:gateway`),
+and there is no written fallback: a list that cannot be read for a day allows no
+gateway model. **Every gateway request carries `providerOptions.gateway`
+`{zeroDataRetention: true, disallowPromptTraining: true}`**, chat and Jev alike.
+A model no provider can serve that way is refused by the gateway itself (HTTP 400,
+`no_providers_available`) and waits a day (`nllm:refused:gateway:<id>`). **Read on 7
+October:** this month's free gateway models (`inclusionai/ling-3.1-flash-free`,
+`poolside/laguna-s-2.1-free`, served by novita and poolside, and the decision model
+Laya, served by boundless) have no provider on the gateway's zero data retention or
+no-training lists, so today every one of them is refused under those flags and sits
+out its day; the house keeps asking once a day, and a model whose provider joins
+those lists starts answering on its own.
+
+**The scoreboard.** Every call adds to its model's line,
+`nllm:score:<provider>:<model>:<week>` (calls, answered, failed, milliseconds, the
+checks its answers met and passed, the last error and when), in the same pipeline as
+the usage. The checks: the brief's guard, a plan or a verdict that can be read, the
+mail reader's answer, a letter's checks. Two weeks are read. Quality is the share
+answered times the share of checks passed, each pulled toward 0.75 by three imagined
+calls (a model with fewer than 5 calls, or 3 checks, is 0.75 on that count). Inside a
+tier the names are sorted by quality in tenths, best first, and the order above breaks
+ties. The engine room's models view (`GET /api/lantern-models`) says it in words
+(`words`) and fields (`ranking`), and the cycle's evidence carries the words too.
+
+**Groq's real limit is tokens a minute.** Each call reserves its own estimate (the
+prompt at four characters a token plus its `max_tokens`) against 7,000 a minute a
+model (Groq's free 8,000, kept under); Cerebras 25,000 (its 30,000).
+
+**Jev, wherever a judgement is enough** (`api/_judge.js`, on the gateway's Decision
+API, `POST /v1/evaluate`): the inbox's first pass (a choice among the 17 kinds; a kind
+it is at least 70 percent sure of that the house does not answer is filed or handed to
+you with no writing model at all; the mail tier is asked only to write a reply, or when
+Jev is unsure, or for a place the house wrote to); every letter and reply (seven yes or
+no questions: money promised, pressure to give, a religious ruling, claiming to be a
+person, someone's details, anything improper, off topic; any at 0.5 or above holds the
+email, on top of the red-line guard and the Guardian; the house's own fixed words are
+not asked); a place's fit, from its own facts, which only adds to its order; the brief;
+the weekly ideas. A judge that is down changes nothing. **Jev is not free:** the gateway
+bills it at 0.04 dollars a million input tokens (a few thousandths of a cent a call),
+against the gateway's own credit, never this budget. Every call is counted by the day
+in `nsoul:jev:<date>` (calls, answered, failed, milliseconds, the cost the gateway
+reported, and by use), shown in the models view and the evidence.
+
+**Paid models, scarcely.** Every daily task runs on the best free model, the daily
+strategist and the Guardian included. A paid model is asked only for:
+
+| Use (`purpose`) | When |
+|---|---|
+| `weekly-strategy` | The scheduled Monday cycle's plan (an extra run on a Monday pays nothing). The one use allowed past 0.10 USD a call. |
+| `weekly-reflection` | The scheduled Monday cycle's reflection. |
+| `tie-break` | The free Guardian alone stands against a public act the Skeptic and the Auditor approved: one paid Guardian judges it, paid or nothing (no second free call). |
+| `letter-retry` | A letter or reply to a place of high value (a foundation, or a school that names itself a network, a trust or a group of schools) whose two free drafts failed their checks. |
+| `ask-deep` | Your own "think deeply" (or "think deep", "think hard") in Ask: the one synthesis of that run. |
+
+The research's web search for places (`api/_outreach.js`, 2 dollars a month at
+most) is paid too; it keeps its own door and share, and since 7 October it also
+answers to the day's cap and a call's ceiling and writes its line in the ledger.
+Caps: **0.50 USD a day**, inside **10 USD a month**; a call whose worst case passes
+**0.10 USD** is refused before it is sent, unless it is the Monday strategy. The
+worst case is estimated before every call (the prompt at two characters a token, all
+of `max_tokens`, at the live price).
+
+**The ROI ledger**, `nsoul:paid:<YYYY-MM>`, one line a paid call `{id, at, task,
+model, costUsd, outcome}`. The outcome is filled in later by what the call led to:
+the Monday strategy, whether any of its intents ran; the reflection, whether a lesson
+was applied, an idea raised or an upgrade proposed; a tie break, whether it changed
+the council's answer; a letter retry, whether the paid draft passed its checks; a
+think deeply, whether its answer was the one you read; a web search, whether a place
+it found was kept. A paid call that failed is its own outcome at once. Home shows
+`spend.roi {calls, usd, helped}`; the brief adds one plain sentence ("Paid models this
+month: 1.20 dollars, 3 uses: ..."), and the models view lists the lines.
+
+**What you must do for any of it:** nothing for the free doors and Jev on Vercel
+(OIDC). For paid: credit on OpenRouter (it already needed it). For zero data
+retention per request to cost nothing, the team must be on Vercel **Pro** (the
+gateway's pricing page); Jev draws on the gateway's credit, so keep a little there.
+
+### Round five: the models review, and NVIDIA (7 October 2026)
+
+**The paid caps hold under pressure** (`api/_llm.js` §8). The worst case of a paid
+call is now *held* in both ledgers before a byte is sent (one `INCRBY` on
+`nsoul:spend:<YYYY-MM>` and `nsoul:spend:day:<date>` together); a hold that takes
+either past its cap is given back at once and the call refused, so five Asks at once
+can no longer pass the 0.50 a day (they did: 0.80). A store that will not take the
+hold refuses every paid call (it used to pay and record nothing). After the call the
+actual cost replaces the hold. A cost that cannot be written closes the paid door for
+the rest of the UTC day, in the router itself, for every caller (Ask, the council,
+the mailbox, the research): `nsoul:deepoff:<date>`, the same mark the cycle and the
+mailbox already closed and read, kept in the instance's memory too. A paid call made
+outside the router holds and settles the same way with `paidReserve(estUsd, purpose)`
+and `paidSettle(hold, {costUsd, model, task})`; `paidRoom` and `paidRecord` stay for
+callers that have not moved yet (the research's web search, `api/_outreach.js`).
+
+**Zero retention for mail.** A paid call that can carry mail or a person's words (the
+mail tier's letter retry, your own "think deeply" in Ask) now asks OpenRouter for
+`"provider": {"zdr": true}` beside `data_collection: "deny"`
+(openrouter.ai/docs/features/zdr, read 7 October 2026: "the request will only be
+routed to endpoints that have a Zero Data Retention policy"). A name with no such
+endpoint is refused by OpenRouter and passed over. The Monday strategy, the
+reflection and the tie break carry totals only and keep `data_collection: "deny"`.
+
+**Faults fade.** A model's count with too little behind it (under 5 calls, or 3
+checks) is 1, not 0.75, and tenths stop at 9, so an unmeasured name stands level with
+a healthy measured one and the tier's own order decides. Once an hour a tier sends one
+call first to the best name not measured for a day (`nllm:explore:<tier>:<hour>`; each
+score line keeps `at`), so a lead sunk by one bad hour is heard again and leads again
+once the bad week leaves the two weeks read (it never did before).
+
+**NVIDIA's catalog** (read 7 October 2026). What NVIDIA says:
+- *The models:* `GET https://integrate.api.nvidia.com/v1/models` is public and
+  OpenAI-shaped (`{object, data[{id, object, created, owned_by}]}`), about ninety
+  names, chat models beside embedders, guards and vision models. The house reads it
+  live (kept six hours, `nllm:live:nvidia`), with no written fallback, and keeps only
+  its chat names: quick `nvidia/nemotron-3.5-lightning-30b-a3b`, `z-ai/glm-5.3-flash`,
+  `openai/gpt-oss-20b`; strong `nvidia/nemotron-3-super-120b-a12b`,
+  `moonshotai/kimi-k3`, `z-ai/glm-5.3`, `deepseek-ai/deepseek-v4.1-flash`,
+  `nvidia/nemotron-3-ultra-550b-a55b`. The two best that are live today stand in the
+  fast, strong and long tiers, after Cerebras (or Groq) and before OpenRouter's free
+  names, and the scoreboard ranks them with the others.
+- *Free, for a trial:* NVIDIA's NIM FAQ (docs.api.nvidia.com/nim/docs/product,
+  updated 6 August 2026): "Members of the NVIDIA Developer Program have free access to
+  NIM API endpoints for prototyping", and "Using NIM in production requires an NVIDIA
+  AI Enterprise license", production being "any use of NIM for purposes other than
+  development, testing, research or evaluation". The NVIDIA API Trial Terms of Service
+  (v. 19 September 2025, assets.ngc.nvidia.com/products/api-catalog/legal): access
+  "for limited trial purposes only and without use of the API Service or Generated
+  Content in production".
+- *Data:* the same terms: NVIDIA does "not store or use User Content or Generated
+  Content at the end of each API Service session" (2.3), but collects "User Content
+  and Generated Content to improve NVIDIA products and services, including AI models"
+  (3.3), and no personal information may be uploaded. So it never reads mail or a
+  person's words: it is not in the mail tier, and a call marked per person passes it
+  over.
+- *Rate:* no table is published. NVIDIA's developer forum (July 2026) puts the free
+  key at 40 requests a minute for the whole account, "dependent on model, use-case and
+  the amount of current overall traffic". The house keeps one bucket for the account,
+  30 a minute and a cautious 1,000 a day (`nllm:rl:nvidia:*:m|d:...`).
+
+Because the Lantern is a production use, **NVIDIA stays off until you set
+`NVIDIA_PRODUCTION_OK=1`**, which you should do only if NVIDIA allows your use (for
+example under a licence it sells for production). Until then the engine room says
+"NVIDIA's free models are held back" and nothing is sent to it.
 
 ### The nightly refresh
 
@@ -559,6 +740,21 @@ meant.
 | `nexp:state` | The experiment now running (or none) and its finished history: `{current: {id, start, args}\|null, history: [...]}` | `_experiments.js` |
 | `nsoul:spend:<YYYY-MM>` | The month's paid model spend in micro-dollars (INCRBY after every paid call), kept 70 days | `_llm.js` |
 | `nsoul:spend:<YYYY-MM>:calls` | How many paid calls that month were charged | `_llm.js` |
+| `nsoul:spend:day:<date>` | (7 October 2026) The day's paid spend in micro-dollars; the day's cap is 0.50 USD. Kept 3 days | `_llm.js` |
+| `nsoul:paid:<YYYY-MM>` | (7 October 2026) The ROI ledger: a hash, one line a paid call `{id, at, task, model, costUsd, outcome}`, the outcome filled in later. Kept 400 days | `_llm.js` |
+| `nllm:score:<provider>:<model>:<week>` | (7 October 2026) The scoreboard: calls, answered, failed, milliseconds, checks met and passed, the last error and when. Two weeks are read; kept 21 days | `_llm.js` |
+| `nllm:live:gateway` | (7 October 2026) The AI Gateway's free list as last read `{at, ids}` | `_llm.js` |
+| `nllm:refused:gateway:<id>`, `nllm:refused:cerebras:<id>`, `nllm:refused:nvidia:<id>` | A name refused under the privacy flags (or gone), set aside a day | `_llm.js` |
+| `nllm:tpm:<provider>:<model>:<minute>` | Tokens reserved this minute (Groq, Cerebras) | `_llm.js` |
+| `nllm:live:nvidia` | (round five) NVIDIA's catalog as last read `{at, ids}`, kept six hours | `_llm.js` |
+| `nllm:rl:nvidia:*:m:<minute>`, `nllm:rl:nvidia:*:d:<date>` | (round five) NVIDIA's one bucket for the whole account: 30 a minute, 1,000 a day | `_llm.js` |
+| `nllm:explore:<tier>:<hour>` | (round five) That hour's one call to the best name not measured for a day, and which | `_llm.js` |
+| `nsoul:jev:<date>` | (7 October 2026) Jev's calls that day: calls, ok, failed, ms, costMicro, and `p:<use>` by use. Kept 40 days | `_jev.js` |
+| `nsoul:voice:said:<kind>:<ref>` | An urgent message already said (a day; six hours for the letters; a conversation for distress) | `_voice.js` |
+| `nsoul:voice:digest:<date>` | What waits for that evening's digest, kinds and the morning's own message only | `_voice.js` |
+| `nsoul:voice:digest:sent:<date>`, `nsoul:voice:carry` | That evening's digest went (or was carried, the day's messages spent), and what was carried | `_voice.js` |
+| `nsoul:voice:log` | The last 40 things the voice did `{at, kind, sent, why}`, never a word of a message | `_voice.js` |
+| `nsoul:voice:retry`, `nsoul:voice:retry:pace` | (round five) Urgent messages that did not get through (the kind and the house's own numbers only), and the thirty minute pace of trying them again | `_voice.js` |
 | `nsoul:nocredit` | Set for one hour after OpenRouter answers 402: the deep tier uses free models only | `_llm.js` |
 | `nsoc:override:<date>` | One day's reel overrides, a hash of `<slot>: {action:"skip"}\|{action:"swap", id}, at, by, note}` | `_lineup.js` |
 | `nsoc:rota:leans` | The rota leans, a small list `[{id, slot, kind, from, to, by, at, note}]`: one reel slot carries a named kind for 1 to 7 days (the Lantern's rota-lean lever). Read fail open on the posting path and every view; ended ones kept 62 days for the insights reconstruction, then pruned on the next write | `_levers.js` |
@@ -589,9 +785,9 @@ meant.
 | `nsoul:goals:archive` | The soul's own retired goals (it keeps at most 8 active), out of every prompt | `_soul.js` |
 | `nsoul:audit:head` | The audit chain's count and newest hash `{count, head, at}`, written with every entry; the weekly Telegram summary carries the head | `_soul.js` |
 | `nsoul:action:<id>` | One soul action, kept 400 days; `nsoul:actions` lists the ids, so an update is by id | `_soul.js` |
-| `nsoul:tg:told` | A hash of each needsYou item already sent and the day it was sent; an item is sent again only after 7 days | `_mind.js` |
+| `nsoul:tg:told` | A hash of each needsYou item already sent and the day it was sent; an item is sent again only after 7 days (since 7 October 2026 kept by the voice, written when the evening digest goes) | `_voice.js` |
 | `nsoul:cycle:daily` | The date of the last scheduled (05:00) cycle; an owner's Run never sets it | `_mind.js` |
-| `nsoul:deepoff:<date>` | Set when a paid call's cost could not be written: no deep call for the rest of that day | `_mind.js` |
+| `nsoul:deepoff:<date>` | Set when a paid call's cost could not be written: no paid call for the rest of that day (round five: the router itself sets and reads it, for every caller) | `_mind.js`, `_llm.js` |
 | `nsoul:count:soul-lineup-date:<date>`, `nsoul:count:soul-skip-date:<date>` | The soul's line-up changes (2 at most) and skips (1 at most) for one target date | `_hands.js` |
 | `nsoul:canary:<hash>` | The canary answers already had for one set of proposed lessons, so an evaluation cut short resumes, kept 7 days | `_evolve.js` |
 | `nllm:rl:<provider>:<model>:soul:<date>` | The soul's own free calls that day; it stops at half of the provider's daily allowance, so the Lantern keeps the rest | `_llm.js` |
@@ -616,8 +812,36 @@ meant.
 | `nsoul:pub:note` | The note on /donate `{text, at, facts, by}`, shown 14 days | `_giving.js` (giving-note); read by `_public.js` |
 | `nsoul:pub:door` | The door of the week `{path, title, desc, since, until}` | the feature-door lever; only read by `_public.js` |
 | `nsoul:count:support:<date>`, `nsoul:count:note:<date>` | That day's support line change and giving note (1 each at most), counted before each runs | `_soul.js` |
+| `nsoul:outreach:places` | The places the research kept (6 October 2026, "The Lantern's outreach"), a hash, id to `{id, name, kind, city, country, website, domain, email, source, sourceRef, evidence, lang, facts: [{text, url}], signals, score, status: new\|written\|followed\|replied\|working\|declined\|dnc, foundAt, firstAt, followupAt, answeredAt, subject, messageId, pending, held, history}`; 500 kept, each change under its own lock | `_outreach.js` |
+| `nsoul:outreach:index` | One small line a place `{s, c, a, t, n, sc, r, p, h, f, u}` (status, contacted, answered, group, country, score, ready, waiting, held until, first letter, follow-up): the order and the counts without reading every place | `_outreach.js` |
+| `nsoul:outreach:byaddr`, `nsoul:outreach:bydomain` | A place's published address, and its own domains (its website's, and its address's unless a free mail provider's), to its id: the deduplication and `matchPlaceByAddress` | `_outreach.js` |
+| `nsoul:outreach:seen` | Sites checked that gave nothing, or were taken away, `{at, why}`; not asked again for 60 days | `_outreach.js` |
+| `nsoul:outreach:cands`, `nsoul:outreach:cursor` | The candidates waiting to be checked (300 at most), and where the walk of the sources is `{n, wd, web, turn}` | `_outreach.js` |
+| `nsoul:outreach:lock:research`, `nsoul:outreach:lock:p:<id>` | One search for places at a time (SET NX, 120 seconds) and one writer a place (20 seconds), each deleted only by its holder | `_outreach.js` |
+| `nsoul:outreach:webspend:<YYYY-MM>` | The web search's own spend that month in micro-dollars (2 dollars at most), also written to `nsoul:spend:<YYYY-MM>`, kept 70 days | `_outreach.js` |
+| `nsoul:count:places:<date>`, `nsoul:count:letters:<date>`, `nsoul:count:followups:<date>` | That day's new places (20 at most), first letters (10) and follow-ups (10), counted by the hands themselves; a letter never spends the six public actions | `_outreach.js` |
+| `nsoul:once:goal:g-outreach` | Set once the outreach goal was added as the owner's, so it is never added again | `_outreach.js` |
 | `nsoul:once:goal:g-sustain`, `nsoul:once:seed:<seed>` | Set once the sustain goal or a seeded idea (case-for-support, print-shop, documentary) was offered, so neither is offered again | `_giving.js` |
 | `nsoul:once:zakat:<YYYY-MM>` | No longer written (6 October 2026): the month's zakat card is now raised while it waits and this month's card is open or was pushed out by the cap, and never again once he answered it, read from the decisions themselves | `_giving.js` |
+| `nsoul:mail:uid` | The mailbox's read pointer `{uid, validity, at}`: the last UID read in INBOX, and its UIDVALIDITY (a change starts again from the last 7 days) ("The Lantern's mail" in §8) | `_mail.js` |
+| `nsoul:mail:lock` | The reading's own lock (SET NX, 90 seconds, a token only its holder deletes) | `_mail.js` |
+| `nsoul:mail:dnc` | Do not contact: a hash, one field an address or a whole domain, `{at, why}`; one no is final | `_mail.js` |
+| `nsoul:mail:firstten` | How many emails the owner has sent with his own Send; at 10 the Lantern sends on its own | `_mail.js` |
+| `nsoul:mail:count:<kind>:<date>` | That day's emails by kind (`outreach` 10, `reply` 30, `followup` 10) and `total` (50), INCR at the send, given back on a failure | `_mail.js` |
+| `nsoul:mail:last:<hash>` | The last email to one address (a hash of it), 24 hours: never two in a day unless answering | `_mail.js` |
+| `nsoul:mail:to:<hash>:<date>` | Answers to one address that day; three at most, 2 days | `_mail.js` |
+| `nsoul:mail:place:<hash>` | One place's letters `{firstAt, followupAt, answeredAt}`, 400 days: one follow-up, 7 days on, none after an answer | `_mail.js` |
+| `nsoul:mail:out:<id>` | One email the Lantern wrote, whole (to, subject, text, status: waiting-owner, sent, declined, refused), 30 days | `_mail.js` |
+| `nsoul:mail:outlog` | Every email's outcome, light (no text, a reader never by name), 300 kept | `_mail.js` |
+| `nsoul:mail:thread:<id>` | One conversation `{from, fromName, subject, messageId(s), kind, action, summary, draft, held, reply, replies, placeId}`, 180 days; `nsoul:mail:threads` lists the latest 300 | `_mail.js` |
+| `nsoul:mail:body:<id>`, `nsoul:mail:rtext:<id>` | A message's text, masked, and the reply the house sent, 30 days; then only the thread's summary and status | `_mail.js` |
+| `nsoul:mail:day:<date>` | That day's mailbox as totals (a hash: received, answered, filed, forYou, sent, waiting, unread), 40 days | `_mail.js` |
+| `nsoul:mail:log` | The last 50 things the mailbox did, as titles | `_mail.js` |
+| `nsoul:mail:labelq` | Gmail labels waiting for the next reading (an email he sent from Home after the reading closed) | `_mail.js` |
+| `nsoul:mail:fail:<uid>` | How many readings one message waited for the mail tier; at 3 it is his, 7 days | `_mail.js` |
+| `nsoul:mail:labels` | Set once the four Gmail labels were made | `_mail.js` |
+| `nsoul:mail:declined` | What he did not want (his Not this one): kind, a letter's subject (never a reply's), why; 30 kept, read by the weekly reflection | `_mail.js` |
+| `nsoul:once:mail-send:<id>` | The claim on one email's send, 10 minutes, so it never goes twice | `_mail.js` |
 
 **Nothing in the store is a reader's identity.** Rate limiting uses a salted
 fingerprint, never an address. The journal keeps an email so you can reply; it is
@@ -656,7 +880,7 @@ stripped from everything public.
 | `/api/insights` | admin | What strangers watched: the cached per-media numbers and the aggregate, now with a `learn` block (watch time by kind, verse length and reciter) |
 | `/api/experiments` | owner only | The experiment now running, if any, with its reading so far; `POST {action:"plan", id, start, args}` and `POST {action:"stop"}`. See "Experiments" above. |
 | `/api/lineup` | owner only | `GET ?date=`: every reel slot's own state, override and the card it would actually post. `POST {action:"set", date, slot, override:{action, id?}}` and `POST {action:"clear", date, slot}`. See "Lineup overrides" above. |
-| `/api/lantern-models` | admin | Which of Groq, Gemini and OpenRouter are configured, the live free models per tier, today's and the last week's usage against the budgets, the last model that answered each tier, and `?action=probe` (POST): one tiny prompt through each tier, latency and the model that answered |
+| `/api/lantern-models` | admin | Which of Groq, Gemini, OpenRouter, the AI Gateway and Cerebras are configured, the live free models per tier, today's and the last week's usage against the budgets, the last model that answered each tier, and `?action=probe` (POST): one tiny prompt through each tier (the mail tier too), latency and the model that answered. Since 7 October also `ranking` (each tier in the order the next call asks, with calls, answers, checks, latency, the last error), `words` (the same in sentences), `gateway` (its free list and what waits), `jev` (today and yesterday) and `paid` (the month's ROI summary, its last 30 lines, the day's and the month's spend against their caps) |
 | `/api/lantern-agent` | owner only | The Lantern agent (masterplan step, "the Lantern agent"): `POST {message, thread}` streams Server-Sent Events (`start`, `plan`, `step`, `subagent`, `artifact`, `action`, `proposal`, `token`, `done`, `error`) while it plans, reads the house's own read-only tools, hands parts of the work to subagents on the router's free models, and answers with sourced numbers, a chart or a draft. `POST {action:"approve"\|"decline", id}` answers a proposal; `POST {action:"undo", id}` reverses a logged action where a real recipe exists. `GET ?action=ledger` and `?action=proposals` read what it has done and what still waits for a yes. See "The Lantern agent" below and OPERATIONS.md's own runbook for what it may do alone. |
 | `/api/reel` | yes | `?id=<reel id>`: the reel's bytes, streamed from the store as `video/mp4` with ranges, so a phone can share the file and a network that refuses the store's URL has one that answers plainly |
 | `/api/podcast` | yes | `/podcast.xml` (rewrite): the verse reels as a podcast feed, RSS 2.0 with the itunes namespace, cached a day |
@@ -1020,7 +1244,7 @@ gone (the inbox read, the token renewed), and stays when the reading itself fail
 
 The house has two Telegram lines. The public channel (`TG_CHAT_ID`) gets the
 posts. The owner's line is a private chat with the same bot (`TG_BOT_TOKEN`),
-used only when the house needs you, plus the weekly summary. It is linked once:
+used only when the house needs you, plus one evening digest. It is linked once:
 
 1. Open the console and press **Link Telegram**. It shows a code like
    `NOOR-7KQ2XD` and the bot's @name. The code lasts 15 minutes.
@@ -1030,6 +1254,32 @@ used only when the house needs you, plus the weekly summary. It is linked once:
 3. Back in the console, press **Check**. The bot answers you in that chat:
    "Linked. NOOR will write to you here only when it needs you, and once a
    week." The console then shows linked, and since when.
+
+**What it says, and when (7 October 2026, `api/_voice.js`).** At once, each said
+once (a day for most, six hours for the letters, one conversation for distress):
+someone in distress; a security, account or billing notice; a complaint; the press;
+a question of money; a place that wants to work together or to meet; posting down
+(a finished day with nothing sent, or a week under 90 percent) or a severe anomaly;
+the paid budget at 80 percent of its month; the mailbox unable to log in; letters
+waiting for your Send. Everything else waits for **one evening digest at 22:00 UTC**
+(the first cron tick after it): the morning's needs (each told once a week), Monday's
+weekly summary, the mailbox's other handovers by kind, and any urgent message the
+day's cap stopped. One of the six is always kept for something urgent: a digest that
+would take the last one waits for the next evening, whole. If Telegram does not
+answer (busy, the network), nothing is spent: only a message that was delivered counts
+toward the six (round five), and what did not go is asked again at a measured pace,
+never every tick. An urgent message waits in a retry list (`nsoul:voice:retry`) and is
+sent again at most once in thirty minutes; the letters reminder asks again after thirty
+minutes; an evening message that met the fault is tried again thirty minutes on; and
+whatever never got through is named in the evening ("Not sent at the time, Telegram
+did not answer: ..."). A need is remembered as told only when its words were in a
+message that went.
+While the Lantern is paused it says nothing; an evening that passes in a pause is
+carried to the first evening after it. **No message ever carries
+an email's words, its subject, a sender, a name, an address or a phone number**: only
+what it is, and "Open Home". Until the link is made, Home keeps the card "Link
+Telegram, so the Lantern can reach you when something is urgent", with no Done and no
+Later.
 
 If Check says the code expired, press Link Telegram again for a new one. If it
 says "the bot uses a webhook; linking needs getUpdates", someone set a webhook
@@ -1217,6 +1467,141 @@ no call but a GET is ever made.
 - The planner's evidence shows a count with no amount: fewer than three gifts in that
   window; amounts reach a model only as a total of three or more (above).
 
+### The Lantern's mail
+
+Added 6 October 2026 (LANTERN.md section 11, Article 12, SOUL.md section 14). The
+Lantern runs the whole inbox of noorcodexoflight@gmail.com and writes only from
+salam@noorcodex.com, signed NOOR Codex of Light. The code is `api/_mail.js`; the
+outreach letters themselves are `api/_outreach.js`'s, and pass the same one door.
+
+**What it does.** Each 15 minute tick, after the cycle's own stages, it reads at most
+20 new messages (IMAP, imap.gmail.com:993, on its own 60 second clock and its own lock;
+attachments by name and size only, never downloaded). A first pass in code sorts what
+needs no model: the house's own copies, lists and newsletters, platform notices,
+security, account and billing notices, someone at risk, an order hidden in a message,
+a no. The rest the mail tier reads (Groq, then OpenRouter's paid names with
+`data_collection: "deny"`; never Gemini's free tier, never a ":free" name), every
+address, phone number and the sender's name masked first. Then:
+
+- answered, within Article 12: readers' questions (from the library's own rooms, with
+  links), thanks, feedback, corrections (thanked, and put before you as a card),
+  outreach answers (the conversation goes on; a call or a meeting is yours), a no
+  (confirmed in one line, and do not contact at once). Every answer passes critic() (no
+  number the library, the email or the date does not hold) and the Guardian, then the
+  one door out;
+- to you, as a card with two lines and Open in Gmail, the message left unread and
+  starred under Lantern/For Sam: money, partnerships that commit the house, the press,
+  legal matters, complaints (also do not contact), security notices (with the sender
+  and subject, never answered), personal messages, someone at risk (see below), and
+  any draft the Guardian or critic stopped;
+- filed, read, under Lantern/Filed: notices, newsletters, spam and phishing. Never
+  deleted.
+
+A message you opened in Gmail before the Lantern reached it is yours (it still honours
+a no in it, and tells the outreach module a place answered). After three answers in one
+conversation, the rest is yours.
+
+**The one door out**, `queueOutgoing(msg, ctx)`, every email in this order: the mailbox
+is set up; the switch is on; the Lantern is not paused; Article 12's address rules (a
+letter or a follow-up only to the address the place itself published, checked against
+`api/_outreach.js`; a reply only to the one who wrote, on that thread's own message);
+do not contact; the caps; the red lines over the subject and the text; the first ten;
+then the send, its record, the audit and the action ledger.
+
+**The letterhead and the house's rules over the words** (round five, 7 October 2026).
+Every email goes as the house's own letter (`api/_letterhead.js renderLetter` on the
+final words, the way out already in them): the night blue head with the moving emblem
+(its still twin for a reader who asks for less motion), the letter in a calm serif, the
+way out set small, the quiet footer; and beside it its plain twin, word for word, as
+multipart/alternative, by Gmail and by Resend alike, the threading headers kept; Gmail's
+Sent copy holds both. The pictures are `assets/mail/lantern-v1.gif` and
+`lantern-v1-still.png`, which ship with the site. Your card for one of the first ten
+shows the plain words, exactly what goes. Before anything is queued, the words a model
+wrote meet the house's rules (`slopCheck`: a dash, an emoji, the machine's stock phrases
+such as "I hope this email finds you well", "delve", "don't hesitate to", "journey" as a
+metaphor, three adjectives in a row) and Jev's eighth question, whether it reads as
+written by an AI. A reply that fails them is written once more, told the words to avoid;
+if the second draft still fails, it comes to you as "A reply the Lantern would not send
+on its own", with the draft, and is never sent. The door holds any letter that still
+carries them, judge or no judge. The house's own fixed words (the way out, the reply to
+someone at risk, the confirmation of a no, every follow-up) pass the same rules, and
+`tests/mail.mjs` and `tests/letterhead.mjs` prove it.
+
+**The first ten.** Until you have sent ten with your own Send, every email waits on
+Home as a decision carrying the whole letter (to, subject, text): Send, Not this one,
+Later. At most five wait at once; more are held for a later reading. After ten, it sends
+on its own. Not this one is never sent, and is kept (`nsoul:mail:declined`) for the
+weekly reflection as something you did not want.
+
+**The switch.** Controls, The Lantern, Mail (the dial `mail.on`, on by default), or
+the Mail room (`POST /api/soul {action:"mail-switch", on}`). Off stops every send at
+once; reading goes on, and the answers it would have sent wait, held. When it is on
+again they go at the next reading, if they are under 3 days old and you have not opened
+the message in Gmail meanwhile; older ones come to you instead. Pause on Home stops
+everything, reading too.
+
+**The caps** (code constants, `MAIL_CAPS` in `api/_mail.js`): new letters 10 a day,
+replies 30, follow-ups 10, all email 50 (Gmail allows 500); one follow-up a place, 7 or
+more days after the first letter and none after any answer; never two emails to one
+address in 24 hours unless answering it, and at most three answers to one address a
+day. A capped email is held, never dropped.
+
+**Do not contact** (`nsoul:mail:dnc`): anyone who says no, unsubscribes, asks to stop or
+complains is added at once, the address or a whole domain, and never written to again.
+Every first letter ends with the plain line that a short "no thanks" is enough. Add or
+remove by hand in the Mail room (`POST {action:"dnc-add"|"dnc-remove", address}`).
+
+**Someone at risk.** One short reply in the house's own fixed words, pointing to local
+help (call or text 988 in the United States and Canada; Samaritans 116 123 in the United
+Kingdom and Ireland; Lifeline 13 11 14 in Australia; 1737 in New Zealand; SADAG 0800 567
+567 in South Africa), then a card on your Home and a Telegram message when it is
+linked. While the first ten are still waiting for your Send, that reply waits too, like
+every other email: open the Home when the Telegram message comes.
+
+**How to read what it sent.**
+
+- Home, Done: "Wrote to the Al Noor Islamic Centre, Toronto: ...", "Answered a reader's
+  email", each with Open in Gmail and no Undo (an email cannot be unsent).
+- The Mail room (`/admin2#mail`, `GET /api/soul?view=mail`): the threads it handled
+  (who, kind, what it did, the reply it sent, 30 days), the places, do not contact, the
+  switch with today's caps.
+- Gmail: Sent (with the Gmail sender), the labels Lantern/Answered, Lantern/For Sam,
+  Lantern/Outreach and Lantern/Filed. Its first reading takes the last 7 days' unread
+  mail.
+- The tick's own answer (`GET /api/soul?action=tick`) carries `mail`: read, answered,
+  waiting, forYou, filed, skipped, retried, and why it stopped.
+
+**The move to Resend, before January 2027.** Google ends Send mail as for outside
+addresses through Gmail's SMTP; the code is ready for the move:
+
+1. Make a Resend account, add the domain noorcodex.com, and add the DNS records it
+   shows (SPF, DKIM, and a DMARC record) at the domain's DNS host; wait until Resend
+   says verified.
+2. Make an API key with sending access only. In Vercel add `RESEND_API_KEY` (Production,
+   Sensitive) and `MAIL_SENDER` = `resend`; redeploy.
+3. That is all. Every email goes through Resend's API, From salam@noorcodex.com, with a
+   Bcc to noorcodexoflight@gmail.com so the account keeps a whole record (the Lantern
+   marks those copies read and does nothing else with them). Reading stays IMAP with
+   the app password: keep `GMAIL_APP_PASSWORD`.
+4. To go back, delete `MAIL_SENDER`.
+
+**When something looks wrong.**
+
+- "Give the Lantern its mailbox" stays on Home: `GMAIL_APP_PASSWORD` is not on this
+  deployment (or `MAIL_SENDER=resend` has no `RESEND_API_KEY`). It closes on its own at
+  the next tick after the password is there.
+- The tick's `mail.error` says AUTHENTICATIONFAILED: the app password was revoked, or
+  2-Step Verification was turned off. Make a new one and replace it in Vercel.
+- "Messages the Lantern could not read": the mail tier did not answer three readings
+  running (Groq's free day spent and no OpenRouter credit, say). They wait for you under
+  Lantern/For Sam; the reading goes on past them.
+- An email went out from the gmail.com address: Send mail as for salam@noorcodex.com is
+  missing in Gmail (Settings, Accounts, Send mail as). Put it back, or move to Resend.
+- A reply was not sent: its card says why (the Guardian, a number it could not check, a
+  red line, the caps, do not contact).
+- To stop all mail at once: the Mail switch. To stop reading too: Pause, or delete
+  `GMAIL_APP_PASSWORD`.
+
 ---
 
 ## 9. How a change reaches the live site
@@ -1393,3 +1778,207 @@ numbers, search, the site (the door), borrowing audiences (letters), sustaining 
 metric). The caps are unchanged: at most 5 intents a day, 6 public actions, 1 door, 3
 letters. The plan's data carries only totals of these powers (letters waiting, the door's
 path and end, whether the search card waits), never a letter's words.
+
+---
+
+## The Lantern's outreach
+
+A runbook for LANTERN.md section 11.3 (6 October 2026): the Lantern looks for places that
+teach Islam in the English-speaking world (Canada, the United States, the United Kingdom,
+Ireland, Australia, New Zealand, South Africa, mixed from the start) and writes each one
+honest letter from salam@noorcodex.com. Everything lives in `api/_outreach.js`, merged
+into the one registry (`api/_hands.js`) the way the levers are, so the red lines, the
+council, the audit and the caps hold for it as for every hand. It never sends or connects
+to mail itself: every letter goes through the mailbox's one door, `queueOutgoing` in
+`api/_mail.js` ("The Lantern's mail" in §8), with all of that door's gates. With no
+mailbox set up, nothing here runs at all. `tests/outreach.mjs` proves it with fixtures;
+no real network is reached.
+
+### What happens each day
+
+At the daily cycle:
+
+1. **Sense** puts the places' totals in the snapshot (`outreach: {places, contacted,
+   replied, working}`) and the planner's evidence, and reads each letter still waiting
+   for your Send from the mailbox's own record (`nsoul:mail:out:<id>`): sent, and the
+   place is written to from the day you sent it; Not this one, and the place waits 30
+   days; refused at your Send, 7 days. The first time the mailbox is set up it adds the
+   goal **g-outreach** as yours, once ("At least 50 places invited to work together,
+   helpfully and respectfully, within 6 weeks", `outreach.contacted`, target 50), with a
+   card: Keep this goal, or Change it. The Lantern can never change it.
+2. **Plan**: the pace step (code, not the model) offers the day's work as intents:
+   a search for places when fewer than 20 are ready for a first letter and the day's 20
+   new places are not yet found; the day's first letters in order, as many as the goal
+   needs (what is left of 50 over the days left to its date: 3 a day at least while it is
+   not met, 2 after, 10 at most), never more than keeps 5 waiting for your Send, never
+   past the day's 10; then the follow-ups that are due, the letters and follow-ups 10 in
+   all. These come on top of the planner's own 5 intents and keep their own caps; the
+   planner may name one for a reason the pace cannot see, and the pace never offers the
+   same place twice. A step you skipped on Next is not offered again before its date.
+3. **Council and act**: `outreach-send` and `outreach-followup` are R2, so each meets
+   the council like any public act; `research` is R1. Their days are counted by the
+   hands themselves (`nsoul:count:letters|followups:<date>`), so a letter never spends
+   the six public actions.
+4. **Reflect**: seven days after each letter went, its effect is written to
+   `nsoul:effects` by that place's own answer (`outreach.replied`: 1 for any answer;
+   helped when it answered yes or with a question, unclear otherwise) and marked on its
+   action, so the general measure does not count it again by a total.
+
+### How a place is found (research, R1)
+
+**The sources, in turn**: OpenStreetMap through Overpass, one country at a time
+(`amenity=place_of_worship` with `religion=muslim`, only those tagged with a website or
+an email); Wikidata (schools, student societies, foundations, organisations and educators
+of the region with an official website, P856); and a web search only when it is paid for.
+The walk: GB, CA, Wikidata, US, AU, web, IE, NZ, Wikidata, ZA, web, and round again.
+Candidates wait in a pool (300 at most); a new source is asked when fewer than 30 wait,
+and they are checked with the countries taking turns.
+
+**An address is kept only when the place itself published it**: an OpenStreetMap `email`
+or `contact:email` tag, or a mailto or a plain address on its own website's home page or
+the contact page that home page links to ("Contact", "Get in touch", "Enquiries"). The
+address must be on the place's own domain, or a free mail provider's (a small mosque often
+uses Gmail); never another organisation's, a web builder's or a placeholder, and never a
+mailbox not meant for letters (noreply, webmaster, donations, jobs and the like). A free
+mail address counts only where the place put it to be written to: a mailto link, its
+contact page, its map tag; never loose text on another page, where a visitor's comment can
+plant one (7 October 2026). A role mailbox (info, office, secretary, madrasa) is
+preferred. A place with an email tag and no website of its own is not kept: there are no
+pages to write from.
+
+**Only the public web** (7 October 2026): a website comes from a tag anyone can edit, so
+a website written as a number (v4 or v6), a name only a private network knows (localhost,
+.local, .internal and the like), a login or an unusual port in the address is no website
+at all; and before every request (each hop of a redirect, its robots.txt too) the name is
+looked up, and one that gives a private, loopback, link-local, shared or reserved address,
+or no answer, is left alone.
+
+**Read politely**: each site's robots.txt first (a refusal, or one that answers with an
+error, leaves the site alone; none at all allows), one request a second across the whole
+run, 6 seconds a page, as `NOORCodexBot/1.0 (+https://noorcodex.com; salam@noorcodex.com)`,
+a redirect followed only on the same site, never another site (a "website" that is a
+Facebook page, a link page or the like is never fetched). One run lasts about 45 seconds,
+inside its hand's minute.
+
+**Facts**: 3 to 6 short sentences from those pages, each with its page, saying what the
+place does (teaching, young people, its community). Never a phone number, an address, a
+name with a title, money, or anything that reads like an instruction to a machine; a
+page's title is its label, never a fact. Fewer than 3, or a page not in English: not
+ready. A site that gave nothing is not asked again for 60 days.
+
+**The web search** runs only when all of these hold: `OPENROUTER_API_KEY` is set, there
+is credit (`nsoul:nocredit` is not set), the month's ledger can be read, the soul's
+monthly cap still holds the worst case, and so does the search's own 2 dollars a month.
+The budget is checked before any request, the price list included. It uses one of the
+deep tier's paid names within its price ceilings, names its search engine (Exa, whose fee
+the estimate counts; unnamed, OpenRouter searches natively for OpenAI, Anthropic and
+Google names, priced past the estimate), is budgeted at one paid call's ceiling (0.10
+dollars, never only its estimate, so the day's cap holds), tells the provider to keep
+nothing (`data_collection: "deny"`), keeps only sites its own citations name (an answer
+that cites nothing keeps nothing), and writes what it cost to both
+`nsoul:spend:<YYYY-MM>` and `nsoul:outreach:webspend:<YYYY-MM>`; when the router holds and
+settles paid calls itself (`paidReserve`, `paidSettle`), the hold is taken before the
+request, the router keeps the month's and the day's spend and the ROI line, and the search
+writes only its own share. It finds websites only: the address still has to come from the
+place's own pages.
+
+Kept in `nsoul:outreach:places`, deduplicated by domain and by address, 500 at most (when
+full, a place never written to, of the order's last group, gives way); 20 new places a
+day. **Undo** on "Looked for places that teach, from their own pages" in Done takes away
+the places that run added, except one that already has a letter.
+
+### The order
+
+A place with a weekend school or youth work first, then student societies, then schools,
+then the rest. Inside each group the countries take turns, and the first country turns as
+places are written to, so no country is always first. Inside a country: the place whose
+pages offer most to work with, then a role mailbox on its own domain.
+
+### The letter (outreach-send, R2)
+
+Written for that one place by the mail tier (`api/_llm.js` route tier "mail": models that
+neither keep nor learn from what they read), from its stored facts only, given as data.
+The offer follows what the place does, and the subject is the offer's own:
+
+| The place | The free offer | Its link |
+|---|---|---|
+| a weekend school | The School's lessons and printables | /school |
+| youth work | the room For Teenagers | /teens |
+| a student society | The Classroom's tracks | /madrasa |
+| a school | The School's curriculum | /school |
+| a mosque | the Masjid Toolbox, and the reels for its screens | /masjid |
+| anything else | the library, and a reel made together | / |
+
+The whole letter stays under 180 words: "Assalamu alaykum", what the place's own pages
+say, the offer with its link, one easy next step (a one line reply is enough), signed
+"With salaam, NOOR Codex of Light, https://noorcodex.com", and the last line: If you
+would rather not hear from us, a short reply of "no thanks" is enough, and you will not
+hear from NOOR again.
+
+**Refused, never sent**: 180 words or more; no link to its offer; an email address or a
+phone number; a link outside noorcodex.com; money of any kind ("free of charge" passes);
+asking them to share, post or follow the house; anything near a ruling; asking for a
+meeting or a call (that is your time); a person's name; a number its facts and its offer
+do not carry (critic); anything else about the place its own pages never said (a day, a
+programme, a word they never wrote, such as "your Sunday hifz class"); the red lines. A
+refused letter gives the day's count back and its place waits a week. A letter the
+mailbox holds (the switch off, the pause, its caps) does not count, and the place stays
+new.
+
+It goes as `queueOutgoing({kind: "outreach", to, toName, subject, text, placeId, why,
+goal: "g-outreach"}, {actor, cycle, viaHand: true})`. Sent: the place is written to. One
+of the first ten: it waits on your Home with the whole letter (Send, Not this one, Later),
+and the place is not counted as contacted, nor written to again, until you send it.
+
+### The follow-up (outreach-followup, R2)
+
+Once, 7 or more days after the first letter went, only while the place has not answered,
+threaded under the first letter and written in code, so it has nothing to invent: "A short
+note after our letter of 7 October about a free library for your weekend school. In case
+it was missed among other mail, it is all free at https://noorcodex.com/school. If it
+would help, ...". Ten a day. Never a second, never after any answer, never after a no.
+
+### Answers
+
+The mailbox reads each answer and tells this file (`onOutreachReply`): interested, or a
+meeting asked for, and the place is **working**; a question or anything else,
+**replied**; a no, **declined**, which is final: the address it published and the one
+that wrote go to do not contact at once. A status never moves back. A meeting is never
+booked by the Lantern; the mailbox puts it before you.
+
+### Where you see it
+
+- **Home**: the mailbox's `mail` part carries `outreach: {places, contacted, replied,
+  working, target: 50}`; the first ten letters wait on your decisions; Next reads "Write
+  to Al Noor Masjid, Leeds: a free library for its weekend school"; Done reads "Wrote to
+  ..." with no Undo, because an email cannot be unsent.
+- **The console's Mail room**: every place, its status, its source, the page its address
+  was found on, its facts and its history.
+- **The goals**: g-outreach, `outreach.contacted` toward 50 by its date, counted in places.
+
+### To stop or steer it
+
+- **No letters at all**: the mail switch off (Controls, `mail.on`) or Pause. With the
+  switch off the search for places may go on (it writes to no one); Pause stops both.
+- **Not this place**: Not this one on its waiting letter (it waits 30 days), or its
+  address or domain on do not contact (it is marked dnc and never written to).
+- **Take places away**: Undo on the search that found them.
+
+### When no letter went today
+
+The cycle's record (its `outreach` summary and dropped lines), Done and the place's own
+history say which:
+
+- the mailbox is not set up, or not on this deployment: "The Lantern's mail" first;
+- the mail switch is off;
+- five letters already wait for your Send: answer them on Home;
+- no place is ready (too few facts, not English, held, already written to): the search
+  runs at the next cycle, 20 new places a day at most;
+- "the mail tier is not on this deployment yet": letters need `api/_llm.js` with the
+  mail tier;
+- a letter refused by its checks: the reason is in Done and in the place's history, and
+  the place waits a week;
+- "the day's 10 first letters are already written".
+
+The keys are in §4 (`nsoul:outreach:*`, `nsoul:count:places|letters|followups:<date>`,
+`nsoul:once:goal:g-outreach`).

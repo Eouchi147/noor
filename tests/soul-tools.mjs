@@ -28,6 +28,7 @@ import {
   JEV, jevOn, jevOff, APPROVED, AUTH, door, addDays, CLOCK, setDay, today, NOTIFY, snapFor, putSnap, PAGE, sitemapOf,
   PSI_BODY, YT, worldOn, worldOff, MANIFEST, DEPS
 } from './_soul-harness.mjs';
+const VOICE = await import('../api/_voice.js');   /* round four: the evening digest */
 
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('  PASS ' + m); } else { fail++; console.log('  FAIL ' + m); } };
@@ -50,9 +51,12 @@ console.log('\nthe Jev sentinel in the council');
   ok(!rolesAsked().includes('guardian') && !rolesAsked().includes('skeptic'), 'and neither model reviewer was asked (saved two calls)');
   ok(JSON.stringify(c.verdicts) === '{}' && /not asked/.test(c.skipped), 'the record says the three were skipped');
   const sent = JEV.bodies[JEV.bodies.length - 1];
-  ok(sent && ['breaks_constitution', 'misrepresents_islam', 'spam_or_bait', 'thin_data'].every(k => sent.questions[k] && sent.questions[k].type === 'noul'), 'Jev was asked the four soul questions, each a probability');
+  /* round four: the Decision API's own name for a yes or no question, and the two promises on every call */
+  ok(sent && ['breaks_constitution', 'misrepresents_islam', 'spam_or_bait', 'thin_data'].every(k => sent.questions[k] && sent.questions[k].type === 'boolean'), 'Jev was asked the four soul questions, each a probability');
+  ok(sent && sent.providerOptions && sent.providerOptions.gateway && sent.providerOptions.gateway.zeroDataRetention === true && sent.providerOptions.gateway.disallowPromptTraining === true,
+    'and asked to keep nothing and learn nothing (zero data retention, no training)');
   ok(/lineup-swap/.test(sent.state.text) && /1204/.test(sent.state.text) && !/@/.test(sent.state.text), 'about the intent itself and the totals behind it');
-  ok(NET.calls.some(x => x.url === 'https://ai-gateway.vercel.sh/typesafe/v1/systemone' && /Bearer gw-test-key/.test(x.headers.authorization)), 'through the AI Gateway with the deployment\'s credential');
+  ok(NET.calls.some(x => x.url === 'https://ai-gateway.vercel.sh/v1/evaluate' && /Bearer gw-test-key/.test(x.headers.authorization)), 'through the AI Gateway\'s Decision API with the deployment\'s credential');
 
   for (const q of ['breaks_constitution', 'misrepresents_islam', 'spam_or_bait']) {
     jevOn(k => k === q ? 0.5 : 0.1);
@@ -116,7 +120,9 @@ console.log('\nthe sentinel reads every text to the owner and every lesson');
   S.set('nexp:state', JSON.stringify({ current: { id: 'verse-length', start: addDays(D0, -2), args: {} }, history: [] }));
   JEV.mode = 'down';
   const t2 = await MIND.tick({ force: true });
-  ok(t2.status === 'done' && NOTIFY.length === 1, 'Jev down: the message goes as before');
+  /* round four: the message waits for the evening digest, and goes then */
+  await VOICE.eveningDigest({ force: true });
+  ok(t2.status === 'done' && NOTIFY.length === 1, 'Jev down: the message goes as before (in the evening digest)');
 
   resetStore(); ROUTER.calls.length = 0; ROUTER.guardian = 'smart';
   jevOn((k, body) => /Bukhari/.test(body.state.text) && k === 'hadith_number' ? 0.93 : 0.02);
@@ -127,7 +133,8 @@ console.log('\nthe sentinel reads every text to the owner and every lesson');
   const bad = props.find(p => /Bukhari/.test(p.lesson.text)), good = props.find(p => /20 seconds/.test(p.lesson.text));
   ok(bad.status === 'refused' && /sentinel/.test(bad.evals.failed[0]) && /hadith/.test(bad.evals.failed[0]), 'a lesson citing a hadith number is refused by the sentinel: ' + bad.evals.failed[0]);
   ok(good.status === 'applied', 'the clean one goes on to the canaries and is applied');
-  ok(ROUTER.calls.filter(c => c.role === 'guardian' && c.tier === 'strong').length === 12, 'the canaries ran once, for the clean lesson only (12 Guardian answers)');
+  /* mail: 6 October 2026, eighteen Guardian canaries now (Article 12's six joined) */
+  ok(ROUTER.calls.filter(c => c.role === 'guardian' && c.tier === 'strong').length === 18, 'the canaries ran once, for the clean lesson only (18 Guardian answers)');
   ok(ev.results.length === 2, 'both are reported');
   ROUTER.guardian = 'approve';
   jevOff();
@@ -595,6 +602,8 @@ console.log('\nthe weekly scorecard, built on Monday, and every instrument in on
   ok(Array.isArray(card.posts.top) && card.posts.top[0].title === 'The Throne verse', 'the top posts of the fortnight');
   ok(card.search.score === 100 && card.speed.pages.length === 4 && card.youtube.subscribers === 1520, 'search readiness, page speed and the YouTube position');
   ok((await L.get(SOUL.K.scorecards))[0] === week, 'filed in the week index');
+  /* round four: Monday's weekly message leads the evening digest */
+  await VOICE.eveningDigest({ force: true });
   ok(NOTIFY.length === 1 && /Week 2026-W41/.test(NOTIFY[0]) && /people reached/.test(NOTIFY[0]) && !DASH.test(NOTIFY[0]), 'the owner\'s weekly message carries the scorecard as a short text: ' + NOTIFY[0].slice(0, 160));
   const sv = await door({ query: { view: 'scorecard' }, headers: AUTH });
   ok(sv.body.ok && sv.body.week === week && sv.body.scorecard.week === week && sv.body.weeks[0] === week, 'the door gives the latest week and the list');

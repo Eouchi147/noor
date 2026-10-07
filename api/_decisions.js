@@ -59,7 +59,8 @@ export const ROOM = Object.freeze({
   observatory: "/admin2#observatory", engine: "/admin2#soul", lantern: "/admin2#lantern", night: "/admin2#night"
 });
 /* and the full console's own panes (/admin#giving, the ledger: 3 October 2026) */
-const HREF_OK = h => /^\/admin2?#[a-z]+$/.test(h) || /^https:\/\/[A-Za-z0-9.-]+(\/[\w./?=&%#-]*)?$/.test(h);
+const HREF_OK = h => /^\/admin2?#[a-z]+$/.test(h) || /^https:\/\/[A-Za-z0-9.-]+(\/[\w./?=&%#-]*)?$/.test(h)
+  || /^https:\/\/mail\.google\.com\/mail\/u\/0\/#search\/rfc822msgid:[A-Za-z0-9._%+-]+$/.test(h);   /* mail: a message in Gmail (LANTERN.md section 11) */
 const str = (v, n) => String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, n || 200);
 const realDate = s => /^\d{4}-\d{2}-\d{2}$/.test(String(s || ""));
 export const hashOf = t => crypto.createHash("sha1").update(String(t || "")).digest("hex").slice(0, 12);
@@ -123,8 +124,19 @@ export function normalize(input) {
     goal: d.goal ? str(d.goal, 60) : null, impact: d.impact ? sayLantern(str(d.impact, 200)) : null,
     options, link, steps, source: str(d.source || "lantern", 30), sticky: d.sticky !== false,
     ref: d.ref ? str(d.ref, 120) : null, expires: realDate(d.expires) ? d.expires : addDays(dayOf(), EXPIRE_DAYS),
-    ...draftOf(d.draft)   /* mission: a letter the card carries (LANTERN.md sections 8 and 10, api/_mission.js) */
+    ...draftOf(d.draft),   /* mission: a letter the card carries (LANTERN.md sections 8 and 10, api/_mission.js) */
+    ...letterOf(d.letter)   /* mail: an email waiting for his Send (LANTERN.md section 11.1, api/_mail.js) */
   } };
+}
+/* mail (LANTERN.md section 11.1): the whole email a card carries, {to,
+   toName, subject, text, kind}, its line breaks kept and never passed
+   through sayLantern, since it is the letter itself */
+function letterOf(v) {
+  if (!v || typeof v !== "object") return {};
+  const text = String(v.text == null ? "" : v.text).replace(/\r\n?/g, "\n").slice(0, 6000).trim();
+  const to = String(v.to == null ? "" : v.to).trim().toLowerCase().slice(0, 200);
+  if (!text || !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(to)) return {};
+  return { letter: { to, toName: str(v.toName, 120), subject: str(v.subject, 200), text, kind: ["outreach", "followup", "reply"].includes(v.kind) ? v.kind : "reply" } };
 }
 /* mission (LANTERN.md section 8): a draft letter, {title, text}, its line
    breaks kept; never passed through sayLantern, since a letter may name
@@ -218,7 +230,9 @@ export async function upsert(input) {
     const i = t.list.findIndex(x => x.key === d.key);
     if (i !== -1) {
       const cur = t.list[i];
-      t.list[i] = { ...cur, ...d, id: cur.id, at: cur.at, status: "open", snoozedUntil: cur.snoozedUntil || null, updatedAt: nowIso() };
+      /* round four: a card that offers no Later cannot stay snoozed */
+      const canSnooze = (d.options || []).some(o => o && o.do && o.do.type === "snooze");
+      t.list[i] = { ...cur, ...d, id: cur.id, at: cur.at, status: "open", snoozedUntil: canSnooze ? (cur.snoozedUntil || null) : null, updatedAt: nowIso() };
       return { write: true, list: t.list, archive: t.archived, result: { ok: true, id: cur.id, updated: true } };
     }
     if (recent) return { write: t.archived.length > 0, list: t.list, archive: t.archived, result: { ok: false, suppressed: "recent", key: d.key } };
@@ -286,7 +300,8 @@ export function viewOne(d) {
     options: (d.options || []).map(o => ({ id: o.id, label: sayLantern(o.label), style: o.style, confirm: o.confirm ? sayLantern(o.confirm) : null })),
     link: d.link ? { href: d.link.href, label: sayLantern(d.link.label) } : null,
     steps: (d.steps || []).map(sayLantern), at: d.at, expires: d.expires || null,
-    draft: d.draft && d.draft.text ? { title: d.draft.title || "", text: d.draft.text } : null };   /* mission: section 10 */
+    draft: d.draft && d.draft.text ? { title: d.draft.title || "", text: d.draft.text } : null,   /* mission: section 10 */
+    letter: d.letter && d.letter.text ? { to: d.letter.to, toName: d.letter.toName || "", subject: d.letter.subject || "", text: d.letter.text, kind: d.letter.kind } : null };   /* mail: section 11.4 */
 }
 /* the open cards the owner sees now: not snoozed, not past their date,
    the ones that ask a yes first, then the newest */
@@ -372,6 +387,13 @@ export async function decide(id, optionId, opts = {}) {
     if (eff.type === "no") {
       let thenMsg = "";
       if (eff.then && eff.then.type === "upgrade") { const u = await upgradeTo(eff.then.id, "declined"); thenMsg = u.ok ? " The upgrade was declined." : " The upgrade could not be moved: " + u.error; }
+      /* mail: a No that also runs its own hand with his approval (Not this
+         one on a waiting letter: api/_mail.js mail-decline) */
+      if (eff.then && eff.then.type === "hand") {
+        const H = await import("./_hands.js");
+        const r = await H.runHand(eff.then.intent, { actor: opts.actor || "owner", approval: { owner: true, source: "decision", id: d.id } });
+        thenMsg = r.ok ? (r.entry && r.entry.result && r.entry.result.note ? " " + sayLantern(str(r.entry.result.note, 200)) + "." : "") : " " + sayLantern(str(r.error, 200)) + ".";
+      }
       await archiveOne(d.id, "no", { option: o.id });
       await rememberNo(d.key);
       await auditDecision(d, o.id, "no");
@@ -486,10 +508,13 @@ export function fromReport(ctx) {
   const c = ctx || {};
   const out = [];
   const goalTitle = id => { const g = (c.goals || []).find(x => x && x.id === id); return g ? str(g.outcome, 120).replace(/[.\s]+$/, "") : "a goal"; };
+  /* round four (7 October 2026): the card stays until the link is made: no
+     Done and no Later to put it away, only the way to the link, and it says
+     why (the stamp moved to 2, so an old card he put away comes back) */
   if (c.telegram && c.telegram.linked === false) {
-    out.push({ kind: "you", key: "tg-link", stamp: "1", sticky: false, title: "Link Telegram, so the Lantern can reach you",
-      why: "It sends you a private message only when it needs you, and a weekly summary; it cannot until the link is made once.",
-      options: [opt.open(), opt.done(), opt.later()], link: { href: ROOM.engine, label: "Open the engine room" },
+    out.push({ kind: "you", key: "tg-link", stamp: "2", sticky: false, title: "Link Telegram, so the Lantern can reach you when something is urgent",
+      why: "So the Lantern can reach you when something is urgent: someone at risk, a complaint, the press, money, a place that wants to work with you, posting down, the mailbox locked out. Everything else waits for one message in the evening. It cannot write to you until the link is made once.",
+      options: [opt.open("Link Telegram")], link: { href: ROOM.engine, label: "Open the engine room" },
       steps: ["Open the engine room and press Link Telegram", "Send the code it shows to the bot in Telegram", "Press Check to finish the link"] });
   }
   if (c.noCredit) {

@@ -3522,7 +3522,9 @@ export default async function handler(req, res) {
      claim in runDue now refuses the second sender, and the door is closed
      here as well). Without the secret the user agent and the signature
      header stay the proof, so a house that never set one keeps its hours. */
-  const cronMayRun = String(q0.action || "") === "due" && (cronSecret ? bearerOk : fromVercelCron);
+  /* review fix, 7 October 2026: a production without the secret admits no
+     cron at all (fail closed), the rule api/soul.js's tick keeps */
+  const cronMayRun = String(q0.action || "") === "due" && (cronSecret ? bearerOk : (fromVercelCron && process.env.VERCEL_ENV !== "production"));
   /* Pinterest returns the owner to the callback in whatever browser he
      approved in, which may not be the one holding the console cookie. The
      signed, fifteen minute `state` this route issued is the proof instead. */

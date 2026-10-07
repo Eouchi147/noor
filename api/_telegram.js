@@ -469,10 +469,18 @@ export async function notifyOwner(text, o = {}) {
     return { ok: false, reason: "the store could not count today's messages; not sent" };
   }
   if (!Number.isFinite(count) || count < 1) return { ok: false, reason: "the store could not count today's messages; not sent" };
-  if (count > OWNER_DAILY_MAX) return { ok: false, reason: "daily limit reached: " + OWNER_DAILY_MAX + " messages to the owner a day" };
+  /* round five (the review, D2): only a delivered message spends one of the
+     day's six. The slot is taken before the send, so two at once can never
+     pass the cap, and given back (DECR) when the message did not go: an
+     outage of Telegram no longer spends the day, and a refusal over the cap
+     does not count either. Best effort: a give back that fails leaves one
+     slot less, never one more. */
+  const giveBack = async () => { try { await s.run([["DECR", K_TG_SENT(day)]]); } catch { } };
+  if (count > OWNER_DAILY_MAX) { await giveBack(); return { ok: false, reason: "daily limit reached: " + OWNER_DAILY_MAX + " messages to the owner a day" }; }
 
   const r = await botCall("sendMessage", { chat_id: owner.chat, text: body, disable_web_page_preview: true }, o);
   if (r.ok) return { ok: true, reason: null };
+  await giveBack();
   const idStr = String(owner.chat);
   let reason = String(r.reason || "").split(idStr).join("<chat>");
   if (r.status === 403 || /blocked|deactivated|chat not found/i.test(reason))
