@@ -113,6 +113,27 @@ export const prob = a => (a && typeof a.probability === "number") ? a.probabilit
 /* ---- the day's count, cheap: one pipeline after each call, never a throw ---- */
 const dayOf = t => new Date(t).toISOString().slice(0, 10);
 export const K_JEV = day => "nsoul:jev:" + day;
+/* round six (7 October 2026): a judge the gateway refuses outright (401,
+   402, 403) waits an hour before it is asked again, with the reason kept
+   for the engine room. On 7 October every call came back 403: Jev is not
+   among the models the gateway's free credit covers, so it answers only
+   once the team has bought credit, and asking it five times a mail round
+   until then changed nothing. Once credit is there it is back within the
+   hour, on its own. */
+export const K_JEV_CLOSED = "nsoul:jev:closed";
+export const CLOSED_S = 3600;
+async function closedWhy() {
+  if (!kvReady()) return null;
+  try { const r = await kv([["GET", K_JEV_CLOSED]]); return r && r[0] ? String(r[0]) : null; } catch { return null; }
+}
+async function countSkip(purpose) {
+  if (!kvReady()) return;
+  const k = K_JEV(dayOf(Date.now()));
+  const cmds = [["HINCRBY", k, "skipped", "1"]];
+  if (purpose) cmds.push(["HINCRBY", k, "s:" + String(purpose).replace(/[^a-z0-9-]/gi, "").slice(0, 24), "1"]);
+  cmds.push(["EXPIRE", k, String(40 * 86400)]);
+  try { await kv(cmds); } catch { }
+}
 async function count(ok, ms, costUsd, purpose) {
   if (!kvReady()) return;
   const k = K_JEV(dayOf(Date.now()));
@@ -126,15 +147,17 @@ async function count(ok, ms, costUsd, purpose) {
 /* the day's count as the evidence and the engine room read it */
 export async function jevCounts(day) {
   const d = day || dayOf(Date.now());
-  const out = { day: d, calls: 0, ok: 0, failed: 0, msAvg: null, costUsd: 0, by: {} };
+  const out = { day: d, calls: 0, ok: 0, failed: 0, skipped: 0, closed: null, msAvg: null, costUsd: 0, by: {} };
   if (!kvReady()) return out;
+  /* round six: today's reading says whether the judge waits now, and why */
+  if (!day || d === dayOf(Date.now())) out.closed = await closedWhy();
   try {
     const r = await kv([["HGETALL", K_JEV(d)]]);
     const a = (r && r[0]) || [];
     const h = {};
     if (Array.isArray(a)) for (let i = 0; i + 1 < a.length; i += 2) h[a[i]] = parseInt(a[i + 1], 10) || 0;
     else if (a && typeof a === "object") for (const [k, v] of Object.entries(a)) h[k] = parseInt(v, 10) || 0;
-    out.calls = h.calls || 0; out.ok = h.ok || 0; out.failed = h.failed || 0;
+    out.calls = h.calls || 0; out.ok = h.ok || 0; out.failed = h.failed || 0; out.skipped = h.skipped || 0;
     out.msAvg = out.calls ? Math.round((h.ms || 0) / out.calls) : null;
     out.costUsd = (h.costMicro || 0) / 1e6;
     for (const [k, v] of Object.entries(h)) if (k.startsWith("p:")) out.by[k.slice(2)] = v;
@@ -149,6 +172,9 @@ export async function ask(state, questions, opts = {}) {
   if (!tok) return { ok: false, why: "no gateway credential on this deployment" };
   const qs = wireQuestions(questions);
   if (!Object.keys(qs).length) return { ok: false, why: "no question to ask" };
+  /* round six: refused outright within the hour, so not asked again yet */
+  const shut = await closedWhy();
+  if (shut) { await countSkip(opts.purpose); return { ok: false, closed: true, why: "the judge waits: " + shut }; }
   const ctl = typeof AbortController === "function" ? new AbortController() : null;
   const timer = ctl ? setTimeout(() => ctl.abort(), opts.timeoutMs || TIMEOUT_MS) : null;
   const t0 = Date.now();
@@ -166,6 +192,14 @@ export async function ask(state, questions, opts = {}) {
       const type = String((j && (j.type || (j.error && j.error.type))) || "");
       if (type === "no_providers_available") return { ok: false, why: "no provider of the judge would keep nothing and learn nothing from it today (no_providers_available)" };
       const said = j && (typeof j.error === "string" ? j.error : (j.error && j.error.message) || j.message || j.error_type);
+      /* round six: refused outright, so it waits an hour (see K_JEV_CLOSED) */
+      const st = Number(r && r.status) || 0;
+      if (st === 401 || st === 402 || st === 403) {
+        const why = "the AI Gateway refused it (" + st + (said ? ": " + String(said).slice(0, 120) : "") + ")"
+          + (st === 403 ? "; Jev answers only once the team has bought AI Gateway credit, since the free credit does not cover it" : "");
+        if (kvReady()) { try { await kv([["SET", K_JEV_CLOSED, why.slice(0, 300), "EX", String(CLOSED_S)]]); } catch { } }
+        return { ok: false, closed: true, why: why.slice(0, 300) };
+      }
       return { ok: false, why: String(said || ("http " + (r && r.status))).slice(0, 160) };
     }
     const answers = {};

@@ -148,6 +148,30 @@ async function open_(w, h, opts = {}) {
       if (m === 'POST') {
         const b = JSON.parse(q.postData() || '{}'); st.posted.push({ url: u.replace(BASE, ''), body: b });
         if (st.refuse && b.action === st.refuse) return r.fulfill(J({ ok: false, message: 'The house would not do that just now.' }));
+        /* round six: the inbox that moves. Each op answers {ok, message, thread?}; answer also {draft, card} */
+        if (b.action === 'mail-thread') {
+          const t = (st.mailv.threads || []).find(x => x.id === b.id);
+          if (st.refuseOp && b.op === st.refuseOp) return r.fulfill(J({ ok: false, message: 'Gmail did not answer, so nothing was archived. Try again in a minute.' }));
+          if (!t) return r.fulfill(J({ ok: false, message: 'That message is no longer in the inbox.' }));
+          const at = iso(Date.now());
+          if (b.op === 'seen') { Object.assign(t, { needsYou: false, seenAt: at, doneAt: at, doneBy: 'seen' }); return r.fulfill(J({ ok: true, message: 'Seen, and archived.', thread: { ...t } })); }
+          if (b.op === 'done') { Object.assign(t, { needsYou: false, action: 'done', doneAt: at, doneBy: 'owner', ops: [] }); return r.fulfill(J({ ok: true, message: 'Archived. It is done.', thread: { ...t } })); }
+          if (b.op === 'notours') { Object.assign(t, { needsYou: false, action: 'done', doneAt: at, doneBy: 'owner', ops: [] }); return r.fulfill(J({ ok: true, message: 'Archived. Mail from ' + t.from + ' is filed quietly from now on.', thread: { ...t } })); }
+          if (b.op === 'answer') {
+            if (st.answerDelay) await new Promise(res => setTimeout(res, st.answerDelay));
+            const draft = { subject: 'Re: ' + t.subject, text: 'Wa alaykum assalam,\n\nThank you for writing. ' + BOLD + '\n\nWith peace,\nNOOR Codex of Light' }, card = { id: 'mail:out-9' };
+            if (st.answerNoThread) return r.fulfill(J({ ok: true, message: 'The Lantern wrote a reply. It waits for your Send.', draft, card }));
+            Object.assign(t, { needsYou: true, action: 'waiting', ops: ['send', 'dontsend', 'done'], card, draft });
+            return r.fulfill(J({ ok: true, message: 'The Lantern wrote a reply. It waits for your Send.', draft, card, thread: { ...t } }));
+          }
+          return r.fulfill(J({ ok: false, message: 'That is not something the inbox knows how to do.' }));
+        }
+        /* a reply waiting for his Send: its card is decided as any letter's */
+        if (b.action === 'decide' && /^mail:out-/.test(String(b.id))) {
+          const t = (st.mailv.threads || []).find(x => x.card && x.card.id === b.id);
+          if (t) Object.assign(t, { needsYou: false, action: b.option === 'send' ? 'answered' : 'done', doneAt: iso(Date.now()), doneBy: 'owner', ops: [], card: null, draft: null });
+          return r.fulfill(J({ ok: true, message: b.option === 'send' ? 'Sent to ' + (t ? t.fromName : 'them') + ', from salam@noorcodex.com.' : 'Not sent. The Lantern keeps what you did not want as a lesson.' }));
+        }
         if (b.action === 'decide') {
           const d = (st.home.decisions || []).find(x => x.id === b.id);
           if (st.removeOnDecide) st.home.decisions = (st.home.decisions || []).filter(x => x.id !== b.id);
@@ -634,6 +658,259 @@ console.log('\n390x844 · motion: on arrival the numbers count up and the first 
   ok(await pg.evaluate(() => [...document.querySelectorAll('#h-mail .mn b')].map(b => b.textContent).join(',')) === '14,6,5,2,4', 'and they stand at their values');
   ok(st.errors.length === 0, 'no console error');
   await ctx.close();
+}
+
+/* ============================================================ round six: the inbox that moves */
+/* GET ?view=mail threads may carry needsYou, ops, gmail, card, draft, seenAt,
+   doneAt, doneBy, and the action "done" */
+const GM = 'https://mail.google.com/mail/u/0/#inbox/18c2f0a9e1aa';
+const MOVES = () => [
+  { id: 'm1', at: iso(NOW - 1 * H), from: 'desk@paper.example', fromName: 'A newspaper', subject: 'An interview about the library', kind: 'press', action: 'for-you', summary: 'A journalist asks for a short interview about the library.', reply: null,
+    needsYou: true, ops: ['done', 'answer', 'notours'], gmail: GM, card: null, draft: null, seenAt: null, doneAt: null, doneBy: null },
+  { id: 'm2', at: iso(NOW - 2 * H), from: 'imam@masjid.example', fromName: 'The imam of a masjid', subject: 'Re: Free printables', kind: 'outreach_answer', action: 'waiting', summary: 'He asks which printables suit ages 7 to 10.', reply: null,
+    needsYou: true, ops: ['send', 'dontsend'], gmail: GM + 'b', card: { id: 'mail:out-7' },
+    draft: { subject: 'Re: Free printables', text: 'Wa alaykum assalam,\n\nThe pages on the Names of Allah suit ages 7 to 10:\nhttps://noorcodex.com/names\n\nWith peace,\nNOOR Codex of Light' }, seenAt: null, doneAt: null, doneBy: null },
+  { id: 'm3', at: iso(NOW - 3 * H), from: 'x' + XSS + '@example.org', fromName: XSS, subject: XSS + BOLD, kind: 'personal', action: 'for-you', summary: XSS + BOLD, reply: null,
+    needsYou: true, ops: ['done', 'answer', 'notours'], gmail: 'http://mail.google.com/mail/u/0/#inbox/1', card: null, draft: null, seenAt: null, doneAt: null, doneBy: null },
+  { id: 'm4', at: iso(NOW - 4 * H), from: 'aisha.reader@example.org', fromName: 'Aisha', subject: 'A question about the night prayer', kind: 'question', action: 'answered', summary: 'She asked how the night prayer is prayed.',
+    reply: { at: iso(NOW - 3.8 * H), text: 'Wa alaykum assalam Aisha,\n\nThe library\'s page gathers what the scholars say.\n\nWith peace,\nNOOR Codex of Light' }, needsYou: false, ops: [], gmail: GM + 'c', card: null, draft: null, seenAt: null, doneAt: iso(NOW - 3.8 * H), doneBy: 'lantern' },
+  { id: 'm5', at: iso(NOW - 5 * H), from: 'office@school.example', fromName: 'A school', subject: 'Thank you', kind: 'thanks', action: 'done', summary: 'They thank the house for the printables.', reply: null,
+    needsYou: false, ops: [], gmail: null, card: null, draft: null, seenAt: null, doneAt: iso(NOW - 4.5 * H), doneBy: 'owner' },
+  { id: 'm6', at: iso(NOW - 30 * H), from: 'news@platform.example', fromName: 'A platform', subject: 'Your weekly digest', kind: 'newsletter', action: 'done', summary: 'A newsletter.', reply: null,
+    needsYou: false, ops: [], gmail: null, card: null, draft: null, seenAt: iso(NOW - 29 * H), doneAt: iso(NOW - 29 * H), doneBy: 'seen' }];
+const MOVE_ADDRS = ['desk@paper.example', 'imam@masjid.example', 'aisha.reader@example.org', 'office@school.example', 'news@platform.example'];
+const PACE_R = (o = {}) => ({ date: day(0), letters: 20, followups: 20, written: 3, followupsWritten: 1, scheduled: 3, waiting: 2, ready: 12, found: 30, searches: { runs: 2, added: 30, checked: 74 },
+  week: 1, start: day(-2), braked: false, until: null, why: 'Week 1 of the warm-up: 20 a day, first letters and follow-ups together; 30 from Wednesday 14 October.', sent: 6, bounced: 0, ...o });
+const rowsOf = pg => pg.evaluate(() => [...document.querySelectorAll('#mail-threads [data-thread]')].map(r => r.querySelector('.t b').textContent + ' / ' + [...r.querySelectorAll('.r .pill')].map(p => p.textContent).join('+')));
+const chipsOf = pg => pg.evaluate(() => [...document.querySelectorAll('#mail-pane [data-mfn]')].map(b => b.dataset.mfn + ':' + b.textContent + ':' + b.getAttribute('aria-pressed')).join(' | '));
+const sheetOps = pg => pg.evaluate(() => [...document.querySelectorAll('#sheet-in .acts > *')].map(b => b.textContent.trim() + (b.tagName === 'A' ? '@' + b.getAttribute('href') : '') + ':' + (b.className.includes('ghost') ? 'ghost' : 'primary')));
+const posts = (st, n0) => st.posted.slice(n0).map(p => JSON.stringify(p.body));
+
+for (const [w, h] of [[390, 844], [1440, 900]]) {
+  const tag = w + 'x' + h;
+  console.log('\n' + tag + ' · the inbox that moves: what needs him, and what is done');
+  const { pg, st, ctx } = await open_(w, h, { mailv: () => MAILV({ threads: MOVES() }) });
+  await openMail(pg);
+  ok(await chipsOf(pg) === 'needs:Needs you3:true | done:Done3:false | all:All6:false', 'it opens on Needs you, with Done and All, each with its count: ' + await chipsOf(pg));
+  ok(await pg.evaluate(() => !document.querySelector('#mail-pane [data-mfa]')), 'and none of the older filters');
+  ok(JSON.stringify(await rowsOf(pg)) === JSON.stringify(['An interview about the library / for you', 'Re: Free printables / for your Send', '<img src=x onerror="window.__xss=1"><b>bold</b> / for you']),
+    'Needs you holds what the Lantern could not settle, newest first: ' + (await rowsOf(pg)).join(' | '));
+  await pg.screenshot({ path: SHOTS + '/room-needs-you-' + tag + '.png', fullPage: true });
+  await pg.click('#mail-pane [data-mfn="done"]'); await pg.waitForTimeout(120);
+  ok(JSON.stringify(await rowsOf(pg)) === JSON.stringify(['A question about the night prayer / answered+done', 'Thank you / done', 'Your weekly digest / done']), 'Done holds the rest, each with a small done pill: ' + (await rowsOf(pg)).join(' | '));
+  await pg.screenshot({ path: SHOTS + '/room-done-' + tag + '.png', fullPage: true });
+  /* a done thread says when, and by whom, it was archived */
+  const arch = [];
+  for (const i of [3, 4, 5]) { await pg.click('#mail-threads [data-thread="' + i + '"]'); await pg.waitForTimeout(300); arch.push(await tc(pg, '#mail-archived')); await closeSheet(pg); }
+  ok(/^Archived (today|yesterday) at \d\d:\d\d UTC, by the Lantern\.$/.test(arch[0]) && /^Archived (today|yesterday) at \d\d:\d\d UTC, by you\.$/.test(arch[1]) && /^Archived (yesterday at \d\d:\d\d UTC|on [A-Z][a-z]{2} \d{1,2} [A-Z][a-z]{2}), when you read it\.$/.test(arch[2]),
+    'a done thread: "Archived <when>, by the Lantern | by you | when you read it": ' + arch.join(' / '));
+  ok(st.posted.length === 0, 'opening what is done posts nothing');
+  await pg.click('#mail-pane [data-mfn="all"]'); await pg.waitForTimeout(120);
+  ok((await rowsOf(pg)).length === 6, 'All holds all six');
+  await pg.click('#mail-pane [data-mfn="needs"]'); await pg.waitForTimeout(120);
+  /* opening what was for him: seen, once */
+  let n0 = st.posted.length, g0 = st.mailGets;
+  await pg.click('#mail-threads [data-thread="0"]'); await until(() => st.posted.length > n0); await pg.waitForTimeout(350);
+  ok(JSON.stringify(posts(st, n0)) === JSON.stringify(['{"action":"mail-thread","id":"m1","op":"seen"}']), 'opening a thread that was for him posts {action:"mail-thread", id, op:"seen"}: ' + posts(st, n0).join(' '));
+  const s1 = await pg.evaluate(() => ({ arch: (document.getElementById('mail-archived') || {}).textContent || '', did: [...document.querySelectorAll('#sheet-in .msh h3')].find(h => h.textContent === 'What the Lantern did').nextElementSibling.textContent }));
+  ok(/^Archived today at \d\d:\d\d UTC, when you read it\.$/.test(s1.arch) && s1.did === 'It was for you; the Lantern sent nothing.', 'and the sheet says it is archived, now that he has read it: ' + s1.arch + ' / ' + s1.did);
+  ok(await chipsOf(pg) === 'needs:Needs you2:true | done:Done4:false | all:All6:false' && !(await rowsOf(pg)).some(r => /^An interview/.test(r)), 'behind the sheet it leaves Needs you for Done: ' + await chipsOf(pg));
+  ok(JSON.stringify(await sheetOps(pg)) === JSON.stringify(['Done:primary', 'Answer it for me:ghost', 'Not NOOR business:ghost', 'Open in Gmail ↗@' + GM + ':ghost', 'Close:ghost']), 'its buttons, in his order and words: ' + (await sheetOps(pg)).join(', '));
+  const gl = await pg.evaluate(() => { const a = document.querySelector('#sheet-in .acts a'); return [a.getAttribute('target'), a.getAttribute('rel'), Math.round(a.getBoundingClientRect().height)]; });
+  ok(gl[0] === '_blank' && gl[1] === 'noopener noreferrer' && gl[2] >= 44, 'Open in Gmail is its https link, in a new tab with no referrer: ' + JSON.stringify(gl));
+  const sh = await shortTaps(pg, '#sheet-in');
+  ok(sh.length === 0 && await noSideScroll(pg), 'every control in the sheet 44 px or more, nothing sideways: ' + sh.join(', '));
+  await pg.screenshot({ path: SHOTS + '/room-thread-ops-' + tag + '.png' });
+  await closeSheet(pg);
+  await pg.click('#mail-pane [data-mfn="done"]'); await pg.waitForTimeout(120);
+  n0 = st.posted.length;
+  const i1 = await pg.evaluate(() => [...document.querySelectorAll('#mail-threads [data-thread]')].find(r => /^An interview/.test(r.querySelector('.t b').textContent)).dataset.thread);
+  await pg.click('#mail-threads [data-thread="' + i1 + '"]'); await pg.waitForTimeout(400);
+  ok(st.posted.length === n0, 'opened again, it posts nothing: "seen" goes once');
+  /* Done: it archives, and the room is read again */
+  g0 = st.mailGets;
+  let r = await press(pg, st, pg.locator('#sheet-in [data-mop="done"]'));
+  ok(JSON.stringify(r.sent.map(x => x.body)) === '[{"action":"mail-thread","id":"m1","op":"done"}]' && r.toast === 'Archived. It is done.', 'Done posts {action:"mail-thread", id, op:"done"}, and the house\'s words are the toast: ' + r.toast);
+  await until(() => st.mailGets > g0, 4000);
+  ok(st.mailGets === g0 + 1 && !(await pg.evaluate(() => document.getElementById('sheet').classList.contains('on'))), 'the sheet closes and the mail is read again');
+  ok(st.errors.length === 0 && st.dialogs === 0, 'no console error, no browser dialog: ' + st.errors.slice(0, 3).join(' | '));
+  await ctx.close();
+}
+
+console.log('\n390x844 · a reply waiting for his Send: Send, and Don\'t send after asking; "seen" never posted for it');
+{
+  let o = await open_(390, 844, { mailv: () => MAILV({ threads: MOVES() }) });
+  await openMail(o.pg);
+  await o.pg.click('#mail-threads [data-thread="1"]'); await o.pg.waitForTimeout(450);
+  ok(o.st.posted.length === 0, 'opening a reply waiting for his Send posts nothing: no "seen" for it');
+  const dr = await o.pg.evaluate(() => { const l = document.getElementById('mail-draft'); return l ? { rows: [...l.querySelectorAll('.lh')].map(r => r.querySelector('.lk').textContent + ': ' + r.querySelector('.lv').textContent.replace(/\s+/g, ' ').trim()), body: l.querySelector('.lt').textContent, ws: getComputedStyle(l.querySelector('.lt')).whiteSpace } : null; });
+  ok(dr && dr.rows.join(' | ') === 'To: The imam of a masjid imam@masjid.example | From: NOOR Codex of Light salam@noorcodex.com | Subject: Re: Free printables' && dr.body === MOVES()[1].draft.text && dr.ws === 'pre-wrap',
+    'the reply is shown whole, as it would go, its lines kept: ' + (dr && dr.rows.join(' | ')));
+  ok(JSON.stringify(await sheetOps(o.pg)) === JSON.stringify(['Send:primary', 'Don\'t send:ghost', 'Open in Gmail ↗@' + GM + 'b:ghost', 'Close:ghost']), 'Send, Don\'t send: ' + (await sheetOps(o.pg)).join(', '));
+  await o.pg.screenshot({ path: SHOTS + '/room-reply-waiting-390x844.png' });
+  /* Don't send asks first */
+  await o.pg.click('#sheet-in [data-mdont]'); await o.pg.waitForTimeout(200);
+  const q = await o.pg.evaluate(() => { const c = document.querySelector('#sheet-in .hcf'); return c ? { t: c.querySelector('p').textContent, b: [...c.querySelectorAll('button')].map(b => b.textContent) } : null; });
+  ok(q && q.t === 'Do not send this reply? Nothing goes out, and the Lantern keeps what you did not want as a lesson.' && q.b.join(',') === 'Yes, do not send it,Cancel' && o.st.posted.length === 0, 'Don\'t send asks first, inside the sheet, posting nothing: ' + (q && q.t));
+  await o.pg.screenshot({ path: SHOTS + '/room-reply-dontsend-confirm-390x844.png' });
+  await o.pg.click('#sheet-in [data-mdsno]'); await o.pg.waitForTimeout(150);
+  ok(o.st.posted.length === 0 && await o.pg.evaluate(() => !document.querySelector('#sheet-in .hcf') && !!document.querySelector('#sheet-in [data-msend]')), 'Cancel posts nothing and brings the buttons back');
+  await o.pg.click('#sheet-in [data-mdont]'); await o.pg.waitForTimeout(150);
+  let r = await press(o.pg, o.st, o.pg.locator('#sheet-in [data-mdsyes]'));
+  ok(JSON.stringify(r.sent.map(x => x.body)) === '[{"action":"decide","id":"mail:out-7","option":"no"}]' && r.toast === 'Not sent. The Lantern keeps what you did not want as a lesson.', 'its yes posts the Home\'s own decision, {action:"decide", id: card.id, option:"no"}: ' + JSON.stringify(r.sent.map(x => x.body)));
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV({ threads: MOVES() }) });
+  await openMail(o.pg);
+  await o.pg.click('#mail-threads [data-thread="1"]'); await o.pg.waitForTimeout(350);
+  const g0 = o.st.mailGets;
+  r = await press(o.pg, o.st, o.pg.locator('#sheet-in [data-msend]'));
+  ok(JSON.stringify(r.sent.map(x => x.body)) === '[{"action":"decide","id":"mail:out-7","option":"send"}]' && r.toast === 'Sent to The imam of a masjid, from salam@noorcodex.com.', 'Send posts {action:"decide", id: card.id, option:"send"}: ' + r.toast);
+  await until(() => o.st.mailGets > g0, 4000); await o.pg.waitForTimeout(200);
+  ok(o.st.mailGets === g0 + 1 && await chipsOf(o.pg) === 'needs:Needs you2:true | done:Done4:false | all:All6:false', 'the sheet closes, the mail is read again, and the reply leaves Needs you: ' + await chipsOf(o.pg));
+  ok(o.st.posted.every(p => p.url === '/api/soul'), 'every post went to /api/soul');
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+}
+
+console.log('\n390x844 · Answer it for me: the Lantern writes, then the draft waits for his Send; Not NOOR business asks first');
+{
+  const { pg, st, ctx } = await open_(390, 844, { motion: true, mailv: () => MAILV({ threads: MOVES() }) });
+  st.answerDelay = 1200;
+  await openMail(pg);
+  await pg.click('#mail-threads [data-thread="0"]'); await until(() => st.posted.length === 1); await pg.waitForTimeout(400);
+  const n0 = st.posted.length;
+  await pg.click('#sheet-in [data-mop="answer"]'); await pg.waitForTimeout(250);
+  const wr = await pg.evaluate(() => ({ t: (document.getElementById('mail-writing') || {}).textContent || '', dis: [...document.querySelectorAll('#sheet-in .acts button:not(#cl)')].every(b => b.disabled),
+    anim: document.getAnimations().some(a => a.playState === 'running' && a.effect && a.effect.target && a.effect.target.closest && a.effect.target.closest('#mail-writing')) }));
+  ok(wr.t === 'The Lantern is writing…' && wr.dis, 'while it writes: "The Lantern is writing…", and the buttons wait: ' + JSON.stringify(wr));
+  ok(wr.anim, 'its light breathes while it writes (motion allowed)');
+  await pg.screenshot({ path: SHOTS + '/room-answer-writing-390x844.png' });
+  await until(() => st.posted.length > n0, 4000);
+  ok(JSON.stringify(posts(st, n0)) === '["{\\"action\\":\\"mail-thread\\",\\"id\\":\\"m1\\",\\"op\\":\\"answer\\"}"]', 'Answer it for me posts {action:"mail-thread", id, op:"answer"}: ' + posts(st, n0).join(' '));
+  await pg.waitForSelector('#sheet-in #mail-draft', { timeout: 6000 }); await pg.waitForTimeout(500);
+  const ad = await pg.evaluate(() => ({ said: (document.getElementById('mail-said') || {}).textContent, body: document.querySelector('#mail-draft .lt').textContent, imgs: document.querySelectorAll('#sheet-in img, #mail-draft b').length, writing: !!document.getElementById('mail-writing') }));
+  ok(ad.said === 'The Lantern wrote a reply. It waits for your Send.' && ad.body === 'Wa alaykum assalam,\n\nThank you for writing. <b>bold</b>\n\nWith peace,\nNOOR Codex of Light' && ad.imgs === 0 && !ad.writing, 'then its words, and the draft whole, as text: ' + ad.said);
+  ok((await sheetOps(pg)).slice(0, 2).join(',') === 'Send:primary,Don\'t send:ghost', 'with Send and Don\'t send: ' + (await sheetOps(pg)).join(', '));
+  await pg.screenshot({ path: SHOTS + '/room-answer-draft-390x844.png' });
+  const r = await press(pg, st, pg.locator('#sheet-in [data-msend]'));
+  ok(JSON.stringify(r.sent.map(x => x.body)) === '[{"action":"decide","id":"mail:out-9","option":"send"}]', 'its Send posts the decision of the card the answer named: ' + JSON.stringify(r.sent.map(x => x.body)));
+  /* Not NOOR business asks first, with the address as text and never in a URL */
+  await pg.click('#mail-pane [data-mfn="all"]'); await pg.waitForTimeout(120);
+  const i3 = await pg.evaluate(() => [...document.querySelectorAll('#mail-threads [data-thread]')].find(r => /^<img/.test(r.querySelector('.t b').textContent)).dataset.thread);
+  await pg.click('#mail-threads [data-thread="' + i3 + '"]'); await pg.waitForTimeout(450);
+  ok(await pg.evaluate(() => !document.querySelector('#sheet-in .acts a')), 'a Gmail address that is not https is never a link');
+  const m0 = st.posted.length;
+  await pg.click('#sheet-in [data-mop="notours"]'); await pg.waitForTimeout(200);
+  const nq = await pg.evaluate(() => { const c = document.querySelector('#sheet-in .hcf'); return c ? { t: c.querySelector('p').textContent, b: [...c.querySelectorAll('button')].map(b => b.textContent), imgs: document.querySelectorAll('#sheet-in img').length } : null; });
+  ok(nq && nq.t === 'Archive it, and quietly file mail from x<img src=x onerror="window.__xss=1">@example.org from now on?' && nq.b.join(',') === 'Yes,Cancel' && nq.imgs === 0 && st.posted.length === m0,
+    'Not NOOR business asks first, inside the sheet, the address as text, with Yes and Cancel: ' + (nq && nq.t));
+  await pg.screenshot({ path: SHOTS + '/room-notours-confirm-390x844.png' });
+  await pg.click('#sheet-in [data-mnno]'); await pg.waitForTimeout(150);
+  ok(st.posted.length === m0 && await pg.evaluate(() => !document.querySelector('#sheet-in .hcf') && !!document.querySelector('#sheet-in [data-mop="notours"]')), 'Cancel posts nothing');
+  await pg.click('#sheet-in [data-mop="notours"]'); await pg.waitForTimeout(150);
+  const rn = await press(pg, st, pg.locator('#sheet-in [data-mnyes]'));
+  ok(JSON.stringify(rn.sent.map(x => x.body)) === '[{"action":"mail-thread","id":"m3","op":"notours"}]' && /^Archived\. Mail from x<img/.test(rn.toast), 'Yes posts {action:"mail-thread", id, op:"notours"}: ' + JSON.stringify(rn.sent.map(x => x.body)));
+  const urls = st.urls.join('\n');
+  ok(!MOVE_ADDRS.some(a => urls.includes(a) || urls.includes(encodeURIComponent(a))) && !/@/.test(st.urls.filter(u => u.startsWith(BASE)).join('')), 'no address ever reached a URL the room asked for');
+  ok(await pg.evaluate(() => typeof window.__xss === 'undefined'), 'no markup ran');
+  ok(st.errors.length === 0 && st.dialogs === 0, 'no console error, no browser dialog: ' + st.errors.slice(0, 3).join(' | '));
+  await ctx.close();
+}
+
+console.log('\n390x844 · a refused op keeps the sheet open with the house\'s words; an empty Needs you is calm; an older inbox is as it was');
+{
+  let o = await open_(390, 844, { mailv: () => MAILV({ threads: MOVES() }) });
+  o.st.refuseOp = 'done';
+  await openMail(o.pg);
+  await o.pg.click('#mail-threads [data-thread="0"]'); await until(() => o.st.posted.length === 1); await o.pg.waitForTimeout(400);
+  const g0 = o.st.mailGets, n0 = o.st.posted.length;
+  await o.pg.click('#sheet-in [data-mop="done"]'); await until(() => o.st.posted.length > n0); await o.pg.waitForTimeout(400);
+  const f = await o.pg.evaluate(() => ({ open: document.getElementById('sheet').classList.contains('on'), t: (document.getElementById('mail-op-fail') || {}).textContent, role: (document.getElementById('mail-op-fail') || { getAttribute: () => null }).getAttribute('role'), btn: !document.querySelector('#sheet-in [data-mop="done"]').disabled }));
+  ok(f.open && f.t === 'Gmail did not answer, so nothing was archived. Try again in a minute.' && f.role === 'alert' && f.btn, 'a refusal keeps the sheet open, with the house\'s words in it, and Done ready again: ' + f.t);
+  ok(o.st.mailGets === g0, 'and nothing is read again after a refusal');
+  await o.pg.screenshot({ path: SHOTS + '/room-op-refused-390x844.png' });
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV({ threads: MOVES().map(t => ({ ...t, needsYou: false })) }) });
+  await openMail(o.pg);
+  const calm = await o.pg.evaluate(() => { const c = document.getElementById('mail-calm'); return c ? { b: c.querySelector('b').textContent, s: c.querySelector('span').textContent } : null; });
+  ok(calm && calm.b === 'Nothing needs you.' && calm.s === 'Everything the Lantern could not settle on its own lands here.' && await chipsOf(o.pg) === 'needs:Needs you0:true | done:Done6:false | all:All6:false',
+    'an empty Needs you says so, calmly: ' + JSON.stringify(calm));
+  await o.pg.screenshot({ path: SHOTS + '/room-needs-you-empty-390x844.png' });
+  await o.ctx.close();
+  /* an answer that carries no thread: the draft it brought still waits in the sheet, with its Send */
+  o = await open_(390, 844, { mailv: () => MAILV({ threads: MOVES() }) });
+  o.st.answerNoThread = true;
+  await openMail(o.pg);
+  await o.pg.click('#mail-threads [data-thread="0"]'); await until(() => o.st.posted.length === 1); await o.pg.waitForTimeout(400);
+  await o.pg.click('#sheet-in [data-mop="answer"]');
+  await o.pg.waitForSelector('#sheet-in #mail-draft', { timeout: 6000 }); await o.pg.waitForTimeout(600);
+  ok((await sheetOps(o.pg)).slice(0, 2).join(',') === 'Send:primary,Don\'t send:ghost' && /^Wa alaykum assalam/.test(await tc(o.pg, '#mail-draft .lt')), 'an answer with no thread: its draft still shows, with Send and Don\'t send');
+  const rs = await press(o.pg, o.st, o.pg.locator('#sheet-in [data-msend]'));
+  ok(JSON.stringify(rs.sent.map(x => x.body)) === '[{"action":"decide","id":"mail:out-9","option":"send"}]', 'and its Send posts the card the answer named');
+  ok(o.st.errors.length === 0, 'no console error: ' + o.st.errors.slice(0, 3).join(' | '));
+  await o.ctx.close();
+  /* an older server: no needsYou anywhere, the inbox exactly as before, and nothing posted when a thread for him is opened */
+  o = await open_(390, 844);
+  await openMail(o.pg);
+  ok(await o.pg.evaluate(() => !document.querySelector('#mail-pane [data-mfn]') && document.querySelectorAll('#mail-pane [data-mfa]').length === 5), 'an older inbox keeps its own filters');
+  await o.pg.click('#mail-threads [data-thread="1"]'); await o.pg.waitForTimeout(400);
+  ok(o.st.posted.length === 0 && await o.pg.evaluate(() => [...document.querySelectorAll('#sheet-in .acts > *')].map(b => b.textContent).join(',')) === 'Close', 'and opening a thread for him posts nothing, its sheet with only Close');
+  await o.ctx.close();
+}
+
+/* ============================================================ round six: the pace, and the places set for later or bounced */
+console.log('\n390x844 · the room\'s pace, a letter set for later, an address that bounced');
+{
+  const SCHED = { id: 'p9', name: 'Hamilton Weekend School', kind: 'weekend school', city: 'Hamilton', country: 'Canada', website: 'https://hws.example', email: 'info@hws.example', source: 'website', evidence: 'https://hws.example/contact', score: 0.8, status: 'new',
+    scheduled: { at: iso(NOW - 1 * H), kind: 'outreach', sendAt: iso(NOW + 2 * H) }, history: [{ at: iso(NOW - 1 * H), what: 'A letter written, set for its own hour' }] };
+  const BOUNCE = { id: 'p10', name: 'Perth Islamic Society', kind: 'student society', city: 'Perth', country: 'Australia', website: 'https://pis.example', email: 'hello@pis.example', source: 'wikidata', evidence: 'https://pis.example', score: 0.6, status: 'dnc',
+    bounced: { at: iso(NOW - 2 * H), why: '550 5.1.1 no such user ' + BOLD }, history: [] };
+  let o = await open_(390, 844, { home: () => HOME({ mail: { ...MAIL_ON(), outreach: { ...MAIL_ON().outreach, pace: PACE_R() } } }), mailv: () => MAILV({ pace: PACE_R(), places: [...PLACES(), SCHED, BOUNCE] }) });
+  ok(await tc(o.pg, '#h-mpace') === 'Today: 4 of 20 letters written, 3 set to go in their own working day, 2 wait for your Send. 12 places ready, 30 found today.', 'Home\'s mail card: the day\'s pace in one line: ' + await tc(o.pg, '#h-mpace'));
+  await openMail(o.pg);
+  const pc = await o.pg.evaluate(() => ({ head: document.querySelector('#mail-pace .mpct').textContent, line: document.getElementById('mail-pace-line').textContent, why: document.getElementById('mail-pace-why').textContent, warn: document.getElementById('mail-pace-why').classList.contains('warn'),
+    bar: document.querySelector('#mail-pace .mprog i').style.transform, lab: document.querySelector('#mail-pace .mprog').getAttribute('aria-label'), caps: document.querySelector('#mail-sw .mcaps').textContent }));
+  ok(pc.head === '20 letters a day today', 'the room\'s top says the day\'s letters, the warm-up named in the house\'s own sentence below: ' + pc.head);
+  ok(pc.line === '4 written so far (1 a follow-up), 3 set to go in their own working day, 2 wait for your Send. 12 places ready, 30 found today.', 'what is written, set and waiting: ' + pc.line);
+  ok(pc.why === PACE_R().why && !pc.warn, 'and the house\'s own sentence: ' + pc.why);
+  ok(pc.bar === 'scaleX(0.2)' && pc.lab === '4 of 20 written today, 3 set for later', 'a calm line of how far the day has gone: ' + pc.bar + ' / ' + pc.lab);
+  ok(pc.caps === 'Replies to people who wrote first: at most 30 a day. One no is final.', 'the replies keep their own cap, the letters\' old caps gone: ' + pc.caps);
+  await o.pg.screenshot({ path: SHOTS + '/room-pace-390x844.png' });
+  await pickTab(o.pg, 'places');
+  const chips = await o.pg.evaluate(() => [...document.querySelectorAll('#mail-pane [data-mfs]')].map(b => b.dataset.mfs + ':' + b.textContent).join(' | '));
+  ok(chips === 'all:All10 | new:New3 | later:Set for later1 | written:Written to1 | followed:Followed up1 | replied:Replied1 | working:Working together1 | declined:Declined1 | dnc:Do not contact2', 'a "Set for later" chip, after New: ' + chips);
+  const rw = await o.pg.evaluate(() => [...document.querySelectorAll('#mail-places [data-place]')].filter(r => r.querySelector('.mrw')).map(r => r.querySelector('.t b').textContent + ' / ' + [...r.querySelectorAll('.mrw')].map(x => x.className + ':' + x.textContent).join(',')));
+  ok(rw.length === 2 && /^Hamilton Weekend School \/ mrw:Its letter goes (today|tomorrow) at \d\d:\d\d UTC$/.test(rw[0]) && rw[1] === 'Perth Islamic Society / mrw bad:Its address bounced', 'the rows say a letter\'s hour and an address that bounced, plainly: ' + rw.join(' | '));
+  await o.pg.click('#mail-pane [data-mfs="later"]'); await o.pg.waitForTimeout(120);
+  ok(await o.pg.evaluate(() => [...document.querySelectorAll('#mail-places [data-place]')].map(r => r.querySelector('.t b').textContent).join(',')) === 'Hamilton Weekend School', 'Set for later shows the place whose letter waits for its hour');
+  await o.pg.screenshot({ path: SHOTS + '/room-places-later-390x844.png', fullPage: true });
+  await o.pg.click('#mail-places [data-place="8"]'); await o.pg.waitForTimeout(350);
+  ok(/^Its letter goes (today|tomorrow) at \d\d:\d\d UTC\.$/.test(await tc(o.pg, '#mail-sched')), 'and its sheet: ' + await tc(o.pg, '#mail-sched'));
+  await closeSheet(o.pg);
+  await o.pg.click('#mail-pane [data-mfs="all"]'); await o.pg.waitForTimeout(120);
+  await o.pg.click('#mail-places [data-place="9"]'); await o.pg.waitForTimeout(350);
+  const bt = await tc(o.pg, '#mail-bounced');
+  ok(/^Its address bounced (today|yesterday) at \d\d:\d\d UTC, so no letter goes to it again\.$/.test(bt) && !/550|<b>/.test(await text(o.pg, '#sheet-in')), 'a bounced address, in plain words, never the mail server\'s code: ' + bt);
+  await o.pg.screenshot({ path: SHOTS + '/room-place-bounced-390x844.png' });
+  await closeSheet(o.pg);
+  for (const t of ['places', 'inbox']) { await pickTab(o.pg, t); const sh = await shortTaps(o.pg, '#s-mail'); ok(sh.length === 0 && await noSideScroll(o.pg), t + ': every control 44 px or more, nothing sideways: ' + sh.join(', ')); }
+  ok(!SOUL.test(await allWords(o.pg, '#s-mail')) && !DASH.test(await text(o.pg, '#s-mail')), 'no "soul" and no dash in the room');
+  ok(o.st.errors.length === 0, 'no console error: ' + o.st.errors.slice(0, 3).join(' | '));
+  await o.ctx.close();
+  /* a braked day, and a sentence that does not name the week */
+  o = await open_(390, 844, { mailv: () => MAILV({ pace: PACE_R({ letters: 10, braked: true, until: day(5), why: 'Half pace until Monday 12 October: 3 of the 40 letters that went in the last 7 days bounced; 10 a day.' }) }) });
+  await openMail(o.pg);
+  const bk = await o.pg.evaluate(() => ({ head: document.querySelector('#mail-pace .mpct').textContent, warn: document.getElementById('mail-pace-why').classList.contains('warn'), icon: !!document.querySelector('#mail-pace-why svg'), t: document.getElementById('mail-pace-why').textContent }));
+  ok(bk.head === '10 letters a day today · half pace' && bk.warn && bk.icon && /^Half pace until Monday 12 October/.test(bk.t), 'braked: half pace, and the house\'s sentence as a gentle warning: ' + bk.head);
+  await o.pg.screenshot({ path: SHOTS + '/room-pace-braked-390x844.png' });
+  await o.ctx.close();
+  o = await open_(390, 844, { mailv: () => MAILV({ pace: PACE_R({ week: 2, why: 'Thirty a day for now, then forty.' }) }) });
+  await openMail(o.pg);
+  ok(await o.pg.evaluate(() => document.querySelector('#mail-pace .mpct').textContent) === '20 letters a day today · week 2 of the warm-up', 'a sentence that does not name the week: the week is said beside the number');
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
 }
 
 await br.close();

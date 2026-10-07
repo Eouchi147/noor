@@ -71,19 +71,24 @@ const seedScore = (provider, model, h) => { H.set(LLM.K_SCORE(provider, model, w
 
 /* the gateway's own public list, in the shape its docs give */
 const GW_LIST = [
-  { id: 'inclusionai/ling-3.1-flash-free', object: 'model', type: 'language', pricing: { input: '0', output: '0' } },
-  { id: 'poolside/laguna-s-2.1-free', object: 'model', type: 'language', pricing: { input: '0', output: '0', input_cache_read: '0' } },
+  { id: 'inclusionai/ling-3.1-flash-free', object: 'model', type: 'language', zdr: 'some', no_training: 'some', pricing: { input: '0', output: '0' } },
+  { id: 'poolside/laguna-s-2.1-free', object: 'model', type: 'language', zdr: 'all', no_training: 'all', pricing: { input: '0', output: '0', input_cache_read: '0' } },
+  /* round six: free, but its list entry says none of its providers keeps nothing */
+  { id: 'convaiinnovations/laya', object: 'model', type: 'language', zdr: 'none', no_training: 'none', pricing: { input: '0', output: '0' } },
+  { id: 'example/learns', object: 'model', type: 'language', zdr: 'some', no_training: 'none', pricing: { input: '0', output: '0' } },
   { id: 'convaiinnovations/laya-free', object: 'model', type: 'decision', pricing: { input: '0', output: '0' } },
   { id: 'inclusionai/ling-3.1-flash', object: 'model', type: 'language', pricing: { input: '0.0000003', output: '0.0000012' } },
   { id: 'example/tiered', object: 'model', type: 'language', pricing: { input: '0', output: '0', input_tiers: [{ cost: '0.000002', min: 200000 }] } },
   { id: 'anthropic/claude-sonnet-5', object: 'model', type: 'language', pricing: { input: '0.000002', output: '0.00001' } }
 ];
-const GW = { models: 0, chats: [], refuse: new Set(), down: false };
+const GW = { models: 0, chats: [], refuse: new Set(), refuseNested: new Set(), down: false };
 onNet(LLM.GATEWAY_MODELS_URL, async () => { GW.models++; if (GW.down) throw new Error('ECONNREFUSED'); return resp(200, { object: 'list', data: GW_LIST }); });
 onNet('https://ai-gateway.vercel.sh/v1/chat/completions', async (u, init) => {
   const b = JSON.parse(init.body);
   GW.chats.push({ b, auth: init.headers.Authorization });
   if (GW.refuse.has(b.model)) return resp(400, { error: 'No providers available that disallow prompt training for model: ' + b.model + '. Providers considered: novita', type: 'no_providers_available', statusCode: 400 });
+  /* round six: the OpenAI shaped error, its type general and its code the gateway's */
+  if (GW.refuseNested.has(b.model)) return resp(400, { error: { message: 'No ZDR (Zero Data Retention) providers available for model: ' + b.model + '. Providers considered: poolside', type: 'invalid_request_error', code: 'no_providers_available' } });
   return resp(200, { model: b.model, choices: [{ message: { content: 'lit' } }], usage: { total_tokens: 9 } });
 });
 /* Groq and OpenRouter */
@@ -114,6 +119,9 @@ console.log('\n1. the AI Gateway\'s free models, found live, every call asked to
   const ids = await LLM.freeModels('gateway', true);
   ok(ids.join() === 'inclusionai/ling-3.1-flash-free,poolside/laguna-s-2.1-free', 'free means a language model whose every price reads zero and which has no tier: ' + ids.join(', '));
   ok(!ids.includes('convaiinnovations/laya-free') && !ids.includes('inclusionai/ling-3.1-flash') && !ids.includes('example/tiered'), 'never a decision model as a writer, a priced twin, or a price that turns on past a tier');
+  ok(!ids.includes('convaiinnovations/laya') && !ids.includes('example/learns') && LLM.gatewayWithout() === 2,
+    'round six: never a free name whose list entry says none of its providers keeps nothing, or none learns nothing; the two are counted');
+  ok(JSON.parse(S.get('nllm:live:gateway')).v === 2 && JSON.parse(S.get('nllm:live:gateway')).without === 2, 'the copy kept in the store is of the new shape, with what it set aside');
   ok(S.has('nllm:live:gateway') && JSON.parse(S.get('nllm:live:gateway')).ids.length === 2, 'the list is kept in the store, the same shape as the others');
   await LLM.freeModels('gateway', false); await LLM.freeModels('gateway', false);
   ok(GW.models === 1, 'and read again only after six hours (one fetch for three asks)');
@@ -156,6 +164,21 @@ console.log('\n1. the AI Gateway\'s free models, found live, every call asked to
   ok(!/GATEWAY_FREE_FALLBACK|laguna|ling-3/.test(fs.readFileSync(new URL('../api/_llm.js', import.meta.url), 'utf8').split('1b. THE AI GATEWAY')[1].split('export async function freeModels')[0].replace(/\/\*[\s\S]*?\*\//g, '')),
     'no gateway model id is written into the router\'s code: free is what the live list says today');
   GW.down = false;
+  /* round six: a copy kept before the list said who keeps nothing is read again, never trusted */
+  LLM.forgetLive('gateway');
+  S.set('nllm:live:gateway', JSON.stringify({ at: Date.now(), ids: ['convaiinnovations/laya'] }));
+  const n0 = GW.models;
+  const fresh6 = await LLM.freeModels('gateway', false);
+  ok(GW.models === n0 + 1 && !fresh6.includes('convaiinnovations/laya'), 'a copy of the old shape is not trusted: the list is read again');
+  /* round six: a refusal in the OpenAI shape (type general, code the gateway's) waits a day too */
+  GW.refuseNested = new Set(['poolside/laguna-s-2.1-free']); GW.refuse = new Set();
+  for (const k of [...S.keys()]) if (k.startsWith('nllm:refused:gateway:')) S.delete(k);
+  LLM.forgetScores();
+  const rn = await LLM.route({ tier: 'fast', messages: [{ role: 'user', content: 'Reply with one word: lit' }] });
+  ok(S.has('nllm:refused:gateway:poolside/laguna-s-2.1-free') && rn.tried.some(t => t.model === 'poolside/laguna-s-2.1-free' && /No ZDR/.test(t.err)), 'a refusal as code no_providers_available, or in its words, waits a day as well');
+  GW.refuseNested = new Set();
+  const rk6 = await LLM.rankingReport();
+  ok(rk6.gateway && rk6.gateway.without === 2, 'the engine room is told how many free names cannot keep the promises: ' + JSON.stringify(rk6.gateway));
   clean();
 }
 

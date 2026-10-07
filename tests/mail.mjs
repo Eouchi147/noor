@@ -53,7 +53,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { Readable } from 'node:stream';
 import {
-  S, L, H, FAULT, NET, resetStore, onNet, resp, SOUL, HANDS, EVOLVE, ROUTER, AUTH, door, setDay, today, addDays, CLOCK, NOTIFY, JEV, jevOn, jevOff
+  S, L, H, Z, FAULT, NET, resetStore, onNet, resp, SOUL, HANDS, EVOLVE, ROUTER, AUTH, door, setDay, today, addDays, CLOCK, NOTIFY, JEV, jevOn, jevOff
 } from './_soul-harness.mjs';
 
 const MAIL = await import('../api/_mail.js');
@@ -122,7 +122,7 @@ class FakeImap {
     return { meta: {}, content: Readable.from([Buffer.from(String(part) === '1' ? m.body : 'BINARY ATTACHMENT BYTES', 'utf8')]) };
   }
   async messageFlagsAdd(range, flags, o = {}) { const m = msgOf(range); if (!m) return false; for (const f of flags) (o.useLabels ? m.labels : m.flags).add(f); return true; }
-  async messageFlagsRemove(range, flags) { const m = msgOf(range); if (!m) return false; for (const f of flags) m.flags.delete(f); return true; }
+  async messageFlagsRemove(range, flags, o = {}) { const m = msgOf(range); if (!m) return false; for (const f of flags) { if (o.useLabels) { m.labels.delete(f); if (f === '\\Inbox') m.archived = true; } else m.flags.delete(f); } return true; }
   async mailboxCreate(name) { BOX.created.push(name); return { path: name }; }
   async logout() { BOX.logouts++; }
 }
@@ -142,8 +142,13 @@ const PLACES = [
   { id: 'p-said-no', name: 'The Quiet Centre', email: 'hello@quiet.example.org', status: 'declined' }
 ];
 const OUTREACH = {
-  replies: [],
+  replies: [], sent: [], bounces: [], brakes: [], ticks: [],
   matchPlaceByAddress: async a => PLACES.find(p => p.email === String(a).toLowerCase()) || null,
+  /* round six: what the mailbox tells the outreach module */
+  onOutreachSent: async x => { OUTREACH.sent.push(x); return { ok: true }; },
+  onBounce: async x => { OUTREACH.bounces.push(x); const p = PLACES.find(q => q.email === x.address); return { ok: true, placeId: p ? p.id : null, counted: !!p }; },
+  brakeNow: async (why, days) => { OUTREACH.brakes.push({ why, days }); return { ok: true }; },
+  outreachTick: async o => { OUTREACH.ticks.push(o); return { ok: true, ran: true, added: 3, checked: 7, why: null }; },
   onOutreachReply: async x => { OUTREACH.replies.push(x); return { ok: true }; },
   outreachCounts: async () => ({ places: 12, contacted: 3, replied: 1, working: 0 }),
   placesView: async () => ({ places: PLACES.map(p => ({ id: p.id, name: p.name, status: p.status, source: 'osm', evidence: 'https://example.org/' + p.id })), counts: { places: 12, contacted: 3, replied: 1, working: 0 } })
@@ -197,7 +202,8 @@ async function fresh(o = {}) {
   resetStore(); NOTIFY.length = 0;
   BOX.msgs.length = 0; BOX.downloads.length = 0; BOX.created.length = 0; BOX.failConnect = null; BOX.connects = 0; BOX.logouts = 0;
   TRANSPORT.sent.length = 0; TRANSPORT.fail = null; RESEND.calls.length = 0; RESEND.status = 200;
-  OUTREACH.replies.length = 0; MAILR.calls.length = 0; MAILR.reader = READER; MAILR.guardian = 'smart';
+  OUTREACH.replies.length = 0; OUTREACH.sent.length = 0; OUTREACH.bounces.length = 0; OUTREACH.brakes.length = 0; OUTREACH.ticks.length = 0;
+  MAILR.calls.length = 0; MAILR.reader = READER; MAILR.guardian = 'smart';
   MAIL.setMailSeams({ outreach: OUTREACH });
   process.env.GMAIL_APP_PASSWORD = PASSWORD;
   for (const k of ['MAIL_SENDER', 'RESEND_API_KEY', 'MAIL_FROM', 'GMAIL_USER']) delete process.env[k];
@@ -283,7 +289,7 @@ console.log('\n3. no password: nothing read, nothing sent, one card to set it up
   const q0 = await q(replyTo(thread('t-x', 'a@example.org')));
   ok(q0.ok === false && q0.status === 'held' && /not set up/.test(q0.reason) && TRANSPORT.sent.length === 0, 'a letter is held: ' + q0.reason);
   const h = keep(await HOME.homeView());
-  ok(h.mail && h.mail.configured === false && h.mail.on === true && h.mail.firstTen.sent === 0 && h.mail.firstTen.of === 10 && h.mail.outreach.target === 50 && !h.missing.mail,
+  ok(h.mail && h.mail.configured === false && h.mail.on === true && h.mail.firstTen.sent === 0 && h.mail.firstTen.of === 10 && h.mail.outreach.target === 1000 && !h.missing.mail,
     'the Home says so in its mail part, with nothing missing');
   process.env.GMAIL_APP_PASSWORD = PASSWORD; process.env.MAIL_SENDER = 'resend';
   const rr = await MAIL.mailReady();
@@ -339,11 +345,11 @@ let firstSent = null;
   const sendLate = await HANDS.runHand({ action: 'mail-send', args: { id: w2.id }, why: 'x' }, { actor: 'owner', approval: { owner: true, source: 'decision', id: c2.id } });
   ok(!sendLate.ok && /declined/.test(sendLate.error), 'and it cannot be sent after');
 
-  /* Later, and at most five waiting */
-  const ts = [1, 2, 3, 4, 5, 6].map(i => thread('t-w' + i, 'reader' + i + '@example.com'));
+  /* Later, and at most ten waiting (round six: all of the first ten at once) */
+  const ts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => thread('t-w' + i, 'reader' + i + '@example.com'));
   const ws = [];
   for (const t of ts) ws.push(await q(replyTo(t)));
-  ok(ws.slice(0, 5).every(w => w.status === 'waiting-owner') && ws[5].status === 'held' && /5 letters already wait/.test(ws[5].reason), 'at most five wait on his Home at once; the sixth is held');
+  ok(ws.slice(0, 10).every(w => w.status === 'waiting-owner') && ws[10].status === 'held' && /10 letters already wait/.test(ws[10].reason), 'at most ten wait on his Home at once; the eleventh is held');
   const c3 = (await openCards()).find(d => d.letter && d.letter.to === 'reader1@example.com');
   ok(c3.title === 'Send this reply to a reader?' && c3.letter.kind === 'reply', 'a reply\'s card names no reader: ' + c3.title);
   const later = keep(await DEC.decide(c3.id, 'later'));
@@ -418,12 +424,12 @@ console.log('\n5. every gate, in its order');
   S.set('nsoul:mail:count:reply:' + day, '30');
   const capR = await q(replyTo(thread('t-c1', 'cap1@example.com')));
   ok(capR.status === 'held' && /cap of 30/.test(capR.reason), 'thirty replies a day: ' + capR.reason);
-  S.set('nsoul:mail:count:reply:' + day, '0'); S.set('nsoul:mail:count:total:' + day, '50');
+  S.set('nsoul:mail:count:reply:' + day, '0'); S.set('nsoul:mail:count:total:' + day, '90');
   const capT = await q(replyTo(thread('t-c2', 'cap2@example.com')));
-  ok(capT.status === 'held' && /50 emails in all/.test(capT.reason), 'fifty emails a day in all: ' + capT.reason);
-  S.set('nsoul:mail:count:total:' + day, '0'); S.set('nsoul:mail:count:outreach:' + day, '10');
+  ok(capT.status === 'held' && /90 emails in all/.test(capT.reason), 'ninety emails a day in all (round six): ' + capT.reason);
+  S.set('nsoul:mail:count:total:' + day, '0'); S.set('nsoul:mail:count:outreach:' + day, '50');
   const capO = await q({ ...LETTER, to: 'office@arrahman.example.org', toName: 'Masjid Ar-Rahman, Leeds', placeId: 'p-leeds' });
-  ok(capO.status === 'held' && /cap of 10/.test(capO.reason), 'ten new letters a day: ' + capO.reason);
+  ok(capO.status === 'held' && /cap of 50/.test(capO.reason), 'fifty new letters a day at most, the pace itself the outreach module\'s (round six): ' + capO.reason);
   S.set('nsoul:mail:count:outreach:' + day, '0');
   const before = parseInt(S.get('nsoul:mail:count:total:' + day) || '0', 10);
   TRANSPORT.fail = 'smtp 535 authentication failed for noorcodexoflight@gmail.com with ' + PASSWORD;
@@ -501,7 +507,8 @@ console.log('\n6. the switch (mail.on) and the pause');
   m2.flags.add('\\Seen');
   await door({ method: 'POST', headers: AUTH, body: { action: 'mail-switch', on: true } });
   await tick();
-  ok(TRANSPORT.sent.length === 1 && (await MAIL.mailView()).threads.find(t => t.from === 'bilal@example.com').action === 'for-you', 'one he opened in Gmail meanwhile is his; nothing sent');
+  const bt = (await MAIL.mailView()).threads.find(t => t.from === 'bilal@example.com');
+  ok(TRANSPORT.sent.length === 1 && bt.action === 'done' && bt.doneBy === 'seen' && bt.needsYou === false && m2.archived === true, 'one he opened in Gmail meanwhile is his, and done (round six): out of his inbox, nothing sent');
   const bad = await door({ method: 'POST', headers: AUTH, body: { action: 'mail-switch', on: 'maybe' } });
   ok(bad.statusCode === 400 && !bad.body.ok, 'on or off, nothing else');
   const anon = await door({ method: 'POST', headers: {}, body: { action: 'mail-switch', on: false } });
@@ -542,7 +549,7 @@ let INBOX = {};
     pages: mail({ from: 'counter@example.net', subject: 'Size', text: 'Out of interest, how many pages does the library have?' })
   };
   const out = await tick();
-  ok(out.ok && out.ran && out.read === 18 && out.answered === 6 && out.forYou === 7 && out.filed === 3 && out.self === 1 && out.skipped === 1, 'eighteen read in one tick: ' + JSON.stringify(out));
+  ok(out.ok && out.ran && out.read === 18 && out.answered === 6 && out.forYou === 6 && out.filed === 4 && out.self === 1 && out.skipped === 1, 'eighteen read in one tick (round six: the security notice filed, not his): ' + JSON.stringify(out));
   ok(MAILR.wrongTier.length === 0 && MAILR.calls.every(c => c.tier === 'mail' && c.caller === 'soul' && c.json === true), 'every model call on the mail tier (Groq, then OpenRouter paid with data_collection deny), as the Lantern\'s own share');
   const reads = readerCalls();
   ok(reads.length === 10, 'ten needed the model; the rest the first pass alone (' + reads.length + ')');
@@ -559,20 +566,18 @@ let INBOX = {};
   ok(qa.length === 1 && qa[0].text.startsWith('Assalamu alaykum Amina,\n\n') && qa[0].text.endsWith('With salaam,\nNOOR Codex of Light\nhttps://noorcodex.com') && /noorcodex\.com\/words/.test(qa[0].text)
     && qa[0].subject === 'Re: How do I begin?' && qa[0].inReplyTo === INBOX.question.messageId && qa[0].references.includes(INBOX.question.messageId),
     'a question answered: her name put back by code, the library\'s room, the house\'s signature, threaded');
-  ok(INBOX.question.labels.has('Lantern/Answered') && INBOX.question.flags.has('\\Seen'), 'labelled Lantern/Answered and marked read');
+  ok(INBOX.question.labels.has('Lantern/Answered') && INBOX.question.flags.has('\\Seen') && INBOX.question.archived === true, 'labelled Lantern/Answered, marked read and out of the inbox (round six)');
   const guards = MAILR.calls.filter(c => c.role === 'guardian');
   ok(guards.length >= 5 && guards.every(g => !EMAIL_RX.test(String(g.messages[1].content))), 'the Guardian read every draft, masked (' + guards.length + ')');
   /* filed */
-  ok(INBOX.newsletter.labels.has('Lantern/Filed') && INBOX.newsletter.flags.has('\\Seen') && INBOX.notice.labels.has('Lantern/Filed') && !sentTo('news@digest.example.com').length,
-    'a newsletter and a platform notice: filed, read, never answered');
+  ok(INBOX.newsletter.labels.has('Lantern/Filed') && INBOX.newsletter.flags.has('\\Seen') && INBOX.notice.labels.has('Lantern/Filed') && !sentTo('news@digest.example.com').length
+    && INBOX.newsletter.archived === true && INBOX.notice.archived === true, 'a newsletter and a platform notice: filed, read, out of the inbox, never answered');
   ok(INBOX.injection.labels.has('Lantern/Filed') && !sentTo('mallory@example.net').length && !users.some(u => /givers' list/.test(u)), 'an order hidden in a message is never followed, never even read by the model: filed');
-  /* the security notice */
+  /* the security notice (round six: filed quietly, never his: "I don't need those kind of checks") */
   const cards = await openCards();
-  const sec = cards.find(d => d.title === 'A security or account notice');
-  ok(sec && /no-reply@accounts\.google\.com/.test(sec.why) && /Security alert: new sign-in/.test(sec.why) && sec.link.href === MAIL.gmailLink(INBOX.security.messageId) && sec.options.map(o => o.label).join() === 'Open in Gmail,Done,Later',
-    'a security notice goes to him with its sender and subject, and Open in Gmail');
-  ok(!sentTo('no-reply@accounts.google.com').length && INBOX.security.labels.has('Lantern/For Sam') && !INBOX.security.flags.has('\\Seen') && INBOX.security.flags.has('\\Flagged'),
-    'never answered: For Sam, unread, starred');
+  ok(!cards.some(d => d.title === 'A security or account notice') && !NOTIFY.some(n => /security/i.test(n)), 'a security notice raises no card on Home and nothing on his phone');
+  ok(!sentTo('no-reply@accounts.google.com').length && INBOX.security.labels.has('Lantern/Filed') && !INBOX.security.labels.has('Lantern/For Sam') && INBOX.security.flags.has('\\Seen')
+    && !INBOX.security.flags.has('\\Flagged') && INBOX.security.archived === true, 'never answered: filed under Lantern/Filed, read, out of the inbox');
   /* someone at risk */
   const dz = sentTo('tired.soul@example.org');
   ok(dz.length === 1 && dz[0].text.includes(MAIL.DISTRESS_TEXT) && /988/.test(dz[0].text) && /116 123/.test(dz[0].text) && /13 11 14/.test(dz[0].text), 'someone at risk: one short, kind reply pointing to local help');
@@ -616,10 +621,10 @@ let INBOX = {};
   /* the Home and the room */
   const h = keep(await HOME.homeView());
   const keys = o => Object.keys(o || {}).sort().join();
-  ok(keys(h.mail) === 'configured,firstTen,last,on,outreach,today' && h.mail.configured && h.mail.on && h.mail.firstTen.sent === 10 && h.mail.firstTen.of === 10,
-    'Home mail: {configured, on, firstTen, today, outreach, last}');
-  ok(JSON.stringify(h.mail.today) === JSON.stringify({ received: 16, answered: 7, filed: 3, forYou: 8, sent: 7 }), 'today: ' + JSON.stringify(h.mail.today));
-  ok(JSON.stringify(h.mail.outreach) === JSON.stringify({ places: 12, contacted: 3, replied: 1, working: 0, target: 50 }), 'outreach from the outreach module, target 50');
+  ok(keys(h.mail) === 'configured,firstTen,last,on,outreach,start,today' && h.mail.configured && h.mail.on && h.mail.firstTen.sent === 10 && h.mail.firstTen.of === 10,
+    'Home mail: {configured, on, start, firstTen, today, outreach, last}');
+  ok(JSON.stringify(h.mail.today) === JSON.stringify({ received: 16, answered: 7, filed: 4, forYou: 7, sent: 7 }), 'today: ' + JSON.stringify(h.mail.today));
+  ok(JSON.stringify(h.mail.outreach) === JSON.stringify({ places: 12, contacted: 3, replied: 1, working: 0, target: 1000 }), 'outreach from the outreach module, target 1000 (round six)');
   ok(h.mail.last.length === 5 && h.mail.last.every(x => keys(x) === 'at,title') && !h.mail.last.some(x => EMAIL_RX.test(x.title)), 'the last five, as titles with no address');
   const heldCards = h.decisions.filter(d => d.title === 'A reply the Lantern would not send on its own');
   ok(h.decisions.every(d => Object.prototype.hasOwnProperty.call(d, 'letter')) && h.decisions.filter(d => !heldCards.includes(d)).every(d => d.letter === null),
@@ -629,11 +634,12 @@ let INBOX = {};
   const done = h.done.filter(d => d.link);
   ok(done.length === 7 && done.every(d => /^https:\/\/mail\.google\.com\/mail\/u\/0\/#search\/rfc822msgid:/.test(d.link.href) && d.undo === false), 'seven Done items, each with its link in Gmail and no Undo');
   const v = keep((await door({ query: { view: 'mail' }, headers: AUTH })).body);
-  ok(v.ok && keys(v) === 'counts,dnc,mail,missing,ok,places,threads' && keys(v.mail) === 'caps,configured,firstTen,on,reason,today' && v.mail.reason === null,
-    'GET ?view=mail: {ok, mail, threads, places, counts, dnc, missing}');
-  ok(v.mail.caps.reply.used === 7 && v.mail.caps.reply.max === 30 && v.mail.caps.total.max === 50 && v.mail.caps.outreach.max === 10 && v.mail.caps.followup.max === 10, 'with the caps and what is used');
+  ok(v.ok && keys(v) === 'counts,dnc,mail,missing,ok,pace,places,threads' && keys(v.mail) === 'caps,configured,firstTen,on,pausedUntil,reason,today' && v.mail.reason === null && v.mail.pausedUntil === null,
+    'GET ?view=mail: {ok, mail, threads, places, counts, pace, dnc, missing}');
+  ok(v.mail.caps.reply.used === 7 && v.mail.caps.reply.max === 30 && v.mail.caps.total.max === 90 && v.mail.caps.outreach.max === 50 && v.mail.caps.followup.max === 50, 'with the ceilings and what is used (round six)');
   /* round five: and what the judge read (judged {by, p}, or null), for the console's Mail room */
-  ok(v.threads.length === 16 && v.threads.every(t => keys(t) === 'action,at,from,fromName,id,judged,kind,reply,subject,summary' && ['answered', 'for-you', 'filed', 'waiting'].includes(t.action)), 'the threads it handled, each {id, at, from, fromName, subject, kind, action, summary, reply, judged}');
+  ok(v.threads.length === 16 && v.threads.every(t => keys(t) === 'action,at,card,doneAt,doneBy,draft,from,fromName,gmail,id,judged,kind,needsYou,ops,reply,seenAt,subject,summary' && ['answered', 'for-you', 'filed', 'waiting', 'done'].includes(t.action)),
+    'the threads it handled, each with what it needs of him and what he may do (round six)');
   ok(v.threads.every(t => t.judged === null || (t.judged.by === 'jev' && typeof t.judged.p === 'number')), 'judged is the judge\'s own reading, or null when another hand sorted it');
   const vt = v.threads.find(t => t.from === 'amina.r@example.com');
   ok(vt.action === 'answered' && vt.kind === 'question' && vt.reply && vt.reply.text === qa[0].text && /first step/.test(vt.summary), 'with the reply it sent');
@@ -803,7 +809,8 @@ console.log('\n11. through the door: do not contact, the tick, the brief');
   const vm = (await door({ query: { view: 'mail' }, headers: AUTH })).body;
   ok(vm.ok && Array.isArray(vm.places) && !vm.places.length && vm.counts === null && /outreach module/.test(vm.missing.places), 'with no outreach module: places empty, missing.places says why');
   const hm = await HOME.homeView();
-  ok(hm.mail && hm.mail.outreach.places === null && hm.mail.outreach.target === 50 && !hm.missing.mail, 'and the Home\'s outreach numbers are null, target 50');
+  ok(hm.mail && hm.mail.outreach.places === null && hm.mail.outreach.target === 1000 && hm.mail.start && hm.mail.start.available === false && /not on this deployment/.test(hm.mail.start.why) && !hm.missing.mail,
+    'and the Home\'s outreach numbers are null, target 1000, and no start button without the module (round six)');
   MAIL.setMailSeams({ outreach: OUTREACH });
   mail({ from: 'tick.reader@example.com', subject: 'Hello', text: 'How do I begin?' });
   const t = keep(await door({ query: { action: 'tick' }, headers: { authorization: 'Bearer ' + process.env.CRON_SECRET } }));
@@ -1104,6 +1111,194 @@ console.log('\n12c. round five: the letterhead and its plain twin, slop written 
 /* ===========================================================================
    13. NOTHING SENT, NOTHING LEAKED
 =========================================================================== */
+console.log('\n12d. round six: seen or done means gone, the buttons, letters set for their own day, bounces, Gmail\'s word, the one-time start');
+{
+  await fresh({ autonomous: true });
+  const rowOf = async from => (await MAIL.mailView()).threads.find(t => t.from === from);
+  const OWNER_ASK = /THE OWNER ASKED THE HOUSE TO ANSWER/;
+  MAILR.reader = task => {
+    const u = String(task.messages[1].content);
+    if (OWNER_ASK.test(u) && /revenue share/.test(u)) return R('partnership', ['They propose putting the library in their app.', 'It would share revenue.'], 'Thank you for thinking of the library. The owner will write to you himself about any arrangement; every page stays free to read at https://noorcodex.com/words', { needsOwner: true });
+    if (/interview the team/.test(u)) return R('press', ['A reporter asks for an interview.', 'They want to talk to the team.'], null, { needsOwner: true });
+    if (/saying salaam to you/.test(u)) return R('personal', ['A friend says salaam.', 'Nothing to do.'], null);
+    return READER(task);
+  };
+
+  /* a. opened in Gmail: done at the next tick, out of his inbox, its card closed */
+  const pa = mail({ from: 'partner@example.org', fromName: 'A Partner', subject: 'An offer', text: 'We propose a revenue share in our app.' });
+  await tick();
+  const ra = await rowOf('partner@example.org');
+  ok(ra && ra.action === 'for-you' && ra.needsYou === true && ra.ops.join() === 'done,answer,notours' && ra.gmail && /^https:\/\/mail\.google\.com\//.test(ra.gmail) && ra.card === null,
+    'a message for him needs him, with Done, Answer it for me and Not NOOR business: ' + JSON.stringify(ra && ra.ops));
+  ok((await DEC.readOpen()).some(d => d.key === 'mail:t:' + ra.id) && pa.labels.has('Lantern/For Sam') && pa.flags.has('\\Flagged') && !pa.flags.has('\\Seen'), 'its card is on Home; in Gmail it waits For Sam, unread and starred');
+  pa.flags.add('\\Seen');
+  await tick();
+  const ra2 = await rowOf('partner@example.org');
+  ok(ra2.action === 'done' && ra2.doneBy === 'seen' && ra2.needsYou === false && ra2.seenAt && pa.archived === true && !pa.flags.has('\\Flagged') && !(await DEC.readOpen()).some(d => d.key === 'mail:t:' + ra.id),
+    'opened in Gmail: done at the next tick, out of his inbox, unstarred, its card closed');
+  ok(ra2.ops.join() === 'answer', 'and still answerable from the Mail room');
+
+  /* b. Done on its Home card: done at the next tick */
+  const pb = mail({ from: 'press@paper.example.com', fromName: 'A Reporter', subject: 'An interview', text: 'Could we interview the team?' });
+  await tick();
+  const rb = await rowOf('press@paper.example.com');
+  const cb = (await DEC.readOpen()).find(d => d.key === 'mail:t:' + rb.id);
+  ok(rb.action === 'for-you' && cb, 'the press: his, with its card');
+  keep(await DEC.decide(cb.id, 'done'));
+  await tick();
+  const rb2 = await rowOf('press@paper.example.com');
+  ok(rb2.action === 'done' && rb2.doneBy === 'owner' && pb.archived === true && pb.flags.has('\\Seen'), 'Done on its card: done at the next tick, read and out of his inbox');
+
+  /* c. the Mail room's own buttons, through the door */
+  const pc = mail({ from: 'personal@example.net', fromName: 'A Friend', subject: 'Salaam', text: 'Just saying salaam to you, brother.' });
+  await tick();
+  const rc = await rowOf('personal@example.net');
+  const seen = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: rc.id, op: 'seen' } })).body);
+  ok(seen.ok && seen.message === '' && seen.thread && seen.thread.action === 'done' && seen.thread.doneBy === 'seen' && !(await DEC.readOpen()).some(d => d.key === 'mail:t:' + rc.id),
+    'opened in the Mail room: done at once (op seen), its card closed');
+  ok(!pc.archived, 'and Gmail is told at the next reading');
+  await tick();
+  ok(pc.archived === true && pc.flags.has('\\Seen') && !pc.flags.has('\\Flagged'), 'which archives it');
+  const again = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: rc.id, op: 'seen' } })).body);
+  ok(again.ok && again.thread.action === 'done', 'seen twice changes nothing');
+
+  /* d. Not NOOR business: archived, and that sender filed quietly from then on, read by no model */
+  const pd = mail({ from: 'promo@shop.example.com', fromName: 'A Shop', subject: 'A deal', text: 'We would love to partner on a revenue share for our shop.' });
+  await tick();
+  const rd = await rowOf('promo@shop.example.com');
+  const nq = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: rd.id, op: 'notours' } })).body);
+  ok(nq.ok && /promo@shop\.example\.com is filed quietly from now on/.test(nq.message) && nq.thread.action === 'done' && nq.thread.doneBy === 'owner', 'Not NOOR business: ' + nq.message);
+  const before = readerCalls().length;
+  const pd2 = mail({ from: 'promo@shop.example.com', fromName: 'A Shop', subject: 'Another deal', text: 'One more offer for you.' });
+  await tick();
+  const rd2 = (await MAIL.mailView()).threads.find(t => t.subject === 'Another deal');
+  ok(readerCalls().length === before && rd2 && rd2.action === 'filed' && /not NOOR business/.test(rd2.summary) && pd2.archived === true && pd2.labels.has('Lantern/Filed'),
+    'the next message from that sender is filed quietly, read by no model, out of the inbox');
+  const own = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: 'no-such-thread', op: 'done' } })).body);
+  ok(own.ok === false && /no longer kept/.test(own.message), 'a thread that is not kept says so');
+
+  /* e. Answer it for me: the reply waits for his Send even after the first ten */
+  const pe = mail({ from: 'partner2@example.org', fromName: 'Another Partner', subject: 'Our app', text: 'We propose a revenue share in our app too.' });
+  await tick();
+  const re = await rowOf('partner2@example.org');
+  const sentBefore = TRANSPORT.sent.length;
+  const ans = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: re.id, op: 'answer' } })).body);
+  ok(ans.ok && ans.draft && /owner will write to you himself/.test(ans.draft.text) && ans.draft.subject === 'Re: Our app' && ans.card && ans.card.id && TRANSPORT.sent.length === sentBefore,
+    'Answer it for me: the Lantern writes the reply, nothing is sent: ' + ans.message);
+  const ask = MAILR.calls.filter(c => c.role === 'mail-reader').pop();
+  ok(OWNER_ASK.test(String(ask.messages[1].content)) && !EMAIL_RX.test(String(ask.messages[1].content)), 'the model was told the owner asked, and read the message masked');
+  const re2 = await rowOf('partner2@example.org');
+  ok(re2.action === 'waiting' && re2.needsYou === true && re2.ops.join() === 'send,dontsend' && re2.card.id === ans.card.id && /owner will write/.test(re2.draft.text),
+    'the Mail room shows the draft with Send and Don\'t send');
+  const card = (await DEC.readOpen()).find(d => d.id === ans.card.id);
+  ok(card && card.kind === 'approve' && /You asked the Lantern to answer/.test(card.why) && card.letter.to === 'partner2@example.org', 'and its card on Home says he asked for it');
+  const sendIt = keep(await DEC.decide(ans.card.id, 'send'));
+  const last = TRANSPORT.sent[TRANSPORT.sent.length - 1];
+  ok(sendIt.ok && TRANSPORT.sent.length === sentBefore + 1 && last.to[0].address === 'partner2@example.org' && last.inReplyTo === pe.messageId, 'his Send sends it, threaded');
+  const re3 = await rowOf('partner2@example.org');
+  await tick();
+  ok(re3.action === 'answered' && pe.archived === true, 'then it is answered, and out of his inbox at the next reading');
+  const dz = mail({ from: 'tired@example.org', fromName: 'Someone', subject: 'Tired', text: 'I want to die, I cannot go on.' });
+  await tick();
+  const rz = await rowOf('tired@example.org');
+  const az = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'mail-thread', id: rz.id, op: 'answer' } })).body);
+  ok(az.ok === false && /yours to answer yourself/.test(az.message) && !rz.ops.includes('answer'), 'someone at risk is never answered by Answer it for me: ' + az.message);
+
+  /* f. a letter set for its place's own working day */
+  setDay(D0, '09:00');
+  const at = CLOCK.t + 3 * 3600000;
+  const sch = await q(LETTER, { actor: 'soul', viaHand: true, sendAt: new Date(at).toISOString() });
+  ok(sch.ok && sch.status === 'scheduled' && sch.sendAt === new Date(at).toISOString() && TRANSPORT.sent.every(m => m.to[0].address !== LETTER.to), 'a letter set for later waits; nothing is sent: ' + sch.status);
+  ok(JSON.parse(S.get('nsoul:mail:out:' + sch.id)).status === 'scheduled' && Z.get('nsoul:mail:sched').has(sch.id), 'kept as scheduled, in the schedule');
+  await tick();
+  ok(TRANSPORT.sent.every(m => m.to[0].address !== LETTER.to), 'the tick before its time sends nothing');
+  CLOCK.t = at + 60000;
+  await tick();
+  const went = TRANSPORT.sent.filter(m => m.to[0].address === LETTER.to);
+  ok(went.length === 1 && JSON.parse(S.get('nsoul:mail:out:' + sch.id)).status === 'sent' && !Z.get('nsoul:mail:sched').has(sch.id), 'at its time the tick sends it, once');
+  ok(OUTREACH.sent.some(x => x.placeId === 'p-alnoor' && x.kind === 'outreach' && x.byOwner === false && x.mailId === sch.id), 'and tells the outreach module at once, as the house\'s own letter');
+  await tick();
+  ok(TRANSPORT.sent.filter(m => m.to[0].address === LETTER.to).length === 1, 'never twice');
+  /* the day's cap spent when its time comes: an hour later, not held */
+  const lt = CLOCK.t + 3600000;
+  const sch2 = await q({ ...LETTER, to: 'office@arrahman.example.org', toName: 'Masjid Ar-Rahman, Leeds', placeId: 'p-leeds' }, { actor: 'soul', viaHand: true, sendAt: new Date(lt).toISOString() });
+  CLOCK.t = lt + 60000;
+  S.set('nsoul:mail:count:outreach:' + today(), '50');
+  await tick();
+  const r2 = JSON.parse(S.get('nsoul:mail:out:' + sch2.id));
+  ok(r2.status === 'scheduled' && r2.tries === 1 && /cap of 50/.test(r2.lastReason) && Date.parse(r2.sendAt) >= CLOCK.t + 59 * 60000 && Z.get('nsoul:mail:sched').has(sch2.id), 'the day\'s cap spent: it waits an hour, not held');
+  S.set('nsoul:mail:count:outreach:' + today(), '0');
+  CLOCK.t += 62 * 60000;
+  await tick();
+  ok(JSON.parse(S.get('nsoul:mail:out:' + sch2.id)).status === 'sent' && TRANSPORT.sent.some(m => m.to[0].address === 'office@arrahman.example.org'), 'and goes when there is room');
+  /* a few a tick */
+  const many = [];
+  for (let i = 0; i < 6; i++) {
+    const pid = 'p-many' + i;
+    PLACES.push({ id: pid, name: 'Place ' + i, email: 'office' + i + '@many.example.org', status: 'new' });
+    many.push(await q({ ...LETTER, to: 'office' + i + '@many.example.org', toName: 'Place ' + i, placeId: pid }, { actor: 'soul', viaHand: true, sendAt: new Date(CLOCK.t + 5 * 60000).toISOString() }));
+  }
+  CLOCK.t += 6 * 60000;
+  const n0 = TRANSPORT.sent.length;
+  await tick();
+  ok(TRANSPORT.sent.length - n0 === MAIL.DRAIN_MAX, 'at most ' + MAIL.DRAIN_MAX + ' a tick, so letters never leave in a burst');
+  await tick();
+  ok(TRANSPORT.sent.length - n0 === 6 && many.every(m => JSON.parse(S.get('nsoul:mail:out:' + m.id)).status === 'sent'), 'the rest at the next tick');
+  /* a place that said no meanwhile: refused at its time, never sent */
+  const sch3 = await q({ ...LETTER, to: 'office0@many.example.org', toName: 'Place 0', placeId: 'p-many0', kind: 'followup', subject: 'A short follow-up' }, { actor: 'soul', viaHand: true, sendAt: new Date(CLOCK.t + 5 * 60000).toISOString() });
+  ok(sch3.status === 'held' || sch3.status === 'refused', 'a follow-up a day after the first letter is not even scheduled: ' + sch3.reason);
+
+  /* g. a bounce: the outreach module hears the place's own address, never the house's */
+  const nb = TRANSPORT.sent.length;
+  const pbn = mail({ from: 'mailer-daemon@googlemail.com', fromName: 'Mail Delivery Subsystem', subject: 'Delivery Status Notification (Failure)',
+    text: "Address not found\n\nYour message wasn't delivered to office3@many.example.org because the address couldn't be found.\n\nFrom: salam@noorcodex.com\nTo: office3@many.example.org", headers: ['X-Failed-Recipients: office3@many.example.org'] });
+  await tick();
+  ok(OUTREACH.bounces.length === 1 && OUTREACH.bounces[0].address === 'office3@many.example.org', 'a bounce: the outreach module hears the address that bounced, and only that one');
+  ok(pbn.labels.has('Lantern/Filed') && pbn.archived === true && TRANSPORT.sent.length === nb && !(await DEC.readOpen()).some(d => /Delivery/.test(d.title || '')), 'filed quietly, never answered, no card');
+
+  /* h. Gmail's word to slow down */
+  TRANSPORT.fail = '550-5.4.5 Daily user sending limit exceeded. For more information on Gmail sending limits go to https://support.google.com';
+  const slow = await q(replyTo(thread('t-slow', 'slow@example.com')));
+  TRANSPORT.fail = null;
+  ok(slow.status === 'held' && /slow down/.test(slow.reason) && S.get('nsoul:mail:pause') && OUTREACH.brakes.length === 1 && OUTREACH.brakes[0].days === 7,
+    'Gmail\'s daily limit: held, every send paused a day, and the letters\' pace halved for a week: ' + slow.reason);
+  const slow2 = await q(replyTo(thread('t-slow2', 'slow2@example.com')));
+  ok(slow2.status === 'held' && /sending waits until/.test(slow2.reason) && TRANSPORT.sent.every(m => m.to[0].address !== 'slow2@example.com'), 'meanwhile nothing goes: ' + slow2.reason);
+  const vp = (await MAIL.mailView()).mail.pausedUntil;
+  ok(vp && Date.parse(vp) > CLOCK.t, 'the Mail room can say until when');
+  S.delete('nsoul:mail:pause');
+
+  /* i. a security notice handed over before round six is filed at the next tick */
+  const old = mail({ from: 'no-reply@accounts.google.com', subject: 'Security alert', text: 'A new app password was created.' });
+  const tid = 't-old-security';
+  S.set('nsoul:mail:thread:' + tid, JSON.stringify({ id: tid, uid: old.uid, at: new Date(CLOCK.t).toISOString(), from: 'no-reply@accounts.google.com', subject: 'Security alert', messageId: old.messageId, kind: 'security', action: 'for-you', summary: 'A security notice.' }));
+  L.set('nsoul:mail:threads', [tid].concat(L.get('nsoul:mail:threads') || []));
+  await DEC.upsert({ kind: 'you', key: 'mail:t:' + tid, stamp: '1', sticky: true, source: 'mail-inbox', title: 'A security or account notice', why: 'x', options: [DEC.opt.done()], steps: [] });
+  old.labels.add('Lantern/For Sam'); old.flags.add('\\Flagged');
+  await tick();
+  ok(JSON.parse(S.get('nsoul:mail:thread:' + tid)).action === 'filed' && !(await DEC.readOpen()).some(d => d.key === 'mail:t:' + tid) && old.archived === true && old.labels.has('Lantern/Filed') && !old.flags.has('\\Flagged'),
+    'the Google alert he was harassed with: its card closed, filed under Lantern/Filed, out of his inbox');
+
+  /* j. the one-time start */
+  const h0 = keep(await HOME.homeView());
+  ok(h0.mail.start && h0.mail.start.available === true && h0.mail.start.usedAt === null && h0.mail.start.why === null, 'Home offers the one-time start while the mailbox is on');
+  const rs = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'outreach-start', step: 'research' } })).body);
+  ok(rs.ok && rs.ran && rs.added === 3 && rs.checked === 7 && /Found 3 new places \(7 checked\)/.test(rs.message) && OUTREACH.ticks.length === 1, 'step one, research now: ' + rs.message);
+  S.set('nsoul:tick:lock', 'someone');
+  const busy = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'outreach-start', step: 'plan' } })).body);
+  ok(busy.ok === false && busy.busy === true && (await MAIL.outreachStartState()).available === true, 'a plan already under way: not spent, he may press again: ' + busy.message);
+  S.delete('nsoul:tick:lock');
+  await SETTINGS.setDial('mail.on', false);
+  const off = keep(await HOME.homeView());
+  ok(off.mail.start.available === false && off.mail.start.why === 'Mail is off.', 'with mail off it is not offered, and says why');
+  await SETTINGS.setDial('mail.on', null);
+  await MAIL.markOutreachStart({ cycle: 'c-test' });
+  const h1 = keep(await HOME.homeView());
+  ok(h1.mail.start.available === false && h1.mail.start.usedAt && h1.mail.start.why === null, 'once started, never offered again');
+  const twice = keep((await door({ method: 'POST', headers: AUTH, body: { action: 'outreach-start', step: 'research' } })).body);
+  ok(twice.ok === false && twice.used === true && /already started/.test(twice.message), 'and the door refuses a second start');
+}
+
 console.log('\n13. nothing real was reached, and the password is nowhere');
 {
   ok(!NET.calls.some(c => /resend\.com|gmail\.com|smtp|imap/i.test(c.url)), 'no real mail server or API was ever reached (the senders and the mailbox are stood in)');

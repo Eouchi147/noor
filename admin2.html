@@ -641,6 +641,71 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .mailc .hcalm{background:none;border:0;padding:0}
 .mailc .acts{margin-top:14px}
 .mailc .acts .btn{flex:1 1 auto}
+/* round six: the day's pace under the outreach, one quiet line (a gentle
+   warning when it is braked), and the day the outreach was started */
+.mpace{margin:8px 0 0 56px}
+.mpace p{margin:0;font-size:12.5px;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+.mpace p+p{margin-top:4px}
+.mpace .mpw{display:flex;gap:7px;align-items:flex-start;color:var(--wait)}
+.mpace .mpw svg{width:14px;height:14px;margin-top:2px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mpace .mst{color:var(--faint)}
+/* the one time start: a gold button with the lamp, and what it does, once */
+.mstart{margin:14px 0 0;padding:14px;border-radius:14px;border:1px solid rgba(233,200,106,.34);
+  background:radial-gradient(110% 90% at 0% 0%,rgba(233,200,106,.12),rgba(233,200,106,0) 62%),var(--panel2)}
+#s-home .mstart .ostart{width:100%;min-height:50px;font-size:14.5px;gap:10px;box-shadow:0 0 0 4px rgba(233,200,106,.08),0 10px 26px -12px rgba(233,200,106,.55)}
+.mstart .ostart svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mstart p{margin:10px 2px 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.mstart-why{margin:10px 0 0;font-size:12.5px;line-height:1.5;color:var(--faint);overflow-wrap:anywhere}
+/* the run, live, inside the card: three steps on a thin line of light, each
+   with its state, its seconds and what it found; nothing covers the Home */
+.orun{position:relative;margin:14px 0 0;padding:14px 14px 10px;border-radius:14px;border:1px solid rgba(233,200,106,.3);
+  background:radial-gradient(120% 80% at 0% 0%,rgba(233,200,106,.09),rgba(233,200,106,0) 60%),var(--panel2)}
+.orun .orh{display:flex;gap:10px;align-items:flex-start}
+.orun .orh .hic{width:30px;height:30px;background:rgba(233,200,106,.1)}
+.orun:focus{outline:none}
+.orun:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.orun .orh .ort{min-width:0}
+.orun .orh b{display:block;color:var(--cream);font-weight:600;font-size:14.5px;line-height:1.35}
+.orun .orh .ort span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45;margin-top:2px}
+.ors{list-style:none;margin:14px 0 0;padding:0}
+.ost{position:relative;display:flex;gap:12px;padding:0 0 14px}
+.ost:last-child{padding-bottom:4px}
+.ost:not(:last-child)::before{content:"";position:absolute;left:8px;top:22px;bottom:2px;width:2px;border-radius:1px;background:rgba(255,249,227,.08)}
+.ost[data-state="done"]:not(:last-child)::before{background:linear-gradient(180deg,rgba(233,200,106,.7),rgba(233,200,106,.25))}
+.osd{position:relative;flex:0 0 18px;width:18px;height:18px;margin-top:1px;border-radius:50%;border:1.5px solid var(--line2);background:var(--panel2);display:flex;align-items:center;justify-content:center}
+.osd i{position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(233,200,106,.75);opacity:0;pointer-events:none}
+.osd svg{width:11px;height:11px;stroke:#1a1608;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;display:none}
+.ost[data-state="work"] .osd{border-color:var(--gold);background:radial-gradient(circle,#FFF6D6 0%,#F2D27A 42%,rgba(233,200,106,.25) 78%);box-shadow:0 0 12px rgba(233,200,106,.55)}
+.ost[data-state="done"] .osd{border-color:var(--gold);background:var(--gold)}
+.ost[data-state="done"] .osd svg{display:block}
+.ost[data-state="fail"] .osd{border-color:var(--ember);background:rgba(224,122,82,.25)}
+.osx{flex:1;min-width:0}
+.osh{display:flex;align-items:baseline;gap:10px;min-height:20px}
+.osh b{flex:1;min-width:0;font-size:13.5px;font-weight:600;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}
+.ost[data-state="work"] .osh b,.ost[data-state="done"] .osh b,.ost[data-state="fail"] .osh b{color:var(--cream)}
+.ose{flex:0 0 auto;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);white-space:nowrap}
+.ost[data-state="work"] .ose{color:var(--gold-dim)}
+.osl{list-style:none;margin:3px 0 0;padding:0}
+.osl li{font-size:12.5px;line-height:1.5;color:var(--muted);padding:2px 0;overflow-wrap:anywhere}
+.osl li.ok{color:var(--text)}
+.osl li.warn{color:var(--wait)}
+.osv{margin:3px 0 0;font-size:12.5px;line-height:1.5;color:var(--text);overflow-wrap:anywhere}
+.osv:empty{display:none}
+.osv em{font-style:normal;color:var(--faint)}
+.olt{list-style:none;margin:6px 0 0;padding:0;border-top:1px solid var(--line)}
+.olt li{display:flex;gap:8px;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45;color:var(--text)}
+.olt li i{flex:0 0 7px;width:7px;height:7px;border-radius:50%;border:1px solid var(--gold-dim);transform:translateY(-1px)}
+.olt li[data-ls="read"] i{background:rgba(233,200,106,.45)}
+.olt li[data-ls="done"] i{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(233,200,106,.55)}
+.olt li[data-ls="no"] i{border-color:var(--faint);background:none}
+.olt li span{flex:1;min-width:0;overflow-wrap:anywhere}
+.olt li em{flex:0 0 auto;font-style:normal;font-size:11.5px;color:var(--faint);white-space:nowrap}
+.olt li[data-ls="done"] em{color:var(--gold-dim)}
+.orf{margin:4px 0 6px;padding:10px 12px;border-radius:10px;border-left:2px solid rgba(240,138,138,.6);background:rgba(240,138,138,.07);font-size:13px;line-height:1.5;color:var(--text);overflow-wrap:anywhere}
+.orf .acts,.ore .acts,.olh .acts{margin-top:8px}
+.ore{margin:2px 0 6px;padding:10px 12px;border-radius:10px;border:1px solid rgba(233,200,106,.3);background:rgba(233,200,106,.06);font-size:13px;line-height:1.5;color:var(--cream);overflow-wrap:anywhere}
+.olh{margin:6px 0 0;padding:10px 12px;border-radius:10px;background:rgba(126,155,209,.08);border:1px solid rgba(126,155,209,.28);font-size:13px;line-height:1.5;color:var(--text)}
+.olh .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transform:rotate(180deg)}
 /* the Lantern's voice on Telegram (round four): while it is not linked, why
    it matters and the way to link it; once linked, one quiet line */
 .hvoice{display:flex;align-items:center;gap:12px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px 12px 16px;text-align:left}
@@ -656,13 +721,13 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 /* the mail sheet: a message the judge sorted on its own */
 .mjudge{margin:8px 0 0;padding:6px 10px;border-left:2px solid var(--gold-dim);background:var(--panel2);border-radius:0 8px 8px 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
 /* a letter waiting for his yes: the whole email, as text, never markup */
-.dc .ltr{margin:12px 0 0;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,249,227,.035),rgba(255,249,227,0) 70px),var(--ink)}
-.dc .ltr .lh{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
-.dc .ltr .lk{flex:0 0 58px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-.dc .ltr .lv{flex:1;min-width:0;color:var(--text);overflow-wrap:anywhere}
-.dc .ltr .lv .ad{display:inline-block;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
-.dc .ltr .lv.sj{color:var(--cream);font-weight:600}
-.dc .ltr .lt{padding:12px 14px 14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;color:var(--text)}
+.dc .ltr,.msh .ltr{margin:12px 0 0;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,249,227,.035),rgba(255,249,227,0) 70px),var(--ink)}
+.dc .ltr .lh,.msh .ltr .lh{display:flex;gap:10px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.45}
+.dc .ltr .lk,.msh .ltr .lk{flex:0 0 58px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.dc .ltr .lv,.msh .ltr .lv{flex:1;min-width:0;color:var(--text);overflow-wrap:anywhere}
+.dc .ltr .lv .ad,.msh .ltr .lv .ad{display:inline-block;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.dc .ltr .lv.sj,.msh .ltr .lv.sj{color:var(--cream);font-weight:600}
+.dc .ltr .lt,.msh .ltr .lt{padding:12px 14px 14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;color:var(--text)}
 .dc .ften{color:var(--gold-dim)}
 /* a sent email in Done: no Undo (an email cannot be unsent), its door to Gmail */
 .hrow .u .hlink{padding:0 4px;font-size:12.5px}
@@ -801,6 +866,32 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .msh .hist li{display:flex;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45;color:var(--text);overflow-wrap:anywhere}
 .msh .hist li:first-child{border-top:0}
 .msh .hist code{flex:0 0 auto;background:none;border:0;padding:0;color:var(--gold-dim);font-size:11px;min-width:64px}
+/* round six: the day's pace at the top of the room, in place of the old caps */
+.mpc{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.mpc .mpct{margin:0;font-size:13.5px;line-height:1.5;color:var(--text)}
+.mpc .mpct b{color:var(--cream);font-weight:600}
+.mpc .mprog{margin:8px 0 8px}
+.mpc .mprog s{position:absolute;top:0;bottom:0;background:var(--gold);opacity:.32;transform-origin:left center;text-decoration:none}
+.mpc .mpcl{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted);overflow-wrap:anywhere}
+.mpc .mpcw{margin:6px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted);overflow-wrap:anywhere;display:flex;gap:7px;align-items:flex-start}
+.mpc .mpcw.warn{color:var(--wait)}
+.mpc .mpcw svg{width:14px;height:14px;margin-top:2px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* a place's row: its letter set for later, or an address that bounced */
+#s-mail .row .t>span.mrw{white-space:normal;color:var(--blue);font-size:12px;margin-top:1px}
+#s-mail .row .t>span.mrw.bad{color:var(--wait)}
+#s-mail .row .r .pill+.pill{margin-left:4px}
+.msh .mnote{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--text);overflow-wrap:anywhere}
+.msh .mnote.later{color:var(--blue)}
+.msh .mnote.bad{color:var(--wait)}
+.msh .mnote.done{color:var(--good)}
+/* the inbox that moves: what needs him, what is done; the calm when nothing waits */
+.mcalm{margin:0 0 4px}
+.msh .mfail{margin:12px 0 0;padding:9px 12px;border-radius:10px;border-left:2px solid rgba(240,138,138,.6);background:rgba(240,138,138,.07);font-size:13px;line-height:1.5;color:var(--text);overflow-wrap:anywhere}
+.msh .mwrite{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:10px 12px;border-radius:10px;background:rgba(233,200,106,.07);border:1px solid rgba(233,200,106,.3);font-size:13px;color:var(--cream)}
+.msh .mwrite i{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(233,200,106,.7)}
+.msh .msaid{margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+.msh .hcf{margin-top:14px}
+.msh .acts a.btn{text-decoration:none}
 .link.door{cursor:pointer;width:100%;text-align:left;min-height:58px}
 .link .hic{margin:0;display:flex}
 .link.door b{font-size:14.5px}
@@ -2601,7 +2692,32 @@ function hMailHtml(j){
     var n=d?hDaysFrom(d):null;return '<div class="ml"><code>'+esc(d?(n===0?hClock(d):n===-1?"yesterday":hShort(d)):"lately")+'</code><span>'+hs(x.title)+'</span></div>'}).join("")+'</div>':'';
   return head+'<div class="mailc'+(on?'':' off')+'" id="h-mailc"><div class="mtop"><span class="state '+(on?'good':'wait')+'" id="h-mail-state"><i></i>'
       +(on?'Mail is on: the Lantern reads and writes':'Mail is off: the Lantern reads, and writes nothing')+'</span></div>'
-    +hMailNums(m.today)+hTenHtml(hMailTen(m))+out+lastH+door+'</div>';
+    +oStartHtml(m)
+    +hMailNums(m.today)+hTenHtml(hMailTen(m))+out+hPaceHtml(m)+lastH+door+'</div>';
+}
+/* round six: the day's pace in one quiet line (mail.outreach.pace): the
+   letters written against the day's number, those set for their own hour,
+   those waiting for his Send, the places ready and found. Said the same way
+   in the Mail room. Nothing is guessed: a number the house did not send is
+   left out of the sentence. */
+function mPaceWords(p,room){
+  var L=hNum(p.letters),w=(hNum(p.written)||0)+(hNum(p.followupsWritten)||0),f=hNum(p.followupsWritten)||0,sc=hNum(p.scheduled)||0,wt=hNum(p.waiting)||0,rd=hNum(p.ready),fd=hNum(p.found)||0;
+  var a=room?[fnum(w)+" written so far"+(f?" ("+fnum(f)+(f===1?" a follow-up)":" of them follow-ups)"):"")]
+    :["Today: "+fnum(w)+(L!=null?" of "+fnum(L)+" letters":(w===1?" letter":" letters"))+" written"];
+  if(sc)a.push(fnum(sc)+" set to go in "+(sc===1?"its":"their")+" own working day");
+  if(wt)a.push(fnum(wt)+(wt===1?" waits":" wait")+" for your Send");
+  var b=rd==null?"":rd===0?"No place is ready yet":fnum(rd)+(rd===1?" place":" places")+" ready";
+  if(fd&&b)b+=", "+fnum(fd)+" found today";
+  return a.join(", ")+"."+(b?" "+b+".":"");
+}
+function hPaceHtml(m){
+  var o=m&&m.outreach&&typeof m.outreach==="object"?m.outreach:null,p=o&&o.pace&&typeof o.pace==="object"?o.pace:null,out="";
+  if(p){var why=typeof p.why==="string"?p.why.trim():"";
+    out+='<p id="h-mpace">'+esc(mPaceWords(p,false))+'</p>';
+    if(p.braked===true)out+='<p class="mpw" id="h-mbrake">'+ICO.warn+'<span>'+hs(why||"The letters go at half pace for now.")+'</span></p>'}
+  var u=oUsedAt(m);
+  if(u&&!(OUT.run&&!OUT.run.hidden))out+='<p class="mst" id="h-ostarted">Outreach started '+esc(hDayMonth(u))+'.</p>';
+  return out?'<div class="mpace">'+out+'</div>':"";
 }
 function hMailPaint(j,prev,arrive){
   var box=$("h-mail");if(!box)return;
@@ -2614,7 +2730,274 @@ function hMailPaint(j,prev,arrive){
     hCount(el,v,function(x){return fnum(Math.round(x))},arrive?900:700,arrive?0:(was==null?v:was))});
   if(arrive){box.querySelectorAll(".pips i").forEach(function(p,n){hAnim(p,[{opacity:0,transform:"scale(.3)"},{opacity:1,transform:"none"}],{duration:420,delay:500+n*55,easing:"cubic-bezier(.3,1.4,.5,1)",fill:"backwards"})});
     var r=box.querySelector(".mout svg");if(r)hAnim(r,[{opacity:0,transform:"rotate(-40deg) scale(.85)"},{opacity:1,transform:"none"}],{duration:800,delay:600,easing:H_EASE,fill:"backwards"})}
+  /* the outreach's live run is one element kept for the life of the page:
+     every read of Home puts the same element back in its place */
+  oAttach();
 }
+
+/* ---- 8c. the outreach, started once by hand (mail.start, round six) ----
+   The owner: "I also want to be able to start the mail outreach for the
+   first time from a button (Make it a one time button) so I can see it in
+   action right now". While mail.start.available, the mail card offers Start
+   the outreach. Pressed, a live run opens inside the card (never a sheet, so
+   the rest of Home stays in reach) and walks three steps, each a line with
+   its state and its seconds:
+     1. it looks for places that teach (POST {action:"outreach-start",
+        step:"research"}, up to about 50 seconds each, at most four times
+        while fewer than 10 places are ready);
+     2. it plans the first letters (POST step:"plan", up to five minutes),
+        the cycle read every 15 seconds meanwhile so its stage is said in
+        plain words;
+     3. it watches the first letters for up to 15 minutes: the cycle read
+        every 20 seconds (the letters planned, read by the council and
+        written), a tick asked every minute while the cycle runs, and Home
+        read again every minute so the letters waiting for his Send appear
+        above as their cards.
+   A step that fails says the house's own words and offers Try again, which
+   resumes from that step. The run lives in memory (OUT), so a read of Home
+   draws the same panel again; after the plan has answered ok the button
+   never comes back (mail.start.usedAt says so, and OUT.used until it does).
+   A read that cannot reach the house is said once, never as a guess. While
+   the page is hidden the watch sleeps, and on its return it reads at once.
+   With less motion asked for, nothing pulses and nothing rises in. */
+var OUT={run:null,used:false,usedAt:null};
+var O_MS={cycle:15000,firstCycle:2500,watch:20000,tick:60000,home:60000,window:15*60000,rounds:4,ready:10};
+var O_STEPS=[["research","Looking for places that teach"],["plan","Planning the first letters"],["watch","Watching the first letters"]];
+var O_STAGE={sense:"Reading the house",assess:"Weighing the goals",plan:"Planning",council:"The council reads each letter",act:"Writing and sending",reflect:"Wrapping up",report:"Wrapping up"};
+var O_CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>';
+function oUsedAt(m){var s=m&&m.start&&typeof m.start==="object"?m.start:null,d=s?hParse(s.usedAt):null;return d||(OUT.used?(hParse(OUT.usedAt)||hNow()):null)}
+/* the start, while it is offered: once, and never again once used */
+function oStartHtml(m){
+  if(OUT.run&&!OUT.run.hidden)return '<div id="h-oslot"></div>';
+  var s=m&&m.start&&typeof m.start==="object"?m.start:null;
+  if(!s||OUT.run||oUsedAt(m))return "";
+  if(s.available===true)return '<div class="mstart" id="h-ostart"><button type="button" class="btn ostart" data-ostart="1">'+ICO.lamp+'<span>Start the outreach</span></button>'
+    +'<p>Once: the Lantern looks for places now, then plans and writes its first letters while you watch. The first 10 wait here for your Send.</p></div>';
+  var why=typeof s.why==="string"?s.why.replace(/\s+/g," ").trim():"";
+  return why?'<p class="mstart-why" id="h-ostart-why">'+hs(why.charAt(0).toUpperCase()+why.slice(1)+(/[.!?]$/.test(why)?"":"."))+'</p>':"";
+}
+/* the panel: built once, its parts changed in place */
+function oPanel(){
+  var el=document.createElement("section");el.className="orun";el.id="h-orun";el.setAttribute("aria-label","Starting the outreach");
+  el.innerHTML='<div class="orh"><div class="hic" aria-hidden="true">'+ICO.lamp+'</div><div class="ort"><b>The outreach, starting</b><span>The Lantern works while you watch. The rest of Home stays as it is; you may read on.</span></div></div>'
+    +'<ol class="ors">'+O_STEPS.map(function(s){return '<li class="ost" data-ostep="'+s[0]+'" data-state="wait"><span class="osd" aria-hidden="true"><i></i>'+O_CHECK+'</span>'
+      +'<div class="osx"><div class="osh"><b>'+esc(s[1])+'</b><span class="ose" aria-hidden="true"></span><span class="sro" data-osr="1">waiting</span></div>'
+      +'<p class="osv" data-olive="1" aria-live="polite"></p><ul class="osl" aria-live="polite"></ul></div></li>'}).join("")+'</ol>'
+    +'<div class="orf" id="h-orun-fail" role="alert" hidden></div><div class="olh" id="h-orun-letters" hidden></div><div class="ore" id="h-orun-end" hidden></div>';
+  return el;
+}
+function oStepEl(k){var r=OUT.run;return r&&r.el?r.el.querySelector('[data-ostep="'+k+'"]'):null}
+/* a step's state: wait, work, done or fail; while it works its dot breathes
+   (a ripple, through hLoop, so it rests while Home is not in view) and its
+   seconds count */
+function oState(k,state){
+  var r=OUT.run,li=oStepEl(k);if(!r||!li)return;
+  li.dataset.state=state;li.querySelector("[data-osr]").textContent={wait:"waiting",work:"working",done:"done",fail:"stopped"}[state]||state;
+  if(state==="work"){r.t0[k]=Date.now();r.t1[k]=0;
+    if(r.loops[k])try{r.loops[k].cancel()}catch(e){}
+    r.loops[k]=hLoop(li.querySelector(".osd i"),[{transform:"scale(.6)",opacity:.9},{transform:"scale(1.8)",opacity:0}],{duration:1800,easing:"cubic-bezier(.2,.6,.3,1)"})}
+  else{if(r.loops[k]){try{r.loops[k].cancel()}catch(e){}r.loops[k]=null}if(r.t0[k]&&!r.t1[k])r.t1[k]=Date.now()}
+  oSecs();
+}
+function oDur(ms){var s=Math.max(0,Math.round(ms/1000));return s<60?s+" s":Math.floor(s/60)+" min "+String(s%60).padStart(2,"0")+" s"}
+function oSecs(){
+  var r=OUT.run;if(!r||!r.el)return;
+  O_STEPS.forEach(function(s){var k=s[0],li=oStepEl(k);if(!li)return;var e=li.querySelector(".ose");
+    e.textContent=r.t0[k]?oDur((r.t1[k]||Date.now())-r.t0[k]):""});
+}
+/* a line under a step: it rises in, once */
+function oLine(k,text,cls){
+  var li=oStepEl(k);if(!li)return;var x=document.createElement("li");if(cls)x.className=cls;x.textContent=text;li.querySelector(".osl").appendChild(x);
+  hAnim(x,[{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:420,easing:H_EASE,fill:"backwards"});
+}
+/* the line that changes in place: the stage now, the letters' counts */
+function oLive(k,html){var li=oStepEl(k);if(!li)return;var v=li.querySelector("[data-olive]");if(v.innerHTML!==html)v.innerHTML=html}
+function oBox(id,html){var r=OUT.run,b=r&&r.el?r.el.querySelector("#"+id):null;if(!b)return null;b.hidden=!html;b.innerHTML=html||"";return b}
+function oAttach(){
+  var r=OUT.run;if(!r||!r.el||r.hidden)return;
+  var slot=$("h-oslot");
+  if(slot){if(slot!==r.el)slot.replaceWith(r.el)}
+  else{var c=$("h-mail");if(c&&!c.contains(r.el))c.appendChild(r.el)}
+  oLetters();
+}
+function oClear(){var r=OUT.run;if(!r)return;Object.keys(r.timers).forEach(function(k){clearTimeout(r.timers[k]);r.timers[k]=0})}
+function oBegin(b){
+  if(OUT.run||OUT.used)return;
+  if(b){b.disabled=true;hPress(b)}
+  var r=OUT.run={el:oPanel(),t0:{},t1:{},loops:{},timers:{},rounds:0,step:"research",ended:false,hidden:false,cycleId:null,lastTick:0,ticking:false,tickSaid:false,lastHome:0,
+    sleeping:false,said:{},watchFrom:0,letters:false,secs:0};
+  /* a press from the keyboard leaves the keyboard on the run, not on nothing */
+  var had=!!b&&document.activeElement===b,st=$("h-ostart");
+  r.el.tabIndex=-1;
+  if(st)st.replaceWith(r.el);else oAttach();
+  if(had)try{r.el.focus({preventScroll:true})}catch(x){}
+  hAnim(r.el,[{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:480,easing:H_EASE,fill:"backwards"});
+  r.secs=setInterval(oSecs,1000);
+  oResearch();
+}
+/* what a refused or unreachable step says, in the house's words when it gave any */
+function oSaid(r,dflt){if(!r)return "Could not reach the house.";if(r.locked)return "The key has expired. Enter it again, then press Try again.";
+  var j=r.j||{};return lw(String(j.message||j.error||"").trim())||dflt}
+function oFail(k,said){
+  var r=OUT.run;if(!r)return;
+  oState(k,"fail");r.step=k;r.failed=k;clearInterval(r.secs);r.secs=0;
+  oBox("h-orun-fail",'<p style="margin:0">'+esc(said)+'</p><div class="acts"><button type="button" class="btn ghost gold" data-oretry="1">Try again</button></div>');
+}
+function oRetry(){
+  var r=OUT.run;if(!r||!r.failed)return;var k=r.failed;r.failed=null;oBox("h-orun-fail","");if(!r.secs)r.secs=setInterval(oSecs,1000);
+  if(k==="research"){r.rounds=0;oResearch()}else if(k==="plan")oPlan();else oWatch();
+}
+/* 1. the places: a search at a time, a line for each, at most four */
+function oResearch(){
+  var r=OUT.run;if(!r)return;r.step="research";oState("research","work");
+  post("/api/soul",{action:"outreach-start",step:"research"}).then(function(x){
+    if(OUT.run!==r)return;var j=x.j||{};
+    if(x.locked||!x.ok||j.ok===false)return oFail("research",oSaid(x,"The search for places did not run."));
+    r.rounds++;
+    var ad=hNum(j.added),ck=hNum(j.checked),rd=hNum(j.ready),line="";
+    if(ad!=null)line="Found "+(ad===0?"no new place":ad===1?"1 new place":fnum(ad)+" new places")+(ck!=null?" ("+fnum(ck)+" checked)":"")+".";
+    if(rd!=null)line+=(line?" ":"")+(rd===0?"None is ready for a first letter yet.":fnum(rd)+" ready for a first letter.");
+    oLine("research",line||lw(String(j.message||"").trim())||"The search ran.",ad?"ok":"");
+    if(rd!=null&&rd<O_MS.ready&&r.rounds<O_MS.rounds)return oResearch();
+    oState("research","done");oPlan();
+  },function(){if(OUT.run===r)oFail("research","Could not reach the house.")});
+}
+/* the cycle, as the engine room reads it: its own record, whole */
+function oCycle(id){return get("/api/soul?view=cycle"+(id?"&id="+encodeURIComponent(id):"")).then(function(x){
+  var j=x&&x.j;if(!x||!x.ok||!j||j.ok===false)return null;var c=j.cycle&&typeof j.cycle==="object"?j.cycle:j;return c&&typeof c==="object"?c:null},function(){return null})}
+/* a cycle older than the press is yesterday's, and its stage is not said */
+function oFresh(c,from){if(!c)return false;if(String(c.status||"")==="running")return true;var t=Date.parse(c.startedAt||c.at||"");return isFinite(t)&&t>=from-120000}
+function oStageWords(c){var w=O_STAGE[String(c&&c.stage||"").toLowerCase()];return w?'<em>Now: </em>'+esc(w):""}
+/* 2. the plan: one long answer, the cycle's stage said meanwhile */
+function oPlan(){
+  var r=OUT.run;if(!r)return;r.step="plan";oState("plan","work");oLive("plan","");
+  var from=hClockNow().getTime(),done=false;r.from=from;
+  var look=function(){if(done||OUT.run!==r)return;
+    oCycle(null).then(function(c){if(done||OUT.run!==r)return;if(oFresh(c,from))oLive("plan",oStageWords(c));r.timers.plan=setTimeout(look,O_MS.cycle)})};
+  r.timers.plan=setTimeout(look,O_MS.firstCycle);
+  post("/api/soul",{action:"outreach-start",step:"plan"}).then(function(x){
+    done=true;clearTimeout(r.timers.plan);if(OUT.run!==r)return;var j=x.j||{};
+    if(x.locked)return oFail("plan",oSaid(x,""));
+    if(!x.ok||j.ok===false){
+      /* an answer with words is the house's own refusal; one without (the
+         platform's own clock ran out) may hide a plan that is under way */
+      if(x.j&&(j.message||j.error))return oFail("plan",oSaid(x,"The plan could not start."));
+      return oCycle(null).then(function(c){if(OUT.run!==r)return;
+        if(c&&String(c.status)==="running"&&oFresh(c,from)){r.cycleId=c.id||null;oLive("plan","");oLine("plan","The house took long to answer, but its plan is under way.");oState("plan","done");return oWatch()}
+        oFail("plan","The plan could not start: the house did not answer in time. Nothing is lost; press Try again.")});
+    }
+    OUT.used=true;OUT.usedAt=j.usedAt||new Date(hClockNow().getTime()).toISOString();
+    r.cycleId=j.cycle&&typeof j.cycle==="object"&&j.cycle.id?String(j.cycle.id):null;
+    oLive("plan","");
+    if(j.busy===true)oLine("plan","The Lantern is already thinking: the first letters come with that plan.","ok");
+    else oLine("plan",lw(String(j.message||"").trim())||"The plan is made.","ok");
+    oState("plan","done");oWatch();
+  },function(){done=true;clearTimeout(r.timers.plan);if(OUT.run===r)oFail("plan","Could not reach the house. Nothing is lost; press Try again.")});
+}
+/* the letters in a cycle: each outreach-send intent, and where it stands */
+function oLetterState(it){
+  var s=String(it.status||"").toLowerCase(),cn=it.council&&typeof it.council==="object"?it.council:null,res=it.result&&typeof it.result==="object"?it.result:null;
+  if(s==="done")return res&&res.ok===false?["no","not written"]:["done","written"];
+  if(s==="failed")return ["no","not written"];
+  if(s==="rejected"||(cn&&cn.approved===false))return ["no","the council said no"];
+  if(s==="running")return ["read","being written"];
+  if(s==="approved"||(cn&&cn.approved===true))return ["read","the council said yes"];
+  if(s==="skipped")return ["no","skipped"];
+  if(s==="unknown")return ["read","being checked"];
+  return ["","planned"];
+}
+function oCount(c){
+  var its=(Array.isArray(c&&c.intents)?c.intents:[]).filter(function(it){return it&&typeof it==="object"&&String(it.action||"")==="outreach-send"});
+  var read=its.filter(function(it){var s=String(it.status||"").toLowerCase(),cn=it.council&&typeof it.council==="object"?it.council:null;return (cn&&typeof cn.approved==="boolean")||/^(approved|rejected|running|done|failed|unknown)$/.test(s)}).length;
+  var written=its.filter(function(it){return String(it.status||"").toLowerCase()==="done"&&!(it.result&&typeof it.result==="object"&&it.result.ok===false)}).length;
+  return {its:its,planned:its.length,read:read,written:written};
+}
+function oCountWords(n){return n.planned?fnum(n.planned)+(n.planned===1?" letter":" letters")+" planned, "+fnum(n.read)+" read by the council, "+fnum(n.written)+" written":"No letter is planned yet."}
+function oLettersHtml(n){
+  if(!n.its.length)return "";
+  var top=n.its.slice(0,6);
+  return '<ul class="olt" aria-label="The letters in this plan">'+top.map(function(it){var a=it.args&&typeof it.args==="object"?it.args:{},S=oLetterState(it);
+      var nm=[String(a.name||"").trim()||"A place",String(a.city||"").trim()].filter(Boolean).join(", ");
+      return '<li data-ls="'+S[0]+'" data-ln="'+esc(String(it.n!=null?it.n:""))+'"><i aria-hidden="true"></i><span>'+esc(nm)+'</span><em>'+esc(S[1])+'</em></li>'}).join("")
+    +(n.its.length>top.length?'<li data-ls=""><i aria-hidden="true"></i><span>And '+fnum(n.its.length-top.length)+' more</span><em></em></li>':'')+'</ul>';
+}
+/* the letters waiting for his Send, on the desk above: said once they are there */
+function oLetterCards(){return (hList(HOME.data,"decisions")||[]).filter(function(d){var lt=hLetter(d);return lt&&String(d.kind||"approve").toLowerCase()==="approve"&&(!lt.kind||lt.kind==="outreach")})}
+function oLetters(){
+  var r=OUT.run;if(!r||!r.el||r.step!=="watch"&&!r.ended)return;
+  var n=r.watchFrom?oLetterCards().length:0,box=r.el.querySelector("#h-orun-letters");if(!box)return;
+  if(!n){if(!box.hidden)oBox("h-orun-letters","");return}
+  var was=!box.hidden;
+  oBox("h-orun-letters",'<p style="margin:0">'+esc(n===1?"Your first letter waits above for your Send.":"Your first letters wait above for your Send.")+'</p>'
+    +'<div class="acts"><button type="button" class="btn ghost gold" data-oletters="1">'+ICO.down+'<span>'+(n===1?"See the letter":"See them")+'</span></button></div>');
+  if(!was){hAnim(box,[{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:480,easing:H_EASE,fill:"backwards"});
+    var arrow=box.querySelector(".btn svg");if(arrow)hAnim(arrow,[{transform:"rotate(180deg) translateY(0)"},{transform:"rotate(180deg) translateY(3px)"},{transform:"rotate(180deg) translateY(0)"}],{duration:900,iterations:3,easing:"ease-in-out",delay:400})}
+}
+/* 3. the watch: the cycle every 20 seconds, a tick each minute while it
+   runs, Home each minute, for up to 15 minutes after the plan answered */
+function oWatch(){
+  var r=OUT.run;if(!r)return;r.step="watch";r.watchFrom=r.watchFrom||Date.now();oState("watch","work");
+  oLive("watch",'<em>Looking in on the plan…</em>');oPoll();
+}
+function oPoll(){
+  var r=OUT.run;if(!r||r.ended||r.step!=="watch")return;clearTimeout(r.timers.watch);r.timers.watch=0;
+  if(document.visibilityState==="hidden"){r.sleeping=true;return}
+  r.sleeping=false;
+  /* the key expired and the gate is up: nothing is asked until he is back in */
+  if(!$("app").classList.contains("on")){r.timers.watch=setTimeout(oPoll,O_MS.watch);return}
+  /* the cycle the plan named is read by its id; with none named, the current
+     one is taken only once it is the new one (running, or begun after the press) */
+  var named=!!r.cycleId;
+  oCycle(r.cycleId).then(function(c){
+    if(OUT.run!==r||r.ended)return;
+    if(c&&!named&&!oFresh(c,r.from)){oLive("watch",'<em>Waiting for the plan to begin…</em>');c=null}
+    else if(!c){if(!r.said.read){r.said.read=1;oLine("watch","The plan could not be read just now; it is looked at again in a moment.","warn")}}
+    if(c){
+      if(!r.cycleId&&c.id)r.cycleId=String(c.id);
+      var n=oCount(c),st=String(c.status||"").toLowerCase();
+      oLive("watch",esc(oCountWords(n))+(st==="running"&&O_STAGE[String(c.stage||"").toLowerCase()]?'<br><em>Now: </em>'+esc(O_STAGE[String(c.stage||"").toLowerCase()]):''));
+      var lt=r.el.querySelector(".olt"),h=oLettersHtml(n);
+      if(h){if(lt)lt.outerHTML=h;else oStepEl("watch").querySelector(".osx").insertAdjacentHTML("beforeend",h);
+        /* a letter that moved on since the last reading lights once */
+        r.ls=r.ls||{};r.el.querySelectorAll(".olt li[data-ln]").forEach(function(li){var k=li.dataset.ln,was=r.ls[k];r.ls[k]=li.dataset.ls;
+          if(was!==undefined&&was!==li.dataset.ls)hAnim(li.querySelector("i"),[{transform:"translateY(-1px) scale(1)"},{transform:"translateY(-1px) scale(2.2)",offset:.35},{transform:"translateY(-1px) scale(1)"}],{duration:900,easing:"ease-out"})})}
+      if(st==="done")return oEnd(n,"done");
+      if(st==="failed")return oEnd(n,"failed");
+      if(st==="running"&&!r.ticking&&Date.now()-r.lastTick>=O_MS.tick)oTick();
+    }
+    if(Date.now()-r.watchFrom>=O_MS.window)return oEnd(c?oCount(c):null,"time");
+    if(Date.now()-r.lastHome>=O_MS.home&&hAwake()&&!HOME.cf&&!HOME.busy){r.lastHome=Date.now();drawHome(true)}
+    oLetters();
+    r.timers.watch=setTimeout(oPoll,O_MS.watch);
+  });
+}
+/* a tick moves the cycle on: one at a time, a minute from the start of the
+   last; its answer is not read, but a fault is said once */
+function oTick(){
+  var r=OUT.run;if(!r)return;r.ticking=true;r.lastTick=Date.now();
+  var fault=function(){if(OUT.run===r&&!r.ended&&!r.tickSaid){r.tickSaid=true;oLine("watch","The Lantern could not be moved on just now; it is asked again in a minute.","warn")}};
+  get("/api/soul?action=tick").then(function(x){r.ticking=false;if(x&&!x.locked&&(!x.ok||(x.j&&x.j.ok===false&&x.j.error)))fault()},function(){r.ticking=false;fault()});
+}
+function oEnd(n,how){
+  var r=OUT.run;if(!r||r.ended)return;r.ended=true;oClear();clearInterval(r.secs);
+  oState("watch",how==="failed"?"fail":"done");oLive("watch",n?esc(oCountWords(n)):"");
+  var w=n?n.written:0;
+  var said=how==="done"?(w?"Done: "+fnum(w)+(w===1?" letter":" letters")+" written.":"Done, with no letter written this time.")+" The rest of the outreach now runs on its own, every day."
+    :how==="failed"?"The plan stopped before all its letters were written; what was written waits above. The rest of the outreach now runs on its own, every day."
+    :"The letters are still being written; each one lands above as it is ready. The rest of the outreach now runs on its own, every day.";
+  oBox("h-orun-end",'<p style="margin:0" id="h-orun-said">'+esc(said)+'</p><div class="acts"><button type="button" class="btn ghost" data-ohide="1">Fold this away</button></div>');
+  var e=r.el.querySelector("#h-orun-end");if(e)hAnim(e,[{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:520,easing:H_EASE,fill:"backwards"});
+  if(hAwake()&&!HOME.cf&&!HOME.busy)drawHome(true);else{delete C.home;HLIVE.at=0;hLiveSync()}
+}
+function oHide(){var r=OUT.run;if(!r)return;r.hidden=true;oClear();clearInterval(r.secs);if(r.el)r.el.remove();if(HOME.data)hMailPaint(HOME.data,HOME.data,false)}
+/* the letters it points to: brought into view, each ringed in light a moment */
+function oShowLetters(){
+  var cs=[].slice.call(document.querySelectorAll("#h-decide article.dc.letter"));if(!cs.length){var d=$("h-decide");if(d)try{d.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(x){d.scrollIntoView()}return}
+  try{cs[0].scrollIntoView({block:"center",behavior:reduced()?"auto":"smooth"})}catch(x){cs[0].scrollIntoView()}
+  cs.forEach(function(c){c.classList.add("lit")});setTimeout(function(){cs.forEach(function(c){c.classList.remove("lit")})},2400);
+}
+/* the page hidden: the watch sleeps; seen again, it reads at once */
+document.addEventListener("visibilitychange",function(){var r=OUT.run;if(r&&r.sleeping&&!r.ended&&document.visibilityState!=="hidden")oPoll()});
 
 /* ---- 9. ideas to grow: Go lights the card and sends it on, Not now slides it
    aside, Never lets it fade ---- */
@@ -2946,6 +3329,11 @@ function wireHome(el){
     if((a=t.closest("[data-jump]"))){var to=$(a.dataset.jump);if(to)try{to.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(x){to.scrollIntoView()}return}
     if((a=t.closest("[data-engine]")))return void show("engine");
     if((a=t.closest("[data-mroom]")))return void show("mail");
+    /* round six: the outreach's one time start, and its live run */
+    if((a=t.closest("[data-ostart]")))return void oBegin(a);
+    if((a=t.closest("[data-oretry]")))return void oRetry();
+    if((a=t.closest("[data-oletters]")))return void oShowLetters();
+    if((a=t.closest("[data-ohide]")))return void oHide();
     if((a=t.closest("[data-tglink],[data-tgopen]")))return void goRoom("engine","soul-voice");
     if((a=t.closest("[data-dlroom]"))){e.preventDefault();return void show(a.dataset.dlroom)}
     if((a=t.closest("[data-sug]"))){var ta=$("h-ask-text");ta.value=H_SUGS[+a.dataset.sug]||"";try{ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}catch(x){}return}
@@ -3450,7 +3838,13 @@ function drawReaders(force){
    Only https links are drawn, opened with no referrer. Every word is the
    house's or its correspondents' own, escaped; what was written to someone
    is shown exactly as it went. */
-var MAIL={tab:"inbox",fa:"all",fs:"all",fc:"all",cf:null,r:null};
+var MAIL={tab:"inbox",fa:"all",fs:"all",fc:"all",cf:null,r:null,
+  /* round six: the inbox that moves. fn, the chip open (Needs you first);
+     seen, the threads whose "seen" went this visit; open, the thread in the
+     sheet; tcf, the question open in it; busy, an op on its way; drafts, a
+     reply the Lantern wrote in answer to "Answer it for me", kept until the
+     inbox is read again with it */
+  fn:"needs",seen:{},open:null,tcf:null,busy:null,drafts:{},said:null};
 var mailQ=function(force){
   var c=C["soul:mail"];
   if(!force&&c&&Date.now()-c.at<TTL)return Promise.resolve(c.v);
@@ -3459,7 +3853,8 @@ var mailQ=function(force){
 };
 /* what the Lantern did with a thread: [pill, word, icon, the sentence] */
 var M_ACT={answered:["good","answered","ok","The Lantern answered it."],"for-you":["gold","for you","person","It is for you: it waits on Home, and stays unread and starred in Gmail."],
-  filed:["","filed","ring","Filed quietly; nothing was sent."],waiting:["wait","waiting","cal","It waits: the Lantern has not answered it yet."]};
+  filed:["","filed","ring","Filed quietly; nothing was sent."],waiting:["wait","waiting","cal","It waits: the Lantern has not answered it yet."],
+  done:["good","done","ok","Done: nothing more waits on it."]};
 var M_ACTS=["for-you","answered","waiting","filed"];
 /* where a place stands: [pill, word] */
 var M_ST={"new":["","new"],written:["blue","written to"],followed:["blue","followed up"],replied:["good","replied"],working:["gold","working together"],declined:["","declined"],dnc:["","do not contact"]};
@@ -3507,9 +3902,31 @@ function mailTopHtml(d){
   return '<div class="msw'+(on?'':' off')+'" id="mail-sw">'
     +'<button type="button" class="mswb" role="switch" aria-checked="'+(on?"true":"false")+'" data-msw="1"'+(cf?' hidden':'')+'><span class="mswt"><b>'+(on?"Mail is on: the Lantern reads and writes":"Mail is off: the Lantern reads, and writes nothing")+'</b><span>'+hs(sub)+'</span></span><span class="sw" aria-hidden="true"></span></button>'
     +(cf?hConfirm("Turn mail off? The Lantern stops writing at once: no letter, reply or follow-up goes out. It keeps reading and sorting the inbox, and what is for you still reaches Home.","Yes, turn it off","mswyes","mswno","danger"):'')
-    +'<div class="mcaps">Each day at most <b>'+n(caps.outreach)+' first letters</b>, <b>'+n(caps.replies)+' replies</b> and <b>'+n(caps.followups)+' follow-ups</b>: <b>'+n(caps.total)+' emails in all</b>. One no is final.</div>'
+    +(d.pace&&typeof d.pace==="object"?mailPaceHtml(d.pace,caps)
+      :'<div class="mcaps">Each day at most <b>'+n(caps.outreach)+' first letters</b>, <b>'+n(caps.replies)+' replies</b> and <b>'+n(caps.followups)+' follow-ups</b>: <b>'+n(caps.total)+' emails in all</b>. One no is final.</div>')
     +hTenHtml(hMailTen(m))
     +hMailNums(m.today)+'</div>';
+}
+/* round six: the day's pace (GET ?view=mail `pace`), in place of the old
+   caps: the letters a day today, the week of the warm-up when the house's
+   own sentence does not already name it, what is written and set and
+   waiting, and that sentence (a gentle warning while the pace is braked).
+   The replies keep their own cap. */
+function mailPaceHtml(p,caps){
+  var L=hNum(p.letters),w=(hNum(p.written)||0)+(hNum(p.followupsWritten)||0),sc=hNum(p.scheduled)||0,wk=hNum(p.week),br=p.braked===true;
+  var why=typeof p.why==="string"?p.why.replace(/\s+/g," ").trim():"";
+  /* the week is named only when the house's sentence does not, and never
+     while braked (the sentence is then about the brake, and the warm-up may
+     be over) */
+  var wkTxt=wk&&p.start&&!br&&!/warm-up|week/i.test(why)?"week "+fnum(wk)+" of the warm-up":"";
+  var head=(L!=null?'<b>'+esc(fnum(L)+(L===1?" letter":" letters")+" a day")+'</b> today':'<b>Today\'s letters</b>')+(br?' · half pace':'')+(wkTxt?' · '+esc(wkTxt):'');
+  var bar=L?'<div class="mprog" role="img" aria-label="'+esc(fnum(w)+" of "+fnum(L)+" written today"+(sc?", "+fnum(sc)+" set for later":""))+'"><i style="transform:scaleX('+(+Math.min(1,w/L).toFixed(4))+')"></i>'
+    +(sc&&w<L?'<s style="left:'+(+(Math.min(1,w/L)*100).toFixed(2))+'%;width:'+(+(Math.min(1-Math.min(1,w/L),sc/L)*100).toFixed(2))+'%"></s>':'')+'</div>':'';
+  var rp=hNum(caps&&caps.replies);
+  return '<div class="mpc" id="mail-pace"><p class="mpct">'+head+'</p>'+bar
+    +'<p class="mpcl" id="mail-pace-line">'+esc(mPaceWords(p,true))+'</p>'
+    +(why||br?'<p class="mpcw'+(br?' warn':'')+'" id="mail-pace-why">'+(br?ICO.warn:'')+'<span>'+hs(why||"The letters go at half pace for now.")+'</span></p>':'')+'</div>'
+    +'<div class="mcaps">'+(rp!=null?'Replies to people who wrote first: at most <b>'+esc(fnum(rp))+' a day</b>. ':'')+'One no is final.</div>';
 }
 function mailTabsHtml(d){
   var th=mObjs(d.threads),pl=mObjs(d.places),dn=mObjs(d.dnc);
@@ -3525,6 +3942,7 @@ function mailInboxHtml(d){
   var th=mObjs(d.threads);
   if(!th)return mailFail("The inbox could not be read just now.",hWhy(d,"threads"));
   if(!th.length)return '<div class="empty">Nothing has arrived yet. What the Lantern reads, and what it does with each message, lands here.</div>';
+  if(mMoves(th))return mailInboxMoves(th);
   var cnt={};th.forEach(function(t){var a=String(t.action||"").toLowerCase();cnt[a]=(cnt[a]||0)+1});
   if(MAIL.fa!=="all"&&!cnt[MAIL.fa])MAIL.fa="all";
   var rows=th.map(function(t,i){return [t,i]}).filter(function(p){return MAIL.fa==="all"||String(p[0].action||"").toLowerCase()===MAIL.fa})
@@ -3534,6 +3952,45 @@ function mailInboxHtml(d){
       return '<button type="button" class="row tap" data-thread="'+p[1]+'"><div class="ic">'+ICO[A[2]]+'</div><div class="t"><b>'+esc(String(t.subject||"").trim()||"(no subject)")+'</b><span>'+esc(who+" · "+mWhen(t.at)+(t.kind?" · "+sWords(t.kind):""))+'</span></div>'
         +'<div class="r"><span class="pill '+A[0]+'">'+esc(A[1])+'</span></div></button>'}).join("")+'</div>';
 }
+/* round six: THE INBOX THAT MOVES. A house that marks each thread needsYou
+   (an older one sends no such field, and keeps the filters above exactly)
+   opens the inbox on what needs him; the rest is Done. What he opens that
+   was for him is marked seen and archived; what he answers moves. */
+function mMoves(th){return (th||[]).some(function(t){return Object.prototype.hasOwnProperty.call(t,"needsYou")})}
+/* done: archived, and nothing of it waits on him now (a reply the Lantern
+   wrote after it was read waits for his Send, so it is not done) */
+function mIsDone(t){return String(t&&t.action||"").toLowerCase()==="done"||!!(t&&t.doneAt&&t.needsYou!==true)}
+function mailInboxMoves(th){
+  var need=th.filter(function(t){return t.needsYou===true}).length,rest=th.length-need;
+  if(["needs","done","all"].indexOf(MAIL.fn)<0)MAIL.fn="needs";
+  var rows=th.map(function(t,i){return [t,i]}).filter(function(p){return MAIL.fn==="all"||(MAIL.fn==="needs"?p[0].needsYou===true:p[0].needsYou!==true)})
+    .sort(function(a,b){return String(b[0].at||"").localeCompare(String(a[0].at||""))});
+  var chips='<div class="mfil slide" role="group" aria-label="Show">'+mailChips("mfn",MAIL.fn,[["needs","Needs you",need],["done","Done",rest],["all","All",th.length]])+'</div>';
+  if(!rows.length)return chips+(MAIL.fn==="needs"
+    ?'<div class="hcalm mcalm" id="mail-calm"><div class="hic good">'+ICO.ok+'</div><div><b>Nothing needs you.</b><span>Everything the Lantern could not settle on its own lands here.</span></div></div>'
+    :'<div class="empty">Nothing is done yet. What the Lantern settles, and what you finish, lands here.</div>');
+  return chips+'<div class="list" id="mail-threads">'+rows.map(function(p){var t=p[0],A=mAct(t),who=String(t.fromName||"").trim()||String(t.from||"").trim()||"Someone",dn=mIsDone(t);
+    var waitSend=Array.isArray(t.ops)&&t.ops.indexOf("send")>=0;
+    return '<button type="button" class="row tap" data-thread="'+p[1]+'"><div class="ic">'+ICO[A[2]]+'</div><div class="t"><b>'+esc(String(t.subject||"").trim()||"(no subject)")+'</b><span>'+esc(who+" · "+mWhen(t.at)+(t.kind?" · "+sWords(t.kind):""))+'</span></div>'
+      +'<div class="r"><span class="pill '+A[0]+'">'+esc(waitSend&&String(t.action||"").toLowerCase()==="waiting"?"for your Send":A[1])+'</span>'+(dn&&String(t.action||"").toLowerCase()!=="done"?'<span class="pill good">done</span>':'')+'</div></button>'}).join("")+'</div>';
+}
+/* when it was archived, and by whom */
+function mWhenAt(at){var d=hParse(at);if(!d)return "";var n=hDaysFrom(d);return n===0?"today at "+hClock(d)+" UTC":n===-1?"yesterday at "+hClock(d)+" UTC":"on "+hShort(d)}
+var M_BY={owner:"by you",seen:"when you read it",lantern:"by the Lantern"};
+function mArchived(t){if(!mIsDone(t))return "";var w=mWhenAt(t.doneAt),by=M_BY[String(t.doneBy||"").toLowerCase()]||"";
+  return "Archived"+(w?" "+w:"")+(by?(w?", ":" ")+by:"")+"."}
+/* the ops a thread offers, in his order and words; anything else is not drawn */
+var M_OPS=["done","answer","notours"];
+function mOps(t){var o=Array.isArray(t&&t.ops)?t.ops.map(String):[];return {list:M_OPS.filter(function(k){return o.indexOf(k)>=0}),send:o.indexOf("send")>=0,dont:o.indexOf("dontsend")>=0}}
+/* the reply waiting for his Send: the house's own draft, else the one "Answer it for me" just wrote */
+function mDraft(t){
+  var k=t&&t.id!=null?String(t.id):"",x=t&&t.draft&&typeof t.draft==="object"&&String(t.draft.text||"").trim()?t.draft:null,kept=MAIL.drafts[k];
+  /* a kept draft stands only while its thread still waits: sent from Home, or settled, it is gone */
+  if(kept&&/^(answered|done|filed)$/.test(String(t&&t.action||"").toLowerCase())){delete MAIL.drafts[k];kept=null}
+  if(!x&&kept&&kept.draft)x=kept.draft;
+  var card=t&&t.card&&typeof t.card==="object"&&t.card.id!=null?t.card:(kept&&kept.card?kept.card:null);
+  return x?{subject:String(x.subject||""),text:String(x.text),card:card}:null;
+}
 /* round four: a message the judge (Jev) sorted on its own, no writing model
    reading it, says so, with how sure the judge was (judged {by, p}) */
 function mJudged(t){
@@ -3542,17 +3999,125 @@ function mJudged(t){
   var p=hNum(j.p);if(p!=null&&p>1&&p<=100)p=p/100;
   return "Sorted by the judge"+(p!=null&&p>=0&&p<=1?" ("+Math.round(p*100)+" percent sure)":"");
 }
-function mailThreadSheet(t){
+function mailThreadHtml(t){
   var A=mAct(t),rp=t.reply&&typeof t.reply==="object"&&String(t.reply.text||"").trim()?t.reply:null,who=String(t.fromName||"").trim()||"Someone";
-  sheet('<div class="msh"><h2>'+esc(String(t.subject||"").trim()||"(no subject)")+'</h2>'
+  var moves=Object.prototype.hasOwnProperty.call(t,"needsYou")||Array.isArray(t.ops),act=String(t.action||"").toLowerCase(),dn=mIsDone(t);
+  var O=moves?mOps(t):{list:[],send:false,dont:false},dr=moves?mDraft(t):null,canSend=!!(dr&&dr.card),busy=MAIL.busy,cf=MAIL.tcf;
+  var did=moves&&act==="for-you"?(t.needsYou===true?"It needs you: the Lantern could not settle it on its own.":"It was for you; the Lantern sent nothing.")
+    :moves&&dr&&act==="waiting"?"It wrote a reply, and the reply waits for your Send.":A[3];
+  var body='<div class="msh"><h2>'+esc(String(t.subject||"").trim()||"(no subject)")+'</h2>'
     +'<p class="sub">From '+esc(who)+(t.from?' · <span class="ad">'+esc(t.from)+'</span>':'')+(mWhen(t.at)?' · '+esc(mWhen(t.at)):'')+'</p>'
-    +'<div class="tags"><span class="pill '+A[0]+'">'+esc(A[1])+'</span>'+(t.kind?'<span class="pill">'+esc(sWords(t.kind))+'</span>':'')+'</div>'
-    +'<h3>What the Lantern did</h3><p class="small" style="margin:0;color:var(--text)">'+esc(A[3])+'</p>'
+    +'<div class="tags"><span class="pill '+A[0]+'">'+esc(moves&&dr&&act==="waiting"?"for your Send":A[1])+'</span>'+(dn&&act!=="done"?'<span class="pill good">done</span>':'')+(t.kind?'<span class="pill">'+esc(sWords(t.kind))+'</span>':'')+'</div>'
+    +(dn&&moves?'<p class="mnote done" id="mail-archived">'+esc(mArchived(t))+'</p>':'')
+    +'<h3>What the Lantern did</h3><p class="small" style="margin:0;color:var(--text)">'+esc(did)+'</p>'
     +(mJudged(t)?'<p class="mjudge" id="mail-judged">'+esc(mJudged(t))+'</p>':'')
-    +(String(t.summary||"").trim()?'<h3>In short</h3><div class="msg" id="mail-summary">'+esc(t.summary)+'</div>':'')
-    +(rp?'<h3>The reply it sent</h3><div class="msg" id="mail-reply">'+esc(rp.text)+'</div>'+(mWhen(rp.at)?'<p class="sub" style="margin:8px 0 0">Sent '+esc(mWhen(rp.at))+'.</p>':'')
-      :'<h3>The reply</h3><p class="small muted" style="margin:0">'+(String(t.action||"").toLowerCase()==="answered"?"The reply itself is no longer kept; the summary stays.":"No reply was sent.")+'</p>')
-    +'<div class="acts"><button class="btn" id="cl">Close</button></div></div>',true);
+    +(String(t.summary||"").trim()?'<h3>In short</h3><div class="msg" id="mail-summary">'+esc(t.summary)+'</div>':'');
+  if(MAIL.said)body+='<p class="msaid" id="mail-said" role="status">'+esc(MAIL.said)+'</p>';
+  /* the reply waiting for his Send is shown whole, exactly as it would go */
+  if(dr)body+='<h3>The reply waiting for your Send</h3>'+hLetterHtml({to:String(t.from||""),toName:String(t.fromName||""),subject:dr.subject,text:dr.text,kind:"reply",from:""}).replace('class="ltr"','class="ltr" id="mail-draft" tabindex="-1"')
+    +(canSend?'':'<p class="small muted" style="margin:8px 0 0">It waits on Home for your Send.</p>');
+  else body+=rp?'<h3>The reply it sent</h3><div class="msg" id="mail-reply">'+esc(rp.text)+'</div>'+(mWhen(rp.at)?'<p class="sub" style="margin:8px 0 0">Sent '+esc(mWhen(rp.at))+'.</p>':'')
+      :'<h3>The reply</h3><p class="small muted" style="margin:0">'+(act==="answered"?"The reply itself is no longer kept; the summary stays.":"No reply was sent.")+'</p>';
+  if(MAIL.fail)body+='<p class="mfail" role="alert" id="mail-op-fail" tabindex="-1">'+esc(MAIL.fail)+'</p>';
+  if(busy==="answer")body+='<p class="mwrite" id="mail-writing" role="status"><i aria-hidden="true"></i>The Lantern is writing…</p>';
+  if(cf==="notours")body+='<div class="hcf" role="group" aria-label="Are you sure?"><p style="margin:0">'+esc("Archive it, and quietly file mail from "+(String(t.from||"").trim()||"this sender")+" from now on?")+'</p>'
+    +'<div class="acts"><button type="button" class="btn danger" data-mnyes="1">Yes</button><button type="button" class="btn ghost" data-mnno="1">Cancel</button></div></div>';
+  else if(cf==="dontsend")body+='<div class="hcf" role="group" aria-label="Are you sure?"><p style="margin:0">Do not send this reply? Nothing goes out, and the Lantern keeps what you did not want as a lesson.</p>'
+    +'<div class="acts"><button type="button" class="btn danger" data-mdsyes="1">Yes, do not send it</button><button type="button" class="btn ghost" data-mdsno="1">Cancel</button></div></div>';
+  var gm=moves?mHttps(t.gmail):null,acts=[],off=busy?' disabled':'';
+  if(!cf){
+    var kept=!!MAIL.drafts[String(t.id)];
+    if(canSend&&(O.send||kept))acts.push('<button type="button" class="btn" data-msend="1"'+off+'>Send</button>');
+    if(canSend&&(O.dont||kept))acts.push('<button type="button" class="btn ghost" data-mdont="1"'+off+'>Don\'t send</button>');
+    O.list.forEach(function(k){
+      if(k==="done")acts.push('<button type="button" class="btn'+(canSend?' ghost':'')+'" data-mop="done"'+off+'>Done</button>');
+      if(k==="answer"&&!dr)acts.push('<button type="button" class="btn ghost gold" data-mop="answer"'+off+'>Answer it for me</button>');
+      if(k==="notours")acts.push('<button type="button" class="btn ghost" data-mop="notours"'+off+'>Not NOOR business</button>');
+    });
+    if(gm)acts.push('<a class="btn ghost" href="'+esc(gm)+'" target="_blank" rel="noopener noreferrer">Open in Gmail <span aria-hidden="true">↗</span></a>');
+  }
+  return body+'<div class="acts">'+acts.join("")+'<button class="btn'+(acts.length||cf?' ghost':'')+'" id="cl">Close</button></div></div>';
+}
+function mailThreadSheet(t){MAIL.open=t&&t.id!=null?String(t.id):null;sheet(mailThreadHtml(t),true);mWriting()}
+/* the sheet drawn again where it stands (a question opened, an answer come
+   back), its scroll kept; only while it still shows this thread */
+function mailThreadRepaint(t,focusSel){
+  if(!t||!$("sheet").classList.contains("on")||MAIL.open!==(t.id!=null?String(t.id):null))return false;
+  /* the control that had the keyboard keeps it, drawn again */
+  var ae=document.activeElement,keep=null;
+  if(!focusSel&&ae&&$("sheet-in").contains(ae))["data-msend","data-mdont","data-mop","data-mnyes","data-mnno","data-mdsyes","data-mdsno"].some(function(k){
+    if(ae.hasAttribute(k)){keep="["+k+(k==="data-mop"?'="'+ae.getAttribute(k)+'"':"")+"]";return true}return false});
+  var s=$("sheet"),y=s.scrollTop;$("sheet-in").innerHTML=mailThreadHtml(t);s.scrollTop=y;mWriting();
+  var f=(focusSel||keep)&&$("sheet-in").querySelector(focusSel||keep);
+  if(f)try{f.focus({preventScroll:!focusSel})}catch(x){f.focus()}
+  return true;
+}
+/* "The Lantern is writing…": its light breathes while the reply is written (never with less motion) */
+function mWriting(){var i=$("sheet-in").querySelector("#mail-writing i");if(!i||reduced()||!i.animate)return;
+  try{i.animate([{opacity:.35,transform:"scale(.8)"},{opacity:1,transform:"scale(1.15)"}],{duration:900,direction:"alternate",iterations:Infinity,easing:"ease-in-out"})}catch(e){}}
+function mOpenThread(){var d=mailData(),th=d&&Array.isArray(d.threads)?d.threads:[];if(MAIL.open==null)return null;
+  for(var i=0;i<th.length;i++)if(th[i]&&typeof th[i]==="object"&&String(th[i].id)===MAIL.open)return th[i];return null}
+/* a thread the house sent back takes the place of the one in hand */
+function mThreadPut(x){
+  if(!x||typeof x!=="object"||x.id==null)return null;var d=mailData(),th=d&&Array.isArray(d.threads)?d.threads:null;if(!th)return null;
+  for(var i=0;i<th.length;i++)if(th[i]&&typeof th[i]==="object"&&String(th[i].id)===String(x.id)){th[i]=x;return x}
+  return null;
+}
+/* opened, a thread that was for him is seen: one quiet post, once, never for
+   a reply waiting for his Send; the thread that comes back moves to Done */
+function mSeen(t){
+  if(!t||t.needsYou!==true||String(t.action||"").toLowerCase()!=="for-you"||t.id==null)return;
+  var id=String(t.id);if(MAIL.seen[id])return;MAIL.seen[id]=1;
+  post("/api/soul",{action:"mail-thread",id:t.id,op:"seen"}).then(function(r){
+    if(r.locked)return;var j=r.j||{};if(!r.ok||j.ok===false)return;
+    var x=mThreadPut(j.thread);
+    if(!x){t.needsYou=false;if(!t.doneAt){t.doneAt=new Date().toISOString();t.doneBy="seen"}x=t}
+    delete C.home;HLIVE.at=0;
+    if(MAIL.tab==="inbox")mailPanePaint();
+    if(!MAIL.busy&&!MAIL.tcf)mailThreadRepaint(x);
+  },function(){delete MAIL.seen[id]});
+}
+/* the mail read again after an answer, and drawn: the room, and the sheet
+   if it is still open on its thread */
+function mRefresh(){
+  delete C["soul:mail"];delete C.home;HLIVE.at=0;
+  return mailQ(true).then(function(r){if(r&&r.locked)return;MAIL.r=r;mailPaint();var t=mOpenThread();if(t&&!MAIL.busy&&!MAIL.tcf)mailThreadRepaint(t)});
+}
+/* a refusal stays in the sheet, in the house's words; a sheet already
+   closed hears it as a toast */
+function mOpFail(t,said,sel){MAIL.fail=said;MAIL.tcf=null;if(!mailThreadRepaint(mOpenThread()||t,sel||"#mail-op-fail")){MAIL.fail=null;toast(said,true)}}
+function mThreadOp(t,op,b){
+  if(MAIL.busy||!t||t.id==null)return;
+  MAIL.busy=op;MAIL.fail=null;MAIL.said=null;
+  if(op==="answer")mailThreadRepaint(t,"#mail-writing");else if(b){b.disabled=true;b.textContent="Working…"}
+  return post("/api/soul",{action:"mail-thread",id:t.id,op:op}).then(function(r){
+    MAIL.busy=null;if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false)return mOpFail(t,lw(j.message||j.error)||"It refused.");
+    var said=lw(String(j.message||"").trim());
+    mThreadPut(j.thread);
+    if(op==="answer"){
+      var dr=j.draft&&typeof j.draft==="object"&&String(j.draft.text||"").trim()?j.draft:null;
+      if(dr)MAIL.drafts[String(t.id)]={draft:{subject:String(dr.subject||""),text:String(dr.text)},card:j.card&&typeof j.card==="object"&&j.card.id!=null?{id:j.card.id}:null};
+      MAIL.said=said||null;
+      if(!mailThreadRepaint(mOpenThread()||t,"#mail-draft")&&said)toast(said);
+      return mRefresh();
+    }
+    MAIL.tcf=null;if(MAIL.open===String(t.id)){MAIL.open=null;closeSheet()}
+    toast(said||"Done.");
+    return mRefresh();
+  },function(){MAIL.busy=null;mOpFail(t,"Could not reach the house.")});
+}
+/* Send and Don't send: the Home's own decision posts, on the card behind the reply */
+function mDecide(t,option,b){
+  var dr=mDraft(t),card=dr&&dr.card;if(!card||MAIL.busy)return;
+  MAIL.busy=option;MAIL.fail=null;if(b){b.disabled=true;b.textContent="Working…"}
+  return post("/api/soul",{action:"decide",id:card.id,option:option}).then(function(r){
+    MAIL.busy=null;if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false)return mOpFail(t,lw(j.message||j.error)||"It refused.");
+    delete MAIL.drafts[String(t.id)];MAIL.tcf=null;if(MAIL.open===String(t.id)){MAIL.open=null;closeSheet()}
+    toast(lw(String(j.message||"").trim())||(option==="send"?"Sent.":"Not sent."));
+    return mRefresh();
+  },function(){MAIL.busy=null;mOpFail(t,"Could not reach the house.")});
 }
 /* the places: in the order the Lantern writes to them, filtered by where they
    stand and by country; the outreach toward its target above them */
@@ -3564,14 +4129,19 @@ function mailPlacesHtml(d){
     return '<div class="mn" role="listitem"><b>'+n(k[x[0]])+'</b><span>'+esc(x[1])+'</span></div>'}).join("")+'</div>'
     +'<div class="mprog" role="img" aria-label="'+esc((ct==null?"None":fnum(ct))+" of "+tg+" places written to")+'" style="--gc:'+(HOME.data?hOutCol(HOME.data):"#E9C86A")+'"><i style="transform:scaleX('+(ct==null?0:+Math.min(1,ct/tg).toFixed(4))+')"></i></div>';
   if(!ps.length)return strip+'<div class="empty">No place is found yet. The Lantern looks for up to 20 a day: mosques, schools, student societies and educators that publish an address for being contacted.</div>';
-  var sc={},cc={};ps.forEach(function(p){var s=String(p.status||"").toLowerCase();sc[s]=(sc[s]||0)+1;var c=String(p.country||"").trim();if(c)cc[c]=(cc[c]||0)+1});
-  if(MAIL.fs!=="all"&&!sc[MAIL.fs])MAIL.fs="all";if(MAIL.fc!=="all"&&!cc[MAIL.fc])MAIL.fc="all";
+  var sc={},cc={},nl=0;ps.forEach(function(p){var s=String(p.status||"").toLowerCase();sc[s]=(sc[s]||0)+1;var c=String(p.country||"").trim();if(c)cc[c]=(cc[c]||0)+1;if(mSched(p))nl++});
+  /* round six: "set for later", the places whose letter waits for its own hour */
+  if(MAIL.fs==="later"?!nl:(MAIL.fs!=="all"&&!sc[MAIL.fs]))MAIL.fs="all";if(MAIL.fc!=="all"&&!cc[MAIL.fc])MAIL.fc="all";
   var countries=Object.keys(cc).sort();
-  var rows=ps.map(function(p,i){return [p,i]}).filter(function(x){return (MAIL.fs==="all"||String(x[0].status||"").toLowerCase()===MAIL.fs)&&(MAIL.fc==="all"||String(x[0].country||"").trim()===MAIL.fc)});
-  return strip+'<div class="mfil slide" role="group" aria-label="Where they stand">'+mailChips("mfs",MAIL.fs,[["all","All",ps.length]].concat(M_STS.filter(function(s){return sc[s]}).map(function(s){return [s,mWords(M_ST[s][1]),sc[s]]})))+'</div>'
+  var rows=ps.map(function(p,i){return [p,i]}).filter(function(x){return (MAIL.fs==="all"||(MAIL.fs==="later"?!!mSched(x[0]):String(x[0].status||"").toLowerCase()===MAIL.fs))&&(MAIL.fc==="all"||String(x[0].country||"").trim()===MAIL.fc)});
+  var chips=[];M_STS.filter(function(s){return sc[s]}).forEach(function(s){chips.push([s,mWords(M_ST[s][1]),sc[s]]);if(s==="new"&&nl)chips.push(["later","Set for later",nl])});
+  if(nl&&!sc["new"])chips.unshift(["later","Set for later",nl]);
+  return strip+'<div class="mfil slide" role="group" aria-label="Where they stand">'+mailChips("mfs",MAIL.fs,[["all","All",ps.length]].concat(chips))+'</div>'
     +(countries.length>1?'<div class="mfil"><select class="fi" data-mfc="1" aria-label="Country"><option value="all">Every country</option>'+countries.map(function(c){return '<option value="'+esc(c)+'"'+(MAIL.fc===c?' selected':'')+'>'+esc(c)+' ('+cc[c]+')</option>'}).join("")+'</select></div>':'')
     +(rows.length?'<div class="list" id="mail-places">'+rows.map(function(x){var p=x[0],S=mSt(p),where=[String(p.city||"").trim(),String(p.country||"").trim()].filter(Boolean).join(", ");
-      return '<button type="button" class="row tap" data-place="'+x[1]+'"><div class="ic">'+ICO.target+'</div><div class="t"><b>'+esc(String(p.name||"").trim()||"A place")+'</b><span>'+esc([sWords(p.kind),where].filter(Boolean).join(" · "))+'</span></div>'
+      var nt=mPlaceNote(p,false);
+      return '<button type="button" class="row tap" data-place="'+x[1]+'"><div class="ic">'+ICO.target+'</div><div class="t"><b>'+esc(String(p.name||"").trim()||"A place")+'</b><span>'+esc([sWords(p.kind),where].filter(Boolean).join(" · "))+'</span>'
+        +nt.map(function(n){return '<span class="mrw'+(n[0]==="bad"?' bad':'')+'">'+esc(n[1])+'</span>'}).join("")+'</div>'
         +'<div class="r"><span class="pill '+S[0]+'">'+esc(S[1])+'</span></div></button>'}).join("")+'</div>'
       :'<div class="empty">No place matches these filters.</div>');
 }
@@ -3582,6 +4152,7 @@ function mailPlaceSheet(p){
   var out=function(u,txt){return '<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(txt)+' <span aria-hidden="true">↗</span></a>'};
   sheet('<div class="msh"><h2>'+esc(String(p.name||"").trim()||"A place")+'</h2><p class="sub">'+esc([mWords(p.kind),where].filter(Boolean).join(" · "))+'</p>'
     +'<div class="tags"><span class="pill '+S[0]+'">'+esc(S[1])+'</span>'+(sc!=null?'<span class="pill">usefulness '+esc(fnum(sc))+'</span>':'')+'</div>'
+    +mPlaceNote(p,true).map(function(n){return '<p class="mnote '+(n[0]==="bad"?"bad":"later")+'" id="'+(n[0]==="bad"?"mail-bounced":"mail-sched")+'">'+esc(n[1])+'</p>'}).join("")
     +'<h3>Where it was found</h3>'
     +kv("Website",web?out(web,mHost(web)):'<span class="muted">'+(p.website?"not a secure address, so not opened from here":"none")+'</span>')
     +kv("Writes to",String(p.email||"").trim()?'<span class="ad">'+esc(p.email)+'</span>':'<span class="muted">no published address</span>')
@@ -3589,6 +4160,20 @@ function mailPlaceSheet(p){
     +kv("The evidence",ev?out(ev,"the page it was found on"):'<span class="muted">'+(p.evidence?"not a secure address, so not opened from here":"none")+'</span>')
     +'<h3>Its history</h3>'+(hist.length?'<ul class="hist">'+hist.map(function(h){return '<li><code>'+esc(mWhen(h.at)||"·")+'</code><span>'+esc(h.what||"")+'</span></li>'}).join("")+'</ul>':'<p class="small muted" style="margin:0">Nothing has happened with it yet.</p>')
     +'<div class="acts"><button class="btn" id="cl">Close</button></div></div>',true);
+}
+/* round six: a place's letter set for its own hour in the place's working
+   day (scheduled {at, kind, sendAt}), and an address that bounced (bounced
+   {at, why}), said plainly in its row and in its sheet */
+function mSched(p){var x=p&&p.scheduled&&typeof p.scheduled==="object"?p.scheduled:null;return x&&hParse(x.sendAt)?x:null}
+function mGoes(at){var d=hParse(at);if(!d)return "";var n=hDaysFrom(d),past=d.getTime()<hClockNow().getTime()-60000;
+  var day=n===0?"today":n===1?"tomorrow":n===-1?"yesterday":H_WD[d.getUTCDay()]+" "+d.getUTCDate()+" "+H_MON[d.getUTCMonth()];
+  return (past?"Its letter was set to go ":"Its letter goes ")+day+" at "+hClock(d)+" UTC"}
+function mPlaceNote(p,full){
+  var out=[],x=mSched(p),b=p&&p.bounced;
+  if(x)out.push(["later",mGoes(x.sendAt)+(full?".":"")]);
+  if(b){var w=b&&typeof b==="object"?mWhenAt(b.at):"";
+    out.push(["bad",full?"Its address bounced"+(w?" "+w:"")+(String(p.status||"").toLowerCase()==="dnc"?", so no letter goes to it again.":"."):"Its address bounced"])}
+  return out;
 }
 /* do not contact: anyone who said no, and anyone he adds; one no is final */
 function mailDncHtml(d){
@@ -3628,12 +4213,25 @@ function wireMail(el){
     if((a=t.closest("[data-mswyes]")))return void mailPost({action:"mail-switch",on:false},a,"Mail is off. Reading goes on.");
     if((a=t.closest("[data-mtab]"))){if(MAIL.tab===a.dataset.mtab)return;MAIL.tab=a.dataset.mtab;MAIL.cf=MAIL.cf&&MAIL.cf.k==="off"?MAIL.cf:null;$("mail-tabs").innerHTML=mailTabsHtml(d);mailPanePaint(d);return}
     if((a=t.closest("[data-mfa]"))){MAIL.fa=a.dataset.mfa;return mailPanePaint(d)}
+    if((a=t.closest("[data-mfn]"))){MAIL.fn=a.dataset.mfn;return mailPanePaint(d)}
     if((a=t.closest("[data-mfs]"))){MAIL.fs=a.dataset.mfs;return mailPanePaint(d)}
-    if((a=t.closest("[data-thread]"))){var th=(Array.isArray(d.threads)?d.threads:[])[+a.dataset.thread];if(th&&typeof th==="object")mailThreadSheet(th);return}
+    if((a=t.closest("[data-thread]"))){var th=(Array.isArray(d.threads)?d.threads:[])[+a.dataset.thread];if(th&&typeof th==="object"){MAIL.tcf=null;MAIL.said=null;MAIL.fail=null;mailThreadSheet(th);mSeen(th)}return}
     if((a=t.closest("[data-place]"))){var pl=(Array.isArray(d.places)?d.places:[])[+a.dataset.place];if(pl&&typeof pl==="object")mailPlaceSheet(pl);return}
     if((a=t.closest("[data-mdrm]"))){var x=(Array.isArray(d.dnc)?d.dnc:[])[+a.dataset.mdrm];if(!x)return;MAIL.cf={k:"rm",a:String(x.address)};mailPanePaint(d);var yy=el.querySelector("[data-mdyes]");if(yy)try{yy.focus({preventScroll:true})}catch(z){}return}
     if((a=t.closest("[data-mdno]"))){MAIL.cf=null;return mailPanePaint(d)}
     if((a=t.closest("[data-mdyes]"))){var cf=MAIL.cf;if(cf&&cf.k==="rm")mailPost({action:"dnc-remove",address:cf.a},a,"Taken off the list.");return}
+  });
+  /* the thread sheet's own buttons (the sheet sits outside the room) */
+  $("sheet-in").addEventListener("click",function(e){
+    var b=e.target&&e.target.closest&&e.target.closest("[data-mop],[data-mnyes],[data-mnno],[data-msend],[data-mdont],[data-mdsyes],[data-mdsno]");if(!b||b.disabled)return;
+    var t=mOpenThread();if(!t)return;
+    if(b.dataset.mop){if(b.dataset.mop==="notours"){MAIL.tcf="notours";MAIL.fail=null;return void mailThreadRepaint(t,"[data-mnyes]")}return void mThreadOp(t,b.dataset.mop,b)}
+    if(b.hasAttribute("data-mnno")){MAIL.tcf=null;return void mailThreadRepaint(t,'[data-mop="notours"]')}
+    if(b.hasAttribute("data-mnyes"))return void mThreadOp(t,"notours",b);
+    if(b.hasAttribute("data-msend"))return void mDecide(t,"send",b);
+    if(b.hasAttribute("data-mdont")){MAIL.tcf="dontsend";MAIL.fail=null;return void mailThreadRepaint(t,"[data-mdsyes]")}
+    if(b.hasAttribute("data-mdsno")){MAIL.tcf=null;return void mailThreadRepaint(t,"[data-mdont]")}
+    if(b.hasAttribute("data-mdsyes"))return void mDecide(t,"no",b);
   });
   el.addEventListener("change",function(e){var s=e.target&&e.target.closest&&e.target.closest("[data-mfc]");if(!s)return;MAIL.fc=s.value||"all";mailPanePaint();var n=el.querySelector("[data-mfc]");if(n)try{n.focus({preventScroll:true})}catch(x){}});
   el.addEventListener("submit",function(e){var f=e.target&&e.target.closest&&e.target.closest("[data-mdadd]");if(!f)return;e.preventDefault();
@@ -5167,12 +5765,21 @@ function brJevDay(d,label){
   if(down)s+=" "+(okn===0?"The judge did not answer":"The judge mostly did not answer")+"; while it is down, everything it would judge goes on exactly as before it existed.";
   return '<p class="jv'+(down?" down":"")+'">'+esc(s)+'</p>';
 }
+/* round six: the judge closed for now (jev.today.closed, the reason in
+   plain words) and how many questions went on without it (skipped) */
+function brJevPause(d){
+  var c=d&&typeof d==="object"&&typeof d.closed==="string"?d.closed.replace(/\s+/g," ").trim().replace(/[.;:,\s]+$/,""):"";
+  if(!c)return "";
+  var k=hNum(d.skipped);
+  return '<p class="jv down" id="brain-jev-closed">'+esc("The judge is waiting: "+lw(c)+". It is asked again within the hour; meanwhile everything it would judge goes on exactly as before it existed."
+    +(k?" "+(k===1?"One thing it would have judged has":fnum(k)+" things it would have judged have")+" gone on without it today.":""))+'</p>';
+}
 function brJev(jv){
   if(jv===undefined)return "";
   jv=jv&&typeof jv==="object"?jv:{};
   var by=jv.today&&jv.today.by&&typeof jv.today.by==="object"?jv.today.by:null;
   var uses=by?Object.keys(by).map(function(k){return [k,hNum(by[k])||0]}).filter(function(x){return x[1]>0}).sort(function(a,b){return b[1]-a[1]}):[];
-  return '<h3>The judge, Jev</h3><div id="brain-jev">'+brJevDay(jv.today,"Today")+brJevDay(jv.yesterday,"Yesterday")
+  return '<h3>The judge, Jev</h3><div id="brain-jev">'+brJevDay(jv.today,"Today")+brJevPause(jv.today)+brJevDay(jv.yesterday,"Yesterday")
     +(uses.length?'<p class="sp" style="margin-top:6px">Today\'s calls: '+esc(uses.slice(0,5).map(function(x){return (BR_JEV[x[0]]||sWords(x[0]))+" ("+fnum(x[1])+")"}).join(", "))+'.</p>':'')+'</div>';
 }
 function brGateway(gw){
@@ -5180,6 +5787,10 @@ function brGateway(gw){
   var h='<h3>The AI Gateway\'s free models</h3>';
   if(!gw||typeof gw!=="object")return h+'<p class="sp" id="brain-gw">The AI Gateway is not set up on this deployment, so its free models are not asked.</p>';
   var free=Array.isArray(gw.free)?gw.free.map(String):[],wait=Array.isArray(gw.waiting)?gw.waiting.map(String):[];
+  var wo=hNum(gw.without);
+  /* round six: a free list read, and none of it fit to ask (no provider that keeps nothing) */
+  if(!free.length&&wo>0)return h+'<p class="sp" id="brain-gw">'+esc(wo===1?"Today the AI Gateway's one free model has no provider that keeps nothing and learns nothing, so it is not asked."
+    :"Today the AI Gateway's "+fnum(wo)+" free models have no provider that keeps nothing and learns nothing, so none is asked.")+'</p>';
   if(!free.length)return h+'<p class="sp" id="brain-gw">Its free list could not be read today, or holds no language model.</p>';
   var nw=free.filter(function(id){return wait.indexOf(id)>=0}).length;
   return h+'<div class="gw" id="brain-gw" role="list">'+free.map(function(id){var w=wait.indexOf(id)>=0;return '<span role="listitem"'+(w?' class="wait"':'')+'><i aria-hidden="true"></i>'+esc(brModel(id))+' · '+(w?"waiting a day":"answering")+'</span>'}).join("")+'</div>'

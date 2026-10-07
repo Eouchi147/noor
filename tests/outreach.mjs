@@ -25,7 +25,8 @@
        societies, schools, the rest) and the countries mixed in turn;
      the caps: 20 new places a day, 10 first letters and 10 follow-ups a
        day (counted by the hands), the pace's own count and the owner's
-       Send (five waiting at most);
+       Send (five waiting at most); round six: 75 new places a day, the
+       day's pace for the letters and the follow-ups, ten waiting at most;
      the letter: written by the mail tier from the facts only, under 180
        words, the offer's own link, the do-not-contact line, signed; refused
        when it invents (a day, a programme, a number), speaks of money, asks
@@ -40,11 +41,26 @@
      the counts, the snapshot's part, the goal added once, the words on
        the Home, the field the planner reads, the red lines, and a whole
        daily cycle whose pace step offers the letters through the council.
+   Round six (7 October 2026) proves as well:
+     the warm-up by week from its stored first day (20, 30, 40, 50), the
+       brake (more than 4 percent of 20 letters or more bounced: half pace
+       for a week) and the brake by hand;
+     each letter's own time (sendSlot): the working day of its country's
+       own zone, Monday to Saturday, 6 minutes from any other, within 72
+       hours, across a change of the clocks in GB and AU;
+     a letter set for its time: handed to the mailbox with sendAt, kept as
+       pending with the day's count spent, read back when it went, was held
+       or refused at its time, or never went; onOutreachSent clears it;
+     a bounce closes its place and is counted;
+     the tick's short search runs only while it is wanted, writes nothing
+       to the ledger and never throws;
+     the pace step offers up to the day's pace, the follow-ups keeping
+       their share, and the goal moves once from 50 to 1000.
 
    Run:  node tests/outreach.mjs
 */
 import {
-  S, L, H as HM, NET, onNet, resp, resetStore, SOUL, HANDS, MIND, INST, ROUTER, APPROVED, addDays, setDay, today, putSnap, snapFor
+  S, L, H as HM, NET, onNet, resp, resetStore, SOUL, HANDS, MIND, INST, ROUTER, APPROVED, addDays, setDay, today, putSnap, snapFor, FAULT
 } from './_soul-harness.mjs';
 
 const O = await import('../api/_outreach.js');
@@ -71,21 +87,29 @@ O.setOutreachSeams({ lookup: async host => {
 } });
 
 /* ---------------------------------------------------------------- the mailbox, its contract stood in */
+/* round six: the contract's letter set for its own time. Once the owner's
+   first ten are sent (MK.firstTen at FIRST_TEN), a letter handed a future
+   ctx.sendAt is kept and answered "scheduled"; with none it goes at once */
+const FIRST_TEN_KEY = 'nsoul:mail:firstten';
+const firstTenDone = () => (parseInt(S.get(FIRST_TEN_KEY), 10) || 0) >= 10;
 const MAIL = { ready: { configured: true, on: true }, dnc: new Set(), dncWhy: [], queued: [], status: 'sent', reason: '' };
 const mailStub = {
   queueOutgoing: async (msg, ctx) => {
     MAIL.queued.push({ msg, ctx });
     const id = 'mail-' + MAIL.queued.length;
-    const st = typeof MAIL.status === 'function' ? MAIL.status(msg, MAIL.queued.length) : MAIL.status;
-    S.set('nsoul:mail:out:' + id, JSON.stringify({ id, status: st }));
+    let st = typeof MAIL.status === 'function' ? MAIL.status(msg, MAIL.queued.length) : MAIL.status;
+    if (st === 'sent' && firstTenDone() && ctx && ctx.sendAt && Date.parse(ctx.sendAt) > SOUL.nowMs()) st = 'scheduled';
+    S.set('nsoul:mail:out:' + id, JSON.stringify({ id, status: st, at: SOUL.nowIso(), ...(st === 'scheduled' ? { sendAt: ctx.sendAt } : {}) }));
     if (st === 'sent') return { ok: true, status: 'sent', id, messageId: '<' + id + '@noorcodex.com>' };
     if (st === 'waiting-owner') return { ok: true, status: 'waiting-owner', id };
+    if (st === 'scheduled') return { ok: true, status: 'scheduled', id, sendAt: ctx.sendAt };
     return { ok: false, status: st, reason: MAIL.reason || 'the stub ' + st + ' it', id };
   },
   isDoNotContact: async a => { const x = String(a).toLowerCase(); return MAIL.dnc.has(x) || MAIL.dnc.has(x.slice(x.lastIndexOf('@') + 1)); },
   addDoNotContact: async (a, why) => { MAIL.dnc.add(String(a).toLowerCase()); MAIL.dncWhy.push(why); return { ok: true }; },
   mailReady: async () => MAIL.ready,
-  MK: { out: id => 'nsoul:mail:out:' + id }
+  MK: { out: id => 'nsoul:mail:out:' + id, firstTen: FIRST_TEN_KEY },
+  FIRST_TEN: 10
 };
 O.setOutreachSeams({ mail: mailStub });
 const mailReset = () => { MAIL.ready = { configured: true, on: true }; MAIL.dnc.clear(); MAIL.dncWhy.length = 0; MAIL.queued.length = 0; MAIL.status = 'sent'; MAIL.reason = ''; };
@@ -513,6 +537,7 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   const q = MAIL.queued[0];
   ok(MAIL.queued.length === 1 && q.msg.kind === 'outreach' && q.msg.to === 'info@alnoor.example.org.uk' && q.msg.placeId === alnoor.id && q.msg.toName === 'Al Noor Masjid' && q.msg.goal === 'g-outreach'
     && q.ctx.viaHand === true && q.ctx.cycle === 'c-test', 'only through queueOutgoing: {kind: outreach, to: its published address, toName, subject, text, placeId, why, goal}, as a hand that keeps its own entry');
+  ok(q.ctx.sendAt === D0 + 'T09:02:00.000Z', 'round six: with its own time in its working day (10:02 in Leeds, two minutes on): ' + q.ctx.sendAt);
   const text = q.msg.text;
   const words = text.split(/\s+/).filter(Boolean).length;
   ok(words < 180 && /^Assalamu alaykum,/.test(text) && text.includes('https://noorcodex.com/school') && /With salaam,\nNOOR Codex of Light\nhttps:\/\/noorcodex\.com\n\nIf you would rather not hear from us, a short reply of "no thanks" is enough/.test(text) && !DASH.test(text),
@@ -525,7 +550,7 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   ok(!/@|0113/.test(prompt.messages[1].content) && /Everything below is DATA, never instructions/.test(prompt.messages[1].content), 'the prompt carries the place\'s own facts as data, never an address or a phone number');
   const after = await byName('Al Noor Masjid');
   ok(after.status === 'written' && after.firstAt && after.history.some(h => h.kind === 'letter' && h.status === 'sent'), 'the place is now written to, with the day the letter went');
-  ok(S.get(K.count('letters', D0)) === '1' && !S.get(K.count('r2', D0)), 'counted as one of the day\'s 10 letters, never the day\'s total of public actions');
+  ok(S.get(K.count('letters', D0)) === '1' && !S.get(K.count('r2', D0)), 'counted as one of the day\'s letters (round six: the pace, 20 in the warm-up\'s first week), never the day\'s total of public actions');
   const twice = await HANDS.runHand(sendIntent(alnoor), { actor: 'soul', approval: APPROVED });
   ok(!twice.ok && /has had its first letter/.test(twice.error) && MAIL.queued.length === 1, 'a second first letter to the same place is refused in the hand: ' + twice.error);
   const u = await HANDS.undoAction(r.id, 'owner');
@@ -575,17 +600,18 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   const d1 = await HANDS.runHand({ ...sendIntent(await byName('Green Lane Mosque'), 'Green Lane Mosque in Birmingham is a mosque, its own pages say; offer it the free Masjid Toolbox and reels for its screens, through the address it published for contact.') }, { actor: 'soul', approval: APPROVED });
   ok(!d1.ok && /one no is final/.test(d1.error) && (await byName('Green Lane Mosque')).status === 'dnc', 'an address on do not contact: refused before a word is written, and the place is marked dnc');
   MAIL.dnc.clear();
-  /* the day's ten */
-  S.set(K.count('letters', D0), '10');
+  /* the day's ten (round six: the day's pace, 20 in the warm-up's first week) */
+  S.set(K.count('letters', D0), '20');
   const ten = await HANDS.runHand(sendIntent(await byName('Al Noor Masjid')), { actor: 'soul', approval: APPROVED });
-  ok(!ten.ok, 'an eleventh letter the same day is never written');
+  ok(!ten.ok, 'a twenty-first letter the same day is never written');
   const fresh = { id: 'p-fresh', name: 'Fresh Mosque', kind: 'mosque', city: 'Hull', country: 'GB', website: 'https://fresh.example.org/', domain: 'fresh.example.org', email: 'info@fresh.example.org',
     source: 'osm', evidence: 'https://fresh.example.org/', lang: 'en', facts: [{ text: 'The mosque is open daily for prayers.', url: 'https://fresh.example.org/' }, { text: 'Visitors are welcome to learn about Islam.', url: 'https://fresh.example.org/' }, { text: 'Our community gathers for Eid each year.', url: 'https://fresh.example.org/' }],
     signals: {}, status: 'new', score: 10, history: [] };
   HM.get('nsoul:outreach:places').set('p-fresh', JSON.stringify(fresh));
   HM.get('nsoul:outreach:index').set('p-fresh', JSON.stringify({ s: 'new', c: 0, a: 0, t: 3, n: 'GB', sc: 10, r: 1, p: 0, h: '', f: '', u: '' }));
   const eleventh = await HANDS.runHand({ action: 'outreach-send', args: { placeId: 'p-fresh', name: 'Fresh Mosque', city: 'Hull', country: 'GB', offer: 'masjid' }, why: 'Fresh Mosque in Hull is a mosque, its own pages say; offer it the free Masjid Toolbox and reels for its screens, through the address it published for contact.' }, { actor: 'soul', approval: APPROVED });
-  ok(!eleventh.ok && /day's 10 first letters are already written/.test(eleventh.error) && S.get(K.count('letters', D0)) === '10', 'the day\'s 10 letters, counted by the hand itself: ' + eleventh.error);
+  ok(!eleventh.ok && /day's 20 first letters are already written/.test(eleventh.error) && S.get(K.count('letters', D0)) === '20', 'the day\'s pace (20), counted by the hand itself: ' + eleventh.error);
+  ok(!HM.has('nsoul:outreach:slots') || HM.get('nsoul:outreach:slots').size === 0, 'round six: no letter that did not go keeps a time: a refusal, a hold and the pace each gave theirs back');
 }
 
 /* ===========================================================================
@@ -610,7 +636,7 @@ console.log('\n6. a letter that waits for the owner\'s Send');
   const sense = await O.senseOutreach(rec);
   const sent = await byName('Al Noor Masjid');
   ok(sense.ok && sent.status === 'written' && sent.firstAt === D0 + 'T10:00:00.000Z' && !sent.waiting, 'read again at the next cycle: it went, on the day he sent it');
-  ok(rec.snapshot.outreach && rec.snapshot.outreach.contacted === 1 && rec.snapshot.outreach.places === 3 && rec.evidence.outreach && rec.evidence.outreach.target === 50,
+  ok(rec.snapshot.outreach && rec.snapshot.outreach.contacted === 1 && rec.snapshot.outreach.places === 3 && rec.evidence.outreach && rec.evidence.outreach.target === 1000,
     'the snapshot carries outreach {places, contacted, replied, working}, the evidence its totals: ' + JSON.stringify(rec.snapshot.outreach));
   ok(SOUL.metricValue(rec.snapshot, 'outreach.contacted') === 1, 'and outreach.contacted reads as the goal\'s metric');
   /* Not this one: the place waits a month */
@@ -719,11 +745,17 @@ console.log('\n8. answers: declined becomes do not contact');
 =========================================================================== */
 console.log('\n9. the counts');
 {
-  const c = await O.outreachCounts();
+  const { pace: cPace, ...c } = await O.outreachCounts();
   ok(JSON.stringify(c) === JSON.stringify({ places: 3, contacted: 3, replied: 3, working: 2, declined: 1, dnc: 0 }), 'outreachCounts: {places, contacted, replied, working, declined, dnc}: ' + JSON.stringify(c));
   const v = await O.placesView({ limit: 2 });
   ok(v.places.length === 2 && JSON.stringify(v.counts) === JSON.stringify(c) && v.places.every(p => p.id && p.name && p.status && p.source && p.evidence && Array.isArray(p.facts) && Array.isArray(p.history)),
     'placesView({limit}): the places (status, source, evidence, facts, history) and the same counts');
+  /* round six: and the day's pace beside them, for the Home and the Mail room */
+  const pv = v.pace;
+  /* the three letters went on their own on D0, so the warm-up began then; eight days on it is in its second week */
+  ok(cPace && pv && pv.start === D0 && pv.week === 2 && pv.letters === 30 && pv.followups === 30 && pv.written === 0 && pv.scheduled === 0 && pv.waiting === 0 && pv.braked === false && /Week 2 of the warm-up/.test(pv.why)
+    && cPace.letters === pv.letters && typeof pv.found === 'number' && pv.searches && typeof pv.searches.runs === 'number',
+    'round six: outreachCounts and placesView carry the day\'s pace {letters, followups, written, scheduled, waiting, week, start, braked, why, found}: ' + JSON.stringify({ start: pv.start, week: pv.week, letters: pv.letters, why: pv.why }));
   ok(Object.keys(v.places[0]).includes('email') && v.places[0].email, 'the console sees each place\'s published address');
   const part = await O.snapshotPart();
   ok(JSON.stringify(part) === JSON.stringify({ places: 3, contacted: 3, replied: 3, working: 2 }), 'the snapshot\'s own part: ' + JSON.stringify(part));
@@ -732,11 +764,11 @@ console.log('\n9. the counts');
 /* ===========================================================================
    10. THE CAPS: 20 new places a day, the pace, the owner's Send
 =========================================================================== */
-console.log('\n10. the caps');
+console.log('\n10. the caps (round six: 75 new places a day, the day\'s pace, ten waiting on his Send)');
 {
   resetStore(); mailReset(); setDay(D0, '09:00');
   const many = [];
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 1; i <= 110; i++) {
     const host = 'us-' + i + '.example.org';
     plain(host, 'Masjid Number ' + i, 'Houston', ['Our weekend school teaches the Quran to young people.', 'The masjid is open daily for prayers and learning.', 'Families from across the city learn together here.'], 'info@' + host);
     many.push({ type: 'node', id: 1000 + i, tags: { name: 'Masjid Number ' + i, website: 'https://' + host + '/', 'addr:city': 'Houston' } });
@@ -745,41 +777,52 @@ console.log('\n10. the caps');
   OSM.US = { elements: many };
   S.set('nsoul:outreach:cursor', JSON.stringify({ n: 3 }));
   const r = await research();
-  ok(r.ok && r.entry.result.added === 20 && (await placesNow()).length === 20 && S.get(K.count('places', D0)) === '20', 'at most 20 new places a day: ' + r.entry.result.added);
+  ok(r.ok && r.entry.result.added === 75 && (await placesNow()).length === 75 && S.get(K.count('places', D0)) === '75', 'at most 75 new places a day: ' + r.entry.result.added);
   const r2 = await research();
-  ok(r2.ok && r2.entry.result.added === 0 && /20 new places are already found/.test(r2.entry.result.note) && (await placesNow()).length === 20, 'a second search the same day finds nothing more: ' + r2.entry.result.note);
+  ok(r2.ok && r2.entry.result.added === 0 && /75 new places are already found/.test(r2.entry.result.note) && (await placesNow()).length === 75, 'a second search the same day finds nothing more: ' + r2.entry.result.note);
   setDay(addDays(D0, 1), '09:00');
   const r3 = await research();
-  ok(r3.ok && r3.entry.result.added === 5, 'the next day the rest of the list is checked: ' + r3.entry.result.added);
+  ok(r3.ok && r3.entry.result.added === 35, 'the next day the rest of the list is checked: ' + r3.entry.result.added);
   OSM.US = savedUS;
-  /* the pace: the goal's own pace (3 a day while it is not met), and never
-     more than his Send can take while the first ten wait */
+  /* the pace: while the owner's first ten are not all sent, never more than
+     his Send can take (ten waiting at most) */
   const pace = await O.paceIntents(today());
   const sends = pace.intents.filter(i => i.action === 'outreach-send');
-  ok(sends.length === 3 && !pace.intents.some(i => i.action === 'research') && pace.summary.letters === 3, 'the pace step: 3 letters a day while 50 are not yet invited (25 ready, so no search): ' + sends.length);
+  ok(sends.length === 10 && !pace.intents.some(i => i.action === 'research') && pace.summary.letters === 10 && pace.summary.pace === 20,
+    'the pace step: ten letters while his first ten are not all sent (the day\'s pace is 20; 110 ready, so no search): ' + sends.length);
   ok(sends.every(i => HANDS.redLineCheck(i).ok && i.goal === 'g-outreach' && i.metric === 'outreach.contacted' && i.seeded && !/\d/.test(i.why + i.expectedEffect)),
     'each in words the guard accepts, naming its goal, and with no figure the auditor could not find (a name with a number is said by its kind)');
   ok(sends.every(i => /^a mosque in Houston, the United States runs a weekend school, its own pages say; offer it a free library for its weekend school, through the address it published for contact\.$/.test(i.why)), 'for example: ' + sends[0].why);
+  ok(new Set(sends.map(i => i.args.placeId)).size === 10, 'ten different places, none offered twice');
   MAIL.status = 'waiting-owner';
-  for (const i of sends) await HANDS.runHand(i, { actor: 'soul', approval: APPROVED });
+  for (const i of sends.slice(0, 3)) await HANDS.runHand(i, { actor: 'soul', approval: APPROVED });
   const p2 = await O.paceIntents(today());
-  ok(p2.intents.filter(i => i.action === 'outreach-send').length === 2, 'three letters wait on his Send: the pace offers only the two that keep five waiting at most');
+  ok(p2.intents.filter(i => i.action === 'outreach-send').length === 7, 'three letters wait on his Send: the pace offers only the seven that keep ten waiting at most');
   for (const i of p2.intents) await HANDS.runHand(i, { actor: 'soul', approval: APPROVED });
   const p3 = await O.paceIntents(today());
-  ok(p3.intents.filter(i => i.action === 'outreach-send').length === 0, 'five wait: no more letters until he answers them');
+  ok(p3.intents.filter(i => i.action === 'outreach-send').length === 0 && p3.dropped.some(d => /already wait for the owner's Send/.test(d)), 'ten wait: no more letters until he answers them: ' + p3.dropped.join(' | '));
+  /* his first ten are sent: the rest of the day's pace (20, ten already written today) */
+  S.set(FIRST_TEN_KEY, '10');
   MAIL.status = 'sent';
-  /* the follow-ups' own ten: a place whose first letter went eight days ago */
-  const due = (await placesNow()).find(p => p.status === 'new' && !p.waiting);
+  const p4 = await O.paceIntents(today());
+  const s4 = p4.intents.filter(i => i.action === 'outreach-send');
+  ok(s4.length === 10 && p4.summary.pace === 20, 'his first ten sent: the rest of the day\'s pace of 20 is offered (ten more): ' + s4.length);
+  for (const i of s4) await HANDS.runHand(i, { actor: 'soul', approval: APPROVED });
+  const p5 = await O.paceIntents(today());
+  ok(p5.intents.filter(i => i.action === 'outreach-send').length === 0 && p5.dropped.some(d => /day's pace of 20/.test(d)) && S.get(K.count('letters', today())) === '20',
+    'the day\'s 20 written: no more letters today: ' + p5.dropped.join(' | '));
+  /* the follow-ups' own count, the day's pace too: a place whose first letter went eight days ago */
+  const due = (await placesNow()).find(p => p.status === 'new' && !p.waiting && !p.scheduled);
   const rec = JSON.parse(HM.get('nsoul:outreach:places').get(due.id));
   HM.get('nsoul:outreach:places').set(due.id, JSON.stringify({ ...rec, status: 'written', firstAt: addDays(today(), -8) + 'T09:00:00.000Z' }));
-  S.set(K.count('followups', today()), '10');
+  S.set(K.count('followups', today()), '20');
   const fu = { action: 'outreach-followup', args: { placeId: due.id }, why: 'One short follow-up, once.' };
   const f = await HANDS.runHand(fu, { actor: 'soul', approval: APPROVED });
-  ok(!f.ok && /the day's 10 follow-ups are already written/.test(f.error) && S.get(K.count('followups', today())) === '10' && MAIL.queued.every(q => q.msg.kind === 'outreach'),
-    'and the follow-ups have their own ten a day: the eleventh is never written: ' + f.error);
-  S.set(K.count('followups', today()), '9');
+  ok(!f.ok && /the day's 20 follow-ups are already written/.test(f.error) && S.get(K.count('followups', today())) === '20' && MAIL.queued.every(q => q.msg.kind === 'outreach'),
+    'and the follow-ups have their own count, the day\'s pace: the twenty-first is never written: ' + f.error);
+  S.set(K.count('followups', today()), '19');
   const f2 = await HANDS.runHand(fu, { actor: 'soul', approval: APPROVED });
-  ok(f2.ok && MAIL.queued.filter(q => q.msg.kind === 'followup').length === 1 && S.get(K.count('followups', today())) === '10', 'the tenth goes, and is counted');
+  ok(f2.ok && MAIL.queued.filter(q => q.msg.kind === 'followup').length === 1 && S.get(K.count('followups', today())) === '20', 'the twentieth goes, and is counted');
   /* the mail switch off: no letters, and nothing at all without a mailbox */
   MAIL.ready = { configured: true, on: false };
   const off = await O.paceIntents(today());
@@ -799,8 +842,8 @@ console.log('\n11. the goal, the field, the red lines');
   const g1 = await O.ensureOutreachGoal({ contacted: 0 });
   const goals = await SOUL.readGoals();
   const g = goals.find(x => x.id === 'g-outreach');
-  ok(g1.added && g && g.owner === 'owner' && g.metric === 'outreach.contacted' && g.target === 50 && g.due === addDays(D0, 42)
-    && g.outcome === 'At least 50 places invited to work together, helpfully and respectfully, within 6 weeks.', 'g-outreach, the owner\'s, added once: 50 places within 6 weeks, on outreach.contacted');
+  ok(g1.added && g && g.owner === 'owner' && g.metric === 'outreach.contacted' && g.target === 1000 && g.due === addDays(D0, 42)
+    && g.outcome === 'At least 1000 places invited to work together, helpfully and respectfully, within 6 weeks.', 'g-outreach, the owner\'s, added once: 1000 places within 6 weeks (round six: was 50), on outreach.contacted');
   const cards = JSON.parse(S.get('nsoul:decisions') || '[]');
   ok(cards.some(d => d.key === 'goal:g-outreach' && d.kind === 'choose' && d.options.some(o => o.id === 'keep')), 'with its card: Keep this goal, or Change it');
   const g2 = await O.ensureOutreachGoal({ contacted: 0 });
@@ -838,11 +881,14 @@ console.log('\n12. a whole daily cycle');
   ok(t.status === 'done', 'the daily cycle ran to its end: ' + t.status);
   const rc = await MIND.readCycle(t.id);
   const out = rc.intents.filter(i => i.action === 'outreach-send');
-  ok(out.length === 3 && out.every(i => i.tier === 'R2' && i.council && i.council.approved && i.status === 'done' && i.goal === 'g-outreach'), 'the pace step offered 3 letters; each met the council and ran: ' + out.map(i => i.status).join());
+  /* round six: the day's pace (20), so every one of the four ready places */
+  ok(out.length === 4 && out.every(i => i.tier === 'R2' && i.council && i.council.approved && i.status === 'done' && i.goal === 'g-outreach'), 'the pace step offered 4 letters (all the ready places, within the day\'s pace); each met the council and ran: ' + out.map(i => i.status).join());
   ok(rc.intents.some(i => i.action === 'research' && i.tier === 'R1'), 'and a search for places, since too few are ready');
-  ok(out[0].args.name === 'Toronto Muslim Youth Centre' && out[1].args.name === 'Al Noor Masjid' && out[2].args.name === 'Quiet Street Islamic Centre',
-    'in order: youth work and weekend schools first, the countries in turn (Canada, then the United Kingdom): ' + out.map(i => i.args.name).join(', '));
-  ok(MAIL.queued.length === 3 && MAIL.queued.every(q => q.msg.kind === 'outreach' && q.ctx.viaHand && q.ctx.cycle === rc.id), 'three letters through queueOutgoing, from inside the cycle');
+  ok(out[0].args.name === 'Toronto Muslim Youth Centre' && out[1].args.name === 'Al Noor Masjid' && out[2].args.name === 'Quiet Street Islamic Centre' && out[3].args.name === 'Green Lane Mosque',
+    'in order: youth work and weekend schools first, the countries in turn (Canada, then the United Kingdom), then the rest: ' + out.map(i => i.args.name).join(', '));
+  ok(MAIL.queued.length === 4 && MAIL.queued.every(q => q.msg.kind === 'outreach' && q.ctx.viaHand && q.ctx.cycle === rc.id && q.ctx.sendAt), 'four letters through queueOutgoing, from inside the cycle, each with its own time');
+  ok(MAIL.queued[0].ctx.sendAt === addDays(D0, 1) + 'T13:00:00.000Z' && MAIL.queued[1].ctx.sendAt === addDays(D0, 1) + 'T08:00:00.000Z',
+    'round six: not one burst at 05:20: each asks for its own working morning, Toronto at 09:00 its own time, Leeds at 09:00 its own: ' + MAIL.queued.map(q => q.ctx.sendAt.slice(11, 16)).join(', '));
   const guardianSaw = ROUTER.calls.filter(c => c.role === 'guardian').map(c => c.messages[1].content).join('\n');
   ok(/outreach-send/.test(guardianSaw) && !/@/.test(guardianSaw.replace(/salam@noorcodex\.com/g, '')), 'the council read each letter\'s intent, with no address in it');
   ok(rc.snapshot.outreach && rc.snapshot.outreach.places === 4 && rc.evidence.outreach && rc.evidence.outreach.places === 4, 'the cycle\'s snapshot and evidence carry the outreach totals');
@@ -853,12 +899,368 @@ console.log('\n12. a whole daily cycle');
   setDay(addDays(D0, 9), '05:20');
   const m = await O.measureLetters(today());
   const e = m.measured.find(x => (x.outreach || {}).answer === 'working');
-  ok(m.measured.length === 3 && e && e.verdict === 'helped' && e.metric === 'outreach.replied' && m.measured.filter(x => x.verdict === 'unclear').length === 2,
-    'seven days on, each letter is measured by its own place\'s answer: one working (helped), two with no answer yet (unclear)');
+  ok(m.measured.length === 4 && e && e.verdict === 'helped' && e.metric === 'outreach.replied' && m.measured.filter(x => x.verdict === 'unclear').length === 3,
+    'seven days on, each letter is measured by its own place\'s answer: one working (helped), three with no answer yet (unclear)');
   const acts = await SOUL.actionsList();
   ok(acts.filter(a => a.hand === 'outreach-send').every(a => a.effect), 'and marked on its action');
   const general = await INST.measureEffects(today());
   ok(!general.measured.some(x => x.action === 'outreach-send'), 'so the general measure never counts a letter a second time by a total');
+}
+
+/* ===========================================================================
+   ROUND SIX (7 October 2026): the pace, each letter's own time, the bounce,
+   the tick's short search
+=========================================================================== */
+/* a ready place written straight into the store (the research is proved
+   above): a mosque of the region with three facts of its own */
+const PLACES_KEY = 'nsoul:outreach:places', INDEX_KEY = 'nsoul:outreach:index', BYADDR_KEY = 'nsoul:outreach:byaddr';
+function synth(id, name, country, extra = {}) {
+  const host = id + '.example.org', site = 'https://' + host + '/';
+  const p = { id, name, kind: 'mosque', city: 'Town', country, website: site, domain: host, email: 'info@' + host, source: 'osm', evidence: site, lang: 'en',
+    facts: [{ text: 'The mosque is open daily for prayers.', url: site }, { text: 'Visitors are welcome to learn about Islam.', url: site }, { text: 'Our community gathers for Eid each year.', url: site }],
+    signals: {}, status: 'new', score: 10, history: [], updatedAt: SOUL.nowIso(), ...extra };
+  for (const k of [PLACES_KEY, INDEX_KEY, BYADDR_KEY]) if (!HM.has(k)) HM.set(k, new Map());
+  HM.get(PLACES_KEY).set(id, JSON.stringify(p));
+  HM.get(INDEX_KEY).set(id, JSON.stringify({ s: p.status, c: p.firstAt ? 1 : 0, a: 0, t: 3, n: country, sc: 10, r: 1, p: 0, sa: 0, h: '', f: p.firstAt ? String(p.firstAt).slice(0, 10) : '', u: '', ua: p.updatedAt }));
+  HM.get(BYADDR_KEY).set(p.email, id);
+  return p;
+}
+const placeById = async id => (await placesNow()).find(p => p.id === id);
+const sendTo = (p, why) => HANDS.runHand({ action: 'outreach-send', args: { placeId: p.id, name: p.name, city: p.city, country: p.country, offer: O.offerFor(p) },
+  why: why || p.name + ' in ' + p.city + ' is a mosque, its own pages say; offer it the free Masjid Toolbox and reels for its screens, through the address it published for contact.' }, { actor: 'soul', approval: APPROVED });
+
+console.log('\n14. round six: the pace, its warm-up and its brake');
+{
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  ok(O.RAMP.join() === '20,30,40,50' && Object.isFrozen(O.RAMP) && O.LETTERS_MAX === 50 && O.LETTERS_PER_DAY === 50 && O.FOLLOWUPS_PER_DAY === 50 && O.WAITING_MAX === 10
+    && O.PLACES_PER_DAY === 75 && O.PLACES_KEEP === 3000 && O.RESEARCH_LOW === 100 && O.CANDS_KEEP === 600 && O.POOL_LOW === 60 && O.OUTREACH_TARGET === 1000 && O.GOAL_DAYS === 42,
+    'the numbers in code: the ramp 20, 30, 40, 50 (frozen), 50 at most, ten waiting on his Send, 75 places a day, 3000 kept, a search below 100 ready, 1000 in 42 days');
+  const none = await O.paceToday(D0);
+  ok(none.week === 1 && none.letters === 20 && none.followups === 20 && none.start === null && !none.braked && /warm-up begins on the first day a letter goes on its own/.test(none.why) && !DASH.test(none.why),
+    'before any letter has gone on its own: week 1, 20 a day: ' + none.why);
+  /* the ramp, week by week from its stored first day */
+  S.set(O.OK_KEYS.rampStart, D0);
+  const ws = [];
+  for (const n of [0, 6, 7, 13, 14, 20, 21, 60]) ws.push(await O.paceToday(addDays(D0, n)));
+  ok(ws.map(w => w.letters).join() === '20,20,30,30,40,40,50,50' && ws.map(w => w.week).join() === '1,1,2,2,3,3,4,9' && ws.every(w => w.followups === w.letters && w.start === D0 && !w.braked),
+    'the warm-up from its first day: 20 in week 1, 30 in week 2, 40 in week 3, 50 from week 4 on, the follow-ups the same number: ' + ws.map(w => w.week + ':' + w.letters).join(' '));
+  ok(/^Week 2 of the warm-up: 30 a day, first letters and follow-ups together; 40 from 21 October\.$/.test(ws[2].why) && /^The warm-up is done: 50 a day/.test(ws[7].why), 'said plainly: ' + ws[2].why);
+  /* the brake: 25 letters gone in the last 7 days, 2 of them bounced (8 percent) */
+  resetStore(); setDay(D0, '09:00');
+  S.set(O.OK_KEYS.rampStart, addDays(D0, -21));
+  for (const [d, n] of [[addDays(D0, -6), 10], [addDays(D0, -3), 10], [D0, 5]]) S.set(O.OK_KEYS.went(d), String(n));
+  const b1 = await O.onBounce({ address: 'gone@nowhere.example.org', at: addDays(D0, -2) + 'T10:00:00.000Z', why: '550 5.1.1 no such user' });
+  const b2 = await O.onBounce({ address: 'closed@nowhere.example.org', at: D0 + 'T08:00:00.000Z', why: '550 5.1.1 no such user' });
+  ok(b1.counted && b2.counted && b1.placeId === null, 'two bounces counted on their own days, from addresses no place published');
+  const braked = await O.paceToday(D0);
+  ok(braked.braked && braked.full === 50 && braked.letters === 25 && braked.followups === 25 && braked.sent === 25 && braked.bounced === 2 && braked.until === addDays(D0, 7)
+    && /^Half pace until 14 October: 2 of the 25 letters that went in the last 7 days bounced, more than the 4 percent/.test(braked.why) && !DASH.test(braked.why),
+    'more than 4 percent of 25 letters bounced: half pace (25 of 50) for 7 days: ' + braked.why);
+  ok(L.get('nsoul:audit') && L.get('nsoul:audit').some(x => /outreach-brake/.test(x) && /halved until/.test(x)), 'and the brake is written to the audit');
+  S.set(O.OK_KEYS.went(addDays(D0, 1)), '100');
+  const still = await O.paceToday(addDays(D0, 3));
+  ok(still.braked && still.letters === 25 && still.until === addDays(D0, 7), 'it holds for its week, whatever goes after');
+  const lifted = await O.paceToday(addDays(D0, 7));
+  ok(!lifted.braked && lifted.letters === 50 && lifted.bounced === 0, 'and lifts on its seventh day, with no bounce in the week before');
+  /* in the first week, half is 10 */
+  resetStore(); setDay(D0, '09:00');
+  S.set(O.OK_KEYS.rampStart, D0); S.set(O.OK_KEYS.went(D0), '25');
+  await O.onBounce({ address: 'a@one.example.org', why: 'no such user' }); await O.onBounce({ address: 'b@one.example.org', why: 'no such user' });
+  const wk1 = await O.paceToday(D0);
+  ok(wk1.braked && wk1.letters === 10 && wk1.full === 20, 'in the first week the brake halves 20 to 10');
+  /* under 20 letters: never braked, however many bounced */
+  resetStore(); setDay(D0, '09:00');
+  S.set(O.OK_KEYS.went(D0), '15');
+  await O.onBounce({ address: 'a@two.example.org', why: 'x' }); await O.onBounce({ address: 'b@two.example.org', why: 'x' }); await O.onBounce({ address: 'c@two.example.org', why: 'x' });
+  const few = await O.paceToday(D0);
+  ok(!few.braked && few.letters === 20 && few.bounced === 3 && few.sent === 15, 'fewer than 20 letters in the week: no brake (3 of 15 bounced)');
+  /* exactly 4 percent is not more than 4 percent; the same address twice is one bounce */
+  resetStore(); setDay(D0, '09:00');
+  S.set(O.OK_KEYS.went(D0), '50');
+  await O.onBounce({ address: 'a@three.example.org', why: 'x' });
+  const twice = await O.onBounce({ address: 'A@three.example.org', why: 'x' });
+  await O.onBounce({ address: 'b@three.example.org', why: 'x' });
+  const four = await O.paceToday(D0);
+  ok(!four.braked && four.bounced === 2 && twice.already, 'exactly 4 percent (2 of 50) is not more than 4 percent, and one address bouncing twice in a day counts once');
+  /* the brake by hand, for N days (the mailbox, when Gmail asks it to slow down) */
+  resetStore(); setDay(D0, '09:00');
+  const h = await O.brakeNow('Gmail said the house is sending too fast', 3);
+  const hp = await O.paceToday(D0);
+  ok(h.ok && h.until === addDays(D0, 3) && hp.braked && hp.letters === 10 && /^Half pace until 10 October: Gmail said the house is sending too fast/.test(hp.why), 'brakeNow(why, 3): half pace for 3 days: ' + hp.why);
+  ok(!(await O.paceToday(addDays(D0, 3))).braked, 'and whole again on the third day after');
+  await O.brakeNow('a longer word from Gmail', 10);
+  const shorter = await O.brakeNow('a shorter one', 2);
+  ok(shorter.ok && shorter.until === addDays(D0, 10) && (await O.paceToday(addDays(D0, 5))).braked, 'a brake already set for longer keeps its day');
+  const tooLong = await O.brakeNow('x', 400);
+  ok(tooLong.ok && tooLong.until === addDays(D0, 30), 'and a brake by hand is 30 days at most');
+  FAULT.all = true;
+  let threw = false, fb = null;
+  try { fb = await O.brakeNow('x', 3); } catch { threw = true; }
+  FAULT.all = false;
+  ok(!threw && fb && !fb.ok && /could not be read/.test(fb.error), 'a store that fails: brakeNow says so, and never throws');
+}
+
+console.log('\n15. round six: each letter\'s own time (sendSlot)');
+{
+  const T = s => Date.parse(s);
+  const slot = (cc, now, taken) => O.sendSlot(cc, T(now), (taken || []).map(T));
+  ok(slot('GB', '2026-10-07T09:00:00Z') === '2026-10-07T09:02:00.000Z', 'GB, a Wednesday at 10:00 in London: two minutes on (09:02 UTC, 10:02 BST)');
+  ok(slot('GB', '2026-10-07T07:00:00Z') === '2026-10-07T08:00:00.000Z', 'GB before 9 there: at 9 its own time (08:00 UTC, British Summer Time)');
+  ok(slot('GB', '2026-10-10T17:00:00Z') === '2026-10-12T08:00:00.000Z', 'GB, a Saturday evening (18:00 in London): Monday at 9, the Sunday passed over');
+  ok(slot('GB', '2026-10-11T10:00:00Z') === '2026-10-12T08:00:00.000Z', 'GB, a Sunday morning: Monday at 9, never a Sunday');
+  ok(slot('GB', '2026-10-10T10:00:00Z') === '2026-10-10T10:02:00.000Z', 'a Saturday in working hours is a working day (a weekend school meets on it)');
+  ok(slot('GB', '2026-10-24T17:30:00Z') === '2026-10-26T09:00:00.000Z', 'GB across the clocks going back (25 October): Monday at 9 is 09:00 UTC, no longer 08:00');
+  ok(slot('US', '2026-10-07T09:00:00Z') === '2026-10-07T13:00:00.000Z', 'US, New York at 05:00: 9 its own time (13:00 UTC)');
+  ok(slot('US', '2026-10-07T20:58:30Z') === '2026-10-08T13:00:00.000Z', 'US at 16:58 there: two minutes on is past 5, so the next morning');
+  ok(slot('AU', '2026-10-03T07:00:00Z') === '2026-10-04T22:00:00.000Z', 'AU across the clocks going forward (4 October): Saturday evening in Sydney to Monday at 9 AEDT (22:00 UTC on the Sunday)');
+  ok(slot('AU', '2026-10-02T22:00:00Z') === '2026-10-02T23:00:00.000Z', 'AU before the change: Saturday at 9 AEST is 23:00 UTC');
+  ok(slot('NZ', '2026-10-07T00:00:00Z') === '2026-10-07T00:02:00.000Z' && slot('NZ', '2026-10-07T05:00:00Z') === '2026-10-07T20:00:00.000Z',
+    'NZ: 13:00 in Auckland is open; 18:00 there waits for 9 the next morning (20:00 UTC)');
+  ok(slot('ZA', '2026-10-07T05:00:00Z') === '2026-10-07T07:00:00.000Z' && slot('IE', '2026-10-07T16:30:00Z') === '2026-10-08T08:00:00.000Z' && slot('CA', '2026-10-07T16:30:00Z') === '2026-10-07T16:32:00.000Z',
+    'ZA, IE and CA each by their own clock');
+  ok(slot('GB', '2026-10-07T09:00:00Z', ['2026-10-07T09:02:00Z', '2026-10-07T09:08:00Z']) === '2026-10-07T09:14:00.000Z', 'six minutes after the times already given out');
+  ok(slot('GB', '2026-10-07T09:00:00Z', ['2026-10-07T09:05:00Z']) === '2026-10-07T09:11:00.000Z', 'never within 6 minutes of one, before it or after it');
+  ok(slot('GB', '2026-10-07T09:00:00Z', ['2026-10-07T13:00:00Z']) === '2026-10-07T09:02:00.000Z', 'a time given to another country hours away is no obstacle');
+  const full = [];
+  for (let t = T('2026-10-07T09:00:00Z'); t <= T('2026-10-10T09:10:00Z'); t += 5 * 60000) full.push(new Date(t).toISOString());
+  ok(slot('GB', '2026-10-07T09:00:00Z', full) === null, 'nothing free in the next 72 hours: null');
+  ok(O.sendSlot('GB', T('2026-10-07T09:00:00Z'), null) === '2026-10-07T09:02:00.000Z' && O.sendSlot('GB', NaN, []) === null && O.sendSlot('XX', T('2026-10-07T16:30:00Z'), []) === '2026-10-08T08:00:00.000Z',
+    'no list is an empty list; no clock is no time; a country outside the region keeps London\'s working day');
+  const from = T('2026-10-07T16:59:00Z'), got = T(slot('AU', '2026-10-07T16:59:00Z'));
+  ok(got - from <= 72 * 3600000 && got - from >= 2 * 60000, 'never sooner than 2 minutes, never more than 72 hours ahead');
+  ok(O.slotWords('2026-10-12T08:00:00.000Z', 'GB') === 'Monday 12 October at 09:00, its own time', 'and said plainly: ' + O.slotWords('2026-10-12T08:00:00.000Z', 'GB'));
+}
+
+console.log('\n16. round six: a letter set for its own time, and read back');
+{
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  await research();
+  S.set(FIRST_TEN_KEY, '10');
+  const alnoor = await byName('Al Noor Masjid');
+  const r = await HANDS.runHand(sendIntent(alnoor), { actor: 'soul', approval: APPROVED });
+  const res = (r.entry && r.entry.result) || {};
+  const q = MAIL.queued[MAIL.queued.length - 1];
+  ok(r.ok && res.status === 'scheduled' && res.sendAt === D0 + 'T09:02:00.000Z' && q.ctx.sendAt === res.sendAt && q.ctx.viaHand === true,
+    'his first ten sent: the letter is handed over with its own time, and the mailbox keeps it for then (scheduled): ' + res.note);
+  ok(/goes on Wednesday 7 October at 10:02, its own time/.test(res.note) && /an email cannot be unsent; a letter set for its own time goes then, unless the mail switch is off/.test(r.entry.undo && r.entry.undo.note),
+    'the hand answers when it goes, and its undo says what can still stop it');
+  const u = await HANDS.undoAction(r.id, 'owner');
+  ok(!u.ok && /an email cannot be unsent/.test(u.error), 'its undo is a refusal that says why: ' + u.error);
+  const w = await byName('Al Noor Masjid');
+  ok(w.status === 'new' && !w.firstAt && !w.waiting && w.scheduled && w.scheduled.sendAt === res.sendAt && w.scheduled.kind === 'outreach' && w.history.some(h => h.status === 'scheduled' && h.sendAt === res.sendAt),
+    'the place waits for its letter (pending, with the time it goes), not yet written to, a line in its history');
+  ok(S.get(K.count('letters', D0)) === '1' && HM.get('nsoul:outreach:slots').size === 1, 'the day\'s count is kept, not given back, and its time stays taken');
+  const quiet = await byName('Quiet Street Islamic Centre');
+  const r2 = await HANDS.runHand(sendIntent(quiet, 'Quiet Street Islamic Centre in Bristol runs a weekend school, its own pages say; offer it a free library for its weekend school, through the address it published for contact.'), { actor: 'soul', approval: APPROVED });
+  ok(r2.ok && r2.entry.result.status === 'scheduled' && r2.entry.result.sendAt === D0 + 'T09:08:00.000Z', 'the next letter takes the next free time, six minutes on: ' + (r2.entry && r2.entry.result.sendAt));
+  const again = await HANDS.runHand(sendIntent(alnoor), { actor: 'soul', approval: APPROVED });
+  ok(!again.ok && /already set to go on Wednesday 7 October at 10:02/.test(again.error), 'a second letter to a place whose letter waits for its time is refused: ' + again.error);
+  const pi = await O.paceIntents(D0);
+  ok(pi.summary.scheduled === 2 && pi.summary.waiting === 0 && !pi.intents.some(i => i.args && [alnoor.id, quiet.id].includes(i.args.placeId)) && pi.intents.some(i => i.action === 'outreach-send'),
+    'the pace step counts them as set for their time, never as waiting on his Send, and offers neither again');
+  /* the sense stage: still waiting for its time, left alone */
+  await O.senseOutreach({ date: D0, snapshot: snapFor(D0), evidence: {} });
+  ok((await byName('Al Noor Masjid')).scheduled && (await byName('Quiet Street Islamic Centre')).scheduled, 'read again before its time: left alone');
+  /* it went, and the mailbox's own record says so (the sense stage reads it) */
+  S.set('nsoul:mail:out:' + res.mailId, JSON.stringify({ id: res.mailId, status: 'sent', sentAt: D0 + 'T09:02:30.000Z', messageId: '<' + res.mailId + '@noorcodex.com>', byOwner: false }));
+  const ev = {};
+  const sense = await O.senseOutreach({ date: D0, snapshot: snapFor(D0), evidence: ev });
+  const went = await byName('Al Noor Masjid');
+  ok(went.status === 'written' && went.firstAt === D0 + 'T09:02:30.000Z' && !went.scheduled && sense.notes.some(n => /1 waiting letter\(s\) went/.test(n)), 'read again after its time: it went, on the minute it went');
+  ok(S.get(O.OK_KEYS.rampStart) === D0 && S.get(O.OK_KEYS.went(D0)) === '1' && ev.outreach && ev.outreach.scheduled === 1 && ev.outreach.pace === 20 && ev.outreach.week === 1,
+    'the house\'s own letter: the warm-up begins that day, the letter counts toward the brake, and the evidence carries the pace as numbers');
+  /* the mailbox calls onOutreachSent when one goes: the place's pending letter is cleared, counted once */
+  const qId = r2.entry.result.mailId;
+  const os = await O.onOutreachSent({ placeId: quiet.id, mailId: qId, kind: 'outreach', at: D0 + 'T09:08:10.000Z', messageId: '<' + qId + '@noorcodex.com>' });
+  const qs = await byName('Quiet Street Islamic Centre');
+  ok(os.ok && qs.status === 'written' && !qs.scheduled && !qs.waiting && qs.firstAt === D0 + 'T09:08:10.000Z' && S.get(O.OK_KEYS.went(D0)) === '2', 'onOutreachSent: written, its pending letter cleared, counted');
+  await O.onOutreachSent({ placeId: quiet.id, mailId: qId, kind: 'outreach', at: D0 + 'T09:09:00.000Z' });
+  ok(S.get(O.OK_KEYS.went(D0)) === '2' && (await byName('Quiet Street Islamic Centre')).firstAt === D0 + 'T09:08:10.000Z', 'told twice, it is marked and counted once');
+  /* held when its time came, refused when its time came, and one that never went */
+  const held = synth('p-held', 'Held Mosque', 'GB'), refused = synth('p-refused', 'Refused Mosque', 'GB'), stale = synth('p-stale', 'Stale Mosque', 'GB');
+  const green = await byName('Green Lane Mosque');
+  const rs = [];
+  for (const p of [held, refused, stale, green]) rs.push(await sendTo(p));
+  ok(rs.every(x => x.ok && x.entry.result.status === 'scheduled') && new Set(rs.map(x => x.entry.result.sendAt)).size === 4, 'four more set for their own times, each its own: ' + rs.map(x => x.entry && x.entry.result.sendAt && x.entry.result.sendAt.slice(11, 16)).join(', '));
+  const mid = x => x.entry.result.mailId;
+  S.set('nsoul:mail:out:' + mid(rs[0]), JSON.stringify({ id: mid(rs[0]), status: 'held', reason: 'the mail switch is off' }));
+  S.set('nsoul:mail:out:' + mid(rs[1]), JSON.stringify({ id: mid(rs[1]), status: 'refused', reason: 'that address asked not to be written to again; one no is final' }));
+  S.set('nsoul:mail:out:' + mid(rs[3]), JSON.stringify({ id: mid(rs[3]), status: 'refused', reason: 'red line: the letter lines' }));
+  const s2 = await O.senseOutreach({ date: D0, snapshot: snapFor(D0), evidence: {} });
+  const hp = await placeById('p-held'), rp = await placeById('p-refused'), gp = await byName('Green Lane Mosque');
+  ok(hp.status === 'new' && !hp.scheduled && hp.held && hp.held.until === addDays(D0, 7) && hp.held.why === 'its letter was held when its time came: the mail switch is off',
+    'held when its time came: set aside a week, as a refused letter is: ' + (hp.held && hp.held.why));
+  ok(rp.status === 'dnc' && !rp.scheduled && /refused when its time came: that address asked not to be written to again; one no is final/.test(rp.held && rp.held.why), 'refused for a no: and a no is final (dnc)');
+  ok(gp.status === 'new' && gp.held && /refused when its time came: red line/.test(gp.held.why) && gp.history.some(h => h.kind === 'letter' && h.status === 'refused'), 'refused for another reason: set aside a week, kept new');
+  ok(s2.notes.some(n => /2 refused, 1 held when their time came, 0 never went/.test(n)) && (await placeById('p-stale')).scheduled, 'the sense stage says so; one still waiting for its time is left alone: ' + s2.notes.join(' | '));
+  const slotKeys = [...HM.get('nsoul:outreach:slots').keys()];
+  ok(!slotKeys.includes('p-held:outreach') && !slotKeys.includes('p-refused:outreach') && !slotKeys.includes(gp.id + ':outreach') && slotKeys.includes('p-stale:outreach'),
+    'the times of the letters set aside are given back; the one still waiting keeps its own: ' + slotKeys.join(', '));
+  /* four days on and it never went: set aside with its reason */
+  setDay(addDays(D0, 5), '09:00');
+  const s3 = await O.senseOutreach({ date: today(), snapshot: snapFor(today()), evidence: {} });
+  const sp = await placeById('p-stale');
+  ok(!sp.scheduled && sp.status === 'new' && /its letter was set to go on 7 October and never went/.test(sp.held && sp.held.why) && sp.history.some(h => h.status === 'never went') && s3.notes.some(n => /1 never went/.test(n)),
+    'a letter set for its time that has not gone 4 days on is set aside with its reason: ' + (sp.held && sp.held.why));
+  /* the follow-up, a week on: set for its own time too */
+  setDay(addDays(D0, 7), '09:00');
+  const fu = await HANDS.runHand({ action: 'outreach-followup', args: { placeId: alnoor.id, name: alnoor.name, city: alnoor.city, country: alnoor.country },
+    why: 'The first letter to Al Noor Masjid in Leeds went more than a week ago with no answer; one short follow-up, once.' }, { actor: 'soul', approval: APPROVED });
+  const fr = (fu.entry && fu.entry.result) || {};
+  const fq = MAIL.queued[MAIL.queued.length - 1];
+  ok(fu.ok && fr.status === 'scheduled' && fq.msg.kind === 'followup' && fq.ctx.sendAt === addDays(D0, 7) + 'T09:02:00.000Z' && fq.ctx.fixed === true && /follow-up to Al Noor Masjid goes on Wednesday 14 October at 10:02/.test(fr.note),
+    'the follow-up is set for its own time as well: ' + fr.note);
+  const fw = await byName('Al Noor Masjid');
+  ok(fw.status === 'written' && fw.scheduled && fw.scheduled.kind === 'followup' && S.get(K.count('followups', today())) === '1', 'its place waits for it, the follow-up counted');
+  await O.onOutreachSent({ placeId: alnoor.id, mailId: fr.mailId, kind: 'followup', at: addDays(D0, 7) + 'T09:02:20.000Z' });
+  const ff = await byName('Al Noor Masjid');
+  ok(ff.status === 'followed' && ff.followupAt === addDays(D0, 7) + 'T09:02:20.000Z' && !ff.scheduled, 'and when it goes, the place is followed and its pending letter cleared');
+}
+
+console.log('\n17. round six: a letter that bounced');
+{
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  await research();
+  const alnoor = await byName('Al Noor Masjid');
+  await HANDS.runHand(sendIntent(alnoor), { actor: 'soul', approval: APPROVED });
+  ok((await O.outreachCounts()).contacted === 1, 'one place written to');
+  const b = await O.onBounce({ address: 'INFO@alnoor.example.org.uk', at: D0 + 'T11:00:00.000Z', why: '550 5.1.1 The email account that you tried to reach does not exist' });
+  const p = await byName('Al Noor Masjid');
+  ok(b.ok && b.placeId === alnoor.id && b.counted && p.status === 'dnc' && p.bounced && p.history.some(h => h.kind === 'bounce' && h.note === 'the address bounced: 550 5.1.1 The email account that you tried to reach does not exist'),
+    'the place whose published address bounced is never written to again (dnc), the reason in its history');
+  ok((await O.outreachCounts()).contacted === 0 && HM.get(O.OK_KEYS.bounces(D0)).size === 1, 'a letter that bounced is no invitation, and the bounce is counted for the day');
+  setDay(addDays(D0, 8), '09:00');
+  const fu = await HANDS.runHand({ action: 'outreach-followup', args: { placeId: alnoor.id }, why: 'One short follow-up, once.' }, { actor: 'soul', approval: APPROVED });
+  ok(!fu.ok && !(await O.paceIntents(today())).intents.some(i => i.args && i.args.placeId === alnoor.id), 'no follow-up to it, and the pace step never offers it again');
+  setDay(D0, '09:00');
+  const again = await O.onBounce({ address: 'info@alnoor.example.org.uk', at: D0 + 'T12:00:00.000Z', why: 'the same notice again' });
+  ok(again.counted && again.already && HM.get(O.OK_KEYS.bounces(D0)).size === 1 && (await byName('Al Noor Masjid')).history.filter(h => h.kind === 'bounce').length === 1, 'the same address again that day: counted once, marked once');
+  const other = await O.onBounce({ address: 'someone@elsewhere.example.net', why: 'mailbox full' });
+  const sameDomain = await O.onBounce({ address: 'imam@greenlane.example.co.uk', why: 'no such user' });
+  ok(other.ok && other.placeId === null && other.counted && sameDomain.placeId === null && (await byName('Green Lane Mosque')).status === 'new',
+    'an address no place published is counted, and closes no place (not even one of the same domain)');
+  const bad = await O.onBounce({ address: 'not an address', why: 'x' });
+  FAULT.all = true;
+  let threw = false, f = null;
+  try { f = await O.onBounce({ address: 'x@y.example.org', why: 'x' }); } catch { threw = true; }
+  FAULT.all = false;
+  ok(!bad.ok && !bad.counted && !threw && f && !f.counted && f.placeId === null, 'no address, or a store that fails: an answer, never a throw');
+}
+
+console.log('\n18. round six: the tick\'s short search for places');
+{
+  resetStore(); mailReset(); setDay(D0, '09:00'); OVERPASS.length = 0;
+  const acts0 = (await SOUL.actionsList()).length;
+  const t1 = await O.outreachTick({ until: Date.now() + 120000 });
+  ok(t1.ok && t1.ran && t1.added === 3 && t1.checked >= 3 && /found 3 new places/.test(t1.why) && OVERPASS.length === 1, 'below its target: one search, the same research as the hand\'s: ' + JSON.stringify(t1));
+  ok((await SOUL.actionsList()).length === acts0, 'nothing written to the action ledger');
+  ok(S.get(K.count('places', D0)) === '3' && HM.get(O.OK_KEYS.tickDay(D0)).get('runs') === '1' && HM.get(O.OK_KEYS.tickDay(D0)).get('added') === '3',
+    'the places it found are counted with the day\'s, and its own day is kept');
+  const pv = (await O.placesView()).pace;
+  ok(pv.found === 3 && pv.searches.runs === 1 && pv.searches.added === 3, 'and the Home and the Mail room can say it: ' + JSON.stringify(pv.searches));
+  /* a run's own seams: the fetch handed in is the one every request goes through, robots.txt first */
+  const seen = [];
+  const t2 = await O.outreachTick({ until: Date.now() + 120000, fetch: async (u, init) => { seen.push(String(u)); return globalThis.fetch(u, init); } });
+  ok(t2.ok && t2.ran && t2.added === 1 && seen.some(u => u.startsWith(O.OVERPASS_URL)) && seen.some(u => /toronto\.example\.ca\/robots\.txt$/.test(u)) && seen.some(u => /toronto\.example\.ca\/$/.test(u)),
+    'a fetch handed in carries the whole search, the source, robots.txt and the place\'s own page: ' + t2.why);
+  /* the lock is shared with the hand */
+  S.set('nsoul:outreach:lock:research', 'the daily hand');
+  const busy = await O.outreachTick({ until: Date.now() + 120000 });
+  S.delete('nsoul:outreach:lock:research');
+  ok(busy.ok && !busy.ran && /another search for places is under way/.test(busy.why), 'a search already under way (the daily hand\'s): none begun beside it');
+  /* not wanted: enough places ready, or the day's 75 found */
+  for (let i = 0; i < 100; i++) synth('p-ready-' + i, 'Masjid ' + i, 'GB');
+  const enough = await O.outreachTick({ until: Date.now() + 120000 });
+  ok(enough.ok && !enough.ran && /places are ready for a first letter, enough for now/.test(enough.why), 'a hundred ready or more: no search: ' + enough.why);
+  for (let i = 0; i < 100; i++) { HM.get(PLACES_KEY).delete('p-ready-' + i); HM.get(INDEX_KEY).delete('p-ready-' + i); }
+  S.set(K.count('places', D0), '75');
+  const done = await O.outreachTick({ until: Date.now() + 120000 });
+  ok(done.ok && !done.ran && /75 new places are already found/.test(done.why), 'the day\'s 75 found: no search: ' + done.why);
+  S.set(K.count('places', D0), '4');
+  /* the mailbox not set up, the Lantern paused, too little time left: no search, an answer */
+  MAIL.ready = { configured: false, on: false, reason: 'no app password' };
+  const nomail = await O.outreachTick({ until: Date.now() + 120000 });
+  MAIL.ready = { configured: true, on: true };
+  S.set(K.paused, JSON.stringify({ at: SOUL.nowIso(), by: 'owner' }));
+  const paused = await O.outreachTick({ until: Date.now() + 120000 });
+  S.delete(K.paused);
+  const short = await O.outreachTick({ until: Date.now() + 25000 });
+  ok(nomail.ok && !nomail.ran && /mailbox is not set up/.test(nomail.why) && paused.ok && !paused.ran && /paused/.test(paused.why) && short.ok && !short.ran && /too little time/.test(short.why),
+    'the mailbox not set up, the Lantern paused, too little of the tick left: no search, and a plain reason each');
+  /* a store that fails: never a throw */
+  FAULT.all = true;
+  let threw = false, broke = null;
+  try { broke = await O.outreachTick({ until: Date.now() + 120000 }); } catch { threw = true; }
+  FAULT.all = false;
+  ok(!threw && broke && broke.ok === false && broke.ran === false && typeof broke.why === 'string', 'a store that fails: {ok: false, ran: false, why}, never a throw: ' + (broke && broke.why));
+  /* never past its time: the run's box ends TICK_MARGIN_MS before until */
+  S.set('nsoul:outreach:cursor', JSON.stringify({ n: 0 }));
+  HM.delete('nsoul:outreach:seen');
+  const until = Date.now() + 40000;
+  const timed = await O.outreachTick({ until });
+  ok(timed.ok && Date.now() < until, 'given 40 seconds, it ends inside them: ' + timed.why);
+}
+
+console.log('\n19. round six: the pace step offers up to the day\'s pace; the goal moves once');
+{
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  for (let i = 0; i < 30; i++) synth('p-r' + String(i).padStart(2, '0'), 'Masjid ' + i, i % 2 ? 'GB' : 'US');
+  S.set(FIRST_TEN_KEY, '10');
+  const p1 = await O.paceIntents(D0);
+  ok(p1.intents.filter(i => i.action === 'outreach-send').length === 20 && p1.summary.pace === 20 && p1.summary.week === 1 && p1.summary.letters === 20,
+    'week 1, his first ten sent, 30 ready: the pace step offers 20 letters');
+  const planned = [0, 1, 2].map(i => ({ action: 'outreach-send', args: { placeId: 'p-r0' + i } }));
+  const pp = await O.paceIntents(D0, { planned });
+  ok(pp.intents.filter(i => i.action === 'outreach-send').length === 17 && !pp.intents.some(i => i.args && ['p-r00', 'p-r01', 'p-r02'].includes(i.args.placeId)),
+    'letters the plan already names count against the day: 17 more, and none again to those three');
+  S.set(O.OK_KEYS.rampStart, addDays(D0, -14));
+  const p3 = await O.paceIntents(D0);
+  ok(p3.intents.filter(i => i.action === 'outreach-send').length === 30 && p3.summary.pace === 40, 'week 3 (40 a day), 30 ready: all 30');
+  S.set(K.count('letters', D0), '25');
+  const p3b = await O.paceIntents(D0);
+  ok(p3b.intents.filter(i => i.action === 'outreach-send').length === 15, 'with 25 already written today: the 15 left of 40');
+  S.delete(K.count('letters', D0));
+  /* the follow-ups that are due keep up to half the day: 12 due, 30 ready, 20 a day */
+  S.delete(O.OK_KEYS.rampStart);
+  for (let i = 0; i < 12; i++) synth('p-f' + String(i).padStart(2, '0'), 'Mosque ' + i, 'GB', { status: 'written', firstAt: addDays(D0, -8) + 'T10:00:00.000Z' });
+  const pf = await O.paceIntents(D0);
+  const nl = pf.intents.filter(i => i.action === 'outreach-send').length, nf = pf.intents.filter(i => i.action === 'outreach-followup').length;
+  ok(nl === 10 && nf === 10 && pf.summary.followups === 10, 'a full day of new places never starves the follow-ups: 10 letters and 10 follow-ups, 20 in all: ' + nl + ' + ' + nf);
+  for (let i = 0; i < 9; i++) { HM.get(PLACES_KEY).delete('p-f0' + i); HM.get(INDEX_KEY).delete('p-f0' + i); }
+  const pf2 = await O.paceIntents(D0);
+  ok(pf2.intents.filter(i => i.action === 'outreach-send').length === 17 && pf2.intents.filter(i => i.action === 'outreach-followup').length === 3, 'and what the follow-ups leave, the letters take: 17 and 3');
+  S.set(K.count('followups', D0), '15');
+  const pf3 = await O.paceIntents(D0);
+  ok(pf3.intents.filter(i => i.action === 'outreach-send').length === 2 && pf3.intents.filter(i => i.action === 'outreach-followup').length === 3,
+    'and the day\'s pace counts what was already written today, of both kinds: 15 follow-ups written, 5 left in all (2 letters and the 3 follow-ups due)');
+  S.delete(K.count('followups', D0));
+  /* braked: half */
+  await O.brakeNow('Gmail asked the house to slow down', 7);
+  const pb = await O.paceIntents(D0);
+  ok(pb.summary.braked && pb.summary.pace === 10 && pb.intents.filter(i => i.action === 'outreach-send' || i.action === 'outreach-followup').length === 10, 'braked: half the day, 10 in all');
+  /* the goal: one carrying the first target (50) moves once to 1000 in six weeks; one he set himself never moves */
+  resetStore(); setDay(D0, '09:00');
+  await SOUL.writeGoals([{ id: 'g-outreach', owner: 'owner', outcome: 'At least 50 places invited to work together, helpfully and respectfully, within 6 weeks.', metric: 'outreach.contacted',
+    baseline: 0, target: 50, due: addDays(D0, 41), cadence: 'weekly', status: 'active', history: [], at: addDays(D0, -1) }]);
+  S.set(K.once('goal:g-outreach'), addDays(D0, -1) + 'T05:00:00.000Z');
+  const DEC = await import('../api/_decisions.js');
+  await DEC.upsert({ kind: 'choose', key: 'goal:g-outreach', stamp: '1', sticky: true, source: 'outreach', goal: 'g-outreach', title: 'A goal for outreach: keep it?',
+    why: 'At least 50 places invited to work together, helpfully and respectfully, within 6 weeks.', options: [DEC.opt.choice('keep', 'Keep this goal', { type: 'done' }, 'primary'), DEC.opt.open('Change it')],
+    link: { href: DEC.ROOM.engine, label: 'Open the goals' }, steps: [], expires: addDays(D0, 30) });
+  const m1 = await O.ensureOutreachGoal({ contacted: 0 });
+  const g = (await SOUL.readGoals()).find(x => x.id === 'g-outreach');
+  ok(m1.ok && m1.moved && g.target === 1000 && g.due === addDays(D0, 42) && g.outcome === 'At least 1000 places invited to work together, helpfully and respectfully, within 6 weeks.' && g.owner === 'owner' && g.baseline === 0,
+    'the goal still carrying 50 moves once to 1000 in six weeks, still his: ' + g.outcome);
+  const card = JSON.parse(S.get('nsoul:decisions') || '[]').find(d => d.key === 'goal:g-outreach');
+  ok(card && /At least 1000 places/.test(card.why) && /grows over four weeks to 50/.test(card.why), 'and its card, still open, says the new words');
+  const m2 = await O.ensureOutreachGoal({ contacted: 0 });
+  ok(m2.ok && !m2.moved && (await SOUL.readGoals()).filter(x => x.id === 'g-outreach').length === 1, 'once only');
+  resetStore(); setDay(D0, '09:00');
+  await SOUL.writeGoals([{ id: 'g-outreach', owner: 'owner', outcome: 'At least 80 places, my own number.', metric: 'outreach.contacted', baseline: 0, target: 80, due: addDays(D0, 30), cadence: 'weekly', status: 'active', history: [], at: D0 }]);
+  S.set(K.once('goal:g-outreach'), D0);
+  const m3 = await O.ensureOutreachGoal({ contacted: 0 });
+  const g3 = (await SOUL.readGoals()).find(x => x.id === 'g-outreach');
+  ok(m3.ok && !m3.moved && g3.target === 80 && g3.outcome === 'At least 80 places, my own number.', 'a target he set himself is never touched');
 }
 
 console.log('\n13. the house\'s words');

@@ -26,6 +26,8 @@ for (const k of ['REDIS_URL', 'KV_URL', 'SOUL_MONTHLY_USD', 'AI_GATEWAY_API_KEY'
 
 /* ---------------------------------------------------------------- the store */
 export const S = new Map(), L = new Map(), H = new Map();
+/* round six: sorted sets (the mailbox's letters set for later), member to score */
+export const Z = new Map();
 export const EVAL = { calls: 0 };
 export const LOG = [];
 export const FAULT = { all: false, cmds: null, key: null };
@@ -39,7 +41,7 @@ function run(c) {
       if (nx && S.has(a[0])) return null;
       S.set(a[0], String(a[1])); return 'OK';
     }
-    case 'DEL': { let n = 0; for (const k of a) { if (S.delete(k)) n++; if (L.delete(k)) n++; if (H.delete(k)) n++; } return n; }
+    case 'DEL': { let n = 0; for (const k of a) { if (S.delete(k)) n++; if (L.delete(k)) n++; if (H.delete(k)) n++; if (Z.delete(k)) n++; } return n; }
     case 'MGET': return a.map(k => S.has(k) ? S.get(k) : null);
     case 'INCR': case 'INCRBY': case 'DECR': case 'DECRBY': {
       const by = op === 'INCR' ? 1 : op === 'DECR' ? -1 : op === 'INCRBY' ? +a[1] : -a[1];
@@ -62,8 +64,18 @@ function run(c) {
     case 'HSET': { const h = H.get(a[0]) || new Map(); for (let i = 1; i + 1 < a.length; i += 2) h.set(a[i], String(a[i + 1])); H.set(a[0], h); return 1; }
     case 'HDEL': { const h = H.get(a[0]); return h && h.delete(a[1]) ? 1 : 0; }
     case 'HINCRBY': { const h = H.get(a[0]) || new Map(); const v = (parseInt(h.get(a[1]) || '0', 10) || 0) + +a[2]; h.set(a[1], String(v)); H.set(a[0], h); return v; }
-    case 'KEYS': { const rx = new RegExp('^' + String(a[0]).replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$'); return [...S.keys(), ...L.keys(), ...H.keys()].filter(k => rx.test(k)); }
-    case 'EXISTS': return a.filter(k => S.has(k) || L.has(k) || H.has(k)).length;
+    case 'KEYS': { const rx = new RegExp('^' + String(a[0]).replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$'); return [...S.keys(), ...L.keys(), ...H.keys(), ...Z.keys()].filter(k => rx.test(k)); }
+    case 'EXISTS': return a.filter(k => S.has(k) || L.has(k) || H.has(k) || Z.has(k)).length;
+    case 'ZADD': { const z = Z.get(a[0]) || new Map(); let n = 0; for (let i = 1; i + 1 < a.length; i += 2) { if (!z.has(String(a[i + 1]))) n++; z.set(String(a[i + 1]), +a[i]); } Z.set(a[0], z); return n; }
+    case 'ZREM': { const z = Z.get(a[0]); if (!z) return 0; let n = 0; for (const m of a.slice(1)) if (z.delete(String(m))) n++; return n; }
+    case 'ZCARD': return (Z.get(a[0]) || new Map()).size;
+    case 'ZSCORE': { const z = Z.get(a[0]); return z && z.has(String(a[1])) ? String(z.get(String(a[1]))) : null; }
+    case 'ZRANGEBYSCORE': {
+      const z = Z.get(a[0]) || new Map(); const lo = a[1] === '-inf' ? -Infinity : +a[1], hi = a[2] === '+inf' ? Infinity : +a[2];
+      let out = [...z].filter(([, sc]) => sc >= lo && sc <= hi).sort((x, y) => x[1] - y[1] || (x[0] < y[0] ? -1 : 1)).map(([m]) => m);
+      const li = a.findIndex(x => String(x).toUpperCase() === 'LIMIT'); if (li > 0) out = out.slice(+a[li + 1], +a[li + 1] + +a[li + 2]);
+      return out;
+    }
     /* the two scripts api/_soul.js runs, by their tag line: compare and
        delete (a lock released only by its holder) and compare and set (a
        goals write only on the version it read). EVAL.calls counts them. */
@@ -81,7 +93,7 @@ function run(c) {
     default: throw new Error('the stub store does not know ' + op);
   }
 }
-export function resetStore() { S.clear(); L.clear(); H.clear(); LOG.length = 0; FAULT.all = false; FAULT.cmds = null; FAULT.key = null; }
+export function resetStore() { S.clear(); L.clear(); H.clear(); Z.clear(); LOG.length = 0; FAULT.all = false; FAULT.cmds = null; FAULT.key = null; }
 
 /* ---------------------------------------------------------------- the network */
 export const NET = { handlers: [], calls: [] };

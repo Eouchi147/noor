@@ -306,3 +306,32 @@ Round five (7 October 2026, the letterhead and the models review; tests/mail.mjs
 - **The Mail room**: each thread carries `judged: {by: "jev", p} | null`.
 - **The engine room's models view** adds `nvidia: {on, free} | {on: false, held}`, and its words say when NVIDIA's free models are held back.
 
+
+## 13. Mail that moves, and 50 letters a day (owner's words, 7 October 2026)
+
+"I need the mail room to automatically dismiss and archive everything that was seen or actioned by me, I need actions options so the mail can move." "The mailroom is harassing me with a google security alert ... I only need anything that is relevant to noorcodex operations only, the admin, I am taking care of with you." "I need 50 letter per day, or whatever is the limit without being flagged." "I also want to be able to start the mail outreach for the first time from a button (Make it a one time button) so I can see it in action right now."
+
+### 13.1 Seen or done means gone (api/_mail.js)
+
+- Security, sign-in, password, billing and receipt notices are filed quietly (Lantern/Filed, read, out of the inbox). They never raise a card on Home and never reach Telegram (api/_voice.js MAIL_URGENT no longer names them). One handed over before this round is filed at the next tick and its card closed.
+- What the Lantern answered or filed on its own leaves the Gmail inbox (archived: the Inbox label taken off, its own label kept).
+- A message handed to the owner is done, and archived and unstarred with its card closed, once he opens it in Gmail, opens it in the Mail room (op seen), presses Done on its card or in the Mail room, or moves it out of the inbox himself. The tick looks at 15 such threads at most.
+- The Mail room's buttons, POST {action:"mail-thread", id, op}: done; answer (Answer it for me: the mail tier writes the reply under every check of an answer, and it always waits for his Send, whatever the first ten say; never for someone at risk, a security notice, a bounce, spam, a no, a newsletter or a notice); notours (Not NOOR business: archived, and that sender filed quietly from then on, read by no model; a place the house wrote to is always the house's). A reply waiting for his Send has Send and Don't send, the decision card's own options.
+- GET ?view=mail rows carry needsYou, ops, gmail, card, draft, seenAt, doneAt, doneBy; the Mail room opens on Needs you.
+
+### 13.2 Fifty a day, without being flagged (api/_outreach.js, api/_mail.js)
+
+- The pace is a warm-up: 20 a day in the first week from the first letter the house sends on its own, then 30, 40 and 50, first letters and follow-ups together (both are email to people who have not written first; about 50 a day is what one mailbox may send). paceToday(date) answers it; more than 4 percent bounced over 7 days with at least 20 sent halves it for a week (the brake), and so does Gmail's own word to slow down (550 5.4.5, 4.7.28), which also pauses every send for 24 hours.
+- Each letter is set for its place's working day, 09:00 to 17:00 local, Monday to Saturday, 6 minutes apart at least (sendSlot), and goes with the 15-minute tick, 4 a tick at most, through every gate again. A day's cap already spent, or a failed send, waits an hour, 6 times at most; anything else is held or refused and the place is set aside.
+- The mailbox's hard ceilings: 50 first letters, 50 follow-ups, 30 replies, 90 in all a day. All of the first ten may wait for his Send at once.
+- Research runs at every tick (outreachTick, 45 seconds, the same politeness) until 75 places are found in a day or 100 are ready; up to 3000 places are kept; the goal is 1000 places written to in six weeks.
+- A delivery failure (mailer-daemon, X-Failed-Recipients) tells the outreach module the exact address a place published (onBounce): never written to again, and counted for the brake.
+
+### 13.3 The one-time start
+
+Home's mail card offers Start the outreach once (mail.start {available, usedAt, why}). The console runs POST {action:"outreach-start", step:"research"} up to four times, then step "plan" (the cycle, as Think again; the button is spent before the plan runs and given back only when no plan could start), and watches the cycle until the first letters wait on Home for his Send.
+
+### 13.4 The judge and the gateway
+
+- Jev answers only with bought AI Gateway credit (the free credit does not cover it; 10 dollars bought 7 October 2026, the smallest top-up, kept a year). A 401, 402 or 403 closes the judge for an hour (nsoul:jev:closed), shown in the engine room; meanwhile everything it would judge goes on as before it existed.
+- The gateway's free names are read with their list's zdr and no_training fields; a name none of whose providers keeps nothing is never asked (on 7 October that was all five), counted as `without`. A refusal is recognised in either error shape.

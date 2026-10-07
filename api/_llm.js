@@ -286,12 +286,26 @@ async function liveModels(provider, force) {
        that is priced today. When the list cannot be read and no copy younger
        than a day is held, no gateway model is allowed at all. Cached six
        hours, in memory and in the store, the same shape as the others.
+       Round six (7 October 2026): every gateway call asks for zero data
+       retention and no training (GATEWAY_PRIVACY), and the list now says of
+       each model whether all, some or none of its providers keep those two
+       promises (data[].zdr and data[].no_training, "all", "some" or "none",
+       read 7 October 2026). A name none of whose providers keeps them could
+       only be refused (400 no_providers_available), as all five free names
+       were on every mail round of 7 October, so it is never asked: it is
+       counted in `without`, for the engine room to say. A list without the
+       two fields (its older shape) leaves the refusing to the gateway.
 --------------------------------------------------------------------------- */
 export const GATEWAY_MODELS_URL = "https://ai-gateway.vercel.sh/v1/models";
 const GATEWAY_STALE = 24 * 3600 * 1000;
+/* a copy kept in the store before round six named models that cannot keep
+   the promises, so only a copy of this shape is trusted */
+const GW_LIST_V = 2;
 const zeroPrice = v => v != null && String(v).trim() !== "" && Number(v) === 0;
-export function gatewayFreeOf(list) {
-  const out = [];
+const promiseKept = v => v == null || String(v).trim().toLowerCase() !== "none";
+function gatewayFreeRead(list) {
+  const ids = [];
+  let without = 0;
   for (const m of Array.isArray(list) ? list : []) {
     if (!m || typeof m.id !== "string" || m.type !== "language") continue;
     const p = m.pricing && typeof m.pricing === "object" ? m.pricing : null;
@@ -301,10 +315,13 @@ export function gatewayFreeOf(list) {
       if (/_tiers$/.test(k)) { if (Array.isArray(v) ? v.length : v != null) priced = true; continue; }
       if (v != null && typeof v !== "object" && !zeroPrice(v)) priced = true;
     }
-    if (!priced && !out.includes(m.id)) out.push(m.id);
+    if (priced || ids.includes(m.id)) continue;
+    if (!promiseKept(m.zdr) || !promiseKept(m.no_training)) { without++; continue; }
+    ids.push(m.id);
   }
-  return out;
+  return { ids, without };
 }
+export function gatewayFreeOf(list) { return gatewayFreeRead(list).ids; }
 async function fetchGatewayFree() {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 6000);
@@ -313,7 +330,7 @@ async function fetchGatewayFree() {
     clearTimeout(t);
     if (!r.ok) return null;
     const j = await r.json();
-    return gatewayFreeOf(j && j.data);
+    return gatewayFreeRead(j && j.data);
   } catch { clearTimeout(t); return null; }
 }
 async function gatewayFreeModels(force) {
@@ -326,19 +343,23 @@ async function gatewayFreeModels(force) {
       const r = await kv([["GET", K_LIVE("gateway")]]);
       const raw = r && r[0];
       const j = raw ? (typeof raw === "string" ? JSON.parse(raw) : raw) : null;
-      if (j && Array.isArray(j.ids)) stored = { at: Number(j.at) || 0, ids: j.ids };
+      if (j && Array.isArray(j.ids) && Number(j.v) >= GW_LIST_V) stored = { at: Number(j.at) || 0, ids: j.ids, without: Number(j.without) || 0 };
     } catch { stored = null; }
   }
   if (!force && stored && now - stored.at < SIX_HOURS) { LIVE.gateway = stored; return stored.ids; }
-  const ids = await fetchGatewayFree();
-  if (ids) {
-    LIVE.gateway = { at: now, ids };
-    if (kvReady()) { try { await kv([["SET", K_LIVE("gateway"), JSON.stringify({ at: now, ids })], ["EXPIRE", K_LIVE("gateway"), String(KEEP)]]); } catch { } }
-    return ids;
+  const got = await fetchGatewayFree();
+  if (got) {
+    LIVE.gateway = { at: now, ids: got.ids, without: got.without };
+    if (kvReady()) { try { await kv([["SET", K_LIVE("gateway"), JSON.stringify({ at: now, ids: got.ids, without: got.without, v: GW_LIST_V })], ["EXPIRE", K_LIVE("gateway"), String(KEEP)]]); } catch { } }
+    return got.ids;
   }
   const best = [cache, stored].filter(Boolean).sort((a, b) => b.at - a.at)[0];
-  return best && best.at && now - best.at < GATEWAY_STALE ? best.ids : [];
+  if (best && best.at && now - best.at < GATEWAY_STALE) { if (best !== cache) LIVE.gateway = { ...best }; return best.ids; }
+  return [];
 }
+/* how many of the gateway's free names its own list says cannot keep the
+   two promises (round six), from the last reading */
+export function gatewayWithout() { return Number(LIVE.gateway && LIVE.gateway.without) || 0; }
 
 /* The free, allowed models for a provider right now: the allow-list
    intersected with what the provider's own /models endpoint says exists
@@ -842,15 +863,18 @@ async function send(provider, model, messages, opts, extra) {
     clearTimeout(timer);
     const ms = Date.now() - t0;
     if (!r.ok) {
-      let why = "", type = "";
+      let why = "", codes = [];
       try {
         const e = await r.json();
         why = String((e && e.error && (e.error.message || e.error)) || "").slice(0, 160);
-        type = String((e && (e.type || (e.error && typeof e.error === "object" && e.error.type))) || "");
+        const inner = e && e.error && typeof e.error === "object" ? e.error : {};
+        codes = [e && e.type, e && e.code, inner.type, inner.code].map(x => String(x || ""));
       }
       catch { try { why = (await r.text()).slice(0, 160); } catch { } }
-      /* round four: the gateway found no provider that keeps nothing */
-      const noProvider = type === "no_providers_available";
+      /* round four: the gateway found no provider that keeps nothing (round
+         six: its type may come at the top, as its docs show, or inside the
+         OpenAI shaped error, as type or as code; and its words say it too) */
+      const noProvider = codes.includes("no_providers_available") || /\bno (zdr|zero data retention)\b[^.]*\bproviders? available\b|\bno providers available\b/i.test(why);
       return { ok: false, error: "http " + r.status + (why ? ": " + why : ""), status: r.status, provider, model, ms, ...(noProvider ? { noProvider: true } : {}) };
     }
     const j = await r.json();
@@ -1913,9 +1937,11 @@ export async function rankingReport() {
   if (providerPresent("gateway")) {
     const ids = await freeModels("gateway", false);
     const parked = await refusedSet(ids, "gateway");
-    out.gateway = { free: ids, waiting: ids.filter(id => parked.has(id)) };
+    const without = gatewayWithout();
+    out.gateway = { free: ids, waiting: ids.filter(id => parked.has(id)), without };
     out.words.push(ids.length
       ? "The AI Gateway's free models today: " + ids.join(", ") + (out.gateway.waiting.length ? "; " + out.gateway.waiting.length + " of them found no provider that keeps nothing and learns nothing, so they wait a day before they are asked again." : "; each is asked to keep nothing and learn nothing.")
+      : without ? "The AI Gateway's " + without + " free " + (without === 1 ? "model has" : "models have") + " no provider that keeps nothing and learns nothing today, so none is asked."
       : "The AI Gateway's free list could not be read, or holds no language model today.");
   } else out.gateway = null;
   /* round five: NVIDIA's catalog, held back while its trial terms stand */

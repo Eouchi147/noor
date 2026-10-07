@@ -131,7 +131,17 @@ const M = {
   nul: () => ({ ok: true, providers: { groq: 'set' }, ranking: null, words: [], gateway: null, jev: { today: null, yesterday: null },
     paid: { roi: null, lines: [], spend: { month: '2026-10', usd: null, capUsd: 10, calls: null, error: 'the spend ledger could not be read' } } }),
   old: () => ({ ok: true, providers: { groq: 'set', gemini: 'set' }, tiers: { fast: [] }, good: {}, usage: {} }),
-  failed: () => ({ ok: false, error: 'the store did not answer ' + BOLD })
+  failed: () => ({ ok: false, error: 'the store did not answer ' + BOLD }),
+  /* round six: the judge closed for the hour (jev.today.closed, its reason in
+     plain words, and skipped, what went on without it), and a gateway whose
+     free names all lack a provider that keeps nothing (gateway.without) */
+  closed: () => ({ ...MODELS(), jev: { today: { day: dayOf(NOW), calls: 40, ok: 40, failed: 0, msAvg: 90, costUsd: 0.0008, by: { 'mail-kind': 40 }, closed: 'its free hour of questions is spent ' + BOLD + '.', skipped: 12 },
+    yesterday: { day: dayOf(NOW - D), calls: 380, ok: 380, failed: 0, msAvg: 88, costUsd: 0.007, by: {} } },
+    gateway: { free: [], waiting: [], without: 7 } }),
+  closedOne: () => ({ ...MODELS(), jev: { today: { day: dayOf(NOW), calls: 0, ok: 0, failed: 0, msAvg: null, costUsd: 0, by: {}, closed: 'the judge said to come back later', skipped: 1 },
+    yesterday: { day: dayOf(NOW - D), calls: 0, ok: 0, failed: 0, msAvg: null, costUsd: 0, by: {} } },
+    gateway: { free: [], waiting: [], without: 1 } }),
+  open: () => ({ ...MODELS(), jev: { today: { ...MODELS().jev.today, closed: '', skipped: 0 }, yesterday: MODELS().jev.yesterday }, gateway: { free: [], waiting: [], without: 0 } })
 };
 
 /* ---------------------------------------------------------------- GET /api/soul?view=mail, api/_mail.js (judged) */
@@ -413,6 +423,26 @@ for (const [name, models, checks] of [
   ['a read that failed', M.failed, async pg => {
     ok(await text(pg, '#brain-fail') === 'The models could not be read just now (the store did not answer <b>bold</b>). The rest of this room is unaffected; press refresh at the top to ask again.', 'a failed read: what happened, escaped, and what to do');
     ok(await has(pg, '#soul-budget') && await has(pg, '#soul-voice'), 'and the rest of the room stands');
+  }],
+  /* round six */
+  ['the judge waiting', M.closed, async pg => {
+    const jv = await pg.evaluate(() => [...document.querySelectorAll('#brain-jev p')].map(p => (p.id ? p.id + ' ' : '') + p.className + ' :: ' + p.textContent));
+    ok(jv[0] === 'jv :: Today: 40 calls, all answered, under a tenth of a second each, for under a cent.', 'Today first, as before: ' + jv[0]);
+    ok(jv[1] === 'brain-jev-closed jv down :: The judge is waiting: its free hour of questions is spent <b>bold</b>. It is asked again within the hour; meanwhile everything it would judge goes on exactly as before it existed. 12 things it would have judged have gone on without it today.',
+      'under Today, the judge\'s pause in its own words, escaped, and what went on without it: ' + jv[1]);
+    ok(/^jv :: Yesterday: /.test(jv[2]), 'then Yesterday, in its place: ' + jv[2]);
+    ok(await pg.evaluate(() => !document.querySelector('#brain-jev b') && getComputedStyle(document.getElementById('brain-jev-closed')).color !== getComputedStyle(document.querySelector('#brain-jev .jv:not(.down)')).color), 'the pause stands apart in the waiting colour, and its markup is text');
+    ok(await text(pg, '#brain-gw') === 'Today the AI Gateway\'s 7 free models have no provider that keeps nothing and learns nothing, so none is asked.', 'the gateway\'s free list read, none fit to ask: said plainly');
+    ok(!await has(pg, '#brain-gw span'), 'and no name is drawn as if it answered');
+  }],
+  ['the judge waiting, one thing', M.closedOne, async pg => {
+    const c = await text(pg, '#brain-jev-closed');
+    ok(c === 'The judge is waiting: the judge said to come back later. It is asked again within the hour; meanwhile everything it would judge goes on exactly as before it existed. One thing it would have judged has gone on without it today.', 'one thing, in words: ' + c);
+    ok(await text(pg, '#brain-gw') === 'Today the AI Gateway\'s one free model has no provider that keeps nothing and learns nothing, so it is not asked.', 'one free model, in words: ' + await text(pg, '#brain-gw'));
+  }],
+  ['the judge open, an empty free list', M.open, async pg => {
+    ok(!await has(pg, '#brain-jev-closed'), 'an empty reason: no pause line at all');
+    ok(await text(pg, '#brain-gw') === 'Its free list could not be read today, or holds no language model.', 'no free name and none without a provider: the old line');
   }]]) {
   const o = await open_(390, 844, { models: models, hash: '#engine' });
   await brains(o.pg);

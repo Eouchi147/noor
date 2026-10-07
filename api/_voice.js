@@ -92,7 +92,9 @@ export const URGENT = Object.freeze({
   models: { word: "no model could answer this morning", text: o => "NOOR Lantern: no model could answer this morning" + (detailOf(o.detail) ? " (" + detailOf(o.detail) + ")" : "") + ", so the Lantern only kept its own standing work. Open Home." }
 });
 /* the mailbox's kinds that are urgent, and the rest, said by kind alone */
-export const MAIL_URGENT = Object.freeze({ distress: "distress", security: "security", complaint: "complaint", press: "press", money: "money", partnership: "partner", meeting: "partner" });
+/* round six (7 October 2026): a security or account notice is no longer the
+   owner's at all (api/_mail.js files it quietly), so it never reaches his phone */
+export const MAIL_URGENT = Object.freeze({ distress: "distress", complaint: "complaint", press: "press", money: "money", partnership: "partner", meeting: "partner" });
 const MAIL_WORD = { personal: "a personal message", legal: "a legal matter", correction: "a correction", long: "a long conversation", held: "a reply the Lantern would not send on its own",
   needs: "a message that needs you", unread: "a message the Lantern could not read", question: "a question", feedback: "feedback", thanks: "thanks", "outreach-answer": "an answer from a place" };
 

@@ -50,7 +50,7 @@ import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import {
   MISSION, K, CAP_LIMITS, store, parse, isPaused, setPaused, readGoals, setOwnerGoal, chronicleRead,
-  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList, sayLantern
+  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList, sayLantern, auditAppend
 } from "./_soul.js";
 import * as I from "./_instruments.js";
 import { undoAction } from "./_hands.js";
@@ -167,6 +167,59 @@ async function mailAfterTick(t0) {
   finally { clearTimeout(timer); }
 }
 
+/* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */
+export const OUTREACH_TICK_HARD_MS = 60000;
+async function outreachAfterTick(t0) {
+  let timer;
+  try {
+    const O = await MAIL.outreachModule();
+    if (!O || typeof O.outreachTick !== "function") return { ok: true, ran: false, why: "the outreach tick is not on this deployment" };
+    return await Promise.race([O.outreachTick({ until: t0 + 285000 }),
+      new Promise(res => { timer = setTimeout(() => res({ ok: false, error: "the search for places took longer than " + OUTREACH_TICK_HARD_MS / 1000 + " seconds; it goes on at the next tick" }), OUTREACH_TICK_HARD_MS); })]);
+  } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
+  finally { clearTimeout(timer); }
+}
+/* round six: the owner's one-time start of the outreach, in two steps the
+   console runs while he watches: research now (one search, its own clock),
+   then a plan now (the cycle, as Think again), whose pace step offers the
+   first letters. The button is spent only once a plan has started. */
+async function outreachStart(step) {
+  const st = await MAIL.outreachStartState();
+  if (st.usedAt) return { ok: false, used: true, usedAt: st.usedAt, message: "The outreach has already started; it runs on its own now." };
+  if (!st.available) return { ok: false, message: st.why || "The outreach cannot start just now." };
+  const O = await MAIL.outreachModule();
+  if (!O || typeof O.outreachTick !== "function") return { ok: false, message: "The outreach is not on this deployment yet." };
+  if (step === "research") {
+    const r = await O.outreachTick({ until: Date.now() + 70000 });
+    let pace = null;
+    try { pace = typeof O.outreachCounts === "function" ? ((await O.outreachCounts()) || {}).pace || null : null; } catch { pace = null; }
+    const added = Number(r && r.added) || 0, checked = Number(r && r.checked) || 0;
+    const message = r && r.ran
+      ? (added ? "Found " + added + " new place" + (added === 1 ? "" : "s") + " (" + checked + " checked)." : "No new place this time (" + checked + " checked).")
+      : sayLantern(String((r && (r.why || r.error)) || "No search ran just now."));
+    return { ok: !!r && r.ok !== false, ran: !!(r && r.ran), added, checked, ready: pace ? pace.ready : null, foundToday: pace ? pace.found : null, message };
+  }
+  if (step === "plan") {
+    /* spent before the plan runs, so a plan longer than the request still
+       counts; given back only when no plan could start */
+    await MAIL.markOutreachStart({ cycle: null });
+    let r;
+    try { r = await tick({ force: true, by: "owner" }); }
+    catch (e) { await MAIL.clearOutreachStart(); return { ok: false, message: "The plan could not start: " + sayLantern(String(e && e.message || e).slice(0, 160)) + "." }; }
+    if (!r || r.busy || r.fresh === false || r.paused || r.error) {
+      await MAIL.clearOutreachStart();
+      return { ok: false, busy: !!(r && (r.busy || r.fresh === false)),
+        message: r && r.error ? sayLantern(String(r.error)) : r && r.paused ? "The Lantern is paused; resume it first." : "The Lantern is in the middle of a plan. Press Start again in a few minutes; your first letters come with the next one." };
+    }
+    await MAIL.markOutreachStart({ cycle: r.id || null });
+    const st2 = await MAIL.outreachStartState();
+    try { await auditAppend({ kind: "outreach-start", actor: "owner", summary: "the owner started the outreach from Home", data: { cycle: r.id || null } }); } catch { }
+    return { ok: true, started: true, usedAt: st2.usedAt, cycle: { id: r.id || null, stage: r.stage || null, status: r.status || null },
+      message: r.status === "done" ? "The Lantern planned and wrote its first letters; they wait above for your Send." : "The Lantern is planning its first letters now. The first 10 will wait here for your Send." };
+  }
+  return { ok: false, message: "Say research or plan." };
+}
+
 async function telegramCall(fnName, ...args) {
   let T;
   try { T = await import("./_telegram.js"); } catch (e) { return { ok: false, error: "the Telegram module could not be loaded: " + String(e && e.message || e).slice(0, 120) }; }
@@ -218,8 +271,11 @@ export default async function handler(req, res) {
         try { voice = await Promise.race([VOICE.voiceTick(), new Promise(res2 => { vt = setTimeout(() => res2({ ok: false, error: "the voice took longer than 15 seconds" }), 15000); })]); }
         catch (e) { voice = { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
         finally { clearTimeout(vt); }
+        /* round six (7 October 2026): then the outreach's search for places,
+           every tick until the day's are found, under its own clock */
+        const outreach = await outreachAfterTick(t0);
         if (fault) throw fault;
-        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice } : r);
+        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice, outreach } : r);
       }
       const view = String(q.view || "today");
       if (view === "home") return json(res, 200, await homeView());
@@ -320,6 +376,9 @@ export default async function handler(req, res) {
       return json(res, 200, await MAIL.mailSwitch(on));
     }
     if (action === "dnc-add") return json(res, 200, await MAIL.addDoNotContact(String(body.address || ""), "the owner"));
+    /* round six: the Mail room's buttons on one message, and the one-time start */
+    if (action === "mail-thread") return json(res, 200, await MAIL.mailThread(String(body.id || ""), String(body.op || "")));
+    if (action === "outreach-start") return json(res, 200, await outreachStart(String(body.step || "")));
     if (action === "dnc-remove") return json(res, 200, await MAIL.removeDoNotContact(String(body.address || "")));
     return json(res, 400, { ok: false, error: "unknown action", message: "That is not something the Lantern knows how to do." });
   } catch (e) {
