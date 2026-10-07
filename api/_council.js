@@ -38,7 +38,9 @@
 // TypeSafe's judge, reached free through Vercel's AI Gateway with the
 // deployment's own OIDC token. It is asked four questions of every public
 // intent (does it break the constitution, misrepresent Islam, read as spam
-// or engagement bait, rest on too little data), each a probability. Any
+// or engagement bait, rest on too little data; round eight: a letter of the
+// outreach is asked the first three, see sentinelQuestions), each a
+// probability. Any
 // answer at 0.5 or above is a reject with the reason, and the three model
 // reviewers are then not asked at all (two paid or free calls saved). A
 // sentinel that cannot be reached never blocks anything: the three decide
@@ -182,10 +184,33 @@ export const SENTINEL_QUESTIONS = Object.freeze({
 });
 const LABEL = { breaks_constitution: "it may break the constitution", misrepresents_islam: "it may misrepresent Islam", spam_or_bait: "it reads as spam or engagement bait", thin_data: "it rests on too little data" };
 const jevOpts = () => ({ fetch: typeof seams.fetch === "function" ? seams.fetch : undefined, req: context.req || undefined });
+/* ROUND EIGHT (7 October 2026). A letter of the outreach (outreach-send,
+   outreach-followup) rests on its place's own published facts, never on
+   posts, so "too little data" (fewer than five posts, a single day) does
+   not apply to it; asked anyway, it held back 9 of the owner's first 10
+   letters at 0.51 to 0.55. A letter is asked the other three questions, and
+   told plainly what it is. Its own words are still checked in code against
+   that place's pages (api/_outreach.js checkLetter) and by the judge's
+   letter questions before it is written, and the mailbox's gates hold. */
+export const LETTER_HANDS = Object.freeze(["outreach-send", "outreach-followup"]);
+const isLetter = it => LETTER_HANDS.includes(String((it && it.action) || ""));
+export function sentinelQuestions(intent) {
+  if (!isLetter(intent)) return SENTINEL_QUESTIONS;
+  const out = {};
+  for (const k of Object.keys(SENTINEL_QUESTIONS)) if (k !== "thin_data") out[k] = SENTINEL_QUESTIONS[k];
+  return Object.freeze(out);
+}
 /* the evidence the sentinel sees: the few numbers it needs to judge whether
-   a claim is thin, never the whole pack */
+   a claim is thin, never the whole pack; for a letter, what the letter is */
 function sentinelState(intent, evidence) {
   const it = intent || {}, ev = (evidence && typeof evidence === "object") ? evidence : {};
+  if (isLetter(it)) {
+    return { text: ("PROPOSED ACTION: " + String(it.action || "") + "\nARGUMENTS: " + JSON.stringify(it.args || {}).slice(0, 300)
+      + "\nWHAT IT IS: " + (it.action === "outreach-followup"
+        ? "the one short follow-up, a week or more after a first letter that had no answer, to a mosque or Islamic place that published its address for contact; written in code, it offers the same free material and the same one-line way out."
+        : "one first letter from the house's own address to a mosque or Islamic place that published its address for contact, written only from that place's own published facts, offering free material from the library and asking nothing in return, with a one-line way out; the day's letters are paced (a warm-up of 20 a day, rising to 50).")
+      + "\nWHY: " + String(it.why || "").slice(0, 600) + "\nEXPECTED EFFECT: " + String(it.expectedEffect || "").slice(0, 300)).slice(0, 4000) };
+  }
   const summary = { northStar: ev.northStar == null ? null : ev.northStar, byKind: Array.isArray(ev.byKind) ? ev.byKind.slice(0, 6) : null,
     posts7: ev.output ? ev.output.posts7 : null, health: ev.output ? ev.output.health : null };
   return { text: ("PROPOSED ACTION: " + String(it.action || "") + "\nARGUMENTS: " + JSON.stringify(it.args || {}).slice(0, 600)
@@ -196,11 +221,12 @@ function sentinelState(intent, evidence) {
 /* {role, vote:"reject"|"pass"|null, unavailable, reasons[], scores{}} */
 export async function sentinel(intent, evidence) {
   let r;
-  try { r = await jevAsk(sentinelState(intent, evidence), SENTINEL_QUESTIONS, { ...jevOpts(), purpose: "sentinel" }); }
+  const Q = sentinelQuestions(intent);   /* round eight: a letter is never asked the posts question */
+  try { r = await jevAsk(sentinelState(intent, evidence), Q, { ...jevOpts(), purpose: "sentinel" }); }
   catch (e) { r = { ok: false, why: String(e && e.message || e).slice(0, 120) }; }
   if (!r || !r.ok) return { role: "sentinel", vote: null, unavailable: true, reasons: ["sentinel unavailable: " + String((r && r.why) || "no answer").slice(0, 160)], scores: {} };
   const scores = {};
-  for (const k of Object.keys(SENTINEL_QUESTIONS)) { const v = jevProb(r.answers && r.answers[k]); scores[k] = v == null ? null : Math.round(v * 1000) / 1000; }
+  for (const k of Object.keys(Q)) { const v = jevProb(r.answers && r.answers[k]); scores[k] = v == null ? null : Math.round(v * 1000) / 1000; }
   if (Object.values(scores).some(v => v == null)) return { role: "sentinel", vote: null, unavailable: true, reasons: ["sentinel unavailable: an incomplete answer"], scores };
   const reasons = Object.keys(scores).filter(k => scores[k] >= RISK_AT).map(k => LABEL[k] + " (" + scores[k] + ")");
   return reasons.length

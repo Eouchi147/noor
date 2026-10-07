@@ -21,8 +21,10 @@
      who ask for less motion. No script, no web font, no external sheet and
      never a tracking pixel: the only pictures are the emblem and its still
      twin, at fixed addresses with no query. Every word is escaped. A link
-     becomes a link only when it is https://noorcodex.com or one of its
-     subdomains; any other address stays plain words.
+     in the letter becomes a link only when it is https://noorcodex.com or
+     one of its subdomains; any other address stays plain words. Round
+     eight: the footer also carries the house's own doors on the social
+     networks (SOCIAL, fixed in code, the site's own list).
      `text` is the clean plain twin for multipart/alternative: the same
      letter, word for word.
 
@@ -53,6 +55,21 @@ export const EMBLEM = Object.freeze({
 });
 export const WORDMARK = Object.freeze({ ar: "\u0646\u0648\u0631", en: "Codex of Light" });
 export const FOOTER_LINE = "NOOR Codex of Light \u00B7 noorcodex.com \u00B7 a free library, no ads, no trackers";
+/* ROUND EIGHT (7 October 2026). The owner: "Also add link to the socials in
+   the footer of the emails". The house's own doors, the same list in the
+   same order as every footer on the site (noor-fx.js NOOR_SOCIAL; the test
+   holds the two to each other, so they never drift apart). Fixed here and
+   never taken from a letter's words: a letter's own text still links only
+   to the house. They sit in the HTML footer, beside the footer line; the
+   plain twin stays the letter's own words, as before. */
+export const SOCIAL = Object.freeze([
+  Object.freeze({ id: "instagram", name: "Instagram", href: "https://www.instagram.com/noorcodexoflight" }),
+  Object.freeze({ id: "facebook", name: "Facebook", href: "https://www.facebook.com/profile.php?id=61592864417863" }),
+  Object.freeze({ id: "youtube", name: "YouTube", href: "https://www.youtube.com/@noorcodex" }),
+  Object.freeze({ id: "pinterest", name: "Pinterest", href: "https://www.pinterest.com/noorcodex" }),
+  Object.freeze({ id: "telegram", name: "Telegram", href: "https://t.me/noorcodex" }),
+  Object.freeze({ id: "threads", name: "Threads", href: "https://www.threads.com/@noorcodexoflight" })
+]);
 
 /* ---------------------------------------------------------------------------
    1. THE HOUSE'S RULES OVER THE WORDS
@@ -319,6 +336,7 @@ const STYLE = [
   ".nb-outer{padding:28px 16px 30px 16px !important;}",
   ".nb-pad{padding-left:44px !important;padding-right:44px !important;}",
   ".nb-head{padding:36px 24px 26px 24px !important;}",
+  ".nb-row,.nb-mid{display:inline !important;}",
   "}",
   "@media (prefers-reduced-motion:reduce){",
   ".nb-move{display:none !important;}",
@@ -345,6 +363,18 @@ const STYLE = [
   "[data-ogsb] .nb-hair{background-color:#273152 !important;}"
 ].join("\n");
 
+/* round eight: the doors in two halves, each kept whole: on a phone two
+   short rows (no door left alone on a line), on a wider screen one row (the
+   sheet's min-width block joins them) */
+function socialRow() {
+  const a = s => "<a href=\"" + esc(s.href) + "\" class=\"nb-social\" style=\"color:" + P.foot + ";text-decoration:underline;white-space:nowrap;\">" + esc(s.name) + "</a>";
+  const half = Math.ceil(SOCIAL.length / 2);
+  const rows = [SOCIAL.slice(0, half), SOCIAL.slice(half)].filter(r => r.length);
+  /* Outlook on Windows draws the spans inline and hides by mso-hide, so it
+     gets its own dot between the halves, and one row */
+  return rows.map(r => "<span class=\"nb-row\" style=\"display:block;\">" + r.map(a).join(" &#183; ") + "</span>")
+    .join("<span class=\"nb-mid\" style=\"display:none;mso-hide:all;\"> &#183; </span><!--[if mso]> &#183; <![endif]-->");
+}
 /* {html, text}; never throws */
 export function renderLetter(opts = {}) {
   const o = opts && typeof opts === "object" ? opts : {};
@@ -377,8 +407,12 @@ export function renderLetter(opts = {}) {
     + "<!-- small -->" + dnc.map(b => "<p class=\"nb-soft\" style=\"margin:16px 0 0 0;font-family:" + SANS + ";font-size:14px;line-height:22px;mso-line-height-rule:exactly;color:" + P.soft + ";\">" + b.split("\n").map(l => inline(l)).join("<br>") + "</p>").join("") + "<!-- /small -->"
     + "</td></tr>" : "";
 
-  const foot = "<tr><td class=\"nb-foot\" align=\"center\" style=\"padding:22px 16px 6px 16px;font-family:" + SANS + ";font-size:12px;line-height:19px;mso-line-height-rule:exactly;color:" + P.foot + ";\">"
+  const foot = "<tr><td class=\"nb-foot\" align=\"center\" style=\"padding:22px 16px 4px 16px;font-family:" + SANS + ";font-size:12px;line-height:19px;mso-line-height-rule:exactly;color:" + P.foot + ";\">"
     + "<span style=\"white-space:nowrap;\">NOOR Codex of Light</span> &#183; <a href=\"" + SITE + "/\" style=\"color:" + P.foot + ";text-decoration:underline;white-space:nowrap;\">noorcodex.com</a> &#183; <span style=\"white-space:nowrap;\">a free library, no ads, no trackers</span>"
+    + "</td></tr>"
+    /* round eight: the house's own doors, one quiet line under it */
+    + "<tr><td class=\"nb-foot\" align=\"center\" style=\"padding:2px 16px 6px 16px;font-family:" + SANS + ";font-size:12px;line-height:19px;mso-line-height-rule:exactly;color:" + P.foot + ";\">"
+    + "<!-- social -->" + socialRow() + "<!-- /social -->"
     + "</td></tr>";
 
   const html = "<!DOCTYPE html>\n"

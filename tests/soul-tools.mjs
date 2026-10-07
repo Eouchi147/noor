@@ -79,6 +79,24 @@ console.log('\nthe Jev sentinel in the council');
   ok(!c.approved && c.verdicts.guardian.vote === 'reject', 'and the Guardian\'s veto still holds without the sentinel');
   ROUTER.guardian = 'approve';
 
+  /* round eight: a letter of the outreach rests on its place's own facts, never on posts */
+  ROUTER.calls.length = 0;
+  jevOn((k) => k === 'thin_data' ? 0.55 : 0.05);
+  const letter = { action: 'outreach-send', args: { placeId: 'p-abcdefabcdef' },
+    why: 'a mosque in Leeds, the United Kingdom runs a weekend school, its own pages say; offer it a free library for its weekend school, through the address it published for contact.',
+    expectedEffect: 'a reply from a mosque about using the house\'s free material', metric: 'outreach.contacted', evidence: {}, seeded: true, outreach: true };
+  c = await COUNCIL.convene(letter, evidence);
+  const asked = JEV.bodies[JEV.bodies.length - 1];
+  ok(c.approved && c.sentinel.vote === 'pass' && asked && !asked.questions.thin_data && ['breaks_constitution', 'misrepresents_islam', 'spam_or_bait'].every(k => asked.questions[k])
+    && /first letter/.test(asked.state.text) && /asking nothing in return/.test(asked.state.text),
+    'round eight: a letter is never asked the posts question (it held back 9 of the first 10 at 0.51 to 0.55); it is asked the other three, told what it is, and passes on to the three');
+  ok(Object.keys(COUNCIL.sentinelQuestions({ action: 'outreach-followup' })).join() === 'breaks_constitution,misrepresents_islam,spam_or_bait'
+    && Object.keys(COUNCIL.sentinelQuestions({ action: 'lineup-swap' })).length === 4, 'the follow-up is a letter too; every other public act is still asked all four');
+  jevOn(k => k === 'spam_or_bait' ? 0.6 : 0.05);
+  c = await COUNCIL.convene(letter, evidence);
+  ok(!c.approved && c.sentinel.vote === 'reject' && /spam/.test(c.sentinel.reasons.join(' ')), 'and a letter that reads as spam is still held back');
+  jevOn(() => 0.08);
+
   jevOn(k => k === 'thin_data' ? null : 0.1);
   c = await COUNCIL.convene(swap, evidence);
   ok(c.approved && c.sentinel.unavailable && /incomplete/.test(c.sentinel.reasons[0]), 'an incomplete answer is unavailable, never a pass or a block');

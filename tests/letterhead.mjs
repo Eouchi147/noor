@@ -32,7 +32,7 @@ try { ({ chromium } = await import('playwright')); } catch { chromium = null; }
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderLetter, slopCheck, isHouseLink, plainLetter, EMBLEM, WORDMARK, FOOTER_LINE, LETTER_KINDS } from '../api/_letterhead.js';
+import { renderLetter, slopCheck, isHouseLink, plainLetter, EMBLEM, WORDMARK, FOOTER_LINE, LETTER_KINDS, SOCIAL } from '../api/_letterhead.js';
 import { OFFERS, SIGN, DNC_LINE, followupLetter } from '../api/_outreach.js';
 import { DNC_LINE as MAIL_DNC, DISTRESS_TEXT, NO_TEXT } from '../api/_mail.js';
 
@@ -96,7 +96,19 @@ console.log('=== links: only the house\'s own ===');
   ok(hrefs.includes('https://reels.noorcodex.com/watch?id=7&amp;t=2'), 'a subdomain is a link, its query escaped in the attribute');
   ok(hrefs.includes('https://noorcodex.com/quran'), 'a closing bracket the address did not open stays outside it');
   ok(hrefs.filter(h => h === 'https://noorcodex.com/').length === 2, 'the signature\'s address and the footer\'s are links');
-  ok(hrefs.length === 5 && hrefs.every(h => /^https:\/\/([a-z0-9-]+\.)*noorcodex\.com(\/|$)/.test(h.replace(/&amp;/g, '&'))), 'every link goes to the house, and there are no others (' + hrefs.length + ')');
+  /* round eight: the footer carries the house's own doors on the social networks, fixed in code */
+  const doors = SOCIAL.map(s => s.href.replace(/&/g, '&amp;'));
+  const own = hrefs.filter(h => !doors.includes(h));
+  ok(own.length === 5 && own.every(h => /^https:\/\/([a-z0-9-]+\.)*noorcodex\.com(\/|$)/.test(h.replace(/&amp;/g, '&'))), 'every link of the letter goes to the house, and there are no others (' + own.length + ')');
+  ok(hrefs.length === 5 + SOCIAL.length && doors.every(d => hrefs.filter(h => h === d).length === 1)
+    && doors.every(d => part(r.html, 'social').includes('href="' + d + '"')) && !doors.some(d => part(r.html, 'letter').includes(d)),
+    'round eight: the footer carries the house\'s ' + SOCIAL.length + ' doors on the social networks, each once, and only there');
+  /* the email's doors are the site's own: the same list, in the same order, as noor-fx.js NOOR_SOCIAL */
+  const fx = fs.readFileSync(path.join(ROOT, 'noor-fx.js'), 'utf8');
+  const siteDoors = [...((fx.match(/var NOOR_SOCIAL = \[([\s\S]*?)\];/) || [])[1] || '').matchAll(/\{\s*id:\s*"([^"]+)",\s*name:\s*"([^"]+)",\s*href:\s*"([^"]*)"\s*\}/g)]
+    .map(m => ({ id: m[1], name: m[2], href: m[3] })).filter(s => s.href);
+  ok(siteDoors.length >= 6 && JSON.stringify(siteDoors) === JSON.stringify(SOCIAL.map(s => ({ id: s.id, name: s.name, href: s.href }))),
+    'the email\'s doors are the site\'s own (noor-fx.js NOOR_SOCIAL), the same list in the same order: ' + siteDoors.map(s => s.id).join(', '));
   for (const plain of ['http://noorcodex.com/insecure', 'https://evil.com/x', 'https://noorcodex.com.evil.com/y', 'https://evilnoorcodex.com/z', 'https://noorcodex.com@evil.com/w', 'https://user:pw@noorcodex.com/v', 'https://noorcodex.com:8443/u'])
     ok(r.html.includes(plain) && !hrefs.some(h => h.replace(/&amp;/g, '&').startsWith(plain)), 'stays plain words: ' + plain);
   ok(r.html.includes('javascript:alert(1)') && !as.some(a => /javascript/i.test(a)), 'javascript: in the text stays words, never an address');
@@ -149,6 +161,11 @@ for (const kind of LETTER_KINDS) {
   ok(ps.length >= 2 && ps.every(t => /font-size:17px/.test(t) && /line-height:28px/.test(t)), kind + ': every body paragraph and list line is 17 px on a 28 px line');
   ok(h.includes('>' + WORDMARK.ar + '<') && /lang="ar" dir="rtl"/.test(h) && h.includes(WORDMARK.en), kind + ': the wordmark, ' + WORDMARK.ar + ' ' + WORDMARK.en + ', in Arabic and English');
   ok(visible(h).replace(/\s+/g, ' ').includes(FOOTER_LINE), kind + ': the quiet footer: "' + FOOTER_LINE + '"');
+  const soc = part(h, 'social');
+  ok(visible(soc.replace(/<!--\[if mso\]>[\s\S]*?<!\[endif\]-->/g, '')).replace(/\s+/g, ' ').trim() === SOCIAL.map(s => s.name).join(' ' + String.fromCharCode(0xB7) + ' ') && !r.text.includes('instagram.com'),
+    kind + ': under it, the house\'s doors by name (' + SOCIAL.map(s => s.name).join(', ') + '); the plain twin stays the letter\'s own words');
+  ok((soc.match(/class="nb-row" style="display:block;"/g) || []).length === 2 && /class="nb-mid" style="display:none;mso-hide:all;"/.test(soc) && /\.nb-row,\.nb-mid\{display:inline !important;\}/.test(h),
+    kind + ': two short rows of doors on a phone, one row on a wider screen');
   ok(h.includes('nb-kind-' + kind), kind + ': the kind is carried');
   ok(!DASH.test(h), kind + ': no dash anywhere in the HTML');
 }

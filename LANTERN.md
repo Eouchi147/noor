@@ -371,3 +371,8 @@ The public map servers time out when a server asks them, though they answer a br
 ### 14.5 Letters that give
 
 Every letter's one step now says the house asks nothing in return; a reply is only something they may do if it helps them. The writer is told the same. The log line of each run names its source, what it gave and the main reasons sites were set aside.
+
+### 14.6 Letters and the sentinel; the house's doors in every footer
+
+- The sentinel (Jev, api/_council.js) asked every public act whether it "rests on too little data: fewer than five posts". A letter rests on its place's own published facts, never on posts, and that question held back 9 of the owner's first 10 letters at 0.51 to 0.55. A letter (outreach-send, outreach-followup) is now asked the other three questions (the constitution, Islam represented truly, spam) and told plainly what it is; every other public act is still asked all four. Each letter's words are still checked in code against its place's pages, and the mailbox's gates hold.
+- Every email's footer now carries the house's doors (Instagram, Facebook, YouTube, Pinterest, Telegram, Threads), the same list as the site's footer (noor-fx.js NOOR_SOCIAL; api/_letterhead.js SOCIAL, the test holds the two together): one row on a wide screen, two short rows on a phone. The plain twin stays the letter's own words.
