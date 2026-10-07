@@ -1503,6 +1503,19 @@ console.log('\n20. round eight: more ways to find places, more of each site, let
   atStep('osm:CA');
   await research();
   ok(HM.get(O.OK_KEYS.seen).get('old.example.org'), 'and only once');
+  /* a place kept from a directory's listing before the rule knew the directory is let go, once, while never written to */
+  resetStore(); mailReset(); setDay(D0, '09:00');
+  const dirP = { id: 'p-dir000000001', name: 'Masjid Listed', kind: 'mosque', city: 'X', country: 'US', website: 'https://www.islamicfinder.org/world/view-place/406', domain: 'islamicfinder.org',
+    email: 'info@islamicfinder.org', source: 'osm', facts: [{ text: 'A mosque open daily for the five prayers.', url: 'u' }, { text: 'Families welcome to learn.', url: 'u' }], signals: {}, status: 'new', lang: 'en', history: [] };
+  HM.set(O.OK_KEYS.places, new Map([[dirP.id, JSON.stringify(dirP)]]));
+  HM.set(O.OK_KEYS.index, new Map([[dirP.id, JSON.stringify({ s: 'new', c: 0, a: 0, t: 3, n: 'US', sc: 1, r: 1, p: 0, sa: 0, h: '', f: '', u: '', ua: '' })]]));
+  HM.set(O.OK_KEYS.byDomain, new Map([['islamicfinder.org', dirP.id]]));
+  HM.set(O.OK_KEYS.byAddr, new Map([['info@islamicfinder.org', dirP.id]]));
+  atStep('osm:GB');
+  await research();
+  ok(!(await placesNow()).some(p => p.name === 'Masjid Listed') && !HM.get(O.OK_KEYS.byAddr).get('info@islamicfinder.org'),
+    'a place kept from a directory\'s listing (its address the directory\'s own) and never written to is let go');
+  ok(!(await O.checkSite({ name: 'Masjid Listed', website: 'https://www.salatomatic.com/spc/Seattle/x', country: 'US', source: 'osm' }, O.makeFetcher(), () => 999999)).ok, 'and a directory\'s listing is never read as a place\'s own site');
 
   /* g. the seed walk, and the tick's account of what it asked */
   resetStore(); mailReset(); setDay(D0, '09:00');

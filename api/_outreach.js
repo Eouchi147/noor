@@ -201,7 +201,7 @@ export const RESEARCH_CONCURRENCY = 8;       /* round eight: was 6 */
 export const SOURCE_TIMEOUT_MS = 40000;
 export const OVERPASS_URLS = Object.freeze(["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]);
 export const SEED_TAKE = 150;
-export const SEEN_V = "8";                   /* round eight: the rules of a site's check changed; what the old ones set aside is read again, once */
+export const SEEN_V = "8b";                  /* round eight: the rules of a site's check changed; what the old ones set aside is read again, once (8b: and a directory's listing let go) */
 export const USER_AGENT = "NOORCodexBot/1.0 (+https://noorcodex.com; salam@noorcodex.com)";
 export const OUTREACH_BOX_MS = 15000;        /* the sense stage's box for the outreach read */
 
@@ -648,7 +648,10 @@ export const FREE_MAIL = new Set(["gmail.com", "googlemail.com", "outlook.com", 
   "eircom.net", "rogers.com", "shaw.ca", "sympatico.ca", "comcast.net", "verizon.net"]);
 /* a "website" that is a page on someone else's platform is not the place's
    own site: it is never fetched */
-const NOT_OWN_SITE = /(^|\.)(facebook\.com|fb\.com|fb\.me|instagram\.com|twitter\.com|x\.com|youtube\.com|youtu\.be|tiktok\.com|linkedin\.com|linktr\.ee|whatsapp\.com|wa\.me|google\.com|goo\.gl|g\.page|maps\.app\.goo\.gl|bit\.ly|tinyurl\.com|eventbrite\.[a-z.]+|launchgood\.com|justgiving\.com|gofundme\.com|yell\.com|yelp\.com|tripadvisor\.[a-z.]+|wikipedia\.org|wikidata\.org)$/i;
+/* round eight: and a directory's listing (a mosque finder, a map, the
+   yellow pages): its page is about the place, but its address is the
+   directory's own */
+const NOT_OWN_SITE = /(^|\.)(facebook\.com|fb\.com|fb\.me|instagram\.com|twitter\.com|x\.com|youtube\.com|youtu\.be|tiktok\.com|linkedin\.com|linktr\.ee|whatsapp\.com|wa\.me|google\.com|goo\.gl|g\.page|maps\.app\.goo\.gl|bit\.ly|tinyurl\.com|eventbrite\.[a-z.]+|launchgood\.com|justgiving\.com|gofundme\.com|yell\.com|yelp\.com|tripadvisor\.[a-z.]+|wikipedia\.org|wikidata\.org|salatomatic\.com|islamicfinder\.org|muslimsinbritain\.org|mosquefinder\.co\.uk|masjidnow\.com|zabihah\.com|halaltrip\.com|foursquare\.com|mapquest\.com|bing\.com|apple\.com|wikimapia\.org|openstreetmap\.org|yellowpages\.[a-z.]+)$/i;
 /* addresses that are never a place's own: platforms and builders (and any
    of their subdomains), placeholders (the bare name, as a template writes it) */
 const NOT_THEIR_DOMAIN = /(^|\.)(sentry\.io|wixpress\.com|wix\.com|squarespace\.com|wordpress\.(com|org)|godaddy\.com|cloudflare\.com|w3\.org|schema\.org|google\.com|gstatic\.com|facebook\.com|instagram\.com|twitter\.com|youtube\.com|mailchimp\.com|list-manage\.com|eventbrite\.[a-z.]+|paypal\.com|stripe\.com|launchgood\.com|justgiving\.com|gofundme\.com)$|^(example\.(com|org|net)|domain\.com|email\.com|yourdomain\.com|yoursite\.com)$/i;
@@ -1802,6 +1805,16 @@ async function researchRun(args, ctx) {
     if (String(r0[3] || "") !== SEEN_V) {
       await store([["DEL", OK_KEYS.seen], ["SET", OK_KEYS.seenV, SEEN_V]]);
       cursor.seed = 0;
+      /* and a place kept from a directory's listing (not its own site),
+         never written to, is let go: the address on that page is the
+         directory's */
+      try {
+        const idx0 = await readIndex();
+        const ids = Object.entries(idx0).filter(([, e]) => e && e.s === "new" && !e.c && !e.p).map(([id]) => id);
+        for (const p of await readPlaces(ids)) {
+          if (p && p.domain && NOT_OWN_SITE.test(p.domain) && !p.firstAt && !p.pending) await dropPlace(p, "its website is a page on another platform");
+        }
+      } catch { /* the next run tries again only through the rules themselves */ }
     }
     const F = makeFetcher(ctx && ctx.io);
     /* round six: a source is asked only while its own clock still fits in
