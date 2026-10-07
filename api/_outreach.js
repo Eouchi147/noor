@@ -1519,6 +1519,14 @@ export async function webCandidates(n) {
    name on its pages (verify: "name"), so a site it made up, or another
    place's, is never kept. */
 export const WEB_MODEL = "perplexity/sonar";
+/* the search models in turn: perplexity/sonar first; when it is not on the
+   list, is priced past its ceiling or will not take the request (a 4xx: no
+   provider that keeps nothing, say), OpenAI's small model with its own web
+   search (about 1.2 cents) */
+export const WEB_MODELS = Object.freeze([
+  { id: "perplexity/sonar", extra: { web_search_options: { search_context_size: "low" } }, contextTokens: 0 },
+  { id: "openai/gpt-6-luna", extra: { plugins: [{ id: "web", engine: "native" }], web_search_options: { search_context_size: "low" }, reasoning: { effort: "low" } }, contextTokens: 20000 }
+]);
 export const CITY_FEE_USD = 0.005;           /* its search fee a request (OpenRouter's list: web_search) */
 export const CITY_PER_DAY = 20;
 export const CITY_MAX = 15;                  /* places asked for a city */
@@ -1563,8 +1571,8 @@ export function webCity(n) { const l = cityList(); const i = Math.floor(Number(n
 /* the search model's live price, from OpenRouter's public list, six hours
    in memory; a price that is not a fixed number, or past the ceilings the
    deep tier answers to, refuses it */
-let webPriceCache = { at: 0, pricing: null, read: false };
-export function forgetWebPrice() { webPriceCache = { at: 0, pricing: null, read: false }; }
+let webPriceCache = { at: 0, prices: null, read: false };
+export function forgetWebPrice() { webPriceCache = { at: 0, prices: null, read: false }; }
 async function webModelPrice(model) {
   const now = Date.now();
   if (!webPriceCache.read || now - webPriceCache.at > 6 * 3600000) {
@@ -1575,13 +1583,15 @@ async function webModelPrice(model) {
         new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("no answer in 8 s")), 8000); })]);
       if (!r.ok) throw new Error("answered " + r.status);
       const j = await r.json();
-      const m = (j && Array.isArray(j.data) ? j.data : []).find(x => x && x.id === model);
-      webPriceCache = { at: now, pricing: m && m.pricing && typeof m.pricing === "object" ? m.pricing : null, read: true };
+      const prices = new Map();
+      const wanted = new Set(WEB_MODELS.map(m => m.id));
+      for (const x of (j && Array.isArray(j.data) ? j.data : [])) if (x && wanted.has(x.id) && x.pricing && typeof x.pricing === "object") prices.set(x.id, x.pricing);
+      webPriceCache = { at: now, prices, read: true };
     } catch (e) {
       if (!webPriceCache.read) return { ok: false, why: "the city search's live price could not be read (" + str(e && e.message || e, 60) + ")" };
     } finally { clearTimeout(timer); }
   }
-  const p = webPriceCache.pricing;
+  const p = webPriceCache.prices ? webPriceCache.prices.get(model) : null;
   if (!p) return { ok: false, why: model + " is not on OpenRouter's price list today" };
   const num = v => (v == null || v === "") ? 0 : Number(v);
   const pr = num(p.prompt), co = Math.max(num(p.completion), num(p.internal_reasoning)), rq = num(p.request), ws = num(p.web_search);
@@ -1593,8 +1603,6 @@ export async function citySearch(n) {
   const [city, cc] = webCity(n);
   const pre = await webBudget(CITY_FEE_USD + 0.002);
   if (!pre.ok) return { ok: false, why: pre.why, cands: [], city, cc };
-  const price = await webModelPrice(WEB_MODEL);
-  if (!price.ok) return { ok: false, why: price.why, cands: [], city, cc };
   let L;
   try { L = await routerMod(); } catch { return { ok: false, why: "the model router could not be loaded", cands: [], city, cc }; }
   const messages = [
@@ -1603,11 +1611,22 @@ export async function citySearch(n) {
   ];
   const maxTokens = 1400;
   const chars = messages.reduce((s, m) => s + m.content.length + 16, 0);
-  const worstUsd = Math.ceil(chars / 2) * price.pr + maxTokens * price.co + price.rq + price.ws;
-  const call = await paidWebCall(L, WEB_MODEL, { model: WEB_MODEL, messages, max_tokens: maxTokens, temperature: 0, usage: { include: true },
-    web_search_options: { search_context_size: "low" }, provider: { data_collection: "deny" } }, worstUsd);
-  if (!call.sent || call.nocredit) return { ok: false, why: call.why, cands: [], city, cc };
-  if (!call.j) return { ok: false, why: call.why || "no answer", cands: [], costUsd: call.costUsd, city, cc };
+  let call = null, model = null, spent = 0;
+  const said = [];
+  for (const m of WEB_MODELS) {
+    const price = await webModelPrice(m.id);
+    if (!price.ok) { said.push(price.why); continue; }
+    const worstUsd = (Math.ceil(chars / 2) + m.contextTokens) * price.pr + maxTokens * price.co + price.rq + price.ws;
+    const c = await paidWebCall(L, m.id, { model: m.id, messages, max_tokens: maxTokens, temperature: 0, usage: { include: true }, ...m.extra,
+      provider: { data_collection: "deny" } }, worstUsd);
+    if (!c.sent || c.nocredit) return { ok: false, why: c.why, cands: [], costUsd: spent, city, cc };
+    spent += Number(c.costUsd) || 0;
+    if (c.j) { call = c; model = m.id; break; }
+    said.push(m.id + ": " + (c.why || "no answer"));
+    /* a model that would not take the request (a 4xx, nothing charged): the next */
+    if (!/answered 4\d\d/.test(c.why || "")) break;
+  }
+  if (!call) return { ok: false, why: str(said.join("; ") || "no search model could be asked", 200), cands: [], costUsd: spent, city, cc };
   const msg = (((call.j.choices || [])[0] || {}).message) || {};
   const parsed = jsonObject(msg.content);
   const cited = new Set([].concat((msg.annotations || []).map(a => a && a.url_citation && a.url_citation.url), Array.isArray(call.j.citations) ? call.j.citations : [])
@@ -1622,7 +1641,7 @@ export async function citySearch(n) {
     cands.push({ name, kind: ["school", "society", "mosque", "foundation"].includes(x.kind) ? x.kind : "mosque", city: str(x.city, 80) || city.replace(/\s*\(.*\)$/, ""),
       country: cc, website: site, email: null, source: "web", sourceRef: "web:city:" + cc + ":" + str(city, 60), evidence: site, ...(cited.has(h) ? {} : { verify: "name" }) });
   }
-  return { ok: true, cands, costUsd: call.costUsd, model: WEB_MODEL, paidId: call.paidId, city, cc };
+  return { ok: true, cands, costUsd: spent, model, paidId: call.paidId, city, cc };
 }
 function jsonObject(raw) {
   const s = String(raw == null ? "" : raw).replace(/<think>[\s\S]*?<\/think>/gi, " ");

@@ -1482,6 +1482,23 @@ console.log('\n20. round eight: more ways to find places, more of each site, let
   const capped = await research();
   ok(CITY.bodies.length === 1 && (capped.entry.result.notes || []).some(n => new RegExp('day\'s ' + O.CITY_PER_DAY + ' city searches are made').test(n)),
     'the day\'s ' + O.CITY_PER_DAY + ' city searches made: the walk passes over the next, and no search is made');
+  /* the first model will not take the request (no provider that keeps nothing): the second is asked in the same search */
+  O.forgetWebPrice();
+  onNet('https://openrouter.ai/api/v1/models', async () => resp(200, { data: [{ id: 'perplexity/sonar', pricing: { prompt: '0.000001', completion: '0.000001', web_search: '0.005' } },
+    { id: 'openai/gpt-6-luna', pricing: { prompt: '0.0000001', completion: '0.0000005', web_search: '0.01' } }] }));
+  onNet(O.OPENROUTER_URL, async (u, init) => {
+    const body = JSON.parse(init.body);
+    CITY.bodies.push(body);
+    if (body.model === 'perplexity/sonar') return resp(404, { error: { message: 'No endpoints found matching your data policy' } });
+    return resp(200, { usage: { cost: 0.0118 }, choices: [{ message: { content: JSON.stringify({ places: [{ name: 'Leeds Central Masjid', website: 'https://leedscentral.example.org.uk', city: 'Leeds', kind: 'mosque' }] }),
+      annotations: [{ type: 'url_citation', url_citation: { url: 'https://leedscentral.example.org.uk/', title: 'Leeds Central Masjid' } }] } }] });
+  });
+  const n2 = CITY.bodies.length;
+  const cs2 = await O.citySearch(li);
+  const tried = CITY.bodies.slice(n2);
+  ok(cs2.ok && tried.map(b => b.model).join() === 'perplexity/sonar,openai/gpt-6-luna' && tried[1].plugins && tried[1].plugins[0].engine === 'native' && tried[1].provider.data_collection === 'deny'
+    && cs2.model === 'openai/gpt-6-luna' && cs2.cands.length === 1 && !cs2.cands[0].verify && cs2.costUsd === 0.0118,
+    'the first search model refusing the request (nothing charged), the second (its own web search) is asked in the same search: ' + tried.map(b => b.model).join(' then '));
   delete process.env.OPENROUTER_API_KEY;
 
   /* e. a source that fails rests */
