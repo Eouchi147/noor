@@ -155,6 +155,7 @@ onNet('https://', async (u, init) => {
   if (!s) throw new Error('no network in this test: ' + u);
   if (url.pathname === '/robots.txt') {
     if (s.robots == null || s.robots === 404) return resp(404, 'not found');
+    if (typeof s.robots === 'object') return resp(s.robots.status, s.robots.body || '', s.robots.headers || {});
     if (typeof s.robots === 'number') return resp(s.robots, 'error');
     return resp(200, s.robots, { 'content-type': 'text/plain' });
   }
@@ -408,6 +409,16 @@ console.log('\n2. fetched politely');
   O.LIMITS.pageTimeoutMs = saved;
   ok(!slow.ok && /did not answer/.test(slow.why) && Date.now() - t0 < 350, 'a page that does not answer in time is let go: ' + slow.why);
   ok(O.LIMITS.pageTimeoutMs === 6000 && O.LIMITS.gapMs === 0 && O.makeFetcher, 'the page clock is 6 seconds in code');
+  /* round eight: a robots.txt that moved (to https, to www) is followed; one that is not there (403) leaves the site open */
+  site('robotsmoved.example.org', { robots: { status: 301, headers: { location: 'https://robotsmoved.example.org/robots-new.txt' } }, pages: {
+    '/robots-new.txt': { status: 200, body: 'User-agent: *\nDisallow: /private\n', headers: { 'content-type': 'text/plain' } }, '/': html({ title: 'Moved Masjid' }), '/private': html({ title: 'p' }) } });
+  const RF = O.makeFetcher();
+  const mv = await RF.page('https://robotsmoved.example.org/', 'https://robotsmoved.example.org/');
+  const mvp = await RF.page('https://robotsmoved.example.org/private', 'https://robotsmoved.example.org/');
+  ok(mv.ok && !mvp.ok && /asks us not to read it/.test(mvp.why), 'round eight: a robots.txt that moved is followed and read: ' + (mv.ok ? 'home read' : mv.why) + '; ' + mvp.why);
+  site('robots403.example.org', { robots: 403, pages: { '/': html({ title: 'Open Masjid' }) } });
+  const r403 = await O.makeFetcher().page('https://robots403.example.org/', 'https://robots403.example.org/');
+  ok(r403.ok, 'a robots.txt that is not there for us (403) leaves the site open, as the standard says');
   site('robots500.example.org', { robots: 503, pages: { '/': html({ title: 'x' }) } });
   const r5 = await O.makeFetcher().page('https://robots500.example.org/', 'https://robots500.example.org/');
   ok(!r5.ok && /robots\.txt answered 503/.test(r5.why) && netTo('robots500.example.org').length === 1, 'a robots.txt that cannot be read leaves the site alone: ' + r5.why);

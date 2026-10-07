@@ -873,11 +873,28 @@ export function makeFetcher(io = {}) {
     try { origin = new URL(url).origin; } catch { return { ok: false, why: "an address that could not be read" }; }
     const host = hostOf(url);
     if (!robots.has(host)) {
+      /* round eight, read as the standard reads it (RFC 9309): a redirect is
+         followed (each hop's name looked up again; the 7 October tick left
+         9 sites of 76 alone because their robots.txt moved to https); a
+         robots.txt that is not there (a 4xx, rate limiting aside) leaves the
+         site open; one that cannot be reached (a 5xx, 429, no answer) leaves
+         the site alone */
       let rule;
       try {
-        const r = await once(origin + "/robots.txt", LIMITS.pageTimeoutMs, { headers: { accept: "text/plain" } });
-        if (r.status === 404 || r.status === 410) rule = { all: true };
+        let ru = origin + "/robots.txt", r = null;
+        for (let hop = 0; hop < 4; hop++) {
+          if (hop) { const pub = await publicUrl(ru, own.lookup); if (!pub.ok) { r = null; break; } }
+          r = await once(ru, LIMITS.pageTimeoutMs, { headers: { accept: "text/plain" } });
+          if (r.status < 300 || r.status >= 400) break;
+          const loc = r.headers && r.headers.get ? r.headers.get("location") : null;
+          let next = null;
+          try { next = loc ? new URL(loc, ru).toString() : null; } catch { next = null; }
+          if (!next) break;
+          ru = next;
+        }
+        if (!r) rule = { none: true, why: "its robots.txt leads off the public web" };
         else if (r.ok) rule = { text: await text(r) };
+        else if (r.status >= 400 && r.status < 500 && r.status !== 429) rule = { all: true };
         else rule = { none: true, why: "its robots.txt answered " + r.status };
       } catch (e) { rule = { none: true, why: "its robots.txt did not answer" }; }
       robots.set(host, rule);
