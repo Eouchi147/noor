@@ -300,7 +300,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   ok(await pg.evaluate(() => { const d = document.querySelector('#h-decide article.dc.letter'), r = document.getElementById('h-orun'); return !!d && !!(d.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING); }), 'and they are indeed above it, as cards with their letter');
   await shotOf(pg, '#h-orun', 'run-letters-wait-' + tag);
   await pg.click('#h-orun-letters [data-oletters]'); await pg.waitForTimeout(500);
-  const seen = await pg.evaluate(() => { const c = document.querySelector('#h-decide article.dc.letter'), r = c.getBoundingClientRect(); return { lit: c.classList.contains('lit'), on: r.top < innerHeight && r.bottom > 0 }; });
+  const seen = await pg.evaluate(() => { const c = document.querySelector('#h-decide article.dc.letter'), r = c.getBoundingClientRect(); return { lit: c.classList.contains('lit') || c.classList.contains('nglow'), on: r.top < innerHeight && r.bottom > 0 }; });
   ok(seen.lit && seen.on, 'See them brings the letters into view, each ringed in light a moment');
   await pg.waitForTimeout(200);
   if (w === 390) await pg.screenshot({ path: SHOTS + '/run-see-letters-' + tag + '.png' });

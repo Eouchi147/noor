@@ -334,6 +334,8 @@ async function open_(w, h, opts = {}) {
         if (st.homeMode === 'locked') return r.fulfill(J({ ok: false, error: 'locked' }, 401));
         return r.fulfill(J({ ...st.home, now: iso(Date.now()) }));
       }
+      /* round nine: the console's Needs you, read on every screen; not one of a room's own reads */
+      if (view === 'needs') { st.needsGets = (st.needsGets || 0) + 1; return r.fulfill(J({ ok: true, at: iso(Date.now()), count: 0, planning: false, items: [] })); }
       st.apiGets.push(u.replace(BASE, ''));
       return r.fulfill(J(SOUL_VIEWS[view] || { ok: false, error: 'no such view' }, SOUL_VIEWS[view] ? 200 : 400));
     }
@@ -560,7 +562,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   ok(/The month's gifts cover 64 percent of the house's running costs this month\./.test(lamp.t), 'what the light stands for, in words');
   ok(/This month\s*\$110 from 6 gifts/.test(lamp.t) && /The last 30 days\s*\$530 from 31 gifts/.test(lamp.t) && /Zakat waiting to be given\s*\$12\.40/.test(lamp.t), "this month's gifts, the last 30 days and the zakat waiting, in the house's currency");
   ok(/The Lantern, yesterday: Wrote the note on the giving page/.test(lamp.t) && /The quiet line on every page: the everyday line/.test(lamp.t), 'what the Lantern last did for giving, and the line it keeps');
-  ok(lamp.href === '/admin#giving' && lamp.target === '_blank' && lamp.rel === 'noopener', 'a link to the ledger room');
+  ok(lamp.href === '#giving' && lamp.target === null && lamp.rel === null, 'a link to the ledger, in this console\'s Giving (round nine: never the retired console)');
   ok(/^A glass lamp hanging in a niche, its light 64 percent of the way up\. The month's gifts cover 64 percent/.test(lamp.aria), 'and the drawing has its words: ' + lamp.aria);
 
   // 9. ideas
@@ -1020,7 +1022,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await pg.waitForTimeout(2300);
     const L = await pg.evaluate(() => { const l = document.getElementById('h-lamp'), lp = l.querySelector('.lp'); return { cold: l.classList.contains('cold'), flame: l.dataset.flame, by: l.dataset.by || '', t: document.getElementById('h-giving').innerText,
       cov: (l.querySelector('.cov') || {}).textContent || '', aria: lp.getAttribute('aria-label') || '', glo: l.querySelector('.glo').style.opacity,
-      tf: l.querySelector('.fl').style.transform, link: !!document.querySelector('#h-giving [data-ledger][href="/admin#giving"]'), fli: document.getAnimations().some(a => a.effect.target.classList && a.effect.target.classList.contains('fli') && a.playState === 'running') }; });
+      tf: l.querySelector('.fl').style.transform, link: !!document.querySelector('#h-giving [data-ledger][href="#giving"]'), fli: document.getAnimations().some(a => a.effect.target.classList && a.effect.target.classList.contains('fli') && a.playState === 'running') }; });
     if (name === 'with-costs') {
       ok(!L.cold && L.by === 'cover' && L.tf === 'scaleY(0.64)' && L.fli, 'the light in the glass stands at the share of the costs the gifts cover, and lives: ' + L.tf);
       ok(/cover 64 percent/.test(L.t) && /14\s*monthly givers/i.test(L.t), 'and says so, beside the givers');
@@ -1349,7 +1351,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   console.log(tag + ' · More: every other room, the engine room first');
   await pg.click('nav.bar [data-s="more"]');
   await pg.waitForSelector('#s-more [data-room]', { timeout: 10000 }); await pg.waitForTimeout(300);
-  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).join(',')) === 'engine,mail,lights,legacy,marketing,journal,night,system,controls,flow,readers', 'the rooms, the engine room first and the Lantern\'s mail beside it');
+  ok(await pg.evaluate(() => [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).join(',')) === 'engine,mail,giving,lights,legacy,marketing,journal,night,system,controls,flow,readers', 'the rooms, the engine room first, the Lantern\'s mail beside it, then Giving');
   ok(await pg.evaluate(() => { const c = document.querySelector('#s-more [data-room]'); return c.classList.contains('feat') && /The engine room/.test(c.innerText) && /31,240/.test(c.innerText); }), 'the engine room leads, with its live number');
   ok(await pg.evaluate(() => /2/.test(document.querySelector('#s-more [data-room="readers"] .v').textContent)), "the readers' inbox card counts what is new");
   ok(await pg.evaluate(() => document.querySelector('#s-more p.sec').textContent) === 'The rooms', 'the rooms come first on the hub, before its health');

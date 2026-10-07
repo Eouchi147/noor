@@ -1394,6 +1394,75 @@ console.log('\n12e. round eight: the letters as one picture, for the Mail room (
   CLOCK.t = keepT;
 }
 
+console.log('\n12f. round nine: what needs him, on every screen (GET ?view=needs, LANTERN.md 15)');
+{
+  const keepS = new Map(S), keepL = new Map([...L].map(([k, v]) => [k, [...v]])), keepH = new Map([...H].map(([k, v]) => [k, new Map(v)])), keepZ = new Map([...Z].map(([k, v]) => [k, new Map(v)]));
+  const keepT = CLOCK.t;
+  resetStore(); setDay(D0, '09:00');
+  const T = today();
+  const up = (key, extra) => DEC.upsert({ kind: 'approve', key, stamp: '1', sticky: true, source: 'mail', title: 'Send this letter to ' + key + '?', why: 'One of the first 10.',
+    options: [DEC.opt.choice('send', 'Send', { type: 'done' }, 'primary'), DEC.opt.later()], link: null, steps: [], expires: addDays(T, 14), ...extra });
+  const letter = kind => ({ letter: { to: 'x@place.example', toName: 'A place', subject: 'S', text: 'Assalamu alaykum.', kind } });
+  const l1 = await up('mail:out-n1', letter('outreach')); CLOCK.t += 60000;
+  const l2 = await up('mail:out-n2', letter('followup')); CLOCK.t += 60000;
+  await up('mail:out-n3', letter('reply')); CLOCK.t += 60000;
+  await DEC.upsert({ kind: 'you', key: 'mail:t:th9', stamp: '1', sticky: true, source: 'mail-inbox', title: 'A message only you can settle', why: 'x', options: [DEC.opt.done()], steps: [] });
+  await DEC.upsert({ kind: 'you', key: 'inbox', stamp: '3', sticky: false, source: 'steward', title: '3 new messages in the inbox', why: 'x', options: [DEC.opt.done()], steps: [] });
+  await DEC.upsert({ kind: 'you', key: 'journal', stamp: '1', sticky: false, source: 'steward', title: '1 journal reply waits to be read', why: 'x', options: [DEC.opt.done()], steps: [] });
+  const gen = await DEC.upsert({ kind: 'you', key: 'tg-link', stamp: '2', sticky: false, source: 'cycle', title: 'Link Telegram, so the Lantern can reach you', why: 'So it can reach you when something is urgent.', options: [DEC.opt.done(), DEC.opt.later()], steps: [] });
+  await DEC.upsert({ kind: 'you', key: 'put-off', stamp: '1', sticky: true, source: 'cycle', title: 'Something he put off', why: 'x', options: [DEC.opt.done(), DEC.opt.later()], steps: [] });
+  const list = JSON.parse(S.get('nsoul:decisions'));
+  list.find(d => d.key === 'put-off').snoozedUntil = addDays(T, 2);
+  S.set('nsoul:decisions', JSON.stringify(list));
+  /* the inbox's own counter, and the journal's queue */
+  S.set('nb:unread', '3');
+  L.set('nj:queue', [JSON.stringify({ entry: 'e1', cid: 'c1', slug: 'a' }), JSON.stringify({ entry: 'e1', cid: 'c2', slug: 'a' })]);
+  L.set('nj:c:e1', [JSON.stringify({ cid: 'c1', state: 'pending', body: 'x' }), JSON.stringify({ cid: 'c2', state: 'approved', body: 'y' })]);
+  /* today's plan held two letters */
+  S.set('nsoul:cycle:c-n1', JSON.stringify({ id: 'c-n1', date: T, status: 'done', intents: [
+    { n: 1, action: 'outreach-send', tier: 'R2', status: 'rejected', args: {}, council: { sentinel: { vote: 'reject', reasons: ['x'] } } },
+    { n: 2, action: 'outreach-followup', tier: 'R2', status: 'failed', args: {}, result: { error: 'the page could not be read' } }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-n1', date: T }));
+  const v = await HOME.needsView();
+  ok(v.ok === true && Array.isArray(v.items) && !v.missing, 'the view answers, nothing missing');
+  ok(v.items.map(x => x.id).join(',') === 'letters,mail,inbox,journal,held,card:' + gen.id, 'in his order: the letters, the mail, the readers, the journal, the held, then each card: ' + v.items.map(x => x.id).join(','));
+  const by = Object.fromEntries(v.items.map(x => [x.id, x]));
+  ok(by.letters.n === 2 && by.letters.title === '2 letters wait for your Send' && by.letters.act === 'Read them' && by.letters.go.room === 'mail' && by.letters.go.tab === 'letters' && by.letters.go.letter === l1.id,
+    'the letters: how many, and the oldest to open first');
+  ok(by.mail.n === 2 && by.mail.title === '2 messages in the mail need you' && by.mail.go.tab === 'inbox', 'a reply on his Send and a message only he can settle, together, in the Mail inbox');
+  ok(by.inbox.n === 3 && by.inbox.title === '3 new messages from readers' && by.inbox.go.room === 'readers' && by.inbox.go.anchor === 'anchor-inbox', 'the readers\' messages, read live from the inbox\'s own counter');
+  ok(by.journal.n === 1 && by.journal.title === '1 journal reply waits to be read' && by.journal.go.anchor === 'anchor-journal', 'the journal\'s replies, read live from its queue (one released is not counted)');
+  ok(by.held.n === 1 && by.held.letters === 2 && by.held.title === '2 letters held back today' && by.held.go.anchor === 'mail-held', 'the held letters, one thing to do, with how many');
+  ok(by['card:' + gen.id].go.room === 'home' && by['card:' + gen.id].go.card === gen.id && by['card:' + gen.id].n === 1, 'every other card: on Home, with its buttons');
+  ok(!v.items.some(x => /put off/.test(x.title)) && !v.items.some(x => /^card:/.test(x.id) && /in the inbox|journal reply/.test(x.title)), 'a card he put off is not counted, and the morning\'s inbox and journal cards are not counted twice');
+  ok(v.count === 2 + 2 + 3 + 1 + 1 + 1 && v.planning === false, 'the count: ' + v.count);
+  /* settled now, gone now */
+  S.set('nb:unread', '0');
+  L.set('nj:c:e1', [JSON.stringify({ cid: 'c1', state: 'approved', body: 'x' })]);
+  const v2 = await HOME.needsView();
+  ok(!v2.items.some(x => x.id === 'inbox' || x.id === 'journal') && v2.count === v.count - 4, 'read and released, they leave the list at once');
+  /* a plan running: no held line, and planning said */
+  S.set('nsoul:cycle:c-n2', JSON.stringify({ id: 'c-n2', date: T, status: 'running', intents: [{ n: 1, action: 'outreach-send', tier: 'R2', status: 'planned', args: {} }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-n2', date: T }));
+  const v3 = await HOME.needsView();
+  ok(v3.planning === true && !v3.items.some(x => x.id === 'held'), 'while a plan runs: planning, and nothing held');
+  /* through the door, the owner only */
+  const d1 = (await door({ query: { view: 'needs' }, headers: AUTH })).body;
+  ok(d1.ok === true && d1.count === v3.count && d1.items.length === v3.items.length, 'GET ?view=needs through the door');
+  const d0 = await door({ query: { view: 'needs' }, headers: {} });
+  ok(d0.status === 401 || (d0.body && d0.body.ok === false), 'and never without the owner\'s key');
+  /* a store that fails: what failed is named, the rest stands */
+  FAULT.cmds = new Set(['LRANGE']);
+  const vf = await HOME.needsView();
+  FAULT.cmds = null;
+  ok(vf.ok === true && vf.missing && vf.missing.journal && vf.items.some(x => x.id === 'letters'), 'a part that cannot be read is named, and the rest stands: ' + JSON.stringify(vf.missing));
+  ok(HOME.NEED_ORDER.join(',') === 'letters,mail,inbox,journal,held', 'the order is the house\'s own, written once');
+  DUMPS.push(JSON.stringify([...S]));
+  resetStore();
+  for (const [k, x] of keepS) S.set(k, x); for (const [k, x] of keepL) L.set(k, x); for (const [k, x] of keepH) H.set(k, x); for (const [k, x] of keepZ) Z.set(k, x);
+  CLOCK.t = keepT;
+}
+
 console.log('\n13. nothing real was reached, and the password is nowhere');
 {
   ok(!NET.calls.some(c => /resend\.com|gmail\.com|smtp|imap/i.test(c.url)), 'no real mail server or API was ever reached (the senders and the mailbox are stood in)');

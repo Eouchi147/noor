@@ -32,7 +32,7 @@ import {
   K, nowMs, nowIso, dayOf, addDays, newId, store, parse, getJSON, setJSON, casUpdate, canonical, isPaused, readGoals,
   readSeries, actionsList, spendView, metricValue, sayLantern, auditAppend
 } from "./_soul.js";
-import { HANDS, tierOf, redLineCheck, runHand, deps, ownerApproval } from "./_hands.js";
+import { HANDS, tierOf, redLineCheck, runHand, deps, ownerApproval, inboxNew, journalWaiting } from "./_hands.js";
 import * as I from "./_instruments.js";
 import * as DEC from "./_decisions.js";
 import { sentences } from "./_prose.js";
@@ -770,6 +770,71 @@ export async function heldLetters() {
     else if (x.status === "planned") writing++;
   }
   return { planning, cycle: rec.id, held, writing };
+}
+/* ROUND NINE (7 October 2026). The owner: "The whole admin should be
+   managed and run by the lantern, I am the human who owns Noor but also has
+   a family with young kids and doesn't have time to chase and dig and
+   search. I need clarity and simplicity at all time. I want to be able to
+   find easily what I need to attend to everywhere in the admin console."
+   GET ?view=needs: everything that waits for him across the house, as one
+   short list the console shows from every screen. Each item says how many,
+   in his words, and where it is done: the letters and the mail's own in the
+   Mail room, readers' messages and journal replies in the Readers' inbox,
+   every other open card on Home, with its buttons. The inbox and the
+   journal are read live (their morning cards are not counted twice), so a
+   need he settles leaves the list at once. A card he put off (Later) is not
+   counted until it comes back, as on Home. Never a throw: a part that
+   cannot be read is named in `missing`, and the rest stands. */
+export const NEED_ORDER = Object.freeze(["letters", "mail", "inbox", "journal", "held"]);
+export async function needsView() {
+  const today = dayOf();
+  const missing = {};
+  const why = e => sayLantern(str(e && e.message || e, 160)) || "it could not be read";
+  const items = [];
+  let cards = [];
+  try { cards = DEC.visible(await DEC.readOpen(), today); } catch (e) { missing.decisions = why(e); }
+  const letters = [], mail = [], rest = [];
+  for (const d of cards) {
+    const key = String(d.key || "");
+    if (key === "inbox" || key === "journal") continue;   /* read live below */
+    const isMail = /^mail:/.test(key);
+    if (isMail && !/^mail:t:/.test(key) && d.letter && typeof d.letter === "object" && String(d.letter.kind || "") !== "reply") { letters.push(d); continue; }
+    if (isMail && key !== "mail-setup") { mail.push(d); continue; }   /* a reply on his Send, a message only he can settle */
+    rest.push(d);
+  }
+  letters.sort((a, b) => String(a.at || "").localeCompare(String(b.at || "")));
+  const byId = {};
+  if (letters.length) byId.letters = { id: "letters", n: letters.length,
+    title: letters.length === 1 ? "1 letter waits for your Send" : letters.length + " letters wait for your Send",
+    why: "Read each one whole, then Send or Not this one.", where: "mail", go: { room: "mail", tab: "letters", letter: String(letters[0].id) },
+    act: letters.length === 1 ? "Read it" : "Read them" };
+  if (mail.length) byId.mail = { id: "mail", n: mail.length,
+    title: mail.length === 1 ? "1 message in the mail needs you" : mail.length + " messages in the mail need you",
+    why: "What the Lantern could not settle on its own, and any reply waiting for your Send.", where: "mail", go: { room: "mail", tab: "inbox" }, act: "Open the inbox" };
+  let planning = false;
+  try {
+    const h = await heldLetters();
+    planning = !!h.planning;
+    const n = Array.isArray(h.held) ? h.held.length : 0;
+    if (!planning && n) byId.held = { id: "held", n: 1, letters: n, title: n === 1 ? "1 letter held back today" : n + " letters held back today",
+      why: "The checks stopped " + (n === 1 ? "it" : "them") + " before " + (n === 1 ? "it was" : "they were") + " written. Plan again brings " + (n === 1 ? "it" : "them") + " back, or choose one by one.",
+      where: "mail", go: { room: "mail", tab: "letters", anchor: "mail-held" }, act: n === 1 ? "See it" : "See them" };
+  } catch (e) { missing.held = why(e); }
+  try {
+    const n = await inboxNew();
+    if (n > 0) byId.inbox = { id: "inbox", n, title: n === 1 ? "1 new message from a reader" : n + " new messages from readers",
+      why: "Readers wrote through the site's message door; only you can answer them.", where: "readers", go: { room: "readers", anchor: "anchor-inbox" }, act: n === 1 ? "Read it" : "Read them" };
+  } catch (e) { missing.inbox = why(e); }
+  try {
+    const n = await journalWaiting();
+    if (n > 0) byId.journal = { id: "journal", n, title: n === 1 ? "1 journal reply waits to be read" : n + " journal replies wait to be read",
+      why: "A reply goes on the journal's wall only once you release it.", where: "readers", go: { room: "readers", anchor: "anchor-journal" }, act: n === 1 ? "Read it" : "Read them" };
+  } catch (e) { missing.journal = why(e); }
+  for (const k of NEED_ORDER) if (byId[k]) items.push(byId[k]);
+  for (const d of rest) items.push({ id: "card:" + d.id, n: 1, kind: d.kind, title: sayLantern(str(d.title, 200)) || "A decision",
+    why: sayLantern(clip(d.why || "", 240)), where: "home", go: { room: "home", card: String(d.id) }, act: "Open" });
+  const count = items.reduce((t, x) => t + (x.n || 0), 0);
+  return { ok: true, at: nowIso(), count, planning, items, ...(Object.keys(missing).length ? { missing } : {}) };
 }
 const parseIntentId = id => { const m = /^i:(.+):(\d+)$/.exec(String(id || "")); return m ? { cycle: m[1], n: Number(m[2]) } : null; };
 const intentOf = it => ({ action: it.action, args: it.args || {}, why: it.why || "", expectedEffect: it.expectedEffect || "", metric: it.metric || "", evidence: it.evidence || {} });

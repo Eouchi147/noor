@@ -385,3 +385,19 @@ Every letter's one step now says the house asks nothing in return; a reply is on
 - The room opens with "What needs you": one row each for the letters on his Send (Read them), the letters held back (Plan again, the Home's Think again), and the inbox's own (Open the inbox), or a calm row saying when the next letters come. Then the switch and the day, then the tabs, Letters first and open whenever the house sends `letters`.
 - The Letters tab: how it works in one line, the path from found to replied, then Waiting for your Send, Held back, Set for later and Sent. A letter opens whole in a sheet ("Letter 1 of 3 waiting"); Send and Not this one each ask first, post the card's own decide, and the next letter opens on its own. While a plan runs the room reads itself again every 20 seconds, for five minutes at most, only while it is open.
 - A house with no `letters` part shows the room exactly as before.
+
+## 15. One console, and what needs the owner on every screen (owner's words, 7 October 2026)
+
+"The whole admin should be managed and run by the lantern, I am the human who owns Noor but also has a family with young kids and doesn't have time to chase and dig and search. I need clarity and simplicity at all time. I want to be able to find easily what I need to attend to everywhere in the admin console. Also some buttons (At least the "Ledger" button) bring me to the old admin console that we retired. I need 1 admin console, unified and optimized for me and the lantern to work synergistically."
+
+### 15.1 Needs you (GET /api/soul?view=needs, api/_home.js needsView)
+
+- One list of what waits for him across the house, each item with how many, his words, its one action and where it is done: the letters on his Send (the oldest opens first, whole), the mail's own (a reply on his Send, a message only he can settle) in the Mail inbox, the readers' new messages and the journal's replies waiting in the Readers' inbox, today's held letters (one thing to do: Plan again, or one by one), then every other open card on Home with its buttons. The inbox and the journal are read live (nb:unread, nj:queue), and their morning cards are not counted twice; a card he put off is not counted until it comes back. `count`, `planning`, and `missing` for a part that cannot be read.
+- The console shows the count in the top bar of every screen: gold with its number, or "All clear". One tap opens the list; one tap on an item goes where it is done. It is read on arrival, every two minutes while the page is in view, after every change he makes, and when the page comes back into view. A house without the view shows no chip.
+- Settled, gone: marking the last new message read (or done, or deleted) closes Home's inbox card at once (api/inbox.js); releasing or removing the last journal reply closes Home's journal card (api/journal.js).
+
+### 15.2 The retired console
+
+- /admin and /admin.html redirect to /admin2 (vercel.json). A link the house raised before to one of the old console's panes (/admin#giving, /admin#inbox) opens that room here: giving, inbox (the Readers' inbox), pulse (Home), guardians (Legacy), traffic (Numbers, readers), market, social, dials. The gate no longer offers the old console, and no link in the console leads to it.
+- Giving (the ledger) is a room here: the zakat still owed first, the gifts of 30 days, where the money stands (zakat off the gross, upkeep at what it costs, the household floor, onward), recording what he gave (POST /api/ledger, minor units) and taking a record back after asking in its row (DELETE), month by month, the recent gifts, the du'as on the wall, Stripe's own pages. Home's "The ledger" and the zakat card open it; LEDGER_HREF is /admin2#giving. More shows it after Mail, with the month's gifts.
+- The Readers' inbox has the old message desk's buttons: New first, a new message read when opened (one PATCH), Reply by mail, Done, Back to read, and Delete after asking.

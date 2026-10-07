@@ -438,7 +438,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   await pg.click('nav.bar [data-s="more"]');
   await pg.waitForSelector('#s-more [data-room="mail"]', { timeout: 10000 });
   const hub = await pg.evaluate(() => ({ order: [...document.querySelectorAll('#s-more [data-room]')].map(b => b.dataset.room).slice(0, 3).join(','), card: document.querySelector('#s-more [data-room="mail"]').innerText.replace(/\s+/g, ' ') }));
-  ok(hub.order === 'engine,mail,lights' && /^Mail /.test(hub.card) && /24 of 50/.test(hub.card) && /mail is on/.test(hub.card), 'Mail is a room in More, after the engine room, with its live number: ' + hub.card);
+  ok(hub.order === 'engine,mail,giving' && /^Mail /.test(hub.card) && /24 of 50/.test(hub.card) && /mail is on/.test(hub.card), 'Mail is a room in More, after the engine room, with its live number: ' + hub.card);
   const g0 = st.mailGets;
   await pg.click('#s-more [data-room="mail"]');
   await pg.waitForSelector('#s-mail.on #mail-tabs [data-mtab]', { timeout: 10000 }); await pg.waitForTimeout(200);

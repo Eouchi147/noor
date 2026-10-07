@@ -58,7 +58,7 @@ export const GIVING_READ_MS = 15000;                /* Stripe's own clock */
 export const GIVING_BOX_MS = 20000;                 /* the sense stage's box for the whole step */
 export const CHANGE_DAYS = 7;                       /* one line change, one note, in 7 days */
 export const STRIPE_DOWN_HOURS = 24;                /* refused this long: the owner is told */
-export const LEDGER_HREF = "/admin#giving";         /* the ledger room (the full console) */
+export const LEDGER_HREF = "/admin2#giving";        /* the Giving room of the one console (round nine: the old console is retired) */
 export const SUSTAIN_ID = "g-sustain";
 export const SUSTAIN_METRIC = "giving.monthly";
 

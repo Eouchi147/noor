@@ -240,7 +240,10 @@ async function open_(w, h, opts = {}) {
         if (b.action === 'benchmarks') return r.fulfill(J({ ok: true, ids: b.ids }));
         return r.fulfill(J({ ok: false, error: 'unknown action' }, 400));
       }
-      const view = new URL(u).searchParams.get('view'); st.gets.push(u.replace(BASE, ''));
+      const view = new URL(u).searchParams.get('view');
+      /* round nine: the console's Needs you reads the house on every screen; this room's own reads are what is counted here */
+      if (view === 'needs') return r.fulfill(J({ ok: true, at: new Date().toISOString(), count: 0, planning: false, items: [] }));
+      st.gets.push(u.replace(BASE, ''));
       if (opts.mode === 'real') {
         const wk = new URL(u).searchParams.get('week');
         const file = view === 'scorecard' && wk === '2026-W40' ? 'scorecard-W40' : view;

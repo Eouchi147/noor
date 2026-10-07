@@ -58,7 +58,9 @@ export const ROOM = Object.freeze({
   posts: "/admin2#posts", readers: "/admin2#readers", system: "/admin2#system",
   observatory: "/admin2#observatory", engine: "/admin2#soul", lantern: "/admin2#lantern", night: "/admin2#night"
 });
-/* and the full console's own panes (/admin#giving, the ledger: 3 October 2026) */
+/* and the old console's panes (/admin#giving, 3 October 2026): round nine
+   retired that console, so the console reads such a link as its own room
+   (/admin#giving opens the Giving room), and the old address redirects */
 const HREF_OK = h => /^\/admin2?#[a-z]+$/.test(h) || /^https:\/\/[A-Za-z0-9.-]+(\/[\w./?=&%#-]*)?$/.test(h)
   || /^https:\/\/mail\.google\.com\/mail\/u\/0\/#search\/rfc822msgid:[A-Za-z0-9._%+-]+$/.test(h);   /* mail: a message in Gmail (LANTERN.md section 11) */
 const str = (v, n) => String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, n || 200);

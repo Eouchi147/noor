@@ -56,7 +56,7 @@ import * as I from "./_instruments.js";
 import { undoAction } from "./_hands.js";
 import { tick, readCycle } from "./_mind.js";
 import { readPlaybook, listProposals, listUpgrades, setUpgradeStatus } from "./_evolve.js";
-import { homeView, doNow, skipNext, ideaChoice } from "./_home.js";
+import { homeView, doNow, skipNext, ideaChoice, needsView } from "./_home.js";
 import { decide, closeByRef } from "./_decisions.js";
 import * as MAIL from "./_mail.js";   /* mail: the Lantern's mailbox (LANTERN.md section 11) */
 import * as VOICE from "./_voice.js";   /* round four: the owner's voice, urgent now and the rest at 22:00 */
@@ -304,6 +304,8 @@ export default async function handler(req, res) {
       }
       const view = String(q.view || "today");
       if (view === "home") return json(res, 200, await homeView());
+      /* round nine: what needs him across the house, for every screen of the console */
+      if (view === "needs") return json(res, 200, await needsView());
       /* mail: the Mail room (threads, places, do not contact, the switch) */
       if (view === "mail") return json(res, 200, await MAIL.mailView());
       if (view === "today") return json(res, 200, await viewToday());

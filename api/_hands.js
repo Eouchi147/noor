@@ -366,8 +366,9 @@ function realDeps() {
   return REAL;
 }
 /* how many inbox messages are still new: the inbox's own counter, kept by
-   api/inbox.js on every arrival and every reading (nb:unread) */
-async function inboxNew() {
+   api/inbox.js on every arrival and every reading (nb:unread). Round nine:
+   read live by the console's Needs you too (api/_home.js needsView) */
+export async function inboxNew() {
   const r = await store([["GET", "nb:unread"]]);
   const n = parseInt(r[0], 10);
   return isFinite(n) && n > 0 ? n : 0;
@@ -375,8 +376,8 @@ async function inboxNew() {
 /* how many journal replies still wait to be read: the reading queue
    api/journal.js keeps (nj:queue), each mark checked against its entry's own
    comments, the way the journal's own `queue` action reads it; bounded to
-   the newest 100 marks and 20 entries */
-async function journalWaiting() {
+   the newest 100 marks and 20 entries; round nine: read live by Needs you */
+export async function journalWaiting() {
   const marks = ((await store([["LRANGE", "nj:queue", "0", "99"]]))[0] || []).map(m => parse(m, null)).filter(m => m && m.entry);
   if (!marks.length) return 0;
   const entries = [...new Set(marks.map(m => String(m.entry)))].slice(0, 20);

@@ -59,7 +59,6 @@ code{font-family:var(--f-mono);font-size:.86em;color:var(--gold);background:var(
 #gate input{width:100%;font:inherit;font-size:16px;background:var(--ink);color:var(--text);border:1px solid var(--line2);border-radius:10px;padding:12px 14px;margin:0 0 10px}
 #gate .go{width:100%;background:var(--gold);color:#1a1608;font-weight:700;border-radius:10px;padding:13px;font-size:15px}
 #gate .err{color:var(--bad);font-size:13px;min-height:1.2em;margin:10px 0 0}
-#gate .old{display:block;text-align:center;margin-top:16px;font-size:12.5px;color:var(--faint)}
 
 /* ---- the shell ---- */
 #app{display:none;min-height:100svh}
@@ -67,8 +66,16 @@ code{font-family:var(--f-mono);font-size:.86em;color:var(--gold);background:var(
 header.top{position:sticky;top:0;z-index:20;background:rgba(11,13,22,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);padding:calc(10px + var(--sat)) 16px 10px;display:flex;align-items:center;gap:12px}
 header.top .mark{width:30px;height:30px;border-radius:50%;background:#1a1608;color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--f-disp);font-size:16px;flex:0 0 auto}
-header.top h1{font-family:var(--f-disp);font-weight:500;font-size:20px;color:var(--cream);margin:0;flex:1;letter-spacing:-.01em}
+header.top h1{font-family:var(--f-disp);font-weight:500;font-size:20px;color:var(--cream);margin:0;flex:1;min-width:0;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 header.top .when{font-family:var(--f-mono);font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+/* round nine: what needs him, on every screen; gold with its number, calm when nothing does */
+header.top .nyou{position:relative;flex:0 0 auto;min-height:40px;display:inline-flex;align-items:center;gap:7px;padding:0 12px 0 8px;border-radius:20px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);font-size:12.5px;font-weight:600;white-space:nowrap}
+header.top .nyou::after{content:"";position:absolute;inset:-3px -2px}
+header.top .nyou.hot{border-color:rgba(233,200,106,.55);background:rgba(233,200,106,.12);color:var(--gold)}
+header.top .nyou .nn{font-family:var(--f-mono);font-size:12px;font-weight:600;min-width:24px;height:24px;padding:0 7px;border-radius:12px;background:var(--gold);color:#1a1608;display:inline-flex;align-items:center;justify-content:center}
+header.top .nyou .ni{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--good)}
+header.top .nyou .ni svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:480px){header.top .when{display:none}}
 header.top .rf{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted)}
 header.top .rf svg{width:16px;height:16px}
 header.top .rf.spin svg{animation:spin .8s linear infinite}
@@ -517,7 +524,7 @@ select.fi{-webkit-appearance:none;appearance:none}
   background:linear-gradient(180deg,rgba(233,200,106,.06),rgba(233,200,106,0) 80px),var(--panel)}
 /* a card that is hovered or focused on a desk is ringed in its goal's colour: an opacity, nothing else */
 .dc::after{content:"";position:absolute;inset:-1px;border-radius:inherit;border:1.5px solid var(--gc,var(--gold));box-shadow:0 0 18px -6px var(--gc,var(--gold));opacity:0;transition:opacity .25s;pointer-events:none}
-.dc.lit::after{opacity:1}
+.dc.lit::after,.dc.nglow::after{opacity:1}
 .dc .k{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;font-size:11.5px;color:var(--faint)}
 .dc h3{margin:10px 0 0;font-size:16px;line-height:1.4;font-weight:600;color:var(--cream);overflow-wrap:anywhere}
 .dc .why{margin:5px 0 0;font-size:13.5px;line-height:1.55;color:var(--muted);overflow-wrap:anywhere}
@@ -911,6 +918,62 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .mlwait{display:flex;gap:10px;align-items:center;background:var(--panel2);border:1px dashed var(--line2);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--text)}
 .mlwait i{display:block;width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto}
 .msh .mpos{margin:2px 0 0;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
+/* ---- NEEDS YOU's list (round nine): each line read whole, never cut */
+#needs-sheet .list>.row{width:100%;text-align:left}
+#needs-sheet .row .t>b,#needs-sheet .row .t>span{white-space:normal;overflow-wrap:anywhere}
+#needs-sheet .row .t>span{margin-top:2px;line-height:1.45}
+#needs-sheet .row .r .pill{white-space:nowrap}
+#needs-sheet .mnote{margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--blue)}
+/* ---- THE READERS' INBOX (round nine): every tap target a thumb's size */
+#s-readers .back{min-height:44px}
+#s-readers .btn,#s-readers .btn.sm{min-height:44px}
+#s-readers .list>.row{width:100%;text-align:left}
+#s-readers .row .t>b{white-space:normal;overflow-wrap:anywhere}
+#rd-sheet .btn{min-height:44px}
+/* ---- GIVING, the ledger (round nine): the zakat still owed first, then the
+   gifts, where the money stands, recording what was given, month by month,
+   the recent gifts and the du'as on the wall. Every tap target a thumb's
+   size; a table scrolls inside its own box, never the page. */
+#s-giving .back{min-height:44px}
+#s-giving .btn{min-height:44px}
+#s-giving .hsec{margin:24px 0 10px}
+.gvo{margin:12px 0 0;padding:18px 16px 16px;border-radius:16px;border:1px solid rgba(233,200,106,.4);background:linear-gradient(180deg,rgba(233,200,106,.09),rgba(233,200,106,0) 110px),var(--panel)}
+.gvo.clear{border-color:#2b4a37;background:linear-gradient(180deg,rgba(142,212,155,.08),rgba(142,212,155,0) 110px),var(--panel)}
+.gvo .gvk{margin:0;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim)}
+.gvo .gvn{font-family:var(--f-disp);font-size:42px;font-weight:600;line-height:1.05;color:var(--cream);margin:6px 0 4px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.gvo.clear .gvn{color:var(--good)}
+.gvo .gvs{margin:0;font-size:13px;line-height:1.5;color:var(--text)}
+.gvo .gvh{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:12px;line-height:1.55;color:var(--muted)}
+.gvset{margin:12px 0 0;padding:14px 16px;border-radius:14px;border:1px dashed var(--line2);background:var(--panel)}
+.gvset b{color:var(--cream)}.gvset p{margin:6px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+#s-giving .mstrip{margin:12px 0 0}
+.gvws{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 14px}
+.gvwl{margin:6px 0 4px;font-size:12px;color:var(--muted)}
+.gvw{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.gvw .gvi{flex:0 0 22px;height:22px;border-radius:50%;background:var(--panel2);border:1px solid var(--line2);color:var(--muted);font-family:var(--f-mono);font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.gvw .t{flex:1;min-width:0}.gvw .t b{display:block;font-size:13.5px;color:var(--cream);font-weight:600}.gvw .t span{display:block;font-size:12px;line-height:1.5;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.gvw .gvv{flex:0 0 auto;font-size:14px;color:var(--cream);font-variant-numeric:tabular-nums;white-space:nowrap}
+.gvw.due .gvi,.gvw.due .gvv,.gvw.due .t b{color:var(--wait)}.gvw.ok .gvi,.gvw.ok .gvv{color:var(--good)}
+.gvf{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.gvf .gvl{font-size:12px;font-weight:600;color:var(--muted);margin-top:4px}
+.gvf .fi{min-height:44px}
+.gvf select.fi{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.gvf .gvrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gvf .gvrow>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.gvf .btn{margin-top:8px}
+.gvf .gvmsg{margin:4px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted)}.gvf .gvmsg.bad{color:var(--bad)}
+.gvtw{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.gvt{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;min-width:520px}
+.gvt th{text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:10px 12px;border-bottom:1px solid var(--line)}
+.gvt td{padding:9px 12px;border-top:1px solid var(--line);color:var(--text);white-space:nowrap}
+.gvt tr:first-child td{border-top:0}
+.gvnote{margin:8px 0 0;font-size:12px;line-height:1.55;color:var(--muted)}
+.gvdua{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 14px}
+.gvdua p{margin:0;padding:10px 0;border-top:1px solid var(--line);font-family:var(--f-disp);font-style:italic;font-size:15px;line-height:1.5;color:var(--cream);overflow-wrap:anywhere}
+.gvdua p:first-child{border-top:0}
+.gvlinks{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+#s-giving .row .t>b{white-space:normal;overflow-wrap:anywhere}
+#s-giving .mdrow .mdt .t b{font-family:var(--f-body);font-variant-numeric:tabular-nums}
 /* a place's row: its letter set for later, or an address that bounced */
 #s-mail .row .t>span.mrw{white-space:normal;color:var(--blue);font-size:12px;margin-top:1px}
 #s-mail .row .t>span.mrw.bad{color:var(--wait)}
@@ -1338,7 +1401,6 @@ select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     <input id="pw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password"/>
     <button class="go" id="enter">Unlock</button>
     <p class="err" id="err"></p>
-    <a class="old" href="/admin">Open the full console instead →</a>
   </div>
 </div>
 
@@ -1347,6 +1409,7 @@ select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     <div class="mark">ن</div>
     <h1 id="title">Home</h1>
     <span class="when" id="when"></span>
+    <button type="button" class="nyou" id="needs" hidden aria-haspopup="dialog"></button>
     <button class="rf" id="refresh" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/></svg></button>
   </header>
 
@@ -1366,6 +1429,7 @@ select.soul-sel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
          five buttons. The engine room is the code's own api/soul.js room. -->
     <section class="surf" id="s-engine"></section>
     <section class="surf" id="s-mail"></section>
+    <section class="surf" id="s-giving"></section>
     <section class="surf" id="s-lights"></section>
     <section class="surf" id="s-legacy"></section>
     <section class="surf" id="s-marketing"></section>
@@ -1402,10 +1466,12 @@ var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){re
 var relock=function(){$("app").classList.remove("on");$("gate").hidden=false;$("err").textContent="The key has expired. Enter it again.";$("enter").disabled=false};
 var answer=function(r){if(r.status===401){relock();return{ok:false,status:401,j:{},locked:true}}return r.json().catch(function(){return null}).then(function(j){return{ok:r.ok,status:r.status,j:j}})};
 var get=function(u){return fetch(u,{credentials:"same-origin",cache:"no-store"}).then(answer)};
-var post=function(u,b){return fetch(u,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};return r})};
+var post=function(u,b){return fetch(u,{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};if(r.ok&&!(b&&b.action==="queue"))needsSoon();return r})};
 /* the corrections store is the one place the house is asked to forget
    something, and it listens for DELETE, so the kit knows a third verb */
-var del=function(u,b){return fetch(u,{method:"DELETE",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};return r})};
+var del=function(u,b){return fetch(u,{method:"DELETE",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};if(r.ok)needsSoon();return r})};
+/* round nine: and PATCH, for the readers' inbox (a message read, done or deleted) */
+var patch=function(u,b){return fetch(u,{method:"PATCH",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(answer).then(function(r){r.j=r.j||{};if(r.ok)needsSoon();return r})};
 /* every action ends here when the network is gone: the button comes back and the owner is told */
 var unreachable=function(b,was){return function(){if(b){b.disabled=false;if(was!=null)b.textContent=was}closeSheet();toast("Could not reach the house.",true)}};
 var toastT=null;
@@ -1532,14 +1598,17 @@ var CUR="home";
    holds it. Nothing here counts the surfaces: the bar's columns are counted
    from the buttons that are in it. */
 var BAR={home:1,ask:1,posts:1,numbers:1,more:1};
-var ROOM={engine:1,mail:1,lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,flow:1,readers:1};
+var ROOM={engine:1,mail:1,giving:1,lights:1,legacy:1,marketing:1,journal:1,night:1,system:1,controls:1,flow:1,readers:1};
 var NAMES={home:"Home",ask:"Ask the Lantern",posts:"Posts",numbers:"Numbers",more:"More",
-  engine:"The engine room",mail:"Mail",lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",
+  engine:"The engine room",mail:"Mail",giving:"Giving",lights:"Lights",legacy:"Legacy",marketing:"Marketing",journal:"Journal desk",night:"Night shift",system:"System",
   controls:"Controls",flow:"Flow",readers:"Readers' inbox"};
 var SHORT={home:"Home",ask:"Ask",posts:"Posts",numbers:"Numbers",more:"More"};
-var ALIAS={today:["home"],soul:["engine"],lantern:["ask"],house:["more"],reels:["posts","share"],observatory:["numbers","overview"]};
+var ALIAS={today:["home"],soul:["engine"],lantern:["ask"],house:["more"],reels:["posts","share"],observatory:["numbers","overview"],
+  /* round nine: the retired console's own pane names (its address now leads
+     here, and a card the house raised before may still name one) */
+  pulse:["home"],inbox:["readers"],ledger:["giving"],guardians:["legacy"],traffic:["numbers","readers"],market:["marketing"],social:["posts"],dials:["controls"]};
 var LOAD={home:drawHome,ask:drawLantern,posts:function(f){return drawTabbed("posts",f)},numbers:function(f){return drawTabbed("numbers",f)},more:drawHouse,
-  engine:drawSoul,mail:drawMail,lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
+  engine:drawSoul,mail:drawMail,giving:drawGiving,lights:drawLights,legacy:drawLegacy,marketing:drawMarketing,journal:drawJournal,night:drawNight,system:drawSystem,
   controls:drawControls,flow:drawFlow,readers:drawReaders};
 var LOADED={};
 /* where a name in the hash, or in a link the house sent, leads: a surface or
@@ -1630,9 +1699,100 @@ function drawTabbed(s,force){
   return Promise.resolve();
 }
 document.addEventListener("click",function(e){var d=e.target.closest&&e.target.closest("[data-score]");if(d)goRoom("engine","soul-i-week")});
-$("refresh").addEventListener("click",function(){if(busy())return toast("A post is on its way; wait for it.");var b=$("refresh");b.classList.add("spin");bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();Promise.resolve(LOAD[CUR]?LOAD[CUR](true):null).then(function(){setTimeout(function(){b.classList.remove("spin")},500)})});
+$("refresh").addEventListener("click",function(){if(busy())return toast("A post is on its way; wait for it.");var b=$("refresh");b.classList.add("spin");bust();needsRead();LOADED[CUR]=true;DRAWN[CUR]=Date.now();Promise.resolve(LOAD[CUR]?LOAD[CUR](true):null).then(function(){setTimeout(function(){b.classList.remove("spin")},500)})});
 /* a surface left open in a hidden tab is read again on return; Home keeps its own clock (hLiveSync) */
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&CUR!=="home"&&!busy()&&Date.now()-(DRAWN[CUR]||0)>TTL&&LOAD[CUR]){bust();LOADED[CUR]=true;DRAWN[CUR]=Date.now();LOAD[CUR](true)}});
+
+/* ================= NEEDS YOU, ON EVERY SCREEN =================
+   Round nine (7 October 2026). The owner: "I want to be able to find easily
+   what I need to attend to everywhere in the admin console." GET
+   /api/soul?view=needs is the house's one list of what waits for him; its
+   count stands in the top bar of every screen, gold with its number, or
+   calm ("All clear") when nothing waits. One tap opens the list; each item
+   is one tap to where it is done: the letters and the mail's own in the
+   Mail room (the first letter opening whole), readers' messages and journal
+   replies in the Readers' inbox, every other card on Home, brought into
+   view with its buttons. The list is read on arrival, every two minutes
+   while the page is in view, after every change the owner makes, and again
+   when the page comes back into view. A house without the view shows no
+   chip at all. */
+var NEEDS={d:null,at:0,busy:false,soon:0,open:false};
+var N_EVERY=120000;
+var N_ICO={letters:"mail",mail:"person",inbox:"mail",journal:"pen",held:"warn"};
+function needsRead(){
+  if(NEEDS.busy||!$("app").classList.contains("on"))return Promise.resolve(NEEDS.d);
+  NEEDS.busy=true;
+  return get("/api/soul?view=needs").then(function(r){
+    NEEDS.busy=false;if(r&&r.locked)return NEEDS.d;
+    var j=r&&r.ok&&r.j&&r.j.ok!==false&&Array.isArray(r.j.items)?r.j:null;
+    if(j){NEEDS.d=j;NEEDS.at=Date.now()}else if(r&&r.status>=400&&r.status<500)NEEDS.d=null;
+    needsPaint();return NEEDS.d;
+  },function(){NEEDS.busy=false;needsPaint();return NEEDS.d});
+}
+function needsSoon(){clearTimeout(NEEDS.soon);NEEDS.soon=setTimeout(needsRead,1200)}
+function needsItems(){var d=NEEDS.d;return d&&Array.isArray(d.items)?d.items.filter(function(x){return x&&typeof x==="object"&&String(x.title||"").trim()&&x.go&&typeof x.go==="object"}):[]}
+function needsCount(){var d=NEEDS.d;if(!d)return 0;var n=hNum(d.count);if(n==null)n=needsItems().reduce(function(t,x){return t+(hNum(x.n)||1)},0);return Math.max(0,n)}
+function needsPaint(){
+  var b=$("needs");if(!b)return;
+  if(!NEEDS.d){b.hidden=true;return}
+  var n=needsCount();b.hidden=false;b.classList.toggle("hot",n>0);
+  b.innerHTML=n>0?'<span class="nn">'+esc(fnum(n))+'</span><span class="nt">'+(n===1?"needs you":"need you")+'</span>':'<span class="ni">'+ICO.ok+'</span><span class="nt">All clear</span>';
+  b.setAttribute("aria-label",(n>0?(n===1?"1 thing needs you":fnum(n)+" things need you"):"Nothing needs you")+". Open the list.");
+  if(NEEDS.open&&$("sheet").classList.contains("on")&&$("sheet-in").querySelector("#needs-sheet")){var sh=$("sheet"),y=sh.scrollTop;$("sheet-in").innerHTML=needsHtml();sh.scrollTop=y}
+}
+function needsHtml(){
+  var d=NEEDS.d,items=needsItems(),out='<div class="msh" id="needs-sheet"><h2>What needs you</h2>';
+  if(!d)out+='<p class="sub">The list could not be read just now. Press refresh at the top to ask again.</p>';
+  else if(!items.length)out+='<div class="hcalm" id="needs-calm"><div class="hic good">'+ICO.ok+'</div><div><b>Nothing needs you. The Lantern has it.</b><span>When something does, its number shows at the top of every screen.</span></div></div>';
+  else out+='<p class="sub">Everything that waits for you, across the house. One tap takes you to where it is done.</p><div class="list" id="needs-list">'+items.map(function(x,i){
+      var ic=ICO[N_ICO[x.id]]||(String(x.id).indexOf("card:")===0?ICO.lamp:ICO.ring);
+      return '<button type="button" class="row tap" data-need="'+i+'"><div class="ic">'+ic+'</div><div class="t"><b>'+hs(x.title)+'</b>'+(String(x.why||"").trim()?'<span>'+hs(x.why)+'</span>':'')+'</div>'
+        +'<div class="r"><span class="pill gold">'+esc(String(x.act||"Open"))+'</span></div></button>'}).join("")+'</div>';
+  if(d&&d.planning===true)out+='<p class="mnote" id="needs-planning">The Lantern is planning now: new letters come to the Mail room as it writes them.</p>';
+  return out+'<div class="acts"><button class="btn ghost" id="cl">Close</button></div></div>';
+}
+function needsOpen(){NEEDS.open=true;sheet(needsHtml(),true);if(Date.now()-NEEDS.at>15000)needsRead()}
+/* to where it is done */
+function needsGo(x){
+  var g=x&&x.go||{};NEEDS.open=false;closeSheet();
+  if(g.room==="mail"){
+    if(g.tab==="letters"||g.tab==="inbox"){MAIL.tab=g.tab;if(g.tab==="inbox")MAIL.fn="needs"}
+    LOADED.mail=true;DRAWN.mail=Date.now();show("mail");
+    return drawMail(true).then(function(){
+      if(CUR!=="mail")return;
+      if(g.letter!=null){var L=mLetters(mailData());if(!L||!L.waiting.length)return;var at=0;L.waiting.forEach(function(w,k){if(String(w.card)===String(g.letter))at=k});return mailLetterSheet(at)}
+      var el=g.anchor?$(g.anchor):(g.tab?$("mail-tab-"+g.tab):null);
+      if(el)try{el.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(e){}
+    });
+  }
+  if(g.room==="home"&&g.card!=null)return needsCard(String(g.card));
+  var r=resolve(g.room);if(!r)return show("home");
+  if(r.s==="readers"){delete C.inbox;delete C.held;LOADED.readers=false}
+  return goRoom(r.s,g.anchor||null);
+}
+/* a card on Home: Home opens, and the card is brought into view and glows
+   for a moment; Home may draw itself again as it opens (it reads itself
+   after a change), so the card is found again until the moment is over */
+function needsCard(id){
+  show("home");var n=0,t0=0,last=null;
+  var find=function(){var el=null;document.querySelectorAll("#h-decide article.dc[data-did]").forEach(function(c){if(c.getAttribute("data-did")===id)el=c});return el};
+  (function look(){
+    if(CUR!=="home"){if(last)last.classList.remove("nglow");return}
+    var el=find();
+    if(el){
+      if(el!==last){last=el;if(!t0)t0=Date.now();try{el.scrollIntoView({block:"center",behavior:reduced()?"auto":"smooth"})}catch(e){el.scrollIntoView()}}
+      if(Date.now()-t0<2400){el.classList.add("nglow");return void setTimeout(look,150)}
+      el.classList.remove("nglow");return;
+    }
+    if(++n<80)setTimeout(look,100);
+  })();
+}
+$("needs").addEventListener("click",needsOpen);
+$("sheet-in").addEventListener("click",function(e){var b=e.target&&e.target.closest&&e.target.closest("[data-need]");if(!b||!$("sheet-in").querySelector("#needs-sheet"))return;
+  var x=needsItems()[+b.dataset.need];if(x)needsGo(x)});
+/* in view: read when stale; out of view: nothing */
+setInterval(function(){if(document.visibilityState==="visible"&&$("app").classList.contains("on")&&Date.now()-NEEDS.at>=N_EVERY-1000)needsRead()},30000);
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&$("app").classList.contains("on")&&Date.now()-NEEDS.at>60000)needsRead()});
 
 function skel(n){var s="";for(var i=0;i<(n||3);i++)s+='<div class="row"><div class="sk" style="width:34px;height:34px;border-radius:9px"></div><div class="t"><div class="sk" style="width:60%"></div><div class="sk" style="width:40%;margin-top:6px"></div></div></div>';return '<div class="list">'+s+'</div>'}
 
@@ -2358,8 +2518,9 @@ var H_KIND={approve:"Needs your yes",choose:"Your choice",you:"Only you can do t
 function hLink(l){
   var href=l&&typeof l==="object"?String(l.href||""):(typeof l==="string"?l:"");
   href=href.trim();if(!href)return null;
-  if(/^\/admin2(?:\.html)?$/.test(href))return {room:"home",href:"#home"};
-  var m=/^(?:\/admin2(?:\.html)?)?#([A-Za-z][\w-]*)(?:[\/?&][\w\/?&=.%-]*)?$/.exec(href);
+  /* round nine: the retired console's address (/admin) is this console too */
+  if(/^\/admin2?(?:\.html)?$/.test(href))return {room:"home",href:"#home"};
+  var m=/^(?:\/admin2?(?:\.html)?)?#([A-Za-z][\w-]*)(?:[\/?&][\w\/?&=.%-]*)?$/.exec(href);
   if(m){var r=resolve(m[1]);return r?{room:r.s,href:"#"+m[1].toLowerCase()}:null}
   if(/^https:\/\/[^\s"'<>\\]+$/i.test(href))return {url:true,href:href};
   if(/^\/(?!\/)[^\s"'<>\\]*$/.test(href))return {url:true,href:href};
@@ -2644,10 +2805,10 @@ function hFlame(j,gv){
 }
 function hGivingHtml(j){
   var gv=j.giving,why=hWhy(j,"giving");
-  var head=hHead("Keeping the lamp lit",null,false,'<a class="hlink" href="/admin#giving" target="_blank" rel="noopener" data-ledger="1">The ledger<span class="chev">'+ICO.chev+'</span></a>');
+  var head=hHead("Keeping the lamp lit",null,false,'<a class="hlink" href="#giving" data-ledger="1">The ledger<span class="chev">'+ICO.chev+'</span></a>');
   var cold=function(say){return head+'<div class="lamp cold" id="h-lamp" data-flame="0"><div class="top"><div class="lp">'+H_LAMP+'</div><div><div class="bl2">The lamp is not lit here</div><p class="say warn">'+say+'</p></div></div></div>'};
-  if(gv==null||typeof gv!=="object")return cold(why?"The giving reading could not be read just now. "+esc(hReason(why)):"Giving is not in the house's answer yet. The ledger room holds the gifts in the meantime.");
-  if(gv.configured===false)return cold("The gift door is not set up yet, so there is nothing to read. Giving reads Stripe; the ledger room says what it needs.");
+  if(gv==null||typeof gv!=="object")return cold(why?"The giving reading could not be read just now. "+esc(hReason(why)):"Giving is not in the house's answer yet. The ledger, in Giving, holds the gifts in the meantime.");
+  if(gv.configured===false)return cold("The gift door is not set up yet, so there is nothing to read. Giving reads Stripe; the ledger, in Giving, says what it needs.");
   var cur=gv.currency||"USD",fl=hFlame(j,gv),m=gv.monthly||{},gvn=hNum(m.givers),d7=hNum(m.delta7),z=gv.zakat&&hNum(gv.zakat.outstanding),did=(Array.isArray(gv.did)?gv.did:[]).filter(function(x){return x&&x.title});
   var tot=function(x){x=x||{};var net=hNum(x.net),n=hNum(x.count);return net==null?'<b>·</b>':'<b>'+esc(hMoney(net,cur))+(n!=null?' <small>from '+fnum(n)+' gift'+(n===1?'':'s')+'</small>':'')+'</b>'};
   var dl=d7==null?'':d7===0?'<div class="dl">no change this week</div>':'<div class="dl '+(d7>0?"up":"dn")+'">'+(d7>0?"↑ "+fnum(d7)+" more":"↓ "+fnum(-d7)+" fewer")+' this week</div>';
@@ -3031,7 +3192,8 @@ function oHide(){var r=OUT.run;if(!r)return;r.hidden=true;oClear();clearInterval
 function oShowLetters(){
   var cs=[].slice.call(document.querySelectorAll("#h-decide article.dc.letter"));if(!cs.length){var d=$("h-decide");if(d)try{d.scrollIntoView({block:"start",behavior:reduced()?"auto":"smooth"})}catch(x){d.scrollIntoView()}return}
   try{cs[0].scrollIntoView({block:"center",behavior:reduced()?"auto":"smooth"})}catch(x){cs[0].scrollIntoView()}
-  cs.forEach(function(c){c.classList.add("lit")});setTimeout(function(){cs.forEach(function(c){c.classList.remove("lit")})},2400);
+  /* round nine: rung with a class of its own, so a pointer passing over another card cannot put the light out early */
+  cs.forEach(function(c){c.classList.add("lit","nglow")});setTimeout(function(){cs.forEach(function(c){c.classList.remove("lit","nglow")})},2400);
 }
 /* the page hidden: the watch sleeps; seen again, it reads at once */
 document.addEventListener("visibilitychange",function(){var r=OUT.run;if(r&&r.sleeping&&!r.ended&&document.visibilityState!=="hidden")oPoll()});
@@ -3845,20 +4007,93 @@ function drawReaderNumbers(force){
 }
 /* THE READERS' INBOX, a room behind More: what readers sent, and the replies
    on the journal that wait to be read before they go on the wall. */
+/* THE READERS' INBOX. Round nine (7 October 2026): the retired console's
+   message desk, here, so nothing about a reader's message sends him
+   anywhere else. The messages that came through the site's door, filtered
+   by where they stand (New first when any is new); opened, a new one is
+   marked read at once, quietly, and its sheet offers Reply by mail, Done
+   (Back to read once done) and Delete, which asks first. The Home's card
+   about new messages closes itself when none is new (api/inbox.js). Then
+   the journal's replies waiting to be released, as before. */
+var RD={f:null,open:null,cf:false,busy:null,ib:null,hq:null,seen:{}};
+var RD_ST={"new":["gold","new"],read:["","read"],done:["good","done"]};
+function rdSt(m){return RD_ST[String(m&&m.status||"")]?String(m.status):"new"}
 function drawReaders(force){
   var el=$("s-readers");
-  if(!el.dataset.built){el.innerHTML=BACK+'<p class="sec">The inbox</p>'+skel(3);el.dataset.built="1"}
-  return Promise.all([inbox(force),held(force)]).then(function(a){
-    var ib=a[0]||{},hq=a[1]||{};
-    var items=(ib.items||[]);var q=(hq.queue||[]);
-    el.innerHTML=BACK
-      +'<p class="sec" id="anchor-inbox">The inbox</p>'+(ib.ok===false?'<div class="empty">The inbox is not set up.</div>':(items.length?'<div class="list">'+items.slice(0,20).map(function(m,i){return '<div class="row tap" data-msg="'+i+'"><div class="ic" style="color:'+(m.status==="new"?"var(--gold)":"var(--faint)")+'">'+ICO.mail+'</div><div class="t"><b>'+esc(m.from||m.kind||"someone")+(m.status==="new"?' <span class="pill good" style="margin-left:6px">new</span>':'')+'</b><span>'+esc(String(m.body||"").slice(0,90))+'</span></div><div class="r small muted">'+esc(ago(m.at))+'</div></div>'}).join("")+'</div>':'<div class="empty">Nothing has arrived.</div>'))
-      +'<p class="sec" id="anchor-journal">Replies waiting to be read</p>'+(q.length?'<div class="list">'+q.map(function(c,i){return '<div class="row hold"><div class="ic">'+ICO.pen+'</div><div class="t tap" data-held="'+i+'"><b>'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b><span>'+esc(String(c.body||"").slice(0,90))+(c.why?' · <i style="color:var(--wait);font-style:normal">flagged: '+esc(c.why)+'</i>':'')+'</span></div><div class="acts2"><button class="btn sm" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger sm" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button></div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>');
-    el.onclick=function(e){var b=e.target.closest("button,[data-msg],[data-held]");if(!b)return;
-      if(b.dataset.held!=null){var c=q[+b.dataset.held]||{};return sheet('<h2 style="font-size:18px">'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</h2><p class="sub">'+esc(ago(c.at))+(c.why?' · <span style="color:var(--wait)">flagged: '+esc(c.why)+'</span>':'')+' · read it whole before it goes on the wall</p><div class="msg">'+esc(c.body||"")+'</div><div class="acts"><button class="btn" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button><button class="btn ghost" id="cl">Close</button></div>')}
-      if(b.dataset.msg!=null){var m=items[+b.dataset.msg]||{};return sheet('<h2 style="font-size:18px">'+esc(m.from||m.kind||"A message")+'</h2><p class="sub">'+esc(m.page||"")+(m.cc?' · '+esc(m.cc):'')+' · '+esc(ago(m.at))+'</p><div class="msg">'+esc(m.body||"")+'</div><div class="acts">'+(m.from&&/@/.test(m.from)?'<a class="btn" href="mailto:'+esc(m.from)+'">Reply by mail</a>':'')+'<a class="btn ghost" href="/admin#inbox">Open in the full console</a></div>')}
-      var rel=b.dataset.rel||b.dataset.rm;if(rel){var p=rel.split("|");b.disabled=true;post("/api/journal",{action:"comment-state",id:p[0],cid:p[1],state:b.dataset.rel?"approve":"reject"}).then(function(r){toast(r.ok?(b.dataset.rel?"Released.":"Removed."):"It refused.",!r.ok);C.held=null;drawReaders(true)})}};
-  }).catch(function(){el.innerHTML=BACK+'<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The inbox could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+  if(!el.dataset.built){el.innerHTML=BACK+'<div id="rd-in"><p class="sec">The inbox</p>'+skel(3)+'</div>';el.dataset.built="1";wireReaders(el)}
+  return Promise.all([inbox(force),held(force)]).then(function(a){RD.ib=a[0]||{};RD.hq=a[1]||{};readersPaint()})
+    .catch(function(){var b=$("rd-in");if(b)b.innerHTML='<div class="card" style="margin-top:12px"><b style="color:var(--bad)">The inbox could not be read.</b><p class="muted small" style="margin:6px 0 0">Press refresh at the top to ask again.</p></div>'});
+}
+function rdItems(){var ib=RD.ib||{};return (Array.isArray(ib.items)?ib.items:[]).filter(function(m){return m&&typeof m==="object"})}
+function readersPaint(){
+  var box=$("rd-in");if(!box)return;
+  var ib=RD.ib||{},items=rdItems(),q=(RD.hq&&Array.isArray(RD.hq.queue)?RD.hq.queue:[]).filter(function(c){return c&&typeof c==="object"});
+  var cnt={"new":0,read:0,done:0};items.forEach(function(m){cnt[rdSt(m)]++});
+  if(!RD.f||(RD.f!=="all"&&!cnt[RD.f]))RD.f=cnt["new"]?"new":"all";
+  var rows=items.map(function(m,i){return [m,i]}).filter(function(p){return RD.f==="all"||rdSt(p[0])===RD.f});
+  var out='<p class="sec" id="anchor-inbox">The inbox</p>';
+  if(ib.ok===false)out+='<div class="empty">The inbox is not set up.</div>';
+  else{
+    if(items.length)out+='<div class="mfil slide" id="rd-fil" role="group" aria-label="Show">'+mailChips("rdf",RD.f,[["new","New",cnt["new"]],["read","Read",cnt.read],["done","Done",cnt.done],["all","All",items.length]])+'</div>';
+    out+=rows.length?'<div class="list" id="rd-list">'+rows.map(function(p){var m=p[0],st=RD_ST[rdSt(m)];
+        return '<button type="button" class="row tap" data-msg="'+p[1]+'"><div class="ic" style="color:'+(rdSt(m)==="new"?"var(--gold)":"var(--faint)")+'">'+ICO.mail+'</div><div class="t"><b>'+esc(m.from||m.kind||"someone")+'</b><span>'+esc([ago(m.at),String(m.body||"").slice(0,90)].filter(Boolean).join(" · "))+'</span></div>'
+          +'<div class="r"><span class="pill '+st[0]+'">'+esc(st[1])+'</span></div></button>'}).join("")+'</div>'
+      :'<div class="empty" id="rd-empty">'+(items.length?"Nothing here is marked "+RD.f+".":"Nothing has arrived. Notes come through the door at /feedback.")+'</div>';
+  }
+  out+='<p class="sec" id="anchor-journal">Replies waiting to be read</p>'+(q.length?'<div class="list">'+q.map(function(c,i){return '<div class="row hold"><div class="ic">'+ICO.pen+'</div><div class="t tap" data-held="'+i+'"><b>'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</b><span>'+esc(String(c.body||"").slice(0,90))+(c.why?' · <i style="color:var(--wait);font-style:normal">flagged: '+esc(c.why)+'</i>':'')+'</span></div><div class="acts2"><button class="btn sm" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger sm" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button></div></div>'}).join("")+'</div>':'<div class="empty">Nothing is waiting. Every reply that has arrived has been answered for.</div>');
+  box.innerHTML=out;
+}
+/* one message at length, with what he may do with it */
+function rdMsgHtml(m){
+  var st=rdSt(m),busy=RD.busy?' disabled':'',acts=[];
+  if(!RD.cf){
+    if(m.from&&/@/.test(m.from))acts.push('<a class="btn" href="mailto:'+esc(m.from)+'?subject='+encodeURIComponent("Re: your note to NOOR Codex of Light")+'">Reply by mail</a>');
+    acts.push(st==="done"?'<button type="button" class="btn ghost" data-ibst="read"'+busy+'>Back to read</button>':'<button type="button" class="btn'+(acts.length?' ghost':'')+'" data-ibst="done"'+busy+'>Done</button>');
+    acts.push('<button type="button" class="btn danger" data-ibdel="1"'+busy+'>Delete</button>');
+  }
+  return '<div class="msh" id="rd-sheet"><h2>'+esc(m.from||m.kind||"A message")+'</h2><p class="sub">'+esc([m.page,m.cc,ago(m.at)].filter(Boolean).join(" · "))+'</p>'
+    +'<div class="tags"><span class="pill '+RD_ST[st][0]+'">'+esc(RD_ST[st][1])+'</span>'+(m.kind?'<span class="pill">'+esc(sWords(m.kind))+'</span>':'')+'</div>'
+    +'<div class="msg" id="rd-body" style="margin-top:12px">'+esc(m.body||"")+'</div>'
+    +(RD.cf?hConfirm("Delete this message for good? It cannot be brought back.","Yes, delete it","ibdelyes","ibdelno","danger"):'')
+    +'<div class="acts">'+acts.join("")+'<button class="btn ghost" id="cl">Close</button></div></div>';
+}
+function rdOpenMsg(){if(RD.open==null||!$("sheet").classList.contains("on")||!$("sheet-in").querySelector("#rd-sheet"))return null;
+  var it=rdItems();for(var i=0;i<it.length;i++)if(String(it[i].id)===RD.open)return it[i];return null}
+function rdRepaint(sel){var m=rdOpenMsg();if(!m)return;var sh=$("sheet"),y=sh.scrollTop;$("sheet-in").innerHTML=rdMsgHtml(m);sh.scrollTop=y;
+  var f=sel&&$("sheet-in").querySelector(sel);if(f)try{f.focus({preventScroll:false})}catch(e){f.focus()}}
+/* one change to a message: the house's counts come back, the list is read again */
+function rdPatch(m,body,said,b){
+  if(RD.busy||!m)return;RD.busy=body.delete?"del":body.status;if(b){b.disabled=true;b.textContent="Working…"}
+  return patch("/api/inbox",body).then(function(r){
+    RD.busy=null;if(r.locked)return;var j=r.j||{};
+    if(!r.ok||j.ok===false){toast(j.reason==="store"?"The inbox's store is not connected, so nothing changed.":j.reason==="gone"?"That message is no longer there.":"It refused.",true);rdRepaint();return}
+    if(said){RD.cf=false;RD.open=null;closeSheet();toast(said)}
+    delete C.inbox;delete C.home;HLIVE.at=0;return drawReaders(true);
+  },function(){RD.busy=null;toast("Could not reach the house.",true);rdRepaint()});
+}
+function wireReaders(el){
+  el.addEventListener("click",function(e){var t=e.target;if(!t||!t.closest)return;var b;
+    if((b=t.closest("[data-rdf]"))){RD.f=b.dataset.rdf;return readersPaint()}
+    if((b=t.closest("[data-msg]"))){var m=rdItems()[+b.dataset.msg];if(!m)return;RD.open=String(m.id);RD.cf=false;sheet(rdMsgHtml(m),true);
+      /* opened, a new message is read: one quiet change, once */
+      if(rdSt(m)==="new"&&m.id!=null&&!RD.seen[m.id]){RD.seen[m.id]=1;patch("/api/inbox",{id:m.id,status:"read"}).then(function(r){
+        if(!r.ok||(r.j&&r.j.ok===false)){delete RD.seen[m.id];return}
+        m.status="read";delete C.inbox;delete C.home;HLIVE.at=0;readersPaint();rdRepaint()},function(){delete RD.seen[m.id]})}
+      return}
+    var q=(RD.hq&&Array.isArray(RD.hq.queue)?RD.hq.queue:[]);
+    if((b=t.closest("[data-held]"))){var c=q[+b.dataset.held]||{};return sheet('<h2 style="font-size:18px">'+esc(c.name||"someone")+' · '+esc(c.title||"")+'</h2><p class="sub">'+esc(ago(c.at))+(c.why?' · <span style="color:var(--wait)">flagged: '+esc(c.why)+'</span>':'')+' · read it whole before it goes on the wall</p><div class="msg">'+esc(c.body||"")+'</div><div class="acts"><button class="btn" data-rel="'+esc(c.entry)+'|'+esc(c.cid)+'">Release</button><button class="btn danger" data-rm="'+esc(c.entry)+'|'+esc(c.cid)+'">Remove</button><button class="btn ghost" id="cl">Close</button></div>')}
+    if((b=t.closest("button[data-rel],button[data-rm]"))){var rel=b.dataset.rel||b.dataset.rm;var p=rel.split("|");b.disabled=true;
+      post("/api/journal",{action:"comment-state",id:p[0],cid:p[1],state:b.dataset.rel?"approve":"reject"}).then(function(r){toast(r.ok?(b.dataset.rel?"Released.":"Removed."):"It refused.",!r.ok);C.held=null;drawReaders(true)})}
+  });
+  /* the message sheet's own buttons (the sheet sits outside the room) */
+  $("sheet-in").addEventListener("click",function(e){
+    var b=e.target&&e.target.closest&&e.target.closest("[data-ibst],[data-ibdel],[data-ibdelyes],[data-ibdelno]");if(!b||b.disabled)return;
+    var m=rdOpenMsg();if(!m)return;
+    if(b.dataset.ibst)return void rdPatch(m,{id:m.id,status:b.dataset.ibst},b.dataset.ibst==="done"?"Done. It moves to Done.":"Back among the read.",b);
+    if(b.hasAttribute("data-ibdel")){RD.cf=true;return rdRepaint("[data-ibdelyes]")}
+    if(b.hasAttribute("data-ibdelno")){RD.cf=false;return rdRepaint("[data-ibdel]")}
+    if(b.hasAttribute("data-ibdelyes"))return void rdPatch(m,{id:m.id,delete:true},"Deleted.",b);
+  });
 }
 
 /* ================= THE MAIL ROOM =================
@@ -4497,6 +4732,131 @@ function mailHubStat(){var m=HOME.data&&HOME.data.mail;
   return [ct==null?"·":ct+" of "+tg,"places written to · mail is "+(m.on===false?"off":"on")];
 }
 
+/* ================= GIVING: THE LEDGER =================
+   Round nine (7 October 2026). The owner: "some buttons (At least the
+   "Ledger" button) bring me to the old admin console that we retired. I
+   need 1 admin console, unified and optimized for me and the lantern to
+   work synergistically." The retired console's Giving pane, here. The one
+   number that matters first: the zakat still owed. Then the gifts of the
+   last 30 days, where the money stands (zakat off the gross, upkeep at what
+   it costs, the household floor, and what stands above it, to give onward),
+   recording what he gave and taking a mistake back (asking first, in the
+   row), month by month, the recent gifts, the du'as on the wall, and
+   Stripe's own pages. GET /api/ledger, with POST to record and DELETE to
+   take back (amounts in minor units, never a float); the gifts from GET
+   /api/admin-data; the wall from GET /api/dedications. A giver's address is
+   shown as text, never as a link. */
+var GV={cf:null,busy:null,msg:null,bad:false,kind:"zakat",date:"",l:null,h:null,w:null};
+var GV_KINDS=[["zakat","Zakat","the due, given onward"],["upkeep","Upkeep","hosting, domains, the models it thinks with"],["household","Household","drawn for the family"],["onward","Onward","given away above the floor"]];
+function gvKindName(k){for(var i=0;i<GV_KINDS.length;i++)if(GV_KINDS[i][0]===k)return GV_KINDS[i][1];return sWords(k)||"A fund"}
+var ledgerQ=function(f){return cached("ledger",function(){return get("/api/ledger").then(function(r){return r&&r.locked?null:r})},f)};
+var wallQ=function(f){return cached("wall",function(){return get("/api/dedications").then(function(r){return r&&r.j})},f)};
+/* minor units, in the money's own currency: 1250 is $12.50 */
+function gvCash(minor,cur){var n=(Number(minor)||0)/100,c=String(cur||"usd").toUpperCase();
+  try{return new Intl.NumberFormat("en-US",{style:"currency",currency:c,minimumFractionDigits:2,maximumFractionDigits:2}).format(n)}
+  catch(e){return c+" "+n.toFixed(2)}}
+function drawGiving(force){
+  var el=$("s-giving");
+  if(!el.dataset.built){el.innerHTML=BACK+'<div id="gv-in">'+skel(3)+'</div>';el.dataset.built="1";wireGiving(el)}
+  return Promise.all([soft(ledgerQ(force)),soft(house(force)),soft(wallQ(force))]).then(function(a){
+    GV.l=a[0];GV.h=a[1];GV.w=a[2];gvPaint();
+  });
+}
+function gvData(){var r=GV.l;return r&&r.j&&typeof r.j==="object"?r.j:null}
+function gvPaint(){
+  var box=$("gv-in");if(!box)return;
+  var r=GV.l,j=gvData(),h=GV.h||{},g=h.gifts&&typeof h.gifts==="object"?h.gifts:null,cur=(j&&j.currency)||"usd";
+  var out="";
+  /* the one number that matters */
+  if(!r||r.net||!j){out+='<div class="hfail" id="gv-fail"><div class="hic bad">'+ICO.warn+'</div><div style="min-width:0"><b>The ledger could not be read just now.</b><span>'+esc(r&&r.net?"Nothing is lost. Try again in a moment.":"Press refresh at the top to ask again.")+'</span><div class="acts"><button type="button" class="btn ghost" data-gvretry="1">Try again</button></div></div></div>'}
+  else if(j.ok===false&&j.reason==="stripe"){out+='<div class="gvset" id="gv-setup"><b>The ledger reads Stripe.</b><p>'+(j.configured?"Stripe did not answer just now, so the ledger cannot add up what arrived. Press refresh at the top in a minute.":"Add STRIPE_SECRET_KEY in Vercel and redeploy, and this fills itself in.")+'</p></div>'}
+  else{
+    var z=j.funds&&j.funds.zakat||{},owe=Math.max(0,hNum(z.outstanding)||0),clear=owe<=0;
+    out+='<div class="gvo'+(clear?' clear':'')+'" id="gv-owed"><p class="gvk">Zakat still owed</p><div class="gvn" id="gv-owe">'+esc(gvCash(owe,cur))+'</div>'
+      +'<p class="gvs">'+(clear?"All of it has been given onward. ":"")+'Set aside '+esc(gvCash(z.accrued,cur))+' · already given '+esc(gvCash(z.given,cur))+'</p>'
+      +(j.honest?'<p class="gvh" id="gv-honest">'+hs(j.honest)+'</p>':'')+'</div>';
+  }
+  /* the gifts of the last 30 days, from the house */
+  out+='<div class="mstrip" id="gv-gifts" role="list" aria-label="Gifts in the last 30 days">'+[[g?money(g.total30d||0):"·","gifts, 30 days"],[g?fnum(g.count30d||0):"·","givers, 30 days"],[g?money(g.monthly||0):"·","monthly gifts a month"]].map(function(x){
+    return '<div class="mn" role="listitem"><b>'+esc(String(x[0]))+'</b><span>'+esc(x[1])+'</span></div>'}).join("")+'</div>';
+  if(j&&j.ok!==false){
+    /* where the money stands, in the order it has to move */
+    var w=j.waterfall;
+    if(w&&w.zakat){var step=function(n,label,val,note,cls){return '<div class="gvw'+(cls?" "+cls:"")+'"><span class="gvi">'+n+'</span><div class="t"><b>'+esc(label)+'</b><span>'+esc(note)+'</span></div><b class="gvv">'+esc(val)+'</b></div>'};
+      var owed=hNum(w.zakat.outstanding)||0,hh=w.household||{},on=w.onward||{},mr=hNum(w.monthsRun)||0;
+      out+=hHead("Where the money stands")+'<div class="gvws" id="gv-water"><p class="gvwl">After '+esc(fnum(mr))+' month'+(mr===1?'':'s')+' of running:</p>'
+        +step("1","Zakat, off the gross",gvCash(owed,cur),owed>0?gvCash(w.zakat.due,cur)+" is due and "+gvCash(w.zakat.given,cur)+" has gone. This much is not yours to spend.":"All of it has been given onward.",owed>0?"due":"ok")
+        +step("2","Upkeep, at what it costs",gvCash(w.upkeep&&w.upkeep.spent,cur),"Hosting, domains, the models it thinks with.","")
+        +step("3","Household floor",gvCash(hh.undrawn,cur)+" left",gvCash(hh.floor,cur)+" a month for "+fnum(mr)+" month"+(mr===1?"":"s")+": "+gvCash(hh.target,cur)+"; "+gvCash(hh.taken,cur)+" drawn so far.","")
+        +step("4","Above the floor, to give onward",gvCash(on.remaining,cur),gvCash(on.available,cur)+" stands above the floor; "+gvCash(on.given,cur)+" already given.","")+'</div>'}
+    /* recording what he gave */
+    var store=j.store!==false,today=new Date().toISOString().slice(0,10);
+    out+=hHead("Record what you gave")+'<form class="gvf" id="gv-form" data-gvadd="1" autocomplete="off" novalidate>'
+      +'<label class="gvl" for="gv-kind">Which fund</label><select class="fi" id="gv-kind">'+GV_KINDS.map(function(k){return '<option value="'+k[0]+'"'+(GV.kind===k[0]?' selected':'')+'>'+esc(k[1]+": "+k[2])+'</option>'}).join("")+'</select>'
+      +'<div class="gvrow"><div><label class="gvl" for="gv-amount">Amount</label><input class="fi" id="gv-amount" type="text" inputmode="decimal" placeholder="25 or 25.50" autocomplete="off"/></div>'
+      +'<div><label class="gvl" for="gv-date">Date</label><input class="fi" id="gv-date" type="date" value="'+esc(GV.date||today)+'"/></div></div>'
+      +'<label class="gvl" for="gv-note">Who it went to (if you like)</label><input class="fi" id="gv-note" type="text" maxlength="200" autocomplete="off"/>'
+      +'<button type="submit" class="btn"'+(store?'':' disabled')+'>Record it</button>'
+      +'<p class="gvmsg'+(GV.bad?' bad':'')+'" id="gv-msg" role="status">'+esc(GV.msg||(store?"It lowers what is still owed above, and stays in the ledger.":"Recording needs the store, which is not connected, so nothing can be kept yet."))+'</p></form>';
+    var gl=mObjs(j.given)||[];
+    out+=hHead("What you have given",gl.length)+(gl.length?'<div class="list" id="gv-given">'+gl.map(function(x,i){var on=GV.cf&&GV.cf===String(x.id);
+      return '<div class="mdrow" data-gvi="'+i+'"><div class="mdt"><div class="t"><b>'+esc(gvCash(x.amountMinor,x.currency||cur))+' · '+esc(gvKindName(x.kind))+'</b><span>'+esc([x.date,String(x.note||"").trim()].filter(Boolean).join(" · "))+'</span></div>'
+        +(on?'':'<button type="button" class="btn ghost" data-gvrm="'+i+'">Take back</button>')+'</div>'
+        +(on?hConfirm("Take this record back? What is still owed goes back up by "+gvCash(x.amountMinor,x.currency||cur)+" if it was zakat.","Yes, take it back","gvrmyes","gvrmno","danger"):'')+'</div>'}).join("")+'</div>'
+      :'<div class="empty" id="gv-none">Nothing recorded yet. When you give something away, write it above so the number stays true.</div>');
+    /* month by month */
+    var ms=mObjs(j.months)||[],t=j.totals||{};
+    out+=hHead("Month by month")+'<div class="gvtw" id="gv-months"><table class="gvt"><thead><tr><th>Month</th><th>Received</th><th>Fees</th><th>Net</th><th>Zakat</th><th>Given</th></tr></thead><tbody>'
+      +(ms.length?ms.map(function(m){return '<tr><td><b>'+esc(m.month)+'</b></td><td>'+esc(gvCash(m.gross,cur))+'</td><td>'+esc(gvCash(m.fee,cur))+'</td><td>'+esc(gvCash(m.net,cur))+'</td><td>'+esc(gvCash(m.zakat,cur))+'</td><td>'+esc(gvCash(m.givenZakat||0,cur))+'</td></tr>'}).join("")
+        :'<tr><td colspan="6" class="muted">No money has arrived yet.</td></tr>')+'</tbody></table></div>'
+      +'<p class="gvnote" id="gv-total">All time: '+esc(gvCash(t.gross,cur))+' received across '+esc(fnum(t.count||0))+' payment'+((t.count||0)===1?'':'s')+', '+esc(gvCash(t.fee,cur))+' in Stripe fees, '+esc(gvCash(t.net,cur))+' net.'
+      +(t.feesPartial?' Some fees could not be read from Stripe, so the fee column is a floor, not the whole.':'')+(j.partial?' Part of the record could not be read, so a total may be low.':'')+'</p>';
+  }
+  /* the recent gifts and the du'as on the wall */
+  var rc=g&&Array.isArray(g.recent)?g.recent.filter(function(x){return x&&typeof x==="object"}):[];
+  out+=hHead("Recent gifts",g?rc.length:null)+(rc.length?'<div class="list" id="gv-recent">'+rc.map(function(x){
+      return '<div class="row"><div class="ic">'+ICO.lamp+'</div><div class="t"><b>'+esc(money(x.amount)+(x.currency&&String(x.currency).toUpperCase()!=="USD"?" "+String(x.currency).toUpperCase():""))+'</b><span>'+esc([x.when,String(x.email||"").trim()].filter(Boolean).join(" · "))+'</span></div></div>'}).join("")+'</div>'
+    :'<div class="empty" id="gv-norecent">'+(g?"No gift in the last 30 days yet. The giving page is live at /donate, and every page carries its quiet golden line.":"The gifts could not be read just now.")+'</div>');
+  var wl=GV.w&&Array.isArray(GV.w.items)?GV.w.items.filter(function(x){return typeof x==="string"&&x.trim()}):[];
+  out+=hHead("Du'as on the wall",wl.length)+(wl.length?'<div class="gvdua" id="gv-wall">'+wl.map(function(x){return '<p>'+esc(x)+'</p>'}).join("")+'</div><p class="gvnote">These lines shine on the site now, after the Lantern\'s gate approved them. To take one down, refund the gift in Stripe, or ask in a working session.</p>'
+    :'<div class="empty" id="gv-nowall">No du\'a shines yet. Givers may leave one at checkout; it appears here and on the site once the gate approves it.</div>');
+  out+='<div class="gvlinks" id="gv-links"><a class="btn ghost" href="https://dashboard.stripe.com/payments" target="_blank" rel="noopener noreferrer">Stripe payments <span aria-hidden="true">↗</span></a>'
+    +'<a class="btn ghost" href="https://dashboard.stripe.com/subscriptions" target="_blank" rel="noopener noreferrer">Stripe monthly gifts <span aria-hidden="true">↗</span></a>'
+    +'<a class="btn ghost" href="/donate" target="_blank" rel="noopener">The giving page <span aria-hidden="true">↗</span></a></div>';
+  /* what he was typing survives a repaint */
+  var keep={amount:($("gv-amount")||{}).value,note:($("gv-note")||{}).value};
+  box.innerHTML=out;
+  if(keep.amount&&$("gv-amount"))$("gv-amount").value=keep.amount;if(keep.note&&$("gv-note"))$("gv-note").value=keep.note;
+}
+/* an amount as he wrote it (25, 25.50, $1,250.75), in minor units, or null */
+function gvMinor(v){var s=String(v||"").replace(/[\s,$€£]/g,"");if(!/^\d+(\.\d{1,2})?$/.test(s))return null;var n=Math.round(parseFloat(s)*100);return n>0&&n<=1e9?n:null}
+function gvAfter(r,said,bad){
+  GV.busy=null;if(r.locked)return;var j=r.j||{};
+  if(!r.ok||j.ok===false){GV.msg=j.reason==="store"?"The store is not connected, so this cannot be kept yet.":j.reason==="amount"?"Write the amount the way you would say it, for example 25 or 25.50.":(lw(j.message||j.reason)||"It would not record.");GV.bad=true;gvPaint();return false}
+  GV.l={ok:true,status:200,j:j};C.ledger={at:Date.now(),v:GV.l};GV.msg=said;GV.bad=!!bad;GV.cf=null;delete C.home;HLIVE.at=0;gvPaint();toast(said);return true;
+}
+function wireGiving(el){
+  el.addEventListener("click",function(e){
+    var t=e.target;if(!t||!t.closest)return;var a,j=gvData();
+    if((a=t.closest("[data-gvretry]")))return void drawGiving(true);
+    if(!j)return;var gl=mObjs(j.given)||[];
+    if((a=t.closest("[data-gvrm]"))){var x=gl[+a.dataset.gvrm];if(!x)return;GV.cf=String(x.id);gvPaint();var y=el.querySelector("[data-gvrmyes]");if(y)try{y.focus({preventScroll:true})}catch(z){}return}
+    if((a=t.closest("[data-gvrmno]"))){var bi=(a.closest("[data-gvi]")||{dataset:{}}).dataset.gvi;GV.cf=null;gvPaint();var b0=bi!=null&&el.querySelector('[data-gvrm="'+bi+'"]');if(b0)try{b0.focus({preventScroll:true})}catch(z){}return}
+    if((a=t.closest("[data-gvrmyes]"))){var id=GV.cf;if(!id||GV.busy)return;GV.busy="rm";a.disabled=true;a.textContent="Working…";
+      del("/api/ledger",{id:id}).then(function(r){gvAfter(r,"Taken back. The ledger is as it was before it.")},function(){GV.busy=null;a.disabled=false;a.textContent="Yes, take it back";toast("Could not reach the house.",true)});return}
+  });
+  el.addEventListener("change",function(e){var t=e.target;if(!t)return;if(t.id==="gv-kind")GV.kind=t.value||"zakat";if(t.id==="gv-date")GV.date=t.value||""});
+  el.addEventListener("submit",function(e){var f=e.target&&e.target.closest&&e.target.closest("[data-gvadd]");if(!f)return;e.preventDefault();if(GV.busy)return;
+    var amt=gvMinor($("gv-amount").value),kind=$("gv-kind").value||"zakat",date=$("gv-date").value||"",note=String($("gv-note").value||"").trim().slice(0,200),b=f.querySelector("button[type=submit]");
+    if(!amt){GV.msg="Write the amount the way you would say it, for example 25 or 25.50.";GV.bad=true;$("gv-msg").textContent=GV.msg;$("gv-msg").className="gvmsg bad";try{$("gv-amount").focus()}catch(x){}return}
+    GV.busy="add";GV.kind=kind;GV.date=date;if(b){b.disabled=true;b.textContent="Recording…"}
+    post("/api/ledger",{kind:kind,amountMinor:amt,note:note,date:date}).then(function(r){
+      var done=gvAfter(r,"Recorded: "+gvCash(amt,(gvData()||{}).currency)+" to "+gvKindName(kind)+".");
+      if(done){if($("gv-amount"))$("gv-amount").value="";if($("gv-note"))$("gv-note").value=""}
+    },function(){GV.busy=null;if(b){b.disabled=false;b.textContent="Record it"}toast("Could not reach the house.",true)});
+  });
+}
+
 /* ================= MORE =================
    The hub every room is reached from (the House of the console before Home):
    the rooms first, the engine room leading them, then the health of the
@@ -4535,10 +4895,12 @@ function drawHouse(force){
       flow:[FLOW_DAYS+" days","the window the map reads, from a post to a gift"],
       readers:ib?[String(nNew),"new · "+nHeld+" "+(nHeld===1?"reply":"replies")+" waiting"]:["·","the inbox could not be read"],
       engine:soulHubStat(so),
-      mail:mailHubStat()
+      mail:mailHubStat(),
+      giving:[money(g.total30d||0),(g.count30d||0)+" gift"+((g.count30d||0)===1?"":"s")+" in 30 days · the ledger"]
     };
     var rooms=[["engine","The engine room","Everything the Lantern runs on: the audit, the playbook, the budget, Telegram, the instruments and every cycle in full"],
-      ["mail","Mail","What the Lantern reads, answers and writes: the inbox, the places it writes to, do not contact"],["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["flow","Flow","Where the energy goes: posts, reach, readers, gifts"],["readers","Readers' inbox","Messages, and replies waiting to be read"]];
+      ["mail","Mail","What the Lantern reads, answers and writes: the inbox, the places it writes to, do not contact"],
+      ["giving","Giving","The ledger: the zakat still owed, what you gave, month by month, the gifts and the du'as on the wall"],["lights","Lights","The library and the day's card"],["legacy","Legacy","Guardians, vetting, the map"],["marketing","Marketing","The outreach studio and the pipeline"],["journal","Journal desk","Write and publish an entry"],["night","Night shift","What the Lantern found overnight"],["system","System","Keys, quick doors, the machinery"],["controls","Controls","Every switch this house has"],["flow","Flow","Where the energy goes: posts, reach, readers, gifts"],["readers","Readers' inbox","Messages, and replies waiting to be read"]];
     el.innerHTML=
       '<p class="sec">The rooms</p><div class="rooms">'+rooms.map(function(r){var s=stat[r[0]]||["·",""];
         return '<button class="card tap'+(r[0]==="engine"?" feat":"")+'" data-room="'+r[0]+'"><b>'+esc(r[1])+'</b><span class="w">'+esc(r[2])+'</span><div class="v">'+esc(s[0])+'</div><span class="w">'+esc(s[1])+'</span></button>'}).join("")+'</div>'
@@ -7655,7 +8017,7 @@ function ctlSave(b){
 
 /* ---------- the gate ---------- */
 function unlock(){$("gate").hidden=true;$("app").classList.add("on");try{localStorage.setItem("noor_nocount","1")}catch(e){}
-  clock();if(!unlock.tick)unlock.tick=setInterval(clock,30000);bust();show((location.hash||"").replace("#","")||"home",true)}
+  clock();if(!unlock.tick)unlock.tick=setInterval(clock,30000);bust();show((location.hash||"").replace("#","")||"home",true);needsRead()}
 function tryKey(){var pw=$("pw").value;if(!pw)return;$("enter").disabled=true;$("err").textContent="";
   post("/api/admin-auth",{password:pw}).then(function(r){if(r.ok&&r.j.ok)unlock();else{$("err").textContent=r.status===501?"The house has no key set (ADMIN_PASSWORD).":"That is not the key.";$("enter").disabled=false}}).catch(function(){$("err").textContent="Could not reach the house.";$("enter").disabled=false})}
 $("enter").addEventListener("click",tryKey);$("pw").addEventListener("keydown",function(e){if(e.key==="Enter")tryKey()});

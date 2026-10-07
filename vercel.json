@@ -55,6 +55,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    { "source": "/admin", "destination": "/admin2", "permanent": false },
+    { "source": "/admin.html", "destination": "/admin2", "permanent": false },
     {
       "source": "/license",
       "destination": "/school",

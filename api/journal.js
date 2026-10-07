@@ -397,6 +397,13 @@ export default async function handler(req, res) {
     const cmds = [["DEL", key]];
     if (keep.length) cmds.push(["RPUSH", key].concat(keep));
     await kv(cmds);
+    /* round nine (7 October 2026): with no reply left waiting, the Home's
+       card about them closes at once (the console's Needs you reads the
+       same queue live). Never a throw. */
+    try {
+      const H = await import("./_hands.js");
+      if ((await H.journalWaiting()) === 0) { const DEC = await import("./_decisions.js"); await DEC.closeByKey("journal", "resolved"); }
+    } catch { }
     return json(res, 200, { ok: true });
   }
 

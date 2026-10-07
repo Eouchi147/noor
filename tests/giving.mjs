@@ -193,7 +193,7 @@ let CYC;
   ok(card && card.kind === 'choose' && card.options.map(o => o.id).join() === 'keep,open' && card.options[0].label === 'Keep this goal' && card.options[1].label === 'Change it' && card.link.href === '/admin2#soul',
     'raised once as a choose card: Keep this goal, or Change it (to the goals)');
   const zak = (await DEC.readOpen()).find(d => d.key === 'zakat:2026-10');
-  ok(zak && zak.kind === 'you' && zak.steps[0] === '5 USD waits to be given' && !/USD/.test(zak.title + ' ' + zak.why) && zak.link.href === '/admin#giving' && zak.options.map(o => o.id).join() === 'open,done,later',
+  ok(zak && zak.kind === 'you' && zak.steps[0] === '5 USD waits to be given' && !/USD/.test(zak.title + ' ' + zak.why) && zak.link.href === '/admin2#giving' && zak.options.map(o => o.id).join() === 'open,done,later',
     'the zakat waiting: once this month, its amount on the owner\'s own card, in its steps: ' + (zak && JSON.stringify({ why: zak.why, steps: zak.steps })));
   {
     const st = await HOME.lanternState({});

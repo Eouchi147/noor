@@ -205,6 +205,12 @@ const json = (res, code, obj) => {
 };
 
 /* ---------- reading the pile ---------- */
+/* round nine (7 October 2026): the Home's card about new messages closes the
+   moment none is new, so Home and the console's Needs you never ask the
+   owner about a message he has already read. Never a throw. */
+async function closeHomeCard(key) {
+  try { const DEC = await import("./_decisions.js"); await DEC.closeByKey(key, "resolved"); } catch { }
+}
 export async function readInbox(limit, status) {
   const ids = (await kv([["LRANGE", "nb:list", "0", String(LIST_CAP - 1)]]))[0] || [];
   const counts = { new: 0, read: 0, done: 0, total: 0 };
@@ -317,6 +323,7 @@ export default async function handler(req, res) {
         await kv([["DEL", "nb:msg:" + id], ["LREM", "nb:list", "0", id]]);
         const fresh = await readInbox(1, "");
         try { await kv([["SET", "nb:unread", String(fresh.counts.new)]]); } catch {}
+        if (!fresh.counts.new) await closeHomeCard("inbox");
         return json(res, 200, { ok: true, deleted: id, counts: fresh.counts });
       }
       const status = STATUSES.indexOf(String(body.status || "")) !== -1 ? String(body.status) : "";
@@ -329,6 +336,7 @@ export default async function handler(req, res) {
       await kv([["SET", "nb:msg:" + id, JSON.stringify(m)]]);
       const fresh = await readInbox(1, "");
       try { await kv([["SET", "nb:unread", String(fresh.counts.new)]]); } catch {}
+      if (!fresh.counts.new) await closeHomeCard("inbox");
       return json(res, 200, { ok: true, id, status, counts: fresh.counts });
     } catch {
       return json(res, 200, { ok: false, reason: "store" });
