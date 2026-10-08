@@ -28,7 +28,10 @@
 //   the cycle it reads the mailbox (api/_mail.js mailTick), answered as
 //   `mail` beside the cycle's own fields; then (round four) the owner's voice
 //   (api/_voice.js voiceTick): letters waiting for his Send, at most once in
-//   six hours, and the evening digest from 22:00 UTC, answered as `voice`.
+//   six hours, and the evening digest from 22:00 UTC, answered as `voice`;
+//   then (round ten) the Lantern mends its held letters, as `mend`, and
+//   (round ten b) the day's letters are counted into one line of the log,
+//   as `letters`; then the search for places, as `outreach`.
 // GET  /api/soul?action=indexnow-key&key=  PUBLIC: the IndexNow key file,
 //   reached at /<key>.txt through vercel.json's rewrite. It answers the key
 //   as plain text when the name asked for is the key, and 404 otherwise;
@@ -50,7 +53,7 @@ import crypto from "node:crypto";
 import { ownerGate } from "./_owner.js";
 import {
   MISSION, K, CAP_LIMITS, store, parse, isPaused, setPaused, readGoals, setOwnerGoal, chronicleRead,
-  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList, sayLantern, auditAppend
+  readSeries, auditVerify, spendView, countsToday, dayOf, storeReady, setRequest, actionsList, sayLantern, auditAppend, nowMs
 } from "./_soul.js";
 import * as I from "./_instruments.js";
 import { undoAction } from "./_hands.js";
@@ -204,6 +207,33 @@ async function mendAfterTick(t0) {
   } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
   finally { clearTimeout(timer); }
 }
+/* ROUND TEN B (8 October 2026): the day's letters as one line of counts in
+   the log (api/_mail.js lettersPulse), written when it changes and once an
+   hour while it does not, so a quiet log still says where the letters are;
+   under its own short clock, never a throw */
+export const PULSE_TICK_MS = 8000;
+export const PULSE_EVERY_MS = 3600000;
+export const PULSE_KEY = "nsoul:pulse:letters";
+async function lettersAfterTick() {
+  let timer;
+  try {
+    if (typeof MAIL.lettersPulse !== "function") return null;
+    const p = await Promise.race([MAIL.lettersPulse(),
+      new Promise(res => { timer = setTimeout(() => res(null), PULSE_TICK_MS); })]);
+    if (!p) return { ok: false, error: "the letters could not be counted in time" };
+    if (!p.cycle && !p.waiting && !p.held && !p.sentToday && !p.scheduled) return p;
+    const sig = crypto.createHash("sha1").update(JSON.stringify({ ...p, date: undefined })).digest("hex").slice(0, 16);
+    let last = null;
+    try { last = parse((await store([["GET", PULSE_KEY]]))[0], null); } catch { last = null; }
+    const now = nowMs();
+    if (!last || last.sig !== sig || now - (Date.parse(String(last.at || "")) || 0) >= PULSE_EVERY_MS) {
+      console.log(JSON.stringify({ noor: "letters", ...p }));
+      try { await store([["SET", PULSE_KEY, JSON.stringify({ sig, at: new Date(now).toISOString() }), "EX", "172800"]]); } catch { }
+    }
+    return p;
+  } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
+  finally { clearTimeout(timer); }
+}
 /* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */
 export const OUTREACH_TICK_HARD_MS = 60000;
 async function outreachAfterTick(t0) {
@@ -322,11 +352,13 @@ export default async function handler(req, res) {
         finally { clearTimeout(vt); }
         /* round ten: then the Lantern mends its own held letters */
         const mend = await mendAfterTick(t0);
+        /* round ten b: then the day's letters, one line in the log */
+        const letters = await lettersAfterTick();
         /* round six (7 October 2026): then the outreach's search for places,
            every tick until the day's are found, under its own clock */
         const outreach = await outreachAfterTick(t0);
         if (fault) throw fault;
-        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice, mend, outreach } : r);
+        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice, mend, letters, outreach } : r);
       }
       const view = String(q.view || "today");
       if (view === "home") return json(res, 200, await homeView());

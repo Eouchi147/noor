@@ -1842,6 +1842,85 @@ async function lettersView() {
   if (!Object.keys(out.missing).length) delete out.missing;
   return out;
 }
+/* ROUND TEN B (8 October 2026): THE DAY'S LETTERS IN ONE LINE OF COUNTS.
+   The console sits behind the owner's key, so the house's director reads
+   the morning's letters from the log: api/soul.js writes this line on a
+   tick when it changes (and once an hour while it does not). It says where
+   today's plan is (its stage), how many letters it planned, how many the
+   council still reads, how many wait to be written, were written, are
+   held and are being tried again by the Lantern; how many wait for his
+   Send, are set for later and went today; the first reasons a letter was
+   held; and, when a reviewer could not answer, which free models were
+   asked and what each said back (the cause the owner's screen cannot
+   show). Never an address, never a place's name, never a letter's words.
+   Never a throw: a part that cannot be read is named in `missing`. */
+const PULSE_LETTER = new Set(["outreach-send", "outreach-followup"]);
+const pulseMask = v => String(v == null ? "" : v).replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]").replace(/\s+/g, " ").trim();
+export async function lettersPulse() {
+  const today = dayOf();
+  const out = { date: today, cycle: null, stage: null, status: null, planned: 0, reviewing: 0, toWrite: 0, written: 0, held: 0, mending: 0,
+    waiting: 0, scheduled: 0, sentToday: 0, firstTen: null, paidReviewers: 0, why: [], silent: [] };
+  const missing = {};
+  let rec = null;
+  try {
+    const ptr = await getJSON(K.cycleCurrent, null);
+    rec = ptr && ptr.id ? await getJSON(K.cycle(ptr.id), null) : null;
+  } catch (e) { missing.plan = str(e && e.message || e, 120); }
+  if (rec && (rec.date === today || rec.status === "running")) {
+    out.cycle = str(rec.id, 48); out.stage = rec.stage || null; out.status = rec.status || null;
+    const letters = (rec.intents || []).filter(it => it && PULSE_LETTER.has(it.action));
+    out.planned = letters.length;
+    out.reviewing = letters.filter(it => it.status === "planned").length;
+    out.toWrite = letters.filter(it => it.status === "approved" || it.status === "running").length;
+    out.written = letters.filter(it => it.status === "done").length;
+    /* why the free reviewers fell silent: each model asked, and its answer */
+    const seen = new Set();
+    for (const it of letters) {
+      const vs = it.council && it.council.verdicts && typeof it.council.verdicts === "object" ? it.council.verdicts : {};
+      for (const role of Object.keys(vs)) {
+        const v = vs[role] || {};
+        const tried = Array.isArray(v.tried) ? v.tried : v.free && Array.isArray(v.free.tried) ? v.free.tried : [];
+        for (const t of tried) {
+          const line = pulseMask(str(t && t.provider, 20) + "/" + str(t && t.model, 60) + ": " + str(t && t.err, 90));
+          if (seen.has(line) || out.silent.length >= 6) continue;
+          seen.add(line); out.silent.push(line);
+        }
+      }
+    }
+  }
+  try {
+    const H = await import("./_home.js");
+    const h = await H.heldLetters();
+    const held = Array.isArray(h.held) ? h.held : [];
+    out.held = held.length;
+    out.mending = held.filter(x => x && x.mending).length;
+    out.why = held.slice(0, 3).map(x => pulseMask(str(x && x.reason, 160)));
+  } catch (e) { missing.held = str(e && e.message || e, 120); }
+  try {
+    const DEC = await import("./_decisions.js");
+    for (const d of (await DEC.readOpen()) || []) {
+      if (!d || d.kind !== "approve" || !d.letter || typeof d.letter !== "object" || !/^mail:/.test(String(d.key || ""))) continue;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(String(d.expires || "")) && String(d.expires) < today) continue;
+      if (String(d.letter.kind || "") === "reply") continue;
+      out.waiting++;
+    }
+  } catch (e) { missing.waiting = str(e && e.message || e, 120); }
+  try {
+    const r = await store([["ZCARD", MK.sched], ["LRANGE", MK.outLog, "0", String(LETTERS_SHOWN.log - 1)], ["GET", MK.firstTen], ["GET", "nsoul:paid:reviewer:" + today]]);
+    out.scheduled = parseInt(r[0], 10) || 0;
+    const seen = new Set();
+    for (const s of r[1] || []) {
+      const x = parse(s, null);
+      if (!x || !x.id || seen.has(x.id)) continue;
+      seen.add(x.id);
+      if (x.status === "sent" && (x.kind === "outreach" || x.kind === "followup") && String(x.sentAt || x.at || "").slice(0, 10) === today) out.sentToday++;
+    }
+    out.firstTen = Math.min(FIRST_TEN, parseInt(r[2], 10) || 0) + "/" + FIRST_TEN;
+    out.paidReviewers = parseInt(r[3], 10) || 0;
+  } catch (e) { missing.mail = str(e && e.message || e, 120); }
+  if (Object.keys(missing).length) out.missing = missing;
+  return out;
+}
 /* GET /api/soul?view=mail */
 export async function mailView() {
   const missing = {};

@@ -314,6 +314,85 @@ console.log('\n5. places held by a passed reason are free again, once');
   ok(r1.released === 1 && r2.released === 0 && (await got('f')).held, 'through the tick, once: ' + r1.released + ' then ' + r2.released);
 }
 
+/* ===========================================================================
+   6. ROUND TEN B: THE DAY'S LETTERS, ONE LINE IN THE LOG
+=========================================================================== */
+console.log('\n6. the day\'s letters as one line of counts in the log, when it changes and once an hour');
+{
+  const MAIL = await import('../api/_mail.js');
+  const DEC = await import('../api/_decisions.js');
+  const { door } = await import('./_soul-harness.mjs');
+  resetStore(); setDay(D0, '06:10');
+  const T = today();
+  const silentTried = [{ provider: 'groq', model: 'openai/gpt-oss-120b', err: 'groq 429: rate limit reached for tokens per minute; write to place-1@place.example' },
+    { provider: 'openrouter', model: 'meta-llama/llama-4-maverick:free', err: 'openrouter 429: rate-limited upstream' }];
+  const silent = { approved: false, verdicts: { guardian: { role: 'guardian', vote: 'reject', failed: true, reasons: ['no answer: no free model answered today'], tried: silentTried },
+    auditor: { role: 'auditor', vote: 'approve', reasons: ['ok'] }, skeptic: { role: 'skeptic', vote: 'reject', failed: true, reasons: ['no answer: no free model answered today'], tried: silentTried.slice(0, 1) } } };
+  const paidVoice = { approved: true, verdicts: { guardian: { role: 'guardian', vote: 'approve', paidVoice: true, free: { reasons: ['no answer'], tried: [{ provider: 'cerebras', model: 'gpt-oss-120b', err: 'cerebras 503: busy' }] } }, auditor: { vote: 'approve' }, skeptic: { vote: 'approve' } } };
+  const send = (n, more) => ({ n, action: 'outreach-send', tier: 'R2', args: { placeId: 'p-' + n }, why: 'a first letter to Place Al Noor', metric: 'outreach.contacted', ...more });
+  S.set('nsoul:cycle:c-p1', JSON.stringify({ id: 'c-p1', date: T, status: 'running', stage: 'act', evidence: {}, intents: [
+    send(1, { status: 'done', council: paidVoice }), send(2, { status: 'planned' }), send(3, { status: 'approved', council: { approved: true } }),
+    send(4, { status: 'rejected', council: silent }), send(5, { status: 'failed', council: { approved: true }, result: { ok: false, error: 'the judge held the letter: it promises money or a reward (0.66)' } }),
+    { n: 6, action: 'post-reel', tier: 'R1', status: 'done', args: {} }] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-p1', date: T, status: 'running' }));
+  S.set(SOUL.K.cycleDaily, T);
+  const card = id => DEC.upsert({ kind: 'approve', key: 'mail:' + id, stamp: '1', sticky: true, source: 'mail', title: 'Send this letter to Place ' + id + '?', why: 'One of the first 10.',
+    letter: { to: id + '@place.example', toName: 'Place ' + id, subject: 'S', text: 'Assalamu alaykum.', kind: id === 'r' ? 'reply' : 'outreach' },
+    options: [DEC.opt.choice('send', 'Send', { type: 'done' }, 'primary'), DEC.opt.later()], link: null, steps: [], expires: addDays(T, 14) });
+  await card('a'); await card('b'); await card('r');
+  Z.set(MAIL.MK.sched, new Map([['m-later', Date.parse(T + 'T15:00:00Z')]]));
+  const row = (id, kind, status, at) => JSON.stringify({ id, at, kind, toName: 'Place ' + id, subject: 'S', status, ...(status === 'sent' ? { sentAt: at } : {}) });
+  L.set(MAIL.MK.outLog, [row('m1', 'outreach', 'sent', T + 'T06:01:00.000Z'), row('m2', 'reply', 'sent', T + 'T06:00:00.000Z'), row('m3', 'outreach', 'waiting-owner', T + 'T05:59:00.000Z'),
+    row('m1', 'outreach', 'scheduled', T + 'T05:40:00.000Z'), row('m4', 'followup', 'sent', addDays(T, -1) + 'T10:00:00.000Z')]);
+  S.set(MAIL.MK.firstTen, '3');
+  S.set('nsoul:paid:reviewer:' + T, '2');
+  const p = await MAIL.lettersPulse();
+  ok(p.cycle === 'c-p1' && p.stage === 'act' && p.status === 'running' && p.planned === 5 && p.reviewing === 1 && p.toWrite === 1 && p.written === 1,
+    'where the plan is, and its letters: planned, read by the council, to be written, written: ' + JSON.stringify({ c: p.cycle, s: p.stage, n: p.planned, r: p.reviewing, w: p.toWrite, d: p.written }));
+  ok(p.held === 2 && p.mending === 2 && p.why.length === 2 && /the council said no/.test(p.why[0]) && /the judge held the letter/.test(p.why[1]), 'held, with the first reasons, both of them for the Lantern to try again: ' + JSON.stringify(p.why));
+  ok(p.waiting === 2 && p.scheduled === 1 && p.sentToday === 1 && p.firstTen === '3/10' && p.paidReviewers === 2,
+    'his Send (never a reply), set for later, gone today (never a reply, never yesterday\'s), the first ten and the paid reviewers: ' + JSON.stringify({ w: p.waiting, s: p.scheduled, t: p.sentToday, f: p.firstTen, r: p.paidReviewers }));
+  ok(p.silent.length === 3 && p.silent[0] === 'cerebras/gpt-oss-120b: cerebras 503: busy' && p.silent.some(x => /^groq\/openai\/gpt-oss-120b: groq 429/.test(x)) && p.silent.some(x => /^openrouter\//.test(x)),
+    'which free models a reviewer asked and what each said, each once, the free answers under a paid voice too: ' + JSON.stringify(p.silent));
+  const all = JSON.stringify(p);
+  ok(!all.includes('@') && /\[an address\]/.test(all) && !/Al Noor|Place a|Place b|Assalamu/.test(all), 'never an address, a place\'s name or a letter\'s words');
+  /* the tick writes it when it changes, and once an hour while it does not
+     (the pointer says done, so these ticks never move the plan itself) */
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-p1', date: T, status: 'done' }));
+  const lines = [];
+  const realLog = console.log;
+  const tickNow = async () => {
+    console.log = (...a) => { const s = a.join(' '); if (/^\{"noor":"letters"/.test(s)) lines.push(JSON.parse(s)); else realLog(...a); };
+    try { return await door({ query: { action: 'tick' }, headers: { authorization: 'Bearer ' + process.env.CRON_SECRET } }); }
+    finally { console.log = realLog; }
+  };
+  let t = await tickNow();
+  ok(t.statusCode === 200 && t.body.letters && t.body.letters.planned === 5 && lines.length === 1 && lines[0].noor === 'letters' && lines[0].held === 2 && lines[0].date === T,
+    'the tick writes one line, and answers the counts as letters: ' + lines.length);
+  CLOCK.t += 15 * 60000;
+  t = await tickNow();
+  ok(lines.length === 1, 'fifteen minutes on, nothing changed: no second line');
+  S.set(MAIL.MK.firstTen, '4');
+  CLOCK.t += 15 * 60000;
+  t = await tickNow();
+  ok(lines.length === 2 && lines[1].firstTen === '4/10', 'a change: a new line');
+  CLOCK.t += 61 * 60000;
+  t = await tickNow();
+  ok(lines.length === 3, 'an hour unchanged: the line again, so a quiet log still says where the letters are');
+  /* nothing today: no line */
+  resetStore(); setDay(addDays(D0, 1), '03:00');
+  t = await tickNow();
+  ok(lines.length === 3 && t.body.letters && t.body.letters.cycle === null, 'a day with no plan and no letters: no line');
+  /* a part that cannot be read is named, the rest stands */
+  resetStore(); setDay(D0, '06:10');
+  S.set('nsoul:cycle:c-p1', JSON.stringify({ id: 'c-p1', date: T, status: 'done', stage: 'report', intents: [send(1, { status: 'done' })] }));
+  S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-p1', date: T }));
+  FAULT.cmds = new Set(['ZCARD']);
+  const pf = await MAIL.lettersPulse();
+  FAULT.cmds = null;
+  ok(pf.written === 1 && pf.missing && pf.missing.mail && pf.scheduled === 0, 'a store fault: named in missing, the plan\'s counts stand: ' + JSON.stringify(pf.missing));
+}
+
 await new Promise(r => setTimeout(r, 10));
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
