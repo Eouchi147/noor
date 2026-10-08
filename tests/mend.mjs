@@ -120,6 +120,20 @@ console.log('\n2. the council: a letter\'s reviewer no free model could answer i
   resetStore(); T.tasks.length = 0;
   c = await COUNCIL.convene(letter, {}, { until: Date.now() + 5000 });
   ok(!c.approved && !T.tasks.some(t => t.tier === 'deep'), 'too little of the council\'s time left: nothing paid');
+  /* round ten c: a free reviewer may wait for its best name's next minute,
+     only inside the council's time less what a paid reviewer needs after
+     it; a paid reviewer never waits; no deadline, no wait */
+  resetStore(); T.tasks.length = 0;
+  const until = Date.now() + 89000;
+  c = await COUNCIL.convene(letter, {}, { until });
+  const freeT = T.tasks.filter(t => t.tier !== 'deep' && ['guardian', 'skeptic'].includes(roleOf(t)));
+  const paidT = T.tasks.filter(t => t.tier === 'deep');
+  ok(c.approved && freeT.length === 2 && freeT.every(t => t.opts && t.opts.waitUntil === until - COUNCIL.TIE_LIMITS.needMs - COUNCIL.FREE_WAIT_MARGIN_MS)
+    && paidT.length === 2 && paidT.every(t => !t.opts || t.opts.waitUntil === undefined),
+    'a free reviewer may wait until the council\'s time less a paid reviewer\'s (' + (freeT[0] && until - freeT[0].opts.waitUntil) + ' ms before its end); a paid one never waits');
+  T.tasks.length = 0;
+  c = await COUNCIL.convene(letter, {});
+  ok(T.tasks.filter(t => t.tier !== 'deep').every(t => !t.opts || t.opts.waitUntil === undefined), 'no deadline given: no wait');
   /* a silent reviewer says which models it asked */
   ROUTER.failRoles = new Set(); SOUL.setSeams({ route: async task => (roleOf(task) === 'guardian' && task.tier !== 'deep'
     ? { ok: false, error: 'no free model answered today', tier: 'strong', tried: [{ provider: 'groq', model: 'openai/gpt-oss-120b', err: '429 rate limited' }, { provider: 'gemini', model: 'gemini-2.5-flash', err: 'quota' }] }

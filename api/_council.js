@@ -117,6 +117,14 @@ export function readVerdict(role, r) {
   return { role, vote, reasons, tier: r.tierUsed || null, model: r.model || null };
 }
 
+/* ROUND TEN C (8 October 2026): how long a free reviewer may wait for the
+   next minute when its best free name is held by its bucket of the minute
+   (api/_llm.js freeWalk): until the council's own time less what a paid
+   reviewer or a tie break would need after it, so waiting never costs the
+   council its last voice. No deadline, no wait. */
+export const FREE_WAIT_MARGIN_MS = 2000;
+const freeWait = opts => (Number.isFinite(opts && opts.until) ? { waitUntil: opts.until - TIE_LIMITS.needMs - FREE_WAIT_MARGIN_MS } : {});
+
 /* opts.mechanical === false skips the code layer: the canary evals use this
    to measure the MODEL's judgment under a candidate playbook, since the code
    layer needs no test of a playbook and would otherwise mask a corrupted one */
@@ -133,7 +141,7 @@ export async function guardian(intent, evidence, opts = {}) {
      (round ten: or as the voice of a Guardian the free models could not
      answer at all, purpose "reviewer", the same question in the same words) */
   const paid = !!opts.tieBreak || !!opts.paidVoice;
-  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 500, temperature: 0, timeout: 25000, ...(paid ? { purpose: opts.paidVoice ? "reviewer" : "tie-break", paidOnly: true } : {}) });
+  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 500, temperature: 0, timeout: 25000, ...(paid ? { purpose: opts.paidVoice ? "reviewer" : "tie-break", paidOnly: true } : freeWait(opts)) });
   const v = readVerdict("guardian", r);
   try { await noteGuard(r, !v.failed); } catch { }
   if (paid) return { ...v, paid: !!(r && r.paid), paidId: (r && r.paidId) || null, costUsd: (r && Number(r.costUsd)) || 0 };
@@ -175,7 +183,7 @@ export async function skeptic(intent, evidence, opts = {}) {
   /* round ten: a Skeptic the free models could not answer at all may be
      asked once on the paid tier (purpose "reviewer"), the same question */
   const paid = !!opts.paidVoice;
-  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 400, temperature: 0, timeout: 20000, ...(paid ? { purpose: "reviewer", paidOnly: true } : {}) });
+  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 400, temperature: 0, timeout: 20000, ...(paid ? { purpose: "reviewer", paidOnly: true } : freeWait(opts)) });
   const v = readVerdict("skeptic", r);
   try { await noteGuard(r, !v.failed); } catch { }   /* round four: a verdict that can be read is a check passed */
   if (paid) return { ...v, paid: !!(r && r.paid), paidId: (r && r.paidId) || null, costUsd: (r && Number(r.costUsd)) || 0 };

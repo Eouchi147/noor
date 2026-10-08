@@ -868,7 +868,9 @@ export async function exploreFirst(tier, ranked, now) {
   const hour = Math.floor(t / EXPLORE_EVERY_MS);
   if (EXPLORE_MEM.get(tier) === hour) return ranked;
   const s = await scoresFor(ranked, t);
-  const at = ranked.findIndex(c => staleAt(s.get(c.provider + ":" + c.model), t));
+  /* round ten c: a name kept for short answers is never the hour's look:
+     a long call would pass it by, and the lead it stood in for would wait */
+  const at = ranked.findIndex(c => !c.short && staleAt(s.get(c.provider + ":" + c.model), t));
   if (at <= 0) return ranked;
   EXPLORE_MEM.set(tier, hour);
   let first = !kvReady();
@@ -1040,7 +1042,17 @@ const TIERS = {
     { provider: "cerebras", pick: "gpt-oss-120b" },
     { provider: "nvidia", pick: "strong" },
     { provider: "openrouter", pick: "best" },
-    { provider: "gateway", pick: "best" }
+    { provider: "gateway", pick: "best" },
+    /* round ten c (8 October 2026): Groq's gpt-oss-20b, for a short answer
+       only (a reviewer's verdict, 800 tokens or fewer): its own bucket of
+       tokens a minute beside the 120b's, which one letter's two reviewers
+       overfill (the Guardian's question is about 5,000 tokens, the
+       Skeptic's 3,000, the bucket 7,000). That week it answered 17 of 17
+       and 14 of its answers passed their check; the mail tier already
+       writes the letters with it when the 120b is busy (MAIL_GROQ). A long
+       piece of thinking (a plan, a strategy) never falls to it: it waits
+       for a strong name. */
+    { provider: "groq", pick: "openai/gpt-oss-20b", short: true }
   ],
   /* large context dumps: Gemini's flash family carries the biggest window
      of the three, so it goes first; the fallback below it is the same as
@@ -1085,9 +1097,9 @@ export async function chainFor(tier, opts = {}) {
   const order = TIERS[tier] || TIERS.fast;
   const out = [];
   const seen = new Set();
-  const push = (provider, model) => {
+  const push = (provider, model, extra) => {
     const k = provider + ":" + model;
-    if (model && !seen.has(k)) { seen.add(k); out.push({ provider, model }); }
+    if (model && !seen.has(k)) { seen.add(k); out.push({ provider, model, ...(extra || {}) }); }
   };
 
   /* The last good name only jumps the queue inside the tier's leading
@@ -1107,7 +1119,9 @@ export async function chainFor(tier, opts = {}) {
       const gm = idx === -1 ? "" : good.slice(idx + 1);
       if (gp && gp === lead && providerPresent(gp)) {
         const ids = await freeModels(gp, false);
-        if (ids.includes(gm)) push(gp, gm);
+        /* round ten c: a name kept for short answers never jumps the queue */
+        const shortOnly = order.some(st => st.short && st.provider === gp && st.pick === gm);
+        if (ids.includes(gm) && !shortOnly) push(gp, gm);
       }
     }
   }
@@ -1170,7 +1184,7 @@ export async function chainFor(tier, opts = {}) {
       continue;
     }
     const model = resolveModel(step.provider, step.pick, ids);
-    if (model) push(step.provider, model);
+    if (model) push(step.provider, model, step.short ? { short: true } : null);   /* round ten c */
   }
   /* round four: measured quality first, the tier's own order between equals;
      round five (D7): and, for a call (opts.explore), once an hour the best
@@ -1356,7 +1370,30 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
 
   const est = estimateTokens(messages, task.opts && task.opts.max_tokens);   /* round four: tokens a minute */
   let anyAttempted = false, dayGated = false, minuteGated = false;
+  /* round ten c: a name kept for short answers answers only a short one */
+  const short = ((task.opts && task.opts.max_tokens) || 500) <= SHORT_ANSWER_TOKENS;
+  const heldByMinute = [];
+  /* one call to one name whose gate has already let it through */
+  const ask = async cand => {
+    const callOpts = { ...(task.opts || {}) };
+    delete callOpts.waitUntil;
+    if (cand.timeoutMs) callOpts.timeout = cand.timeoutMs;
+    if (task.json && !callOpts.response_format && await jsonCapable(cand.provider, cand.model)) {
+      callOpts.response_format = { type: "json_object" };
+    }
+    const got = await chatOnce(cand.provider, cand.model, messages, callOpts);
+    tried.push({ provider: cand.provider, model: cand.model, ms: got.ms, err: got.ok ? "" : got.error, ...(cand.waited ? { waited: true } : {}) });
+    if (parkable(cand.provider, got)) await rememberRefused(cand.model, got.error, cand.provider);
+    const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
+    await recordUsage(cand.provider, now, tokens, cand.model, got);
+    if (got.ok) {
+      await addTokens(cand.provider, cand.model, now, tokens);
+      if (!cand.short) await rememberGood(tier, cand.provider + ":" + cand.model);
+    }
+    return got;
+  };
   for (const cand of candidates) {
+    if (cand.short && !short) continue;
     if (perPerson && cand.provider === "gemini") {
       tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to Gemini's free tier" });
       continue;
@@ -1379,26 +1416,45 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
     const gate = await checkAndReserve(cand.provider, cand.model, Date.now(), caller, est);
     if (!gate.ok) {
       tried.push({ provider: cand.provider, model: cand.model, err: gateWords(gate.why) });
-      if (/^(rpm|tpm)\b/.test(String(gate.why || ""))) minuteGated = true; else dayGated = true;
+      if (/^(rpm|tpm)\b/.test(String(gate.why || ""))) { minuteGated = true; heldByMinute.push(cand); } else dayGated = true;
       continue;
     }
     anyAttempted = true;
-    const callOpts = { ...(task.opts || {}) };
-    if (task.json && !callOpts.response_format && await jsonCapable(cand.provider, cand.model)) {
-      callOpts.response_format = { type: "json_object" };
-    }
-    const got = await chatOnce(cand.provider, cand.model, messages, callOpts);
-    tried.push({ provider: cand.provider, model: cand.model, ms: got.ms, err: got.ok ? "" : got.error });
-    if (parkable(cand.provider, got)) await rememberRefused(cand.model, got.error, cand.provider);
-    const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
-    await recordUsage(cand.provider, now, tokens, cand.model, got);
+    const got = await ask(cand);
     if (got.ok) {
-      await addTokens(cand.provider, cand.model, now, tokens);
-      await rememberGood(tier, cand.provider + ":" + cand.model);
       return { ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider: got.provider, tier, tried,
                measured: { provider: cand.provider, model: cand.model } };
     }
     if (got.blocked) return { ok: false, error: got.error, blocked: true, tier, tried };
+  }
+  /* ROUND TEN C (8 October 2026): THE NEXT MINUTE. A name held only by its
+     bucket of the minute (Groq's tokens a minute, most of all: on 8 October
+     it held the council's best free name 7 times) frees at the next minute.
+     When nothing else answered and the caller says how long it may wait
+     (opts.waitUntil, a clock time: the council keeps its own last seconds
+     for a paid reviewer), the walk waits for that minute and asks those
+     names once more, each inside what is left. */
+  const waitUntil = Number(task.opts && task.opts.waitUntil);
+  if (heldByMinute.length && Number.isFinite(waitUntil)) {
+    const t1 = Date.now();
+    const nextMinute = (Math.floor(t1 / 60000) + 1) * 60000 + WAIT.afterMs;
+    if (waitUntil - nextMinute >= WAIT.minCallMs) {
+      await WAIT.sleep(nextMinute - t1);
+      for (const cand of heldByMinute) {
+        const left = waitUntil - Date.now();
+        if (left < WAIT.minCallMs) break;
+        const gate = await checkAndReserve(cand.provider, cand.model, Date.now(), caller, est);
+        if (!gate.ok) { tried.push({ provider: cand.provider, model: cand.model, err: gateWords(gate.why), waited: true }); continue; }
+        anyAttempted = true;
+        const timeout = Math.min(Number(task.opts && task.opts.timeout) || 9000, left);
+        const got = await ask({ ...cand, waited: true, timeoutMs: timeout });
+        if (got.ok) {
+          return { ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider: got.provider, tier, tried, waited: true,
+                   measured: { provider: cand.provider, model: cand.model } };
+        }
+        if (got.blocked) return { ok: false, error: got.error, blocked: true, tier, tried };
+      }
+    }
   }
   if (!anyAttempted) {
     /* round ten c: only a day's bucket waits for midnight; a minute's frees in a minute */
@@ -1407,6 +1463,10 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
   }
   return { ok: false, error: "no free model answered", tier, tried };
 }
+/* round ten c: the walk's wait for the next minute (freeWalk above): how
+   long after the minute turns it asks, the least time a call is worth, and
+   the sleep itself (a test makes it instant) */
+export const WAIT = { sleep: ms => new Promise(r => setTimeout(r, Math.max(0, ms))), afterMs: 250, minCallMs: 6000 };
 /* round ten c: a bucket of a minute says so (on 8 October Groq's tokens a
    minute read "rate limit reached for today", and the day was not over) */
 export function gateWords(why) {

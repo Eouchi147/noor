@@ -554,11 +554,55 @@ console.log("\n=== 11. round ten c: the free names answer the council again ==="
     STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free");
     for (let i = 0; i < 8; i++) await L.checkAndReserve("gemini", "gemini-3.8-flash", FIX);
     for (let i = 0; i < 25; i++) await L.checkAndReserve("groq", "openai/gpt-oss-120b", FIX);
+    for (let i = 0; i < 25; i++) await L.checkAndReserve("groq", "openai/gpt-oss-20b", FIX);
     for (let i = 0; i < 15; i++) await L.checkAndReserve("openrouter", "x:free", FIX);
     const busy = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
     ok(!busy.ok && busy.error === "every free model is busy this minute; the next minute frees them" && busy.tried.every(t => /for this minute \(rpm\)/.test(t.err)),
       "every name held by its minute: said so, not a day's reset: " + busy.error);
   } finally { Date.now = realNow; }
+  geminiAnswers = null; groqAnswers = null; orAnswers = null;
+
+  /* d. Groq's gpt-oss-20b answers a short question when the strong names cannot */
+  STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free"); L.forgetScores();
+  const chain = await L.chainFor("strong", { skipGood: true, unranked: true });
+  const tail = chain[chain.length - 1];
+  ok(tail.provider === "groq" && tail.model === "openai/gpt-oss-20b" && tail.short === true && chain.filter(c => c.short).length === 1,
+    "the strong tier ends with Groq's gpt-oss-20b, kept for short answers: " + chain.map(c => c.provider + ":" + c.model + (c.short ? "(short)" : "")).join(", "));
+  geminiAnswers = () => ({ ok: false, status: 503, why: "busy" });
+  orAnswers = () => ({ ok: false, status: 429, why: "Provider returned error" });
+  groqAnswers = m => (m === "openai/gpt-oss-120b" ? { ok: false, status: 500, why: "down" } : { ok: true, text: '{"vote":"approve","reasons":["ok"]}' });
+  const v20 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+  ok(v20.ok && v20.provider === "groq" && v20.model === "openai/gpt-oss-20b", "a verdict the strong names could not give: the 20b gives it (" + v20.provider + " " + v20.model + ")");
+  ok(STORE.get("nllm:good:strong") !== "groq:openai/gpt-oss-20b", "and it is never remembered as the tier's good name");
+  const long20 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 1400 } });
+  ok(!long20.ok && !long20.tried.some(t => t.model === "openai/gpt-oss-20b"), "a long answer (a plan) never falls to it: " + long20.error);
+  ok((await L.chainFor("fast", { skipGood: true, unranked: true })).every(c => !c.short), "the fast tier asks it as it always did");
+
+  /* e. the next minute: a name held by its minute's bucket is asked again when the caller can wait */
+  const realNow2 = Date.now, realSleep = L.WAIT.sleep;
+  let clock = Math.floor(realNow2() / 60000) * 60000 + 40000;
+  const slept = [];
+  Date.now = () => clock;
+  L.WAIT.sleep = async ms => { slept.push(ms); clock += ms; };
+  try {
+    const fill = () => {
+      const m = Math.floor(clock / 60000);
+      STORE.set("nllm:tpm:groq:openai/gpt-oss-120b:" + m, "7000");
+      STORE.set("nllm:tpm:groq:openai/gpt-oss-20b:" + m, "7000");
+    };
+    STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free"); L.forgetScores(); fill();
+    groqAnswers = () => ({ ok: true, text: '{"vote":"approve","reasons":["ok"]}' });
+    const w = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400, timeout: 25000, waitUntil: clock + 60000 } });
+    ok(w.ok && w.waited === true && w.provider === "groq" && w.model === "openai/gpt-oss-120b" && slept.length === 1 && slept[0] === 20000 + L.WAIT.afterMs,
+      "held by Groq's minute and nothing else answered: it waits for the next minute (" + slept.join() + " ms) and Groq answers");
+    ok(w.tried.some(t => t.waited === true && t.model === "openai/gpt-oss-120b" && t.err === "") && w.tried.some(t => /for this minute \(tpm/.test(t.err)), "both the hold and the try after the wait are in tried");
+    slept.length = 0; clock = Math.floor(clock / 60000) * 60000 + 40000; fill();
+    const nw = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400, timeout: 25000, waitUntil: clock + 25000 } });
+    ok(!nw.ok && slept.length === 0 && nw.error === "no free model answered", "too little time before the caller's own limit: no wait (" + nw.error + ")");
+    const nd = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+    ok(!nd.ok && slept.length === 0, "no limit given: no wait, as before");
+    ok(L.WAIT.minCallMs === 6000 && L.WAIT.afterMs === 250, "a call after the wait is worth at least six seconds, a quarter second past the minute");
+  } finally { Date.now = realNow2; L.WAIT.sleep = realSleep; }
   geminiAnswers = null; groqAnswers = null; orAnswers = null;
 }
 

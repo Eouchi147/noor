@@ -193,7 +193,8 @@ console.log('\n2. the scoreboard orders each tier');
   await LLM.freeModels('groq', true); await LLM.freeModels('gateway', true);
   const order = async tier => (await LLM.chainFor(tier, { skipGood: true })).map(c => c.provider + ':' + c.model);
   const s0 = await order('strong');
-  ok(s0.join() === 'groq:openai/gpt-oss-120b,gateway:inclusionai/ling-3.1-flash-free,gateway:poolside/laguna-s-2.1-free', 'nothing measured yet: the tier\'s own order, its lead provider first: ' + s0.join(', '));
+  /* round ten c: Groq's gpt-oss-20b closes the strong tier, for short answers only */
+  ok(s0.join() === 'groq:openai/gpt-oss-120b,gateway:inclusionai/ling-3.1-flash-free,gateway:poolside/laguna-s-2.1-free,groq:openai/gpt-oss-20b', 'nothing measured yet: the tier\'s own order, its lead provider first: ' + s0.join(', '));
   /* round five (the review, D7): an unmeasured name is no longer under a
      healthy measured one; the two stand level and the tier's order decides */
   seedScore('gateway', 'poolside/laguna-s-2.1-free', { n: 20, ok: 20, ms: 16000, gn: 10, gp: 10 });
