@@ -38,6 +38,8 @@ const GEMINI_EXTRA = [];
 let groqAnswers = null, geminiAnswers = null, orAnswers = null, orModels = null;
 let kvFault = false;
 const OR_CALLS = [];
+const OR_KEY_CALLS = [];
+let orKeyAnswer = null;
 
 function orModel(id, price) {
   return { id, context_length: 32000, pricing: price || { prompt: "0", completion: "0", request: "0" },
@@ -96,10 +98,17 @@ globalThis.fetch = async (url, opt) => {
     ].concat(GEMINI_EXTRA) }) };
   }
   if (url.includes("generativelanguage.googleapis.com") && url.includes("/chat/completions")) {
-    const body = JSON.parse(opt.body);
+    const body = JSON.parse(opt.body); LAST.gemini = body;
     const a = geminiAnswers ? geminiAnswers(body.model) : { ok: true, text: "lit" };
     if (!a.ok) return { ok: false, status: a.status || 500, json: async () => ({ error: { message: a.why || "error" } }), text: async () => a.why || "" };
     return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: a.text } }], usage: { total_tokens: 8 } }) };
+  }
+  /* round ten c: the OpenRouter key's own page */
+  if (url.includes("openrouter.ai/api/v1/key")) {
+    OR_KEY_CALLS.push(url);
+    if (!orKeyAnswer) throw new Error("unexpected fetch " + url);
+    const a = orKeyAnswer();
+    return { ok: a.ok !== false, status: a.status || 200, json: async () => a.body || {} };
   }
   /* OpenRouter */
   if (url.includes("openrouter.ai/api/v1/models")) {
@@ -344,6 +353,7 @@ console.log("\n=== 10. the paid deep tier, under the monthly cap ===");
   ok(LAST.or.provider && LAST.or.provider.max_price && LAST.or.provider.max_price.prompt === L.DEEP_MAX_PROMPT_PER_MTOK && LAST.or.provider.data_collection === "deny",
      "deep: OpenRouter is told the price ceiling and that no endpoint may keep the prompt");
   ok(LAST.or.max_tokens === 800, "deep: the max_tokens the estimate used is the one sent");
+  ok(JSON.stringify(LAST.or.reasoning) === JSON.stringify({ exclude: true }), "round ten c: a short paid call asks no effort; only the thinking kept out, as before (" + JSON.stringify(LAST.or.reasoning) + ")");
   ok(STORE.get(K) === "1050", "cost recorded from usage.cost, in micro-dollars (" + STORE.get(K) + ")");
   const r1 = await L.spendReport();
   ok(r1.month === month && r1.usd === 0.00105 && r1.calls === 1 && r1.capUsd === 10, "spendReport reads the ledger (" + JSON.stringify(r1) + ")");
@@ -471,6 +481,75 @@ console.log("\n=== 10. the paid deep tier, under the monthly cap ===");
   const k2 = await L.route({ tier: "deep", purpose: "weekly-strategy", messages: msgs });
   ok(k2.ok && k2.paid === false && !OR_CALLS.length && k2.tried.some(t => /no credit/.test(t.err)), "the next deep call does not knock again");
   orAnswers = null;
+}
+
+console.log("\n=== 11. round ten c: the free names answer the council again ===");
+{
+  STORE.clear(); L.forgetOrTier(); OR_KEY_CALLS.length = 0;
+  /* a. OpenRouter's free allowance is the account's own */
+  orKeyAnswer = () => ({ body: { data: { label: "noor", is_free_tier: false, limit: null, usage: 0.85 } } });
+  ok(await L.orDaily() === L.OR_DAILY_PAID && L.OR_DAILY_PAID === 900 && STORE.get(L.K_OR_TIER) === "paid" && OR_KEY_CALLS.length === 1,
+    "an account that bought credits: 900 free requests a day, read once and kept (" + STORE.get(L.K_OR_TIER) + ")");
+  ok(await L.orDaily() === 900 && OR_KEY_CALLS.length === 1, "asked again within ten minutes: from memory, no second read");
+  L.forgetOrTier();
+  ok(await L.orDaily() === 900 && OR_KEY_CALLS.length === 1, "a new instance: from the store, no second read");
+  STORE.delete(L.K_OR_TIER); L.forgetOrTier();
+  orKeyAnswer = () => ({ body: { data: { is_free_tier: true } } });
+  ok(await L.orDaily() === L.OR_DAILY_FREE && L.OR_DAILY_FREE === 40 && STORE.get(L.K_OR_TIER) === "free", "an account that never paid: 40, as before");
+  STORE.delete(L.K_OR_TIER); L.forgetOrTier();
+  orKeyAnswer = () => ({ ok: false, status: 401, body: { error: { message: "no auth" } } });
+  ok(await L.orDaily() === 40 && !STORE.has(L.K_OR_TIER), "a read that fails: 40, and nothing kept, so it is read again later");
+  process.env.OPENROUTER_DAILY = "7";
+  ok(await L.orDaily() === 7, "OPENROUTER_DAILY still decides when set");
+  delete process.env.OPENROUTER_DAILY;
+  /* the bucket itself follows it */
+  const day = Date.parse(new Date().toISOString().slice(0, 10) + "T00:00:00Z");
+  STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "paid");
+  let last = null;
+  for (let i = 0; i < 41; i++) last = await L.checkAndReserve("openrouter", "a:free", day + i * 61000);
+  ok(last && last.ok === true, "with a paid account the 41st free request of the day still goes");
+  STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free");
+  for (let i = 0; i < 41; i++) last = await L.checkAndReserve("openrouter", "a:free", day + i * 61000);
+  ok(last && last.ok === false && last.why === "rpd", "with a free account the 41st is refused, as before");
+  orKeyAnswer = null;
+
+  /* b. a short free answer asks the thinking names to think little */
+  STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free");
+  const msgs = [{ role: "user", content: "judge this" }];
+  LAST.gemini = null;
+  const g1 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+  ok(g1.ok && g1.provider === "gemini" && LAST.gemini && LAST.gemini.reasoning_effort === "low", "a short answer from Gemini: reasoning_effort low (" + (LAST.gemini && LAST.gemini.reasoning_effort) + ")");
+  const g2 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 1400 } });
+  ok(g2.ok && g2.provider === "gemini" && LAST.gemini.reasoning_effort === undefined, "a long answer from Gemini: its own thinking, as before");
+  geminiAnswers = () => ({ ok: false, status: 503, why: "busy" });
+  groqAnswers = () => ({ ok: false, status: 500, why: "down" });
+  const o1 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+  ok(o1.ok && o1.provider === "openrouter" && JSON.stringify(LAST.or.reasoning) === JSON.stringify({ exclude: true, effort: "low" }), "a short free answer from OpenRouter: effort low, the thinking kept out (" + JSON.stringify(LAST.or.reasoning) + ")");
+  const o2 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 1400 } });
+  ok(o2.ok && JSON.stringify(LAST.or.reasoning) === JSON.stringify({ exclude: true }), "a long one: only the thinking kept out, as before");
+  ok(L.SHORT_ANSWER_TOKENS === 800, "short means 800 tokens or fewer");
+
+  /* c. the words: a minute's bucket says this minute, and no answer is never "today" */
+  ok(L.gateWords("tpm, 7000 tokens a minute") === "rate limit reached for this minute (tpm, 7000 tokens a minute)" && L.gateWords("rpm") === "rate limit reached for this minute (rpm)"
+    && L.gateWords("rpd") === "rate limit reached for today (rpd)" && /^rate limit reached for today \(the daily cycle's share/.test(L.gateWords("the daily cycle's share of the day (20 of 40)")),
+    "a minute's bucket says this minute; a day's says today");
+  orAnswers = () => ({ ok: false, status: 429, why: "Provider returned error" });
+  const none = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+  ok(!none.ok && none.error === "no free model answered", "every name asked and none answered: " + none.error);
+  /* every name held by its minute: the next minute frees them */
+  const realNow = Date.now;
+  const FIX = Math.floor(realNow() / 60000) * 60000 + 5000;
+  Date.now = () => FIX;
+  try {
+    STORE.clear(); L.forgetOrTier(); STORE.set(L.K_OR_TIER, "free");
+    for (let i = 0; i < 8; i++) await L.checkAndReserve("gemini", "gemini-3.8-flash", FIX);
+    for (let i = 0; i < 25; i++) await L.checkAndReserve("groq", "openai/gpt-oss-120b", FIX);
+    for (let i = 0; i < 15; i++) await L.checkAndReserve("openrouter", "x:free", FIX);
+    const busy = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 400 } });
+    ok(!busy.ok && busy.error === "every free model is busy this minute; the next minute frees them" && busy.tried.every(t => /for this minute \(rpm\)/.test(t.err)),
+      "every name held by its minute: said so, not a day's reset: " + busy.error);
+  } finally { Date.now = realNow; }
+  geminiAnswers = null; groqAnswers = null; orAnswers = null;
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");

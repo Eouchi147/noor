@@ -74,6 +74,20 @@
 //   the scoreboard, and held back until the owner says NVIDIA allows his use
 //   (NVIDIA_PRODUCTION_OK, section 1c: its free catalog is a trial).
 //
+// ROUND TEN C, 8 OCTOBER 2026 (the morning's letters, counted in the log:
+// of the council's 20 model reviews, 9 were answered free and 10 needed the
+// paid reviewer; Groq was held by the house's own tokens-a-minute bucket 7
+// times, Gemini's flash timed out 9 times and was busy 5, OpenRouter's free
+// names had spent the cycle's share of the day, 20 of 40, and two of them
+// answered empty). Three changes, each marked "round ten c":
+//   1. a short answer asks a thinking model to think little (Gemini's
+//      reasoning_effort "low", OpenRouter's reasoning.effort "low"), so it
+//      answers in time and its budget goes to the answer (section 5);
+//   2. OpenRouter's free allowance is read from the account itself: 1000 a
+//      day once it has bought credits, as the owner's has (section 4);
+//   3. a bucket of a minute says "this minute", and a walk that found no
+//      answer says "no free model answered", never "today".
+//
 // "FREE" BELONGS TO THE ACCOUNT, NOT THE MODEL. A model named on an
 // allow-list is only actually free if the account whose key answers for it
 // has no billing turned on: a Groq organisation still on its free plan, or
@@ -534,6 +548,61 @@ const tpmKey = (provider, model, minute) => "nllm:tpm:" + provider + ":" + model
    least the other half. Every other caller is the Lantern's, as before. */
 export const SOUL_FREE_SHARE = 0.5;
 const soulKey = (provider, model, day) => "nllm:rl:" + provider + ":" + model + ":soul:" + day;
+
+/* ROUND TEN C (8 October 2026): OPENROUTER'S FREE ALLOWANCE, FROM THE
+   ACCOUNT ITSELF. openrouter.ai/docs/api-reference/limits, read 8 October
+   2026: an account that bought fewer than 10 credits is "limited to 50 :free
+   model requests per day"; with at least 10, "your daily limit is increased
+   to 1000 :free model requests per day". The key's own page (GET /api/v1/key)
+   says is_free_tier, "whether the user has paid for credits before"; the
+   owner bought 20 dollars of credits on 7 October for the paid brain, so
+   the house was keeping itself to 40 a day (the cycle's half, 20) of an
+   allowance of 1000, and the council's free names were spent by 06:00. The
+   account is read once a day (nllm:or:tier, "paid" or "free"), and a paid
+   account is kept to OR_DAILY_PAID for a margin; an account that never paid,
+   or a read that fails, keeps the old OR_DAILY_FREE. OPENROUTER_DAILY, when
+   set, still decides. The free names stay free either way: a :free name
+   costs nothing, whatever the account holds. */
+export const OR_DAILY_FREE = 40;
+export const OR_DAILY_PAID = 900;
+export const K_OR_TIER = "nllm:or:tier";
+const OR_TIER_S = 24 * 3600;
+const OR_TIER_MEM_MS = 10 * 60000;
+const OR_TIER_MEM = { at: 0, paid: null };
+export function forgetOrTier() { OR_TIER_MEM.at = 0; OR_TIER_MEM.paid = null; }
+export async function orPaidAccount() {
+  const now = Date.now();
+  if (OR_TIER_MEM.at && now - OR_TIER_MEM.at < OR_TIER_MEM_MS) return OR_TIER_MEM.paid;
+  let paid = null;
+  if (kvReady()) {
+    try { const r = await kv([["GET", K_OR_TIER]]); const v = r && r[0]; if (v === "paid") paid = true; else if (v === "free") paid = false; } catch { }
+  }
+  const key = keyFor("openrouter");
+  if (paid === null && key) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 4000);
+    try {
+      const r = await fetch(PROVIDER_BASE.openrouter + "/key", { headers: { Authorization: "Bearer " + key }, signal: ctrl.signal });
+      if (r.ok) {
+        const j = await r.json();
+        const d = j && j.data;
+        if (d && typeof d.is_free_tier === "boolean") {
+          paid = d.is_free_tier === false;
+          if (kvReady()) { try { await kv([["SET", K_OR_TIER, paid ? "paid" : "free", "EX", String(OR_TIER_S)]]); } catch { } }
+        }
+      }
+    } catch { }
+    finally { clearTimeout(t); }
+  }
+  OR_TIER_MEM.at = now; OR_TIER_MEM.paid = paid;
+  return paid;
+}
+export async function orDaily() {
+  const n = parseInt(process.env.OPENROUTER_DAILY, 10);
+  if (n > 0) return n;
+  return (await orPaidAccount()) === true ? OR_DAILY_PAID : OR_DAILY_FREE;
+}
+
 export async function checkAndReserve(provider, model, now, caller, estTokens) {
   const caps = CAPS[provider];
   if (!caps) return { ok: true };
@@ -542,7 +611,8 @@ export async function checkAndReserve(provider, model, now, caller, estTokens) {
      fifty requests a day however they are spread across its free names. Now
      that a tier walks several of them, one bucket stands for all. */
   if (provider === "openrouter" || provider === "nvidia") model = "*";   /* round five: NVIDIA's allowance is the account's too */
-  const rpd = typeof caps.rpd === "function" ? caps.rpd() : caps.rpd;
+  /* round ten c: OpenRouter's day is the account's own (orDaily above) */
+  const rpd = provider === "openrouter" ? await orDaily() : typeof caps.rpd === "function" ? caps.rpd() : caps.rpd;
   const mKey = rlKey(provider, model, "m", minuteEpoch(now));
   const dKey = rlKey(provider, model, "d", dayStr(now));
   const wantTok = !!caps.tpd;
@@ -795,6 +865,8 @@ export async function chatOnce(provider, model, messages, opts = {}) {
   return await send(provider, model, messages, opts, null);
 }
 
+/* round ten c: an answer this short or shorter is a short answer (send below) */
+export const SHORT_ANSWER_TOKENS = 800;
 /* extra.paid is set only by deepWalk(): it asks OpenRouter for usage
    accounting (usage.cost in USD on the reply) and tells OpenRouter's own
    router the price ceiling and that no endpoint may keep the prompt. */
@@ -827,7 +899,19 @@ async function send(provider, model, messages, opts, extra) {
      OpenRouter, a name that thinks is asked to keep the thinking out of
      the reply, since one free name wrote it straight into the text. */
   if (provider === "groq" && /gpt-oss/.test(model)) body.reasoning_effort = opts.reasoning_effort || "low";
-  if (provider === "openrouter") body.reasoning = { exclude: true };
+  /* round ten c: a short free answer (a reviewer's verdict, a label) asks
+     the thinking names to think little. Gemini's 3.x flash thinks at length
+     by default and timed out on 9 of the council's calls on 8 October; its
+     OpenAI door takes reasoning_effort "low" (thinking_level low;
+     ai.google.dev/gemini-api/docs/openai, read that day). OpenRouter's
+     reasoning.effort "low" gives the thinking about a fifth of max_tokens on
+     a name that only takes a budget, where a short budget otherwise "returns
+     finish_reason length with an empty content" (openrouter.ai/docs, the
+     reasoning tokens page, read that day); two free names answered empty.
+     A paid call (extra.paid) is left as it was. */
+  const shortFree = !(extra && extra.paid) && (opts.max_tokens || 500) <= SHORT_ANSWER_TOKENS;
+  if (provider === "gemini" && (opts.reasoning_effort || shortFree)) body.reasoning_effort = opts.reasoning_effort || "low";
+  if (provider === "openrouter") body.reasoning = { exclude: true, ...(!(extra && extra.paid) && (opts.reasoning_effort || shortFree) ? { effort: opts.reasoning_effort || "low" } : {}) };
   /* round four: every gateway request asks that the provider keep nothing
      and learn nothing (docs/ai-gateway/security-and-compliance: the request
      body's providerOptions.gateway, zeroDataRetention and
@@ -1240,7 +1324,7 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
   }
 
   const est = estimateTokens(messages, task.opts && task.opts.max_tokens);   /* round four: tokens a minute */
-  let anyAttempted = false;
+  let anyAttempted = false, dayGated = false, minuteGated = false;
   for (const cand of candidates) {
     if (perPerson && cand.provider === "gemini") {
       tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to Gemini's free tier" });
@@ -1259,9 +1343,12 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
       tried.push({ provider: cand.provider, model: cand.model, err: "skipped: per-person data is never sent to NVIDIA (its trial terms let it learn from what it reads)" });
       continue;
     }
-    const gate = await checkAndReserve(cand.provider, cand.model, now, caller, est);
+    /* round ten c: the bucket of the minute the name is asked in, not of the
+       minute the walk began (a walk past a slow name can cross a minute) */
+    const gate = await checkAndReserve(cand.provider, cand.model, Date.now(), caller, est);
     if (!gate.ok) {
-      tried.push({ provider: cand.provider, model: cand.model, err: "rate limit reached for today (" + gate.why + ")" });
+      tried.push({ provider: cand.provider, model: cand.model, err: gateWords(gate.why) });
+      if (/^(rpm|tpm)\b/.test(String(gate.why || ""))) minuteGated = true; else dayGated = true;
       continue;
     }
     anyAttempted = true;
@@ -1283,9 +1370,17 @@ async function freeWalk(tier, task, messages, perPerson, now, tried, caller) {
     if (got.blocked) return { ok: false, error: got.error, blocked: true, tier, tried };
   }
   if (!anyAttempted) {
-    return { ok: false, error: "the free allowance for today is used up; resets at " + resetLabel(now), tier, tried };
+    /* round ten c: only a day's bucket waits for midnight; a minute's frees in a minute */
+    const error = dayGated || !minuteGated ? "the free allowance for today is used up; resets at " + resetLabel(now) : "every free model is busy this minute; the next minute frees them";
+    return { ok: false, error, tier, tried };
   }
-  return { ok: false, error: "no free model answered today", tier, tried };
+  return { ok: false, error: "no free model answered", tier, tried };
+}
+/* round ten c: a bucket of a minute says so (on 8 October Groq's tokens a
+   minute read "rate limit reached for today", and the day was not over) */
+export function gateWords(why) {
+  const w = String(why || "");
+  return "rate limit reached for " + (/^(rpm|tpm)\b/.test(w) ? "this minute" : "today") + " (" + w + ")";
 }
 
 /* ---------------------------------------------------------------------------
@@ -1857,7 +1952,7 @@ async function mailWalk(task, messages, now, tried) {
   for (const cand of await exploreFirst("mail", await rankByQuality(cands, now), now)) {   /* round five: faults fade */
     const { provider, model } = cand;
     const gate = await checkAndReserve(provider, model, now, task.caller, est);
-    if (!gate.ok) { tried.push({ provider, model, err: "rate limit reached for today (" + gate.why + ")" }); continue; }
+    if (!gate.ok) { tried.push({ provider, model, err: gateWords(gate.why) }); continue; }
     const callOpts = { ...(task.opts || {}) };
     if (task.json && !callOpts.response_format && await jsonCapable(provider, model)) callOpts.response_format = { type: "json_object" };
     const got = await chatOnce(provider, model, messages, callOpts);
