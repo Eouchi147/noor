@@ -173,6 +173,10 @@ export const FACTS_MIN = 2, FACTS_MAX = 6;   /* round eight: two facts of its ow
 export const LETTER_WORDS_MAX = 180;
 export const WEB_USD_MONTH = 4;              /* the web search's own share of the month's paid budget (round eight: was 2; a city search costs about 0.6 cents, 20 a day at most) */
 export const HOLD_DAYS = 7;                  /* a place whose letter was refused waits this long */
+/* round ten: the holds that pass (the writer could not be reached, the
+   judge's doubt, the house's own rules over the words): the Lantern's own
+   mend may try such a place again the same day (api/_home.js mendLetters) */
+export const MENDABLE_HOLD = /could not be written|no free model|did not answer|could not be reached|the judge held|the house's rules held|took longer|timed? ?out/i;
 export const SEEN_DAYS = 60;                 /* a site that gave nothing is not fetched again for this long */
 export const CANDS_KEEP = 600;               /* round six: was 300 */
 export const POOL_LOW = 60;                  /* round six: was 30 */
@@ -331,6 +335,28 @@ async function withPlace(id, fn) {
   } finally { await releaseLock(key, token).catch(() => false); }
 }
 
+/* round ten (7 October 2026): the places a reason that has passed still
+   holds (the judge's old question about a free gift, a writer that could
+   not be reached) are free again; the place's history says so. Read from
+   the index's own hold dates, so only held places are opened. */
+export async function releaseHolds(rx) {
+  const re = rx instanceof RegExp ? rx : MENDABLE_HOLD;
+  const idx = await readIndex();
+  const today = dayOf();
+  let n = 0;
+  for (const id of Object.keys(idx).filter(k => idx[k] && idx[k].h && String(idx[k].h) >= today)) {
+    try {
+      await withPlace(id, cur => {
+        if (!cur || !cur.held || !re.test(String(cur.held.why || ""))) return null;
+        const next = { ...cur, held: null };
+        push(next, { kind: "letter", status: "free again", note: "the reason it was held has passed (" + str(cur.held.why, 120) + ")" });
+        n++;
+        return next;
+      });
+    } catch { /* a place being changed right now keeps its hold */ }
+  }
+  return n;
+}
 /* the counts, from the index: places kept, contacted (a first letter sent),
    replied (any answer, a no too), working (a collaboration begun),
    declined, and dnc (on the do not contact list before any letter) */
@@ -2137,26 +2163,39 @@ async function draftLetter(p, offerKey, why, retry, purpose) {
   /* round four: and Jev's seven letter questions (a judge that is down holds nothing) */
   let jr = null;
   try { jr = await J.letterRisk({ subject, text }); } catch { jr = null; }
-  if (jr && jr.held) return fail({ ok: false, error: "the judge held the letter: " + str(jr.reasons.join("; "), 200) });
+  /* round ten: a hold says how to mend it (the next draft is told), and
+     keeps the draft, which only the owner's own Write it anyway may carry on
+     to his Send, with the judge's doubt beside it */
+  if (jr && jr.held) return fail({ ok: false, error: "the judge held the letter: " + str(jr.reasons.join("; "), 200), judged: true,
+    hits: Array.isArray(jr.hits) ? jr.hits.slice(0, 8) : [], mend: Array.isArray(jr.mend) ? jr.mend.slice(0, 4) : [], draft: { subject, text, words: c.words, model: r.model || null } });
   return { ok: true, subject, text, words: c.words, model: r.model || null, paidId: r.paidId || null, measured: r.measured || null };
 }
-export async function writeLetter(p, offerKey, why) {
+/* round ten: what the next draft is told: why the last was set aside, and
+   how to mend it when the judge said */
+const retryWhy = d => str(d && d.error, 300) + (d && Array.isArray(d.mend) && d.mend.length ? "; to mend it: " + d.mend.join("; ") : "");
+/* opts.owner (round ten): the owner himself asked for this letter (Write it
+   anyway). When every draft passed the house's code and only the judge had
+   a doubt, the last draft is kept for his own Send, the doubt beside it
+   (api/_mail.js shows it on the letter's card); it never goes on its own. */
+export async function writeLetter(p, offerKey, why, opts = {}) {
   const note = async (d, passed) => { if (d && d.measured) { try { const L = await import("./_llm.js"); await L.noteGuard({ measured: d.measured }, passed); } catch { } } };
+  /* the house's own rules over the words (a dash, an emoji, a stock phrase) are never carried past, not even for him */
+  const forOwner = d => (opts.owner && d && !d.ok && d.judged && d.draft && !(d.hits && d.hits.length) ? { ok: true, ...d.draft, doubt: str(d.error, 300), paidId: d.paidId || null, measured: d.measured || null } : d);
   const first = await draftLetter(p, offerKey, why, null, null);
   await note(first, first.ok);
   if (first.ok || !first.written) return first;
-  /* round four: a second free draft, told why */
-  const second = await draftLetter(p, offerKey, why, first.error, null);
+  /* round four: a second free draft, told why (round ten: and how to mend it) */
+  const second = await draftLetter(p, offerKey, why, retryWhy(first), null);
   await note(second, second.ok);
-  if (second.ok || !second.written) return second.ok ? second : first;
+  if (second.ok || !second.written) return second.ok ? second : forOwner(first);
   /* and only for a place of high value, one paid draft (api/_llm.js, the
      "letter-retry" use, under the day's and the month's caps) */
-  if (!J.isHighValuePlace(p)) return second;
-  const third = await draftLetter(p, offerKey, why, second.error, "letter-retry");
+  if (!J.isHighValuePlace(p)) return forOwner(second);
+  const third = await draftLetter(p, offerKey, why, retryWhy(second), "letter-retry");
   if (third.paidId) {
     try { const L = await import("./_llm.js"); await L.paidOutcome(third.paidId, { helped: !!third.ok, note: third.ok ? "the paid draft for " + str(p.name, 80) + " passed every check" : "the paid draft failed its checks too" }); } catch { }
   }
-  return third.ok ? third : second;
+  return third.ok ? third : forOwner(third.judged ? third : second);
 }
 /* the follow-up, written in code: nothing to invent */
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -2401,7 +2440,11 @@ async function sendRun(args, ctx = {}) {
   if (!p) return { ok: false, error: "there is no such place" };
   if (p.status !== "new") return { ok: false, error: p.name + " is " + p.status + (["declined", "dnc"].includes(p.status) ? "; one no is final" : "; it has had its first letter") };
   if (p.pending) return { ok: false, error: "a letter to " + p.name + (p.pending.sendAt ? " is already set to go on " + slotWords(p.pending.sendAt, p.country) : " already waits for the owner's Send") };
-  if (p.held && p.held.until >= dayOf()) return { ok: false, error: p.name + " waits until " + p.held.until + " (" + str(p.held.why, 120) + ")" };
+  /* round ten: the owner's own Write it anyway, and the Lantern mending a
+     letter it held for a reason that passes (the writer silent, the judge),
+     are not stopped by that same hold; every check below still runs */
+  if (p.held && p.held.until >= dayOf() && !ctx.ownerApproved && !(ctx.mend && MENDABLE_HOLD.test(String(p.held.why || ""))))
+    return { ok: false, error: p.name + " waits until " + p.held.until + " (" + str(p.held.why, 120) + ")" };
   if (!readyOf(p)) return { ok: false, error: p.name + " has too little of its own to write from" };
   try { if (typeof m.M.isDoNotContact === "function" && await m.M.isDoNotContact(p.email)) {
     await withPlace(id, cur => { if (!cur) return null; const next = { ...cur, status: "dnc" }; push(next, { kind: "dnc", note: "its address is on do not contact" }); return next; }).catch(() => null);
@@ -2417,11 +2460,15 @@ async function sendRun(args, ctx = {}) {
      is written (nothing is written for a letter with no time to go) */
   let slot = await takeSlot(p, "outreach");
   if (!slot.ok) { await day.giveBack(); return { ok: false, error: slot.error }; }
-  const w = await writeLetter(p, offer, ctx.why);
+  const w = await writeLetter(p, offer, ctx.why, { owner: !!ctx.ownerApproved });
   if (!w.ok) {
     await day.giveBack();
     await releaseSlot(slot.field);
-    await withPlace(id, cur => { if (!cur) return null; const next = { ...cur, held: { until: addDays(dayOf(), HOLD_DAYS), why: w.error } }; push(next, { kind: "letter", status: "not written", note: str(w.error, 200) }); return next; }).catch(() => null);
+    /* round ten: a writer that could not be reached holds no place (the
+       place is free for the next try); a letter its checks held waits
+       HOLD_DAYS before the plan picks it again */
+    const passing = !w.written;
+    await withPlace(id, cur => { if (!cur) return null; const next = { ...cur, ...(passing ? {} : { held: { until: addDays(dayOf(), HOLD_DAYS), why: w.error } }) }; push(next, { kind: "letter", status: "not written", note: str(w.error, 200) }); return next; }).catch(() => null);
     return { ok: false, error: w.error };
   }
   /* a letter slow to write may have outlived its time: a fresh one */
@@ -2429,7 +2476,9 @@ async function sendRun(args, ctx = {}) {
   let q;
   try {
     q = await m.M.queueOutgoing({ kind: "outreach", to: p.email, toName: p.name, subject: w.subject, text: w.text, placeId: p.id, why: str(ctx.why, 400) || "a first letter to a mosque or an Islamic place", goal: GOAL_ID },
-      { actor: ctx.actor || "soul", cycle: ctx.cycle || null, viaHand: true, sendAt: slot.sendAt });
+      { actor: ctx.actor || "soul", cycle: ctx.cycle || null, viaHand: true, sendAt: slot.sendAt,
+        /* round ten: a letter the owner asked for that the judge doubted goes to his Send, the doubt beside it */
+        ...(w.doubt ? { ownerReview: true, judgeDoubt: w.doubt } : {}) });
   } catch (e) { q = { ok: false, status: "held", reason: "the mailbox could not take the letter: " + str(e && e.message || e, 120) }; }
   const status = q && q.status;
   /* round six: "scheduled" is kept like a letter waiting on the owner (the

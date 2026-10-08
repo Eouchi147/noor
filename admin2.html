@@ -912,6 +912,7 @@ ol.hsteps li{margin:3px 0;overflow-wrap:anywhere}
 .mlh .mdt .t b{display:block;color:var(--cream);font-weight:600;font-size:14.5px;line-height:1.35;overflow-wrap:anywhere}
 .mlh .mdt .t span{display:block;color:var(--wait);font-size:12.5px;line-height:1.45;margin-top:3px;overflow-wrap:anywhere}
 .mlh .acts{margin-top:10px}
+.mlh .mdt .t span.mlm{color:var(--good)}
 .mlh .hcf{margin-top:10px}
 .mlnote{margin:14px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .mlnote .btn{flex:0 0 auto}
@@ -4247,7 +4248,8 @@ function mailNeedsHtml(d){
   var m=d.mail&&typeof d.mail==="object"?d.mail:{},L=mLetters(d);
   if(m.configured===false||!L)return "";
   var ten=hMailTen(m),th=mObjs(d.threads)||[],need=mMoves(th)?th.filter(function(t){return t.needsYou===true}).length:0;
-  var w=L.waiting.length,h=L.held.length,rp=L.repliesWaiting,rows=[];
+  /* round ten: a held letter the Lantern tries again by itself needs nothing of him */
+  var hm=L.held.filter(function(x){return x.mending===true}).length,w=L.waiting.length,h=L.held.length-hm,rp=L.repliesWaiting,rows=[];
   if(w)rows.push(mNeedRow("hot","mail",mPlural(w,"letter waits","letters wait")+" for your Send",
     (ten.sent<ten.of?"Your first ten: "+ten.sent+" of "+ten.of+" sent. ":"")+"Read each one whole, then Send or Not this one.",
     '<button type="button" class="btn" data-mlw="0">'+(w===1?"Read it":"Read them")+'</button>',"mail-need-letters"));
@@ -4255,6 +4257,8 @@ function mailNeedsHtml(d){
   else if(h)rows.push(mNeedRow("","warn",mPlural(h,"letter","letters")+" held back",
     "The checks stopped "+(h===1?"it before it was":"them before they were")+" written. Plan again brings "+(h===1?"it":"them")+" back, or choose one by one in Letters.",
     '<button type="button" class="btn ghost gold" data-mplan="1">Plan again</button>',"mail-need-held"));
+  if(hm&&!L.planning)rows.push(mNeedRow("calm","lamp",mPlural(hm,"letter","letters")+" being tried again",
+    "The Lantern tries "+(hm===1?"it":"them")+" again by itself, a little later. Nothing to do.","","mail-need-mend"));
   if(need)rows.push(mNeedRow("","person",mPlural(need,"message needs you","messages need you"),
     "In the inbox: what the Lantern could not settle on its own"+(rp?", and "+(rp===1?"a reply that waits":fnum(rp)+" replies that wait")+" for your Send":"")+".",
     '<button type="button" class="btn ghost" data-mgo="inbox">Open the inbox</button>',"mail-need-inbox"));
@@ -4314,7 +4318,8 @@ function mHeldHtml(x,i,ten){
   var on=MAIL.cf&&MAIL.cf.k==="any"&&MAIL.cf.id===String(x.id),acts=[];
   if(x.canDoNow===true)acts.push('<button type="button" class="btn ghost gold" data-mlany="'+i+'">Write it anyway</button>');
   if(x.canSkip===true)acts.push('<button type="button" class="btn ghost" data-mlskip="'+i+'">Skip</button>');
-  return '<div class="mlh" data-mlh="'+i+'"><div class="mdt"><div class="ic">'+ICO.warn+'</div><div class="t"><b>'+hs(x.title||"A letter")+'</b><span>'+hs(x.reason||"The checks held it back.")+'</span></div></div>'
+  return '<div class="mlh" data-mlh="'+i+'"><div class="mdt"><div class="ic">'+ICO.warn+'</div><div class="t"><b>'+hs(x.title||"A letter")+'</b><span>'+hs(x.reason||"The checks held it back.")+'</span>'
+    +(x.mending===true?'<span class="mlm">The Lantern tries it again by itself, a little later.</span>':'')+'</div></div>'
     +(on?hConfirm(ten.sent<ten.of?"Write it now, with your approval in place of the checks? The red lines and the daily caps still hold, and the letter waits here for your Send."
         :"Write and send it now, with your approval in place of the checks? The red lines and the daily caps still hold.","Yes, write it","mlanyyes","mlanyno","")
       :(acts.length?'<div class="acts">'+acts.join("")+'</div>':''))+'</div>';

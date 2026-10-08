@@ -1173,7 +1173,11 @@ export const PAID_PURPOSES = Object.freeze({
   "weekly-reflection": "the Monday reflection",
   "tie-break": "a tie break",
   "letter-retry": "a letter retry",
-  "ask-deep": "a think deeply in Ask"
+  "ask-deep": "a think deeply in Ask",
+  /* round ten (7 October 2026): a council reviewer of a letter that the free
+     models could not answer at all, asked once more by a paid name (at most
+     12 a day, api/_council.js REVIEWER_PAID_DAY) */
+  "reviewer": "a reviewer the free models could not answer"
 });
 /* the research's web search for places (api/_outreach.js, the mission
    builder's, 2 dollars a month at most) is paid too: it keeps its own door
@@ -1183,7 +1187,7 @@ export const LEDGER_TASKS = Object.freeze({ ...PAID_PURPOSES, "web-search": "a w
 export const PAID_DAY_CAP_USD = 0.5;
 export const PAID_CALL_MAX_USD = 0.1;
 export const paidPurposeOf = p => (typeof p === "string" && Object.prototype.hasOwnProperty.call(PAID_PURPOSES, p) ? p : null);
-const PURPOSES_WORDS = "the Monday strategy and reflection, a tie break between the free judges, a letter retry for a place of high value, and the owner's own think deeply";
+const PURPOSES_WORDS = "the Monday strategy and reflection, a tie break between the free judges, a letter retry for a place of high value, a reviewer the free models could not answer, and the owner's own think deeply";
 
 export async function route(task = {}) {
   const deep = task.tier === "deep";

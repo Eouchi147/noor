@@ -744,7 +744,9 @@ export async function runHand(intent, opts = {}) {
      Next; a Go on an idea stands in for the council on the steps he was
      shown, and for nothing more: they keep the Lantern's own per-date
      limits and never overwrite a slot he set himself (6 October 2026) */
-  const ctx = { why: str(it.why, 600), cycle: opts.cycle || null, actor: opts.actor || "soul", ownerApproved: !!own && own.source !== "idea", approval: own };
+  /* round ten: mend, the Lantern trying again a letter it held for a reason
+     that passes (api/_home.js mendLetters); the hand still runs every check */
+  const ctx = { why: str(it.why, 600), cycle: opts.cycle || null, actor: opts.actor || "soul", ownerApproved: !!own && own.source !== "idea", approval: own, mend: !!opts.mend };
 
   if (hand.tier === "R0") {
     try { const r = await hand.run(args, ctx); return { ok: !!(r && r.ok), tier: "R0", data: r && r.data }; }

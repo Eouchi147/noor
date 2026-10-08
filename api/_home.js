@@ -727,7 +727,14 @@ function councilSaid(it) {
 /* one intent of a cycle as a Next item, or null when it is not one */
 function nextFromIntent(rec, it, mark, goals, today) {
   if (!it || it.tier === "R0" || !it.tier) return null;
-  if (mark) return null;
+  /* round ten: a step he ran that did not go stays in view, with why, so it
+     can be run again (and a letter, mended by the Lantern itself) */
+  if (mark) {
+    if (mark.skipped || mark.pending || mark.ok !== false) return null;
+    return { id: "i:" + rec.id + ":" + it.n, title: intentTitle(it, today), why: sayLantern(str(it.why, 400)), goal: goalFor(it.metric, goals), when: "today",
+      hand: it.action, tier: it.tier, status: "blocked", reason: sayLantern(clip((mark.by === "owner" ? "when you ran it: " : "") + str(mark.error || "it did not run", 280), 300)),
+      canDoNow: true, canSkip: true };
+  }
   const running = rec.status === "running";
   let status, reason = null;
   if (PENDING.has(it.status) && running) { status = "planned"; reason = it.status === "planned" ? "the council reviews it this morning" : "the cycle runs it within minutes"; }
@@ -766,10 +773,137 @@ export async function heldLetters() {
     if (!it || !LETTER_HANDS.has(it.action)) continue;
     const x = nextFromIntent(rec, it, marks[it.n], [], today);
     if (!x) continue;
-    if (x.status === "blocked") held.push({ id: x.id, title: x.title, why: x.why, reason: x.reason, hand: x.hand, canDoNow: !!x.canDoNow, canSkip: !!x.canSkip });
+    if (x.status === "blocked") held.push({ id: x.id, title: x.title, why: x.why, reason: x.reason, hand: x.hand, canDoNow: !!x.canDoNow, canSkip: !!x.canSkip, n: it.n, way: mendWay(rec, it, marks[it.n]) });
     else if (x.status === "planned") writing++;
   }
+  /* round ten: what the Lantern's own mend did with each, and whether it
+     will try again by itself (then it needs nothing of the owner) */
+  if (held.length) {
+    let got = [];
+    try { got = (await store([["MGET", ...held.map(h => mendKey(rec.id, h.n))]]))[0] || []; } catch { got = []; }
+    held.forEach((h, i) => {
+      const m = parse(got[i], null);
+      if (m && m.ok === false && m.error) h.reason = sayLantern(clip("the Lantern tried again at " + String(m.last || "").slice(11, 16) + " UTC: " + str(m.error, 240), 300));
+      h.mending = !!h.way && !(m && (m.final || m.ok || (m.tries || 0) >= MEND.tries));
+      if (m && m.tries) h.tries = m.tries;
+      delete h.n; delete h.way;
+    });
+  }
   return { planning, cycle: rec.id, held, writing };
+}
+/* ROUND TEN (7 October 2026). THE LANTERN MENDS ITS OWN HELD LETTERS. The
+   owner: "please fix it so it can send on its own with the lantern fixing
+   the issues it finds instead of blocking and leaving me in the dust". On
+   each tick, today's letters that were held for a reason that passes are
+   tried again by the Lantern itself, with nothing asked of him:
+     a council whose reviewers could not answer (no model) or ran out of
+       time is convened again (a silent reviewer may then be asked once on
+       the paid tier, api/_council.js);
+     a letter the writer could not write, or the judge held, is written
+       again under the approval it already has (the next draft is told why
+       and how to mend it, api/_outreach.js);
+     a letter he asked for himself (Write it anyway) that failed the same
+       way is tried again for him.
+   At most MEND.perTick a tick and MEND.tries a letter a day, MEND.gapMs
+   apart, inside the tick's own time. A real refusal (a red line, the
+   sentinel's or a reviewer's own no, a cap, a place held, do not contact)
+   is never tried again, and every gate of the hand and the mailbox holds. */
+export const MEND = Object.freeze({ perTick: 2, tries: 3, gapMs: 40 * 60000, needMs: 60000 });
+const MEND_ERR = /could not be written|no free model|did not answer|could not be reached|no answer|the judge held|the house's rules held|took longer|timed? ?out|the cycle stopped/i;
+const MEND_NEVER = /red line|one no is final|asked not to be written|do not contact|already written|already wait|waits until|has had its first letter|no such place|paused/i;
+const MEND_REFUSED = new Set(["R3", "cap", "paused", "unknown", "council"]);
+const mendKey = (cycle, n) => "nsoul:mend:" + cycle + ":" + n;
+const passes = (err, refused) => !MEND_REFUSED.has(String(refused || "")) && MEND_ERR.test(String(err || "")) && !MEND_NEVER.test(String(err || ""));
+/* why a held letter may be tried again, and how: {how: "council"|"hand",
+   owner} or null (a real refusal, or nothing to mend) */
+export function mendWay(rec, it, mark) {
+  if (!it || !LETTER_HANDS.has(it.action)) return null;
+  if (mark) {
+    if (mark.skipped || mark.pending || mark.ok !== false) return null;
+    return passes(mark.error, mark.refused) ? { how: "hand", owner: mark.by === "owner" } : null;
+  }
+  const c = it.council || {};
+  if (it.status === "rejected") {
+    if (c.timedOut) return { how: "council" };
+    if (c.sentinel && c.sentinel.vote === "reject") return null;
+    const v = c.verdicts || {};
+    const silent = ["guardian", "skeptic"].some(k => v[k] && v[k].failed && v[k].tier !== "code");
+    const realNo = ["guardian", "auditor", "skeptic"].some(k => v[k] && v[k].vote === "reject" && !v[k].failed);
+    return silent && !realNo ? { how: "council" } : null;
+  }
+  if (it.status === "failed") return passes(it.result && it.result.error, it.result && it.result.refused) && c.approved ? { how: "hand" } : null;
+  if (PENDING.has(it.status) && rec && rec.status !== "running") return it.status === "approved" && c.approved ? { how: "hand" } : { how: "council" };
+  return null;
+}
+/* once a version: the places a passed reason still holds are free again */
+const MEND_RELEASE_V = "10a";
+async function releaseOnce() {
+  const flag = "nsoul:mend:released:" + MEND_RELEASE_V;
+  let first = false;
+  try { first = (await store([["SET", flag, nowIso(), "NX", "EX", String(60 * 86400)]]))[0] === "OK"; } catch { first = false; }
+  if (!first) return 0;
+  try { const O = await import("./_outreach.js"); return typeof O.releaseHolds === "function" ? await O.releaseHolds() : 0; } catch { return 0; }
+}
+export async function mendLetters(opts = {}) {
+  const until = Number.isFinite(opts.until) ? opts.until : Date.now() + 100000;
+  const out = { ok: true, tried: 0, wrote: 0, held: [], released: 0 };
+  try { if (await isPaused()) return { ...out, why: "the Lantern is paused" }; } catch { return { ...out, why: "the pause could not be read" }; }
+  out.released = await releaseOnce().catch(() => 0);
+  const today = dayOf();
+  const { rec } = await latestCycle();
+  if (!rec || rec.date !== today) return { ...out, why: "no plan today yet" };
+  if (rec.status === "running") return { ...out, why: "a plan is running" };
+  const marks = await ownerMarks(rec).catch(() => ({}));
+  let C = null, playbook = null;
+  for (const it of rec.intents || []) {
+    if (out.tried >= MEND.perTick || until - Date.now() < MEND.needMs) break;
+    const mark = marks[it.n] || null;
+    const way = mendWay(rec, it, mark);
+    if (!way) continue;
+    const key = mendKey(rec.id, it.n);
+    let m0 = null;
+    try { m0 = parse((await store([["GET", key]]))[0], null); } catch { continue; }
+    m0 = m0 || { tries: 0 };
+    if (m0.final || m0.ok || (m0.tries || 0) >= MEND.tries || (m0.last && nowMs() - Date.parse(m0.last) < MEND.gapMs)) continue;
+    let locked = false;
+    try { locked = (await store([["SET", key + ":lock", nowIso(), "NX", "EX", "600"]]))[0] === "OK"; } catch { locked = false; }
+    if (!locked) continue;
+    out.tried++;
+    const at = nowIso(), tries = (m0.tries || 0) + 1;
+    const keep = async (note, extra) => { try { await store([["SET", key, JSON.stringify(note), "EX", String(CYCLE_KEEP_S)], ...(extra || [])]); } catch { } };
+    try {
+      let approval;
+      if (way.how === "council") {
+        if (!C) C = await import("./_council.js");
+        if (!playbook) { try { const E = await import("./_evolve.js"); playbook = await E.readPlaybook(); } catch { playbook = { version: 0, lessons: [] }; } }
+        const council = await C.convene(intentOf(it), rec.evidence, { playbook, until: Math.min(until - 40000, Date.now() + 70000) });
+        if (!council || !council.approved) {
+          const said = councilSaid({ council: council || {} });
+          const again = !!council && !!mendWay(rec, { ...it, status: "rejected", council }, null);
+          await keep({ tries, last: at, ok: false, final: !again, error: str(said, 300) });
+          out.held.push({ n: it.n, why: str(said, 200) });
+          continue;
+        }
+        approval = council;
+      } else approval = way.owner ? { owner: true, source: "next", id: "i:" + rec.id + ":" + it.n } : it.council;
+      const r = await runHand(intentOf(it), { actor: "soul", cycle: rec.id, approval, mend: true });
+      if (r.ok) {
+        await keep({ tries, last: at, ok: true, actionId: r.id || null },
+          [["SET", K.ownerRun(rec.id, it.n), JSON.stringify({ by: way.owner ? "owner" : "lantern", mended: true, ok: true, actionId: r.id || null, undo: r.entry && r.entry.undo ? r.entry.undo.kind : null, at }), "EX", String(CYCLE_KEEP_S)]]);
+        out.wrote++;
+      } else {
+        const err = str(r.error, 300);
+        await keep({ tries, last: at, ok: false, final: !passes(err, r.refused), error: err },
+          mark && mark.by === "owner" ? [["SET", K.ownerRun(rec.id, it.n), JSON.stringify({ ...mark, error: err, refused: r.refused || null, at }), "EX", String(CYCLE_KEEP_S)]] : null);
+        out.held.push({ n: it.n, why: str(err, 200) });
+      }
+    } catch (e) {
+      await keep({ tries, last: at, ok: false, final: false, error: str(e && e.message || e, 200) });
+    } finally {
+      try { await store([["DEL", key + ":lock"]]); } catch { }
+    }
+  }
+  return out;
 }
 /* ROUND NINE (7 October 2026). The owner: "The whole admin should be
    managed and run by the lantern, I am the human who owns Noor but also has
@@ -815,7 +949,8 @@ export async function needsView() {
   try {
     const h = await heldLetters();
     planning = !!h.planning;
-    const n = Array.isArray(h.held) ? h.held.length : 0;
+    /* round ten: a held letter the Lantern tries again by itself needs nothing of him */
+    const n = Array.isArray(h.held) ? h.held.filter(x => !x.mending).length : 0;
     if (!planning && n) byId.held = { id: "held", n: 1, letters: n, title: n === 1 ? "1 letter held back today" : n + " letters held back today",
       why: "The checks stopped " + (n === 1 ? "it" : "them") + " before " + (n === 1 ? "it was" : "they were") + " written. Plan again brings " + (n === 1 ? "it" : "them") + " back, or choose one by one.",
       where: "mail", go: { room: "mail", tab: "letters", anchor: "mail-held" }, act: n === 1 ? "See it" : "See them" };
@@ -879,7 +1014,17 @@ export async function doNow(id) {
     }
     let first = false;
     try { first = (await store([["SET", markKey, JSON.stringify({ by: "owner", pending: true, at: nowIso() }), "NX", "EX", String(CYCLE_KEEP_S)]]))[0] === "OK"; } catch { first = false; }
-    if (!first) return { ok: false, message: "That step was already answered from the Home." };
+    /* round ten: a run that did not go may be run again (the mark is taken
+       over only while it still says it failed) */
+    if (!first) {
+      let prior = null;
+      try { prior = parse((await store([["GET", markKey]]))[0], null); } catch { prior = null; }
+      const again = prior && prior.ok === false && !prior.pending && !prior.skipped;
+      if (again) {
+        try { first = (await store([["SET", markKey, JSON.stringify({ by: "owner", pending: true, at: nowIso() }), "XX", "EX", String(CYCLE_KEEP_S)]]))[0] === "OK"; } catch { first = false; }
+      }
+      if (!first) return { ok: false, message: "That step was already answered from the Home." };
+    }
     const before = it.tier === "R2" && it.metric ? { metric: it.metric, value: num(metricValue(rec.snapshot, it.metric)), date: today } : null;
     const r = await runHand(intentOf(it), { actor: "owner", cycle: rec.id, approval: { owner: true, source: "next", id: sid }, before });
     await store([["SET", markKey, JSON.stringify({ by: "owner", ok: !!r.ok, actionId: r.id || null, undo: r.entry && r.entry.undo ? r.entry.undo.kind : null, error: r.ok ? null : str(r.error, 300), refused: r.refused || null, at: nowIso() }), "EX", String(CYCLE_KEEP_S)]]);

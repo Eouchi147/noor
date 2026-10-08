@@ -498,7 +498,11 @@ async function queueGates(m, id, at, ctx, stop) {
   /* round four, gate 7b: Jev's seven questions over the letter (the house's
      own fixed words excepted); any risk at 0.5 or above holds it. A judge
      that cannot be reached holds nothing. */
-  if (!ctx.fixed) {
+  /* round ten: a letter the owner himself asked for, which the judge
+     doubted, is not judged a second time here: it goes only to his own
+     Send (gate 8 below), the judge's doubt on its card */
+  const forHisEyes = !!(ctx.ownerReview && ctx.judgeDoubt);
+  if (!ctx.fixed && !forHisEyes) {
     let jr = null;
     try { jr = await J.letterRisk({ subject: m.subject, text: m.text }); } catch { jr = null; }
     /* round five: and the house's rules over the words (letterRisk reads
@@ -517,7 +521,7 @@ async function queueGates(m, id, at, ctx, stop) {
       if (waiting.length >= MAX_WAITING) return stop("held", MAX_WAITING + " letters already wait for your Send; this one waits for a later run");
     }
     rec.status = "waiting-owner";
-    const card = await letterCard(rec, sent, { ownerAsked: !!ctx.ownerReview });
+    const card = await letterCard(rec, sent, { ownerAsked: !!ctx.ownerReview, doubt: forHisEyes ? str(ctx.judgeDoubt, 300) : null });
     if (!card.ok) return stop("held", "the letter's card could not be raised: " + str(card.error || card.suppressed || "it refused", 120));
     rec.card = card.id;
     await store([["SET", MK.out(id), JSON.stringify(rec), "EX", BODY_S]]);
@@ -555,7 +559,8 @@ async function letterCard(rec, sent, opts = {}) {
   const title = rec.kind === "reply" ? "Send this reply to " + who + "?" : rec.kind === "followup" ? "Send this follow-up to " + who + "?" : "Send this letter to " + who + "?";
   return DEC.upsert({
     kind: "approve", key: "mail:" + rec.id, stamp: "1", sticky: true, source: "mail",
-    title, why: opts.ownerAsked ? "You asked the Lantern to answer this message. Read its reply, then Send it or not."
+    title, why: opts.doubt ? "You asked the Lantern to write this letter. The judge had a doubt (" + sayLantern(str(opts.doubt.replace(/^the judge held the letter: /, ""), 200)) + "), so it waits for you: read it whole, then Send it or not."
+      : opts.ownerAsked ? "You asked the Lantern to answer this message. Read its reply, then Send it or not."
       : "One of the first " + FIRST_TEN + " emails the Lantern writes, each waiting for your Send (" + sent + " of " + FIRST_TEN + " sent so far)." + (rec.why ? " " + cap1(str(rec.why, 240)) + "." : ""),
     letter: { to: rec.to, toName: rec.toName || "", subject: rec.subject, text: rec.text, kind: rec.kind },
     options: [

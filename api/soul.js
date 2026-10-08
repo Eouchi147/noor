@@ -180,6 +180,30 @@ function logOutreach(from, r) {
       why: mask(r.why || r.error).slice(0, 240) }));
   } catch { }
 }
+/* ROUND TEN (7 October 2026): the Lantern mends its own held letters on the
+   tick (api/_home.js mendLetters), under its own clock, never a throw; one
+   line of counts in the log (never an address, never a letter's words) */
+export const MEND_TICK_MS = 110000;
+async function mendAfterTick(t0) {
+  const left = t0 + 230000 - Date.now();
+  if (left < 70000) return { ok: true, ran: false, why: "too little of the tick was left to mend a letter" };
+  let timer;
+  try {
+    const H = await import("./_home.js");
+    if (typeof H.mendLetters !== "function") return { ok: true, ran: false, why: "the mend is not on this deployment" };
+    const until = Date.now() + Math.min(MEND_TICK_MS, left);
+    const r = await Promise.race([H.mendLetters({ until }),
+      new Promise(res => { timer = setTimeout(() => res({ ok: false, error: "the mend took longer than its time; it goes on at the next tick" }), Math.min(MEND_TICK_MS, left) + 15000); })]);
+    try {
+      const mask = v => String(v || "").replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]");
+      if (r && (r.tried || r.released || r.ok === false))
+        console.log(JSON.stringify({ noor: "mend", tried: Number(r.tried) || 0, wrote: Number(r.wrote) || 0, released: Number(r.released) || 0,
+          held: (Array.isArray(r.held) ? r.held : []).slice(0, 3).map(x => mask(x && x.why).slice(0, 160)), why: mask(r.why || r.error || "").slice(0, 160) }));
+    } catch { }
+    return { ...r, ran: true };
+  } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
+  finally { clearTimeout(timer); }
+}
 /* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */
 export const OUTREACH_TICK_HARD_MS = 60000;
 async function outreachAfterTick(t0) {
@@ -296,11 +320,13 @@ export default async function handler(req, res) {
         try { voice = await Promise.race([VOICE.voiceTick(), new Promise(res2 => { vt = setTimeout(() => res2({ ok: false, error: "the voice took longer than 15 seconds" }), 15000); })]); }
         catch (e) { voice = { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
         finally { clearTimeout(vt); }
+        /* round ten: then the Lantern mends its own held letters */
+        const mend = await mendAfterTick(t0);
         /* round six (7 October 2026): then the outreach's search for places,
            every tick until the day's are found, under its own clock */
         const outreach = await outreachAfterTick(t0);
         if (fault) throw fault;
-        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice, outreach } : r);
+        return json(res, 200, r && typeof r === "object" ? { ...r, mail, voice, mend, outreach } : r);
       }
       const view = String(q.view || "today");
       if (view === "home") return json(res, 200, await homeView());

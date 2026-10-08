@@ -49,7 +49,7 @@
 // every playbook lesson it proposes (religiousRisk below).
 // ---------------------------------------------------------------------------
 
-import { constitutionText, councilRule, countsToday, CAP_LIMITS, seams, context } from "./_soul.js";
+import { constitutionText, councilRule, countsToday, CAP_LIMITS, seams, context, store, dayOf } from "./_soul.js";
 import { ask as jevAsk, RISK_AT, prob as jevProb, TEXT_QUESTIONS as JEV_TEXT_QUESTIONS, TEXT_LABEL as JEV_TEXT_LABEL } from "./_jev.js";   /* round four: prob, and the text questions now live in _jev.js */
 import { noteGuard, paidOutcome } from "./_llm.js";   /* round four: the scoreboard and the ROI ledger */
 import { redLineCheck } from "./_hands.js";
@@ -103,8 +103,12 @@ const SKEPTIC_SYSTEM = [
 
 /* a verdict object, always: a model answer that is not a clear approve or
    reject is a reject, with the reason saying why */
+/* round ten: the models a reviewer asked and why each did not answer, kept
+   with a silent reviewer's verdict so the engine room shows what went wrong
+   (never a key, never a prompt) */
+const triedOf = r => (r && Array.isArray(r.tried) && r.tried.length ? r.tried.slice(0, 8).map(t => ({ provider: String((t && t.provider) || ""), model: String((t && t.model) || "").slice(0, 80), err: String((t && t.err) || "").slice(0, 140) })) : null);
 export function readVerdict(role, r) {
-  if (!r || !r.ok) return { role, vote: "reject", failed: true, reasons: ["no answer: " + String((r && r.error) || "the reviewer could not be reached").slice(0, 160)], tier: r && r.tierUsed || null };
+  if (!r || !r.ok) return { role, vote: "reject", failed: true, reasons: ["no answer: " + String((r && r.error) || "the reviewer could not be reached").slice(0, 160)], tier: r && r.tierUsed || null, ...(triedOf(r) ? { tried: triedOf(r) } : {}) };
   const j = parseJson(r.content);
   const vote = j && typeof j.vote === "string" ? j.vote.trim().toLowerCase() : "";
   if (vote !== "approve" && vote !== "reject")
@@ -125,9 +129,11 @@ export async function guardian(intent, evidence, opts = {}) {
     { role: "system", content: GUARDIAN_SYSTEM + "\n\n" + constitutionText() + "\n\nHOUSE RULES:\n" + HOUSE_RULES.map(r => "- " + r).join("\n") + "\n\n" + lessonsText(opts.playbook) },
     { role: "user", content: dataBlock(intent, evidence) }
   ];
-  /* round four: the free strong tier; the paid tier only as a tie break */
-  const paid = !!opts.tieBreak;
-  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 500, temperature: 0, timeout: 25000, ...(paid ? { purpose: "tie-break", paidOnly: true } : {}) });
+  /* round four: the free strong tier; the paid tier only as a tie break
+     (round ten: or as the voice of a Guardian the free models could not
+     answer at all, purpose "reviewer", the same question in the same words) */
+  const paid = !!opts.tieBreak || !!opts.paidVoice;
+  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 500, temperature: 0, timeout: 25000, ...(paid ? { purpose: opts.paidVoice ? "reviewer" : "tie-break", paidOnly: true } : {}) });
   const v = readVerdict("guardian", r);
   try { await noteGuard(r, !v.failed); } catch { }
   if (paid) return { ...v, paid: !!(r && r.paid), paidId: (r && r.paidId) || null, costUsd: (r && Number(r.costUsd)) || 0 };
@@ -166,9 +172,13 @@ export async function skeptic(intent, evidence, opts = {}) {
     { role: "system", content: SKEPTIC_SYSTEM + "\n\n" + lessonsText(opts.playbook) },
     { role: "user", content: dataBlock(intent, evidence, left) }
   ];
-  const r = await think("strong", messages, { max_tokens: 400, temperature: 0, timeout: 20000 });
+  /* round ten: a Skeptic the free models could not answer at all may be
+     asked once on the paid tier (purpose "reviewer"), the same question */
+  const paid = !!opts.paidVoice;
+  const r = await think(paid ? "deep" : "strong", messages, { max_tokens: 400, temperature: 0, timeout: 20000, ...(paid ? { purpose: "reviewer", paidOnly: true } : {}) });
   const v = readVerdict("skeptic", r);
   try { await noteGuard(r, !v.failed); } catch { }   /* round four: a verdict that can be read is a check passed */
+  if (paid) return { ...v, paid: !!(r && r.paid), paidId: (r && r.paidId) || null, costUsd: (r && Number(r.costUsd)) || 0 };
   return v;
 }
 
@@ -313,8 +323,69 @@ export async function convene(intent, evidence, opts = {}) {
       }
     }
   }
-  return { approved, verdicts, ...(sen ? { sentinel: sen } : {}), ...(tieBreak ? { tieBreak } : {}), at: new Date().toISOString() };
+  /* ROUND TEN (7 October 2026): A SILENT REVIEWER IS ASKED ONCE MORE. The
+     owner, after the free models went quiet one evening and his letters were
+     held ("guardian: no answer: no free model answered today"): "please fix
+     it so it can send on its own with the lantern fixing the issues it finds
+     instead of blocking". For a letter of the outreach, a reviewer whose free
+     models could not answer at all (no model, or an answer that was not a
+     verdict) is asked once more, the same question in the same words, by one
+     paid model (purpose "reviewer", api/_llm.js), within the paid caps, at
+     most REVIEWER_PAID_DAY times a day, and only when it can finish inside
+     the council's time. Its verdict is the reviewer's own and the rule is
+     unchanged: the Guardian must approve and two of three. A paid model that
+     cannot answer either leaves the reviewer silent, and silence is still a
+     no (the Lantern then tries the letter again on a later tick, api/_home.js
+     mendLetters). */
+  let voices = null;
+  if (!approved && isLetter(intent) && opts.voice !== false) {
+    const silent = ["guardian", "skeptic"].filter(k => verdicts[k] && verdicts[k].failed && verdicts[k].tier !== "code");
+    const realNo = ["guardian", "skeptic"].some(k => verdicts[k] && verdicts[k].vote === "reject" && !verdicts[k].failed);
+    const left = Number.isFinite(opts.until) ? opts.until - Date.now() : Infinity;
+    if (silent.length && !realNo && verdicts.auditor && verdicts.auditor.vote === "approve" && left >= TIE_LIMITS.needMs) {
+      voices = [];
+      const asked = [];
+      for (const role of silent) {
+        if (!(await reviewerRoom())) { voices.push({ role, asked: false, why: "the day's " + REVIEWER_PAID_DAY + " paid reviewers are spent" }); continue; }
+        const call = safe(role, () => (role === "guardian" ? guardian : skeptic)(intent, evidence, { ...opts, paidVoice: true }));
+        asked.push([role, call]);
+      }
+      const answers = await Promise.all(asked.map(([role, call]) => {
+        let t;
+        const run = Number.isFinite(left) ? Promise.race([call, new Promise(res => { t = setTimeout(() => res(LATE), left); })]).finally(() => clearTimeout(t)) : call;
+        return run.then(v => [role, v]);
+      }));
+      const was = approved;
+      for (const [role, v] of answers) {
+        if (v === LATE) { voices.push({ role, asked: true, paid: false, late: true, why: "the paid reviewer did not answer inside the council's time" }); continue; }
+        if (v && v.paid && !v.failed) {
+          verdicts[role] = { ...v, paidVoice: true, free: { reasons: verdicts[role].reasons || [], ...(verdicts[role].tried ? { tried: verdicts[role].tried } : {}) } };
+          voices.push({ role, asked: true, paid: true, model: v.model || null, vote: v.vote, costUsd: v.costUsd || 0, paidId: v.paidId || null });
+        } else voices.push({ role, asked: true, paid: false, why: String((v && v.reasons && v.reasons[0]) || "no paid model could answer").slice(0, 200) });
+      }
+      approved = councilRule(verdicts);
+      for (const x of voices) {
+        if (!x.paidId) continue;
+        try { await paidOutcome(x.paidId, { helped: approved && !was, note: approved && !was ? VOICE_NOTES.helped : VOICE_NOTES.held }); } catch { }
+      }
+    }
+  }
+  return { approved, verdicts, ...(sen ? { sentinel: sen } : {}), ...(tieBreak ? { tieBreak } : {}), ...(voices ? { voices } : {}), at: new Date().toISOString() };
 }
+/* round ten: the day's paid reviewers, counted in the store (a store that
+   cannot count asks none) */
+export const REVIEWER_PAID_DAY = 12;
+async function reviewerRoom() {
+  try {
+    const key = "nsoul:paid:reviewer:" + dayOf();
+    const n = parseInt((await store([["INCR", key], ["EXPIRE", key, String(3 * 86400)]]))[0], 10);
+    return isFinite(n) && n <= REVIEWER_PAID_DAY;
+  } catch { return false; }
+}
+const VOICE_NOTES = {
+  helped: "a paid reviewer answered where the free models could not, and the letter went on to be written",
+  held: "a paid reviewer answered where the free models could not; the letter stayed held"
+};
 /* the time a paid tie break needs: its own call (25 seconds) and a margin
    (a test may shorten it, as api/_mind.js LIMITS is shortened) */
 export const TIE_LIMITS = { needMs: 26000 };

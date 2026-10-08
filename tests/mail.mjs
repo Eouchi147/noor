@@ -1463,6 +1463,25 @@ console.log('\n12f. round nine: what needs him, on every screen (GET ?view=needs
   CLOCK.t = keepT;
 }
 
+console.log('\n12g. round ten: a letter the owner asked for, which the judge doubted, waits for his own Send (LANTERN.md 16)');
+{
+  await fresh({ autonomous: true });
+  jevOn(k => (k === 'promises_money' ? 0.81 : 0.02));
+  const held = await q(LETTER);
+  ok(held.status === 'held' && /the judge held it: it promises money or a reward/.test(held.reason) && TRANSPORT.sent.length === 0, 'a letter the Lantern wrote on its own, which the judge holds, is held as before');
+  await fresh({ autonomous: true });
+  jevOn(k => (k === 'promises_money' ? 0.81 : 0.02));
+  const asked = JEV.bodies.length;
+  const doubt = 'the judge held the letter: it promises money or a reward (0.81)';
+  const w = await q(LETTER, { actor: 'owner', viaHand: true, ownerReview: true, judgeDoubt: doubt });
+  ok(w.ok && w.status === 'waiting-owner' && TRANSPORT.sent.length === 0, 'his own, after the first ten: it waits for his Send, nothing sent');
+  ok(JEV.bodies.length === asked, 'and the judge is not asked a second time at the door');
+  const card = (await openCards()).find(d => d.letter && d.letter.to === LETTER.to);
+  ok(card && card.why === 'You asked the Lantern to write this letter. The judge had a doubt (it promises money or a reward (0.81)), so it waits for you: read it whole, then Send it or not.'
+    && card.options.map(o => o.id).join() === 'send,no,later', 'its card says he asked for it and what the judge doubted, with Send and Not this one: ' + (card && card.why));
+  jevOff();
+}
+
 console.log('\n13. nothing real was reached, and the password is nowhere');
 {
   ok(!NET.calls.some(c => /resend\.com|gmail\.com|smtp|imap/i.test(c.url)), 'no real mail server or API was ever reached (the senders and the mailbox are stood in)');

@@ -95,9 +95,18 @@ export async function mailKind(msg, opts = {}) {
    2. EVERY LETTER AND REPLY: eight yes or no questions (round five: the
       eighth, and the house's rules over the words before them)
 --------------------------------------------------------------------------- */
+/* ROUND TEN (7 October 2026). The owner, after nine letters were held one
+   evening: "please fix it so it can send on its own with the lantern fixing
+   the issues it finds instead of blocking and leaving me in the dust". The
+   first question read the house's own free offer as a promise of value,
+   and held every letter that made it (0.63, 0.64): giving freely, with
+   nothing asked back, is the whole of what the house writes to say. It now
+   asks what it was meant to ask: money, a payment, a prize or a reward, or
+   an offer that depends on the reader doing something. The second question
+   tells a gentle suggestion from pressure. */
 export const LETTER_QUESTIONS = Object.freeze({
-  promises_money: { type: "boolean", instructions: "The email promises money, a gift, a payment, a reward or anything else of value, or offers to pay for something." },
-  pressure_to_give: { type: "boolean", instructions: "The email asks for money or a donation, or pressures the reader to give, share, post, follow or act." },
+  promises_money: { type: "boolean", instructions: "The email promises money, a payment, a prize or a reward, or offers to pay for something, or makes anything it offers depend on the reader doing something in return. Offering the library's own free material (its pages, lessons, curriculum, printables or reels) with nothing asked in return is not this." },
+  pressure_to_give: { type: "boolean", instructions: "The email asks for money or a donation, or presses the reader to give, share, post or follow, or urges them to act by insisting, setting a deadline or making them feel guilty. One gentle suggestion they may take or leave is not this." },
   religious_ruling: { type: "boolean", instructions: "The email issues a religious ruling in its own words, declaring something obligatory, forbidden, permitted or disliked." },
   claims_person: { type: "boolean", instructions: "The email claims to be written by a person (a named individual, an imam, a scholar or a member of staff) rather than by the library itself." },
   shares_details: { type: "boolean", instructions: "The email shares someone's personal details: another person's contact details, an email address, a phone number or a home address." },
@@ -107,10 +116,23 @@ export const LETTER_QUESTIONS = Object.freeze({
   ai_voice: { type: "boolean", instructions: "The email reads as written by an AI: stock phrases, empty praise, or lists of three adjectives." }
 });
 export const LETTER_LABEL = Object.freeze({
-  promises_money: "it promises money or a gift", pressure_to_give: "it presses the reader to give or to act",
+  promises_money: "it promises money or a reward", pressure_to_give: "it presses the reader to give or to act",
   religious_ruling: "it gives a religious ruling", claims_person: "it claims to be written by a person",
   shares_details: "it shares someone's details", asks_improper: "it asks for something improper", off_topic: "it strays from what the house writes about",
   ai_voice: "it reads as written by an AI"
+});
+/* round ten: what a writer is told to change when a question holds a
+   letter, so the Lantern's next draft mends it instead of the letter
+   stopping there */
+export const LETTER_MEND = Object.freeze({
+  promises_money: "offer only the library's free material, with nothing asked in return, and never mention money, a payment, a prize or a reward",
+  pressure_to_give: "make the one step a gentle suggestion they may take or leave, with no urging, no deadline and no request to share or follow",
+  religious_ruling: "give no ruling of any kind; point to the library's pages instead",
+  claims_person: "speak as the library itself, never as a person, an imam, a scholar or a member of staff",
+  shares_details: "carry no one's contact details, no address and no phone number",
+  asks_improper: "ask for nothing at all except, if it helps them, a short reply",
+  off_topic: "speak only of the free library, its offer to this place and the place's own teaching",
+  ai_voice: "write it plainly, as the house speaks, with no stock phrase, no empty praise and no list of three adjectives"
 });
 /* the house's rules over the words, as one reason a writer can act on */
 export function slopReason(hits) {
@@ -136,7 +158,9 @@ export async function letterRisk(m, opts = {}) {
   const risky = Object.keys(scores).filter(k => scores[k] >= RISK_AT);
   const reasons = risky.map(k => LETTER_LABEL[k] + " (" + Math.round(scores[k] * 100) / 100 + ")"
     + (k === "ai_voice" ? ": write it plainly, as the house speaks, with no stock phrase, no empty praise and no list of three adjectives" : ""));
-  return { held: reasons.length > 0, unavailable: false, reasons, scores, slop: risky.length === 1 && risky[0] === "ai_voice", hits: [] };
+  /* round ten: and how to mend each, for the writer's next draft */
+  const mend = risky.map(k => LETTER_MEND[k]).filter(Boolean);
+  return { held: reasons.length > 0, unavailable: false, reasons, mend, scores, slop: risky.length === 1 && risky[0] === "ai_voice", hits: [] };
 }
 
 /* ---------------------------------------------------------------------------

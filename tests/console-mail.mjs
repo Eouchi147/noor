@@ -955,7 +955,7 @@ const LTRS = (o = {}) => ({
     { id: 'i:c-7:4', title: 'Write to ' + XSS, why: '', reason: BOLD, hand: 'outreach-send', canDoNow: true, canSkip: true }],
   planning: false, writing: 0,
   scheduled: [{ id: 'out-s1', kind: 'outreach', toName: 'Hamilton Weekend School', subject: 'Free printables for your classes', sendAt: iso(NOW + 2 * H) }],
-  sent: [{ id: 'out-1', kind: 'outreach', toName: 'Al Noor Islamic Centre', subject: 'Free printables for your weekend school', at: iso(NOW - 26 * H) }],
+  sent: [{ id: 'out-1', kind: 'outreach', toName: 'Al Noor Islamic Centre', subject: 'Free printables for your weekend school', at: iso(NOW - D) }],
   ...o });
 const LTR_ADDRS = ['info@alhuda.example', 'contact@leedsisoc.example', 'office@bic.example'];
 const MAILV_L = (o = {}) => { const v = MAILV({ pace: PACE_R(), letters: LTRS(), ...o }); v.mail.firstTen = { sent: 1, of: 10 }; return v; };
@@ -1117,6 +1117,23 @@ console.log('\n390x844 · Plan again: the plan runs, the room reads itself again
   await o.pg.click('#mail-pane .hsec [data-mplan]'); await until(() => o.st.posted.length > n0); await o.pg.waitForTimeout(400);
   ok(await toastSays(o.pg) === 'The Lantern is already planning. The letters appear here as it writes them.', 'a plan already in hand is not a refusal: ' + await toastSays(o.pg));
   ok(o.st.errors.length === 0, 'no console error');
+  await o.ctx.close();
+}
+
+console.log('\n390x844 · round ten: a held letter the Lantern tries again by itself asks nothing of him');
+{
+  const o = await open_(390, 844, { mailv: () => MAILV_L({ letters: LTRS({ held: [
+    { id: 'i:c-7:3', title: 'Write to the Brisbane Islamic Centre', why: '', reason: 'the Lantern tried again at 21:05 UTC: the letter could not be written: no free model answered today', hand: 'outreach-send', canDoNow: true, canSkip: true, mending: true, tries: 1 },
+    { id: 'i:c-7:4', title: 'Write to the Perth Masjid', why: '', reason: 'the council said no (guardian: it crosses the constitution)', hand: 'outreach-send', canDoNow: true, canSkip: true, mending: false }] }) }) });
+  await openMail(o.pg);
+  const nr = await needRows(o.pg);
+  ok(nr.some(x => x === 'mail-need-held /  / 1 letter held back / The checks stopped it before it was written. Plan again brings it back, or choose one by one in Letters. / Plan again'), 'only the held letter the Lantern will not try again asks for him: ' + nr.join(' | '));
+  ok(nr.some(x => x === 'mail-need-mend / calm / 1 letter being tried again / The Lantern tries it again by itself, a little later. Nothing to do. / '), 'and the one it is trying again is said calmly, nothing to do');
+  const hl = await o.pg.evaluate(() => [...document.querySelectorAll('#mail-held [data-mlh]')].map(r => [...r.querySelectorAll('.t span')].map(s => s.textContent).join(' + ')));
+  ok(hl[0] === 'the Lantern tried again at 21:05 UTC: the letter could not be written: no free model answered today + The Lantern tries it again by itself, a little later.' && hl[1] === 'the council said no (guardian: it crosses the constitution)',
+    'in Held back, what the Lantern last tried, and that it tries again by itself: ' + hl[0]);
+  ok(o.st.errors.length === 0, 'no console error');
+  await o.pg.screenshot({ path: SHOTS + '/room-held-mending-390x844.png', fullPage: true });
   await o.ctx.close();
 }
 
