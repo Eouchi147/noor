@@ -234,6 +234,25 @@ async function lettersAfterTick() {
   } catch (e) { return { ok: false, error: sayLantern(String(e && e.message || e).slice(0, 160)) }; }
   finally { clearTimeout(timer); }
 }
+/* ROUND TEN C (8 October 2026): the free names' health (api/_llm.js
+   modelsPulse), one line in the log once an hour, on a tick with time to
+   spare; under its own short clock, never a throw */
+export const MODELS_PULSE_KEY = hour => "nsoul:pulse:models:" + hour;
+async function modelsAfterTick(t0) {
+  if (Date.now() - t0 > 200000) return null;
+  let timer;
+  try {
+    const hour = new Date(nowMs()).toISOString().slice(0, 13);
+    const first = (await store([["SET", MODELS_PULSE_KEY(hour), "1", "NX", "EX", "7200"]]))[0] === "OK";
+    if (!first) return null;
+    const L = await import("./_llm.js");
+    if (typeof L.modelsPulse !== "function") return null;
+    const p = await Promise.race([L.modelsPulse(), new Promise(res => { timer = setTimeout(() => res(null), PULSE_TICK_MS); })]);
+    if (p) console.log(JSON.stringify({ noor: "models", ...p }));
+    return p;
+  } catch { return null; }
+  finally { clearTimeout(timer); }
+}
 /* round six: the outreach's tick (api/_outreach.js outreachTick), never a throw */
 export const OUTREACH_TICK_HARD_MS = 60000;
 async function outreachAfterTick(t0) {
@@ -354,6 +373,8 @@ export default async function handler(req, res) {
         const mend = await mendAfterTick(t0);
         /* round ten b: then the day's letters, one line in the log */
         const letters = await lettersAfterTick();
+        /* round ten c: and, once an hour, the free names' health */
+        await modelsAfterTick(t0);
         /* round six (7 October 2026): then the outreach's search for places,
            every tick until the day's are found, under its own clock */
         const outreach = await outreachAfterTick(t0);

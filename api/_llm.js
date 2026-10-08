@@ -798,6 +798,37 @@ export async function scoresFor(cands, now) {
   } catch { /* an unread scoreboard ranks nothing: the tier's own order stands */ }
   return out;
 }
+/* ROUND TEN C (8 October 2026): THE FREE NAMES' HEALTH IN ONE LINE. The
+   engine room shows the scoreboard behind the owner's key; the house's
+   director reads it from the log, where api/soul.js writes this once an
+   hour: each free name of the strong and fast tiers with its calls answered
+   of those asked over the two weeks, its checks passed, its mean time, and
+   its last error and when; and whether the OpenRouter account is a paid
+   one. Names and numbers only, never a prompt or an answer. Never a throw. */
+export async function modelsPulse() {
+  const now = Date.now();
+  const rows = [];
+  const seen = new Set();
+  for (const tier of ["strong", "fast"]) {
+    let chain = [];
+    try { chain = await chainFor(tier, { unranked: true, skipGood: true }); } catch { chain = []; }
+    let s = new Map();
+    try { s = await scoresFor(chain, now); } catch { s = new Map(); }
+    for (const c of chain) {
+      const key = c.provider + ":" + c.model;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const x = s.get(key) || {};
+      rows.push(c.provider + "/" + c.model + " " + (x.ok || 0) + "/" + (x.n || 0)
+        + (x.gn ? " checks " + (x.gp || 0) + "/" + x.gn : "")
+        + (x.ok ? " " + (Math.round((x.ms || 0) / x.ok / 100) / 10) + "s" : "")
+        + (x.err ? " last error " + String(x.err).replace(/\s+/g, " ").slice(0, 70) + " at " + String(x.errAt || "").slice(5, 16).replace("T", " ") : ""));
+    }
+  }
+  let paid = null;
+  try { paid = await orPaidAccount(); } catch { paid = null; }
+  return { names: rows, openrouter: paid === true ? "paid account, " + OR_DAILY_PAID + " free a day" : paid === false ? "free account, " + OR_DAILY_FREE + " a day" : "not read" };
+}
 /* round five (the review, D7): a count with too little behind it is no
    evidence either way, so it is 1, neither lifting nor lowering: an
    unmeasured name no longer scores 0.75 x 0.75 = 0.56 under every healthy

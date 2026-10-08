@@ -528,6 +528,16 @@ console.log("\n=== 11. round ten c: the free names answer the council again ==="
   const o2 = await L.route({ tier: "strong", messages: msgs, opts: { max_tokens: 1400 } });
   ok(o2.ok && JSON.stringify(LAST.or.reasoning) === JSON.stringify({ exclude: true }), "a long one: only the thinking kept out, as before");
   ok(L.SHORT_ANSWER_TOKENS === 800, "short means 800 tokens or fewer");
+  /* the free names' health, one line for the log */
+  L.forgetScores();
+  const mp = await L.modelsPulse();
+  const gem = mp.names.find(x => /^gemini\/gemini-3\.8-flash /.test(x)) || "";
+  const grq = mp.names.find(x => /^groq\/openai\/gpt-oss-120b /.test(x)) || "";
+  /* (this file's store keeps no HSET, so the last error is not shown here; tests/mend.mjs reads the line whole) */
+  ok(/^gemini\/gemini-3\.8-flash 2\/4 [\d.]+s$/.test(gem) && /^groq\/openai\/gpt-oss-120b 0\/2$/.test(grq)
+    && mp.openrouter === "free account, 40 a day" && new Set(mp.names.map(x => x.split(" ")[0])).size === mp.names.length,
+    "each free name once: answered of asked and its time; the OpenRouter account: " + JSON.stringify(mp).slice(0, 300));
+  ok(!/judge this|lit/.test(JSON.stringify(mp)), "never a prompt or an answer");
 
   /* c. the words: a minute's bucket says this minute, and no answer is never "today" */
   ok(L.gateWords("tpm, 7000 tokens a minute") === "rate limit reached for this minute (tpm, 7000 tokens a minute)" && L.gateWords("rpm") === "rate limit reached for this minute (rpm)"

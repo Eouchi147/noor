@@ -363,10 +363,10 @@ console.log('\n6. the day\'s letters as one line of counts in the log, when it c
   /* the tick writes it when it changes, and once an hour while it does not
      (the pointer says done, so these ticks never move the plan itself) */
   S.set('nsoul:cycle:current', JSON.stringify({ id: 'c-p1', date: T, status: 'done' }));
-  const lines = [];
+  const lines = [], mlines = [];
   const realLog = console.log;
   const tickNow = async () => {
-    console.log = (...a) => { const s = a.join(' '); if (/^\{"noor":"letters"/.test(s)) lines.push(JSON.parse(s)); else realLog(...a); };
+    console.log = (...a) => { const s = a.join(' '); if (/^\{"noor":"letters"/.test(s)) lines.push(JSON.parse(s)); else if (/^\{"noor":"models"/.test(s)) mlines.push(JSON.parse(s)); else realLog(...a); };
     try { return await door({ query: { action: 'tick' }, headers: { authorization: 'Bearer ' + process.env.CRON_SECRET } }); }
     finally { console.log = realLog; }
   };
@@ -376,6 +376,7 @@ console.log('\n6. the day\'s letters as one line of counts in the log, when it c
   CLOCK.t += 15 * 60000;
   t = await tickNow();
   ok(lines.length === 1, 'fifteen minutes on, nothing changed: no second line');
+  ok(mlines.length === 1 && Array.isArray(mlines[0].names) && typeof mlines[0].openrouter === 'string', 'round ten c: the free names\' health, once in the hour: ' + JSON.stringify(mlines[0] || null).slice(0, 160));
   S.set(MAIL.MK.firstTen, '4');
   CLOCK.t += 15 * 60000;
   t = await tickNow();
@@ -387,6 +388,7 @@ console.log('\n6. the day\'s letters as one line of counts in the log, when it c
   resetStore(); setDay(addDays(D0, 1), '03:00');
   t = await tickNow();
   ok(lines.length === 3 && t.body.letters && t.body.letters.cycle === null, 'a day with no plan and no letters: no line');
+  ok(mlines.length === 3, 'the free names\' health: once in each new hour, whatever the letters (' + mlines.length + ')');
   /* a part that cannot be read is named, the rest stands */
   resetStore(); setDay(D0, '06:10');
   S.set('nsoul:cycle:c-p1', JSON.stringify({ id: 'c-p1', date: T, status: 'done', stage: 'report', intents: [send(1, { status: 'done' })] }));
