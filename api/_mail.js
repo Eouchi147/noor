@@ -1855,11 +1855,13 @@ async function lettersView() {
    show). Never an address, never a place's name, never a letter's words.
    Never a throw: a part that cannot be read is named in `missing`. */
 const PULSE_LETTER = new Set(["outreach-send", "outreach-followup"]);
+export const PULSE_SILENT = 12;
 const pulseMask = v => String(v == null ? "" : v).replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]").replace(/\s+/g, " ").trim();
 export async function lettersPulse() {
   const today = dayOf();
   const out = { date: today, cycle: null, stage: null, status: null, planned: 0, reviewing: 0, toWrite: 0, written: 0, held: 0, mending: 0,
-    waiting: 0, scheduled: 0, sentToday: 0, firstTen: null, paidReviewers: 0, why: [], silent: [] };
+    waiting: 0, scheduled: 0, sentToday: 0, firstTen: null, paidReviewers: 0, paidUsdToday: 0, paidUsdMonth: 0, why: [],
+    voices: { free: 0, paid: 0, silent: 0 }, silent: [] };
   const missing = {};
   let rec = null;
   try {
@@ -1873,20 +1875,27 @@ export async function lettersPulse() {
     out.reviewing = letters.filter(it => it.status === "planned").length;
     out.toWrite = letters.filter(it => it.status === "approved" || it.status === "running").length;
     out.written = letters.filter(it => it.status === "done").length;
-    /* why the free reviewers fell silent: each model asked, and its answer */
-    const seen = new Set();
+    /* who answered the two model reviewers (the Guardian and the Skeptic):
+       a free model, the paid voice, or no one; and why the free models fell
+       silent, each model and answer counted over the day's letters */
+    const voices = { free: 0, paid: 0, silent: 0 };
+    const tally = new Map();
     for (const it of letters) {
       const vs = it.council && it.council.verdicts && typeof it.council.verdicts === "object" ? it.council.verdicts : {};
-      for (const role of Object.keys(vs)) {
-        const v = vs[role] || {};
+      for (const role of ["guardian", "skeptic"]) {
+        const v = vs[role];
+        if (!v || typeof v !== "object" || v.tier === "code") continue;
+        if (v.paidVoice) voices.paid++; else if (v.failed) voices.silent++; else voices.free++;
         const tried = Array.isArray(v.tried) ? v.tried : v.free && Array.isArray(v.free.tried) ? v.free.tried : [];
         for (const t of tried) {
-          const line = pulseMask(str(t && t.provider, 20) + "/" + str(t && t.model, 60) + ": " + str(t && t.err, 90));
-          if (seen.has(line) || out.silent.length >= 6) continue;
-          seen.add(line); out.silent.push(line);
+          if (!t || !t.err) continue;
+          const line = str(pulseMask(str(t.provider, 20) + "/" + str(t.model, 60) + ": " + pulseMask(t.err)), 170);
+          tally.set(line, (tally.get(line) || 0) + 1);
         }
       }
     }
+    out.voices = voices;
+    out.silent = [...tally.entries()].sort((a, b) => b[1] - a[1]).slice(0, PULSE_SILENT).map(([l, n]) => (n > 1 ? l + " (x" + n + ")" : l));
   }
   try {
     const H = await import("./_home.js");
@@ -1894,7 +1903,7 @@ export async function lettersPulse() {
     const held = Array.isArray(h.held) ? h.held : [];
     out.held = held.length;
     out.mending = held.filter(x => x && x.mending).length;
-    out.why = held.slice(0, 3).map(x => pulseMask(str(x && x.reason, 160)));
+    out.why = held.slice(0, 3).map(x => str(pulseMask(x && x.reason), 160));
   } catch (e) { missing.held = str(e && e.message || e, 120); }
   try {
     const DEC = await import("./_decisions.js");
@@ -1906,7 +1915,8 @@ export async function lettersPulse() {
     }
   } catch (e) { missing.waiting = str(e && e.message || e, 120); }
   try {
-    const r = await store([["ZCARD", MK.sched], ["LRANGE", MK.outLog, "0", String(LETTERS_SHOWN.log - 1)], ["GET", MK.firstTen], ["GET", "nsoul:paid:reviewer:" + today]]);
+    const r = await store([["ZCARD", MK.sched], ["LRANGE", MK.outLog, "0", String(LETTERS_SHOWN.log - 1)], ["GET", MK.firstTen], ["GET", "nsoul:paid:reviewer:" + today],
+      ["GET", "nsoul:spend:day:" + today], ["GET", "nsoul:spend:" + today.slice(0, 7)]]);
     out.scheduled = parseInt(r[0], 10) || 0;
     const seen = new Set();
     for (const s of r[1] || []) {
@@ -1917,6 +1927,9 @@ export async function lettersPulse() {
     }
     out.firstTen = Math.min(FIRST_TEN, parseInt(r[2], 10) || 0) + "/" + FIRST_TEN;
     out.paidReviewers = parseInt(r[3], 10) || 0;
+    /* what the paid models cost today and this month (the ledger keeps millionths of a dollar) */
+    out.paidUsdToday = Math.round(Math.max(0, Number(r[4]) || 0) / 100) / 10000;
+    out.paidUsdMonth = Math.round(Math.max(0, Number(r[5]) || 0) / 100) / 10000;
   } catch (e) { missing.mail = str(e && e.message || e, 120); }
   if (Object.keys(missing).length) out.missing = missing;
   return out;

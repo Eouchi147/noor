@@ -346,14 +346,18 @@ console.log('\n6. the day\'s letters as one line of counts in the log, when it c
     row('m1', 'outreach', 'scheduled', T + 'T05:40:00.000Z'), row('m4', 'followup', 'sent', addDays(T, -1) + 'T10:00:00.000Z')]);
   S.set(MAIL.MK.firstTen, '3');
   S.set('nsoul:paid:reviewer:' + T, '2');
+  S.set('nsoul:spend:day:' + T, '123456'); S.set('nsoul:spend:' + T.slice(0, 7), '2500000');
   const p = await MAIL.lettersPulse();
   ok(p.cycle === 'c-p1' && p.stage === 'act' && p.status === 'running' && p.planned === 5 && p.reviewing === 1 && p.toWrite === 1 && p.written === 1,
     'where the plan is, and its letters: planned, read by the council, to be written, written: ' + JSON.stringify({ c: p.cycle, s: p.stage, n: p.planned, r: p.reviewing, w: p.toWrite, d: p.written }));
   ok(p.held === 2 && p.mending === 2 && p.why.length === 2 && /the council said no/.test(p.why[0]) && /the judge held the letter/.test(p.why[1]), 'held, with the first reasons, both of them for the Lantern to try again: ' + JSON.stringify(p.why));
   ok(p.waiting === 2 && p.scheduled === 1 && p.sentToday === 1 && p.firstTen === '3/10' && p.paidReviewers === 2,
     'his Send (never a reply), set for later, gone today (never a reply, never yesterday\'s), the first ten and the paid reviewers: ' + JSON.stringify({ w: p.waiting, s: p.scheduled, t: p.sentToday, f: p.firstTen, r: p.paidReviewers }));
-  ok(p.silent.length === 3 && p.silent[0] === 'cerebras/gpt-oss-120b: cerebras 503: busy' && p.silent.some(x => /^groq\/openai\/gpt-oss-120b: groq 429/.test(x)) && p.silent.some(x => /^openrouter\//.test(x)),
-    'which free models a reviewer asked and what each said, each once, the free answers under a paid voice too: ' + JSON.stringify(p.silent));
+  ok(p.silent.length === 3 && /^groq\/openai\/gpt-oss-120b: groq 429: rate limit reached for tokens per minute; write to \[an address\] \(x2\)$/.test(p.silent[0])
+    && p.silent[1] === 'cerebras/gpt-oss-120b: cerebras 503: busy' && /^openrouter\/meta-llama\/llama-4-maverick:free: openrouter 429/.test(p.silent[2]),
+    'which free models a reviewer asked and what each said, counted over the day, most first, the free answers under a paid voice too: ' + JSON.stringify(p.silent));
+  ok(JSON.stringify(p.voices) === JSON.stringify({ free: 1, paid: 1, silent: 2 }), 'who answered the Guardian and the Skeptic: a free model, the paid voice, no one: ' + JSON.stringify(p.voices));
+  ok(p.paidUsdToday === 0.1235 && p.paidUsdMonth === 2.5, 'what the paid models cost today and this month: ' + p.paidUsdToday + ', ' + p.paidUsdMonth);
   const all = JSON.stringify(p);
   ok(!all.includes('@') && /\[an address\]/.test(all) && !/Al Noor|Place a|Place b|Assalamu/.test(all), 'never an address, a place\'s name or a letter\'s words');
   /* the tick writes it when it changes, and once an hour while it does not
