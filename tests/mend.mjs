@@ -134,6 +134,18 @@ console.log('\n2. the council: a letter\'s reviewer no free model could answer i
   T.tasks.length = 0;
   c = await COUNCIL.convene(letter, {});
   ok(T.tasks.filter(t => t.tier !== 'deep').every(t => !t.opts || t.opts.waitUntil === undefined), 'no deadline given: no wait');
+  /* round ten d: the Guardian and the Skeptic are told what a letter is, as
+     the sentinel is; an act that is not a letter is told nothing new */
+  resetStore(); T.tasks.length = 0; ROUTER.failRoles = new Set();
+  await COUNCIL.convene(letter, {}, { sentinel: false });
+  const says = t => !!t && /WHAT IT IS: one first letter from the house's own address to a mosque or Islamic place that published its address for contact/.test(t.messages[1].content) && t.messages[1].content.includes(COUNCIL.LETTER_CHECKED);
+  ok(says(T.tasks.find(t => roleOf(t) === 'guardian')) && says(T.tasks.find(t => roleOf(t) === 'skeptic')) && /published on its own pages for contact \(Article 12\)/.test(COUNCIL.LETTER_CHECKED) && !/@/.test(COUNCIL.LETTER_CHECKED),
+    'round ten d: the Guardian and the Skeptic read what a letter is and what the code checks before it goes, as the sentinel reads it (no address in it)');
+  T.tasks.length = 0;
+  await COUNCIL.convene(swap, {}, { sentinel: false });
+  const swapAsked = T.tasks.filter(t => ['guardian', 'skeptic'].includes(roleOf(t)));
+  ok(swapAsked.length === 2 && swapAsked.every(t => !/WHAT IT IS/.test(t.messages[1].content)), 'an act that is not a letter is told nothing new');
+  ROUTER.failRoles = new Set(['guardian', 'skeptic']);
   /* a silent reviewer says which models it asked */
   ROUTER.failRoles = new Set(); SOUL.setSeams({ route: async task => (roleOf(task) === 'guardian' && task.tier !== 'deep'
     ? { ok: false, error: 'no free model answered today', tier: 'strong', tried: [{ provider: 'groq', model: 'openai/gpt-oss-120b', err: '429 rate limited' }, { provider: 'gemini', model: 'gemini-2.5-flash', err: 'quota' }] }
@@ -230,6 +242,11 @@ console.log('\n4. the mend: which held letters, how, how often; never a real ref
   ok(W(send(8, { status: 'approved', council: approved }), null).how === 'hand' && W(send(9, { status: 'planned' }), null).how === 'council' && HOME.mendWay({ id: 'x', status: 'running' }, send(9, { status: 'planned' }), null) === null,
     'a plan that stopped before a letter: the hand if it was approved, the council if not; never while the plan still runs');
   ok(W(send(10, { status: 'rejected', council: { approved: false, timedOut: true, verdicts: {} } })).how === 'council', 'a council that ran out of time: again');
+  ok(W(send(11, { status: 'failed', council: approved, result: { ok: false, error: "the letter says something about the place its own pages do not (Masjid's)" } })).how === 'hand'
+    && W(send(12, { status: 'failed', council: approved, result: { ok: false, error: 'the letter carries a number its facts do not: "300"' } })).how === 'hand'
+    && W(send(13, { status: 'failed', council: approved, result: { ok: false, error: 'the letter runs to 190 words; a first letter stays under 180' } })).how === 'hand'
+    && W(send(14, { status: 'failed', council: approved, result: { ok: false, error: 'red line, in the letter: x' } })) === null,
+    'round ten d: a draft that failed one of its own checks is written again, told why; a red line in the letter never');
   /* the tick */
   setup();
   let r = await HOME.mendLetters({ until: Date.now() + 200000 });

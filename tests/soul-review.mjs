@@ -599,7 +599,8 @@ console.log('\nR5. the second review: paid credit, the tie break\'s clock, a sil
     return SR(task);
   } });
   /* on a day of its own: block 10 above closed the deep tier for D0 in this process */
-  const TB_DAY = addDays(D0, 3);
+  /* (never a Monday, whose plan is the weekly one: run on a Friday, three days on was a Monday) */
+  const TB_DAY = new Date(addDays(D0, 3) + 'T12:00:00Z').getUTCDay() === 1 ? addDays(D0, 4) : addDays(D0, 3);
   const dailyWith = async () => {
     resetStore(); ROUTER.failRoles.clear(); ROUTER.plan = JSON.stringify({ intents: [swap] }); ROUTER.guardian = 'reject'; ROUTER.skeptic = 'approve';
     setDay(TB_DAY, '05:20'); quietExp();

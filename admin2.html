@@ -3386,12 +3386,17 @@ function hSkel(){
   return '<div class="hx"><div class="hz" id="hz-a">'
     +'<section class="hface" id="h-face" aria-label="The Lantern, its goals and today"><div class="hg" id="h-greet"></div>'+hOrbHtml()
       +'<div id="h-status"></div><div class="hzn hdata" id="h-horizon"></div></section>'
-    +'<section class="hdata" id="h-goals"></section>'
     +'<div id="h-fail" hidden></div>'
-    +'<div class="hdata" id="h-brief"><div class="card brief"><div class="sk" style="width:40%"></div><div class="sk" style="height:18px;margin-top:16px"></div><div class="sk" style="height:18px;margin-top:8px;width:92%"></div><div class="sk" style="height:18px;margin:8px 0 18px;width:70%"></div></div></div>'
+    /* round eleven (15 October 2026), the owner: "make sure in the admin
+       console that the most important items are showing first": what waits
+       for him, then the letters, then what comes next; the brief, what was
+       done and the goals after */
     +'<section class="hdata" id="h-decide">'+hHead("Your decisions",null,false)+skel(2)+'</section>'
-    +'<section class="hdata" id="h-next"></section><section class="hdata" id="h-done"></section>'
     +'<section class="hdata" id="h-mail" hidden></section>'
+    +'<section class="hdata" id="h-next"></section>'
+    +'<div class="hdata" id="h-brief"><div class="card brief"><div class="sk" style="width:40%"></div><div class="sk" style="height:18px;margin-top:16px"></div><div class="sk" style="height:18px;margin-top:8px;width:92%"></div><div class="sk" style="height:18px;margin:8px 0 18px;width:70%"></div></div></div>'
+    +'<section class="hdata" id="h-done"></section>'
+    +'<section class="hdata" id="h-goals"></section>'
     +'<section class="hdata" id="h-voice" hidden aria-label="Telegram"></section>'
     +'<section class="hdata" id="h-giving"></section><section class="hdata" id="h-ideas"></section>'
     +'<section id="h-ask">'+hAskBox()+'</section><div id="h-engine">'+hEngine(null)+'</div>'

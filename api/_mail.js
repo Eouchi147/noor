@@ -1857,10 +1857,22 @@ async function lettersView() {
 const PULSE_LETTER = new Set(["outreach-send", "outreach-followup"]);
 export const PULSE_SILENT = 12;
 const pulseMask = v => String(v == null ? "" : v).replace(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, "[an address]").replace(/\s+/g, " ").trim();
+/* round ten d (9 October 2026): the kind of reason a letter was held for */
+export function heldKind(reason) {
+  const s = String(reason || "");
+  if (/the judge held|the house's rules held/.test(s)) return /written by an AI/.test(s) ? "judge: reads as written by an AI" : "judge: another question";
+  if (/the letter (?:runs to|does not carry|carries|links outside|speaks of money|asks the place|asks for a meeting|touches a ruling|names a person|says something about the place|came back empty)/.test(s)) return "writer: a draft failed a check";
+  if (/could not be written|no model that keeps nothing|no free model/.test(s) && !/the council said no/.test(s)) return "writer: no answer";
+  if (/the sentinel said no/.test(s)) return "sentinel: no";
+  if (/the council said no/.test(s)) return /(?:guardian|skeptic): (?!no answer|the answer could not)/.test(s) ? "council: a reviewer said no" : "council: no reviewer answered";
+  if (/the cycle stopped/.test(s)) return "the plan stopped";
+  if (/cap|already wait|waits until|pace/.test(s)) return "pace or cap";
+  return "other";
+}
 export async function lettersPulse() {
   const today = dayOf();
   const out = { date: today, cycle: null, stage: null, status: null, planned: 0, reviewing: 0, toWrite: 0, written: 0, held: 0, mending: 0,
-    waiting: 0, scheduled: 0, sentToday: 0, firstTen: null, paidReviewers: 0, paidUsdToday: 0, paidUsdMonth: 0, why: [],
+    waiting: 0, scheduled: 0, sentToday: 0, firstTen: null, paidReviewers: 0, paidUsdToday: 0, paidUsdMonth: 0, why: [], heldKinds: {},
     voices: { free: 0, paid: 0, silent: 0 }, silent: [] };
   const missing = {};
   let rec = null;
@@ -1904,6 +1916,11 @@ export async function lettersPulse() {
     out.held = held.length;
     out.mending = held.filter(x => x && x.mending).length;
     out.why = held.slice(0, 3).map(x => str(pulseMask(x && x.reason), 160));
+    /* round ten d: every held letter by the kind of reason, so the line
+       shows all of them, not the first three */
+    const kinds = {};
+    for (const x of held) { const k = heldKind(x && x.reason); kinds[k] = (kinds[k] || 0) + 1; }
+    out.heldKinds = kinds;
   } catch (e) { missing.held = str(e && e.message || e, 120); }
   try {
     const DEC = await import("./_decisions.js");

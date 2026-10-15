@@ -2040,22 +2040,56 @@ async function mailWalk(task, messages, now, tried) {
   const done = (more) => ({ tier: "mail", tried, paid: false, costUsd: 0, ...more });
   const cands = await mailCandidates(tried);
   const est = estimateTokens(messages, task.opts && task.opts.max_tokens);
-  for (const cand of await exploreFirst("mail", await rankByQuality(cands, now), now)) {   /* round five: faults fade */
+  /* one call to one name whose gate has already let it through */
+  const askMail = async (cand, timeoutMs) => {
     const { provider, model } = cand;
-    const gate = await checkAndReserve(provider, model, now, task.caller, est);
-    if (!gate.ok) { tried.push({ provider, model, err: gateWords(gate.why) }); continue; }
     const callOpts = { ...(task.opts || {}) };
+    delete callOpts.waitUntil;
+    if (timeoutMs) callOpts.timeout = timeoutMs;
     if (task.json && !callOpts.response_format && await jsonCapable(provider, model)) callOpts.response_format = { type: "json_object" };
     const got = await chatOnce(provider, model, messages, callOpts);
-    tried.push({ provider, model, ms: got.ms, err: got.ok ? "" : got.error });
+    tried.push({ provider, model, ms: got.ms, err: got.ok ? "" : got.error, ...(timeoutMs ? { waited: true } : {}) });
     if (parkable(provider, got)) await rememberRefused(model, got.error, provider);
     const tokens = (got.usage && (got.usage.total_tokens || got.usage.totalTokens)) || 0;
     await recordUsage(provider, now, tokens, model, got);
-    if (got.ok) {
-      await addTokens(provider, model, now, tokens);
-      return done({ ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider, measured: { provider, model } });
-    }
+    if (got.ok) await addTokens(provider, model, now, tokens);
+    return got;
+  };
+  const heldByMinute = [];
+  for (const cand of await exploreFirst("mail", await rankByQuality(cands, now), now)) {   /* round five: faults fade */
+    const { provider, model } = cand;
+    /* round ten d: the bucket of the minute the name is asked in */
+    const gate = await checkAndReserve(provider, model, Date.now(), task.caller, est);
+    if (!gate.ok) { tried.push({ provider, model, err: gateWords(gate.why) }); if (/^(rpm|tpm)\b/.test(String(gate.why || ""))) heldByMinute.push(cand); continue; }
+    const got = await askMail(cand);
+    if (got.ok) return done({ ok: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider, measured: { provider, model } });
     if (got.blocked) return done({ ok: false, error: got.error, blocked: true });
+  }
+  /* ROUND TEN D (9 October 2026): THE WRITER WAITS FOR ITS NEXT MINUTE TOO.
+     That morning the plan's council finished at 05:03 and its act stage
+     wrote the day's 20 letters back to back: Groq's two names, the only
+     ones the mail tier may ask, spent their tokens a minute on the first and
+     19 letters were held ("no model that keeps nothing answered: rate limit
+     reached for this minute"), to be written again two a tick by the mend
+     over the next two hours. A writer that says how long it may wait
+     (opts.waitUntil) now waits for the next minute and asks those names once
+     more, inside what is left, as the council's free reviewers do. */
+  const waitUntil = Number(task.opts && task.opts.waitUntil);
+  if (heldByMinute.length && Number.isFinite(waitUntil)) {
+    const t1 = Date.now();
+    const nextMinute = (Math.floor(t1 / 60000) + 1) * 60000 + WAIT.afterMs;
+    if (waitUntil - nextMinute >= WAIT.minCallMs) {
+      await WAIT.sleep(nextMinute - t1);
+      for (const cand of heldByMinute) {
+        const left = waitUntil - Date.now();
+        if (left < WAIT.minCallMs) break;
+        const gate = await checkAndReserve(cand.provider, cand.model, Date.now(), task.caller, est);
+        if (!gate.ok) { tried.push({ provider: cand.provider, model: cand.model, err: gateWords(gate.why), waited: true }); continue; }
+        const got = await askMail(cand, Math.min(Number(task.opts && task.opts.timeout) || 9000, left));
+        if (got.ok) return done({ ok: true, waited: true, content: got.content, tool_calls: got.tool_calls, usage: got.usage, model: got.model, provider: cand.provider, measured: { provider: cand.provider, model: cand.model } });
+        if (got.blocked) return done({ ok: false, error: got.error, blocked: true });
+      }
+    }
   }
   /* correspondence may reach a paid name that keeps nothing: perPerson is
      false here by the amended red line, and only here. task.noPaid: the

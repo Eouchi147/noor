@@ -640,6 +640,27 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   ok(O.inventedIn('Assalamu alaykum, we saw your Saturday youth club.', { name: 'X', facts: [{ text: 'Our youth programme meets each week.' }] }, 'youth').length > 0
     && O.inventedIn('Assalamu alaykum, we read about your youth programme.', { name: 'X', facts: [{ text: 'Our youth program meets each week.' }] }, 'youth').length === 0,
     'what a letter says of the place is held to its own words, programme and program alike');
+  /* round ten d: a possessive is the word it belongs to */
+  ok(O.inventedIn("Assalamu alaykum, the Masjid's weekend school and Al Noor's classes are why we write.", { name: 'Al Noor Masjid', facts: [{ text: 'Our weekend school and classes.' }] }, 'school').length === 0
+    && O.inventedIn("Assalamu alaykum, we heard of Ahmed's class.", { name: 'Al Noor Masjid', facts: [{ text: 'Our classes.' }] }, 'school').join() === 'Ahmed',
+    "round ten d: a possessive is read as the word it belongs to: the place's own name passes, a name its pages never wrote does not");
+  /* round eleven: each letter may name one or two more rooms, chosen from the place's own facts */
+  const rp = { name: 'Al Noor Masjid', kind: 'mosque', facts: [{ text: 'Classes for new Muslims and reverts every week.' }, { text: 'Our children learn Arabic with the Noorani qaida.' }] };
+  const rk = O.roomsFor(rp, 'masjid');
+  ok(rk.join() === 'begin,kids' && O.roomsFor({ name: 'X', kind: 'mosque', facts: [] }, 'masjid').join() === 'quran,begin' && !O.roomsFor({ name: 'Y', kind: 'school', facts: [{ text: 'Youth club and teen talks.' }] }, 'youth').includes('teens'),
+    'round eleven: the rooms come from the place\'s own facts first, then its kind, never its offer\'s own room: ' + rk.join());
+  const wm = O.writerMessages(rp, 'masjid');
+  ok(/ROOMS \(one or two, only if they fit\):\n- a guide for new Muslims at https:\/\/noorcodex\.com\/begin/.test(wm[1].content) && /how NOOR could serve this place/.test(wm[0].content) && /no stock phrase/.test(wm[0].content),
+    'round eleven: the writer is given the rooms, asked to say how NOOR could serve the place, and to write plainly');
+  const roomBody = "Assalamu alaykum,\n\nWe read that Al Noor Masjid runs classes for new Muslims and reverts. The Masjid Toolbox at https://noorcodex.com/masjid is free for you, and a guide for new Muslims at https://noorcodex.com/begin covers the first day and the first weeks.";
+  ok(O.inventedIn(roomBody, rp, 'masjid').length === 0, 'round eleven: the rooms\' own words are the house\'s, never read as invented: ' + O.inventedIn(roomBody, rp, 'masjid').join());
+  /* round ten d: the first draft may wait for the writer's next minute; the second, told why, does not */
+  WRITER.calls.length = 0;
+  await tryWith(opener + 'Everything is free for your classes.', /free offer's own link/, 'round ten d: once more, to read the writer\'s clock');
+  const firstAsk = WRITER.calls[0] && WRITER.calls[0].opts || {};
+  ok(WRITER.calls.length >= 2 && Number.isFinite(firstAsk.waitUntil) && firstAsk.waitUntil - Date.now() <= O.WRITER_WAIT_MS && firstAsk.waitUntil - Date.now() > O.WRITER_WAIT_MS - 10000
+    && WRITER.calls.slice(1).every(t => !t.opts || t.opts.waitUntil === undefined) && O.WRITER_WAIT_MS === 30000,
+    'round ten d: the first draft may wait up to 30 seconds for the writer\'s next minute; a second draft, told why, does not');
   /* the mailbox's own refusals and holds */
   MAIL.status = 'held'; MAIL.reason = 'the mail switch is off';
   const greenId = (await byName('Green Lane Mosque')).id;

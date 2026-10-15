@@ -809,7 +809,7 @@ export async function heldLetters() {
    sentinel's or a reviewer's own no, a cap, a place held, do not contact)
    is never tried again, and every gate of the hand and the mailbox holds. */
 export const MEND = Object.freeze({ perTick: 2, tries: 3, gapMs: 40 * 60000, needMs: 60000 });
-const MEND_ERR = /could not be written|no free model|did not answer|could not be reached|no answer|the judge held|the house's rules held|took longer|timed? ?out|the cycle stopped/i;
+const MEND_ERR = /could not be written|no free model|did not answer|could not be reached|no answer|the judge held|the house's rules held|took longer|timed? ?out|the cycle stopped|the letter (?:runs to|does not carry|carries|links outside|speaks of money|asks the place|asks for a meeting|touches a ruling|names a person|says something about the place|came back empty)/i;
 const MEND_NEVER = /red line|one no is final|asked not to be written|do not contact|already written|already wait|waits until|has had its first letter|no such place|paused/i;
 const MEND_REFUSED = new Set(["R3", "cap", "paused", "unknown", "council"]);
 const mendKey = (cycle, n) => "nsoul:mend:" + cycle + ":" + n;
@@ -836,7 +836,7 @@ export function mendWay(rec, it, mark) {
   return null;
 }
 /* once a version: the places a passed reason still holds are free again */
-const MEND_RELEASE_V = "10a";
+const MEND_RELEASE_V = "10d";   /* round ten d: the drafts that failed their own checks pass too */
 async function releaseOnce() {
   const flag = "nsoul:mend:released:" + MEND_RELEASE_V;
   let first = false;
