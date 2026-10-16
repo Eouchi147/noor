@@ -120,6 +120,10 @@ const PHRASES = [
   ["\"invaluable\"", /\binvaluable\b|\bunparalleled\b/i]
 ];
 
+/* round eleven b (16 October 2026): the same list in words, for the writer,
+   so a draft avoids them from the start instead of being held for them */
+export const AVOID_WORDS = PHRASES.map(x => x[0]).join(", ");
+
 /* "journey" is a plain word in a library of history (the Night Journey,
    the journey to Madinah), and a machine's metaphor everywhere else ("your
    learning journey", "on this journey together"). Only the second is a hit:

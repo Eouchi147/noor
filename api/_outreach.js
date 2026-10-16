@@ -134,6 +134,7 @@ import {
 import { critic, evidenceFromText } from "./_agent.js";
 import { linksIn, namesAPerson, wordNumbers } from "./_mission.js";
 import * as I from "./_instruments.js";
+import { AVOID_WORDS } from "./_letterhead.js";   /* round eleven b: the words the house never writes, told to the writer */
 import * as J from "./_judge.js";   /* round four: Jev's letter questions, the place score, a place of high value */
 import crypto from "node:crypto";
 import dns from "node:dns";   /* review fix, 7 October 2026: only the public web is ever fetched */
@@ -2086,6 +2087,7 @@ const WRITER_SYSTEM = [
   "- Write plainly, as a person who read their pages would: short sentences, one concrete thing from their facts, no stock phrase (no \"I hope this finds you well\", no \"we are thrilled\"), no empty praise, no list of three, no dashes.",
   "- The letter gives and asks for nothing in return: a reply is only something they may do if it helps them.",
   "- Never promise or ask for money, never ask them to share, post or follow anything, never accept terms, never ask for a meeting or a call, never give a religious ruling, never name a person.",
+  "- Never use any of these: " + AVOID_WORDS + "; and never the word \"journey\" as a metaphor, \"not just X but Y\", or three adjectives in a row.",
   "- Begin with \"Assalamu alaykum,\" and keep the body under 140 words.",
   "- No signature and no closing line: the house adds them.",
   "Answer with JSON only: {\"body\": \"the letter body\"}."
@@ -2101,7 +2103,7 @@ export function writerMessages(p, offerKey) {
 }
 /* the words a letter may use that its facts need not carry: the house's
    own, and the words any sentence may begin with */
-const STARTERS = new Set(["we", "our", "us", "you", "your", "it", "its", "if", "in", "with", "thank", "thanks", "this", "that", "these", "those", "the", "a", "an",
+const STARTERS = new Set(["everything", "everyone", "something", "nothing", "we", "our", "us", "you", "your", "it", "its", "if", "in", "with", "thank", "thanks", "this", "that", "these", "those", "the", "a", "an",
   "as", "at", "for", "from", "here", "there", "may", "assalamu", "alaykum", "alaikum", "dear", "every", "all", "and", "but", "so", "to", "when", "what",
   "whether", "would", "should", "could", "please", "peace", "salaam", "salam", "each", "one", "many", "some", "any", "both", "since", "while", "after",
   "before", "their", "they", "them", "not", "no", "yes", "just", "also", "do", "is", "are", "was", "be", "have", "has", "will", "can", "insha'allah",
@@ -2205,9 +2207,13 @@ async function draftLetter(p, offerKey, why, retry, purpose) {
   const r = await mailRoute(messages, purpose, !retry && !purpose ? WRITER_WAIT_MS : 0);
   if (!r || !r.ok) return { ok: false, error: "the letter could not be written: " + str(r && r.error, 160) };
   const j = jsonObject(r.content);
-  const body = tidyBody(j && typeof j.body === "string" ? j.body : "");
+  let body = tidyBody(j && typeof j.body === "string" ? j.body : "");
   const fail = (out) => ({ ...out, written: true, paidId: r.paidId || null, measured: r.measured || null });
   if (body.length < 60) return fail({ ok: false, error: "the letter came back empty" });
+  /* round eleven b (16 October 2026): a letter that named the rooms but left
+     out its offer's own link gets that link in one plain line, written in
+     code, rather than being held for it */
+  if (!body.includes(SITE + o.path) && !(o.path === "/" && body.includes(SITE))) body = body + "\n\nYou can find it all at " + SITE + (o.path === "/" ? "" : o.path) + ".";
   const subject = letterSubject(p, o);
   const text = body + "\n\n" + SIGN + "\n\n" + DNC_LINE;
   const c = checkLetter(p, offerKey, subject, text, body);

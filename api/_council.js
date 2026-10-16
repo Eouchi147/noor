@@ -99,7 +99,7 @@ export function letterWhatItIs(it) {
     ? "the one short follow-up, a week or more after a first letter that had no answer, to a mosque or Islamic place that published its address for contact; written in code, it offers the same free material and the same one-line way out."
     : "one first letter from the house's own address to a mosque or Islamic place that published its address for contact, written only from that place's own published facts, offering free material from the library and asking nothing in return, with a one-line way out; the day's letters are paced (a warm-up of 20 a day, rising to 50).";
 }
-export const LETTER_CHECKED = "CHECKED IN CODE BEFORE IT GOES: the address is the one the place published on its own pages for contact (Article 12), and never one on do not contact; the letter is checked against the place's own pages (nothing they do not say), against the red lines, and by the judge's letter questions; it goes from the house's own address only, within the day's mail caps.";
+export const LETTER_CHECKED = "CHECKED IN CODE BEFORE IT GOES: the address is the one the place published on its own pages for contact (Article 12), and never one on do not contact; the letter is checked against the place's own pages (nothing they do not say), against the red lines, and by the judge's letter questions; it goes from the house's own address only, within the day's mail caps. A letter counts only against the outreach's own daily pace, never against the day's cap of public actions, and the outreach is a goal the owner started himself.";
 
 const VERDICT_ASK = "Answer with JSON only, exactly this shape: {\"vote\":\"approve\" or \"reject\",\"reasons\":[\"one short sentence\", ...]}.";
 

@@ -632,7 +632,13 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   await tryWith(opener + 'The full course at ' + link + ' is free. Write to me at sam@example.com.', /address or a phone number/, 'an address in a letter is refused');
   await tryWith(opener + 'The full course at ' + link + ' is free, and more at https://example.com/islam.', /links outside the house/, 'a link outside the house is refused');
   await tryWith(opener + 'The full course at ' + link + ' is free. ' + 'We would be so glad to help in any way at all. '.repeat(16), /a first letter stays under 180/, 'a letter of 180 words or more is refused');
-  await tryWith(opener + 'Everything is free for your classes.', /free offer's own link/, 'a letter without its offer\'s own link is refused');
+  /* round eleven b: a draft without its offer's own link gets it in one plain line, written in code */
+  ok(!O.checkLetter(quiet, 'weekend-school', 'S', 'x', opener + 'Everything is free for your classes.').ok, 'a body without its offer\'s own link would still be refused by the check itself');
+  WRITER.body = opener + 'Everything is free for your classes.';
+  const nl = await O.writeLetter(await byName('Quiet Street Islamic Centre'), 'weekend-school', 'a first letter');
+  WRITER.body = null;
+  ok(nl.ok && /You can find it all at https:\/\/noorcodex\.com\/school\./.test(nl.text),
+    'round eleven b: the writer left out its offer\'s link, so the house adds it in one plain line and the letter passes: ' + (nl.error || 'written'));
   const held = await byName('Quiet Street Islamic Centre');
   ok(held.held && held.held.until === addDays(D0, 7) && held.status === 'new', 'a place whose letter was refused waits a week: ' + held.held.until);
   ok(S.get(K.count('letters', D0)) === '1', 'and no refused letter spent the day\'s count');
@@ -656,7 +662,7 @@ const sendIntent = (p, why) => ({ action: 'outreach-send', args: { placeId: p.id
   ok(O.inventedIn(roomBody, rp, 'masjid').length === 0, 'round eleven: the rooms\' own words are the house\'s, never read as invented: ' + O.inventedIn(roomBody, rp, 'masjid').join());
   /* round ten d: the first draft may wait for the writer's next minute; the second, told why, does not */
   WRITER.calls.length = 0;
-  await tryWith(opener + 'Everything is free for your classes.', /free offer's own link/, 'round ten d: once more, to read the writer\'s clock');
+  await tryWith(opener + 'The full course at ' + link + ' is free. Could we book a call next week?', /meeting or a call/, 'round ten d: once more, to read the writer\'s clock');
   const firstAsk = WRITER.calls[0] && WRITER.calls[0].opts || {};
   ok(WRITER.calls.length >= 2 && Number.isFinite(firstAsk.waitUntil) && firstAsk.waitUntil - Date.now() <= O.WRITER_WAIT_MS && firstAsk.waitUntil - Date.now() > O.WRITER_WAIT_MS - 10000
     && WRITER.calls.slice(1).every(t => !t.opts || t.opts.waitUntil === undefined) && O.WRITER_WAIT_MS === 30000,
